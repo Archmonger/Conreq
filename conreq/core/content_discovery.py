@@ -8,6 +8,7 @@ from conreq.core.thread_helper import ReturnThread
 # TODO: Obtain these values from the database on init
 ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
+FETCH_MULTI_PAGE = 5
 
 
 class ContentDiscovery:
@@ -520,117 +521,44 @@ class ContentDiscovery:
             self.__top_movies(page_number), self.__top_tv(page_number)
         )
 
-    def __popular_movies(self, page_number, fetch_multi_page=5):
+    def __popular_movies(self, page_number):
         # Obtain disovery results through the movie.popular function. Store results in cache.
+        return self.__threaded_query(
+            self.__popular_movie_cache,
+            self.__popular_movie_cache_time,
+            self.__tmdb_movies.popular,
+            page_number,
+        )
 
-        # Thread 5 pages of TMDB queries
-        page = page_number * fetch_multi_page
-        thread_list = []
-        for subtractor in range(0, fetch_multi_page):
-            thread = ReturnThread(
-                target=cache.handler,
-                args=[
-                    self.__popular_movie_cache,
-                    self.__popular_movie_cache_time,
-                    self.__tmdb_movies.popular,
-                    page - subtractor,
-                ],
-                kwargs={"page": page - subtractor, "language": LANGUAGE},
-            )
-            thread.start()
-            thread_list.append(thread)
-
-        # Merge together 5 pages
-        merged_results = thread_list[0].join()
-        thread_list.remove(thread_list[0])
-        for thread in thread_list:
-            merged_results = self.__merge_results(merged_results, thread.join())
-
-        return merged_results
-
-    def __top_movies(self, page_number, fetch_multi_page=5):
+    def __top_movies(self, page_number):
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
 
-        # Thread 5 pages of TMDB queries
-        page = page_number * fetch_multi_page
-        thread_list = []
-        for subtractor in range(0, fetch_multi_page):
-            thread = ReturnThread(
-                target=cache.handler,
-                args=[
-                    self.__top_movie_cache,
-                    self.__top_movie_cache_time,
-                    self.__tmdb_movies.top_rated,
-                    page - subtractor,
-                ],
-                kwargs={"page": page - subtractor, "language": LANGUAGE},
-            )
-            thread.start()
-            thread_list.append(thread)
+        return self.__threaded_query(
+            self.__top_movie_cache,
+            self.__top_movie_cache_time,
+            self.__tmdb_movies.top_rated,
+            page_number,
+        )
 
-        # Merge together 5 pages
-        merged_results = thread_list[0].join()
-        thread_list.remove(thread_list[0])
-        for thread in thread_list:
-            merged_results = self.__merge_results(merged_results, thread.join())
-
-        return merged_results
-
-    def __popular_tv(self, page_number, fetch_multi_page=5):
+    def __popular_tv(self, page_number):
         # Obtain disovery results through the tv.popular function. Store results in cache.
 
-        # Thread 5 pages of TMDB queries
-        page = page_number * fetch_multi_page
-        thread_list = []
-        for subtractor in range(0, fetch_multi_page):
-            thread = ReturnThread(
-                target=cache.handler,
-                args=[
-                    self.__popular_tv_cache,
-                    self.__popular_tv_cache_time,
-                    self.__tmdb_tv.popular,
-                    page - subtractor,
-                ],
-                kwargs={"page": page - subtractor, "language": LANGUAGE},
-            )
-            thread.start()
-            thread_list.append(thread)
+        return self.__threaded_query(
+            self.__popular_tv_cache,
+            self.__popular_tv_cache_time,
+            self.__tmdb_tv.popular,
+            page_number,
+        )
 
-        # Merge together 5 pages
-        merged_results = thread_list[0].join()
-        thread_list.remove(thread_list[0])
-        for thread in thread_list:
-            merged_results = self.__merge_results(merged_results, thread.join())
-
-        return merged_results
-
-    def __top_tv(self, page_number, fetch_multi_page=5):
+    def __top_tv(self, page_number):
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
 
-        # Thread 5 pages of TMDB queries
-        page = page_number * fetch_multi_page
-        thread_list = []
-        for subtractor in range(0, fetch_multi_page):
-            thread = ReturnThread(
-                target=cache.handler,
-                args=[
-                    self.__top_tv_cache,
-                    self.__top_tv_cache_time,
-                    self.__tmdb_tv.top_rated,
-                    page - subtractor,
-                ],
-                kwargs={"page": page - subtractor, "language": LANGUAGE},
-            )
-            thread.start()
-            thread_list.append(thread)
-
-        # Merge together 5 pages
-        merged_results = thread_list[0].join()
-        thread_list.remove(thread_list[0])
-        for thread in thread_list:
-            merged_results = self.__merge_results(merged_results, thread.join())
-
-        return merged_results
+        return self.__threaded_query(
+            self.__top_tv_cache,
+            self.__top_tv_cache_time,
+            self.__tmdb_tv.top_rated,
+            page_number,
+        )
 
     def __recommended(self, tmdb_id, content_type, page_number):
         """Obtains recommendations given a TMDB ID.
@@ -745,6 +673,34 @@ class ContentDiscovery:
                 self.__logger,
             )
             return False
+
+    def __threaded_query(
+        self, cache_dict, cache_time_dict, function, page_number, *args, **kwargs
+    ):
+        # Thread 5 pages of TMDB queries
+        page = page_number * FETCH_MULTI_PAGE
+        thread_list = []
+        for subtractor in range(0, FETCH_MULTI_PAGE):
+            thread = ReturnThread(
+                target=cache.handler,
+                args=[
+                    cache_dict,
+                    cache_time_dict,
+                    function,
+                    page - subtractor,
+                ],
+                kwargs={"page": page - subtractor, "language": LANGUAGE},
+            )
+            thread.start()
+            thread_list.append(thread)
+
+        # Merge together 5 pages
+        merged_results = thread_list[0].join()
+        thread_list.remove(thread_list[0])
+        for thread in thread_list:
+            merged_results = self.__merge_results(merged_results, thread.join())
+
+        return merged_results
 
     def __keywords_to_ids(self, keywords):
         # Turn a keyword string or a list of keywords into a TMDB keyword ID number
