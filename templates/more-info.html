@@ -1,0 +1,278 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include "head_content.html" %} {% load static %}
+</head>
+
+<body>
+    <div class="main">
+        {% include "navbar.html" %} {% include "sidebar.html" %}
+        <div class="viewport moreInfo">
+            <div class="viewport-scrollable">
+                <link rel="stylesheet" href="{% static 'css/more-info.css' %}">
+                <link rel="stylesheet" href="{% static 'css/mobile.css' %}" />
+                <div class="moreInfo-grid">
+                    <div class="left-group">
+                        <div class="moreInfo-poster-container">
+                            <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w300{{content.poster_path}}" class="moreInfo-poster lazy">
+                            <div class="moreInfo-collection-btn">VIEW COLLECTION </div>
+                        </div>
+                        <div class="moreInfo-quick-info">
+                            {% if content.original_name %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Original Name </div>
+                                <div class="quick-info"> {{content.original_name}} </div>
+                            </div>
+                            {% endif %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Availabity </div>
+                                <div class="quick-info">
+                                    {% if content.conreqStatus == available %} Available
+                                    <div class="moreInfo-availablity-dot green"> </div>
+                                    {% elif content.conreqStatus == partial %} Partial
+                                    <div class="moreInfo-availablity-dot yellow"> </div>
+                                    {% else %} Unavailable
+                                    <div class="moreInfo-availablity-dot red"> </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if content.conreqStatus != available %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Request Status </div>
+                                <div class="quick-info">
+                                    <div class="" id="movie-request-status"> Not Requested </div>
+                                </div>
+                            </div>
+                            {% endif %} {% if content.status %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Release Status </div>
+                                <div class="quick-info"> {{content.status}} </div>
+                            </div>
+                            {% endif %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Content Type </div>
+                                <div class="quick-info">
+                                    {% if content.name %}Television{% elif content.title %}Movie{% endif %} </div>
+                            </div>
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Genres </div>
+                                <div class="quick-info">
+                                    {% for genre in content.genres %}
+                                    <div class="quick-info-btn"> {{genre.name}} </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <br>
+                            <br> {% if content.last_air_date %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Last Episode Air Date </div>
+                                <div class="quick-info"> {{content.last_air_date}} </div>
+                            </div>
+                            {% endif %} {% if content.release_date %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Release Date </div>
+                                <div class="quick-info"> {{content.release_date}} </div>
+                            </div>
+                            {% endif %} {% if content.adult %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Sexual/Adult Content </div>
+                                <div class="quick-info"> {{content.adult}} </div>
+                            </div>
+                            {% endif %} {% if content.spoken_languages %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Languages </div>
+                                <div class="quick-info">
+                                    {% for language in content.spoken_languages %}
+                                    <div class="quick-info-btn"> {{language.name}} </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %} {% if content.runtime %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Runtime </div>
+                                <div class="quick-info"> {{content.runtime}} </div>
+                            </div>
+                            {% endif %} {% if content.budget %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Budget </div>
+                                <div class="quick-info"> ${{content.budget}} </div>
+                            </div>
+                            {% endif %} {% if content.revenue %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Revenue </div>
+                                <div class="quick-info"> ${{content.revenue}} </div>
+                            </div>
+                            {% endif %} {% if content.production_companies %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Production Companies </div>
+                                <div class="quick-info">
+                                    {% for company in content.production_companies %}
+                                    <div class="quick-info-btn"> {{company.name}} </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %} {% if content.networks %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Networks </div>
+                                <div class="quick-info">
+                                    {% for network in content.networks %}
+                                    <div class="quick-info-btn"> {{network.name}} </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %} {% if content.keywords.results %}
+                            <br>
+                            <br>
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Tags </div>
+                                <div class="quick-info">
+                                    {% if content.keywords.results %} {% for keyword in content.keywords.results %}
+                                    <div class="quick-info-btn"> {{keyword.name}} </div>
+                                    {% endfor %} {% elif content.keywords.keywords %} {% for keyword in content.keywords.keywords %}
+                                    <div class="quick-info-btn"> {{keyword.name}} </div>
+                                    {% endfor %} {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="right-group">
+                        <div class="moreInfo-main-info">
+                            <div class="main-title">{% firstof content.title content.name "Unknown" %}</div>
+                            <div class="main-rating">
+                                <div class="inline bold"> SCORE: </div>
+                                <div class="inline light rating"> {{content.vote_average}} / 10 </div>
+                            </div>
+                            <i class="fas fa-ellipsis-v"></i> {% if content.conreqStatus == available %}
+                            <div class="request-button box-shadow available"> AVAILABLE </div>
+                            {% else %}
+                            <div class="request-button box-shadow aquaman" onclick="aquamanRequestedBtn()"><i class="fas fa-plus"></i> REQUEST </div>
+                            {% endif %}
+                        </div>
+                        <div class="moreInfo-overview grid-block contains-carousel">
+                            <div class="moreInfo-summary">
+                                <div class="bold moreInfo-head contains-carousel"> Overview </div>
+                                {% firstof content.overview "No summary available."%}
+                            </div>
+                            <div class="moreInfo-reviews">
+                                {% for review in content.reviews.results %}
+                                <div class="review-container">
+                                    <a href="{{review.url}}" target="_blank">
+                                        <div class="review no-highlighting">
+                                            <div class="giant-quote"> " </div>
+                                            <div class="review-quote">
+                                                {{review.content}}
+                                            </div>
+                                            <div class="giant-quote"> " </div>
+                                            <div class="bold"> - {{review.author}} </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                            <script src="{% static 'js/review_carousel.js' %}"></script>
+                        </div>
+                        {% if recommended %}
+                        <div class="moreInfo-recommendations grid-block contains-carousel">
+                            <div class="bold moreInfo-head contains-carousel"> Recommendations
+                                <div class="recommended-carousel-controls carousel-controls tns-controls">
+                                    <div class="recommended-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
+                                    </div>
+                                    <div class="recommended-next"><i id="discover-fa" class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommended-outer-container carousel-outer-container">
+                                <div class="recommended-inner-container carousel-inner-container">
+                                    {% for card in recommended %} {% if card.poster_path %}
+                                    <div class="posterContainer-wrapper">
+                                        {% include "poster_card.html" %}
+                                    </div>
+                                    {% endif %} {% endfor %}
+                                </div>
+                                <script src="{% static 'js/recommended_carousel.js' %}"></script>
+                            </div>
+                        </div>
+                        {% endif %} {% if content.credits.cast %}
+                        <div class="moreInfo-cast grid-block contains-carousel">
+                            <div class="bold moreInfo-head contains-carousel"> Cast Members
+                                <div class="cast-carousel-controls carousel-controls tns-controls">
+                                    <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
+                                    </div>
+                                    <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cast-outer-container carousel-outer-container">
+                                <div class="cast-inner-container carousel-inner-container">
+                                    {% for card in content.credits.cast %}
+                                    <div class="posterContainer-wrapper">
+                                        {% include "cast_poster_card.html" %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <script src="{% static 'js/cast_carousel.js' %}"></script>
+                            </div>
+                        </div>
+                        {% endif %} {% if content.videos.results %}
+                        <div class="moreInfo-videos grid-block contains-carousel">
+                            <div class="bold moreInfo-head contains-carousel"> Videos and Trailers
+                                <div class="videos-carousel-controls carousel-controls tns-controls">
+                                    <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
+                                    </div>
+                                    <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="videos-outer-container carousel-outer-container">
+                                <div class="videos-inner-container carousel-inner-container">
+                                    {% for video in content.videos.results %} {% if video.site == youtube %}
+                                    <div class="videoContainer-wrapper">
+                                        {% include "youtube_embed_card.html" %}
+                                    </div>
+                                    {% endif %} {% endfor %}
+                                </div>
+                                <script src="{% static 'js/videos_carousel.js' %}"></script>
+                            </div>
+                        </div>
+                        {% endif %} {% if content.images.backdrops %}
+                        <div class="moreInfo-images grid-block contains-carousel">
+                            <div class="bold moreInfo-head contains-carousel"> Artwork and Images
+                                <div class="images-carousel-controls carousel-controls tns-controls">
+                                    <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
+                                    </div>
+                                    <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="images-outer-container carousel-outer-container">
+                                <div class="images-inner-container carousel-inner-container">
+                                    {% for image in content.images.backdrops %}
+                                    <div class="imageContainer-wrapper">
+                                        {% include "artwork_card.html" %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <script src="{% static 'js/images_carousel.js' %}"></script>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="movie-backdrop-container">
+                <div class="backdrop-tint"></div>
+                <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/original{{content.backdrop_path}}" class="moreInfo-backdrop lazy">
+                <div class="backdrop-placeholder-gradient"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js"></script>
+    <script src="{% static 'js/lazy_posters.js' %}"></script>
+</body>
+
+</html>
+{% endspaceless %}

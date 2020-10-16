@@ -1,0 +1,15 @@
+{% load static %}
+<div class="navbar navbar-expand-md navbar-dark fixed-top">
+    <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="navbar-brand" />
+    <div class="searchbar form-inline">
+        <input type="text" name="content-search" placeholder="Search..." />
+        <i class="fas fa-search"></i>
+    </div>
+    <div class="navbar-right-container">
+        <div class="username">username</div>
+        <i class="fas fa-caret-down"></i>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>

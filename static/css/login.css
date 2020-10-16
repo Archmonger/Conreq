@@ -1,0 +1,141 @@
+:root {
+    /* Globals */
+    --global-font: 'Roboto', sans-serif;
+    --primary-font-size: 14px;
+    --box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+    --accent-color: #258a6d;
+    /* Navbar */
+    --searchbar-bg: #252525;
+}
+
+html,
+body,
+.main,
+.login-bg {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+}
+
+.login-bg-tint {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(18, 23, 25, 0.8), rgba(18, 23, 25, 0.25), rgba(18, 23, 25, 0.15), rgba(0, 0, 0, 0.0));
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-bg {
+    background: #363636;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+.login-box {
+    width: 50%;
+    border-radius: 4px;
+    box-shadow: var(--box-shadow);
+    max-width: 750px;
+    overflow: hidden;
+    padding: 25px;
+}
+
+.login-brand {
+    width: 50%;
+    margin: 0 25%;
+    filter: var(--logo-drop-shadow);
+    object-fit: contain;
+    max-height: 100px;
+}
+
+.username,
+.password {
+    display: block;
+    border: none;
+    outline: none !important;
+    background: transparent;
+    color: rgb(255 255 255 / 0.65);
+    padding: 10px;
+    font-size: var(--primary-font-size);
+    font-family: var(--global-font);
+    font-weight: 300;
+    width: 80%;
+    margin-bottom: 35px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background: rgb(0 0 0 / 0.25);
+    border-radius: 4px;
+}
+
+.username:focus,
+.password:focus {
+    color: rgb(255 255 255 / 0.8);
+}
+
+.sign-in {
+    background: var(--accent-color);
+    color: #FFF;
+    width: 100px;
+    margin-top: 30px;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: var(--primary-font-size);
+    font-family: var(--global-font);
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.sign-in:hover,
+.sign-in:active {
+    background: #249e7b;
+}
+
+.centered {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 25vh;
+    justify-content: space-evenly;
+}
+
+a {
+    text-decoration: none;
+}
+
+.sign-in-container {
+    margin-top: auto;
+}
+
+.login-box-header {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-bottom: 35px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .login-box {
+        width: 100%;
+        box-shadow: none;
+    }
+    .login-brand {
+        width: 80%;
+    }
+}

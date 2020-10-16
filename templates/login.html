@@ -1,0 +1,32 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include "head_content.html" %} {% load static %}
+</head>
+
+<body>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <div class="main">
+        <div class="login-box">
+            <div class="login-box-header">
+                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="login-brand">
+            </div>
+            <div class="centered">
+                <input type="text" name="username" placeholder="username" class="username">
+                <input type="text" name="password" placeholder="password" class="password">
+                <a href="/discover/" class="sign-in-container">
+                    <div class="sign-in"> Sign In </div>
+                </a>
+            </div>
+        </div>
+        <div class="login-bg">
+            <div class="login-bg-tint">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endspaceless %}

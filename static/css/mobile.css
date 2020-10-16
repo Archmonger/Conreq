@@ -1,0 +1,115 @@
+@media only screen and (max-width: 1150px) {
+     :root {
+        /* Videos */
+        --video-height: calc(var(--video-width) * 0.5625);
+        --video-width: 30vw;
+        /* Artwork */
+        --artwork-height: calc(var(--video-width) * 0.5625);
+        --artwork-width: 30vw;
+    }
+}
+
+@media only screen and (max-width: 880px) {
+     :root {
+        /* More Info Grid */
+        --left-column-width: 175px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+     :root {
+        /* Sidebar */
+        --sidebar-width: 100%;
+        --sidebar-top: 0;
+        /* Navbar */
+        --searchbar-width: 70%;
+        /* Viewport */
+        --viewport-left: 0;
+        --viewport-padding: 15px;
+        /* Posters */
+        --poster-width: calc(25vw - var(--viewport-total-padding));
+        /* Videos */
+        --video-height: calc(var(--video-width) * 0.5625);
+        --video-width: 70vw;
+        /* Artwork */
+        --artwork-height: calc(var(--video-width) * 0.5625);
+        --artwork-width: 70vw;
+    }
+    .navbar {
+        z-index: 2;
+    }
+    .navbar-brand {
+        display: none;
+    }
+    .searchbar {
+        left: 0px;
+        position: relative;
+        margin: auto 0;
+    }
+    .navbar-right-container {
+        margin: calc((var(--navbar-height) - 40px)/2) 0;
+    }
+    .navbar-right-container>.username,
+    .navbar-right-container>[data-icon="caret-down"] {
+        display: none;
+    }
+    .sidebar {
+        z-index: 1;
+        opacity: 0;
+    }
+    .viewport {
+        z-index: 4;
+    }
+    .navbar-expand-md button.navbar-toggler {
+        display: inline-block;
+    }
+    /* More Info */
+    .moreInfo-grid {
+        display: flex;
+        flex-direction: column;
+        width: calc(100vw - var(--viewport-padding) * 2);
+    }
+    .moreInfo-poster-container {
+        margin: 0 auto;
+        width: 55vw;
+    }
+    .moreInfo-poster-container img {
+        height: calc(55vw * 1.5);
+    }
+    .moreInfo-grid .request-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 999;
+        border-radius: 500px;
+    }
+    .tns-controls {
+        display: none;
+    }
+    .main-title,
+    .main-rating {
+        display: none;
+        margin: 0;
+        padding: 0;
+    }
+    .moreInfo-main-info {
+        height: 0;
+    }
+    .moreInfo {
+        padding-bottom: 60px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+     :root {
+        /* Posters */
+        --poster-width: calc(33vw - var(--viewport-total-padding));
+    }
+}
+
+@media only screen and (max-width: 450px) {
+     :root {
+        /* Posters */
+        --poster-width: calc(45vw - var(--viewport-total-padding));
+    }
+}

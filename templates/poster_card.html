@@ -1,0 +1,21 @@
+{% load static %}
+<div class="posterContainer">
+    <i class="fas fa-ellipsis-v"></i>
+    <i class="fas fa-angle-down"></i>
+    <div class="poster-tint"></div>
+    <a href="/more-info/?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
+        <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w200{{card.poster_path}}" class="posterContainer-poster lazy" />
+    </a>
+
+    <div class="posterContainer-descriptionContainer {% if card.name %}poster-tv{% elif card.title %}poster-movie{% endif %}">
+        <div class="posterContainer-title">{% firstof card.name card.title "Unknown" %}</div>
+        {% if card.conreqStatus == available %}
+        <div class="availablity-dot green"></div>
+        {% elif card.conreqStatus == partial %}
+        <div class="availablity-dot yellow"></div>
+        {% else %}
+        <div class="availablity-dot red"></div>
+        {% endif %}
+        <div class="posterContainer-description">{{card.overview}}</div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include "head_content.html" %} {% load static %}
+</head>
+
+<body>
+    <div class="main">
+
+        {% include "navbar.html" %} {% include "sidebar.html" %}
+        <div class="viewport discover">
+            <link rel="stylesheet" href="{% static 'css/mobile.css' %}" />
+            <div class="viewport-scrollable viewport-posters">
+                {% for card in all_cards %} {% if card.poster_path %} {% include "poster_card.html" %} {% endif %} {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js"></script>
+    <script src="{% static 'js/lazy_posters.js' %}"></script>
+</body>
+
+</html>
+{% endspaceless %}

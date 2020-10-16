@@ -1,0 +1,314 @@
+.episode-container {
+    overflow: hidden;
+    max-height: 0px;
+}
+
+.modal-no-tint {
+    display: none;
+    position: fixed;
+    background: rgba(0, 0, 0, 0);
+    height: 100%;
+    width: 100%;
+    z-index: 7;
+}
+
+.modal-no-tint .modal-container {
+    width: var(--modal-width);
+    height: var(--modal-height);
+    z-index: 7;
+    margin: calc((100vh - var(--modal-height)) / 2) auto;
+    background: var(--navbar-bg);
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 50px 260px 90px;
+}
+
+.modal-no-tint .modal-container.fa-holder {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.modal-no-tint .modal-seasons-container {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.modal-no-tint .modal-request-button-container {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.modal-confirm-button {
+    color: #fff;
+    font-family: var(--global-font);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 40px;
+    text-align: center;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 40px;
+    border-radius: 4px;
+    background: var(--accent-color);
+    float: right;
+    margin: 15px 16px;
+    margin-left: 0px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    will-change: background;
+}
+
+.modal-seasons-container {
+    background: var(--searchbar-bg);
+    border-radius: 5px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.episode-block {
+    padding: 7px 15px;
+    display: grid;
+    grid-template-columns: 30px 30px auto;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.episode-block input {
+    grid-column: 2;
+}
+
+.episode-block .episode {
+    color: rgba(255, 255, 255, 0.5);
+    grid-column: 3;
+}
+
+.season-block {
+    padding: 15px 15px;
+    display: grid;
+    grid-template-columns: 30px 93% 30px;
+}
+
+.season-one .episode-block:nth-of-type(even) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.season-two .episode-block:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.season-block.season-1,
+.season-block.season-3,
+.season-block.season-5 {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.season-block .modal-dot,
+.episode-block .modal-dot {
+    margin-right: 5px;
+}
+
+.season-block .fa-angle-up,
+.season-block .fa-angle-down {
+    grid-column: 3;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.season {
+    grid-column: 2;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal-tint {
+    display: none;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+    z-index: 6;
+}
+
+.modal-select-button {
+    color: #fff;
+    font-family: var(--global-font);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 40px;
+    text-align: center;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 40px;
+    border-radius: 4px;
+    background: #6d6d6d;
+    float: right;
+    margin: 15px 16px;
+    margin-left: 0px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    will-change: background;
+}
+
+.modal-select-button:hover {
+    background: #828282;
+}
+
+.modal-container {
+    width: var(--modal-width);
+    height: var(--modal-height);
+    z-index: 7;
+    margin: calc((100vh - var(--modal-height)) / 2) auto;
+    background: var(--navbar-bg);
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: var(--modal-template-columns);
+    grid-template-rows: var(--modal-template-rows);
+}
+
+.modal-poster {
+    height: var(--modal-poster-height);
+    width: var(--modal-poster-width);
+    margin: calc((var(--modal-height) - var(--modal-poster-height)) / 2);
+    border-radius: 5px;
+    grid-row: 1 / 4;
+    grid-column: 1;
+    background: var(--accent-color);
+}
+
+.modal-title {
+    color: #fff;
+    grid-row: 2;
+    grid-column: 2;
+    font-family: var(--global-font);
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.modal-container.fa-holder {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.modal-fa-holder .fa-play {
+    color: var(--modal-top-button-color);
+    font-size: 20px;
+    margin: 15px 16px;
+    float: right;
+}
+
+.modal-fa-holder .fa-expand {
+    color: var(--modal-top-button-color);
+    font-size: 20px;
+    margin: 15px 16px;
+    float: right;
+}
+
+.modal-fa-holder .fa-window-close {
+    color: var(--modal-top-button-color);
+    font-size: 20px;
+    margin: 15px 16px;
+    margin-right: 22px;
+    float: right;
+}
+
+.modal-fa-holder .fa-expand:hover,
+.modal-fa-holder .fa-window-close:hover,
+.modal-fa-holder .fa-play:hover {
+    color: #fff;
+}
+
+.modal-info {
+    display: grid;
+    background: var(--searchbar-bg);
+    border-radius: 5px;
+    margin-right: calc((var(--modal-height) - var(--modal-poster-height)) / 2);
+    grid-row: 3;
+    grid-column: 2;
+    padding: 15px 20px;
+}
+
+.info {
+    font-size: 14px;
+    display: inline;
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--global-font);
+    font-weight: 300;
+}
+
+.info-bold {
+    font-weight: bold;
+    font-family: var(--global-font);
+    font-weight: 700;
+}
+
+.modal-info-text-left {
+    display: grid;
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.modal-info-text-right {
+    display: grid;
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.modal-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 2px;
+    margin-bottom: 3px;
+}
+
+.modal-description {
+    display: grid;
+    font-family: var(--global-font);
+    font-weight: 300;
+    color: #fff;
+    grid-row: 4;
+    grid-column: 2;
+    margin-top: 10px;
+    margin-right: calc((var(--modal-height) - var(--modal-poster-height)) / 2);
+    max-height: 120px;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.modal-request-button-container {
+    grid-row: 5;
+    grid-column: 2;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: end;
+    align-items: flex-end;
+    margin: 15px 16px;
+}
+
+.modal-request-button {
+    color: #fff;
+    font-family: var(--global-font);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 40px;
+    text-align: center;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 40px;
+    border-radius: 4px;
+    background: var(--accent-color);
+    float: right;
+    margin-left: 0px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    will-change: background;
+}
+
+.modal-request-button:hover,
+.modal-confirm-button:hover {
+    background: #2ba180;
+}
