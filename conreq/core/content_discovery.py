@@ -162,7 +162,7 @@ class ContentDiscovery:
                 # Remove keyword strings (invalid parameters)
                 kwargs.__delitem__("keyword")
 
-            # Perform a discovery search
+            # Perform a discovery search for a movie
             if content_type.lower() == "movie":
                 return cache.handler(
                     self.__discover_movie_cache,
@@ -172,6 +172,7 @@ class ContentDiscovery:
                     **kwargs,
                 )
 
+            # Perform a discovery search for a TV show
             if content_type.lower() == "tv":
                 return cache.handler(
                     self.__discover_tv_cache,
@@ -301,6 +302,7 @@ class ContentDiscovery:
             content_type: String containing "movie" or "tv".
         """
         try:
+            # Obtain a movie's external IDs
             if content_type.lower() == "movie":
                 self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
@@ -310,6 +312,7 @@ class ContentDiscovery:
                     tmdb_id,
                 )
 
+            # Obtain a TV show's external IDs
             if content_type.lower() == "tv":
                 self.__tmdb_tv.id = tmdb_id
                 return cache.handler(
@@ -318,6 +321,7 @@ class ContentDiscovery:
                     self.__tmdb_tv.external_ids,
                     tmdb_id,
                 )
+
             # Content Type was invalid
             log.handler(
                 "Invalid content_type " + str(content_type) + " in get_external_ids().",
@@ -341,6 +345,7 @@ class ContentDiscovery:
             content_type: String containing "movie" or "tv".
         """
         try:
+            # Obtain a movie's genres
             if content_type.lower() == "movie":
                 return cache.handler(
                     self.__movie_genres_cache,
@@ -348,6 +353,8 @@ class ContentDiscovery:
                     self.__genres.movie_list,
                     1,
                 )
+
+            # Obtain a TV show's genres
             if content_type.lower() == "tv":
                 return cache.handler(
                     self.__movie_genres_cache,
