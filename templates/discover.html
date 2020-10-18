@@ -13,7 +13,7 @@
         <div class="viewport discover">
             <link rel="stylesheet" href="{% static 'css/mobile.css' %}" />
             <div class="viewport-scrollable viewport-posters">
-                {% for card in all_cards %} {% if card.poster_path %} {% include "poster_card.html" %} {% endif %} {% endfor %}
+                {% for card in all_cards %} {% if card.poster_path and card.conreq_valid_id == True %} {% include "poster_card.html" %} {% endif %} {% endfor %}
             </div>
         </div>
     </div>

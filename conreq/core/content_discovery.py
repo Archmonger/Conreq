@@ -528,36 +528,37 @@ class ContentDiscovery:
             self.__popular_movie_cache_time,
             self.__tmdb_movies.popular,
             page_number,
+            "movie",
         )
 
     def __top_movies(self, page_number):
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
-
         return self.__threaded_query(
             self.__top_movie_cache,
             self.__top_movie_cache_time,
             self.__tmdb_movies.top_rated,
             page_number,
+            "movie",
         )
 
     def __popular_tv(self, page_number):
         # Obtain disovery results through the tv.popular function. Store results in cache.
-
         return self.__threaded_query(
             self.__popular_tv_cache,
             self.__popular_tv_cache_time,
             self.__tmdb_tv.popular,
             page_number,
+            "tv",
         )
 
     def __top_tv(self, page_number):
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
-
         return self.__threaded_query(
             self.__top_tv_cache,
             self.__top_tv_cache_time,
             self.__tmdb_tv.top_rated,
             page_number,
+            "tv",
         )
 
     def __recommended(self, tmdb_id, content_type, page_number):
@@ -675,10 +676,15 @@ class ContentDiscovery:
             return False
 
     def __threaded_query(
-        self, cache_dict, cache_time_dict, function, page_number, *args, **kwargs
+        self,
+        cache_dict,
+        cache_time_dict,
+        function,
+        page_number,
+        content_type,
     ):
-        # Thread 5 pages of TMDB queries
-        page = page_number * FETCH_MULTI_PAGE
+        # Obtain multiple pages of TMDB queries
+        total_pages = page_number * FETCH_MULTI_PAGE
         thread_list = []
         for subtractor in range(0, FETCH_MULTI_PAGE):
             thread = ReturnThread(
@@ -687,18 +693,53 @@ class ContentDiscovery:
                     cache_dict,
                     cache_time_dict,
                     function,
-                    page - subtractor,
+                    total_pages - subtractor,
                 ],
-                kwargs={"page": page - subtractor, "language": LANGUAGE},
+                kwargs={"page": total_pages - subtractor, "language": LANGUAGE},
             )
             thread.start()
             thread_list.append(thread)
 
-        # Merge together 5 pages
+        # Merge together these pages
         merged_results = thread_list[0].join()
         thread_list.remove(thread_list[0])
         for thread in thread_list:
             merged_results = self.__merge_results(merged_results, thread.join())
+
+        # Set to valid ID to True, since tmdb is a valid source for Radarr.
+        if content_type == "movie":
+            for result in merged_results["results"]:
+                result["conreq_valid_id"] = True
+
+        # Determine if TV has a TVDB ID (required for Sonarr)
+        elif content_type == "tv":
+            thread_list = []
+            for result in merged_results["results"]:
+                thread = ReturnThread(
+                    target=self.get_external_ids,
+                    args=[
+                        result["id"],
+                        content_type,
+                    ],
+                )
+                thread.start()
+                thread_list.append(thread)
+
+            # Valid ID defaults to false
+            for result in merged_results["results"]:
+                result["conreq_valid_id"] = False
+
+            # Set the external IDs
+            for index, thread in enumerate(thread_list):
+                current_result = merged_results["results"][index]
+                current_result["external_ids"] = thread.join()
+
+                # If it has a valid external id, set conreq_valid_id to True
+                try:
+                    if current_result["external_ids"]["tvdb_id"] is not None:
+                        current_result["conreq_valid_id"] = True
+                except:
+                    pass
 
         return merged_results
 
@@ -718,6 +759,7 @@ class ContentDiscovery:
                         keyword,
                         query=keyword,
                     )["results"]
+
                     for search_result in keyword_search:
                         # Find an exact match
                         if search_result["name"].lower() == keyword.lower():
