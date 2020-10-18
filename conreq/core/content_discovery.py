@@ -3,7 +3,7 @@ from random import shuffle
 
 import tmdbsimple as tmdb
 from conreq.core import cache, log
-from conreq.core.thread_helper import ReturnThread
+from conreq.core.thread_helper import ReturnThread, threaded_execution
 
 # TODO: Obtain these values from the database on init
 ANIME_CHECK_FALLBACK = True
@@ -493,37 +493,42 @@ class ContentDiscovery:
     # Private Class Methods
     def __all(self, page_number):
         # Merge popular_movies, popular_tv, top_movies, and top_tv results together
-        return self.__merge_results(
-            self.__popular(page_number), self.__top(page_number)
-        )
+        function_list = [
+            self.__popular_movies,
+            self.__popular_tv,
+            self.__top_movies,
+            self.__top_tv,
+        ]
+        results = threaded_execution(function_list, [page_number])
+        return self.__merge_results(*results)
 
     def __tv(self, page_number):
         # Merge popular_tv and top_tv results together
-        return self.__merge_results(
-            self.__popular_tv(page_number), self.__top_tv(page_number)
-        )
+        function_list = [self.__popular_tv, self.__top_tv]
+        results = threaded_execution(function_list, [page_number])
+        return self.__merge_results(*results)
 
     def __movies(self, page_number):
         # Merge popular_movies and top_movies results together
-        return self.__merge_results(
-            self.__popular_movies(page_number), self.__top_movies(page_number)
-        )
+        function_list = [self.__popular_movies, self.__top_movies]
+        results = threaded_execution(function_list, [page_number])
+        return self.__merge_results(*results)
 
     def __popular(self, page_number):
         # Merge popular_movies and popular_tv results together
-        return self.__merge_results(
-            self.__popular_movies(page_number), self.__popular_tv(page_number)
-        )
+        function_list = [self.__popular_movies, self.__popular_tv]
+        results = threaded_execution(function_list, [page_number])
+        return self.__merge_results(*results)
 
     def __top(self, page_number):
         # Merge top_movies and top_tv results together
-        return self.__merge_results(
-            self.__top_movies(page_number), self.__top_tv(page_number)
-        )
+        function_list = [self.__top_movies, self.__top_tv]
+        results = threaded_execution(function_list, [page_number])
+        return self.__merge_results(*results)
 
     def __popular_movies(self, page_number):
         # Obtain disovery results through the movie.popular function. Store results in cache.
-        return self.__threaded_query(
+        return self.__threaded_multi_page_cached(
             self.__popular_movie_cache,
             self.__popular_movie_cache_time,
             self.__tmdb_movies.popular,
@@ -533,7 +538,7 @@ class ContentDiscovery:
 
     def __top_movies(self, page_number):
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
-        return self.__threaded_query(
+        return self.__threaded_multi_page_cached(
             self.__top_movie_cache,
             self.__top_movie_cache_time,
             self.__tmdb_movies.top_rated,
@@ -543,7 +548,7 @@ class ContentDiscovery:
 
     def __popular_tv(self, page_number):
         # Obtain disovery results through the tv.popular function. Store results in cache.
-        return self.__threaded_query(
+        return self.__threaded_multi_page_cached(
             self.__popular_tv_cache,
             self.__popular_tv_cache_time,
             self.__tmdb_tv.popular,
@@ -553,7 +558,7 @@ class ContentDiscovery:
 
     def __top_tv(self, page_number):
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
-        return self.__threaded_query(
+        return self.__threaded_multi_page_cached(
             self.__top_tv_cache,
             self.__top_tv_cache_time,
             self.__tmdb_tv.top_rated,
@@ -675,7 +680,7 @@ class ContentDiscovery:
             )
             return False
 
-    def __threaded_query(
+    def __threaded_multi_page_cached(
         self,
         cache_dict,
         cache_time_dict,

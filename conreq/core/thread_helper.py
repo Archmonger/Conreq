@@ -26,3 +26,26 @@ class ReturnThread(Thread):
         """
         super().join(*args, **kwargs)
         return self._return
+
+
+def threaded_execution(function_list, args_list):
+    """Threaded execution of function calls.
+    Args:
+        function_list: List containing references to functions
+        args_list: List containing the arguments to be used for these function calls
+    """
+    thread_list = []
+    results = []
+
+    for function in function_list:
+        thread = ReturnThread(
+            target=function,
+            args=args_list,
+        )
+        thread.start()
+        thread_list.append(thread)
+
+    for thread in thread_list:
+        results.append(thread.join())
+
+    return results
