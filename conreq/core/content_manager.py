@@ -49,7 +49,7 @@ class ContentManager:
 
         # Creating a logger (for log files)
         self.__logger = log.get_logger("Content Discovery")
-        log.configure(self.__logger, log.WARNING)
+        log.configure(self.__logger, log.DEBUG)
 
         self.refresh_content()
 

@@ -42,7 +42,7 @@ class ConnectionChecker:
 
         # Creating a logger (for log files)
         self.__logger = log.get_logger("Connection Checker")
-        log.configure(self.__logger, log.WARNING)
+        log.configure(self.__logger, log.DEBUG)
 
         # Create some regex rules to validate links
         self.__url_validator = re.compile(

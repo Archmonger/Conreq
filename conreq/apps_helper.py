@@ -2,7 +2,7 @@ from conreq.core import log
 from conreq import content_discovery, content_manager
 
 __logger = log.get_logger("Content Discovery")
-log.configure(__logger, log.WARNING)
+log.configure(__logger, log.DEBUG)
 
 static_context_vars = {
     "available": "Available",

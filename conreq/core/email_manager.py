@@ -22,7 +22,7 @@ class EmailManager:
     def __init__(self, **kwargs):
         # Creating a logger (for log files)
         self.__logger = log.get_logger("Content Discovery")
-        log.configure(self.__logger, log.WARNING)
+        log.configure(self.__logger, log.DEBUG)
 
         # Personal email login information
         try:

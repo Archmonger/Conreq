@@ -41,7 +41,7 @@ class Search:
 
         # Create a logger (for log files)
         self.__logger = log.get_logger("Search")
-        log.configure(self.__logger, log.WARNING)
+        log.configure(self.__logger, log.DEBUG)
 
         # Set up result caching dictionaries
         # key = query, value = page contents
