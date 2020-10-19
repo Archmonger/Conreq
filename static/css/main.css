@@ -73,6 +73,7 @@ html {
     height: 100%;
     overflow: hidden;
     font-family: var(--global-font);
+    scroll-behavior: smooth;
 }
 
 body {
@@ -108,6 +109,7 @@ a:hover {
 .viewport-scrollable {
     min-height: fit-content;
     padding: var(--viewport-padding);
+    scroll-behavior: smooth;
 }
 
 .viewport-posters {
