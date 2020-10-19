@@ -45,9 +45,9 @@
     --poster-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
     /* Poster Indicators */
     --tv-color: #0076a3;
-    --tv-indicator-hr: 1px solid var(--tv-color);
+    --tv-indicator-hr: 2px solid var(--tv-color);
     --movie-color: #b66707;
-    --movie-indicator-hr: 1px solid var(--movie-color);
+    --movie-indicator-hr: 2px solid var(--movie-color);
     /* Modal */
     --modal-top-button-color: rgba(255, 255, 255, 0.7);
     --modal-width: 780px;
@@ -358,6 +358,10 @@ button:focus {
     float: right;
     color: rgba(255, 255, 255, 0.6);
     transition: color 0.3s ease;
+}
+
+.navpages-page.suboption:not(.active) svg {
+    display: none;
 }
 
 .navpages-page.suboption svg:hover {
