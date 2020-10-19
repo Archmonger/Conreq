@@ -94,33 +94,33 @@ def more_info(request):
         tmdb_object.__contains__("keywords")
         and tmdb_object["keywords"].__contains__("results")
         and isinstance(tmdb_object["keywords"]["results"], list)
+        and len(tmdb_object["keywords"]["results"]) == 0
     ):
-        if len(tmdb_object["keywords"]["results"]) == 0:
-            tmdb_object["keywords"]["results"] = None
+        tmdb_object["keywords"]["results"] = None
     # Cast Members
     if (
         tmdb_object.__contains__("credits")
         and tmdb_object["credits"].__contains__("cast")
         and isinstance(tmdb_object["credits"]["cast"], list)
+        and len(tmdb_object["credits"]["cast"]) == 0
     ):
-        if len(tmdb_object["credits"]["cast"]) == 0:
-            tmdb_object["credits"]["cast"] = None
+        tmdb_object["credits"]["cast"] = None
     # Videos
     if (
         tmdb_object.__contains__("videos")
         and tmdb_object["videos"].__contains__("results")
         and isinstance(tmdb_object["videos"]["results"], list)
+        and len(tmdb_object["videos"]["results"]) == 0
     ):
-        if len(tmdb_object["videos"]["results"]) == 0:
-            tmdb_object["videos"]["results"] = None
+        tmdb_object["videos"]["results"] = None
     # Artwork (Images)
     if (
         tmdb_object.__contains__("images")
         and tmdb_object["images"].__contains__("backdrops")
         and isinstance(tmdb_object["images"]["backdrops"], list)
+        and len(tmdb_object["images"]["backdrops"]) == 0
     ):
-        if len(tmdb_object["images"]["backdrops"]) == 0:
-            tmdb_object["images"]["backdrops"] = None
+        tmdb_object["images"]["backdrops"] = None
     # Last Air Date
     if (
         tmdb_object.__contains__("last_air_date")
