@@ -78,7 +78,7 @@ class Search:
                 results_list.append(thread.join())
 
             # Sort the results with our conreq ranking algorithm
-            return self.__sort_results(query, results_list[0] + results_list[1])
+            return self.__set_conreq_rank(query, results_list[0] + results_list[1])
         except:
             log.handler(
                 "Searching for all failed!",
@@ -87,22 +87,26 @@ class Search:
             )
             return []
 
-    def television(self, query):
+    def television(self, query, conreq_rank=False):
         """Search Sonarr for a query.
 
         Args:
             query: A string containing a search term.
+            conreq_rank: Calculate conreq similarity ranking and sort the results (True/False)
         """
         try:
-            return self.__set_original_rank(
-                cache.handler(
-                    self.__television_cache,
-                    self.__television_cache_time,
-                    self.__television,
-                    query,
-                    query=query,
-                )
+            results = cache.handler(
+                self.__television_cache,
+                self.__television_cache_time,
+                self.__television,
+                query,
+                query=query,
             )
+
+            if conreq_rank:
+                return self.__set_conreq_rank(query, results)
+
+            return results
 
         except:
             log.handler(
@@ -112,22 +116,26 @@ class Search:
             )
             return []
 
-    def movie(self, query):
+    def movie(self, query, conreq_rank=False):
         """Search Radarr for a query.
 
         Args:
             query: A string containing a search term.
         """
         try:
-            return self.__set_original_rank(
-                cache.handler(
-                    self.__movie_cache,
-                    self.__movie_cache_time,
-                    self.__movie,
-                    query,
-                    query=query,
-                )
+            results = cache.handler(
+                self.__movie_cache,
+                self.__movie_cache_time,
+                self.__movie,
+                query,
+                query=query,
             )
+
+            if conreq_rank:
+                return self.__set_conreq_rank(query, results)
+
+            return results
+
         except:
             log.handler(
                 "Searching for movie failed!",
@@ -151,7 +159,7 @@ class Search:
         for thread in thread_list:
             thread.join()
 
-        return results
+        return self.__set_original_rank(results)
 
     def __movie(self, **kwargs):
         # Perform a search
@@ -168,9 +176,9 @@ class Search:
         for thread in thread_list:
             thread.join()
 
-        return results
+        return self.__set_original_rank(results)
 
-    def __sort_results(self, query, results):
+    def __set_conreq_rank(self, query, results):
         # Determine string similarity and combined with a weight of the original rank
         clean_query = self.__clean_str(query)
         thread_list = []
@@ -209,35 +217,6 @@ class Search:
             log.handler("Failed to rank results", log.ERROR, self.__logger)
             return results
 
-    def __clean_str(self, string):
-        # Removes non-alphanumerics from a string
-        try:
-            return substitution(r"\W+", "", string).lower()
-        except:
-            log.handler(
-                "Cleaning the string failed!",
-                log.ERROR,
-                self.__logger,
-            )
-            return ""
-
-    def __round(self, number, significant_figures=5):
-        # Round a number using the concept of significant figures
-        try:
-            # Rounding would've returned an error if the number is 0
-            if number == 0:
-                return number
-
-            # Round a non-zero number
-            return round(number, -int(floor(log10(number))) + (significant_figures - 1))
-        except:
-            log.handler("Failed to round!", log.ERROR, self.__logger)
-            return number
-
-    def __set_content_type(self, result, content_type):
-        # Sets content type as "tv" or "movie"
-        result["contentType"] = content_type
-
     def __generate_conreq_rank(self, result, clean_query):
         # Determines string similarity and combined with a weight of the original rank
         clean_title = self.__clean_str(result["title"])
@@ -270,6 +249,35 @@ class Search:
     def __generate_original_rank(self, result, rank):
         # Sets the original rank based on the position Sonarr/Radarr
         result["arrOriginalRank"] = rank
+
+    def __clean_str(self, string):
+        # Removes non-alphanumerics from a string
+        try:
+            return substitution(r"\W+", "", string).lower()
+        except:
+            log.handler(
+                "Cleaning the string failed!",
+                log.ERROR,
+                self.__logger,
+            )
+            return ""
+
+    def __round(self, number, significant_figures=5):
+        # Round a number using the concept of significant figures
+        try:
+            # Rounding would've returned an error if the number is 0
+            if number == 0:
+                return number
+
+            # Round a non-zero number
+            return round(number, -int(floor(log10(number))) + (significant_figures - 1))
+        except:
+            log.handler("Failed to round!", log.ERROR, self.__logger)
+            return number
+
+    def __set_content_type(self, result, content_type):
+        # Sets content type as "tv" or "movie"
+        result["contentType"] = content_type
 
 
 # Test driver code
