@@ -270,6 +270,7 @@ a:hover {
     color: inherit;
     font-size: inherit;
     display: inline;
+    padding-left: 5px;
 }
 
 button {
