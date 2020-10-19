@@ -16,8 +16,9 @@
                 <div class="moreInfo-grid">
                     <div class="left-group">
                         <div class="moreInfo-poster-container">
-                            <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w300{{content.poster_path}}" class="moreInfo-poster lazy">
-                            <div class="moreInfo-collection-btn">VIEW COLLECTION </div>
+                            <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w300{{content.poster_path}}" class="moreInfo-poster lazy"> {% if content.belongs_to_collection %}
+                            <div class="moreInfo-collection-btn no-highlighting">VIEW COLLECTION </div>
+                            {% endif %}
                         </div>
                         <div class="moreInfo-quick-info">
                             {% if content.original_name %}
@@ -61,7 +62,7 @@
                                 <div class="quick-info bold"> Genres </div>
                                 <div class="quick-info">
                                     {% for genre in content.genres %}
-                                    <div class="quick-info-btn"> {{genre.name}} </div>
+                                    <div class="quick-info-btn no-highlighting"> {{genre.name}} </div>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -87,7 +88,7 @@
                                 <div class="quick-info bold"> Languages </div>
                                 <div class="quick-info">
                                     {% for language in content.spoken_languages %}
-                                    <div class="quick-info-btn"> {{language.name}} </div>
+                                    <div class="quick-info-btn no-highlighting"> {{language.name}} </div>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -111,7 +112,7 @@
                                 <div class="quick-info bold"> Production Companies </div>
                                 <div class="quick-info">
                                     {% for company in content.production_companies %}
-                                    <div class="quick-info-btn"> {{company.name}} </div>
+                                    <div class="quick-info-btn no-highlighting"> {{company.name}} </div>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -120,7 +121,7 @@
                                 <div class="quick-info bold"> Networks </div>
                                 <div class="quick-info">
                                     {% for network in content.networks %}
-                                    <div class="quick-info-btn"> {{network.name}} </div>
+                                    <div class="quick-info-btn no-highlighting"> {{network.name}} </div>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -131,9 +132,9 @@
                                 <div class="quick-info bold"> Tags </div>
                                 <div class="quick-info">
                                     {% if content.keywords.results %} {% for keyword in content.keywords.results %}
-                                    <div class="quick-info-btn"> {{keyword.name}} </div>
+                                    <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
                                     {% endfor %} {% elif content.keywords.keywords %} {% for keyword in content.keywords.keywords %}
-                                    <div class="quick-info-btn"> {{keyword.name}} </div>
+                                    <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
                                     {% endfor %} {% endif %}
                                 </div>
                             </div>
@@ -150,7 +151,8 @@
                             <i class="fas fa-ellipsis-v"></i> {% if content.conreqStatus == available %}
                             <div class="request-button box-shadow available"> AVAILABLE </div>
                             {% else %}
-                            <div class="request-button box-shadow aquaman" onclick="aquamanRequestedBtn()"><i class="fas fa-plus"></i> REQUEST </div>
+                            <div class="request-button box-shadow no-highlighting"><i class="fas fa-plus"></i> REQUEST
+                            </div>
                             {% endif %}
                         </div>
                         <div class="moreInfo-overview grid-block contains-carousel">
