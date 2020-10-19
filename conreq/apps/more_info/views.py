@@ -77,12 +77,6 @@ def more_info(request):
         tmdb_object["runtime"] = "{:d}h {:d}m".format(
             *divmod(tmdb_object["runtime"], 60)
         )
-    # Adult
-    if tmdb_object.__contains__("adult") and isinstance(tmdb_object["adult"], bool):
-        if not tmdb_object["adult"]:
-            tmdb_object["adult"] = "No"
-        else:
-            tmdb_object["adult"] = "Yes"
     # Reviews
     if (
         tmdb_object.__contains__("reviews")
