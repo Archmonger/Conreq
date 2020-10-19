@@ -56,6 +56,7 @@
                                 <div class="quick-info">
                                     {% if content.name %}Television{% elif content.title %}Movie{% endif %} </div>
                             </div>
+                            {% if content.genres %}
                             <div class="quick-info-block">
                                 <div class="quick-info bold"> Genres </div>
                                 <div class="quick-info">
@@ -64,6 +65,7 @@
                                     {% endfor %}
                                 </div>
                             </div>
+                            {% endif %}
                             <br>
                             <br> {% if content.last_air_date %}
                             <div class="quick-info-block">
