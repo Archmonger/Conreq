@@ -21,4 +21,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("discover/", include("conreq.apps.discover.urls")),
     path("more-info/", include("conreq.apps.more_info.urls")),
+    path("search/", include("conreq.apps.search.urls")),
 ]

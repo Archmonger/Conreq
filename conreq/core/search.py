@@ -138,8 +138,7 @@ class Search:
         if kwargs.__contains__("query"):
             # Perform a search and set the conreqSource
             results = self.__sonarr.lookupSeries(kwargs["query"])
-            for result in results:
-                result["conreqSource"] = "sonarr"
+
             return results
 
         # Required kwargs was not found
@@ -149,8 +148,7 @@ class Search:
         if kwargs.__contains__("query"):
             # Perform a search and set the conreqSource
             results = self.__radarr.lookupMovie(kwargs["query"])
-            for result in results:
-                result["conreqSource"] = "radarr"
+
             return results
 
         # Required kwargs was not found

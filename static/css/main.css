@@ -106,7 +106,7 @@ a:hover {
 }
 
 .viewport-scrollable {
-    min-height: 100%;
+    min-height: fit-content;
     padding: var(--viewport-padding);
 }
 
@@ -369,9 +369,7 @@ button:focus {
     margin: 0;
     border-radius: 5px;
     width: var(--poster-width);
-    height: var(--poster-container-height);
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow: hidden;
     display: inline-block;
     margin-right: var(--poster-padding);
     margin-bottom: var(--poster-padding);
@@ -382,6 +380,7 @@ button:focus {
     will-change: transform;
     background: var(--placeholder-gradient);
     height: auto;
+    max-height: var(--poster-container-height);
     user-select: none;
 }
 

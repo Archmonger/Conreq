@@ -10,10 +10,10 @@
     <div class="main">
 
         {% include "navbar.html" %} {% include "sidebar.html" %}
-        <div class="viewport discover">
+        <div class="viewport search">
             <link rel="stylesheet" href="{% static 'css/mobile.css' %}" />
             <div class="viewport-scrollable viewport-posters">
-                {% for card in all_cards %} {% if card.poster_path and card.conreq_valid_id == True %} {% include "tmdb_poster_card.html" %} {% endif %} {% endfor %}
+                {% for card in all_cards %} {% include "arr_poster_card.html" %} {% endfor %}
             </div>
         </div>
     </div>

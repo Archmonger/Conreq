@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     "conreq.apps.discover",
     "conreq.apps.more_info",
     "conreq.apps.login",
+    "conreq.apps.search",
 ]
 
 MIDDLEWARE = [

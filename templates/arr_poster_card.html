@@ -1,0 +1,21 @@
+{% load static %}
+<div class="posterContainer">
+    <i class="fas fa-ellipsis-v"></i>
+    <i class="fas fa-angle-down"></i>
+    <div class="poster-tint"></div>
+    <a href="/more-info/?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% elif card.imdbId %}imdb_id={{card.imdbId}}{% endif %}&content_type={% if card.tvdbId %}tv{% elif card.tmdbId or card.imdbId %}movie{% endif %}">
+        <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="posterContainer-poster lazy" />
+    </a>
+
+    <div class="posterContainer-descriptionContainer {% if card.tvdbId %}poster-tv{% elif card.tmdbId or card.imdbId %}poster-movie{% endif %}">
+        <div class="posterContainer-title">{% firstof card.title "Unknown" %}</div>
+        {% if card.conreqStatus == available %}
+        <div class="availablity-dot green"></div>
+        {% elif card.conreqStatus == partial %}
+        <div class="availablity-dot yellow"></div>
+        {% else %}
+        <div class="availablity-dot red"></div>
+        {% endif %}
+        <div class="posterContainer-description">{{card.overview}}</div>
+    </div>
+</div>
