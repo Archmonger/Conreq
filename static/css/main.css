@@ -206,6 +206,7 @@ a:hover {
     transition: background 0.4s ease, color 0.4s ease;
     will-change: background, color;
     color: var(--searchbar-font-color);
+    overflow: hidden;
 }
 
 .searchbar:focus-within {
