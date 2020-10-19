@@ -36,19 +36,6 @@ def get_bool_from_env(name, default_value):
     return default_value
 
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Location to store data (ex. database file)
-DATA_DIR = os.environ.get("DATA_DIR")
-if not DATA_DIR:
-    log.handler(
-        "DATA_DIR not configured, using default data directory.",
-        log.WARNING,
-        __logger,
-    )
-    DATA_DIR = BASE_DIR
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -57,15 +44,28 @@ DEBUG = get_bool_from_env("CONREQ_DEBUG", True)
 if DEBUG:
     log.console_stream(log.get_logger(), log.WARNING)
 
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Location to store data (ex. database file)
+DATA_DIR = os.environ.get("DATA_DIR")
+if not DATA_DIR:
+    # log.handler(
+    #     "DATA_DIR not configured, using default data directory.",
+    #     log.WARNING,
+    #     __logger,
+    # )
+    DATA_DIR = BASE_DIR
+
 # SECURITY WARNING: keep the secret key used in production secret!
 # TODO: Store secret key in database
 SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY and DEBUG:
-    log.handler(
-        "SECRET_KEY not configured, using a random temporary key.",
-        log.WARNING,
-        __logger,
-    )
+    # log.handler(
+    #     "SECRET_KEY not configured, using a random temporary key.",
+    #     log.WARNING,
+    #     __logger,
+    # )
     SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = []
