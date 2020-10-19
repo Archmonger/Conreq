@@ -46,10 +46,6 @@ def more_info(request):
         thread.start()
         thread_list.append(thread)
 
-    # Wait for thread computation to complete
-    for thread in thread_list:
-        thread.join()
-
     # Prepare data attributes for the HTML
     # Recommended Content
     if isinstance(tmdb_recommended, list) and len(tmdb_recommended) == 0:
@@ -129,7 +125,7 @@ def more_info(request):
     ):
         year, month, day = tmdb_object["last_air_date"].split(sep="-")
         month = month_name[int(month)]
-        tmdb_object["last_air_date"] = f"{month} {day}, {year}"
+        tmdb_object["last_air_date_formatted"] = f"{month} {day}, {year}"
     # Release Date
     if (
         tmdb_object.__contains__("release_date")
@@ -138,7 +134,16 @@ def more_info(request):
     ):
         year, month, day = tmdb_object["release_date"].split(sep="-")
         month = month_name[int(month)]
-        tmdb_object["release_date"] = f"{month} {day}, {year}"
+        tmdb_object["release_date_formatted"] = f"{month} {day}, {year}"
+    # Content Type
+    if tmdb_object.__contains__("name"):
+        content_type = "tv"
+    elif tmdb_object.__contains__("title"):
+        content_type = "movie"
+
+    # Wait for thread computation to complete
+    for thread in thread_list:
+        thread.join()
 
     # Render the page
     context = generate_context(
@@ -146,6 +151,7 @@ def more_info(request):
             "content": tmdb_object,
             "recommended": tmdb_recommended,
             "collection": tmdb_collection,
+            "content_type": content_type,
         }
     )
     return HttpResponse(template.render(context, request))

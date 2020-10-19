@@ -54,9 +54,10 @@
                             {% endif %}
                             <div class="quick-info-block">
                                 <div class="quick-info bold"> Content Type </div>
-                                <a href="/discover/?content_type={% if content.name %}tv{% elif content.title %}movie{% endif %}">
-                                    <div class="quick-info-btn no-highlighting {% if content.name %}tv{% elif content.title %}movie{% endif %}">
-                                        {% if content.name %}Television{% elif content.title %}Movie{% endif %} </div>
+                                <a href="/discover/?content_type={{content_type}}">
+                                    <div class="quick-info-btn no-highlighting {{content_type}}">
+                                        {% if content_type == "tv" %}Television{% elif content_type == "movie" %}Movie{% endif %}
+                                    </div>
                                 </a>
                             </div>
                             {% if content.genres %}
@@ -70,15 +71,15 @@
                             </div>
                             {% endif %}
                             <br>
-                            <br> {% if content.last_air_date %}
+                            <br> {% if content.last_air_date_clean %}
                             <div class="quick-info-block">
                                 <div class="quick-info bold"> Last Episode Air Date </div>
-                                <div class="quick-info"> {{content.last_air_date}} </div>
+                                <div class="quick-info"> {{content.last_air_date_formatted}} </div>
                             </div>
-                            {% endif %} {% if content.release_date %}
+                            {% endif %} {% if content.release_date_clean %}
                             <div class="quick-info-block">
                                 <div class="quick-info bold"> Release Date </div>
-                                <div class="quick-info"> {{content.release_date}} </div>
+                                <div class="quick-info"> {{content.release_date_formatted}} </div>
                             </div>
                             {% endif %} {% if content.spoken_languages %}
                             <div class="quick-info-block">
