@@ -1,7 +1,7 @@
 from pprint import pprint
 
 from conreq import content_discovery
-from conreq.apps_helper import generate_context, obtain_conreq_status
+from conreq.apps_helper import generate_context, tmdb_conreq_status
 from django.http import HttpResponse
 from django.template import loader
 from threading import Thread
@@ -25,13 +25,13 @@ def more_info(request):
     thread_list = []
 
     # Checking Conreq status of the current TMDB ID
-    thread = Thread(target=obtain_conreq_status, args=[tmdb_object])
+    thread = Thread(target=tmdb_conreq_status, args=[tmdb_object])
     thread.start()
     thread_list.append(thread)
 
     # Checking Conreq status for all recommended content
     for card in tmdb_recommended:
-        thread = Thread(target=obtain_conreq_status, args=[card])
+        thread = Thread(target=tmdb_conreq_status, args=[card])
         thread.start()
         thread_list.append(thread)
 

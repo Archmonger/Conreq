@@ -2,7 +2,7 @@
 from threading import Thread
 
 from conreq import content_discovery, searcher
-from conreq.apps_helper import generate_context, obtain_conreq_status
+from conreq.apps_helper import generate_context, arr_conreq_status
 from django.http import HttpResponse
 from django.template import loader
 
@@ -21,7 +21,6 @@ def convert_cards_to_tmdb(index, all_results):
 
 # Create your views here.
 def search(request):
-
     # Get the ID from the URL
     query = request.GET.get("query", "")
     arr_results = searcher.all(query)
@@ -31,6 +30,17 @@ def search(request):
     thread_list = []
     for index in range(0, len(arr_results)):
         thread = Thread(target=convert_cards_to_tmdb, args=[index, arr_results])
+        thread.start()
+        thread_list.append(thread)
+
+    # Wait for computation to complete
+    for thread in thread_list:
+        thread.join()
+
+    # Generate conreq status
+    thread_list = []
+    for card in arr_results:
+        thread = Thread(target=arr_conreq_status, args=[card])
         thread.start()
         thread_list.append(thread)
 

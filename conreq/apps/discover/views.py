@@ -4,7 +4,7 @@ from threading import Thread
 from django.http import HttpResponse
 from django.template import loader
 from conreq import content_discovery
-from conreq.apps_helper import obtain_conreq_status, generate_context
+from conreq.apps_helper import tmdb_conreq_status, generate_context
 
 
 # Create your views here.
@@ -29,7 +29,7 @@ def discover(request, page=1):
 
     thread_list = []
     for card in tmdb_results:
-        thread = Thread(target=obtain_conreq_status, args=[card])
+        thread = Thread(target=tmdb_conreq_status, args=[card])
         thread.start()
         thread_list.append(thread)
 
