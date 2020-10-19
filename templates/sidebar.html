@@ -6,12 +6,12 @@
             <a class="navpages-page group discover nav-link" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">Request<i id="discover-fa"
                     class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="discover-tabs">
-                <a href="/discover/" class="navpages-page suboption {% if active_tab == discover %}active{% endif %}">Discover
+                <a href="/discover/" class="navpages-page suboption discover {% if active_tab == discover %}active{% endif %}">Discover
                     <i class="fas fa-filter"></i></a>
-                <a href="/discover/?content_type=tv" class="navpages-page suboption discover {% if active_tab == tv_shows %}active{% endif %}">TV
+                <a href="/discover/?content_type=tv" class="navpages-page suboption tv-shows {% if active_tab == tv_shows %}active{% endif %}">TV
                     Shows
                     <i class="fas fa-filter"></i></a>
-                <a href="/discover/?content_type=movies" class="navpages-page suboption discover {% if active_tab == movies %}active{% endif %}">Movies
+                <a href="/discover/?content_type=movies" class="navpages-page suboption movies {% if active_tab == movies %}active{% endif %}">Movies
                     <i class="fas fa-filter"></i></a>
             </div>
 
