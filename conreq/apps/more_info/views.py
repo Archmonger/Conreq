@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from conreq import content_discovery
 from conreq.apps_helper import generate_context, tmdb_conreq_status
 from django.http import HttpResponse
@@ -15,11 +13,24 @@ def more_info(request):
     tmdb_id = request.GET.get("tmdb_id", None)
     content_type = request.GET.get("content_type", None)
 
+    # Get all the basic metadata for a given ID
     tmdb_object = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
 
+    # Get recommended results
     tmdb_recommended = content_discovery.similar_and_recommended(tmdb_id, content_type)[
         "results"
     ]
+
+    # Get collection information
+    if (
+        tmdb_object.__contains__("belongs_to_collection")
+        and tmdb_object["belongs_to_collection"] is not None
+    ):
+        tmdb_collection = content_discovery.collections(
+            tmdb_object["belongs_to_collection"]["id"]
+        )
+    else:
+        tmdb_collection = None
 
     # Check the availability in Sonarr/Radarr
     thread_list = []
@@ -118,8 +129,11 @@ def more_info(request):
             tmdb_object["images"]["backdrops"] = None
 
     # Render the page
-    # pprint(tmdb_object)
     context = generate_context(
-        {"content": tmdb_object, "recommended": tmdb_recommended}
+        {
+            "content": tmdb_object,
+            "recommended": tmdb_recommended,
+            "collection": tmdb_collection,
+        }
     )
     return HttpResponse(template.render(context, request))

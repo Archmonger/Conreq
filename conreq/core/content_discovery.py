@@ -25,6 +25,7 @@ class ContentDiscovery:
         self.__discover = tmdb.Discover()
         self.__finder = tmdb.Find()
         self.__genres = tmdb.Genres()
+        self.__collections = tmdb.Collections(id=0)
         # TODO: Obtain this value from the database on init
         tmdb.API_KEY = tmdb_api_key
 
@@ -246,6 +247,10 @@ class ContentDiscovery:
                 self.__logger,
             )
             return {}
+
+    def collections(self, collection_id):
+        self.__collections.id = collection_id
+        return self.__collections.info()
 
     def get_by_tmdb_id(self, tmdb_id, content_type, obtain_extras=True):
         """Obtains a movie or series given a TMDB ID.

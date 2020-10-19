@@ -54,8 +54,10 @@
                             {% endif %}
                             <div class="quick-info-block">
                                 <div class="quick-info bold"> Content Type </div>
-                                <div class="quick-info">
-                                    {% if content.name %}Television{% elif content.title %}Movie{% endif %} </div>
+                                <a href="/discover/?content_type={% if content.name %}tv{% elif content.title %}movie{% endif %}">
+                                    <div class="quick-info-btn no-highlighting {% if content.name %}tv{% elif content.title %}movie{% endif %}">
+                                        {% if content.name %}Television{% elif content.title %}Movie{% endif %} </div>
+                                </a>
                             </div>
                             {% if content.genres %}
                             <div class="quick-info-block">
@@ -198,6 +200,26 @@
                                     {% endif %} {% endfor %}
                                 </div>
                                 <script src="{% static 'js/recommended_carousel.js' %}"></script>
+                            </div>
+                        </div>
+                        {% endif %} {% if collection %}
+                        <div class="moreInfo-collection grid-block contains-carousel">
+                            <div class="bold moreInfo-head contains-carousel"> {{collection.name}}
+                                <div class="collection-carousel-controls carousel-controls tns-controls">
+                                    <div class="collection-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
+                                    </div>
+                                    <div class="collection-next"><i id="discover-fa" class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collection-outer-container carousel-outer-container">
+                                <div class="collection-inner-container carousel-inner-container">
+                                    {% for card in collection.parts %}
+                                    <div class="posterContainer-wrapper">
+                                        {% include "tmdb_poster_card.html" %}
+                                    </div> {% endfor %}
+                                </div>
+                                <script src="{% static 'js/collection_carousel.js' %}"></script>
                             </div>
                         </div>
                         {% endif %} {% if content.credits.cast %}

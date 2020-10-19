@@ -80,7 +80,7 @@
     top: 20px;
     font-size: 28px;
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .moreInfo-main-info .fa-ellipsis-v:hover {
@@ -181,7 +181,7 @@
     font-weight: 300;
     line-height: 18px;
     height: auto;
-    transition: all 0.5s ease;
+    transition: filter 0.5s ease;
 }
 
 .review:hover {
@@ -436,7 +436,7 @@
 .moreInfo-collection-btn {
     width: 100%;
     text-align: center;
-    background: var(--movie-indicator);
+    background: var(--accent-color);
     font-family: 'Roboto', sans-serif;
     color: #FFF;
     padding-top: 4px;
@@ -448,7 +448,7 @@
 }
 
 .moreInfo-collection-btn:hover {
-    background: #d47808;
+    background: #2ba180;
 }
 
 .moreInfo-quick-info {
@@ -492,11 +492,27 @@
     border-radius: 4px;
     color: #FFF;
     margin: 2px;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease;
 }
 
 .quick-info-btn:hover {
     background: #2ba180;
+}
+
+.quick-info-btn.movie {
+    background: var(--movie-color);
+}
+
+.quick-info-btn.movie:hover {
+    background: #d47808;
+}
+
+.quick-info-btn.tv {
+    background: var(--tv-color);
+}
+
+.quick-info-btn.tv:hover {
+    background: #008bc2;
 }
 
 .quick-info-extra-spacing {
