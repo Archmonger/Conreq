@@ -76,6 +76,7 @@ class Search:
             for thread in thread_list:
                 results_list.append(thread.join())
 
+            # Sort the results with our conreq ranking algorithm
             return self.__sort_ranked_results(query, results_list[0] + results_list[1])
         except:
             log.handler(
