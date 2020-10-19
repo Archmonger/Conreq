@@ -78,7 +78,7 @@ class Search:
                 results_list.append(thread.join())
 
             # Sort the results with our conreq ranking algorithm
-            return self.__sort_ranked_results(query, results_list[0] + results_list[1])
+            return self.__sort_results(query, results_list[0] + results_list[1])
         except:
             log.handler(
                 "Searching for all failed!",
@@ -94,7 +94,7 @@ class Search:
             query: A string containing a search term.
         """
         try:
-            return self.__rank_results(
+            return self.__set_original_rank(
                 cache.handler(
                     self.__television_cache,
                     self.__television_cache_time,
@@ -119,7 +119,7 @@ class Search:
             query: A string containing a search term.
         """
         try:
-            return self.__rank_results(
+            return self.__set_original_rank(
                 cache.handler(
                     self.__movie_cache,
                     self.__movie_cache_time,
@@ -170,35 +170,39 @@ class Search:
 
         return results
 
-    def __set_content_type(self, result, source_name):
-        result["contentType"] = source_name
-
-    def __sort_ranked_results(self, query, results):
+    def __sort_results(self, query, results):
         # Determine string similarity and combined with a weight of the original rank
         clean_query = self.__clean_str(query)
+        thread_list = []
         for result in results:
-            result["conreqNewRank"] = (
-                # Round the values to look pretty
-                self.__round(
-                    # String similarity between the query and result
-                    self.__damerau.distance(
-                        clean_query, self.__clean_str(result["title"])
-                    )
-                    # Use sonarr/radarr's original rank as a weight/bias
-                    * (result["conreqOriginalRank"] / 10)
-                )
-                + 1
+            thread = Thread(
+                target=self.__generate_conreq_rank, args=[result, clean_query]
             )
-        # Sort them by the new ranking metric
-        return sorted(results, key=lambda i: i["conreqNewRank"])
+            thread.start()
+            thread_list.append(thread)
 
-    def __rank_results(self, results):
-        # Calculate a value to determine string similarity
+        # Wait for computation to complete
+        for thread in thread_list:
+            thread.join()
+
+        # Sort them by the new ranking metric
+        return sorted(results, key=lambda i: i["conreqSimilarityRank"])
+
+    def __set_original_rank(self, results):
+        # Determine what search ranking was provided by Sonarr/Radarr
         try:
-            count = 1
-            for result in results:
-                result["conreqOriginalRank"] = count
-                count = count + 1
+            thread_list = []
+            for index, result in enumerate(results, start=1):
+                thread = Thread(
+                    target=self.__generate_original_rank, args=[result, index]
+                )
+                thread.start()
+                thread_list.append(thread)
+
+            # Wait for computation to complete
+            for thread in thread_list:
+                thread.join()
+
             # Sort them by the similarity metric
             return results
         except:
@@ -208,7 +212,7 @@ class Search:
     def __clean_str(self, string):
         # Removes non-alphanumerics from a string
         try:
-            return substitution(r"\W+", "", string)
+            return substitution(r"\W+", "", string).lower()
         except:
             log.handler(
                 "Cleaning the string failed!",
@@ -229,6 +233,43 @@ class Search:
         except:
             log.handler("Failed to round!", log.ERROR, self.__logger)
             return number
+
+    def __set_content_type(self, result, content_type):
+        # Sets content type as "tv" or "movie"
+        result["contentType"] = content_type
+
+    def __generate_conreq_rank(self, result, clean_query):
+        # Determines string similarity and combined with a weight of the original rank
+        clean_title = self.__clean_str(result["title"])
+
+        # Multiplier if whole substring was found within the search result
+        if clean_title.find(clean_query) != -1:
+            query_substring_multiplier = 0.1
+        else:
+            query_substring_multiplier = 1
+
+        # Generate similarity rank
+        result["conreqSimilarityRank"] = (
+            # Round the values to look pretty
+            self.__round(
+                # String similarity between the query and result
+                (
+                    self.__damerau.distance(clean_query, clean_title)
+                    # Use sonarr/radarr's original rank as a weight/bias
+                    * (result["arrOriginalRank"] / 10)
+                )
+                # Bias towards full substring matches
+                * query_substring_multiplier
+            )
+            + 1
+        )
+
+        # Remove sonarr/radarr's original ranking
+        result.pop("arrOriginalRank")
+
+    def __generate_original_rank(self, result, rank):
+        # Sets the original rank based on the position Sonarr/Radarr
+        result["arrOriginalRank"] = rank
 
 
 # Test driver code
