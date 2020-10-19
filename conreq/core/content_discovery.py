@@ -300,25 +300,6 @@ class ContentDiscovery:
             )
             return {}
 
-    def get_by_imdb_id(self, imdb_id):
-        """Converts IMDB ID to TMDB ID.
-
-        Args:
-            id: An Integer or String containing the IMDB ID.
-        """
-        # TODO: Add caching
-        try:
-            self.__finder.id = imdb_id
-            return self.__finder.info(external_source="imdb_id")
-
-        except:
-            log.handler(
-                "Failed to obtain imdb ID!",
-                log.ERROR,
-                self.__logger,
-            )
-            return None
-
     def get_by_tvdb_id(self, tvdb_id):
         """Converts TVDB ID to TMDB ID.
 
@@ -332,7 +313,7 @@ class ContentDiscovery:
 
         except:
             log.handler(
-                "Failed to obtain imdb ID!",
+                "Failed to obtain content with TVDB ID " + str(tvdb_id) + "!",
                 log.ERROR,
                 self.__logger,
             )
@@ -950,8 +931,6 @@ if __name__ == "__main__":
     # pprint(content_discovery.get_external_ids(2222, "tv"))
     # print("\n#### Movie External ID Test ####")
     # pprint(content_discovery.get_external_ids(2222, "movie"))
-    # print("\n#### IMDB to TMDB Test ####")
-    # pprint(content_discovery.imdb_id_to_tmdb("tt0266543"))
     # print("\n#### TVDB to TMDB Test ####")
     # pprint(content_discovery.tvdb_id_to_tmdb("276562"))
     # print("\n#### Discover Test ####")

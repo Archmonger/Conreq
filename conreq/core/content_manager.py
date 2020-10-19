@@ -57,7 +57,7 @@ class ContentManager:
         """Gets content information and computes the conreqStatus of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
 
         Kwargs:
-            imdb_id: A string containing the IMDB ID.
+            tmdb_id: A string containing the TMDB ID.
             tvdb_id: An integer containing the TVDB ID.
 
         Returns:
@@ -66,8 +66,8 @@ class ContentManager:
             2) None
         """
         try:
-            # Search for the IMDB ID within Radarr.
-            if kwargs.__contains__("imdb_id"):
+            # Search for the TMDB ID within Radarr.
+            if kwargs.__contains__("tmdb_id"):
                 # Get Radarr's collection
                 results = cache.handler(
                     self.__radarr_cache,
@@ -76,14 +76,14 @@ class ContentManager:
                     max_cache_duration=None,
                 )
 
-                # Find our IMDB ID within Radarr
-                if results.__contains__(kwargs["imdb_id"]):
-                    return results[kwargs["imdb_id"]]
+                # Find our TMDB ID within Radarr
+                if results.__contains__(kwargs["tmdb_id"]):
+                    return results[kwargs["tmdb_id"]]
 
                 # Return None if couldn't find the movie
                 log.handler(
-                    "Movie with IMDB ID "
-                    + str(kwargs["imdb_id"])
+                    "Movie with TMDB ID "
+                    + str(kwargs["tmdb_id"])
                     + " not found within Radarr.",
                     log.INFO,
                     self.__logger,
@@ -141,7 +141,7 @@ class ContentManager:
             root_dir: An string containing the root directory (required).
 
             # Pick One ID
-            imdb_id: A string containing the IMDB ID.
+            tmdb_id: A string containing the TMDB ID.
             tvdb_id: An integer containing the TVDB ID.
 
         Returns:
@@ -149,10 +149,10 @@ class ContentManager:
             2) None
         """
         try:
-            # Add a movie with a specific IMDB ID to Radarr.
-            if kwargs.__contains__("imdb_id"):
+            # Add a movie with a specific TMDB ID to Radarr.
+            if kwargs.__contains__("tmdb_id"):
                 return self.__radarr.addMovie(
-                    kwargs["imdb_id"],
+                    kwargs["tmdb_id"],
                     kwargs["quality_profile_id"],
                     kwargs["root_dir"],
                     monitored=False,
@@ -460,7 +460,7 @@ class ContentManager:
         # Return a Percentage or None
         try:
             # Check download status for a specific movie in Radarr.
-            if kwargs.__contains__("imdb_id"):
+            if kwargs.__contains__("tmdb_id"):
                 pass
             # Check download status for anything the related to a specific show in Sonarr.
             if kwargs.__contains__("tvdb_id"):
@@ -492,9 +492,9 @@ class ContentManager:
             # Set up a dictionary of results with IDs as keys
             results_with_ids = {}
             for movie in results:
-                if movie.__contains__("imdbId"):
+                if movie.__contains__("tmdbId"):
                     self.__check_status(movie)
-                    results_with_ids[movie["imdbId"]] = movie
+                    results_with_ids[movie["tmdbId"]] = movie
 
             # Return all movies
             return results_with_ids
@@ -675,8 +675,8 @@ if __name__ == "__main__":
         "x",
     )
     # print("\n#### Get Movies Test ####")
-    # pprint(content_manager.get(imdb_id="tt0114709"))
-    # pprint(content_manager.get(imdb_id="tt2245084"))
+    # pprint(content_manager.get(tmdb_id="tt0114709"))
+    # pprint(content_manager.get(tmdb_id="tt2245084"))
 
     # print("\n#### Get TV Test ####")
     # pprint(content_manager.get(tvdb_id=373345))
@@ -696,7 +696,7 @@ if __name__ == "__main__":
     # radarr_root = content_manager.radarr_root_dirs()[0]["path"]
     # pprint(
     #     content_manager.add(
-    #         imdb_id="tt1979376", quality_profile_id=1, root_dir=radarr_root
+    #         tmdb_id="tt1979376", quality_profile_id=1, root_dir=radarr_root
     #     )
     # )
 

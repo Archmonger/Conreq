@@ -39,8 +39,7 @@ def obtain_conreq_status(card):
 
         # Compute conreq status of movie
         elif card.__contains__("title"):
-            external_id = content_discovery.get_external_ids(card["id"], "movie")
-            content = content_manager.get(imdb_id=external_id["imdb_id"])
+            content = content_manager.get(tmdb_id=card["id"])
             if content is not None:
                 card["conreqStatus"] = content["conreqStatus"]
 
