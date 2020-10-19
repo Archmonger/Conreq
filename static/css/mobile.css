@@ -38,7 +38,7 @@
     .navbar {
         z-index: 2;
     }
-    .navbar-brand {
+    .navbar-brand-container {
         display: none;
     }
     .searchbar {
