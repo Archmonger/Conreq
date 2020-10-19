@@ -445,6 +445,7 @@
     box-shadow: var(--box-shadow);
     transition: background 0.3s ease;
     will-change: background;
+    cursor: pointer;
 }
 
 .moreInfo-collection-btn:hover {
