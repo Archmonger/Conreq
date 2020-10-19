@@ -17,7 +17,7 @@ def discover(request, page=1):
         tmdb_results = content_discovery.tv(page)["results"]
         active_tab = "TV Shows"
 
-    elif content_type == "movies":
+    elif content_type == "movie":
         tmdb_results = content_discovery.movies(page)["results"]
         active_tab = "Movies"
 
