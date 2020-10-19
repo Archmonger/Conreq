@@ -8,42 +8,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 
-# Create your views here.
-def more_info(request):
-    template = loader.get_template("more-info.html")
-
-    # Get the ID from the URL
-    tmdb_id = request.GET.get("tmdb_id", None)
-    content_type = request.GET.get("content_type", None)
-
-    # Get all the basic metadata for a given ID
-    tmdb_object = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
-
-    # Get recommended results
-    recommend_thread = ReturnThread(
-        target=content_discovery.similar_and_recommended, args=[tmdb_id, content_type]
-    )
-    recommend_thread.start()
-
-    # Get collection information
-    if (
-        tmdb_object.__contains__("belongs_to_collection")
-        and tmdb_object["belongs_to_collection"] is not None
-    ):
-        tmdb_collection = content_discovery.collections(
-            tmdb_object["belongs_to_collection"]["id"]
-        )
-    else:
-        tmdb_collection = None
-
-    # Check the availability in Sonarr/Radarr
-    thread_list = []
-
-    # Checking Conreq status of the current TMDB ID
-    thread = Thread(target=tmdb_conreq_status, args=[tmdb_object])
-    thread.start()
-    thread_list.append(thread)
-
+def preparse_tmdb_object(tmdb_object):
     # Prepare data attributes for the HTML
     # Summary
     if tmdb_object.__contains__("overview") and isinstance(
@@ -132,12 +97,55 @@ def more_info(request):
         tmdb_object["release_date_formatted"] = f"{month} {day}, {year}"
     # Content Type
     if tmdb_object.__contains__("name"):
-        content_type = "tv"
+        tmdb_object["content_type"] = "tv"
     elif tmdb_object.__contains__("title"):
-        content_type = "movie"
+        tmdb_object["content_type"] = "movie"
+
+
+# Create your views here.
+def more_info(request):
+    template = loader.get_template("more-info.html")
+    thread_list = []
+
+    # Get the ID from the URL
+    tmdb_id = request.GET.get("tmdb_id", None)
+    content_type = request.GET.get("content_type", None)
+
+    # Get all the basic metadata for a given ID
+    tmdb_object = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
+
+    # Get recommended results
+    similar_and_recommended_thread = ReturnThread(
+        target=content_discovery.similar_and_recommended, args=[tmdb_id, content_type]
+    )
+    similar_and_recommended_thread.start()
+
+    # Checking Conreq status of the current TMDB ID
+    thread = Thread(target=tmdb_conreq_status, args=[tmdb_object])
+    thread.start()
+    thread_list.append(thread)
+
+    # Pre-parse data attributes within tmdb_object
+    thread = Thread(target=preparse_tmdb_object, args=[tmdb_object])
+    thread.start()
+    thread_list.append(thread)
+
+    # Get collection information
+    if (
+        tmdb_object.__contains__("belongs_to_collection")
+        and tmdb_object["belongs_to_collection"] is not None
+    ):
+        tmdb_collection = True
+        tmdb_collection_thread = ReturnThread(
+            target=content_discovery.collections,
+            args=[tmdb_object["belongs_to_collection"]["id"]],
+        )
+        tmdb_collection_thread.start()
+    else:
+        tmdb_collection = None
 
     # Checking Conreq status for all recommended content
-    tmdb_recommended = recommend_thread.join()
+    tmdb_recommended = similar_and_recommended_thread.join()
     # Recommended Content
     if isinstance(tmdb_recommended, list) and len(tmdb_recommended) == 0:
         tmdb_recommended = None
@@ -149,6 +157,8 @@ def more_info(request):
     # Wait for thread computation to complete
     for thread in thread_list:
         thread.join()
+    if tmdb_collection is not None:
+        tmdb_collection = tmdb_collection_thread.join()
 
     # Render the page
     context = generate_context(
@@ -156,7 +166,7 @@ def more_info(request):
             "content": tmdb_object,
             "recommended": tmdb_recommended,
             "collection": tmdb_collection,
-            "content_type": content_type,
+            "content_type": tmdb_object["content_type"],
         }
     )
     return HttpResponse(template.render(context, request))
