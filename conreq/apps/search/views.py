@@ -1,14 +1,10 @@
 # from django.shortcuts import render
 from threading import Thread
 
+from conreq import content_discovery, searcher
+from conreq.apps_helper import generate_context, obtain_conreq_status
 from django.http import HttpResponse
 from django.template import loader
-from conreq import content_discovery, searcher
-from conreq.apps_helper import obtain_conreq_status, generate_context
-from threading import Thread
-
-from pprint import pprint
-from traceback import format_exc
 
 
 def convert_cards_to_tmdb(index, all_results):

@@ -2,6 +2,7 @@
 
 from math import floor, log10
 from re import sub as substitution
+from threading import Thread
 
 from conreq.core import cache, log
 from conreq.core.thread_helper import ReturnThread
@@ -136,20 +137,41 @@ class Search:
             return []
 
     def __television(self, **kwargs):
-        if kwargs.__contains__("query"):
-            # Perform a search
-            return self.__sonarr.lookupSeries(kwargs["query"])
+        # Perform a search
+        results = self.__sonarr.lookupSeries(kwargs["query"])
 
-        # Required kwargs was not found
-        raise KeyError
+        # Set content type
+        thread_list = []
+        for result in results:
+            thread = Thread(target=self.__set_content_type, args=[result, "tv"])
+            thread.start()
+            thread_list.append(thread)
+
+        # Wait for computation to complete
+        for thread in thread_list:
+            thread.join()
+
+        return results
 
     def __movie(self, **kwargs):
-        if kwargs.__contains__("query"):
-            # Perform a search
-            return self.__radarr.lookupMovie(kwargs["query"])
+        # Perform a search
+        results = self.__radarr.lookupMovie(kwargs["query"])
 
-        # Required kwargs was not found
-        raise KeyError
+        # Set content type
+        thread_list = []
+        for result in results:
+            thread = Thread(target=self.__set_content_type, args=[result, "movie"])
+            thread.start()
+            thread_list.append(thread)
+
+        # Wait for computation to complete
+        for thread in thread_list:
+            thread.join()
+
+        return results
+
+    def __set_content_type(self, result, source_name):
+        result["contentType"] = source_name
 
     def __sort_ranked_results(self, query, results):
         # Determine string similarity and combined with a weight of the original rank

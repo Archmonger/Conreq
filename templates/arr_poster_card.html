@@ -3,11 +3,11 @@
     <i class="fas fa-ellipsis-v"></i>
     <i class="fas fa-angle-down"></i>
     <div class="poster-tint"></div>
-    <a href="/more-info/?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% elif card.imdbId %}imdb_id={{card.imdbId}}{% endif %}&content_type={% if card.tvdbId %}tv{% elif card.tmdbId or card.imdbId %}movie{% endif %}">
+    <a href="/more-info/?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% elif card.imdbId %}imdb_id={{card.imdbId}}{% endif %}&content_type={{card.contentType}}">
         <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="posterContainer-poster lazy" />
     </a>
 
-    <div class="posterContainer-descriptionContainer {% if card.tvdbId %}poster-tv{% elif card.tmdbId or card.imdbId %}poster-movie{% endif %}">
+    <div class="posterContainer-descriptionContainer poster-{{card.contentType}}">
         <div class="posterContainer-title">{% firstof card.title "Unknown" %}</div>
         {% if card.conreqStatus == available %}
         <div class="availablity-dot green"></div>
