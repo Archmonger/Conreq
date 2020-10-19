@@ -247,7 +247,7 @@ class ContentDiscovery:
             )
             return {}
 
-    def get_by_id(self, tmdb_id, content_type):
+    def get_by_tmdb_id(self, tmdb_id, content_type, obtain_extras=True):
         """Obtains a movie or series given a TMDB ID.
 
         Args:
@@ -256,6 +256,12 @@ class ContentDiscovery:
         """
         # Searches for content based on TMDB ID
         try:
+            # Obtain extras if needed
+            if obtain_extras:
+                extras = "reviews,keywords,videos,credits,images"
+            else:
+                extras = None
+
             # Obtain a movie by ID
             if content_type.lower() == "movie":
                 self.__tmdb_movies.id = tmdb_id
@@ -264,7 +270,7 @@ class ContentDiscovery:
                     self.__movie_by_id_cache_time,
                     self.__tmdb_movies.info,
                     tmdb_id,
-                    append_to_response="reviews,keywords,videos,credits,images",
+                    append_to_response=extras,
                 )
 
             # Obtain a TV show by ID
@@ -275,7 +281,7 @@ class ContentDiscovery:
                     self.__tv_by_id_cache_time,
                     self.__tmdb_tv.info,
                     tmdb_id,
-                    append_to_response="reviews,keywords,videos,credits,images",
+                    append_to_response=extras,
                 )
 
             # Content Type was invalid
@@ -293,6 +299,44 @@ class ContentDiscovery:
                 self.__logger,
             )
             return {}
+
+    def get_by_imdb_id(self, imdb_id):
+        """Converts IMDB ID to TMDB ID.
+
+        Args:
+            id: An Integer or String containing the IMDB ID.
+        """
+        # TODO: Add caching
+        try:
+            self.__finder.id = imdb_id
+            return self.__finder.info(external_source="imdb_id")
+
+        except:
+            log.handler(
+                "Failed to obtain imdb ID!",
+                log.ERROR,
+                self.__logger,
+            )
+            return None
+
+    def get_by_tvdb_id(self, tvdb_id):
+        """Converts TVDB ID to TMDB ID.
+
+        Args:
+            id: An Integer or String containing the TMDB ID.
+        """
+        # TODO: Add caching
+        try:
+            self.__finder.id = tvdb_id
+            return self.__finder.info(external_source="tvdb_id")
+
+        except:
+            log.handler(
+                "Failed to obtain imdb ID!",
+                log.ERROR,
+                self.__logger,
+            )
+            return None
 
     def get_external_ids(self, tmdb_id, content_type):
         """Gets all external IDs given a TMDB ID.
@@ -378,44 +422,6 @@ class ContentDiscovery:
                 self.__logger,
             )
             return {}
-
-    def imdb_id_to_tmdb(self, tmdb_id):
-        """Converts IMDB ID to TMDB ID.
-
-        Args:
-            id: An Integer or String containing the IMDB ID.
-        """
-        # TODO: Add caching
-        try:
-            self.__finder.id = tmdb_id
-            return self.__finder.info(external_source="imdb_id")
-
-        except:
-            log.handler(
-                "Failed to obtain imdb ID!",
-                log.ERROR,
-                self.__logger,
-            )
-            return None
-
-    def tvdb_id_to_tmdb(self, tmdb_id):
-        """Converts TVDB ID to TMDB ID.
-
-        Args:
-            id: An Integer or String containing the TMDB ID.
-        """
-        # TODO: Add caching
-        try:
-            self.__finder.id = tmdb_id
-            return self.__finder.info(external_source="tvdb_id")
-
-        except:
-            log.handler(
-                "Failed to obtain imdb ID!",
-                log.ERROR,
-                self.__logger,
-            )
-            return None
 
     def is_anime(self, tmdb_id, content_type):
         """Checks if a TMDB ID can be considered Anime.

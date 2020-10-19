@@ -15,7 +15,7 @@ def more_info(request):
     tmdb_id = request.GET.get("tmdb_id", None)
     content_type = request.GET.get("content_type", None)
 
-    tmdb_object = content_discovery.get_by_id(tmdb_id, content_type)
+    tmdb_object = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
 
     tmdb_recommended = content_discovery.similar_and_recommended(tmdb_id, content_type)[
         "results"
