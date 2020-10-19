@@ -136,20 +136,16 @@ class Search:
 
     def __television(self, **kwargs):
         if kwargs.__contains__("query"):
-            # Perform a search and set the conreqSource
-            results = self.__sonarr.lookupSeries(kwargs["query"])
-
-            return results
+            # Perform a search
+            return self.__sonarr.lookupSeries(kwargs["query"])
 
         # Required kwargs was not found
         raise KeyError
 
     def __movie(self, **kwargs):
         if kwargs.__contains__("query"):
-            # Perform a search and set the conreqSource
-            results = self.__radarr.lookupMovie(kwargs["query"])
-
-            return results
+            # Perform a search
+            return self.__radarr.lookupMovie(kwargs["query"])
 
         # Required kwargs was not found
         raise KeyError
