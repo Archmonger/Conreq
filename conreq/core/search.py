@@ -87,7 +87,7 @@ class Search:
             )
             return []
 
-    def television(self, query, conreq_rank=False):
+    def television(self, query):
         """Search Sonarr for a query.
 
         Args:
@@ -95,18 +95,13 @@ class Search:
             conreq_rank: Calculate conreq similarity ranking and sort the results (True/False)
         """
         try:
-            results = cache.handler(
+            return cache.handler(
                 self.__television_cache,
                 self.__television_cache_time,
                 self.__television,
                 query,
                 query=query,
             )
-
-            if conreq_rank:
-                return self.__set_conreq_rank(query, results)
-
-            return results
 
         except:
             log.handler(
@@ -116,25 +111,20 @@ class Search:
             )
             return []
 
-    def movie(self, query, conreq_rank=False):
+    def movie(self, query):
         """Search Radarr for a query.
 
         Args:
             query: A string containing a search term.
         """
         try:
-            results = cache.handler(
+            return cache.handler(
                 self.__movie_cache,
                 self.__movie_cache_time,
                 self.__movie,
                 query,
                 query=query,
             )
-
-            if conreq_rank:
-                return self.__set_conreq_rank(query, results)
-
-            return results
 
         except:
             log.handler(

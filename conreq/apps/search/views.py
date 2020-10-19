@@ -23,8 +23,16 @@ def convert_cards_to_tmdb(index, all_results):
 def search(request):
     # Get the ID from the URL
     query = request.GET.get("query", "")
-    arr_results = searcher.all(query)
+    content_type = request.GET.get("content_type", None)
     template = loader.get_template("search.html")
+
+    # Determine which search method to use (tv/movie/all)
+    if content_type == "tv":
+        arr_results = searcher.television(query)
+    elif content_type == "movie":
+        arr_results = searcher.movie(query)
+    else:
+        arr_results = searcher.all(query)
 
     # Attempt to convert cards to TMDB equivalents
     thread_list = []
