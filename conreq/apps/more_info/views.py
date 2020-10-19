@@ -1,9 +1,12 @@
+from calendar import month_name
+from threading import Thread
+
 from conreq import content_discovery
 from conreq.apps_helper import generate_context, tmdb_conreq_status
+from conreq.core.thread_helper import ReturnThread
 from django.http import HttpResponse
 from django.template import loader
-from threading import Thread
-from calendar import month_name
+
 
 # Create your views here.
 def more_info(request):
@@ -17,9 +20,10 @@ def more_info(request):
     tmdb_object = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
 
     # Get recommended results
-    tmdb_recommended = content_discovery.similar_and_recommended(tmdb_id, content_type)[
-        "results"
-    ]
+    recommend_thread = ReturnThread(
+        target=content_discovery.similar_and_recommended, args=[tmdb_id, content_type]
+    )
+    recommend_thread.start()
 
     # Get collection information
     if (
@@ -40,16 +44,7 @@ def more_info(request):
     thread.start()
     thread_list.append(thread)
 
-    # Checking Conreq status for all recommended content
-    for card in tmdb_recommended:
-        thread = Thread(target=tmdb_conreq_status, args=[card])
-        thread.start()
-        thread_list.append(thread)
-
     # Prepare data attributes for the HTML
-    # Recommended Content
-    if isinstance(tmdb_recommended, list) and len(tmdb_recommended) == 0:
-        tmdb_recommended = None
     # Summary
     if tmdb_object.__contains__("overview") and isinstance(
         tmdb_object["overview"], str
@@ -140,6 +135,16 @@ def more_info(request):
         content_type = "tv"
     elif tmdb_object.__contains__("title"):
         content_type = "movie"
+
+    # Checking Conreq status for all recommended content
+    tmdb_recommended = recommend_thread.join()
+    # Recommended Content
+    if isinstance(tmdb_recommended, list) and len(tmdb_recommended) == 0:
+        tmdb_recommended = None
+    for card in tmdb_recommended["results"]:
+        thread = Thread(target=tmdb_conreq_status, args=[card])
+        thread.start()
+        thread_list.append(thread)
 
     # Wait for thread computation to complete
     for thread in thread_list:

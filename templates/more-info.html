@@ -177,7 +177,7 @@
                             </div>
                             <script src="{% static 'js/review_carousel.js' %}"></script>
                         </div>
-                        {% if recommended %}
+                        {% if recommended.results %}
                         <div class="moreInfo-recommendations grid-block contains-carousel">
                             <div class="bold moreInfo-head contains-carousel"> Recommendations
                                 <div class="recommended-carousel-controls carousel-controls tns-controls">
@@ -189,7 +189,7 @@
                             </div>
                             <div class="recommended-outer-container carousel-outer-container">
                                 <div class="recommended-inner-container carousel-inner-container">
-                                    {% for card in recommended %} {% if card.poster_path %}
+                                    {% for card in recommended.results %} {% if card.poster_path %}
                                     <div class="posterContainer-wrapper">
                                         {% include "tmdb_poster_card.html" %}
                                     </div>
