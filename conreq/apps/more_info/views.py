@@ -3,7 +3,7 @@ from conreq.apps_helper import generate_context, tmdb_conreq_status
 from django.http import HttpResponse
 from django.template import loader
 from threading import Thread
-
+from calendar import month_name
 
 # Create your views here.
 def more_info(request):
@@ -46,7 +46,7 @@ def more_info(request):
         thread.start()
         thread_list.append(thread)
 
-    # Wait for computation to complete
+    # Wait for thread computation to complete
     for thread in thread_list:
         thread.join()
 
@@ -121,6 +121,24 @@ def more_info(request):
     ):
         if len(tmdb_object["images"]["backdrops"]) == 0:
             tmdb_object["images"]["backdrops"] = None
+    # Last Air Date
+    if (
+        tmdb_object.__contains__("last_air_date")
+        and isinstance(tmdb_object["last_air_date"], str)
+        and len(tmdb_object["last_air_date"]) != 0
+    ):
+        year, month, day = tmdb_object["last_air_date"].split(sep="-")
+        month = month_name[int(month)]
+        tmdb_object["last_air_date"] = f"{month} {day}, {year}"
+    # Release Date
+    if (
+        tmdb_object.__contains__("release_date")
+        and isinstance(tmdb_object["release_date"], str)
+        and len(tmdb_object["release_date"]) != 0
+    ):
+        year, month, day = tmdb_object["release_date"].split(sep="-")
+        month = month_name[int(month)]
+        tmdb_object["release_date"] = f"{month} {day}, {year}"
 
     # Render the page
     context = generate_context(
