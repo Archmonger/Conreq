@@ -233,9 +233,6 @@ class Search:
             + 1
         )
 
-        # Remove sonarr/radarr's original ranking
-        result.pop("arrOriginalRank")
-
     def __generate_original_rank(self, result, rank):
         # Sets the original rank based on the position Sonarr/Radarr
         result["arrOriginalRank"] = rank

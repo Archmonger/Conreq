@@ -3,6 +3,7 @@ from random import shuffle
 
 import tmdbsimple as tmdb
 from conreq.core import cache, log
+from conreq.core.generic_tools import is_key_value_in_list
 from conreq.core.thread_helper import ReturnThread, threaded_execution
 
 # TODO: Obtain these values from the database on init
@@ -424,9 +425,7 @@ class ContentDiscovery:
                 api_results = self.__tmdb_tv.keywords()
 
                 # Check if the content contains Keyword: Anime
-                if self.__is_key_value_in_results(
-                    api_results["results"], "name", "anime"
-                ):
+                if is_key_value_in_list(api_results["results"], "name", "anime"):
                     return True
 
                 # Check if fallback method is enabled
@@ -434,9 +433,7 @@ class ContentDiscovery:
                     tv_info = self.__tmdb_tv.info()
                     # Check if genere is Animation and Country is Japan
                     if (
-                        self.__is_key_value_in_results(
-                            tv_info["genres"], "name", "Animation"
-                        )
+                        is_key_value_in_list(tv_info["genres"], "name", "Animation")
                         and "JP" in tv_info["origin_country"]
                     ):
                         return True
@@ -447,9 +444,7 @@ class ContentDiscovery:
                 api_results = self.__tmdb_movies.keywords()
 
                 # Check if the content contains Keyword: Anime
-                if self.__is_key_value_in_results(
-                    api_results["keywords"], "name", "anime"
-                ):
+                if is_key_value_in_list(api_results["keywords"], "name", "anime"):
                     return True
 
                 # Check if fallback method is enabled
@@ -457,9 +452,9 @@ class ContentDiscovery:
                     movie_info = self.__tmdb_movies.info()
 
                     # Check if genere is Animation and Country is Japan
-                    if self.__is_key_value_in_results(
+                    if is_key_value_in_list(
                         movie_info["genres"], "name", "Animation"
-                    ) and self.__is_key_value_in_results(
+                    ) and is_key_value_in_list(
                         movie_info["production_countries"], "iso_3166_1", "JP"
                     ):
                         return True
@@ -660,24 +655,6 @@ class ContentDiscovery:
                 self.__logger,
             )
             return {}
-
-    def __is_key_value_in_results(self, results, key, value):
-        # Iterate through each result and check for the key/value pair
-        # TODO: Add threading
-        try:
-            for result in results:
-                if result[key] == value:
-                    return True
-
-            # The key value pair could not be found in the list of dictionaries
-            return False
-        except:
-            log.handler(
-                "Couldn't check for key/value pair in results!",
-                log.ERROR,
-                self.__logger,
-            )
-            return False
 
     def __threaded_multi_page_cached(
         self,

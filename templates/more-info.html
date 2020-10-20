@@ -16,7 +16,7 @@
                 <div class="moreInfo-grid">
                     <div class="left-group">
                         <div class="moreInfo-poster-container">
-                            <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w300{{content.poster_path}}" class="moreInfo-poster lazy"> {% if content.belongs_to_collection %}
+                            <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.poster_path content.remotePoster %}" class="moreInfo-poster lazy"> {% if content.belongs_to_collection %}
                             <div class="moreInfo-collection-btn no-highlighting">VIEW COLLECTION </div>
                             {% endif %}
                         </div>
@@ -65,18 +65,23 @@
                                 <div class="quick-info bold"> Genres </div>
                                 <div class="quick-info">
                                     {% for genre in content.genres %}
-                                    <div class="quick-info-btn no-highlighting"> {{genre.name}} </div>
+                                    <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %} </div>
                                     {% endfor %}
                                 </div>
                             </div>
                             {% endif %}
                             <br>
-                            <br> {% if content.last_air_date_clean %}
+                            <br> {% if content.year %}
+                            <div class="quick-info-block">
+                                <div class="quick-info bold"> Year </div>
+                                <div class="quick-info"> {{content.year}} </div>
+                            </div>
+                            {% endif %}{% if content.last_air_date_formatted %}
                             <div class="quick-info-block">
                                 <div class="quick-info bold"> Last Episode Air Date </div>
                                 <div class="quick-info"> {{content.last_air_date_formatted}} </div>
                             </div>
-                            {% endif %} {% if content.release_date_clean %}
+                            {% endif %} {% if content.release_date_formatted %}
                             <div class="quick-info-block">
                                 <div class="quick-info bold"> Release Date </div>
                                 <div class="quick-info"> {{content.release_date_formatted}} </div>
@@ -119,7 +124,8 @@
                                 <div class="quick-info bold"> Networks </div>
                                 <div class="quick-info">
                                     {% for network in content.networks %}
-                                    <div class="quick-info-btn no-highlighting"> {{network.name}} </div>
+                                    <div class="quick-info-btn no-highlighting"> {% firstof network.name network %}
+                                    </div>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -144,7 +150,8 @@
                             <div class="main-title">{% firstof content.title content.name "Unknown" %}</div>
                             <div class="main-rating">
                                 <div class="inline bold"> SCORE: </div>
-                                <div class="inline light rating"> {{content.vote_average}} / 10 </div>
+                                <div class="inline light rating">
+                                    {% firstof content.vote_average content.ratings.value "-" %} / 10 </div>
                             </div>
                             <i class="fas fa-ellipsis-v"></i> {% if content.conreqStatus == available %}
                             <div class="request-button box-shadow available"> AVAILABLE </div>
@@ -287,7 +294,7 @@
             </div>
             <div class="movie-backdrop-container">
                 <div class="backdrop-tint"></div>
-                <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/original{{content.backdrop_path}}" class="moreInfo-backdrop lazy">
+                <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.backdrop_path content.backdropPath %}" class="moreInfo-backdrop lazy">
                 <div class="backdrop-placeholder-gradient"></div>
             </div>
         </div>

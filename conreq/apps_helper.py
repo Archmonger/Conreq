@@ -4,7 +4,10 @@ from conreq import content_discovery, content_manager
 __logger = log.get_logger("Content Discovery")
 log.configure(__logger, log.DEBUG)
 
-static_context_vars = {
+TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
+TMDB_POSTER_300_URL = "https://image.tmdb.org/t/p/w300"
+
+STATIC_CONTEXT_VARS = {
     "available": "Available",
     "partial": "Partial",
     "downloading": "Downloading",
@@ -24,7 +27,7 @@ static_context_vars = {
 
 
 def generate_context(dict1):
-    res = {**dict1, **static_context_vars}
+    res = {**dict1, **STATIC_CONTEXT_VARS}
     return res
 
 
