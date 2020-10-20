@@ -1,7 +1,7 @@
 from conreq.core import log
 from conreq import content_discovery, content_manager
 
-__logger = log.get_logger("Content Discovery")
+__logger = log.get_logger("Apps Helper")
 log.configure(__logger, log.DEBUG)
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
@@ -75,7 +75,7 @@ def arr_conreq_status(card):
         # Something unexpected was passed in
         else:
             log.handler(
-                "TMDB card did not contain contentType!",
+                "TVDB card did not contain contentType!",
                 log.WARNING,
                 __logger,
             )
@@ -83,7 +83,7 @@ def arr_conreq_status(card):
 
     except:
         log.handler(
-            "Could not determine Conreq Status of TMDB card!",
+            "Could not determine Conreq Status of TVDB card!",
             log.ERROR,
             __logger,
         )
