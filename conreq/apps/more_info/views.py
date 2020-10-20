@@ -3,13 +3,13 @@ from threading import Thread
 
 from conreq import content_discovery, searcher
 from conreq.apps_helper import (
-    generate_context,
-    tmdb_conreq_status,
     TMDB_BACKDROP_URL,
     TMDB_POSTER_300_URL,
+    generate_context,
+    tmdb_conreq_status,
 )
-from conreq.core.thread_helper import ReturnThread
 from conreq.core.generic_tools import is_key_value_in_list
+from conreq.core.thread_helper import ReturnThread
 from django.http import HttpResponse
 from django.template import loader
 

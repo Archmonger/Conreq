@@ -1,6 +1,7 @@
 """Conreq Caching: Simplified caching module."""
 # Default Python Modules
 from time import time
+
 from conreq.core import log
 
 # TODO: Obtain these values from the database on init

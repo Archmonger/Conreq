@@ -2,7 +2,7 @@
 from threading import Thread
 
 from conreq import content_discovery, searcher
-from conreq.apps_helper import generate_context, arr_conreq_status
+from conreq.apps_helper import arr_conreq_status, generate_context
 from django.http import HttpResponse
 from django.template import loader
 

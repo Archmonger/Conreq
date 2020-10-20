@@ -1,10 +1,10 @@
 # from django.shortcuts import render
 from threading import Thread
 
+from conreq import content_discovery
+from conreq.apps_helper import generate_context, tmdb_conreq_status
 from django.http import HttpResponse
 from django.template import loader
-from conreq import content_discovery
-from conreq.apps_helper import tmdb_conreq_status, generate_context
 
 
 # Create your views here.
