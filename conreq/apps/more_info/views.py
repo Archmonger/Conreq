@@ -62,7 +62,7 @@ def preprocess_arr_result(arr_result):
         backdrop = is_key_value_in_list(
             arr_result["images"], "coverType", "fanart", return_item=True
         )
-        if backdrop is not None:
+        if backdrop is not False:
             arr_result["backdropPath"] = backdrop["url"]
 
 
