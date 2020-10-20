@@ -1,5 +1,5 @@
-from conreq.core import log
 from conreq import content_discovery, content_manager
+from conreq.core import log
 
 __logger = log.get_logger("Apps Helper")
 log.configure(__logger, log.DEBUG)
