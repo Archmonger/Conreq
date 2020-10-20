@@ -252,8 +252,21 @@ def more_info(request):
     elif tvdb_id is not None:
         # Fallback for TVDB
         arr_result = searcher.television(tvdb_id)[0]
-        preprocess_arr_result(arr_result)
-        arr_conreq_status(arr_result)
+        thread_list = []
+
+        # Preprocess results
+        thread = Thread(target=preprocess_arr_result, args=[arr_result])
+        thread.start()
+        thread_list.append(thread)
+
+        # Obtain conreq status
+        thread = Thread(target=arr_conreq_status, args=[arr_result])
+        thread.start()
+        thread_list.append(thread)
+
+        # Wait for thread computation to complete
+        for thread in thread_list:
+            thread.join()
 
         # Generate context for page rendering
         context = generate_context(
