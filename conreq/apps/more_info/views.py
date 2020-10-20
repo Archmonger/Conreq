@@ -179,7 +179,7 @@ def preprocess_tmdb_result(tmdb_result):
 
 # Create your views here.
 def more_info(request):
-    template = loader.get_template("more-info.html")
+    template = loader.get_template("more_info.html")
     thread_list = []
 
     # Get the ID from the URL

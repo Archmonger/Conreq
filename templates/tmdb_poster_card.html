@@ -3,7 +3,7 @@
     <i class="fas fa-ellipsis-v"></i>
     <i class="fas fa-angle-down"></i>
     <div class="poster-tint"></div>
-    <a href="/more-info/?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
+    <a href="/more_info/?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
         <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w200{{card.poster_path}}" class="posterContainer-poster lazy" />
     </a>
 

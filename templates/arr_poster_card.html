@@ -3,7 +3,7 @@
     <i class="fas fa-ellipsis-v"></i>
     <i class="fas fa-angle-down"></i>
     <div class="poster-tint"></div>
-    <a href="/more-info/?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
+    <a href="/more_info/?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
         <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="posterContainer-poster lazy" />
     </a>
 
