@@ -31,10 +31,22 @@ def generate_context(dict1):
     return res
 
 
-def tmdb_conreq_status(card):
+def set_conreq_status(card):
     try:
+        # Compute conreq status of a Sonarr card
+        if card.__contains__("tvdbId"):
+            content = content_manager.get(tvdb_id=card["tvdbId"])
+            if content is not None:
+                card["conreqStatus"] = content["conreqStatus"]
+
+        # Compute conreq status of a Radarr card
+        elif card.__contains__("tmdbId"):
+            content = content_manager.get(tmdb_id=card["tmdbId"])
+            if content is not None:
+                card["conreqStatus"] = content["conreqStatus"]
+
         # Compute conreq status of TV show
-        if card.__contains__("name"):
+        elif card.__contains__("name"):
             external_id = content_discovery.get_external_ids(card["id"], "tv")
             content = content_manager.get(tvdb_id=external_id["tvdb_id"])
             if content is not None:
@@ -49,7 +61,7 @@ def tmdb_conreq_status(card):
         # Something unexpected was passed in
         else:
             log.handler(
-                "TMDB card did not contain title or name!",
+                "Card did not contain contentType, title, or name!",
                 log.WARNING,
                 __logger,
             )
@@ -57,33 +69,7 @@ def tmdb_conreq_status(card):
 
     except:
         log.handler(
-            "Could not determine Conreq Status of TMDB card!",
-            log.ERROR,
-            __logger,
-        )
-        return card
-
-
-def arr_conreq_status(card):
-    try:
-        # Compute conreq status of a Sonarr/Radarr card
-        if card.__contains__("contentType"):
-            content = content_manager.get(tvdb_id=card["tvdbId"])
-            if content is not None:
-                card["conreqStatus"] = content["conreqStatus"]
-
-        # Something unexpected was passed in
-        else:
-            log.handler(
-                "TVDB card did not contain contentType!",
-                log.WARNING,
-                __logger,
-            )
-            return card
-
-    except:
-        log.handler(
-            "Could not determine Conreq Status of TVDB card!",
+            "Could not determine Conreq Status of card!\n" + card,
             log.ERROR,
             __logger,
         )

@@ -2,12 +2,12 @@
 from threading import Thread
 
 from conreq import content_discovery, searcher
-from conreq.apps_helper import arr_conreq_status, generate_context
+from conreq.apps_helper import set_conreq_status, generate_context
 from django.http import HttpResponse
 from django.template import loader
 
 
-def convert_cards_to_tmdb(index, all_results):
+def convert_card_to_tmdb(index, all_results):
     # Convert Sonarr cards to TMDB
     if all_results[index].__contains__("tvdbId"):
         try:
@@ -37,7 +37,7 @@ def search(request):
     # Attempt to convert cards to TMDB equivalents
     thread_list = []
     for index in range(0, len(arr_results)):
-        thread = Thread(target=convert_cards_to_tmdb, args=[index, arr_results])
+        thread = Thread(target=convert_card_to_tmdb, args=[index, arr_results])
         thread.start()
         thread_list.append(thread)
 
@@ -48,7 +48,7 @@ def search(request):
     # Generate conreq status
     thread_list = []
     for card in arr_results:
-        thread = Thread(target=arr_conreq_status, args=[card])
+        thread = Thread(target=set_conreq_status, args=[card])
         thread.start()
         thread_list.append(thread)
 

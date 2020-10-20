@@ -2,7 +2,7 @@
 from threading import Thread
 
 from conreq import content_discovery
-from conreq.apps_helper import generate_context, tmdb_conreq_status
+from conreq.apps_helper import generate_context, set_conreq_status
 from django.http import HttpResponse
 from django.template import loader
 
@@ -29,7 +29,7 @@ def discover(request, page=1):
 
     thread_list = []
     for card in tmdb_results:
-        thread = Thread(target=tmdb_conreq_status, args=[card])
+        thread = Thread(target=set_conreq_status, args=[card])
         thread.start()
         thread_list.append(thread)
 

@@ -5,9 +5,8 @@ from conreq import content_discovery, searcher
 from conreq.apps_helper import (
     TMDB_BACKDROP_URL,
     TMDB_POSTER_300_URL,
-    arr_conreq_status,
     generate_context,
-    tmdb_conreq_status,
+    set_conreq_status,
 )
 from conreq.core.generic_tools import is_key_value_in_list
 from conreq.core.thread_helper import ReturnThread
@@ -200,7 +199,7 @@ def more_info(request):
         similar_and_recommended_thread.start()
 
         # Checking Conreq status of the current TMDB ID
-        thread = Thread(target=tmdb_conreq_status, args=[tmdb_result])
+        thread = Thread(target=set_conreq_status, args=[tmdb_result])
         thread.start()
         thread_list.append(thread)
 
@@ -229,7 +228,7 @@ def more_info(request):
         if isinstance(tmdb_recommended, list) and len(tmdb_recommended) == 0:
             tmdb_recommended = None
         for card in tmdb_recommended["results"]:
-            thread = Thread(target=tmdb_conreq_status, args=[card])
+            thread = Thread(target=set_conreq_status, args=[card])
             thread.start()
             thread_list.append(thread)
 
@@ -260,7 +259,7 @@ def more_info(request):
         thread_list.append(thread)
 
         # Obtain conreq status
-        thread = Thread(target=arr_conreq_status, args=[arr_result])
+        thread = Thread(target=set_conreq_status, args=[arr_result])
         thread.start()
         thread_list.append(thread)
 
