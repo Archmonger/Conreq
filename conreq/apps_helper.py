@@ -49,7 +49,7 @@ def tmdb_conreq_status(card):
         # Something unexpected was passed in
         else:
             log.handler(
-                "TMDB card did not contan title or name!",
+                "TMDB card did not contain title or name!",
                 log.WARNING,
                 __logger,
             )
@@ -66,26 +66,16 @@ def tmdb_conreq_status(card):
 
 def arr_conreq_status(card):
     try:
-        # If a TMDB card was passed in, use it's respective function
-        if card.__contains__("tmdbCard"):
-            tmdb_conreq_status(card)
-
-        # Compute conreq status of TV show
-        elif card["contentType"] == "tv":
+        # Compute conreq status of a Sonarr/Radarr card
+        if card.__contains__("contentType"):
             content = content_manager.get(tvdb_id=card["tvdbId"])
-            if content is not None:
-                card["conreqStatus"] = content["conreqStatus"]
-
-        # Compute conreq status of movie
-        elif card["contentType"] == "movie":
-            content = content_manager.get(tmdb_id=card["tmdbId"])
             if content is not None:
                 card["conreqStatus"] = content["conreqStatus"]
 
         # Something unexpected was passed in
         else:
             log.handler(
-                "TMDB card did not contan title or name!",
+                "TMDB card did not contain contentType!",
                 log.WARNING,
                 __logger,
             )

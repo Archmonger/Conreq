@@ -5,6 +5,7 @@ from conreq import content_discovery, searcher
 from conreq.apps_helper import (
     TMDB_BACKDROP_URL,
     TMDB_POSTER_300_URL,
+    arr_conreq_status,
     generate_context,
     tmdb_conreq_status,
 )
@@ -252,6 +253,7 @@ def more_info(request):
         # Fallback for TVDB
         arr_result = searcher.television(tvdb_id)[0]
         preprocess_arr_result(arr_result)
+        arr_conreq_status(arr_result)
 
         # Generate context for page rendering
         context = generate_context(
