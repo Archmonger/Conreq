@@ -2,7 +2,7 @@ from calendar import month_name
 from threading import Thread
 
 from conreq import content_discovery, searcher
-from conreq.apps_helper import (
+from conreq.apps.helpers import (
     TMDB_BACKDROP_URL,
     TMDB_POSTER_300_URL,
     generate_context,
