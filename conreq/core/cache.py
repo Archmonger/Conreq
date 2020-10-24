@@ -1,8 +1,10 @@
 """Conreq Caching: Simplified caching module."""
+from threading import Thread
+
 from conreq.core import log
 from conreq.core.generic_tools import clean_string
-from django.core.cache import cache
 from conreq.core.thread_helper import ReturnThread
+from django.core.cache import cache
 
 # TODO: Obtain these values from the database on init
 DEFAULT_CACHE_DURATION = 30 * 60  # Time in seconds
@@ -75,7 +77,9 @@ def handler(
 
             # Set values in cache for any newly executed functions
             if bool(missing_keys):
-                cache.set_many(missing_keys, cache_duration)
+                Thread(
+                    target=cache.set_many, args=[missing_keys, cache_duration]
+                ).start()
 
             # Return all results
             cached_results.update(missing_keys)
