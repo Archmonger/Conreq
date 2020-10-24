@@ -96,6 +96,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "cache",
+    }
+}
+
 ROOT_URLCONF = "conreq.urls"
 
 TEMPLATES = [
@@ -117,7 +124,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "conreq.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -125,6 +131,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
+        "timeout": 30,
     }
 }
 

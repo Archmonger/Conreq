@@ -1,10 +1,10 @@
 """Conreq Searching: Searches Sonarr and Radarr for content."""
 
 from math import floor, log10
-from re import sub as substitution
 from threading import Thread
 
 from conreq.core import cache, log
+from conreq.core.generic_tools import clean_string
 from conreq.core.thread_helper import ReturnThread
 from PyArr import RadarrAPI, SonarrAPI
 from similarity.damerau import Damerau
@@ -43,14 +43,6 @@ class Search:
         # Create a logger (for log files)
         self.__logger = log.get_logger("Search")
         log.configure(self.__logger, log.DEBUG)
-
-        # Set up result caching dictionaries
-        # key = query, value = page contents
-        self.__movie_cache = {}
-        self.__television_cache = {}
-        # key = query, value = time when cached
-        self.__movie_cache_time = {}
-        self.__television_cache_time = {}
 
     def all(self, query):
         """Search Sonarr and Radarr for a query. Sort the
@@ -96,8 +88,7 @@ class Search:
         """
         try:
             return cache.handler(
-                self.__television_cache,
-                self.__television_cache_time,
+                "sonarr search cache",
                 self.__television,
                 query,
                 query=query,
@@ -119,8 +110,7 @@ class Search:
         """
         try:
             return cache.handler(
-                self.__movie_cache,
-                self.__movie_cache_time,
+                "radarr search cache",
                 self.__movie,
                 query,
                 query=query,
@@ -170,7 +160,7 @@ class Search:
 
     def __set_conreq_rank(self, query, results):
         # Determine string similarity and combined with a weight of the original rank
-        clean_query = self.__clean_str(query)
+        clean_query = clean_string(query)
         thread_list = []
         for result in results:
             thread = Thread(
@@ -209,7 +199,7 @@ class Search:
 
     def __generate_conreq_rank(self, result, clean_query):
         # Determines string similarity and combined with a weight of the original rank
-        clean_title = self.__clean_str(result["title"])
+        clean_title = clean_string(result["title"])
 
         # Multiplier if whole substring was found within the search result
         if clean_title.find(clean_query) != -1:
@@ -236,18 +226,6 @@ class Search:
     def __generate_original_rank(self, result, rank):
         # Sets the original rank based on the position Sonarr/Radarr
         result["arrOriginalRank"] = rank
-
-    def __clean_str(self, string):
-        # Removes non-alphanumerics from a string
-        try:
-            return substitution(r"\W+", "", string).lower()
-        except:
-            log.handler(
-                "Cleaning the string failed!",
-                log.ERROR,
-                self.__logger,
-            )
-            return ""
 
     def __round(self, number, significant_figures=5):
         # Round a number using the concept of significant figures

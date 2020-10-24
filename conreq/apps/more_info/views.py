@@ -6,7 +6,8 @@ from conreq.apps.helpers import (
     TMDB_BACKDROP_URL,
     TMDB_POSTER_300_URL,
     generate_context,
-    set_conreq_status,
+    set_multi_conreq_status,
+    set_single_conreq_status,
 )
 from conreq.core.generic_tools import is_key_value_in_list
 from conreq.core.thread_helper import ReturnThread
@@ -199,7 +200,7 @@ def more_info(request):
         similar_and_recommended_thread.start()
 
         # Checking Conreq status of the current TMDB ID
-        thread = Thread(target=set_conreq_status, args=[tmdb_result])
+        thread = Thread(target=set_single_conreq_status, args=[tmdb_result])
         thread.start()
         thread_list.append(thread)
 
@@ -227,10 +228,12 @@ def more_info(request):
         # Recommended Content
         if isinstance(tmdb_recommended, list) and len(tmdb_recommended) == 0:
             tmdb_recommended = None
-        for card in tmdb_recommended["results"]:
-            thread = Thread(target=set_conreq_status, args=[card])
-            thread.start()
-            thread_list.append(thread)
+
+        thread = Thread(
+            target=set_multi_conreq_status, args=[tmdb_recommended["results"]]
+        )
+        thread.start()
+        thread_list.append(thread)
 
         # Wait for thread computation to complete
         for thread in thread_list:
@@ -259,7 +262,7 @@ def more_info(request):
         thread_list.append(thread)
 
         # Obtain conreq status
-        thread = Thread(target=set_conreq_status, args=[arr_result])
+        thread = Thread(target=set_single_conreq_status, args=[arr_result])
         thread.start()
         thread_list.append(thread)
 

@@ -2,7 +2,7 @@
 from threading import Thread
 
 from conreq import content_discovery
-from conreq.apps.helpers import generate_context, set_conreq_status
+from conreq.apps.helpers import generate_context, set_multi_conreq_status
 from django.http import HttpResponse
 from django.template import loader
 
@@ -13,28 +13,25 @@ def discover(request, page=1):
     # Get the ID from the URL
     content_type = request.GET.get("content_type", None)
 
+    # Search for TV content if requested
     if content_type == "tv":
         tmdb_results = content_discovery.tv(page)["results"]
         active_tab = "TV Shows"
 
+    # Search for movie content if requested
     elif content_type == "movie":
         tmdb_results = content_discovery.movies(page)["results"]
         active_tab = "Movies"
 
+    # Search for both content if requested
     else:
         tmdb_results = content_discovery.all(page)["results"]
         active_tab = "Discover"
 
     template = loader.get_template("discover.html")
 
-    thread_list = []
-    for card in tmdb_results:
-        thread = Thread(target=set_conreq_status, args=[card])
-        thread.start()
-        thread_list.append(thread)
-
-    for thread in thread_list:
-        thread.join()
+    # Set conreq status for all cards
+    set_multi_conreq_status(tmdb_results)
 
     context = generate_context(
         {

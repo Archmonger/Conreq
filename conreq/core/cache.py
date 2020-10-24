@@ -1,11 +1,11 @@
 """Conreq Caching: Simplified caching module."""
-# Default Python Modules
-from time import time
-
 from conreq.core import log
+from conreq.core.generic_tools import clean_string
+from django.core.cache import cache
+from conreq.core.thread_helper import ReturnThread
 
 # TODO: Obtain these values from the database on init
-MAX_CACHE_DURATION = 30 * 60  # Time in seconds
+DEFAULT_CACHE_DURATION = 30 * 60  # Time in seconds
 
 # Creating a logger (for log files)
 __logger = log.get_logger("Caching")
@@ -13,72 +13,111 @@ log.configure(__logger, log.DEBUG)
 
 
 def handler(
-    cache,
-    cache_time,
-    function,
-    page_key=0,
-    max_cache_duration=MAX_CACHE_DURATION,
+    cache_name,
+    function=None,
+    page_key="",
+    force_update_cache=False,
+    cache_duration=DEFAULT_CACHE_DURATION,
     **kwargs
 ):
     """Handles caching for results and data.
 
     Args:
-        cache:  Dictionary used for (Page name or page number, Results) pairs. Used for RAM caching.
-        cache_time:  Dictionary used for (Page name or page number, Time Cached) pairs. Used for RAM caching.
-        function: A function reference that returns something (ex. A function that obtains search results). This function must use **kwargs.
-        page_key: The page name or page number to use as a key for the cache and cache_time dictionaries.
-        **kwargs: Any additional parameters that need to be passed into "function".
+        cache: Name of the cache to use.
+        function: A function reference that returns some value to be cached. This function must only use **kwargs.
+        page_key: The page name or page number to use as a key value.
+        force_update_cache:
+        cache_duration:
+        **kwargs: Any parameters that need to be passed into "function".
     """
-    # "None" = obtain cached results only.
-    if max_cache_duration is not None:
-        # Looks through cache and will perform a search if needed.
-        try:
-            # Search if this page has never been cached before
-            if not cache.__contains__(page_key):
-                cache[page_key] = function(**kwargs)
-                cache_time[page_key] = time()
-                log.handler(
-                    "New cached page. Function " + function.__name__ + " re-ran.",
-                    log.INFO,
-                    __logger,
-                )
 
-            # Search if the cache results are too old.
-            elif time() - cache_time[page_key] > max_cache_duration:
-                cache[page_key] = function(**kwargs)
-                cache_time[page_key] = time()
-                log.handler(
-                    "Cached results too old. Function "
-                    + function.__name__
-                    + " re-ran.",
-                    log.INFO,
-                    __logger,
-                )
+    cached_results = None
+    # Looks through cache and will perform a search if needed.
+    try:
+        # If the function was actually a list, then use set_many and/or get_many
+        # All items must belong to the same cache
+        # { page_key: {
+        #               "function": function_value,
+        #               "kwargs": kwargs_value,
+        #               "cache_key": cache_key_value, (optional)
+        #             },
+        # ... }
+        if isinstance(function, dict):
+            # Obtain all the keys from the passed in dictionary
+            requested_keys = []
+            for key, value in function.items():
+                if value.__contains__("cache_key"):
+                    cache_key = value["cache_key"]
+                else:
+                    cache_key = clean_string(
+                        cache_name + "_kwargs" + str(kwargs) + "_key" + str(key)
+                    )
 
-            # Search if there are unreasonably few results in cache
-            elif len(cache[page_key]) <= 1:
-                cache[page_key] = function(**kwargs)
-                cache_time[page_key] = time()
-                log.handler(
-                    "Too few cached results. Function "
-                    + function.__name__
-                    + " re-ran.",
-                    log.INFO,
-                    __logger,
-                )
+                requested_keys.append(cache_key)
 
-        except:
-            # If the search threw an exception, return a cached value.
+            # Search cache for all keys
+            cached_results = cache.get_many(requested_keys)
+
+            # If nothing was in cache, or cache was expired, run function()
+            thread_list = []
+            for cache_key in requested_keys:
+                if not cached_results.__contains__(cache_key):
+                    key = cache_key.split("_")[2][3:]
+                    thread = ReturnThread(
+                        target=function[key]["function"], kwargs=function[key]["kwargs"]
+                    )
+                    thread.start()
+                    thread_list.append((cache_key, thread))
+
+            missing_keys = {}
+            for key, thread in thread_list:
+                missing_keys[key] = thread.join()
+
+            # Set values in cache for any newly executed functions
+            if bool(missing_keys):
+                cache.set_many(missing_keys, cache_duration)
+
+            # Return all results
+            cached_results.update(missing_keys)
+            return cached_results
+
+        # Get the cached value
+        cache_key = clean_string(
+            cache_name + "_kwargs" + str(kwargs) + "_key" + str(page_key)
+        )
+        cached_results = cache.get(cache_key)
+
+        # No function was provided, just return bare cache value
+        if function is None:
+            return cached_results
+
+        # If the user wants to force update the cache, nothing
+        # was in cache, or cache was expired, run function()
+        if cached_results is None or force_update_cache:
+            function_results = function(**kwargs)
+            cache.set(cache_key, function_results, cache_duration)
+            return function_results
+
+        # If a value was in cache and not expired, return that value
+        if cached_results is not None:
+            return cached_results
+
+    except:
+        # If the search threw an exception, return a cached value.
+        if isinstance(function, dict):
+            log.handler(
+                "Function list failed to execute!",
+                log.ERROR,
+                __logger,
+            )
+        else:
             log.handler(
                 "Function " + function.__name__ + " failed to execute!",
                 log.ERROR,
                 __logger,
             )
-            if cache.__contains__(page_key):
-                return cache[page_key]
+        if cached_results is None:
+            return cache.get(cache_key)
 
-            # No cached values to return. Exception must be handled elsewhere.
-            raise
-
-    # Return the values stored in cache
-    return cache[page_key]
+        # No cached values to return. Exception must be handled elsewhere.
+        raise

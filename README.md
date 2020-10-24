@@ -14,10 +14,10 @@
 5. Type `./venv/Scripts/activate` to enter the virtual environment.
 6. Type `pip install -r requirements.txt` to install Python packages within the virtual environment.
 7. Open the project folder in Visual Studio Code (File -> Open Folder).
-8. At the bottom left of VS code, enable the virtual environment called `Python 3.8.5 64-bit ('venv': venv)`.
-9. If your terminal does not show venv (ex. `(venv) ...`), type `./venv/Scripts/Activate`.
-10. Create the Django database by typing `./venv/Scripts/python.exe manage.py migrate`.
-11. Create the Django admin account by typing `./venv/Scripts/python.exe manage.py createsuperuser`.
+8. Open up the terminal within VS code.
+9. Create the Django database by typing `./venv/Scripts/python.exe manage.py migrate`.
+10. Create the Django admin account by typing `./venv/Scripts/python.exe manage.py createsuperuser`.
+11. Create the Django cache by typign `./venv/Scripts/python.exe manage.py createcachetable`
 12. Create a `credentials.json` file at the root of the project folder.
 
     - Must contain the following values:

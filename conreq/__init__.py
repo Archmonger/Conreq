@@ -5,6 +5,8 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.search import Search
 from conreq.settings import DATA_DIR
+from django.core.cache import cache
+
 
 TMDB_KEY = "112fd4c96274603f68620c78067d5422"
 

@@ -30,44 +30,6 @@ class ContentDiscovery:
         # TODO: Obtain this value from the database on init
         tmdb.API_KEY = tmdb_api_key
 
-        # Set up result caching dictionaries
-        # key = page_number, value = page contents
-        self.__popular_movie_cache = {}
-        self.__top_movie_cache = {}
-        self.__popular_tv_cache = {}
-        self.__top_tv_cache = {}
-        self.__discover_movie_cache = {}
-        self.__discover_tv_cache = {}
-        self.__movie_recommendations_cache = {}
-        self.__tv_recommendations_cache = {}
-        self.__movie_genres_cache = {}
-        self.__tv_genres_cache = {}
-        self.__movie_similar_cache = {}
-        self.__tv_similar_cache = {}
-        self.__keyword_id_cache = {}
-        self.__movie_by_id_cache = {}
-        self.__tv_by_id_cache = {}
-        self.__movie_external_id_cache = {}
-        self.__tv_external_id_cache = {}
-        # key = page_number, value = time when cached
-        self.__popular_movie_cache_time = {}
-        self.__top_movie_cache_time = {}
-        self.__popular_tv_cache_time = {}
-        self.__top_tv_cache_time = {}
-        self.__discover_movie_cache_time = {}
-        self.__discover_tv_cache_time = {}
-        self.__movie_recommendations_cache_time = {}
-        self.__tv_recommendations_cache_time = {}
-        self.__movie_genres_cache_time = {}
-        self.__tv_genres_cache_time = {}
-        self.__movie_similar_cache_time = {}
-        self.__tv_similar_cache_time = {}
-        self.__keyword_id_cache_time = {}
-        self.__movie_by_id_cache_time = {}
-        self.__tv_by_id_cache_time = {}
-        self.__movie_external_id_cache_time = {}
-        self.__tv_external_id_cache_time = {}
-
         # Creating a logger (for log files)
         self.__logger = log.get_logger("Content Discovery")
         log.configure(self.__logger, log.DEBUG)
@@ -167,8 +129,7 @@ class ContentDiscovery:
             # Perform a discovery search for a movie
             if content_type.lower() == "movie":
                 return cache.handler(
-                    self.__discover_movie_cache,
-                    self.__discover_movie_cache_time,
+                    "discover movie cache",
                     self.__discover.movie,
                     str(kwargs),
                     **kwargs,
@@ -177,8 +138,7 @@ class ContentDiscovery:
             # Perform a discovery search for a TV show
             if content_type.lower() == "tv":
                 return cache.handler(
-                    self.__discover_tv_cache,
-                    self.__discover_tv_cache_time,
+                    "discover tv cache",
                     self.__discover.tv,
                     str(kwargs),
                     **kwargs,
@@ -272,8 +232,7 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
-                    self.__movie_by_id_cache,
-                    self.__movie_by_id_cache_time,
+                    "movie by id cache",
                     self.__tmdb_movies.info,
                     tmdb_id,
                     append_to_response=extras,
@@ -283,8 +242,7 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 self.__tmdb_tv.id = tmdb_id
                 return cache.handler(
-                    self.__tv_by_id_cache,
-                    self.__tv_by_id_cache_time,
+                    "tv by id cache",
                     self.__tmdb_tv.info,
                     tmdb_id,
                     append_to_response=extras,
@@ -337,8 +295,7 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
-                    self.__movie_external_id_cache,
-                    self.__movie_external_id_cache_time,
+                    "movie external id cache",
                     self.__tmdb_movies.external_ids,
                     tmdb_id,
                 )
@@ -347,8 +304,7 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 self.__tmdb_tv.id = tmdb_id
                 return cache.handler(
-                    self.__tv_external_id_cache,
-                    self.__tv_external_id_cache_time,
+                    "tv external id cache",
                     self.__tmdb_tv.external_ids,
                     tmdb_id,
                 )
@@ -379,8 +335,7 @@ class ContentDiscovery:
             # Obtain a movie's genres
             if content_type.lower() == "movie":
                 return cache.handler(
-                    self.__movie_genres_cache,
-                    self.__movie_genres_cache_time,
+                    "movie genres cache",
                     self.__genres.movie_list,
                     1,
                 )
@@ -388,8 +343,7 @@ class ContentDiscovery:
             # Obtain a TV show's genres
             if content_type.lower() == "tv":
                 return cache.handler(
-                    self.__movie_genres_cache,
-                    self.__movie_genres_cache_time,
+                    "movie genres cache",
                     self.__genres.tv_list,
                     1,
                 )
@@ -523,8 +477,7 @@ class ContentDiscovery:
     def __popular_movies(self, page_number):
         # Obtain disovery results through the movie.popular function. Store results in cache.
         return self.__threaded_multi_page_cached(
-            self.__popular_movie_cache,
-            self.__popular_movie_cache_time,
+            "popular movie cache",
             self.__tmdb_movies.popular,
             page_number,
             "movie",
@@ -533,8 +486,7 @@ class ContentDiscovery:
     def __top_movies(self, page_number):
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
         return self.__threaded_multi_page_cached(
-            self.__top_movie_cache,
-            self.__top_movie_cache_time,
+            "top movie cache",
             self.__tmdb_movies.top_rated,
             page_number,
             "movie",
@@ -543,8 +495,7 @@ class ContentDiscovery:
     def __popular_tv(self, page_number):
         # Obtain disovery results through the tv.popular function. Store results in cache.
         return self.__threaded_multi_page_cached(
-            self.__popular_tv_cache,
-            self.__popular_tv_cache_time,
+            "popular tv cache",
             self.__tmdb_tv.popular,
             page_number,
             "tv",
@@ -553,8 +504,7 @@ class ContentDiscovery:
     def __top_tv(self, page_number):
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
         return self.__threaded_multi_page_cached(
-            self.__top_tv_cache,
-            self.__top_tv_cache_time,
+            "top tv cache",
             self.__tmdb_tv.top_rated,
             page_number,
             "tv",
@@ -573,8 +523,7 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
-                    self.__movie_recommendations_cache,
-                    self.__movie_recommendations_cache_time,
+                    "movie recommendations cache",
                     self.__tmdb_movies.recommendations,
                     str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
@@ -584,8 +533,7 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 self.__tmdb_tv.id = tmdb_id
                 return cache.handler(
-                    self.__tv_recommendations_cache,
-                    self.__tv_recommendations_cache_time,
+                    "tv recommendations cache",
                     self.__tmdb_tv.recommendations,
                     str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
@@ -621,8 +569,7 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
-                    self.__movie_similar_cache,
-                    self.__movie_similar_cache_time,
+                    "movie similar cache",
                     self.__tmdb_movies.similar_movies,
                     str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
@@ -632,8 +579,7 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 self.__tmdb_tv.tmdb_id = tmdb_id
                 return cache.handler(
-                    self.__tv_similar_cache,
-                    self.__tv_similar_cache_time,
+                    "tv similar cache",
                     self.__tmdb_tv.similar,
                     str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
@@ -658,8 +604,7 @@ class ContentDiscovery:
 
     def __threaded_multi_page_cached(
         self,
-        cache_dict,
-        cache_time_dict,
+        cache_name,
         function,
         page_number,
         content_type,
@@ -671,8 +616,7 @@ class ContentDiscovery:
             thread = ReturnThread(
                 target=cache.handler,
                 args=[
-                    cache_dict,
-                    cache_time_dict,
+                    cache_name,
                     function,
                     total_pages - subtractor,
                 ],
@@ -734,8 +678,7 @@ class ContentDiscovery:
                 for keyword in keywords:
                     # Perform a search
                     keyword_search = cache.handler(
-                        self.__keyword_id_cache,
-                        self.__keyword_id_cache_time,
+                        "keyword to id cache",
                         self.__search.keyword,
                         keyword,
                         query=keyword,
@@ -751,8 +694,7 @@ class ContentDiscovery:
             elif len(keywords) >= 1 and isinstance(keywords, str):
                 # Perform a search
                 keyword_search = cache.handler(
-                    self.__keyword_id_cache,
-                    self.__keyword_id_cache_time,
+                    "keyword to id cache",
                     self.__search.keyword,
                     keywords,
                     query=keywords,

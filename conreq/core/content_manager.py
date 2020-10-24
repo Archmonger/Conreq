@@ -36,22 +36,12 @@ class ContentManager:
         self.__sonarr = SonarrAPI(self.__sonarr_url, self.__sonarr_api_key)
         self.__radarr = RadarrAPI(self.__radarr_url, self.__radarr_api_key)
 
-        # Set up result caching dictionaries
-        # key = page_number, value = page contents
-        # TODO: Periodically run a task to re-populate the cache every minute
-        self.__radarr_cache = {}
-        self.__sonarr_cache = {}
-        self.__sonarr_seasons_cache = {}
-        # key = page_number, value = time when cached
-        self.__radarr_cache_time = {}
-        self.__sonarr_cache_time = {}
-        self.__sonarr_seasons_cache_time = {}
-
         # Creating a logger (for log files)
         self.__logger = log.get_logger("Content Discovery")
         log.configure(self.__logger, log.DEBUG)
 
-        self.refresh_content()
+        # Periodically run a task to re-populate the cache every minute
+        Thread(target=self.refresh_content, daemon=True).start()
 
     def get(self, **kwargs):
         """Gets content information and computes the conreqStatus of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
@@ -70,10 +60,8 @@ class ContentManager:
             if kwargs.__contains__("tmdb_id"):
                 # Get Radarr's collection
                 results = cache.handler(
-                    self.__radarr_cache,
-                    self.__radarr_cache_time,
+                    "radarr library cache",
                     self.__get_all_radarr_content,
-                    max_cache_duration=None,
                 )
 
                 # Find our TMDB ID within Radarr
@@ -95,10 +83,8 @@ class ContentManager:
                 # Get Sonarr's collection
 
                 results = cache.handler(
-                    self.__sonarr_cache,
-                    self.__sonarr_cache_time,
+                    "sonarr library cache",
                     self.__get_all_sonarr_content,
-                    max_cache_duration=None,
                 )
 
                 # Find our TVDB ID within Sonarr
@@ -468,21 +454,24 @@ class ContentManager:
         except:
             pass
 
-    def refresh_content(self, cache_duration=60):
+    def refresh_content(self):
         """Refreshes Sonarr and Radarr's content"""
-        cache.handler(
-            self.__radarr_cache,
-            self.__radarr_cache_time,
-            self.__get_all_radarr_content,
-            max_cache_duration=cache_duration,
-        )
+        while 1:
+            cache.handler(
+                "radarr library cache",
+                self.__get_all_radarr_content,
+                cache_duration=None,
+                force_update_cache=True,
+            )
 
-        cache.handler(
-            self.__sonarr_cache,
-            self.__sonarr_cache_time,
-            self.__get_all_sonarr_content,
-            max_cache_duration=cache_duration,
-        )
+            cache.handler(
+                "sonarr library cache",
+                self.__get_all_sonarr_content,
+                cache_duration=None,
+                force_update_cache=True,
+            )
+
+            sleep(60)
 
     def __get_all_radarr_content(self):
         try:
