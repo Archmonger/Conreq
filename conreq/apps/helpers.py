@@ -6,6 +6,7 @@ log.configure(__logger, log.DEBUG)
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
 TMDB_POSTER_300_URL = "https://image.tmdb.org/t/p/w300"
+EXTERNAL_ID_CACHE_TIMEOUT = 6 * 60 * 60
 
 STATIC_CONTEXT_VARS = {
     "available": "Available",
@@ -79,7 +80,9 @@ def set_multi_conreq_status(results):
 
     # Fetch all external IDs at once
     external_id_cache_results = cache.handler(
-        "tv external id cache", external_id_multi_fetch
+        "tv external id cache",
+        external_id_multi_fetch,
+        cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
     )
 
     # Retrieve the external IDs at set the conreq status

@@ -10,6 +10,7 @@ from conreq.core.thread_helper import ReturnThread, threaded_execution
 ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
 FETCH_MULTI_PAGE = 5
+EXTERNAL_ID_CACHE_TIMEOUT = 6 * 60 * 60
 
 
 class ContentDiscovery:
@@ -298,6 +299,7 @@ class ContentDiscovery:
                     "movie external id cache",
                     self.__tmdb_movies.external_ids,
                     tmdb_id,
+                    cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
                 )
 
             # Obtain a TV show's external IDs
@@ -307,6 +309,7 @@ class ContentDiscovery:
                     "tv external id cache",
                     self.__tmdb_tv.external_ids,
                     tmdb_id,
+                    cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
                 )
 
             # Content Type was invalid
