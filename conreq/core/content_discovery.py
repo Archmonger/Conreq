@@ -3,7 +3,7 @@ from random import shuffle
 
 import tmdbsimple as tmdb
 from conreq.core import cache, log
-from conreq.core.generic_tools import clean_string, is_key_value_in_list
+from conreq.core.generic_tools import is_key_value_in_list
 from conreq.core.thread_helper import ReturnThread, threaded_execution
 
 # TODO: Obtain these values from the database on init
@@ -22,13 +22,6 @@ class ContentDiscovery:
 
     def __init__(self, tmdb_api_key):
         # Initialize the TMDB API library
-        self.__tmdb_movies = tmdb.Movies()
-        self.__tmdb_tv = tmdb.TV()
-        self.__search = tmdb.Search()
-        self.__discover = tmdb.Discover()
-        self.__finder = tmdb.Find()
-        self.__genres = tmdb.Genres()
-        self.__collections = tmdb.Collections(id=0)
         # TODO: Obtain this value from the database on init
         tmdb.API_KEY = tmdb_api_key
 
@@ -132,7 +125,7 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 return cache.handler(
                     "discover movie cache",
-                    self.__discover.movie,
+                    tmdb.Discover().movie,
                     str(kwargs),
                     **kwargs,
                 )
@@ -141,7 +134,7 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 return cache.handler(
                     "discover tv cache",
-                    self.__discover.tv,
+                    tmdb.Discover().tv,
                     str(kwargs),
                     **kwargs,
                 )
@@ -212,8 +205,12 @@ class ContentDiscovery:
             return {}
 
     def collections(self, collection_id):
-        self.__collections.id = collection_id
-        return self.__collections.info()
+        """Obtains items in the collection of a given TMDB Collection ID.
+
+        Args:
+            collection_id: An Integer or String containing the TMDB Collection ID.
+        """
+        return tmdb.Collections(collection_id).info()
 
     def get_by_tmdb_id(self, tmdb_id, content_type, obtain_extras=True):
         """Obtains a movie or series given a TMDB ID.
@@ -232,20 +229,18 @@ class ContentDiscovery:
 
             # Obtain a movie by ID
             if content_type.lower() == "movie":
-                self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
                     "movie by id cache",
-                    self.__tmdb_movies.info,
+                    tmdb.Movies(tmdb_id).info,
                     tmdb_id,
                     append_to_response=extras,
                 )
 
             # Obtain a TV show by ID
             if content_type.lower() == "tv":
-                self.__tmdb_tv.id = tmdb_id
                 return cache.handler(
                     "tv by id cache",
-                    self.__tmdb_tv.info,
+                    tmdb.TV(tmdb_id).info,
                     tmdb_id,
                     append_to_response=extras,
                 )
@@ -274,8 +269,7 @@ class ContentDiscovery:
         """
         # TODO: Add caching
         try:
-            self.__finder.id = tvdb_id
-            return self.__finder.info(external_source="tvdb_id")
+            return tmdb.Find(tvdb_id).info(external_source="tvdb_id")
 
         except:
             log.handler(
@@ -295,20 +289,18 @@ class ContentDiscovery:
         try:
             # Obtain a movie's external IDs
             if content_type.lower() == "movie":
-                self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
                     "movie external id cache",
-                    self.__tmdb_movies.external_ids,
+                    tmdb.Movies(tmdb_id).external_ids,
                     tmdb_id,
                     cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
                 )
 
             # Obtain a TV show's external IDs
             if content_type.lower() == "tv":
-                self.__tmdb_tv.id = tmdb_id
                 return cache.handler(
                     "tv external id cache",
-                    self.__tmdb_tv.external_ids,
+                    tmdb.TV(tmdb_id).external_ids,
                     tmdb_id,
                     cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
                 )
@@ -340,7 +332,7 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 return cache.handler(
                     "movie genres cache",
-                    self.__genres.movie_list,
+                    tmdb.Genres().movie_list,
                     1,
                 )
 
@@ -348,7 +340,7 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 return cache.handler(
                     "movie genres cache",
-                    self.__genres.tv_list,
+                    tmdb.Genres().tv_list,
                     1,
                 )
 
@@ -379,8 +371,7 @@ class ContentDiscovery:
         try:
             # TV: Obtain the keywords for a specific ID
             if content_type.lower() == "tv":
-                self.__tmdb_tv.id = tmdb_id
-                api_results = self.__tmdb_tv.keywords()
+                api_results = tmdb.TV(tmdb_id).keywords()
 
                 # Check if the content contains Keyword: Anime
                 if is_key_value_in_list(api_results["results"], "name", "anime"):
@@ -388,7 +379,7 @@ class ContentDiscovery:
 
                 # Check if fallback method is enabled
                 if ANIME_CHECK_FALLBACK:
-                    tv_info = self.__tmdb_tv.info()
+                    tv_info = tmdb.TV(tmdb_id).info()
                     # Check if genere is Animation and Country is Japan
                     if (
                         is_key_value_in_list(tv_info["genres"], "name", "Animation")
@@ -398,8 +389,7 @@ class ContentDiscovery:
 
             # Movies: Obtain the keywords for a specific ID
             elif content_type.lower() == "movie":
-                self.__tmdb_movies.id = tmdb_id
-                api_results = self.__tmdb_movies.keywords()
+                api_results = tmdb.Movies(tmdb_id).keywords()
 
                 # Check if the content contains Keyword: Anime
                 if is_key_value_in_list(api_results["keywords"], "name", "anime"):
@@ -407,7 +397,7 @@ class ContentDiscovery:
 
                 # Check if fallback method is enabled
                 if ANIME_CHECK_FALLBACK:
-                    movie_info = self.__tmdb_movies.info()
+                    movie_info = tmdb.Movies(tmdb_id).info()
 
                     # Check if genere is Animation and Country is Japan
                     if is_key_value_in_list(
@@ -482,7 +472,7 @@ class ContentDiscovery:
         # Obtain disovery results through the movie.popular function. Store results in cache.
         return self.__threaded_multi_page_cached(
             "popular movie cache",
-            self.__tmdb_movies.popular,
+            tmdb.Movies().popular,
             page_number,
             "movie",
         )
@@ -491,7 +481,7 @@ class ContentDiscovery:
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
         return self.__threaded_multi_page_cached(
             "top movie cache",
-            self.__tmdb_movies.top_rated,
+            tmdb.Movies().top_rated,
             page_number,
             "movie",
         )
@@ -500,7 +490,7 @@ class ContentDiscovery:
         # Obtain disovery results through the tv.popular function. Store results in cache.
         return self.__threaded_multi_page_cached(
             "popular tv cache",
-            self.__tmdb_tv.popular,
+            tmdb.TV().popular,
             page_number,
             "tv",
         )
@@ -509,7 +499,7 @@ class ContentDiscovery:
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
         return self.__threaded_multi_page_cached(
             "top tv cache",
-            self.__tmdb_tv.top_rated,
+            tmdb.TV().top_rated,
             page_number,
             "tv",
         )
@@ -525,20 +515,18 @@ class ContentDiscovery:
         # Performs a recommended search
         try:
             if content_type.lower() == "movie":
-                self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
                     "movie recommendations cache",
-                    self.__tmdb_movies.recommendations,
+                    tmdb.Movies(tmdb_id).recommendations,
                     str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
                     language=LANGUAGE,
                 )
 
             if content_type.lower() == "tv":
-                self.__tmdb_tv.id = tmdb_id
                 return cache.handler(
                     "tv recommendations cache",
-                    self.__tmdb_tv.recommendations,
+                    tmdb.TV(tmdb_id).recommendations,
                     str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
                     language=LANGUAGE,
@@ -571,20 +559,18 @@ class ContentDiscovery:
         # Searches for similar content based on id
         try:
             if content_type.lower() == "movie":
-                self.__tmdb_movies.id = tmdb_id
                 return cache.handler(
                     "movie similar cache",
-                    self.__tmdb_movies.similar_movies,
+                    tmdb.Movies(tmdb_id).similar_movies,
                     str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
                     language=LANGUAGE,
                 )
 
             if content_type.lower() == "tv":
-                self.__tmdb_tv.tmdb_id = tmdb_id
                 return cache.handler(
                     "tv similar cache",
-                    self.__tmdb_tv.similar,
+                    tmdb.TV(tmdb_id).similar,
                     str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
                     language=LANGUAGE,
@@ -645,9 +631,8 @@ class ContentDiscovery:
             external_id_multi_fetch = {}
             for result in merged_results["results"]:
                 result["conreq_valid_id"] = True
-                self.__tmdb_tv.id = result["id"]
                 external_id_multi_fetch[str(result["id"])] = {
-                    "function": self.__tmdb_tv.external_ids,
+                    "function": tmdb.TV(result["id"]).external_ids,
                     "kwargs": {},
                     "args": [],
                     "card": result,
@@ -689,7 +674,7 @@ class ContentDiscovery:
                     # Perform a search
                     keyword_search = cache.handler(
                         "keyword to id cache",
-                        self.__search.keyword,
+                        tmdb.Search().keyword,
                         keyword,
                         query=keyword,
                     )["results"]
@@ -705,7 +690,7 @@ class ContentDiscovery:
                 # Perform a search
                 keyword_search = cache.handler(
                     "keyword to id cache",
-                    self.__search.keyword,
+                    tmdb.Search().keyword,
                     keywords,
                     query=keywords,
                 )["results"]
