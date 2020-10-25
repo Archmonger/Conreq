@@ -4,7 +4,7 @@ import os
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.search import Search
-from conreq.settings import DATA_DIR
+from conreq.settings import DATA_DIR, DEBUG
 from django.core.cache import cache
 
 
@@ -29,4 +29,6 @@ content_discovery = ContentDiscovery(TMDB_KEY)
 content_manager = ContentManager(sonarr_url, sonarr_key, radarr_url, radarr_key)
 searcher = Search(sonarr_url, sonarr_key, radarr_url, radarr_key)
 credentials_file.close()
-cache.clear()
+
+if DEBUG:
+    cache.clear()
