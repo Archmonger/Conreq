@@ -7,7 +7,7 @@ from conreq.core.thread_helper import ReturnThread
 from django.core.cache import cache
 
 # TODO: Obtain these values from the database on init
-DEFAULT_CACHE_DURATION = 30 * 60  # Time in seconds
+DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
 
 # Creating a logger (for log files)
 __logger = log.get_logger("Caching")
@@ -36,25 +36,27 @@ def handler(
     cached_results = None
     # Looks through cache and will perform a search if needed.
     try:
+        log.handler(
+            "Accessed cache " + cache_name,
+            log.INFO,
+            __logger,
+        )
+
         # If the function was actually a list, then use set_many and/or get_many
         # All items must belong to the same cache
         # { page_key: {
         #               "function": function_value,
-        #               "kwargs": kwargs_value,
-        #               "cache_key": cache_key_value, (optional)
+        #               "kwargs": {kwargs_value},
+        #               "args": [args_values],
         #             },
         # ... }
         if isinstance(function, dict):
             # Obtain all the keys from the passed in dictionary
             requested_keys = []
             for key, value in function.items():
-                if value.__contains__("cache_key"):
-                    cache_key = value["cache_key"]
-                else:
-                    cache_key = clean_string(
-                        cache_name + "_kwargs" + str(kwargs) + "_key" + str(key)
-                    )
-
+                cache_key = clean_string(
+                    cache_name + "_kwargs" + str(kwargs) + "_key" + str(key)
+                )
                 requested_keys.append(cache_key)
 
             # Search cache for all keys
@@ -66,7 +68,9 @@ def handler(
                 if not cached_results.__contains__(cache_key):
                     key = cache_key.split("_")[2][3:]
                     thread = ReturnThread(
-                        target=function[key]["function"], kwargs=function[key]["kwargs"]
+                        target=function[key]["function"],
+                        args=function[key]["args"],
+                        kwargs=function[key]["kwargs"],
                     )
                     thread.start()
                     thread_list.append((cache_key, thread))

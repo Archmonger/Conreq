@@ -8,7 +8,6 @@ log.configure(__logger, log.DEBUG)
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
 TMDB_POSTER_300_URL = "https://image.tmdb.org/t/p/w300"
-EXTERNAL_ID_CACHE_TIMEOUT = 6 * 60 * 60
 
 STATIC_CONTEXT_VARS = {
     "available": "Available",
@@ -35,12 +34,12 @@ def generate_context(dict1):
 
 
 def __get_external_ids(**kwargs):
-    return content_discovery.get_external_ids(kwargs["id"], kwargs["content_type"])
+    return content_discovery.get_external_ids(
+        kwargs["id"], kwargs["content_type"], no_cache=True
+    )
 
 
-def ___prepare_or_generate_conreq_status(
-    card, radarr_library, sonarr_library, external_id_multi_fetch
-):
+def __set_multi_conreq_status(card, radarr_library, sonarr_library):
     # Sonarr card
     if card.__contains__("tvdbId"):
         if sonarr_library is not None and sonarr_library.__contains__(card["tvdbId"]):
@@ -53,13 +52,12 @@ def ___prepare_or_generate_conreq_status(
 
     # TMDB TV card
     elif card.__contains__("name"):
-        # Create the format to multi-fetch the external IDs from the database
-        external_id_multi_fetch[str(card["id"])] = {
-            "function": __get_external_ids,
-            "cache_key": "tvexternalidcache_kwargs_key" + str(card["id"]),
-            "kwargs": {"id": card["id"], "content_type": "tv"},
-            "card": card,
-        }
+        if (
+            sonarr_library is not None
+            and card.__contains__("tvdb_id")
+            and sonarr_library.__contains__(card["tvdb_id"])
+        ):
+            card["conreqStatus"] = sonarr_library[card["tvdb_id"]]["conreqStatus"]
 
     # TMDB movie card
     elif card.__contains__("title"):
@@ -77,34 +75,16 @@ def set_multi_conreq_status(results):
     )
 
     # Generate conreq status if possible, or get the external ID if a TVDB ID is needed
-    external_id_multi_fetch = {}
     thread_list = []
     for card in results:
         thread = Thread(
-            target=___prepare_or_generate_conreq_status,
-            args=[card, radarr_library, sonarr_library, external_id_multi_fetch],
+            target=__set_multi_conreq_status,
+            args=[card, radarr_library, sonarr_library],
         )
         thread.start()
         thread_list.append(thread)
     for thread in thread_list:
         thread.join()
-
-    # Fetch all external IDs at once
-    external_id_cache_results = cache.handler(
-        "tv external id cache",
-        external_id_multi_fetch,
-        cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
-    )
-
-    # Retrieve the external IDs at set the conreq status
-    for cache_key, external_id_results in external_id_cache_results.items():
-        key = cache_key.split("_")[2][3:]
-        if sonarr_library is not None and sonarr_library.__contains__(
-            external_id_results["tvdb_id"]
-        ):
-            external_id_multi_fetch[key]["card"]["conreqStatus"] = sonarr_library[
-                external_id_results["tvdb_id"]
-            ]["conreqStatus"]
 
     return results
 

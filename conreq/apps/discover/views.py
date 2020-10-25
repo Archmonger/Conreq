@@ -1,6 +1,4 @@
 # from django.shortcuts import render
-from threading import Thread
-
 from conreq import content_discovery
 from conreq.apps.helpers import generate_context, set_multi_conreq_status
 from django.http import HttpResponse

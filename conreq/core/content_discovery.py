@@ -3,14 +3,14 @@ from random import shuffle
 
 import tmdbsimple as tmdb
 from conreq.core import cache, log
-from conreq.core.generic_tools import is_key_value_in_list
+from conreq.core.generic_tools import clean_string, is_key_value_in_list
 from conreq.core.thread_helper import ReturnThread, threaded_execution
 
 # TODO: Obtain these values from the database on init
 ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
 FETCH_MULTI_PAGE = 5
-EXTERNAL_ID_CACHE_TIMEOUT = 6 * 60 * 60
+EXTERNAL_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 MAX_RECOMMENDED_PAGES = 2
 
 
@@ -642,31 +642,37 @@ class ContentDiscovery:
 
         # Determine if TV has a TVDB ID (required for Sonarr)
         elif content_type == "tv":
-            thread_list = []
+            external_id_multi_fetch = {}
             for result in merged_results["results"]:
-                thread = ReturnThread(
-                    target=self.get_external_ids,
-                    args=[
-                        result["id"],
-                        content_type,
-                    ],
-                )
-                thread.start()
-                thread_list.append(thread)
+                result["conreq_valid_id"] = True
+                self.__tmdb_tv.id = result["id"]
+                external_id_multi_fetch[str(result["id"])] = {
+                    "function": self.__tmdb_tv.external_ids,
+                    "kwargs": {},
+                    "args": [],
+                    "card": result,
+                }
+
+            external_id_cache_results = cache.handler(
+                "tv external id cache",
+                external_id_multi_fetch,
+                cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
+            )
 
             # Valid ID defaults to false
             for result in merged_results["results"]:
                 result["conreq_valid_id"] = False
 
-            # Set the external IDs
-            for index, thread in enumerate(thread_list):
-                current_result = merged_results["results"][index]
-                current_result["external_ids"] = thread.join()
-
-                # If it has a valid external id, set conreq_valid_id to True
+            # Set the tvdb_id, and if it exists then this TMDB card has a valid ID
+            for cache_key, external_id_results in external_id_cache_results.items():
+                key = cache_key.split("_")[2][3:]
                 try:
-                    if current_result["external_ids"]["tvdb_id"] is not None:
-                        current_result["conreq_valid_id"] = True
+                    if external_id_results["tvdb_id"] is not None:
+                        external_id_multi_fetch[key]["card"]["conreq_valid_id"] = True
+                        external_id_multi_fetch[key]["card"][
+                            "tvdb_id"
+                        ] = external_id_results["tvdb_id"]
+
                 except:
                     pass
 
