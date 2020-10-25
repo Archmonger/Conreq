@@ -33,13 +33,7 @@ def generate_context(dict1):
     return res
 
 
-def __get_external_ids(**kwargs):
-    return content_discovery.get_external_ids(
-        kwargs["id"], kwargs["content_type"], no_cache=True
-    )
-
-
-def __set_multi_conreq_status(card, radarr_library, sonarr_library):
+def __set_many_conreq_status(card, radarr_library, sonarr_library):
     # Sonarr card
     if card.__contains__("tvdbId"):
         if sonarr_library is not None and sonarr_library.__contains__(card["tvdbId"]):
@@ -65,7 +59,7 @@ def __set_multi_conreq_status(card, radarr_library, sonarr_library):
             card["conreqStatus"] = radarr_library[card["id"]]["conreqStatus"]
 
 
-def set_multi_conreq_status(results):
+def set_many_conreq_status(results):
     # Fetch Sonarr and Radarr libraries
     radarr_library = cache.handler(
         "radarr library cache",
@@ -78,7 +72,7 @@ def set_multi_conreq_status(results):
     thread_list = []
     for card in results:
         thread = Thread(
-            target=__set_multi_conreq_status,
+            target=__set_many_conreq_status,
             args=[card, radarr_library, sonarr_library],
         )
         thread.start()

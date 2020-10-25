@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from conreq import content_discovery
-from conreq.apps.helpers import generate_context, set_multi_conreq_status
+from conreq.apps.helpers import generate_context, set_many_conreq_status
 from django.http import HttpResponse
 from django.template import loader
 
@@ -29,7 +29,7 @@ def discover(request, page=1):
     template = loader.get_template("discover.html")
 
     # Set conreq status for all cards
-    set_multi_conreq_status(tmdb_results)
+    set_many_conreq_status(tmdb_results)
 
     context = generate_context(
         {

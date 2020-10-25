@@ -6,7 +6,7 @@ from conreq.apps.helpers import (
     TMDB_BACKDROP_URL,
     TMDB_POSTER_300_URL,
     generate_context,
-    set_multi_conreq_status,
+    set_many_conreq_status,
     set_single_conreq_status,
 )
 from conreq.core.generic_tools import is_key_value_in_list
@@ -230,7 +230,7 @@ def more_info(request):
             tmdb_recommended = None
 
         thread = Thread(
-            target=set_multi_conreq_status, args=[tmdb_recommended["results"]]
+            target=set_many_conreq_status, args=[tmdb_recommended["results"]]
         )
         thread.start()
         thread_list.append(thread)

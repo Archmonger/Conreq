@@ -2,7 +2,7 @@
 from threading import Thread
 
 from conreq import content_discovery, searcher
-from conreq.apps.helpers import set_multi_conreq_status, generate_context
+from conreq.apps.helpers import set_many_conreq_status, generate_context
 from django.http import HttpResponse
 from django.template import loader
 
@@ -46,7 +46,7 @@ def search(request):
         thread.join()
 
     # Generate conreq status
-    set_multi_conreq_status(arr_results)
+    set_many_conreq_status(arr_results)
 
     context = generate_context(
         {
