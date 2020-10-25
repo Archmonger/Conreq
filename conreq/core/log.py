@@ -100,11 +100,6 @@ def console_stream(logger, level):
         logger: A logger objected obtained from logging.getLogger().
         level: Logging module log level (ex. logging.WARNING)
     """
-    # Remove old stream handler
-    for handle in logger.handlers[:]:
-        if isinstance(handle, logging.StreamHandler):
-            logger.removeHandler(handle)
-
     # Configure new stream handler
     formatter = logging.Formatter(LOG_FORMAT)
     stream_handler = logging.StreamHandler()
