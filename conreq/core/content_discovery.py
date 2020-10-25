@@ -11,6 +11,7 @@ ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
 FETCH_MULTI_PAGE = 5
 EXTERNAL_ID_CACHE_TIMEOUT = 6 * 60 * 60
+MAX_RECOMMENDED_PAGES = 2
 
 
 class ContentDiscovery:
@@ -172,7 +173,7 @@ class ContentDiscovery:
 
             # Gather up to 9 additional recommended pages
             for page_number in range(1, recommend_page_one["total_pages"]):
-                if page_number <= 5:
+                if page_number <= MAX_RECOMMENDED_PAGES:
                     thread = ReturnThread(
                         target=self.__recommended,
                         args=[tmdb_id, content_type, page_number],
@@ -185,7 +186,7 @@ class ContentDiscovery:
 
             # Gather up to 9 additional similar pages
             for page_number in range(1, similar_page_one["total_pages"]):
-                if page_number <= 5:
+                if page_number <= MAX_RECOMMENDED_PAGES:
                     thread = ReturnThread(
                         target=self.__similar, args=[tmdb_id, content_type, page_number]
                     )

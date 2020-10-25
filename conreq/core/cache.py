@@ -77,9 +77,7 @@ def handler(
 
             # Set values in cache for any newly executed functions
             if bool(missing_keys):
-                Thread(
-                    target=cache.set_many, args=[missing_keys, cache_duration]
-                ).start()
+                cache.set_many(missing_keys, cache_duration)
 
             # Return all results
             cached_results.update(missing_keys)
