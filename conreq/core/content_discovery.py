@@ -197,15 +197,7 @@ class ContentDiscovery:
             for thread in thread_list:
                 merged_results = self.__merge_results(merged_results, thread.join())
 
-            # If it's TV recommendations, we need to get the TVDB IDs
-            # in order to determine conreq status later
-            if content_type == "tv":
-                self.determine_tvdb_id(merged_results)
-
-            # If its a movie, the ID is already valid
-            if content_type == "movie":
-                for result in merged_results["results"]:
-                    result["conreq_valid_id"] = True
+            self.determine_id_validity(merged_results)
 
             # Shuffle and return
             return self.__shuffle_results(merged_results)
@@ -446,6 +438,56 @@ class ContentDiscovery:
             )
             return False
 
+    def determine_id_validity(self, tmdb_response):
+        # Needed because TVDB IDs are required for Sonarr
+        external_id_multi_fetch = {}
+
+        # Create a list of all needed IDs
+        for result in tmdb_response["results"]:
+            # Sonarr card
+            if result.__contains__("tvdbId"):
+                result["conreq_valid_id"] = True
+
+            # Radarr card
+            elif result.__contains__("tmdbId"):
+                result["conreq_valid_id"] = True
+
+            # TMDB TV card
+            elif result.__contains__("name"):
+                # Valid ID defaults to false until a TVDB match is determined
+                result["conreq_valid_id"] = False
+                external_id_multi_fetch[str(result["id"])] = {
+                    "function": tmdb.TV(result["id"]).external_ids,
+                    "kwargs": {},
+                    "args": [],
+                    "card": result,
+                }
+
+            # TMDB Movie card
+            elif result.__contains__("title"):
+                result["conreq_valid_id"] = True
+
+        # Grab external IDs if needed
+        external_id_cache_results = cache.handler(
+            "tv external id cache",
+            external_id_multi_fetch,
+            cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
+        )
+
+        # Set the tvdb_id, and if it exists then this TMDB card has a valid ID
+        if external_id_cache_results is not None:
+            for cache_key, external_id_results in external_id_cache_results.items():
+                key = cache_key.split("_")[2][3:]
+                try:
+                    if external_id_results["tvdb_id"] is not None:
+                        external_id_multi_fetch[key]["card"]["conreq_valid_id"] = True
+                        external_id_multi_fetch[key]["card"][
+                            "tvdb_id"
+                        ] = external_id_results["tvdb_id"]
+
+                except:
+                    pass
+
     # Private Class Methods
     def __all(self, page_number):
         # Merge popular_movies, popular_tv, top_movies, and top_tv results together
@@ -641,61 +683,9 @@ class ContentDiscovery:
                 result["conreq_valid_id"] = True
 
         # Determine if TV has a TVDB ID (required for Sonarr)
-        elif content_type == "tv":
-            self.determine_tvdb_id(merged_results)
+        self.determine_id_validity(merged_results)
 
         return merged_results
-
-    def determine_tvdb_id(self, tmdb_response):
-        # Needed because TVDB IDs are required for Sonarr
-        external_id_multi_fetch = {}
-
-        # Create a list of all needed IDs
-        for result in tmdb_response["results"]:
-            # Sonarr card
-            if result.__contains__("tvdbId"):
-                pass
-
-            # Radarr card
-            elif result.__contains__("tmdbId"):
-                pass
-
-            # TMDB TV card
-            elif result.__contains__("name"):
-                result["conreq_valid_id"] = True
-                external_id_multi_fetch[str(result["id"])] = {
-                    "function": tmdb.TV(result["id"]).external_ids,
-                    "kwargs": {},
-                    "args": [],
-                    "card": result,
-                }
-
-            # TMDB Movie card
-            elif result.__contains__("title"):
-                pass
-
-        external_id_cache_results = cache.handler(
-            "tv external id cache",
-            external_id_multi_fetch,
-            cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
-        )
-
-        # Valid ID defaults to false
-        for result in tmdb_response["results"]:
-            result["conreq_valid_id"] = False
-
-        # Set the tvdb_id, and if it exists then this TMDB card has a valid ID
-        for cache_key, external_id_results in external_id_cache_results.items():
-            key = cache_key.split("_")[2][3:]
-            try:
-                if external_id_results["tvdb_id"] is not None:
-                    external_id_multi_fetch[key]["card"]["conreq_valid_id"] = True
-                    external_id_multi_fetch[key]["card"][
-                        "tvdb_id"
-                    ] = external_id_results["tvdb_id"]
-
-            except:
-                pass
 
     def __keywords_to_ids(self, keywords):
         # Turn a keyword string or a list of keywords into a TMDB keyword ID number

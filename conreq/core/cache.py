@@ -49,67 +49,75 @@ def handler(
         #             },
         # ... }
         if isinstance(function, dict):
-            # Obtain all the keys from the passed in dictionary
-            requested_keys = []
-            for key, value in function.items():
-                cache_key = clean_string(
-                    cache_name + "_kwargs" + str(kwargs) + "_key" + str(key)
-                )
-                log.handler(
-                    cache_name + " multi-execution generated cache key " + cache_key,
-                    log.DEBUG,
-                    __logger,
-                )
-                requested_keys.append(cache_key)
-
-            # Search cache for all keys
-            cached_results = cache.get_many(requested_keys)
-            log.handler(
-                cache_name + " multi-execution available keys: " + str(len(cache_key)),
-                log.DEBUG,
-                __logger,
-            )
-
-            # If nothing was in cache, or cache was expired, run function()
-            thread_list = []
-            for cache_key in requested_keys:
-                if not cached_results.__contains__(cache_key):
-                    key = cache_key.split("_")[2][3:]
-                    thread = ReturnThread(
-                        target=function[key]["function"],
-                        args=function[key]["args"],
-                        kwargs=function[key]["kwargs"],
+            if len(function) == 0:
+                # Nothing was passed in
+                return None
+            else:
+                # Obtain all the keys from the passed in dictionary
+                requested_keys = []
+                for key, value in function.items():
+                    cache_key = clean_string(
+                        cache_name + "_kwargs" + str(kwargs) + "_key" + str(key)
                     )
-                    thread.start()
-                    thread_list.append((cache_key, thread))
+                    log.handler(
+                        cache_name
+                        + " multi-execution generated cache key "
+                        + cache_key,
+                        log.DEBUG,
+                        __logger,
+                    )
+                    requested_keys.append(cache_key)
 
-            missing_keys = {}
-            for key, thread in thread_list:
-                missing_keys[key] = thread.join()
-
-            # Set values in cache for any newly executed functions
-            if bool(missing_keys):
+                # Search cache for all keys
+                cached_results = cache.get_many(requested_keys)
                 log.handler(
                     cache_name
-                    + " multi-execution missing keys: "
-                    + str(len(missing_keys)),
+                    + " multi-execution available keys: "
+                    + str(len(cache_key)),
                     log.DEBUG,
                     __logger,
                 )
-                cache.set_many(missing_keys, cache_duration)
 
-            # Return all results
-            cached_results.update(missing_keys)
+                # If nothing was in cache, or cache was expired, run function()
+                thread_list = []
+                for cache_key in requested_keys:
+                    if not cached_results.__contains__(cache_key):
+                        key = cache_key.split("_")[2][3:]
+                        thread = ReturnThread(
+                            target=function[key]["function"],
+                            args=function[key]["args"],
+                            kwargs=function[key]["kwargs"],
+                        )
+                        thread.start()
+                        thread_list.append((cache_key, thread))
 
-            # If results were none, log it.
-            if cached_results is None:
-                log.handler(
-                    cache_name + " multi-execution had no results!",
-                    log.WARNING,
-                    __logger,
-                )
+                missing_keys = {}
+                for key, thread in thread_list:
+                    missing_keys[key] = thread.join()
 
-            return cached_results
+                # Set values in cache for any newly executed functions
+                if bool(missing_keys):
+                    log.handler(
+                        cache_name
+                        + " multi-execution missing keys: "
+                        + str(len(missing_keys)),
+                        log.DEBUG,
+                        __logger,
+                    )
+                    cache.set_many(missing_keys, cache_duration)
+
+                # Return all results
+                cached_results.update(missing_keys)
+
+                # If results were none, log it.
+                if cached_results is None:
+                    log.handler(
+                        cache_name + " multi-execution had no results!",
+                        log.WARNING,
+                        __logger,
+                    )
+
+                return cached_results
 
         # Get the cached value
         cache_key = clean_string(

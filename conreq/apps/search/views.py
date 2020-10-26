@@ -46,7 +46,7 @@ def search(request):
         thread.join()
 
     # Generate conreq status
-    content_discovery.determine_tvdb_id({"results": arr_results})
+    content_discovery.determine_id_validity({"results": arr_results})
     set_many_conreq_status(arr_results)
 
     context = generate_context(

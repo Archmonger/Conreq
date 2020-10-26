@@ -223,12 +223,12 @@ def more_info(request):
         else:
             tmdb_collection = None
 
-        # Checking Conreq status for all recommended content
+        # Recommended content
         tmdb_recommended = similar_and_recommended_thread.join()
-        # Recommended Content
         if isinstance(tmdb_recommended, list) and len(tmdb_recommended) == 0:
             tmdb_recommended = None
 
+        # Checking Conreq status for all recommended content
         thread = Thread(
             target=set_many_conreq_status, args=[tmdb_recommended["results"]]
         )
