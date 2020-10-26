@@ -193,6 +193,11 @@ class ContentDiscovery:
             for thread in thread_list:
                 merged_results = self.__merge_results(merged_results, thread.join())
 
+            # If it's TV recommendations, we need to get the TVDB IDs
+            # in order to determine conreq status later
+            if content_type == "tv":
+                self.__determine_tvdb_id(merged_results)
+
             # Shuffle and return
             return self.__shuffle_results(merged_results)
 
@@ -628,40 +633,46 @@ class ContentDiscovery:
 
         # Determine if TV has a TVDB ID (required for Sonarr)
         elif content_type == "tv":
-            external_id_multi_fetch = {}
-            for result in merged_results["results"]:
-                result["conreq_valid_id"] = True
-                external_id_multi_fetch[str(result["id"])] = {
-                    "function": tmdb.TV(result["id"]).external_ids,
-                    "kwargs": {},
-                    "args": [],
-                    "card": result,
-                }
-
-            external_id_cache_results = cache.handler(
-                "tv external id cache",
-                external_id_multi_fetch,
-                cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
-            )
-
-            # Valid ID defaults to false
-            for result in merged_results["results"]:
-                result["conreq_valid_id"] = False
-
-            # Set the tvdb_id, and if it exists then this TMDB card has a valid ID
-            for cache_key, external_id_results in external_id_cache_results.items():
-                key = cache_key.split("_")[2][3:]
-                try:
-                    if external_id_results["tvdb_id"] is not None:
-                        external_id_multi_fetch[key]["card"]["conreq_valid_id"] = True
-                        external_id_multi_fetch[key]["card"][
-                            "tvdb_id"
-                        ] = external_id_results["tvdb_id"]
-
-                except:
-                    pass
+            self.__determine_tvdb_id(merged_results)
 
         return merged_results
+
+    def __determine_tvdb_id(self, tmdb_response):
+        # Needed because TVDB IDs are required for Sonarr
+        external_id_multi_fetch = {}
+
+        # Create a list of all needed IDs
+        for result in tmdb_response["results"]:
+            result["conreq_valid_id"] = True
+            external_id_multi_fetch[str(result["id"])] = {
+                "function": tmdb.TV(result["id"]).external_ids,
+                "kwargs": {},
+                "args": [],
+                "card": result,
+            }
+
+        external_id_cache_results = cache.handler(
+            "tv external id cache",
+            external_id_multi_fetch,
+            cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
+        )
+
+        # Valid ID defaults to false
+        for result in tmdb_response["results"]:
+            result["conreq_valid_id"] = False
+
+        # Set the tvdb_id, and if it exists then this TMDB card has a valid ID
+        for cache_key, external_id_results in external_id_cache_results.items():
+            key = cache_key.split("_")[2][3:]
+            try:
+                if external_id_results["tvdb_id"] is not None:
+                    external_id_multi_fetch[key]["card"]["conreq_valid_id"] = True
+                    external_id_multi_fetch[key]["card"][
+                        "tvdb_id"
+                    ] = external_id_results["tvdb_id"]
+
+            except:
+                pass
 
     def __keywords_to_ids(self, keywords):
         # Turn a keyword string or a list of keywords into a TMDB keyword ID number

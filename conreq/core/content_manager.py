@@ -61,7 +61,7 @@ class ContentManager:
                 # Get Radarr's collection
                 results = cache.handler(
                     "radarr library cache",
-                    self.__get_all_radarr_content,
+                    self.get_all_radarr_content,
                 )
 
                 # Find our TMDB ID within Radarr
@@ -84,7 +84,7 @@ class ContentManager:
 
                 results = cache.handler(
                     "sonarr library cache",
-                    self.__get_all_sonarr_content,
+                    self.get_all_sonarr_content,
                 )
 
                 # Find our TVDB ID within Sonarr
@@ -459,21 +459,21 @@ class ContentManager:
         while 1:
             cache.handler(
                 "radarr library cache",
-                self.__get_all_radarr_content,
-                cache_duration=None,
+                self.get_all_radarr_content,
+                cache_duration=60,
                 force_update_cache=True,
             )
 
             cache.handler(
                 "sonarr library cache",
-                self.__get_all_sonarr_content,
-                cache_duration=None,
+                self.get_all_sonarr_content,
+                cache_duration=60,
                 force_update_cache=True,
             )
 
             sleep(60)
 
-    def __get_all_radarr_content(self):
+    def get_all_radarr_content(self):
         try:
             # Get the latest list of Radarr's collection
             results = self.__radarr.getMovie()
@@ -496,7 +496,7 @@ class ContentManager:
             )
             return None
 
-    def __get_all_sonarr_content(self, get_seasons=False):
+    def get_all_sonarr_content(self, get_seasons=False):
         try:
             # Get the latest list of Sonarr's collection
             results = self.__sonarr.getSeries()

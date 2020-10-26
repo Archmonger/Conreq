@@ -63,9 +63,13 @@ def set_many_conreq_status(results):
     # Fetch Sonarr and Radarr libraries
     radarr_library = cache.handler(
         "radarr library cache",
+        function=content_manager.get_all_radarr_content,
+        cache_duration=70,
     )
     sonarr_library = cache.handler(
         "sonarr library cache",
+        function=content_manager.get_all_sonarr_content,
+        cache_duration=70,
     )
 
     # Generate conreq status if possible, or get the external ID if a TVDB ID is needed
