@@ -98,8 +98,8 @@ MIDDLEWARE = [
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "cache",
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(DATA_DIR, "cache"),
     }
 }
 
@@ -131,7 +131,9 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
-        "timeout": 30,
+        "OPTIONS": {
+            "timeout": 30,
+        },
     }
 }
 
