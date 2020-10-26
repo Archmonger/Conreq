@@ -198,6 +198,11 @@ class ContentDiscovery:
             if content_type == "tv":
                 self.__determine_tvdb_id(merged_results)
 
+            # If its a movie, the ID is already valid
+            if content_type == "movie":
+                for result in merged_results["results"]:
+                    result["conreq_valid_id"] = True
+
             # Shuffle and return
             return self.__shuffle_results(merged_results)
 
