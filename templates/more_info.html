@@ -196,7 +196,7 @@
                             </div>
                             <div class="recommended-outer-container carousel-outer-container">
                                 <div class="recommended-inner-container carousel-inner-container">
-                                    {% for card in recommended.results %} {% if card.poster_path %}
+                                    {% for card in recommended.results %} {% if card.poster_path and card.conreq_valid_id %}
                                     <div class="posterContainer-wrapper">
                                         {% include "tmdb_poster_card.html" %}
                                     </div>
