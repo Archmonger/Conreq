@@ -11,7 +11,8 @@ ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
 FETCH_MULTI_PAGE = 5
 EXTERNAL_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
-MAX_RECOMMENDED_PAGES = 5
+MAX_RECOMMENDED_PAGES = 7
+MAX_SIMILAR_PAGES = 1
 
 
 class ContentDiscovery:
@@ -164,27 +165,30 @@ class ContentDiscovery:
             # Get recommended page one
             recommend_page_one = self.__recommended(tmdb_id, content_type, 1)
 
-            # Gather up to 9 additional recommended pages
-            for page_number in range(1, recommend_page_one["total_pages"]):
-                if page_number <= MAX_RECOMMENDED_PAGES:
-                    thread = ReturnThread(
-                        target=self.__recommended,
-                        args=[tmdb_id, content_type, page_number],
-                    )
-                    thread.start()
-                    thread_list.append(thread)
+            # Gather additional recommended pages
+            if recommend_page_one["total_pages"] > 1:
+                for page_number in range(2, recommend_page_one["total_pages"]):
+                    if page_number <= MAX_RECOMMENDED_PAGES:
+                        thread = ReturnThread(
+                            target=self.__recommended,
+                            args=[tmdb_id, content_type, page_number],
+                        )
+                        thread.start()
+                        thread_list.append(thread)
 
             # Get similar page one
             similar_page_one = self.__similar(tmdb_id, content_type, 1)
 
-            # Gather up to 9 additional similar pages
-            for page_number in range(1, similar_page_one["total_pages"]):
-                if page_number <= MAX_RECOMMENDED_PAGES:
-                    thread = ReturnThread(
-                        target=self.__similar, args=[tmdb_id, content_type, page_number]
-                    )
-                    thread.start()
-                    thread_list.append(thread)
+            # Gather up additional similar pages
+            if similar_page_one["total_pages"] > 1:
+                for page_number in range(2, similar_page_one["total_pages"]):
+                    if page_number <= MAX_SIMILAR_PAGES:
+                        thread = ReturnThread(
+                            target=self.__similar,
+                            args=[tmdb_id, content_type, page_number],
+                        )
+                        thread.start()
+                        thread_list.append(thread)
 
             # Merge results of the first page of similar and recommended
             merged_results = self.__merge_results(recommend_page_one, similar_page_one)
