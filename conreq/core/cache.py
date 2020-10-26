@@ -1,6 +1,4 @@
 """Conreq Caching: Simplified caching module."""
-from threading import Thread
-
 from conreq.core import log
 from conreq.core.generic_tools import clean_string
 from conreq.core.thread_helper import ReturnThread
@@ -38,7 +36,7 @@ def handler(
     try:
         log.handler(
             "Accessed cache " + cache_name,
-            log.INFO,
+            log.DEBUG,
             __logger,
         )
 
@@ -57,10 +55,20 @@ def handler(
                 cache_key = clean_string(
                     cache_name + "_kwargs" + str(kwargs) + "_key" + str(key)
                 )
+                log.handler(
+                    cache_name + " multi-execution generated cache key " + cache_key,
+                    log.DEBUG,
+                    __logger,
+                )
                 requested_keys.append(cache_key)
 
             # Search cache for all keys
             cached_results = cache.get_many(requested_keys)
+            log.handler(
+                cache_name + " multi-execution available keys: " + str(len(cache_key)),
+                log.DEBUG,
+                __logger,
+            )
 
             # If nothing was in cache, or cache was expired, run function()
             thread_list = []
@@ -81,32 +89,69 @@ def handler(
 
             # Set values in cache for any newly executed functions
             if bool(missing_keys):
+                log.handler(
+                    cache_name
+                    + " multi-execution missing keys: "
+                    + str(len(missing_keys)),
+                    log.DEBUG,
+                    __logger,
+                )
                 cache.set_many(missing_keys, cache_duration)
 
             # Return all results
             cached_results.update(missing_keys)
+
+            # If results were none, log it.
+            if cached_results is None:
+                log.handler(
+                    cache_name + " multi-execution had no results!",
+                    log.WARNING,
+                    __logger,
+                )
+
             return cached_results
 
         # Get the cached value
         cache_key = clean_string(
             cache_name + "_kwargs" + str(kwargs) + "_key" + str(page_key)
         )
+        log.handler(
+            cache_name + " generated cache key " + cache_key,
+            log.DEBUG,
+            __logger,
+        )
         cached_results = cache.get(cache_key)
 
         # No function was provided, just return bare cache value
         if function is None:
+            log.handler(
+                cache_name + " requested raw cache values.",
+                log.DEBUG,
+                __logger,
+            )
             return cached_results
 
         # If the user wants to force update the cache, nothing
         # was in cache, or cache was expired, run function()
         if cached_results is None or force_update_cache:
             function_results = function(**kwargs)
+            log.handler(
+                cache_name + " function " + function.__name__ + " executed!",
+                log.INFO,
+                __logger,
+            )
             cache.set(cache_key, function_results, cache_duration)
             return function_results
 
+        if cached_results is None:
+            log.handler(
+                cache_name + " is not in the cache handler!",
+                log.INFO,
+                __logger,
+            )
+
         # If a value was in cache and not expired, return that value
-        if cached_results is not None:
-            return cached_results
+        return cached_results
 
     except:
         # If the search threw an exception, return a cached value.
@@ -122,8 +167,5 @@ def handler(
                 log.ERROR,
                 __logger,
             )
-        if cached_results is None:
-            return cache.get(cache_key)
 
-        # No cached values to return. Exception must be handled elsewhere.
-        raise
+        return cache.get(cache_key)
