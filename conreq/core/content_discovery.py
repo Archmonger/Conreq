@@ -200,7 +200,7 @@ class ContentDiscovery:
             # If it's TV recommendations, we need to get the TVDB IDs
             # in order to determine conreq status later
             if content_type == "tv":
-                self.__determine_tvdb_id(merged_results)
+                self.determine_tvdb_id(merged_results)
 
             # If its a movie, the ID is already valid
             if content_type == "movie":
@@ -642,23 +642,37 @@ class ContentDiscovery:
 
         # Determine if TV has a TVDB ID (required for Sonarr)
         elif content_type == "tv":
-            self.__determine_tvdb_id(merged_results)
+            self.determine_tvdb_id(merged_results)
 
         return merged_results
 
-    def __determine_tvdb_id(self, tmdb_response):
+    def determine_tvdb_id(self, tmdb_response):
         # Needed because TVDB IDs are required for Sonarr
         external_id_multi_fetch = {}
 
         # Create a list of all needed IDs
         for result in tmdb_response["results"]:
-            result["conreq_valid_id"] = True
-            external_id_multi_fetch[str(result["id"])] = {
-                "function": tmdb.TV(result["id"]).external_ids,
-                "kwargs": {},
-                "args": [],
-                "card": result,
-            }
+            # Sonarr card
+            if result.__contains__("tvdbId"):
+                pass
+
+            # Radarr card
+            elif result.__contains__("tmdbId"):
+                pass
+
+            # TMDB TV card
+            elif result.__contains__("name"):
+                result["conreq_valid_id"] = True
+                external_id_multi_fetch[str(result["id"])] = {
+                    "function": tmdb.TV(result["id"]).external_ids,
+                    "kwargs": {},
+                    "args": [],
+                    "card": result,
+                }
+
+            # TMDB Movie card
+            elif result.__contains__("title"):
+                pass
 
         external_id_cache_results = cache.handler(
             "tv external id cache",
