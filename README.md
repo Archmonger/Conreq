@@ -17,7 +17,7 @@
 8. Open up the terminal within VS code.
 9. Create the Django database by typing `./venv/Scripts/python.exe manage.py migrate`.
 10. Create the Django admin account by typing `./venv/Scripts/python.exe manage.py createsuperuser`.
-11 Create a `credentials.json` file at the root of the project folder.
+11. Create a `credentials.json` file at the root of the project folder.
 
     - Must contain the following values:
     - ```json
@@ -30,7 +30,7 @@
       }
       ```
 
-13. Run the Django project by typing `./venv/Scripts/python.exe manage.py runserver`
+12. Run the Django project by typing `./venv/Scripts/python.exe manage.py runserver`
 
 ## Visual Studio Code Extensions (Optional)
 
