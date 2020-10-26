@@ -31,4 +31,7 @@ searcher = Search(sonarr_url, sonarr_key, radarr_url, radarr_key)
 credentials_file.close()
 
 if DEBUG:
-    cache.clear()
+    try:
+        cache.clear()
+    except:
+        pass
