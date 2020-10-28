@@ -3,41 +3,50 @@
     <div id="navpages" class="navpages">
         <div id="navpages-availablePages" class="navpages-availablePages">
 
-            <a class="navpages-page group discover nav-link" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">Request<i id="discover-fa"
+            <a class="navpages-page group discover nav-link" data-toggle="collapse" data-target="#discover-tabs"
+                aria-expanded="true" aria-controls="discover-tabs">Request<i id="discover-fa"
                     class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="discover-tabs">
-                <a href="/discover/" class="navpages-page suboption discover {% if active_tab == discover %}active{% endif %}">Discover
+                <a href="/discover/"
+                    class="navpages-page suboption discover {% if active_tab == discover %}active{% endif %}">Discover
                     <i class="fas fa-filter"></i></a>
-                <a href="/discover/?content_type=tv" class="navpages-page suboption tv-shows {% if active_tab == tv_shows %}active{% endif %}">TV
+                <a href="/discover/?content_type=tv"
+                    class="navpages-page suboption tv-shows {% if active_tab == tv_shows %}active{% endif %}">TV
                     Shows
                     <i class="fas fa-filter"></i></a>
-                <a href="/discover/?content_type=movie" class="navpages-page suboption movies {% if active_tab == movies %}active{% endif %}">Movies
+                <a href="/discover/?content_type=movie"
+                    class="navpages-page suboption movies {% if active_tab == movies %}active{% endif %}">Movies
                     <i class="fas fa-filter"></i></a>
             </div>
 
-            <a class="navpages-page group user nav-link" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true" aria-controls="user-tabs">User Options<i id="user-fa"
+            <a class="navpages-page group user nav-link" data-toggle="collapse" data-target="#user-tabs"
+                aria-expanded="true" aria-controls="user-tabs">User Options<i id="user-fa"
                     class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="user-tabs">
                 <a href="#" class="navpages-page suboption user {% if active_tab == my_requests %}active{% endif %}">My
                     Requests</a>
-                <a href="#" class="navpages-page suboption user {% if active_tab == report_issue %}active{% endif %}">Report
-                    Issue</a>
-                <a href="#" class="navpages-page suboption user">Log Out</a>
+                <a href="#" class="navpages-page suboption user {% if active_tab == my_issues %}active{% endif %}">My
+                    Issues</a>
+                <a href="#" class="navpages-page suboption user">Sign Out</a>
             </div>
 
-            <a class="navpages-page group admin nav-link" data-toggle="collapse" data-target="#admin-tabs" aria-expanded="true" aria-controls="admin-tabs">Admin<i id="admin-fa" class="fas fa-angle-up"></i></a>
+            <a class="navpages-page group admin nav-link" data-toggle="collapse" data-target="#admin-tabs"
+                aria-expanded="true" aria-controls="admin-tabs">Admin<i id="admin-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="admin-tabs">
-                <a href="#" class="navpages-page suboption admin {% if active_tab == manage_users %}active{% endif %}">Manage
+                <a href="#"
+                    class="navpages-page suboption admin {% if active_tab == manage_users %}active{% endif %}">Manage
                     Users</a>
-                <a href="#" class="navpages-page suboption admin {% if active_tab == send_mass_email %}active{% endif %}">Send
-                    Mass Email</a>
-                <a href="#" class="navpages-page suboption admin {% if active_tab == view_all_requests %}active{% endif %}">View
+                <a href="#" class="navpages-page suboption admin {% if active_tab == email_users %}active{% endif %}">
+                    Email User(s)</a>
+                <a href="#" class="navpages-page suboption admin {% if active_tab == all_requests %}active{% endif %}">
                     All Requests</a>
-                <a href="#" class="navpages-page suboption admin {% if active_tab == view_all_issues %}active{% endif %}">View
+                <a href="#" class="navpages-page suboption admin {% if active_tab == all_issues %}active{% endif %}">
                     All Issues</a>
-                <a href="#" class="navpages-page suboption admin {% if active_tab == task_queue %}active{% endif %}">Task
+                <a href="#"
+                    class="navpages-page suboption admin {% if active_tab == task_queue %}active{% endif %}">Task
                     Queue</a>
-                <a href="#" class="navpages-page suboption admin {% if active_tab == settings %}active{% endif %}">Settings</a>
+                <a href="#"
+                    class="navpages-page suboption admin {% if active_tab == settings %}active{% endif %}">Settings</a>
             </div>
 
         </div>
