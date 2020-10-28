@@ -300,6 +300,7 @@ button:focus {
     font-family: var(--global-font);
     font-weight: 300;
     box-shadow: var(--box-shadow);
+    display: block !important;
 }
 
 .sidebar .navpages {

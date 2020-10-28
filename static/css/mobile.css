@@ -54,8 +54,21 @@
         display: none;
     }
     .sidebar {
-        z-index: 1;
-        opacity: 0;
+        top: var(--navbar-height);
+        z-index: 9999;
+        height: calc(100vh - var(--navbar-height));
+        display: none !important;
+        overflow-y: overlay;
+    }
+    .sidebar.collapse:not(.show) {
+        display: none !important;
+    }
+    .sidebar.collapsing {
+        display: block !important;
+        overflow-y: hidden;
+    }
+    .sidebar.show {
+        display: block !important;
     }
     .viewport {
         z-index: 4;
