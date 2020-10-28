@@ -21,10 +21,10 @@ class ContentDiscovery:
         tmdb_api_key: String containing the TMDB API key.
     """
 
-    def __init__(self, tmdb_api_key):
+    def __init__(self):
         # Initialize the TMDB API library
         # TODO: Obtain this value from the database on init
-        tmdb.API_KEY = tmdb_api_key
+        tmdb.API_KEY = "112fd4c96274603f68620c78067d5422"
 
         # Creating a logger (for log files)
         self.__logger = log.get_logger("Content Discovery")

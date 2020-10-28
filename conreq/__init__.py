@@ -25,7 +25,7 @@ try:
 except:
     raise
 
-content_discovery = ContentDiscovery(TMDB_KEY)
+content_discovery = ContentDiscovery()
 content_manager = ContentManager(sonarr_url, sonarr_key, radarr_url, radarr_key)
 searcher = Search(sonarr_url, sonarr_key, radarr_url, radarr_key)
 credentials_file.close()
