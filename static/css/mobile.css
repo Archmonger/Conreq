@@ -57,24 +57,30 @@
         top: var(--navbar-height);
         z-index: 9999;
         height: calc(100vh - var(--navbar-height));
+        max-height: calc(100vh - var(--navbar-height));
+        min-height: calc(100vh - var(--navbar-height));
         display: none !important;
         overflow-y: overlay;
     }
     .sidebar.collapse:not(.show) {
         display: none !important;
     }
-    .sidebar.collapsing {
-        display: block !important;
-        overflow-y: hidden;
-    }
+    .sidebar.collapsing,
     .sidebar.show {
         display: block !important;
     }
     .viewport {
         z-index: 4;
     }
-    .navbar-expand-md button.navbar-toggler {
+    .navbar .navbar-toggler {
         display: inline-block;
+    }
+    .navbar .navbar-toggler.collapsed {
+        background: none;
+    }
+    .navpages-page.suboption {
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
     /* More Info */
     .moreInfo-grid {
