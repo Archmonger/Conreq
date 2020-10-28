@@ -10,6 +10,9 @@ TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
 TMDB_POSTER_300_URL = "https://image.tmdb.org/t/p/w300"
 
 STATIC_CONTEXT_VARS = {
+    "username": "username",
+    "password": "password",
+    "sign_in": "Sign In",
     "available": "Available",
     "partial": "Partial",
     "downloading": "Downloading",
