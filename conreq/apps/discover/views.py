@@ -1,6 +1,10 @@
 # from django.shortcuts import render
 from conreq import content_discovery
-from conreq.apps.helpers import generate_context, set_many_conreq_status
+from conreq.apps.helpers import (
+    generate_context,
+    set_many_conreq_status,
+    STATIC_CONTEXT_VARS,
+)
 from django.http import HttpResponse
 from django.template import loader
 
@@ -14,17 +18,17 @@ def discover(request, page=1):
     # Search for TV content if requested
     if content_type == "tv":
         tmdb_results = content_discovery.tv(page)["results"]
-        active_tab = "TV Shows"
+        active_tab = STATIC_CONTEXT_VARS["tv_shows"]
 
     # Search for movie content if requested
     elif content_type == "movie":
         tmdb_results = content_discovery.movies(page)["results"]
-        active_tab = "Movies"
+        active_tab = STATIC_CONTEXT_VARS["movies"]
 
     # Search for both content if requested
     else:
         tmdb_results = content_discovery.all(page)["results"]
-        active_tab = "Discover"
+        active_tab = STATIC_CONTEXT_VARS["discover"]
 
     template = loader.get_template("discover.html")
 
