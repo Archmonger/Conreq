@@ -54,7 +54,9 @@ body,
 .login-brand {
     width: 50%;
     margin: 0 25%;
+    -webkit-filter: var(--logo-drop-shadow);
     filter: var(--logo-drop-shadow);
+    -o-object-fit: contain;
     object-fit: contain;
     max-height: 100px;
 }
@@ -121,6 +123,8 @@ a {
 
 .login-box-header {
     width: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     display: flex;
     align-items: center;

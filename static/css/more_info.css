@@ -79,6 +79,7 @@
     right: 27px;
     top: 20px;
     font-size: 28px;
+    -webkit-filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
     transition: color 0.3s ease;
 }
@@ -181,10 +182,13 @@
     font-weight: 300;
     line-height: 18px;
     height: auto;
+    transition: -webkit-filter 0.5s ease;
     transition: filter 0.5s ease;
+    transition: filter 0.5s ease, -webkit-filter 0.5s ease;
 }
 
 .review:hover {
+    -webkit-filter: brightness(120%);
     filter: brightness(120%);
 }
 
@@ -327,6 +331,7 @@
 .image-carousel-artwork {
     width: 100%;
     height: 100%;
+    -o-object-fit: cover;
     object-fit: cover;
     transition: opacity 2.5s;
 }
@@ -356,6 +361,7 @@
 .movie-backdrop-container img {
     width: 100%;
     height: 325px;
+    -o-object-fit: cover;
     object-fit: cover;
     position: absolute;
     transition: opacity 5s ease;

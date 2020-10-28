@@ -107,6 +107,8 @@ a:hover {
 }
 
 .viewport-scrollable {
+    min-height: -webkit-fit-content;
+    min-height: -moz-fit-content;
     min-height: fit-content;
     padding: var(--viewport-padding);
     scroll-behavior: smooth;
@@ -159,8 +161,6 @@ a:hover {
     -webkit-touch-callout: none;
     /* iOS Safari */
     -webkit-user-select: none;
-    /* Safari */
-    -khtml-user-select: none;
     /* Konqueror HTML */
     -moz-user-select: none;
     /* Old versions of Firefox */
@@ -168,6 +168,14 @@ a:hover {
     /* Internet Explorer/Edge */
     user-select: none;
     /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+:-ms-input-placeholder {
+    opacity: 0.75;
+}
+
+::-ms-input-placeholder {
+    opacity: 0.75;
 }
 
 ::placeholder,
@@ -192,6 +200,7 @@ a:hover {
     padding: 0px;
     -webkit-filter: var(--logo-drop-shadow);
     filter: var(--logo-drop-shadow);
+    -o-object-fit: contain;
     object-fit: contain;
 }
 
@@ -390,7 +399,6 @@ button:focus {
     background: var(--placeholder-gradient);
     height: auto;
     max-height: var(--poster-container-height);
-    user-select: none;
 }
 
 .posterContainer-poster {
@@ -398,12 +406,15 @@ button:focus {
     height: var(--poster-height);
     display: block;
     will-change: transform, filter;
+    transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
     transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
+    transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
     z-index: 6;
     position: relative;
 }
 
 .posterContainer-poster:hover {
+    -webkit-filter: brightness(113%);
     filter: brightness(113%);
     transform: scale(1.08);
 }
@@ -463,6 +474,7 @@ button:focus {
     top: var(--poster-height);
     left: 0px;
     z-index: 10;
+    -webkit-filter: brightness(25%);
     filter: brightness(25%);
 }
 
@@ -492,8 +504,11 @@ button:focus {
     top: 0px;
     color: rgba(255, 255, 255, 0.85);
     font-size: 19px;
+    transition: color 0.3s ease, opacity 0.3s ease, -webkit-filter 0.3s ease;
     transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+    transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease, -webkit-filter 0.3s ease;
     opacity: 0;
+    -webkit-filter: drop-shadow(0 0 2px #000000);
     filter: drop-shadow(0 0 2px #000000);
     z-index: 7;
     will-change: color, filter;
@@ -505,6 +520,7 @@ button:focus {
 
 .fa-ellipsis-v:hover {
     color: #fff;
+    -webkit-filter: drop-shadow(0 0 3px #000000);
     filter: drop-shadow(0 0 3px #000000);
 }
 
