@@ -8,6 +8,9 @@ from django.template import loader
 
 
 def convert_card_to_tmdb(index, all_results):
+    # NOTE: For some reason, overriding values in all_results requires the list and index value.
+    # It will NOT work if attempting to change values by reference (ex. card = newCard).
+
     # Convert Sonarr cards to TMDB
     if all_results[index].__contains__("tvdbId"):
         try:
