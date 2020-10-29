@@ -29,7 +29,6 @@ STATIC_CONTEXT_VARS = {
     "email_users": "Email Users",
     "all_requests": "All Requests",
     "all_issues": "All Issues",
-    "task_queue": "Task Queue",
     "settings": "Settings",
     "youtube": "YouTube",
 }
