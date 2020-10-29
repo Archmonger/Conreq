@@ -36,7 +36,7 @@ def handler(
     try:
         log.handler(
             "Accessed cache " + cache_name,
-            log.DEBUG,
+            log.INFO,
             __logger,
         )
 
@@ -74,7 +74,7 @@ def handler(
                     cache_name
                     + " multi-execution available keys: "
                     + str(len(cache_key)),
-                    log.DEBUG,
+                    log.INFO,
                     __logger,
                 )
 
@@ -101,7 +101,7 @@ def handler(
                         cache_name
                         + " multi-execution missing keys: "
                         + str(len(missing_keys)),
-                        log.DEBUG,
+                        log.INFO,
                         __logger,
                     )
                     cache.set_many(missing_keys, cache_duration)

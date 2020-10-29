@@ -20,6 +20,7 @@ from conreq.core import log
 # Logging for the settings configuration
 __logger = log.get_logger("Main App")
 log.configure(__logger, log.DEBUG)
+log.configure(log.get_logger(), log.INFO)
 
 # Settings Helper Function
 def get_bool_from_env(name, default_value):
