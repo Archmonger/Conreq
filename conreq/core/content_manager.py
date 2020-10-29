@@ -7,6 +7,9 @@ from conreq.core import cache, log
 from conreq.core.thread_helper import ReturnThread
 from PyArr import RadarrAPI, SonarrAPI
 
+# Days, Hours, Minutes, Seconds
+GET_CONTENT_CACHE_TIMEOUT = 60
+
 
 class ContentManager:
     """Adds and removes content from Sonarr and Radarr, and can return the request state.
@@ -62,6 +65,7 @@ class ContentManager:
                 results = cache.handler(
                     "radarr library cache",
                     function=self.get_all_radarr_content,
+                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                 )
 
                 # Find our TMDB ID within Radarr
@@ -85,6 +89,7 @@ class ContentManager:
                 results = cache.handler(
                     "sonarr library cache",
                     function=self.get_all_sonarr_content,
+                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                 )
 
                 # Find our TVDB ID within Sonarr

@@ -9,6 +9,9 @@ from conreq.core.thread_helper import ReturnThread
 from PyArr import RadarrAPI, SonarrAPI
 from similarity.damerau import Damerau
 
+# Days, Hours, Minutes, Seconds
+SEARCH_CACHE_TIMEOUT = 60 * 60
+
 
 class Search:
     """Searches Sonarr and Radarr for a given query
@@ -92,6 +95,7 @@ class Search:
                 function=self.__television,
                 page_key=query,
                 query=query,
+                cache_duration=SEARCH_CACHE_TIMEOUT,
             )
 
         except:
@@ -114,6 +118,7 @@ class Search:
                 function=self.__movie,
                 page_key=query,
                 query=query,
+                cache_duration=SEARCH_CACHE_TIMEOUT,
             )
 
         except:

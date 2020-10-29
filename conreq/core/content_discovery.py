@@ -10,9 +10,17 @@ from conreq.core.thread_helper import ReturnThread, threaded_execution
 ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
 FETCH_MULTI_PAGE = 5
-EXTERNAL_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 MAX_RECOMMENDED_PAGES = 7
 MAX_SIMILAR_PAGES = 1
+# Days, Hours, Minutes, Seconds
+EXTERNAL_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
+DISCOVER_BY_FILTER_CACHE_TIMEOUT = 3 * 24 * 60 * 60
+GET_BY_TMDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
+GET_GENRES_CACHE_TIMEOUT = 30 * 24 * 60 * 60
+RECOMMENDED_CACHE_TIMEOUT = 14 * 24 * 60 * 60
+SIMILAR_CACHE_TIMEOUT = 14 * 24 * 60 * 60
+POPULAR_AND_TOP_CACHE_TIMEOUT = 14 * 24 * 60 * 60
+KEYWORDS_TO_IDS_CACHE_TIMEOUT = 30 * 24 * 60 * 60
 
 
 class ContentDiscovery:
@@ -103,8 +111,9 @@ class ContentDiscovery:
         """
         return self.__shuffle_results(self.__top_tv(page_number))
 
-    def discover(self, content_type, **kwargs):
-        """Filter by keywords.
+    def discover_by_filter(self, content_type, **kwargs):
+        """Filter by keywords or any other TMDB filter capable arguements.
+        (see tmdbsimple discover.movie and discover.tv)
 
         Args:
             content_type: String containing "movie" or "tv".
@@ -128,6 +137,7 @@ class ContentDiscovery:
                     "discover movie cache",
                     function=tmdb.Discover().movie,
                     page_key=str(kwargs),
+                    cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
                     **kwargs,
                 )
 
@@ -137,6 +147,7 @@ class ContentDiscovery:
                     "discover tv cache",
                     function=tmdb.Discover().tv,
                     page_key=str(kwargs),
+                    cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
                     **kwargs,
                 )
 
@@ -239,6 +250,7 @@ class ContentDiscovery:
                     "movie by id cache",
                     function=tmdb.Movies(tmdb_id).info,
                     page_key=tmdb_id,
+                    cache_duration=GET_BY_TMDB_ID_CACHE_TIMEOUT,
                     append_to_response=extras,
                 )
 
@@ -248,6 +260,7 @@ class ContentDiscovery:
                     "tv by id cache",
                     function=tmdb.TV(tmdb_id).info,
                     page_key=tmdb_id,
+                    cache_duration=GET_BY_TMDB_ID_CACHE_TIMEOUT,
                     append_to_response=extras,
                 )
 
@@ -339,6 +352,7 @@ class ContentDiscovery:
                 return cache.handler(
                     "movie genres cache",
                     function=tmdb.Genres().movie_list,
+                    cache_duration=GET_GENRES_CACHE_TIMEOUT,
                 )
 
             # Obtain a TV show's genres
@@ -346,6 +360,7 @@ class ContentDiscovery:
                 return cache.handler(
                     "movie genres cache",
                     function=tmdb.Genres().tv_list,
+                    cache_duration=GET_GENRES_CACHE_TIMEOUT,
                 )
 
             # Content Type was invalid
@@ -573,6 +588,7 @@ class ContentDiscovery:
                     "movie recommendations cache",
                     function=tmdb.Movies(tmdb_id).recommendations,
                     page_key=str(tmdb_id) + "page" + str(page_number),
+                    cache_duration=RECOMMENDED_CACHE_TIMEOUT,
                     page=page_number,
                     language=LANGUAGE,
                 )
@@ -582,6 +598,7 @@ class ContentDiscovery:
                     "tv recommendations cache",
                     function=tmdb.TV(tmdb_id).recommendations,
                     page_key=str(tmdb_id) + "page" + str(page_number),
+                    cache_duration=RECOMMENDED_CACHE_TIMEOUT,
                     page=page_number,
                     language=LANGUAGE,
                 )
@@ -617,6 +634,7 @@ class ContentDiscovery:
                     "movie similar cache",
                     function=tmdb.Movies(tmdb_id).similar_movies,
                     page_key=str(tmdb_id) + "page" + str(page_number),
+                    cache_duration=SIMILAR_CACHE_TIMEOUT,
                     page=page_number,
                     language=LANGUAGE,
                 )
@@ -626,6 +644,7 @@ class ContentDiscovery:
                     "tv similar cache",
                     function=tmdb.TV(tmdb_id).similar,
                     page_key=str(tmdb_id) + "page" + str(page_number),
+                    cache_duration=SIMILAR_CACHE_TIMEOUT,
                     page=page_number,
                     language=LANGUAGE,
                 )
@@ -663,6 +682,8 @@ class ContentDiscovery:
                     cache_name,
                     function,
                     total_pages - subtractor,
+                    False,
+                    POPULAR_AND_TOP_CACHE_TIMEOUT,
                 ],
                 kwargs={"page": total_pages - subtractor, "language": LANGUAGE},
             )
@@ -698,6 +719,7 @@ class ContentDiscovery:
                         "keyword to id cache",
                         function=tmdb.Search().keyword,
                         page_key=keyword,
+                        cache_duration=KEYWORDS_TO_IDS_CACHE_TIMEOUT,
                         query=keyword,
                     )["results"]
 
@@ -714,6 +736,7 @@ class ContentDiscovery:
                     "keyword to id cache",
                     function=tmdb.Search().keyword,
                     page_key=keywords,
+                    cache_duration=KEYWORDS_TO_IDS_CACHE_TIMEOUT,
                     query=keywords,
                 )["results"]
 
@@ -852,7 +875,7 @@ class ContentDiscovery:
 
 # Test driver code
 if __name__ == "__main__":
-    content_discovery = ContentDiscovery("x")
+    content_discovery = ContentDiscovery()
 
     # print("\n#### Discover All Test ####")
     # pprint(content_discovery.all(1))
