@@ -525,3 +525,40 @@
 .quick-info-extra-spacing {
     line-height: 18px;
 }
+
+
+/* Artwork and Images */
+
+.mfp-no-margins .mfp-container {
+    padding: 0;
+}
+
+.mfp-zoom-out-cur .mfp-image-holder .mfp-close {
+    right: 0px;
+    cursor: pointer !important;
+}
+
+.mfp-counter {
+    display: none;
+}
+
+.mfp-with-zoom .mfp-container,
+.mfp-with-zoom.mfp-bg {
+    opacity: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: all 0.3s ease-out;
+}
+
+.mfp-with-zoom.mfp-ready .mfp-container {
+    opacity: 1;
+}
+
+.mfp-with-zoom.mfp-ready.mfp-bg {
+    opacity: 0.8;
+}
+
+.mfp-with-zoom.mfp-removing .mfp-container,
+.mfp-with-zoom.mfp-removing.mfp-bg {
+    opacity: 0;
+}
