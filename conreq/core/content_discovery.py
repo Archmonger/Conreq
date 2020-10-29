@@ -126,8 +126,8 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 return cache.handler(
                     "discover movie cache",
-                    tmdb.Discover().movie,
-                    str(kwargs),
+                    function=tmdb.Discover().movie,
+                    page_key=str(kwargs),
                     **kwargs,
                 )
 
@@ -135,8 +135,8 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 return cache.handler(
                     "discover tv cache",
-                    tmdb.Discover().tv,
-                    str(kwargs),
+                    function=tmdb.Discover().tv,
+                    page_key=str(kwargs),
                     **kwargs,
                 )
 
@@ -237,8 +237,8 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 return cache.handler(
                     "movie by id cache",
-                    tmdb.Movies(tmdb_id).info,
-                    tmdb_id,
+                    function=tmdb.Movies(tmdb_id).info,
+                    page_key=tmdb_id,
                     append_to_response=extras,
                 )
 
@@ -246,8 +246,8 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 return cache.handler(
                     "tv by id cache",
-                    tmdb.TV(tmdb_id).info,
-                    tmdb_id,
+                    function=tmdb.TV(tmdb_id).info,
+                    page_key=tmdb_id,
                     append_to_response=extras,
                 )
 
@@ -297,8 +297,8 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 return cache.handler(
                     "movie external id cache",
-                    tmdb.Movies(tmdb_id).external_ids,
-                    tmdb_id,
+                    function=tmdb.Movies(tmdb_id).external_ids,
+                    page_key=tmdb_id,
                     cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
                 )
 
@@ -306,8 +306,8 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 return cache.handler(
                     "tv external id cache",
-                    tmdb.TV(tmdb_id).external_ids,
-                    tmdb_id,
+                    function=tmdb.TV(tmdb_id).external_ids,
+                    page_key=tmdb_id,
                     cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
                 )
 
@@ -328,7 +328,7 @@ class ContentDiscovery:
             return {}
 
     def get_genres(self, content_type):
-        """Gets all external IDs given a TMDB ID.
+        """Gets all available TMDB genres and genre IDs.
 
         Args:
             content_type: String containing "movie" or "tv".
@@ -338,16 +338,14 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 return cache.handler(
                     "movie genres cache",
-                    tmdb.Genres().movie_list,
-                    1,
+                    function=tmdb.Genres().movie_list,
                 )
 
             # Obtain a TV show's genres
             if content_type.lower() == "tv":
                 return cache.handler(
                     "movie genres cache",
-                    tmdb.Genres().tv_list,
-                    1,
+                    function=tmdb.Genres().tv_list,
                 )
 
             # Content Type was invalid
@@ -470,7 +468,7 @@ class ContentDiscovery:
         # Grab external IDs if needed
         external_id_cache_results = cache.handler(
             "tv external id cache",
-            external_id_multi_fetch,
+            function=external_id_multi_fetch,
             cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
         )
 
@@ -573,8 +571,8 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 return cache.handler(
                     "movie recommendations cache",
-                    tmdb.Movies(tmdb_id).recommendations,
-                    str(tmdb_id) + "page" + str(page_number),
+                    function=tmdb.Movies(tmdb_id).recommendations,
+                    page_key=str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
                     language=LANGUAGE,
                 )
@@ -582,8 +580,8 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 return cache.handler(
                     "tv recommendations cache",
-                    tmdb.TV(tmdb_id).recommendations,
-                    str(tmdb_id) + "page" + str(page_number),
+                    function=tmdb.TV(tmdb_id).recommendations,
+                    page_key=str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
                     language=LANGUAGE,
                 )
@@ -617,8 +615,8 @@ class ContentDiscovery:
             if content_type.lower() == "movie":
                 return cache.handler(
                     "movie similar cache",
-                    tmdb.Movies(tmdb_id).similar_movies,
-                    str(tmdb_id) + "page" + str(page_number),
+                    function=tmdb.Movies(tmdb_id).similar_movies,
+                    page_key=str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
                     language=LANGUAGE,
                 )
@@ -626,8 +624,8 @@ class ContentDiscovery:
             if content_type.lower() == "tv":
                 return cache.handler(
                     "tv similar cache",
-                    tmdb.TV(tmdb_id).similar,
-                    str(tmdb_id) + "page" + str(page_number),
+                    function=tmdb.TV(tmdb_id).similar,
+                    page_key=str(tmdb_id) + "page" + str(page_number),
                     page=page_number,
                     language=LANGUAGE,
                 )
@@ -698,8 +696,8 @@ class ContentDiscovery:
                     # Perform a search
                     keyword_search = cache.handler(
                         "keyword to id cache",
-                        tmdb.Search().keyword,
-                        keyword,
+                        function=tmdb.Search().keyword,
+                        page_key=keyword,
                         query=keyword,
                     )["results"]
 
@@ -714,8 +712,8 @@ class ContentDiscovery:
                 # Perform a search
                 keyword_search = cache.handler(
                     "keyword to id cache",
-                    tmdb.Search().keyword,
-                    keywords,
+                    function=tmdb.Search().keyword,
+                    page_key=keywords,
                     query=keywords,
                 )["results"]
 

@@ -89,8 +89,8 @@ class Search:
         try:
             return cache.handler(
                 "sonarr search cache",
-                self.__television,
-                query,
+                function=self.__television,
+                page_key=query,
                 query=query,
             )
 
@@ -111,8 +111,8 @@ class Search:
         try:
             return cache.handler(
                 "radarr search cache",
-                self.__movie,
-                query,
+                function=self.__movie,
+                page_key=query,
                 query=query,
             )
 

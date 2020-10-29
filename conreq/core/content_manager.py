@@ -61,7 +61,7 @@ class ContentManager:
                 # Get Radarr's collection
                 results = cache.handler(
                     "radarr library cache",
-                    self.get_all_radarr_content,
+                    function=self.get_all_radarr_content,
                 )
 
                 # Find our TMDB ID within Radarr
@@ -84,7 +84,7 @@ class ContentManager:
 
                 results = cache.handler(
                     "sonarr library cache",
-                    self.get_all_sonarr_content,
+                    function=self.get_all_sonarr_content,
                 )
 
                 # Find our TVDB ID within Sonarr
@@ -459,14 +459,14 @@ class ContentManager:
         while 1:
             cache.handler(
                 "radarr library cache",
-                self.get_all_radarr_content,
+                function=self.get_all_radarr_content,
                 cache_duration=60,
                 force_update_cache=True,
             )
 
             cache.handler(
                 "sonarr library cache",
-                self.get_all_sonarr_content,
+                function=self.get_all_sonarr_content,
                 cache_duration=60,
                 force_update_cache=True,
             )
