@@ -569,3 +569,24 @@ img.lazy:not([src]) {
 .sidebar ::-webkit-scrollbar-track {
     display: none;
 }
+
+
+/* Text input boxes */
+
+.text-input {
+    display: block;
+    border: none;
+    outline: none !important;
+    color: rgb(255 255 255 / 0.65);
+    padding: 10px;
+    font-size: var(--primary-font-size);
+    font-family: var(--global-font);
+    transition: background 0.3s ease, color 0.3s ease;
+    border-radius: 4px;
+    font-weight: 300;
+}
+
+.text-input:focus {
+    background: #fff;
+    color: var(--searchbar-bg);
+}

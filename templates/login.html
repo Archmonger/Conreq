@@ -14,8 +14,8 @@
                 <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="login-brand">
             </div>
             <div class="centered">
-                <input id="sign-in-username" type="text" placeholder="{{username}}" class="username">
-                <input id="sign-in-password" type="text" placeholder="{{password}}" class="password">
+                <input id="sign-in-username" type="text" placeholder="{{username}}" class="username text-input" name="username" required="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="">
+                <input id="sign-in-password" type="password" placeholder="{{password}}" class="password text-input" name="password" required="">
                 <a href="/discover/" class="sign-in-container">
                     <div class="sign-in"> {{sign_in}} </div>
                 </a>

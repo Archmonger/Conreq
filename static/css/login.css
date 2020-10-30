@@ -63,26 +63,10 @@ body,
 
 .username,
 .password {
-    display: block;
-    border: none;
-    outline: none !important;
     background: transparent;
-    color: rgb(255 255 255 / 0.65);
-    padding: 10px;
-    font-size: var(--primary-font-size);
-    font-family: var(--global-font);
-    font-weight: 300;
     width: 80%;
     margin-bottom: 35px;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
     background: rgb(0 0 0 / 0.25);
-    border-radius: 4px;
-}
-
-.username:focus,
-.password:focus {
-    color: rgb(255 255 255 / 0.8);
 }
 
 .sign-in {
@@ -97,7 +81,7 @@ body,
     font-family: var(--global-font);
     font-weight: 700;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease;
 }
 
 .sign-in:hover,
