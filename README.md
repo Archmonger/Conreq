@@ -22,7 +22,6 @@
     - Must contain the following values:
     - ```json
       {
-        "tmdb_key": "",
         "sonarr_url": "",
         "sonarr_key": "",
         "radarr_url": "",
