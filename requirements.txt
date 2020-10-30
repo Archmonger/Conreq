@@ -3,3 +3,4 @@ requests==2.24.0
 tmdbsimple==2.6.0
 strsim==0.0.3
 django==3.1.1
+diskcache==5.0.3

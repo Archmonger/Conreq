@@ -99,8 +99,12 @@ MIDDLEWARE = [
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "BACKEND": "diskcache.DjangoCache",
         "LOCATION": os.path.join(DATA_DIR, "cache"),
+        "TIMEOUT": 300,  # Django setting for default timeout of each key.
+        "SHARDS": 8,  # Number of db files to create
+        "DATABASE_TIMEOUT": 0.010,  # 10 milliseconds
+        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte
     }
 }
 
