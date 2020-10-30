@@ -36,7 +36,7 @@ def handler(
     try:
         log.handler(
             "Accessed cache " + cache_name,
-            log.INFO,
+            log.DEBUG,
             __logger,
         )
 
@@ -73,7 +73,7 @@ def handler(
                 log.handler(
                     cache_name
                     + " multi-execution available keys: "
-                    + str(len(cache_key)),
+                    + str(len(cached_results)),
                     log.INFO,
                     __logger,
                 )
