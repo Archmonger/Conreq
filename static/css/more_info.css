@@ -536,6 +536,20 @@
 .mfp-zoom-out-cur .mfp-image-holder .mfp-close {
     right: 0px;
     cursor: pointer !important;
+    transition: opacity 0.3s ease;
+}
+
+.mfp-arrow {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.mfp-arrow:focus {
+    opacity: 0.65;
+}
+
+.mfp-arrow:hover {
+    transform: scale(1.2);
+    opacity: 1;
 }
 
 .mfp-counter {
