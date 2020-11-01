@@ -284,6 +284,10 @@ a:hover {
     padding-left: 5px;
 }
 
+.navbar .username.first-letter {
+    display: none;
+}
+
 button {
     transition: background 0.3s ease;
     will-change: background;

@@ -83,6 +83,9 @@
     .navbar .username.full-name {
         display: none;
     }
+    .navbar .username.first-letter {
+        display: inline-block;
+    }
     .navbar .username-container {
         border-radius: 50%;
         background: var(--accent-color);
