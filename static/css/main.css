@@ -250,7 +250,7 @@ a:hover {
     color: inherit;
 }
 
-.navbar-right-container {
+.username-container {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -264,11 +264,11 @@ a:hover {
     transition: color 0.3s ease;
 }
 
-.navbar-right-container:hover {
+.username-container:hover {
     color: #fff;
 }
 
-.navbar-right-container .username {
+.username-container .username {
     color: inherit;
     font-size: inherit;
     font-family: inherit;
@@ -277,7 +277,7 @@ a:hover {
     margin-right: 1px;
 }
 
-.navbar-right-container .fa-caret-down {
+.username-container .fa-caret-down {
     color: inherit;
     font-size: inherit;
     display: inline;

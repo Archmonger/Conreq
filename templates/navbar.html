@@ -3,16 +3,17 @@
     <a href="/" class="navbar-brand-container">
         <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="navbar-brand" />
     </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle sidebar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="searchbar form-inline">
         <input type="text" id="content-search" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
         <i class="fas fa-search"></i>
     </div>
-    <div class="navbar-right-container">
-        <div class="username">username</div>
+    <div class="username-container">
+        <div class="username full-name">username</div>
+        <div class="username first-letter">U</div>
         <i class="fas fa-caret-down"></i>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle sidebar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
     </div>
     <script src="{% static 'js/navbar.js' %}"></script>
 </div>
