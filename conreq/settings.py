@@ -17,10 +17,6 @@ from django.core.management.utils import get_random_secret_key
 
 from conreq.core import log
 
-# Logging for the settings configuration
-__logger = log.get_logger("Main App")
-log.configure(__logger, log.DEBUG)
-log.configure(log.get_logger(), log.INFO)
 
 # Settings Helper Function
 def get_bool_from_env(name, default_value):
@@ -42,13 +38,16 @@ def get_bool_from_env(name, default_value):
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = get_bool_from_env("CONREQ_DEBUG", True)
+
+# Logging for the settings configuration
+__logger = log.get_logger("Main App")
+log.configure(__logger, log.DEBUG)
+log.configure(log.get_logger(), log.INFO)
 if DEBUG:
     log.console_stream(log.get_logger(), log.WARNING)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Location to store data (ex. database file)
 DATA_DIR = os.environ.get("DATA_DIR")
 if not DATA_DIR:
     # log.handler(
@@ -69,7 +68,7 @@ if not SECRET_KEY and DEBUG:
     # )
     SECRET_KEY = get_random_secret_key()
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -81,6 +80,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "channels",
     "conreq.apps.discover",
     "conreq.apps.more_info",
     "conreq.apps.login",
@@ -128,6 +128,7 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = "conreq.wsgi.application"
+ASGI_APPLICATION = "conreq.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -166,13 +167,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
