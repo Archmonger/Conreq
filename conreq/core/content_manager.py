@@ -462,20 +462,33 @@ class ContentManager:
     def refresh_content(self):
         """Refreshes Sonarr and Radarr's content"""
         while 1:
-            cache.handler(
-                "radarr library cache",
-                function=self.get_all_radarr_content,
-                cache_duration=60,
-                force_update_cache=True,
-            )
+            try:
+                cache.handler(
+                    "radarr library cache",
+                    function=self.get_all_radarr_content,
+                    cache_duration=60,
+                    force_update_cache=True,
+                )
+            except:
+                log.handler(
+                    "Failed to refresh radarr!",
+                    log.WARNING,
+                    self.__logger,
+                )
 
-            cache.handler(
-                "sonarr library cache",
-                function=self.get_all_sonarr_content,
-                cache_duration=60,
-                force_update_cache=True,
-            )
-
+            try:
+                cache.handler(
+                    "sonarr library cache",
+                    function=self.get_all_sonarr_content,
+                    cache_duration=60,
+                    force_update_cache=True,
+                )
+            except:
+                log.handler(
+                    "Failed to refresh sonarr!",
+                    log.WARNING,
+                    self.__logger,
+                )
             sleep(60)
 
     def get_all_radarr_content(self):
