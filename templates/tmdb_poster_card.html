@@ -4,7 +4,12 @@
     <i class="fas fa-angle-down"></i>
     <div class="poster-tint"></div>
     <a href="/more_info/?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
-        <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w200{{card.poster_path}}" class="posterContainer-poster lazy" />
+        {% if card.poster_path %}
+        <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w200{{card.poster_path}}"
+            class="posterContainer-poster lazy" />
+        {% else %}
+        <img src="{% static 'images/transparent.png' %}" class="posterContainer-poster" />
+        {% endif %}
     </a>
 
     <div class="posterContainer-descriptionContainer {% if card.name %}poster-tv{% elif card.title %}poster-movie{% endif %}">
