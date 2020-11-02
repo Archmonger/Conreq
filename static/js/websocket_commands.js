@@ -23,12 +23,12 @@ function connect() {
 
     command_socket.onclose = function(e) {
         console.log(
-            "Socket is closed. Reconnect will be attempted in 1 second.",
+            "Socket is closed. Reconnect will be attempted in 3 second.",
             e.reason
         );
         setTimeout(function() {
             connect();
-        }, 1000);
+        }, 3000);
     };
 
     command_socket.onerror = function(err) {
