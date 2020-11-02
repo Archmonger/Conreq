@@ -1,6 +1,8 @@
+wheel
 pyarr==0.9.4
 requests==2.24.0
 tmdbsimple==2.6.0
 strsim==0.0.3
-django==3.1.1
+django==3.1.2
 diskcache==5.0.3
+channels==3.0.0
