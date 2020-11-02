@@ -6,17 +6,19 @@ if (loc.protocol == "https:") {
     ws_start = "ws://";
 }
 let endpoint = ws_start + loc.host;
-let socket = new WebSocket(endpoint);
+let command_socket = new WebSocket(endpoint);
 
-socket.onmessage = function(e) {
-    console.log("message", e);
+command_socket.onmessage = function(e) {
+    console.log("socket message received", e);
+    let command = JSON.parse(e.data);
+    console.log("socket message JSON contents", command);
 };
-socket.onopen = function(e) {
-    console.log("open", e);
+command_socket.onopen = function(e) {
+    console.log("socket opened", e);
 };
-socket.onerror = function(e) {
-    console.log("error", e);
+command_socket.onerror = function(e) {
+    console.log("socket error", e);
 };
-socket.onclose = function(e) {
-    console.log("close", e);
+command_socket.onclose = function(e) {
+    console.log("socket closed", e);
 };
