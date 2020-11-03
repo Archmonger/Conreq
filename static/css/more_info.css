@@ -186,6 +186,7 @@
     transition: -webkit-filter 0.5s ease;
     transition: filter 0.5s ease;
     transition: filter 0.5s ease, -webkit-filter 0.5s ease;
+    overflow: hidden;
 }
 
 .review:hover {
