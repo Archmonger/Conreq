@@ -66,7 +66,6 @@ class ContentManager:
                     "radarr library cache",
                     function=self.get_all_radarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
-                    force_update_cache=True,
                 )
 
                 # Find our TMDB ID within Radarr
@@ -91,7 +90,6 @@ class ContentManager:
                     "sonarr library cache",
                     function=self.get_all_sonarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
-                    force_update_cache=True,
                 )
 
                 # Find our TVDB ID within Sonarr
