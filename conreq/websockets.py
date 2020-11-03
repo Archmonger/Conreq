@@ -6,15 +6,15 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
-    """tmp"""
+    """Communicates with the browser to perform actions on-demand."""
 
     async def connect(self):
-        """When the browser attempts to """
+        """When the browser attempts to connect to the server."""
         print("connected")
         await self.accept()
         await self.send_json({"test": "testy"})
         # pprint(self.scope)
 
     async def receive_json(self, content, **kwargs):
-        """When the browser attempts to communicate with the server."""
+        """When the browser attempts to send a message to the server."""
         print("received", content)

@@ -1,3 +1,6 @@
+// Commands contain the following
+// command_name (string), parameters (null or JSON dictionary)
+
 function connect() {
     // Create the command socket
     let loc = window.location;
@@ -19,6 +22,8 @@ function connect() {
         console.log("socket message received", e);
         let command = JSON.parse(e.data);
         console.log("socket message JSON contents", command);
+        json_payload = { command_name: "request", parameters: null };
+        command_socket.send(JSON.stringify(json_payload));
     };
 
     command_socket.onclose = function(e) {
