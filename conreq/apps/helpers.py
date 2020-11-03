@@ -42,27 +42,31 @@ def generate_context(dict1):
 def __set_many_conreq_status(card, radarr_library, sonarr_library):
     # Sonarr card
     if card.__contains__("tvdbId"):
-        if sonarr_library is not None and sonarr_library.__contains__(card["tvdbId"]):
-            card["conreqStatus"] = sonarr_library[card["tvdbId"]]["conreqStatus"]
+        if sonarr_library is not None and sonarr_library.__contains__(
+            str(card["tvdbId"])
+        ):
+            card["conreqStatus"] = sonarr_library[str(card["tvdbId"])]["conreqStatus"]
 
     # Radarr card
     elif card.__contains__("tmdbId"):
-        if radarr_library is not None and radarr_library.__contains__(card["tmdbId"]):
-            card["conreqStatus"] = radarr_library[card["tmdbId"]]["conreqStatus"]
+        if radarr_library is not None and radarr_library.__contains__(
+            str(card["tmdbId"])
+        ):
+            card["conreqStatus"] = radarr_library[str(card["tmdbId"])]["conreqStatus"]
 
     # TMDB TV card
     elif card.__contains__("name"):
         if (
             sonarr_library is not None
             and card.__contains__("tvdb_id")
-            and sonarr_library.__contains__(card["tvdb_id"])
+            and sonarr_library.__contains__(str(card["tvdb_id"]))
         ):
-            card["conreqStatus"] = sonarr_library[card["tvdb_id"]]["conreqStatus"]
+            card["conreqStatus"] = sonarr_library[str(card["tvdb_id"])]["conreqStatus"]
 
     # TMDB movie card
     elif card.__contains__("title"):
-        if radarr_library is not None and radarr_library.__contains__(card["id"]):
-            card["conreqStatus"] = radarr_library[card["id"]]["conreqStatus"]
+        if radarr_library is not None and radarr_library.__contains__(str(card["id"])):
+            card["conreqStatus"] = radarr_library[str(card["id"])]["conreqStatus"]
 
 
 def set_many_conreq_status(results):

@@ -154,10 +154,10 @@
                                     {% firstof content.vote_average content.ratings.value "-" %} / 10 </div>
                             </div>
                             <i class="fas fa-ellipsis-v"></i> {% if content.conreqStatus == available %}
-                            <div class="request-button box-shadow available"> AVAILABLE </div>
+                            <div class="request-button box-shadow no-highlighting available"> AVAILABLE </div>
                             {% else %}
-                            <div class="request-button box-shadow no-highlighting"><i class="fas fa-plus"></i> REQUEST
-                            </div>
+                            <div class="request-button box-shadow no-highlighting" onclick="request_command()">
+                                <i class="fas fa-plus"></i> REQUEST </div>
                             {% endif %}
                         </div>
                         <div class="moreInfo-overview grid-block contains-carousel">

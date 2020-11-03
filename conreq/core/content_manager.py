@@ -51,7 +51,7 @@ class ContentManager:
 
         Kwargs:
             tmdb_id: A string containing the TMDB ID.
-            tvdb_id: An integer containing the TVDB ID.
+            tvdb_id: A string containing the TVDB ID.
 
         Returns:
             1) JSON response containing the existing content, filled with conreqStatus key-value pairs.
@@ -66,11 +66,12 @@ class ContentManager:
                     "radarr library cache",
                     function=self.get_all_radarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    force_update_cache=True,
                 )
 
                 # Find our TMDB ID within Radarr
-                if results.__contains__(kwargs["tmdb_id"]):
-                    return results[kwargs["tmdb_id"]]
+                if results.__contains__(str(kwargs["tmdb_id"])):
+                    return results[str(kwargs["tmdb_id"])]
 
                 # Return None if couldn't find the movie
                 log.handler(
@@ -90,11 +91,12 @@ class ContentManager:
                     "sonarr library cache",
                     function=self.get_all_sonarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    force_update_cache=True,
                 )
 
                 # Find our TVDB ID within Sonarr
-                if results.__contains__(kwargs["tvdb_id"]):
-                    return results[kwargs["tvdb_id"]]
+                if results.__contains__(str(kwargs["tvdb_id"])):
+                    return results[str(kwargs["tvdb_id"])]
 
                 # Return None if couldn't find the series
                 log.handler(
@@ -133,7 +135,7 @@ class ContentManager:
 
             # Pick One ID
             tmdb_id: A string containing the TMDB ID.
-            tvdb_id: An integer containing the TVDB ID.
+            tvdb_id: A string containing the TVDB ID.
 
         Returns:
             1) JSON response of adding the content.
@@ -196,7 +198,7 @@ class ContentManager:
 
         Kwargs:
             # Pick One ID
-            radarr_id: A string containing the Radarr ID.
+            radarr_id: An integer containing the Radarr ID.
             sonarr_id: An integer containing the Sonarr ID.
             seasons: A list of integers containing the specific season numbers values (optional).
             episode_ids: A list of integers containing the specific "episodeId" values (optional).
@@ -347,7 +349,7 @@ class ContentManager:
 
         Kwargs:
             # Pick One ID
-            radarr_id: A string containing the Radarr ID.
+            radarr_id: An integer string containing the Radarr ID.
             sonarr_id: An integer containing the Sonarr ID.
             episode_file_ids: A list of integers containing the specific "episodeFileId" values.
 
@@ -399,7 +401,7 @@ class ContentManager:
 
         Kwargs:
             # Pick One ID
-            radarr_id: A string containing the Radarr ID.
+            radarr_id: An integer containing the Radarr ID.
             sonarr_id: An integer containing the Sonarr ID.
 
             episode_file_ids: A list of integers containing the specific "episodeFileId" values (optional).
@@ -466,7 +468,7 @@ class ContentManager:
                 cache.handler(
                     "radarr library cache",
                     function=self.get_all_radarr_content,
-                    cache_duration=60,
+                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
             except:
@@ -480,7 +482,7 @@ class ContentManager:
                 cache.handler(
                     "sonarr library cache",
                     function=self.get_all_sonarr_content,
-                    cache_duration=60,
+                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
             except:
@@ -501,7 +503,7 @@ class ContentManager:
             for movie in results:
                 if movie.__contains__("tmdbId"):
                     self.__check_status(movie)
-                    results_with_ids[movie["tmdbId"]] = movie
+                    results_with_ids[str(movie["tmdbId"])] = movie
 
             # Return all movies
             return results_with_ids
@@ -533,7 +535,7 @@ class ContentManager:
                             episodes=episodes,
                         )
 
-                    results_with_ids[series["tvdbId"]] = series
+                    results_with_ids[str(series["tvdbId"])] = series
 
             # Return all movies
             return results_with_ids

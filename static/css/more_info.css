@@ -114,6 +114,7 @@
 
 .request-button:hover:not(.available) {
     background: #2ba180;
+    cursor: pointer;
 }
 
 .moreInfo-overview {
