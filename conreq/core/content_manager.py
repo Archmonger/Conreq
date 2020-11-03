@@ -146,7 +146,7 @@ class ContentManager:
                     kwargs["tmdb_id"],
                     kwargs["quality_profile_id"],
                     kwargs["root_dir"],
-                    monitored=False,
+                    monitored=True,
                     searchForMovie=False,
                 )
 
