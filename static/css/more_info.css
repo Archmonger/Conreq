@@ -503,6 +503,7 @@
     color: #FFF;
     margin: 2px;
     transition: background 0.3s ease;
+    max-width: 80%;
 }
 
 .quick-info-btn:hover {
