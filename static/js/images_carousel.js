@@ -25,7 +25,7 @@ $(document).ready(function() {
             verticalFit: true,
         },
         zoom: {
-            enabled: true,
+            enabled: false,
             duration: 300, // don't foget to change the duration also in CSS
         },
         gallery: {
