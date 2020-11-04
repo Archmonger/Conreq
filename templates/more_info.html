@@ -8,7 +8,7 @@
 
 <body>
     <div class="main">
-        {% include "navbar.html" %} {% include "sidebar.html" %}
+        {% include "navbar.html" %} {% include "sidebar.html" %} {% include "series_selection_modal.html" %}
         <div class="viewport moreInfo">
             <div class="viewport-scrollable">
                 <link rel="stylesheet" href="{% static 'css/more_info.css' %}">
@@ -155,10 +155,13 @@
                             </div>
                             <i class="fas fa-ellipsis-v"></i> {% if content.conreqStatus == available %}
                             <div class="request-button box-shadow no-highlighting available"> AVAILABLE </div>
-                            {% else %}
+                            {% else %} {% if content_type == "movie" %}
                             <div class="request-button box-shadow no-highlighting" onclick="request_command()">
-                                <i class="fas fa-plus"></i> REQUEST </div>
-                            {% endif %}
+                                REQUEST </div>
+                            {% elif content_type == "tv" %}
+                            <div class="request-button box-shadow no-highlighting" data-toggle="modal" data-target="#modal-container">
+                                REQUEST </div>
+                            {% endif %} {% endif %}
                         </div>
                         <div class="moreInfo-overview grid-block contains-carousel">
                             <div class="moreInfo-summary">

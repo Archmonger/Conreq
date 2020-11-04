@@ -1,71 +1,111 @@
-{% spaceless %}
-<div class="aquaman modal-tint">
-    <div class="modal-container">
-        <div class="modal-fa-holder">
-            <i class="fas fa-window-close"></i>
-            <a href="/more_info/">
-                <i class="fas fa-expand"></i>
-            </a>
-        </div>
-        <img class="modal-poster" src="#" alt="" />
-        <div class="modal-title">Aquaman</div>
-        <div class="modal-info">
-            <div class="modal-info-text-left">
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Availabity:
-                        <div class="info">
-                            Unavailable
-                            <div class="modal-dot red"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Request Status:
-                        <div class="info">
-                            Unrequested
-                            <div class="modal-dot red"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Content Type:
-                        <div class="info">Movie</div>
-                    </div>
+{% spaceless %} {% load static %}
+<div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-hidden="true">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}" />
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div data-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-window-close"></i>
                 </div>
             </div>
-            <div class="modal-info-text-right">
-                <div class="info-block">
-                    <div class="info info-bold">
-                        In Cinemas:
-                        <div class="info">December 2018</div>
+            <div class="modal-body">
+                <div class="season-episode-container">
+                    <div class="season-block season-1 no-highlighting">
+                        <div class="modal-checkbox-container"><input type="checkbox" /></div>
+
+                        <div class="modal-season-container collapsed" data-toggle="collapse" data-target="#season-1" aria-expanded="false" aria-controls="season-1">
+                            <div class="season line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                S1 - The Return of the Flash
+                            </div>
+                        </div>
+                        <div class="modal-season-dropdown-container">
+                            <i class="fas fa-angle-down" data-toggle="collapse" data-target="#season-1" aria-expanded="false" aria-controls="season-1"></i>
+                        </div>
+
                     </div>
-                </div>
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Genres:
-                        <div class="info">Fantasy, Adventure</div>
+                    <div id="season-1" class="episode-container collapse no-highlighting">
+                        <div class="episode-block">
+                            <div class="modal-checkbox-container"><input type="checkbox" /> </div>
+                            <div class="episode line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                1 - Pilot
+                            </div>
+                        </div>
+                        <div class="episode-block">
+                            <div class="modal-checkbox-container"><input type="checkbox" /></div>
+                            <div class="episode line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                2 - Fastest Man Alive, And He Really Fucks
+                            </div>
+                        </div>
+                        <div class="episode-block">
+                            <div class="modal-checkbox-container"><input type="checkbox" /></div>
+                            <div class="episode line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                3 - Things You Can't Outrun
+                            </div>
+                        </div>
+                        <div class="episode-block">
+                            <div class="modal-checkbox-container"><input type="checkbox" /></div>
+                            <div class="episode line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                4 - Going Rogue
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Score:
-                        <div class="info">6.3 / 10</div>
+
+                    <div class="season-block season-2 no-highlighting">
+                        <div class="modal-checkbox-container"><input type="checkbox" /></div>
+                        <div class="modal-season-container collapsed" data-toggle="collapse" data-target="#season-2" aria-expanded="false" aria-controls="season-2">
+                            <div class="season line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                S2 - Finding the Lost Chapter
+                            </div>
+                        </div>
+                        <div class="modal-season-dropdown-container">
+                            <i class="fas fa-angle-down" data-toggle="collapse" data-target="#season-2" aria-expanded="false" aria-controls="season-2"></i>
+                        </div>
                     </div>
+                    <div id="season-2" class="episode-container collapse no-highlighting">
+                        <div class="episode-block">
+                            <div class="modal-checkbox-container"><input type="checkbox" /></div>
+                            <div class="episode line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                1 - Pilot
+                            </div>
+                        </div>
+                        <div class="episode-block">
+                            <div class="modal-checkbox-container"><input type="checkbox" /></div>
+                            <div class="episode line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                2 - Fastest Man Alive
+                            </div>
+                        </div>
+                        <div class="episode-block">
+                            <div class="modal-checkbox-container"><input type="checkbox" /></div>
+                            <div class="episode line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                3 - Things You Can't Outrun
+                            </div>
+                        </div>
+                        <div class="episode-block">
+                            <div class="modal-checkbox-container"><input type="checkbox" /></div>
+                            <div class="episode line-clamp-1">
+                                <div class="modal-dot red"></div>
+                                4 - Going Rogue
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
-        <div class="modal-description">
-            Once home to the most advanced civilization on Earth, the city of Atlantis is now an underwater kingdom ruled by the power-hungry King Orm. With a vast army at his disposal, Orm plans to conquer the remaining oceanic people -- and then the surface world.
-            Standing in his way is Aquaman, Orm's half-human, half-Atlantean brother and true heir to the throne. With help from royal counselor Vulko, must retrieve the legendary Trident of Atlan and embrace his destiny as protector of the deep.
-        </div>
-        <div class="modal-request-button-container">
-            <div class="modal-request-button aquaman">
-                <i class="fas fa-plus"></i> REQUEST
+            <div class="modal-footer">
+                <div class="modal-button select-button no-highlighting" onclick="modal_select_all()">SELECT ALL</div>
+                <div class="modal-button request-button no-highlighting">REQUEST</div>
             </div>
         </div>
     </div>
+    <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>{
 </div>
 {% endspaceless %}

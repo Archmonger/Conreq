@@ -1,112 +1,70 @@
-{% spaceless %}
-<div class="modal-no-tint">
+{% spaceless %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/modal.css' %}" />
+<div class="modal-tint">
     <div class="modal-container">
         <div class="modal-fa-holder">
             <i class="fas fa-window-close"></i>
+            <a href="/more_info/">
+                <i class="fas fa-expand"></i>
+            </a>
         </div>
-        <div class="modal-seasons-container">
-            <div class="season-block season-1">
-                <input type="checkbox" />
-                <div class="season">
-                    <div class="modal-dot red"></div>
-                    Season 1 - "The Return of the Flash"
-                </div>
-                <i id="season-one-fa" class="fas fa-angle-down"></i>
-            </div>
-            <div class="episode-container season-one">
-                <div class="episode-block">
-                    <input type="checkbox" />
-                    <div class="episode">
-                        <div class="modal-dot red"></div>
-                        E01 - Pilot
+        <img class="modal-poster" src="#" alt="" />
+        <div class="modal-title">Aquaman</div>
+        <div class="modal-info">
+            <div class="modal-info-text-left">
+                <div class="info-block">
+                    <div class="info info-bold">
+                        Availabity:
+                        <div class="info">
+                            Unavailable
+                            <div class="modal-dot red"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="episode-block">
-                    <input type="checkbox" />
-                    <div class="episode">
-                        <div class="modal-dot red"></div>
-                        E02 - Fastest Man Alive
+                <div class="info-block">
+                    <div class="info info-bold">
+                        Request Status:
+                        <div class="info">
+                            Unrequested
+                            <div class="modal-dot red"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="episode-block">
-                    <input type="checkbox" />
-                    <div class="episode">
-                        <div class="modal-dot red"></div>
-                        E03 - Things You Can't Outrun
-                    </div>
-                </div>
-                <div class="episode-block">
-                    <input type="checkbox" />
-                    <div class="episode">
-                        <div class="modal-dot red"></div>
-                        E04 - Going Rogue
+                <div class="info-block">
+                    <div class="info info-bold">
+                        Content Type:
+                        <div class="info">Movie</div>
                     </div>
                 </div>
             </div>
-            <div class="season-block season-2">
-                <input type="checkbox" />
-                <div class="season">
-                    <div class="modal-dot yellow"></div>
-                    Season 2 - "Finding the Lost Chapter"
-                </div>
-                <i id="season-two-fa" class="fas fa-angle-down"></i>
-            </div>
-            <div class="episode-container season-two">
-                <div class="episode-block">
-                    <div class="episode">
-                        <div class="modal-dot green"></div>
-                        E01 - The Man Who Saved Central City
+            <div class="modal-info-text-right">
+                <div class="info-block">
+                    <div class="info info-bold">
+                        In Cinemas:
+                        <div class="info">December 2018</div>
                     </div>
                 </div>
-                <div class="episode-block">
-                    <div class="episode">
-                        <div class="modal-dot yellow"></div>
-                        E02 - Flash of Two Worlds
+                <div class="info-block">
+                    <div class="info info-bold">
+                        Genres:
+                        <div class="info">Fantasy, Adventure</div>
                     </div>
                 </div>
-                <div class="episode-block">
-                    <input type="checkbox" />
-                    <div class="episode">
-                        <div class="modal-dot red"></div>
-                        E03 - Family of Rogues
-                    </div>
-                </div>
-                <div class="episode-block">
-                    <input type="checkbox" />
-                    <div class="episode">
-                        <div class="modal-dot red"></div>
-                        E04 - The Fury of Firestorm
+                <div class="info-block">
+                    <div class="info info-bold">
+                        Score:
+                        <div class="info">6.3 / 10</div>
                     </div>
                 </div>
             </div>
-            <div class="season-block season-3">
-                <div class="season">
-                    <div class="modal-dot green"></div>
-                    Season 3 - "Faster Than Lightning"
-                </div>
-                <i class="fas fa-angle-down"></i>
-            </div>
-            <div class="season-block season-4">
-                <div class="season">
-                    <div class="modal-dot green"></div>
-                    Season 4 - "Can't Look Back"
-                </div>
-                <i class="fas fa-angle-down"></i>
-            </div>
-            <div class="season-block season-5">
-                <div class="season">
-                    <div class="modal-dot green"></div>
-                    Season 5 - "Roadblocks"
-                </div>
-                <i class="fas fa-angle-down"></i>
-            </div>
+        </div>
+        <div class="modal-description">
+            Once home to the most advanced civilization on Earth, the city of Atlantis is now an underwater kingdom ruled by the power-hungry King Orm. With a vast army at his disposal, Orm plans to conquer the remaining oceanic people -- and then the surface world.
+            Standing in his way is Aquaman, Orm's half-human, half-Atlantean brother and true heir to the throne. With help from royal counselor Vulko, must retrieve the legendary Trident of Atlan and embrace his destiny as protector of the deep.
         </div>
         <div class="modal-request-button-container">
-            <div class="modal-confirm-button flash">
-                CONFIRM
-            </div>
-            <div class="modal-select-button flash">
-                SELECT ALL
+            <div class="modal-request-button">
+                <i class="fas fa-plus"></i> REQUEST
             </div>
         </div>
     </div>

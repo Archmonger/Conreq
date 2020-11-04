@@ -57,25 +57,64 @@ function connect() {
 
 connect();
 
+let obtain_url_parameters = function() {
+    let url_params = new URLSearchParams(window.location.search);
+    let results = { tmdb_id: null, tvdb_id: null, content_type: null };
+
+    // Content Type
+    if (url_params.has("content_type")) {
+        results.content_type = url_params.get("content_type");
+    }
+    // TMDB ID
+    if (url_params.has("tmdb_id")) {
+        results.tmdb_id = url_params.get("tmdb_id");
+    }
+    // TVDB ID
+    if (url_params.has("tvdb_id")) {
+        results.tvdb_id = url_params.get("tvdb_id");
+    }
+
+    // Could not determine ID parameters
+    if (results.tmdb_id == null && results.tvdb_id == null) {
+        return null;
+    }
+    // URL parameters were determined
+    else {
+        return results;
+    }
+};
+
 // AVAILABLE COMMANDS
 
-// Command to request
+/* REQUEST COMMAND STRUCTURE */
+// {   command_name: "",
+//     parameters: {   tmdb_id: "",
+//                     tvdb_id: "",
+//                     content_type: "",
+//                     seasons: [],
+//                     episode_ids: [],
+//                 }
+// }
 var request_command = function(
     tmdb_id = null,
     tvdb_id = null,
-    content_type = null
+    content_type = null,
+    seasons = null,
+    episode_ids = null
 ) {
-    // {command_name:"", parameters: {tmdb_id="", tvdb_id=""} }
+    // Request the server to download some content
     let json_payload = {
         command_name: "request",
         parameters: {
             tmdb_id: tmdb_id,
             tvdb_id: tvdb_id,
             content_type: content_type,
+            seasons: seasons,
+            episode_ids: episode_ids,
         },
     };
 
-    // A parameter was passed in to the function call
+    // ID was passed in to the function call
     if (tmdb_id != null || tvdb_id != null) {
         json_payload.parameters.tmdb_id = tmdb_id;
         json_payload.parameters.tvdb_id = tvdb_id;
@@ -84,43 +123,49 @@ var request_command = function(
 
     // Attempt to obtain ID from the URL
     else {
-        let url_params = new URLSearchParams(window.location.search);
+        let url_params = obtain_url_parameters();
+        json_payload.parameters.tmdb_id = url_params.tmdb_id;
+        json_payload.parameters.content_type = url_params.content_type;
+        json_payload.parameters.tvdb_id = url_params.tvdb_id;
+        COMMAND_SOCKET.send(JSON.stringify(json_payload));
+    }
+};
 
-        // Movies
-        if (
-            url_params.has("content_type") &&
-            url_params.get("content_type") == "movie"
-        ) {
-            json_payload.parameters.content_type = url_params.get("content_type");
-            // TMDB ID was obtained
-            if (url_params.has("tmdb_id")) {
-                json_payload.parameters.tmdb_id = url_params.get("tmdb_id");
-                COMMAND_SOCKET.send(JSON.stringify(json_payload));
-            }
-        }
+/* EPISODE MODAL COMMAND STRUCTURE */
+// {   command_name: "",
+//     parameters: {   tmdb_id: "",
+//                     tvdb_id: "",
+//                     content_type: "",
+//                 }
+// }
+var episode_modal_command = function(
+    tmdb_id = null,
+    tvdb_id = null,
+    content_type = null
+) {
+    // Request the server to generate an episode modal
+    let json_payload = {
+        command_name: "episode modal",
+        parameters: {
+            tmdb_id: tmdb_id,
+            tvdb_id: tvdb_id,
+            content_type: content_type,
+        },
+    };
 
-        // TV Shows
-        else if (
-            url_params.has("content_type") &&
-            url_params.get("content_type") == "tv"
-        ) {
-            json_payload.parameters.content_type = url_params.get("content_type");
-            // TVDB ID was obtained
-            if (url_params.has("tvdb_id")) {
-                json_payload.parameters.tvdb_id = url_params.get("tvdb_id");
-                COMMAND_SOCKET.send(JSON.stringify(json_payload));
-            }
+    // ID was passed in to the function call
+    if (tmdb_id != null || tvdb_id != null) {
+        json_payload.parameters.tmdb_id = tmdb_id;
+        json_payload.parameters.tvdb_id = tvdb_id;
+        COMMAND_SOCKET.send(JSON.stringify(json_payload));
+    }
 
-            // TMDB ID was obtained
-            else if (url_params.has("tmdb_id")) {
-                json_payload.parameters.tmdb_id = url_params.get("tmdb_id");
-                COMMAND_SOCKET.send(JSON.stringify(json_payload));
-            }
-        }
-
-        // Could not determine parameters
-        else {
-            console.log("Request command did not receive an ID!");
-        }
+    // Attempt to obtain ID from the URL
+    else {
+        let url_params = obtain_url_parameters();
+        json_payload.parameters.tmdb_id = url_params.tmdb_id;
+        json_payload.parameters.content_type = url_params.content_type;
+        json_payload.parameters.tvdb_id = url_params.tvdb_id;
+        COMMAND_SOCKET.send(JSON.stringify(json_payload));
     }
 };
