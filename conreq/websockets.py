@@ -9,6 +9,8 @@ from conreq import content_manager
 class CommandConsumer(AsyncJsonWebsocketConsumer):
     """Communicates with the browser to perform actions on-demand."""
 
+    # BASIC WEBSOCKET FUNCTIONALITY
+
     async def connect(self):
         """When the browser attempts to connect to the server."""
         print("connected")
@@ -61,7 +63,10 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                         quality_profile_id=1,
                         root_dir=radarr_root,
                     )
-                    content_manager.request(radarr_id=new_movie["id"])
+                    if new_movie.__contains__("id"):
+                        content_manager.request(radarr_id=new_movie["id"])
+                    else:
+                        print("new movie did not contain id")
                 else:
                     content_manager.request(radarr_id=preexisting_movie["id"])
                 print("requested movie")
