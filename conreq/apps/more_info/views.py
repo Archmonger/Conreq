@@ -125,9 +125,17 @@ def preprocess_tmdb_result(tmdb_result):
         tmdb_result.__contains__("videos")
         and tmdb_result["videos"].__contains__("results")
         and isinstance(tmdb_result["videos"]["results"], list)
-        and len(tmdb_result["videos"]["results"]) == 0
     ):
-        tmdb_result["videos"]["results"] = None
+        if len(tmdb_result["videos"]["results"]) == 0:
+            tmdb_result["videos"]["results"] = None
+        else:
+            contains_youtube = False
+            for video in tmdb_result["videos"]["results"]:
+                if video["site"] == "YouTube":
+                    contains_youtube = True
+                    break
+            if not contains_youtube:
+                tmdb_result["videos"]["results"] = None
     # Artwork (Images)
     if (
         tmdb_result.__contains__("images")
