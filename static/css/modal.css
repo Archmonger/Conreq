@@ -1,5 +1,9 @@
 /* Modal Container */
 
+.modal-open .modal {
+    overflow: hidden;
+}
+
 .modal-content {
     background: var(--navbar-bg);
     will-change: height;
@@ -13,6 +17,9 @@
     background: var(--searchbar-bg);
     color: #FFF;
     padding: 0;
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-y: overlay;
 }
 
 
