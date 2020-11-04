@@ -278,6 +278,7 @@
 
 .carousel-inner-container.tns-carousel {
     display: flex;
+    will-change: transform;
 }
 
 .carousel-controls {
