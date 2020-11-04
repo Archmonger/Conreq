@@ -11,7 +11,7 @@
 1. Pull the repository from GitHub.
 2. Navigate to the repository folder. At this folder location, open PowerShell as administrator.
 3. Type `python -m venv venv` to create a virtual environment.
-4. _If using Windows,_ type `set-executionpolicy remotesigned` and select Yes to All to allow python scripts to run on your computer.
+4. _If using Windows:_ type `set-executionpolicy remotesigned` and select Yes to All to allow python scripts to run on your computer.
 5. Type `./venv/Scripts/activate` to enter the virtual environment.
 6. Type `pip install -r requirements.txt` to install Python packages within the virtual environment.
 7. Open the project folder in Visual Studio Code (File -> Open Folder).
