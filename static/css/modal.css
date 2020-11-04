@@ -88,16 +88,10 @@
 
 /* Seasons/Episode Modal Styling */
 
-.modal-seasons-container {
-    background: var(--searchbar-bg);
-    overflow: hidden;
-}
-
 .season-block {
     padding: 0px 15px;
     display: grid;
     grid-template-columns: 30px auto 30px;
-    cursor: pointer;
 }
 
 .season-block>* {
@@ -160,6 +154,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    cursor: pointer;
 }
 
 .modal-dot {
