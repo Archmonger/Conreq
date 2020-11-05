@@ -62,10 +62,10 @@
         min-height: calc(100vh - var(--navbar-height));
         display: none !important;
     }
+    .sidebar.collapsing,
     .sidebar.collapse:not(.show) {
         display: none !important;
     }
-    .sidebar.collapsing,
     .sidebar.show {
         display: block !important;
     }
