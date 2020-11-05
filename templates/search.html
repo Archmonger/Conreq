@@ -10,9 +10,9 @@
     <div class="main">
 
         {% include "navbar.html" %} {% include "sidebar.html" %}
-        <div class="viewport search">
+        <div class="viewport-container">
             <link rel="stylesheet" href="{% static 'css/mobile.css' %}" />
-            <div class="viewport-scrollable viewport-posters">
+            <div class="viewport viewport-posters search">
                 {% for card in all_cards %} {% include "arr_poster_card.html" %} {% endfor %}
             </div>
         </div>

@@ -96,22 +96,23 @@ a:hover {
     outline: none;
 }
 
-.viewport {
+.viewport-container {
     z-index: 1;
     left: var(--viewport-left);
     top: var(--navbar-height);
     position: fixed;
-    transition: width 1s ease;
     height: calc(100vh - var(--navbar-height));
+    overflow-x: hidden;
     overflow-y: auto;
+    width: calc(100vw - var(--viewport-left));
+    scroll-behavior: smooth;
 }
 
-.viewport-scrollable {
+.viewport {
     min-height: -webkit-fit-content;
     min-height: -moz-fit-content;
     min-height: fit-content;
     padding: var(--viewport-padding);
-    scroll-behavior: smooth;
 }
 
 .viewport-posters {
@@ -570,10 +571,6 @@ img.lazy:not([src]) {
 ::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background: #41927b;
-}
-
-.sidebar ::-webkit-scrollbar-track {
-    display: none;
 }
 
 
