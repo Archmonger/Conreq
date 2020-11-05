@@ -4,7 +4,7 @@
 
 - Install [Python 3.8](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
 - Install [Visual Studio Code](https://code.visualstudio.com/)
-- _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_ -> _MSVC_)
+- _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_ -> _MSVC_ and _Windows 10 SDK_)
 
 ## Set up the environment
 
