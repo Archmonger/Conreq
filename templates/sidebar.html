@@ -1,4 +1,4 @@
-{% spaceless %}
+{% spaceless %} {% load static %}
 <div id="sidebar" class="sidebar no-highlighting">
     <div id="navpages" class="navpages">
         <div id="navpages-availablePages" class="navpages-availablePages">
@@ -42,5 +42,6 @@
 
         </div>
     </div>
+    <script src="{% static 'js/sidebar.js' %}"></script>
 </div>
 {% endspaceless %}

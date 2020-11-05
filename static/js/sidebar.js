@@ -1,0 +1,1 @@
+new SimpleBar($("#sidebar")[0]);

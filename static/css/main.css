@@ -100,7 +100,7 @@ a:hover {
     z-index: 1;
     left: var(--viewport-left);
     top: var(--navbar-height);
-    position: fixed;
+    position: relative;
     height: calc(100vh - var(--navbar-height));
     overflow-x: hidden;
     overflow-y: auto;
@@ -113,6 +113,10 @@ a:hover {
     min-height: -moz-fit-content;
     min-height: fit-content;
     padding: var(--viewport-padding);
+}
+
+.viewport.discover {
+    margin-left: var(--poster-padding);
 }
 
 .viewport-posters {
@@ -559,18 +563,14 @@ img.lazy:not([src]) {
 
 /* Scrollbar */
 
-::-webkit-scrollbar {
-    width: 7px;
-    background: rgba(0, 0, 0, 0);
+.simplebar-scrollbar::before {
+    background-color: var(--accent-color);
 }
 
-::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0);
-}
-
+::-webkit-scrollbar,
+::-webkit-scrollbar-track,
 ::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background: #41927b;
+    display: none;
 }
 
 
