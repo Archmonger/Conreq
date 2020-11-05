@@ -1,65 +1,66 @@
 @media only screen and (max-width: 1150px) {
      :root {
         /* Videos */
-        --video-height: calc(var(--video-width) * 0.5625);
-        --video-width: 30vw;
+        --video-height: calc(var(--video-width) * 0.5625) !important;
+        --video-width: 30vw !important;
         /* Artwork */
-        --artwork-height: calc(var(--video-width) * 0.5625);
-        --artwork-width: 30vw;
+        --artwork-height: calc(var(--video-width) * 0.5625) !important;
+        --artwork-width: 30vw !important;
     }
 }
 
 @media only screen and (max-width: 880px) {
      :root {
         /* More Info Grid */
-        --left-column-width: 175px;
+        --left-column-width: 175px !important;
     }
 }
 
 @media only screen and (max-width: 800px) {
      :root {
         /* Sidebar */
-        --sidebar-width: 100%;
-        --sidebar-top: 0;
+        --sidebar-width: 100% !important;
+        --sidebar-top: 0 !important;
         /* Navbar */
-        --searchbar-width: 70%;
+        --searchbar-width: 70% !important;
         /* Viewport */
-        --viewport-left: 0;
-        --viewport-padding: 15px;
+        --viewport-left: 0 !important;
+        --viewport-padding: 15px !important;
         /* Posters */
-        --poster-width: calc(25vw - var(--viewport-total-padding));
+        --poster-width: calc(25vw - var(--viewport-total-padding)) !important;
         /* Videos */
-        --video-height: calc(var(--video-width) * 0.5625);
-        --video-width: 70vw;
+        --video-height: calc(var(--video-width) * 0.5625) !important;
+        --video-width: 70vw !important;
         /* Artwork */
-        --artwork-height: calc(var(--video-width) * 0.5625);
-        --artwork-width: 70vw;
+        --artwork-height: calc(var(--video-width) * 0.5625) !important;
+        --artwork-width: 70vw !important;
     }
     .navbar {
-        z-index: 2;
-        display: flex;
-        flex-wrap: nowrap;
+        z-index: 2 !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
     }
     .navbar-brand-container {
-        display: none;
+        display: none !important;
     }
     .searchbar {
-        left: 0px;
-        position: relative;
-        margin: auto 0;
+        left: 0px !important;
+        position: relative !important;
+        margin: auto 0 !important;
     }
     .username-container {
-        margin: calc((var(--navbar-height) - 35px)/2) 0;
-        position: relative;
-        padding-right: 0;
-        color: rgba(255, 255, 255, .75);
+        margin: calc((var(--navbar-height) - 35px)/2) 0 !important;
+        position: relative !important;
+        padding-right: 0 !important;
+        color: rgba(255, 255, 255, .75) !important;
     }
     .sidebar {
-        top: var(--navbar-height);
-        z-index: 9999;
-        height: calc(100vh - var(--navbar-height));
-        max-height: calc(100vh - var(--navbar-height));
-        min-height: calc(100vh - var(--navbar-height));
+        top: var(--navbar-height) !important;
+        z-index: 9999 !important;
+        height: calc(100vh - var(--navbar-height)) !important;
+        max-height: calc(100vh - var(--navbar-height)) !important;
+        min-height: calc(100vh - var(--navbar-height)) !important;
         display: none !important;
     }
     .sidebar.collapsing,
@@ -70,85 +71,85 @@
         display: block !important;
     }
     .viewport-container {
-        z-index: 4;
+        z-index: 4 !important;
     }
     .navbar .navbar-toggler {
-        display: inline-block;
-        border: none;
-        padding-left: 0;
-        padding-right: 0;
+        display: inline-block !important;
+        border: none !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
         background: none !important;
     }
     .navbar .username.full-name {
-        display: none;
+        display: none !important;
     }
     .navbar .username.first-letter {
-        display: inline-block;
+        display: inline-block !important;
     }
     .navbar .username-container {
-        border-radius: 50%;
-        background: var(--accent-color);
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        justify-content: center;
-        width: 35px;
-        height: 35px
+        border-radius: 50% !important;
+        background: var(--accent-color) !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 35px !important;
+        height: 35px !important;
     }
     .username-container .fa-caret-down {
-        padding-left: 2px;
+        padding-left: 2px !important;
     }
     .navpages-page.suboption {
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
     }
     /* More Info */
     .moreInfo-grid {
-        display: flex;
-        flex-direction: column;
-        width: calc(100vw - var(--viewport-padding) * 2);
+        display: flex !important;
+        flex-direction: column !important;
+        width: calc(100vw - var(--viewport-padding) * 2) !important;
     }
     .moreInfo-poster-container {
-        margin: 0 auto;
-        width: 55vw;
+        margin: 0 auto !important;
+        width: 55vw !important;
     }
     .moreInfo-poster-container img {
-        height: calc(55vw * 1.5);
+        height: calc(55vw * 1.5) !important;
     }
     .moreInfo-grid .request-button {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 999;
-        border-radius: 500px;
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        z-index: 999 !important;
+        border-radius: 500px !important;
     }
     .tns-controls {
-        display: none;
+        display: none !important;
     }
     .main-title,
     .main-rating {
-        display: none;
-        margin: 0;
-        padding: 0;
+        display: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     .moreInfo-main-info {
-        height: 0;
+        height: 0 !important;
     }
     .moreInfo {
-        padding-bottom: 80px;
+        padding-bottom: 80px !important;
     }
 }
 
 @media only screen and (max-width: 600px) {
      :root {
         /* Posters */
-        --poster-width: calc(33vw - var(--viewport-total-padding));
+        --poster-width: calc(33vw - var(--viewport-total-padding)) !important;
     }
 }
 
 @media only screen and (max-width: 450px) {
      :root {
         /* Posters */
-        --poster-width: calc(45vw - var(--viewport-total-padding));
+        --poster-width: calc(45vw - var(--viewport-total-padding)) !important;
     }
 }
