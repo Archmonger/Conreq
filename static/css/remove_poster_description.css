@@ -1,17 +1,19 @@
-.movie.posterContainer .fa-angle-down,
-.tv.posterContainer .fa-angle-down {
+.poster-container .fa-angle-down {
     padding-top: 0px;
     color: rgba(255, 255, 255, 0.7);
+    -webkit-filter: drop-shadow(0 0 2px #000000);
     filter: drop-shadow(0 0 2px #000000);
 }
 
-.movie.posterContainer .fa-angle-down:hover,
-.tv.posterContainer .fa-angle-down:hover {
+.poster-container .fa-angle-down:hover {
     background: transparent;
     color: rgba(255, 255, 255, 1);
 }
 
-.movie.posterContainer .posterContainer-descriptionContainer,
-.tv.posterContainer .posterContainer-descriptionContainer {
+.poster-description-container {
     display: none;
+}
+
+.cast.poster-container {
+    height: auto;
 }
