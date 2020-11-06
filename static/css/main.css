@@ -409,6 +409,7 @@ button:focus {
     will-change: transform;
     background: var(--placeholder-gradient);
     height: auto;
+    min-height: calc(var(--poster-container-height) / 2);
     max-height: var(--poster-container-height);
 }
 
