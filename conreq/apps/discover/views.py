@@ -1,9 +1,9 @@
 # from django.shortcuts import render
 from conreq import content_discovery
 from conreq.apps.helpers import (
+    STATIC_CONTEXT_VARS,
     generate_context,
     set_many_conreq_status,
-    STATIC_CONTEXT_VARS,
 )
 from django.http import HttpResponse
 from django.template import loader

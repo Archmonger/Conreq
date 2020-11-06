@@ -1,3 +1,8 @@
+// HELPER FUNCTIONS
+let html_from_string = function(string_html) {
+    return document.createRange().createContextualFragment(string_html);
+};
+
 // CREATE WEBSOCKET
 let COMMAND_SOCKET = null;
 let RETRY_COUNTER = 0;
@@ -15,14 +20,23 @@ function connect() {
     let endpoint = ws_start + loc.host;
     COMMAND_SOCKET = new WebSocket(endpoint);
 
-    // Socket events
+    // RECEIVABLE COMMANDS
+    COMMAND_SOCKET.onmessage = function(response) {
+        console.log("Websocket message received.", response);
+        json_response = JSON.parse(response.data);
+        if (json_response.command_name == "series selection modal") {
+            console.log("It's a series selection modal command!", json_response.html);
+            let temp = html_from_string(json_response.html);
+            console.log(temp);
+            $("#modal-dialog .spinner-border").hide();
+            document.getElementById("modal-dialog").appendChild(temp);
+        }
+    };
+
+    // OTHER WEBSOCKET EVENTS
     COMMAND_SOCKET.onopen = function(e) {
         RETRY_COUNTER = 0;
         console.log("Websocket opened.", e);
-    };
-
-    COMMAND_SOCKET.onmessage = function(e) {
-        console.log("Websocket message received.", e);
     };
 
     COMMAND_SOCKET.onclose = function(e) {
@@ -84,7 +98,7 @@ let obtain_url_parameters = function() {
     }
 };
 
-// AVAILABLE COMMANDS
+// SENDABLE COMMANDS
 
 /* REQUEST COMMAND STRUCTURE */
 // {   command_name: "",
@@ -131,21 +145,28 @@ var request_command = function(
     }
 };
 
-/* EPISODE MODAL COMMAND STRUCTURE */
+/* SERIES SELECTION MODAL COMMAND STRUCTURE */
 // {   command_name: "",
 //     parameters: {   tmdb_id: "",
 //                     tvdb_id: "",
 //                     content_type: "",
 //                 }
 // }
-var episode_modal_command = function(
+var series_selection_modal_command = function(
     tmdb_id = null,
     tvdb_id = null,
     content_type = null
 ) {
+    // Delete the old modal content and display the spinner
+    let modal_content = document.getElementById("modal-content");
+    if (modal_content != null) {
+        modal_content.remove();
+    }
+    $("#modal-dialog .spinner-border").show();
+
     // Request the server to generate an episode modal
     let json_payload = {
-        command_name: "episode modal",
+        command_name: "series selection modal",
         parameters: {
             tmdb_id: tmdb_id,
             tvdb_id: tvdb_id,

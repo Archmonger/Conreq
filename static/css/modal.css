@@ -10,6 +10,11 @@
     transition: height 0.3s ease;
 }
 
+.spinner-border {
+    margin: auto;
+    color: var(--accent-color);
+}
+
 
 /* Modal Body */
 

@@ -8,7 +8,15 @@
 
 <body>
     <div class="main">
-        {% include "navbar.html" %} {% include "sidebar.html" %} {% include "series_selection_modal.html" %}
+        {% include "navbar.html" %} {% include "sidebar.html" %}
+        <div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-hidden="true">
+            <link rel="stylesheet" href="{% static 'css/modal.css' %}" />
+            <div id="modal-dialog" class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
         <div class="viewport-container">
             <link rel="stylesheet" href="{% static 'css/more_info.css' %}">
             <div class="viewport more-info">
@@ -158,7 +166,7 @@
                             <div class="request-button box-shadow no-highlighting" onclick="request_command()">
                                 REQUEST </div>
                             {% elif content_type == "tv" %}
-                            <div class="request-button box-shadow no-highlighting" data-toggle="modal" data-target="#modal-container">
+                            <div class="request-button box-shadow no-highlighting" data-toggle="modal" data-target="#modal-container" onclick="series_selection_modal_command()">
                                 REQUEST </div>
                             {% endif %} {% endif %}
                         </div>

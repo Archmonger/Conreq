@@ -13,6 +13,7 @@ from conreq.core.generic_tools import is_key_value_in_list
 from conreq.core.thread_helper import ReturnThread
 from django.http import HttpResponse
 from django.template import loader
+from django.template.loader import render_to_string
 
 
 def preprocess_arr_result(arr_result):
@@ -288,3 +289,8 @@ def more_info(request):
 
     # Render the page
     return HttpResponse(template.render(context, request))
+
+
+def series_modal(tmdb_id):
+    context = {"seasons": ["a", "b", "c", "d", "e", "f", "g"]}
+    return render_to_string("series_selection_modal.html", context)
