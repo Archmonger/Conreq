@@ -6,3 +6,8 @@ var modal_select_all = function() {
         $(".modal-button.select-button").text("SELECT ALL");
     }
 };
+
+let modal_body = $(".modal-body")[0];
+if (modal_body != null) {
+    new SimpleBar(modal_body);
+}
