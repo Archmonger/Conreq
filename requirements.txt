@@ -6,3 +6,4 @@ strsim==0.0.3
 django==3.1.2
 diskcache==5.0.3
 channels==3.0.0
+django-htmlmin==0.11.0
