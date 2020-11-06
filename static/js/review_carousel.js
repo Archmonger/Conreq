@@ -1,5 +1,5 @@
 var reviewCarousel = tns({
-    container: ".moreInfo-reviews",
+    container: ".more-info-reviews",
     items: 1,
     speed: 300,
     swipeAngle: 60,

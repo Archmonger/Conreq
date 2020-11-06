@@ -1,12 +1,12 @@
 {% load static %}
-<div class="posterContainer cast no-highlighting">
-    <div class="poster-tint"></div>
+<div class="poster-container cast no-highlighting">
+    <div class="description-tint"></div>
     <a href="#">
-        <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w200{{card.profile_path}}" class="posterContainer-poster lazy" />
+        <img src="{% static 'images/transparent.png' %}" data-src="https://image.tmdb.org/t/p/w200{{card.profile_path}}" class="poster lazy" />
     </a>
 
-    <div class="posterContainer-descriptionContainer">
-        <div class="posterContainer-title">{{card.name}}</div>
-        <div class="posterContainer-description">{{card.character}}</div>
+    <div class="poster-description-container">
+        <div class="poster-title">{{card.name}}</div>
+        <div class="poster-description">{{card.character}}</div>
     </div>
 </div>

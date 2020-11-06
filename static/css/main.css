@@ -327,18 +327,18 @@ button:focus {
     white-space: nowrap;
 }
 
-.navpages-availablePages {
+.all-tab-groups {
     height: 100%;
     text-overflow: ellipsis;
 }
 
-.navpages-availablePages .suboption:hover,
-.navpages-availablePages .suboption.active {
+.all-tab-groups .suboption:hover,
+.all-tab-groups .suboption.active {
     color: #ffffff;
     background-color: var(--accent-color);
 }
 
-.navpages-availablePages .navpages-page {
+.all-tab-groups .nav-tab {
     text-decoration: none;
     font-size: var(--primary-font-size);
     color: var(--navpages-font-color);
@@ -348,53 +348,53 @@ button:focus {
     overflow: hidden;
 }
 
-.navpages-page.group {
+.nav-tab.group {
     text-overflow: inherit;
     padding: var(--navpages-button-padding-group);
     border-bottom: var(--navpages-button-border);
     border-top: var(--navpages-button-border);
 }
 
-.navpages-page.group.collapsed {
+.nav-tab.group.collapsed {
     border-bottom-color: transparent;
 }
 
-.navpages-page.group.collapsed [data-icon="angle-up"] {
+.nav-tab.group.collapsed [data-icon="angle-up"] {
     transform: rotate(180deg);
 }
 
-.navpages-availablePages .navpages-page.group:last-of-type {
+.all-tab-groups .nav-tab.group:last-of-type {
     border-bottom: var(--navpages-button-border) !important;
 }
 
-.navpages-page.group .fa-angle-up,
-.navpages-page.group .fa-angle-down {
+.nav-tab.group .fa-angle-up,
+.nav-tab.group .fa-angle-down {
     float: right;
     color: rgba(0, 0, 0, 0.5);
 }
 
-.navpages-page.suboption {
+.nav-tab.suboption {
     padding: var(--navpages-button-padding-suboption);
 }
 
-.navpages-page.suboption svg {
+.nav-tab.suboption svg {
     float: right;
     color: rgba(255, 255, 255, 0.6);
     transition: color 0.3s ease;
 }
 
-.navpages-page.suboption:not(.active) svg {
+.nav-tab.suboption:not(.active) svg {
     display: none;
 }
 
-.navpages-page.suboption svg:hover {
+.nav-tab.suboption svg:hover {
     color: #fff;
 }
 
 
 /* Posters */
 
-.posterContainer {
+.poster-container {
     margin: 0;
     border-radius: 5px;
     width: var(--poster-width);
@@ -412,7 +412,7 @@ button:focus {
     max-height: var(--poster-container-height);
 }
 
-.posterContainer-poster {
+.poster {
     width: var(--poster-width);
     height: var(--poster-height);
     display: block;
@@ -424,33 +424,33 @@ button:focus {
     position: relative;
 }
 
-.posterContainer-poster:hover {
+.poster:hover {
     -webkit-filter: brightness(113%);
     filter: brightness(113%);
     transform: scale(1.08);
 }
 
-.posterContainer:hover {
+.poster-container:hover {
     z-index: 5;
     transform: scale(1.05);
 }
 
-.posterContainer-descriptionContainer {
+.poster-description-container {
     z-index: 7;
     position: relative;
     background: var(--poster-bg-color);
     height: var(--poster-details-height);
 }
 
-.tv .posterContainer-descriptionContainer {
+.tv .poster-description-container {
     border-top: var(--tv-indicator-hr);
 }
 
-.movie .posterContainer-descriptionContainer {
+.movie .poster-description-container {
     border-top: var(--movie-indicator-hr);
 }
 
-.posterContainer-title {
+.poster-title {
     font-family: var(--global-font);
     font-weight: 300;
     overflow: hidden;
@@ -464,11 +464,7 @@ button:focus {
     width: calc(var(--poster-width) - 20px);
 }
 
-.posterContainer-subtitle {
-    font-size: 13px;
-}
-
-.posterContainer-description {
+.poster-description {
     font-family: var(--global-font);
     font-weight: 300;
     font-size: var(--secondary-font-size);
@@ -477,7 +473,7 @@ button:focus {
     padding: 0px var(--poster-description-padding);
 }
 
-.poster-tint {
+.description-tint {
     background: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), var(--poster-bg-color));
     height: var(--poster-details-height);
     width: var(--poster-width);
@@ -489,7 +485,7 @@ button:focus {
     filter: brightness(25%);
 }
 
-.posterContainer .fa-angle-down {
+.poster-container .fa-angle-down {
     position: absolute;
     bottom: 0px;
     color: rgba(255, 255, 255, 0.5);
@@ -503,12 +499,12 @@ button:focus {
     will-change: color, background-color;
 }
 
-.posterContainer .fa-angle-down:hover {
+.poster-container .fa-angle-down:hover {
     background-color: rgb(255 255 255 / 10%);
     color: rgba(255, 255, 255, 0.85);
 }
 
-.posterContainer .fa-ellipsis-v {
+.poster-container .fa-ellipsis-v {
     position: absolute;
     padding: 8px 9px;
     right: 0px;
@@ -525,7 +521,7 @@ button:focus {
     will-change: color, filter;
 }
 
-.posterContainer:hover .fa-ellipsis-v {
+.poster-container:hover .fa-ellipsis-v {
     opacity: 1;
 }
 

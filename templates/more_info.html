@@ -11,15 +11,15 @@
         {% include "navbar.html" %} {% include "sidebar.html" %} {% include "series_selection_modal.html" %}
         <div class="viewport-container">
             <link rel="stylesheet" href="{% static 'css/more_info.css' %}">
-            <div class="viewport moreInfo">
-                <div class="moreInfo-grid">
+            <div class="viewport more-info">
+                <div class="more-info-grid">
                     <div class="left-group">
-                        <div class="moreInfo-poster-container">
-                            <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.poster_path content.remotePoster %}" class="moreInfo-poster lazy"> {% if content.belongs_to_collection %}
-                            <div class="moreInfo-collection-btn no-highlighting">VIEW COLLECTION </div>
+                        <div class="more-info-poster-container">
+                            <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.poster_path content.remotePoster %}" class="more-info-poster lazy"> {% if content.belongs_to_collection %}
+                            <div class="more-info-collection-btn no-highlighting">VIEW COLLECTION </div>
                             {% endif %}
                         </div>
-                        <div class="moreInfo-quick-info">
+                        <div class="more-info-quick-info">
                             {% if content.original_name %}
                             <div class="quick-info-block">
                                 <div class="quick-info bold"> Original Name </div>
@@ -30,11 +30,11 @@
                                 <div class="quick-info bold"> Availabity </div>
                                 <div class="quick-info">
                                     {% if content.conreqStatus == available %} Available
-                                    <div class="moreInfo-availablity-dot green"> </div>
+                                    <div class="more-info-availablity-dot green"> </div>
                                     {% elif content.conreqStatus == partial %} Partial
-                                    <div class="moreInfo-availablity-dot yellow"> </div>
+                                    <div class="more-info-availablity-dot yellow"> </div>
                                     {% else %} Unavailable
-                                    <div class="moreInfo-availablity-dot red"> </div>
+                                    <div class="more-info-availablity-dot red"> </div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                     <div class="right-group">
-                        <div class="moreInfo-main-info">
+                        <div class="more-info-main-info">
                             <div class="main-title">{% firstof content.title content.name "Unknown" %}</div>
                             <div class="main-rating no-highlighting">
                                 <div class="inline bold"> SCORE: </div>
@@ -162,12 +162,12 @@
                                 REQUEST </div>
                             {% endif %} {% endif %}
                         </div>
-                        <div class="moreInfo-overview grid-block contains-carousel">
-                            <div class="moreInfo-summary">
-                                <div class="bold moreInfo-head contains-carousel"> Overview </div>
+                        <div class="more-info-overview grid-block contains-carousel">
+                            <div class="more-info-summary">
+                                <div class="bold more-info-head contains-carousel"> Overview </div>
                                 {% firstof content.overview "No summary available."%}
                             </div>
-                            <div class="moreInfo-reviews">
+                            <div class="more-info-reviews">
                                 {% for review in content.reviews.results %}
                                 <div class="review-container">
                                     <a href="{{review.url}}" target="_blank">
@@ -187,8 +187,8 @@
                             <script src="{% static 'js/review_carousel.js' %}"></script>
                         </div>
                         {% if recommended.results %}
-                        <div class="moreInfo-recommendations grid-block contains-carousel">
-                            <div class="bold moreInfo-head contains-carousel"> Recommendations
+                        <div class="more-info-recommendations grid-block contains-carousel">
+                            <div class="bold more-info-head contains-carousel"> Recommendations
                                 <div class="recommended-carousel-controls carousel-controls tns-controls">
                                     <div class="recommended-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                                     </div>
@@ -199,7 +199,7 @@
                             <div class="recommended-outer-container carousel-outer-container">
                                 <div class="recommended-inner-container carousel-inner-container">
                                     {% for card in recommended.results %} {% if card.poster_path and card.conreq_valid_id %}
-                                    <div class="posterContainer-wrapper">
+                                    <div class="poster-container-wrapper">
                                         {% include "tmdb_poster_card.html" %}
                                     </div>
                                     {% endif %} {% endfor %}
@@ -208,8 +208,8 @@
                             </div>
                         </div>
                         {% endif %} {% if collection %}
-                        <div class="moreInfo-collection grid-block contains-carousel">
-                            <div class="bold moreInfo-head contains-carousel"> {{collection.name}}
+                        <div class="more-info-collection grid-block contains-carousel">
+                            <div class="bold more-info-head contains-carousel"> {{collection.name}}
                                 <div class="collection-carousel-controls carousel-controls tns-controls">
                                     <div class="collection-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                                     </div>
@@ -220,7 +220,7 @@
                             <div class="collection-outer-container carousel-outer-container">
                                 <div class="collection-inner-container carousel-inner-container">
                                     {% for card in collection.parts %}
-                                    <div class="posterContainer-wrapper">
+                                    <div class="poster-container-wrapper">
                                         {% include "tmdb_poster_card.html" %}
                                     </div> {% endfor %}
                                 </div>
@@ -228,8 +228,8 @@
                             </div>
                         </div>
                         {% endif %} {% if content.credits.cast %}
-                        <div class="moreInfo-cast grid-block contains-carousel">
-                            <div class="bold moreInfo-head contains-carousel"> Cast Members
+                        <div class="more-info-cast grid-block contains-carousel">
+                            <div class="bold more-info-head contains-carousel"> Cast Members
                                 <div class="cast-carousel-controls carousel-controls tns-controls">
                                     <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                                     </div>
@@ -240,7 +240,7 @@
                             <div class="cast-outer-container carousel-outer-container">
                                 <div class="cast-inner-container carousel-inner-container">
                                     {% for card in content.credits.cast %}
-                                    <div class="posterContainer-wrapper">
+                                    <div class="poster-container-wrapper">
                                         {% include "cast_poster_card.html" %}
                                     </div>
                                     {% endfor %}
@@ -249,8 +249,8 @@
                             </div>
                         </div>
                         {% endif %} {% if content.videos.results %}
-                        <div class="moreInfo-videos grid-block contains-carousel">
-                            <div class="bold moreInfo-head contains-carousel"> Videos and Trailers
+                        <div class="more-info-videos grid-block contains-carousel">
+                            <div class="bold more-info-head contains-carousel"> Videos and Trailers
                                 <div class="videos-carousel-controls carousel-controls tns-controls">
                                     <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                                     </div>
@@ -270,19 +270,19 @@
                             </div>
                         </div>
                         {% endif %} {% if content.images.backdrops %}
-                        <div class="moreInfo-images grid-block contains-carousel">
-                            <div class="bold moreInfo-head contains-carousel"> Artwork and Images
-                                <div class="images-carousel-controls carousel-controls tns-controls">
+                        <div class="more-info-images grid-block contains-carousel">
+                            <div class="bold more-info-head contains-carousel"> Artwork and Images
+                                <div class="artwork-carousel-controls carousel-controls tns-controls">
                                     <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                                     </div>
                                     <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="images-outer-container carousel-outer-container">
-                                <div class="images-inner-container carousel-inner-container">
+                            <div class="artwork-outer-container carousel-outer-container">
+                                <div class="artwork-inner-container carousel-inner-container">
                                     {% for image in content.images.backdrops %}
-                                    <div class="imageContainer-wrapper">
+                                    <div class="artwork-container-wrapper">
                                         {% include "artwork_card.html" %}
                                     </div>
                                     {% endfor %}
@@ -298,7 +298,7 @@
             </div>
             <div class="movie-backdrop-container">
                 <div class="backdrop-tint"></div>
-                <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.backdrop_path content.backdropPath %}" class="moreInfo-backdrop lazy">
+                <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.backdrop_path content.backdropPath %}" class="more-info-backdrop lazy">
                 <div class="backdrop-placeholder-gradient"></div>
             </div>
             <script src="{% static 'js/viewport.js' %}"></script>

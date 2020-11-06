@@ -1,6 +1,6 @@
 var imagesCarousel = tns({
-    container: ".images-inner-container",
-    controlsContainer: ".images-carousel-controls",
+    container: ".artwork-inner-container",
+    controlsContainer: ".artwork-carousel-controls",
     swipeAngle: 60,
     loop: false,
     items: 3,
@@ -14,7 +14,7 @@ var imagesCarousel = tns({
 });
 
 $(document).ready(function() {
-    $(".imageContainer").magnificPopup({
+    $(".artwork-container").magnificPopup({
         delegate: "a",
         type: "image",
         closeOnContentClick: true,

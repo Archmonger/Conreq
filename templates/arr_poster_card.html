@@ -1,14 +1,14 @@
 {% load static %} {% if card.tmdbCard %} {% include "tmdb_poster_card.html" %} {% else %}
-<div class="posterContainer no-highlighting {{card.contentType}}">
+<div class="poster-container no-highlighting {{card.contentType}}">
     <i class="fas fa-ellipsis-v"></i>
     <i class="fas fa-angle-down"></i>
-    <div class="poster-tint"></div>
+    <div class="description-tint"></div>
     <a href="/more_info/?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
-        <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="posterContainer-poster lazy" />
+        <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy" />
     </a>
 
-    <div class="posterContainer-descriptionContainer">
-        <div class="posterContainer-title">{% firstof card.title "Unknown" %}</div>
+    <div class="poster-description-container">
+        <div class="poster-title">{% firstof card.title "Unknown" %}</div>
         {% if card.conreqStatus == available %}
         <div class="availablity-dot green"></div>
         {% elif card.conreqStatus == partial %}
@@ -16,7 +16,7 @@
         {% else %}
         <div class="availablity-dot red"></div>
         {% endif %}
-        <div class="posterContainer-description">{{card.overview}}</div>
+        <div class="poster-description">{{card.overview}}</div>
     </div>
 </div>
 {% endif %}

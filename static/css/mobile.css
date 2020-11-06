@@ -99,24 +99,24 @@
     .username-container .fa-caret-down {
         padding-left: 2px !important;
     }
-    .navpages-page.suboption {
+    .navpages-tab.suboption {
         padding-top: 20px !important;
         padding-bottom: 20px !important;
     }
     /* More Info */
-    .moreInfo-grid {
+    .more-info-grid {
         display: flex !important;
         flex-direction: column !important;
         width: calc(100vw - var(--viewport-padding) * 2) !important;
     }
-    .moreInfo-poster-container {
+    .more-info-poster-container {
         margin: 0 auto !important;
         width: 55vw !important;
     }
-    .moreInfo-poster-container img {
+    .more-info-poster-container img {
         height: calc(55vw * 1.5) !important;
     }
-    .moreInfo-grid .request-button {
+    .more-info-grid .request-button {
         position: fixed !important;
         bottom: 20px !important;
         right: 20px !important;
@@ -132,10 +132,10 @@
         margin: 0 !important;
         padding: 0 !important;
     }
-    .moreInfo-main-info {
+    .more-info-main-info {
         height: 0 !important;
     }
-    .moreInfo {
+    .more-info {
         padding-bottom: 80px !important;
     }
 }

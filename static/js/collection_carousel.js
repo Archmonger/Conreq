@@ -13,8 +13,8 @@ var collectionCarousel = tns({
     edgePadding: 20,
 });
 
-$(".moreInfo-collection-btn").click(function() {
-    $(".moreInfo-collection")[0].scrollIntoView({
+$(".more-info-collection-btn").click(function() {
+    $(".more-info-collection")[0].scrollIntoView({
         behavior: "smooth",
     });
 });
