@@ -1,12 +1,12 @@
 import json
 import os
 
+from django.core.cache import cache
+
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.search import Search
 from conreq.settings import DATA_DIR, DEBUG
-from django.core.cache import cache
-
 
 TMDB_KEY = "112fd4c96274603f68620c78067d5422"
 
@@ -27,8 +27,8 @@ content_manager = ContentManager(sonarr_url, sonarr_key, radarr_url, radarr_key)
 searcher = Search(sonarr_url, sonarr_key, radarr_url, radarr_key)
 credentials_file.close()
 
-# if DEBUG:
-#     try:
-#         cache.clear()
-#     except:
-#         pass
+if DEBUG:
+    try:
+        cache.clear()
+    except:
+        pass

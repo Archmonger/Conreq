@@ -1,6 +1,6 @@
 """Conreq Caching: Simplified caching module."""
 from conreq.core import log
-from conreq.core.generic_tools import clean_string
+from conreq.core.generic_tools import generate_cache_key, obtain_key_from_cache_key
 from conreq.core.thread_helper import ReturnThread
 from django.core.cache import cache
 
@@ -18,6 +18,7 @@ def handler(
     page_key="",
     force_update_cache=False,
     cache_duration=DEFAULT_CACHE_DURATION,
+    *args,
     **kwargs
 ):
     """Handles caching for results and data.
@@ -56,8 +57,8 @@ def handler(
                 # Obtain all the keys from the passed in dictionary
                 requested_keys = []
                 for key, value in function.items():
-                    cache_key = clean_string(
-                        cache_name + "_kwargs" + str(kwargs) + "_key" + str(key)
+                    cache_key = generate_cache_key(
+                        cache_name, value["args"], value["kwargs"], key
                     )
                     log.handler(
                         cache_name
@@ -82,7 +83,7 @@ def handler(
                 thread_list = []
                 for cache_key in requested_keys:
                     if not cached_results.__contains__(cache_key):
-                        key = cache_key.split("_")[2][3:]
+                        key = obtain_key_from_cache_key(cache_key)
                         thread = ReturnThread(
                             target=function[key]["function"],
                             args=function[key]["args"],
@@ -120,9 +121,8 @@ def handler(
                 return cached_results
 
         # Get the cached value
-        cache_key = clean_string(
-            cache_name + "_kwargs" + str(kwargs) + "_key" + str(page_key)
-        )
+        cache_key = generate_cache_key(cache_name, args, kwargs, page_key)
+
         log.handler(
             cache_name + " generated cache key " + cache_key,
             log.DEBUG,

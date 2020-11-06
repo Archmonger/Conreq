@@ -3,13 +3,13 @@ from random import shuffle
 
 import tmdbsimple as tmdb
 from conreq.core import cache, log
-from conreq.core.generic_tools import is_key_value_in_list
+from conreq.core.generic_tools import is_key_value_in_list, obtain_key_from_cache_key
 from conreq.core.thread_helper import ReturnThread, threaded_execution
 
 # TODO: Obtain these values from the database on init
 ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
-FETCH_MULTI_PAGE = 5
+FETCH_MULTI_PAGE = 2
 MAX_RECOMMENDED_PAGES = 7
 MAX_SIMILAR_PAGES = 1
 # Days, Hours, Minutes, Seconds
@@ -19,7 +19,7 @@ GET_BY_TMDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 GET_GENRES_CACHE_TIMEOUT = 30 * 24 * 60 * 60
 RECOMMENDED_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 SIMILAR_CACHE_TIMEOUT = 14 * 24 * 60 * 60
-POPULAR_AND_TOP_CACHE_TIMEOUT = 14 * 24 * 60 * 60
+POPULAR_AND_TOP_CACHE_TIMEOUT = 3 * 24 * 60 * 60
 KEYWORDS_TO_IDS_CACHE_TIMEOUT = 30 * 24 * 60 * 60
 
 
@@ -490,7 +490,7 @@ class ContentDiscovery:
         # Set the tvdb_id, and if it exists then this TMDB card has a valid ID
         if external_id_cache_results is not None:
             for cache_key, external_id_results in external_id_cache_results.items():
-                key = cache_key.split("_")[2][3:]
+                key = obtain_key_from_cache_key(cache_key)
                 try:
                     if external_id_results["tvdb_id"] is not None:
                         external_id_multi_fetch[key]["card"]["conreq_valid_id"] = True
