@@ -72,6 +72,7 @@
     }
     .viewport-container {
         z-index: 4 !important;
+        width: 100vw !important;
     }
     .navbar .navbar-toggler {
         display: inline-block !important;

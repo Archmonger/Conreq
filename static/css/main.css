@@ -100,7 +100,7 @@ a:hover {
     z-index: 1;
     left: var(--viewport-left);
     top: var(--navbar-height);
-    position: relative;
+    position: fixed;
     height: calc(100vh - var(--navbar-height));
     overflow-x: hidden;
     overflow-y: auto;
