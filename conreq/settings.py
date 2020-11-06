@@ -60,12 +60,12 @@ if not DATA_DIR:
 # SECURITY WARNING: keep the secret key used in production secret!
 # TODO: Store secret key in database
 SECRET_KEY = os.environ.get("SECRET_KEY")
-if not SECRET_KEY and DEBUG:
-    # log.handler(
-    #     "SECRET_KEY not configured, using a random temporary key.",
-    #     log.WARNING,
-    #     __logger,
-    # )
+if not SECRET_KEY:
+    log.handler(
+        "SECRET_KEY not configured, using a random temporary key.",
+        log.WARNING,
+        __logger,
+    )
     SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = ["*"]
