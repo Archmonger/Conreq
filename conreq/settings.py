@@ -40,7 +40,7 @@ def get_bool_from_env(name, default_value):
 DEBUG = get_bool_from_env("CONREQ_DEBUG", True)
 
 # Logging for the settings configuration
-__logger = log.get_logger("Main App")
+__logger = log.get_logger("conreq.settings")
 log.configure(__logger, log.DEBUG)
 log.configure(log.get_logger(), log.INFO)
 if DEBUG:

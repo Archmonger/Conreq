@@ -44,7 +44,7 @@ class Search:
         self.__damerau = Damerau()
 
         # Create a logger (for log files)
-        self.__logger = log.get_logger("Search")
+        self.__logger = log.get_logger("conreq.core.search")
         log.configure(self.__logger, log.DEBUG)
 
     def all(self, query):
@@ -90,6 +90,12 @@ class Search:
             conreq_rank: Calculate conreq similarity ranking and sort the results (True/False)
         """
         try:
+            log.handler(
+                "Searching for " + query + " (TV)",
+                log.INFO,
+                self.__logger,
+            )
+
             return cache.handler(
                 "sonarr search cache",
                 function=self.__television,
@@ -113,6 +119,12 @@ class Search:
             query: A string containing a search term.
         """
         try:
+            log.handler(
+                "Searching for " + query + " (MOVIE)",
+                log.INFO,
+                self.__logger,
+            )
+
             return cache.handler(
                 "radarr search cache",
                 function=self.__movie,

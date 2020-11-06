@@ -21,7 +21,7 @@ class EmailManager:
 
     def __init__(self, **kwargs):
         # Creating a logger (for log files)
-        self.__logger = log.get_logger("Content Discovery")
+        self.__logger = log.get_logger("conreq.core.email_manager")
         log.configure(self.__logger, log.DEBUG)
 
         # Personal email login information
@@ -74,6 +74,12 @@ class EmailManager:
 
             # Send the email
             self.__smtp_server.sendmail(email["From"], email["To"], email.as_string())
+
+            log.handler(
+                "Sent email to " + receiver_email,
+                log.INFO,
+                self.__logger,
+            )
         except:
             log.handler("Failed to send email!", log.ERROR, self.__logger)
 

@@ -3,7 +3,7 @@ from threading import Thread
 from conreq import content_discovery, content_manager
 from conreq.core import cache, log
 
-__logger = log.get_logger("Apps Helper")
+__logger = log.get_logger("conreq.apps.helpers")
 log.configure(__logger, log.DEBUG)
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"

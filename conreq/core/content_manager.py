@@ -40,7 +40,7 @@ class ContentManager:
         self.__radarr = RadarrAPI(self.__radarr_url, self.__radarr_api_key)
 
         # Creating a logger (for log files)
-        self.__logger = log.get_logger("Content Discovery")
+        self.__logger = log.get_logger("conreq.core.content_manager")
         log.configure(self.__logger, log.DEBUG)
 
         # Periodically run a task to re-populate the cache every minute

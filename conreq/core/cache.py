@@ -8,7 +8,7 @@ from django.core.cache import cache
 DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
 
 # Creating a logger (for log files)
-__logger = log.get_logger("Caching")
+__logger = log.get_logger("conreq.core.cache")
 log.configure(__logger, log.DEBUG)
 
 
