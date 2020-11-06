@@ -7,7 +7,6 @@
 .modal-content {
     background: var(--navbar-bg);
     will-change: height;
-    transition: height 0.3s ease;
 }
 
 .spinner-border {
@@ -25,6 +24,7 @@
     max-height: 50vh;
     overflow-y: auto;
     overflow-y: overlay;
+    will-change: height;
 }
 
 
