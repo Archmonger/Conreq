@@ -207,6 +207,7 @@ a:hover {
     filter: var(--logo-drop-shadow);
     -o-object-fit: contain;
     object-fit: contain;
+    transition: opacity 0.3s ease;
 }
 
 .searchbar {
@@ -542,6 +543,9 @@ button:focus {
     right: 0px;
     margin: 7px 6px;
 }
+
+
+/* Lazy loaded images */
 
 img.lazy {
     opacity: 0;
