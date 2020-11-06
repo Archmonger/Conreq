@@ -23,7 +23,7 @@ application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
         "websocket": AllowedHostsOriginValidator(
-            URLRouter([url("", CommandConsumer().as_asgi())])
+            URLRouter([url("ws", CommandConsumer().as_asgi())])
         ),
         # Use this when user authentication is complete
         # "websocket": AllowedHostsOriginValidator(

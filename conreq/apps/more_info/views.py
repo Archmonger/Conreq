@@ -291,6 +291,6 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
-def series_modal(tmdb_id):
+def series_modal(tmdb_id=None, tvdb_id=None):
     context = {"seasons": ["a", "b", "c", "d", "e", "f", "g"]}
     return render_to_string("series_selection_modal.html", context)

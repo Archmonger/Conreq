@@ -163,10 +163,10 @@
                             <i class="fas fa-ellipsis-v"></i> {% if content.conreqStatus == available %}
                             <div class="request-button box-shadow no-highlighting available"> AVAILABLE </div>
                             {% else %} {% if content_type == "movie" %}
-                            <div class="request-button box-shadow no-highlighting" onclick="request_command()">
+                            <div class="request-button box-shadow no-highlighting" onclick="request_content()">
                                 REQUEST </div>
                             {% elif content_type == "tv" %}
-                            <div class="request-button box-shadow no-highlighting" data-toggle="modal" data-target="#modal-container" onclick="series_selection_modal_command()">
+                            <div class="request-button box-shadow no-highlighting" data-toggle="modal" data-target="#modal-container" onclick="generate_episode_modal()">
                                 REQUEST </div>
                             {% endif %} {% endif %}
                         </div>
