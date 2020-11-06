@@ -3,10 +3,11 @@
     color: rgba(255, 255, 255, 0.7);
     -webkit-filter: drop-shadow(0 0 2px #000000);
     filter: drop-shadow(0 0 2px #000000);
+    background: #0000004d;
 }
 
 .poster-container .fa-angle-down:hover {
-    background: transparent;
+    background: #00000057;
     color: rgba(255, 255, 255, 1);
 }
 
