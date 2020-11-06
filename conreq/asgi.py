@@ -14,7 +14,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 from django.core.asgi import get_asgi_application
 from django.conf.urls import url
-from conreq.websockets import CommandConsumer
+from conreq.server_websockets import CommandConsumer
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conreq.settings")
 
