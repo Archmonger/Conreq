@@ -442,11 +442,11 @@ button:focus {
     height: var(--poster-details-height);
 }
 
-.posterContainer-descriptionContainer.poster-tv {
+.tv .posterContainer-descriptionContainer {
     border-top: var(--tv-indicator-hr);
 }
 
-.posterContainer-descriptionContainer.poster-movie {
+.movie .posterContainer-descriptionContainer {
     border-top: var(--movie-indicator-hr);
 }
 

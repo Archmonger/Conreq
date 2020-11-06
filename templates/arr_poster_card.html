@@ -1,5 +1,5 @@
 {% load static %} {% if card.tmdbCard %} {% include "tmdb_poster_card.html" %} {% else %}
-<div class="posterContainer no-highlighting">
+<div class="posterContainer no-highlighting {{card.contentType}}">
     <i class="fas fa-ellipsis-v"></i>
     <i class="fas fa-angle-down"></i>
     <div class="poster-tint"></div>
@@ -7,7 +7,7 @@
         <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="posterContainer-poster lazy" />
     </a>
 
-    <div class="posterContainer-descriptionContainer poster-{{card.contentType}}">
+    <div class="posterContainer-descriptionContainer">
         <div class="posterContainer-title">{% firstof card.title "Unknown" %}</div>
         {% if card.conreqStatus == available %}
         <div class="availablity-dot green"></div>

@@ -1,5 +1,5 @@
 {% load static %}
-<div class="posterContainer no-highlighting">
+<div class="posterContainer no-highlighting {% if card.name %}tv{% elif card.title %}movie{% endif %}">
     <i class="fas fa-ellipsis-v"></i>
     <i class="fas fa-angle-down"></i>
     <div class="poster-tint"></div>
@@ -12,7 +12,7 @@
         {% endif %}
     </a>
 
-    <div class="posterContainer-descriptionContainer {% if card.name %}poster-tv{% elif card.title %}poster-movie{% endif %}">
+    <div class="posterContainer-descriptionContainer">
         <div class="posterContainer-title">{% firstof card.name card.title "Unknown" %}</div>
         {% if card.conreqStatus == available %}
         <div class="availablity-dot green"></div>
