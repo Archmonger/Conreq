@@ -71,11 +71,22 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             "selector": "#modal-content",
             "html": None,
         }
+
+        # Check if an ID is present
         if (
             content["parameters"]["tvdb_id"] is not None
             or content["parameters"]["tmdb_id"] is not None
         ):
-            response["html"] = series_modal(1)
-            await self.send_json(response)
+            # Episode modal
+            if content["parameters"]["modal_type"] == "episode selector":
+                response["html"] = series_modal(1)
+                await self.send_json(response)
+
+            # Content info modal
+            elif content["parameters"]["modal_type"] == "content info":
+                pass
+
+            else:
+                print("Invalid modal type!")
         else:
             print("Generate modal missing an ID!")

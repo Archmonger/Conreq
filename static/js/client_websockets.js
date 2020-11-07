@@ -139,11 +139,7 @@ var request_content = function(
 };
 
 // SENDABLE COMMAND: GENERATE EPISODE MODAL
-var generate_episode_modal = function(
-    tmdb_id = null,
-    tvdb_id = null,
-    content_type = null
-) {
+var generate_episode_modal = function(tmdb_id = null, tvdb_id = null) {
     // Hide the old modal content
     $("#modal-content").hide();
     // Display the loading animation
@@ -153,6 +149,7 @@ var generate_episode_modal = function(
     let json_payload = {
         command_name: "generate modal",
         parameters: {
+            modal_type: "episode selector",
             tmdb_id: obtained_params.tmdb_id,
             tvdb_id: obtained_params.tvdb_id,
         },
