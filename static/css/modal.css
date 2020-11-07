@@ -36,7 +36,7 @@
     justify-content: flex-end;
 }
 
-.modal [data-prefix="fas"] {
+.modal .fa-window-close {
     color: var(--modal-top-button-color);
     font-size: 20px;
     transition: color 0.3s ease;
@@ -44,7 +44,7 @@
     cursor: pointer;
 }
 
-.modal [data-prefix="fas"]:hover {
+.modal .fa-window-close:hover {
     color: #fff;
 }
 
@@ -103,10 +103,22 @@
     padding: 15px 0px;
 }
 
-.season-block .fa-angle-up,
 .season-block .fa-angle-down {
     grid-column: 3;
     color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    height: auto;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+}
+
+.season-block .fa-angle-down:hover {
+    color: #fff;
+}
+
+.season-block .fa-angle-down:not(.collapsed) {
+    transform: rotate(180deg);
 }
 
 .season-block .season {
