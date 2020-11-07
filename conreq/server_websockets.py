@@ -66,7 +66,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
     # COMMAND RESPONSE: GENERATE MODAL
     async def __generate_modal(self, content):
-        response = {"command_name": "generate modal", "html": None}
+        response = {
+            "command_name": "render page element",
+            "selector": "#modal-content",
+            "html": None,
+        }
         if (
             content["parameters"]["tvdb_id"] is not None
             or content["parameters"]["tmdb_id"] is not None

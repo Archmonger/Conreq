@@ -1,8 +1,4 @@
 // HELPER FUNCTIONS
-let html_from_string = function(string_html) {
-    return document.createRange().createContextualFragment(string_html);
-};
-
 let obtain_common_parameters = function(
     tmdb_id = null,
     tvdb_id = null,
@@ -49,7 +45,6 @@ function connect() {
         ws_start = "ws://";
     }
     let endpoint = ws_start + loc.host + "/ws";
-    console.log(endpoint);
     COMMAND_SOCKET = new WebSocket(endpoint);
 
     // RECEIVABLE COMMANDS
@@ -59,16 +54,20 @@ function connect() {
         json_response = JSON.parse(response.data);
 
         // Check for valid commands
-        if (json_response.command_name == "generate modal") {
-            // Prepare the modal
-            $("#modal-dialog .spinner-border").hide();
-            let modal_content = document.getElementById("modal-content");
-            if (modal_content != null) {
-                modal_content.remove();
+        if (json_response.command_name == "render page element") {
+            // Determine what needs to be replaced
+            let selected_element = $(json_response.selector);
+            let parent_element = selected_element.parent();
+
+            // Show the loading icon
+            let loading_icon = parent_element.children(".loading-animation");
+            if (loading_icon.length) {
+                loading_icon.hide();
             }
-            // Append the new modal
-            let temp = html_from_string(json_response.html);
-            document.getElementById("modal-dialog").appendChild(temp);
+
+            // Place the new HTML on the page
+            selected_element[0].innerHTML = json_response.html;
+            selected_element.show();
         }
     };
 
@@ -145,11 +144,8 @@ var generate_episode_modal = function(
     tvdb_id = null,
     content_type = null
 ) {
-    // Delete the old modal content
-    let modal_content = document.getElementById("modal-content");
-    if (modal_content != null) {
-        modal_content.remove();
-    }
+    // Hide the old modal content
+    $("#modal-content").hide();
     // Display the loading animation
     $("#modal-dialog .spinner-border").show();
 
