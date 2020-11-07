@@ -165,10 +165,10 @@
                             <div class="request-button box-shadow no-highlighting available"> AVAILABLE </div>
                             {% else %} {% if content_type == "movie" %}
                             <div class="request-button box-shadow no-highlighting" onclick="request_content()">
-                                REQUEST </div>
+                                <i class="fas fa-plus"></i> REQUEST </div>
                             {% elif content_type == "tv" %}
                             <div class="request-button box-shadow no-highlighting" data-toggle="modal" data-target="#modal-container" onclick="generate_episode_modal()">
-                                REQUEST </div>
+                                <i class="fas fa-plus"></i> REQUEST </div>
                             {% endif %} {% endif %}
                         </div>
                         <div class="more-info-overview grid-block contains-carousel">
