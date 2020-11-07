@@ -53,6 +53,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         elif content["parameters"]["content_type"] == "movie":
             # TODO: Obtain radarr root and quality profile ID from database
             radarr_root = content_manager.radarr_root_dirs()[0]["path"]
+            radarr_profile_id = content_manager.radarr_quality_profiles()[0]["id"]
 
             # Check if the movie is already within Radarr's collection
             preexisting_movie = content_manager.get(
@@ -63,7 +64,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             if preexisting_movie is None:
                 new_movie = content_manager.add(
                     tmdb_id=content["parameters"]["tmdb_id"],
-                    quality_profile_id=1,
+                    quality_profile_id=radarr_profile_id,
                     root_dir=radarr_root,
                 )
                 if new_movie.__contains__("id"):

@@ -310,9 +310,11 @@ def series_modal(tmdb_id=None, tvdb_id=None):
     # TODO: Obtain radarr root and quality profile ID from database
     if requested_show is None:
         sonarr_root = content_manager.sonarr_root_dirs()[0]["path"]
+        sonarr_profile_id = content_manager.sonarr_quality_profiles()[0]["id"]
+
         requested_show = content_manager.add(
             tvdb_id=tvdb_id,
-            quality_profile_id=1,
+            quality_profile_id=sonarr_profile_id,
             root_dir=sonarr_root,
             series_type="Standard",
         )
