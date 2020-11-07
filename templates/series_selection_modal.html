@@ -11,9 +11,11 @@
             <div class="modal-checkbox-container"><input type="checkbox" /></div>
 
             <div class="modal-season-container">
-                <div class="season line-clamp-1">
+                <div class="season">
                     <div class="modal-dot red"></div>
-                    {% if season.seasonNumber == 0 %} Specials {% else %} Season {{season.seasonNumber}} {% endif %}
+                    <div class="season-name line-clamp-1">
+                        {% if season.seasonNumber == 0 %} Specials {% else %} Season {{season.seasonNumber}} {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="modal-season-dropdown-container">
@@ -25,7 +27,7 @@
             {% for episode in season.episodes %}
             <div class="episode-block">
                 <div class="modal-checkbox-container"><input type="checkbox" /> </div>
-                <div class="episode line-clamp-1">
+                <div class="episode">
                     <div class="modal-dot red"></div>
                     <div class="episode-number bold">
                         {% firstof episode.episodeNumber "Unknown" %}
@@ -36,7 +38,7 @@
                     </div>
                     {% endif %} {% endif %}
                     <div class="episode-separator"> </div>
-                    <div class="episode-name">
+                    <div class="episode-name line-clamp-1">
                         {% firstof episode.title "Unknown" %}
                     </div>
 
