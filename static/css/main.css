@@ -245,15 +245,15 @@ a:hover {
 }
 
 .searchbar .fa-search {
-    position: absolute;
     top: 0px;
     right: 0px;
-    padding-right: 15px;
+    margin-right: 15px;
     margin-top: calc((var(--navbar-height) * 0.4) / 2);
     margin-bottom: calc((var(--navbar-height) * 0.3) / 2);
     height: calc(var(--navbar-height) * 0.3);
     width: calc(var(--navbar-height) * 0.3);
     color: inherit;
+    margin: 0 auto;
 }
 
 .username-container {
@@ -360,7 +360,7 @@ button:focus {
     border-bottom-color: transparent;
 }
 
-.nav-tab.group.collapsed [data-icon="angle-up"] {
+.nav-tab.group.collapsed .fa-angle-up {
     transform: rotate(180deg);
 }
 
@@ -368,8 +368,7 @@ button:focus {
     border-bottom: var(--navpages-button-border) !important;
 }
 
-.nav-tab.group .fa-angle-up,
-.nav-tab.group .fa-angle-down {
+.nav-tab.group .fas {
     float: right;
     color: rgba(0, 0, 0, 0.5);
 }
@@ -378,17 +377,17 @@ button:focus {
     padding: var(--navpages-button-padding-suboption);
 }
 
-.nav-tab.suboption svg {
+.nav-tab.suboption .fas {
     float: right;
     color: rgba(255, 255, 255, 0.6);
     transition: color 0.3s ease;
 }
 
-.nav-tab.suboption:not(.active) svg {
+.nav-tab.suboption:not(.active) .fas {
     display: none;
 }
 
-.nav-tab.suboption svg:hover {
+.nav-tab.suboption .fas:hover {
     color: #fff;
 }
 
@@ -499,6 +498,7 @@ button:focus {
     font-size: 18px;
     transition: color 0.3s ease, background-color 0.3s ease;
     will-change: color, background-color;
+    text-align: center;
 }
 
 .poster-container .fa-angle-down:hover {
