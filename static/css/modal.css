@@ -133,10 +133,6 @@
     align-items: center;
 }
 
-.modal-season-container:not(.collapsed)~.modal-season-dropdown-container>[data-icon="angle-down"] {
-    transform: rotate(180deg);
-}
-
 .episode-block {
     padding: 7px 15px;
     display: grid;
@@ -172,6 +168,9 @@
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
 }
 
 .modal-dot {
