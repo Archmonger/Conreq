@@ -158,10 +158,6 @@ a:hover {
     box-shadow: var(--box-shadow);
 }
 
-[data-prefix="fas"] {
-    box-sizing: content-box;
-}
-
 .no-highlighting {
     -webkit-touch-callout: none;
     /* iOS Safari */
@@ -173,6 +169,10 @@ a:hover {
     /* Internet Explorer/Edge */
     user-select: none;
     /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.clickable {
+    cursor: pointer;
 }
 
 :-ms-input-placeholder {

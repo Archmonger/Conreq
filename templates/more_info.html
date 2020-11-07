@@ -161,12 +161,16 @@
                                 <div class="inline light rating">
                                     {% firstof content.vote_average content.ratings.value "-" %} / 10 </div>
                             </div>
-                            <i class="fas fa-ellipsis-v"></i> {% if content.conreqStatus == available %}
+                            <i class="fas fa-ellipsis-v">
+                            </i> {% if content.conreqStatus == available %} {% if content_type == "movie" %}
                             <div class="request-button box-shadow no-highlighting available"> AVAILABLE </div>
-                            {% else %} {% if content_type == "movie" %}
+                            {% endif %} {% if content_type == "tv" %}
+                            <div class="request-button box-shadow no-highlighting available clickable" data-toggle="modal" data-target="#modal-container" onclick="generate_episode_modal()">
+                                AVAILABLE </div>
+                            {% endif %} {% else %} {% if content_type == "movie" %}
                             <div class="request-button box-shadow no-highlighting" onclick="request_content()">
                                 <i class="fas fa-plus"></i> REQUEST </div>
-                            {% elif content_type == "tv" %}
+                            {% endif %} {% if content_type == "tv" %}
                             <div class="request-button box-shadow no-highlighting" data-toggle="modal" data-target="#modal-container" onclick="generate_episode_modal()">
                                 <i class="fas fa-plus"></i> REQUEST </div>
                             {% endif %} {% endif %}
