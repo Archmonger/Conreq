@@ -26,7 +26,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         if content["command_name"] == "request":
             await self.__request_content(content)
 
-        if content["command_name"] == "generate modal":
+        elif content["command_name"] == "generate modal":
             await self.__generate_modal(content)
 
         else:
