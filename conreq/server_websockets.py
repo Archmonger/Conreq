@@ -1,4 +1,5 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from htmlmin.minify import html_minify
 
 from conreq import content_manager
 from conreq.apps.more_info.views import series_modal
@@ -14,11 +15,21 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
     # INITIAL CONNECTION
     async def connect(self):
         """When the browser attempts to connect to the server."""
-        print("connected")
+        # Accept the connection
         await self.accept()
         # pprint(self.scope)
 
-    # RECIEVABLE COMMANDS
+    # SENDING COMMANDS
+    async def send_json(self, content, close=False):
+        """Encode the given content as JSON and send it to the client."""
+        # Minify HTML (if possible)
+        if isinstance(content, dict) and content.__contains__("html"):
+            content["html"] = html_minify(content["html"])
+
+        # Send response
+        await super().send(text_data=await self.encode_json(content), close=close)
+
+    # RECEIVING COMMANDS
     async def receive_json(self, content, **kwargs):
         """When the browser attempts to send a message to the server."""
         print("received", content)
