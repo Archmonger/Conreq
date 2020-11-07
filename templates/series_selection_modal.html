@@ -8,11 +8,24 @@
     <div class="season-episode-container">
         {% for season in seasons %}
         <div class="season-block season-{{season.seasonNumber}} no-highlighting">
+
+            {% if season.statistics.conreqStatus != available %}
             <div class="modal-checkbox-container"><input type="checkbox" /></div>
+            {% else %}
+            <div></div>
+            {% endif %}
 
             <div class="modal-season-container">
                 <div class="season">
+
+                    {% if season.statistics.conreqStatus == available %}
+                    <div class="modal-dot green"></div>
+                    {% elif season.statistics.conreqStatus == partial %}
+                    <div class="modal-dot yellow"></div>
+                    {% else %}
                     <div class="modal-dot red"></div>
+                    {% endif %}
+
                     <div class="season-name line-clamp-1">
                         {% if season.seasonNumber == 0 %} Specials {% else %} Season {{season.seasonNumber}} {% endif %}
                     </div>
@@ -26,9 +39,19 @@
         <div id="season-{{season.seasonNumber}}" class="episode-container collapse no-highlighting">
             {% for episode in season.episodes %}
             <div class="episode-block">
+
+                {% if episode.conreqStatus != available %}
                 <div class="modal-checkbox-container"><input type="checkbox" /> </div>
+                {% else %}
+                <div></div>
+                {% endif %}
+
                 <div class="episode">
+                    {% if episode.conreqStatus == available %}
+                    <div class="modal-dot green"></div>
+                    {% else %}
                     <div class="modal-dot red"></div>
+                    {% endif %}
                     <div class="episode-number bold">
                         {% firstof episode.episodeNumber "Unknown" %}
                     </div>

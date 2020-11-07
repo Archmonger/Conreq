@@ -329,6 +329,7 @@ def series_modal(tmdb_id=None, tvdb_id=None):
             series = content_manager.get(
                 tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
             )
+            print("Retrying content fetch")
 
-    context = {"seasons": series["seasons"]}
+    context = generate_context({"seasons": series["seasons"]})
     return render_to_string("series_selection_modal.html", context)
