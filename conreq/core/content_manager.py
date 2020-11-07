@@ -4,7 +4,6 @@ from threading import Thread
 from time import sleep
 
 from conreq.core import cache, log
-from conreq.core.thread_helper import ReturnThread
 from PyArr import RadarrAPI, SonarrAPI
 
 # Days, Hours, Minutes, Seconds
@@ -550,7 +549,10 @@ class ContentManager:
         episodes = self.__sonarr.getEpisodesBySeriesId(series["id"])
         for season in series["seasons"]:
             # Set the season conreq status
-            self.__check_status(season["statistics"])
+            try:
+                self.__check_status(season["statistics"])
+            except:
+                raise
 
             # Set the episode conreq status
             season["episodes"] = []
