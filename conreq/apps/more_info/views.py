@@ -1,7 +1,8 @@
 from calendar import month_name
 from threading import Thread
+from time import sleep
 
-from conreq import content_discovery, searcher
+from conreq import content_discovery, content_manager, searcher
 from conreq.apps.helpers import (
     TMDB_BACKDROP_URL,
     TMDB_POSTER_300_URL,
@@ -14,6 +15,9 @@ from conreq.core.thread_helper import ReturnThread
 from django.http import HttpResponse
 from django.template import loader
 from django.template.loader import render_to_string
+
+# TODO: Obtain this value from the database on init
+MAX_SERIES_FETCH_RETRIES = 20
 
 
 def preprocess_arr_result(arr_result):
@@ -292,5 +296,39 @@ def more_info(request):
 
 
 def series_modal(tmdb_id=None, tvdb_id=None):
-    context = {"seasons": ["a", "b", "c", "d", "e", "f", "g"]}
+    # Determine the TVDB ID
+    if tvdb_id is not None:
+        pass
+
+    elif tmdb_id is not None:
+        tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
+
+    # Check if the show is already within Sonarr's collection
+    requested_show = content_manager.get(tvdb_id=tvdb_id)
+
+    # If it doesn't already exists, add then add it
+    # TODO: Obtain radarr root and quality profile ID from database
+    if requested_show is None:
+        sonarr_root = content_manager.sonarr_root_dirs()[0]["path"]
+        requested_show = content_manager.add(
+            tvdb_id=tvdb_id,
+            quality_profile_id=1,
+            root_dir=sonarr_root,
+            series_type="Standard",
+        )
+
+    # Keep refreshing until we get the series from Sonarr
+    series = content_manager.get(tvdb_id=tvdb_id, obtain_season_info=True)
+    if series is None:
+        series_fetch_retries = 0
+        while series is None:
+            if series_fetch_retries > MAX_SERIES_FETCH_RETRIES:
+                break
+            series_fetch_retries = series_fetch_retries + 1
+            sleep(0.5)
+            series = content_manager.get(
+                tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
+            )
+
+    context = {"seasons": series["seasons"]}
     return render_to_string("series_selection_modal.html", context)

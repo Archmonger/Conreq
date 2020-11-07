@@ -7,49 +7,42 @@
 <div class="modal-body">
     <div class="season-episode-container">
         {% for season in seasons %}
-        <div class="season-block season-1 no-highlighting">
+        <div class="season-block season-{{season.seasonNumber}} no-highlighting">
             <div class="modal-checkbox-container"><input type="checkbox" /></div>
 
             <div class="modal-season-container">
                 <div class="season line-clamp-1">
                     <div class="modal-dot red"></div>
-                    S1 - The Return of the Flash
+                    {% if season.seasonNumber == 0 %} Specials {% else %} Season {{season.seasonNumber}} {% endif %}
                 </div>
             </div>
             <div class="modal-season-dropdown-container">
-                <i class="fas fa-angle-down collapsed" data-toggle="collapse" data-target="#season-1" aria-expanded="false" aria-controls="season-1"></i>
+                <i class="fas fa-angle-down collapsed" data-toggle="collapse" data-target="#season-{{season.seasonNumber}}" aria-expanded="false" aria-controls="season-{{season.seasonNumber}}"></i>
             </div>
 
         </div>
-        <div id="season-1" class="episode-container collapse no-highlighting">
+        <div id="season-{{season.seasonNumber}}" class="episode-container collapse no-highlighting">
+            {% for episode in season.episodes %}
             <div class="episode-block">
                 <div class="modal-checkbox-container"><input type="checkbox" /> </div>
                 <div class="episode line-clamp-1">
                     <div class="modal-dot red"></div>
-                    1 - Pilot
+                    <div class="episode-number bold">
+                        {% firstof episode.episodeNumber "Unknown" %}
+                    </div>
+                    {% if episode.absoluteEpisodeNumber %} {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
+                    <div class="absolute-episode-number bold">
+                        ({{episode.absoluteEpisodeNumber}})
+                    </div>
+                    {% endif %} {% endif %}
+                    <div class="episode-separator"> </div>
+                    <div class="episode-name">
+                        {% firstof episode.title "Unknown" %}
+                    </div>
+
                 </div>
             </div>
-            <div class="episode-block">
-                <div class="modal-checkbox-container"><input type="checkbox" /></div>
-                <div class="episode line-clamp-1">
-                    <div class="modal-dot red"></div>
-                    2 - Fastest Man Alive, And He Really Fucks
-                </div>
-            </div>
-            <div class="episode-block">
-                <div class="modal-checkbox-container"><input type="checkbox" /></div>
-                <div class="episode line-clamp-1">
-                    <div class="modal-dot red"></div>
-                    3 - Things You Can't Outrun
-                </div>
-            </div>
-            <div class="episode-block">
-                <div class="modal-checkbox-container"><input type="checkbox" /></div>
-                <div class="episode line-clamp-1">
-                    <div class="modal-dot red"></div>
-                    4 - Going Rogue
-                </div>
-            </div>
+            {% endfor %}
         </div>
         {% endfor %}
     </div>

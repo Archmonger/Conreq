@@ -125,6 +125,8 @@
     font-weight: 700;
     color: rgba(255, 255, 255, 0.7);
     line-height: 24px;
+    display: flex;
+    align-items: center;
 }
 
 .season-block .modal-season-dropdown-container {
@@ -149,6 +151,13 @@
     color: rgba(255, 255, 255, 0.5);
     grid-column: 2;
     line-height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.episode-block .episode>*:not(.modal-dot) {
+    display: inline-block;
+    margin-right: 5px;
 }
 
 .episode-container {
@@ -177,8 +186,6 @@
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    display: inline-block;
-    margin-left: 2px;
-    margin-bottom: 3px;
-    margin-right: 5px;
+    margin-left: 5px;
+    margin-right: 10px;
 }

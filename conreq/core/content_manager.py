@@ -46,8 +46,11 @@ class ContentManager:
         # Periodically run a task to re-populate the cache every minute
         Thread(target=self.refresh_content, daemon=True).start()
 
-    def get(self, **kwargs):
+    def get(self, obtain_season_info=False, force_update_cache=False, **kwargs):
         """Gets content information and computes the conreqStatus of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
+
+        Args:
+            obtain_season_info: Boolean. If True, return season/episode information.
 
         Kwargs:
             tmdb_id: A string containing the TMDB ID.
@@ -66,6 +69,7 @@ class ContentManager:
                     "radarr library cache",
                     function=self.get_all_radarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    force_update_cache=force_update_cache,
                 )
 
                 # Find our TMDB ID within Radarr
@@ -85,16 +89,23 @@ class ContentManager:
             # Search for the TVDB ID within Sonarr.
             if kwargs.__contains__("tvdb_id"):
                 # Get Sonarr's collection
-
                 results = cache.handler(
                     "sonarr library cache",
                     function=self.get_all_sonarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    force_update_cache=force_update_cache,
                 )
 
                 # Find our TVDB ID within Sonarr
                 if results.__contains__(str(kwargs["tvdb_id"])):
-                    return results[str(kwargs["tvdb_id"])]
+                    series = results[str(kwargs["tvdb_id"])]
+
+                    # Obtain season information if needed
+                    if obtain_season_info:
+                        # Set the season and episode status codes
+                        self.__season_info_and_status(series)
+
+                    return series
 
                 # Return None if couldn't find the series
                 log.handler(
@@ -129,7 +140,8 @@ class ContentManager:
 
         Kwargs:
             quality_profile_id: An integer containing the quality profile ID (required).
-            root_dir: An string containing the root directory (required).
+            root_dir: A string containing the root directory (required).
+            series_type: String containing Standard/Anime/Daily (required if adding TV).
 
             # Pick One ID
             tmdb_id: A string containing the TMDB ID.
@@ -163,16 +175,11 @@ class ContentManager:
                     ignoreEpisodesWithoutFiles=True,
                 )["id"]
 
-                # Refresh Sonarr's information
-                sleep(5)
-                self.__sonarr.setCommand(name="RescanSeries", seriesId=series_id)
-                self.__sonarr.setCommand(name="RefreshSeries", seriesId=series_id)
-
                 # Obtain all information that Sonarr collected about the series
                 new_series = self.__sonarr.getSeries(series_id)
 
                 # Set the series type
-                new_series["seriesType"] = kwargs["series_type"]
+                new_series["seriesType"] = kwargs["series_type"].lower().capitalize()
                 return self.__sonarr.updSeries(new_series)
 
             # Invalid parameter
@@ -514,7 +521,7 @@ class ContentManager:
             )
             return None
 
-    def get_all_sonarr_content(self, get_seasons=False):
+    def get_all_sonarr_content(self):
         try:
             # Get the latest list of Sonarr's collection
             results = self.__sonarr.getSeries()
@@ -524,14 +531,6 @@ class ContentManager:
             for series in results:
                 if series.__contains__("tvdbId"):
                     self.__check_status(series)
-
-                    if get_seasons:
-                        # Set the season and episode status codes
-                        episodes = self.__sonarr.getEpisodesBySeriesId(series["id"])
-                        self.__set_seasons_status(
-                            seasons=series["seasons"],
-                            episodes=episodes,
-                        )
 
                     results_with_ids[str(series["tvdbId"])] = series
 
@@ -546,41 +545,19 @@ class ContentManager:
             )
             return None
 
-    def __set_seasons_status(self, **kwargs):
-        # Set the season status codes
-        season_threads = []
-        episode_threads = []
-        for season in kwargs["seasons"]:
-            if not season.__contains__("statistics"):
-                season["statistics"] = {}
-                log.handler(
-                    "Season did not contain any statistics!\n" + str(season),
-                    log.WARNING,
-                    self.__logger,
-                )
-            season_thread = Thread(
-                target=self.__check_status, args=[season["statistics"]]
-            )
-            season_thread.start()
-            season_threads.append(season_thread)
+    def __season_info_and_status(self, series):
+        # Obtain the episodes
+        episodes = self.__sonarr.getEpisodesBySeriesId(series["id"])
+        for season in series["seasons"]:
+            # Set the season conreq status
+            self.__check_status(season["statistics"])
 
-            # Set the episode status codes
+            # Set the episode conreq status
             season["episodes"] = []
-            for episode in kwargs["episodes"]:
+            for episode in episodes:
                 if episode["seasonNumber"] == season["seasonNumber"]:
-                    episode_thread = ReturnThread(
-                        target=self.__check_status, args=[episode]
-                    )
-                    episode_thread.start()
-                    episode_threads.append(episode_thread)
-
-            for thread in episode_threads:
-                season["episodes"].append(thread.join())
-
-        for thread in season_threads:
-            thread.join()
-
-        return kwargs["seasons"]
+                    self.__check_status(episode)
+                    season["episodes"].append(episode)
 
     def __check_status(self, content):
 

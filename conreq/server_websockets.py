@@ -90,7 +90,10 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         ):
             # Episode modal
             if content["parameters"]["modal_type"] == "episode selector":
-                response["html"] = series_modal(1)
+                response["html"] = series_modal(
+                    tmdb_id=content["parameters"]["tmdb_id"],
+                    tvdb_id=content["parameters"]["tvdb_id"],
+                )
                 await self.send_json(response)
 
             # Content info modal
