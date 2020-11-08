@@ -572,10 +572,29 @@ img.lazy:not([src]) {
     background-color: var(--accent-color);
 }
 
-::-webkit-scrollbar,
-::-webkit-scrollbar-track,
+::-webkit-scrollbar {
+    width: 7px;
+    background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: rgb(65 146 123 / 0.5);
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
     display: none;
+}
+
+
+/* Hide scrollbars for non-webkit browsers */
+
+html * {
+    /* IE 11 */
+    -ms-overflow-style: none;
+    /* Firefox 64 */
+    scrollbar-width: none;
 }
 
 
