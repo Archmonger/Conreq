@@ -24,7 +24,7 @@
             {% endif %}
 
             <div class="modal-season-container">
-                <div class="season clickable">
+                <div class="season {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
 
                     {% if season.statistics.conreqStatus == available %}
                     <div class="modal-dot green"></div>
@@ -62,7 +62,7 @@
                 <div></div>
                 {% endif %}
 
-                <div class="episode clickable">
+                <div class="episode {% if episode.conreqStatus != available %}clickable{% endif %}">
                     {% if episode.conreqStatus == available %}
                     <div class="modal-dot green"></div>
                     {% else %}
