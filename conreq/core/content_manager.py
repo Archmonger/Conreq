@@ -549,10 +549,7 @@ class ContentManager:
         episodes = self.__sonarr.getEpisodesBySeriesId(series["id"])
         for season in series["seasons"]:
             # Set the season conreq status
-            try:
-                self.__check_status(season["statistics"])
-            except:
-                raise
+            self.__check_status(season["statistics"])
 
             # Set the episode conreq status
             season["episodes"] = []
