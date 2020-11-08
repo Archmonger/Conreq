@@ -10,7 +10,15 @@
         <div class="season-block season-{{season.seasonNumber}} no-highlighting">
 
             {% if season.statistics.conreqStatus != available %}
-            <div class="modal-checkbox-container"><input type="checkbox" /></div>
+            <div class="modal-checkbox-container">
+                <div class="pretty p-icon p-curve p-smooth p-jelly">
+                    <input type="checkbox" />
+                    <div class="state">
+                        <i class="icon fas fa-check"></i>
+                        <label></label>
+                    </div>
+                </div>
+            </div>
             {% else %}
             <div></div>
             {% endif %}
@@ -41,7 +49,15 @@
             <div class="episode-block">
 
                 {% if episode.conreqStatus != available %}
-                <div class="modal-checkbox-container"><input type="checkbox" /> </div>
+                <div class="modal-checkbox-container">
+                    <div class="pretty p-icon p-curve p-smooth p-jelly">
+                        <input type="checkbox" />
+                        <div class="state">
+                            <i class="icon fas fa-check"></i>
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
                 {% else %}
                 <div></div>
                 {% endif %}

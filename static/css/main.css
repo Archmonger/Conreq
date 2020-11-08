@@ -175,6 +175,10 @@ a:hover {
     cursor: pointer;
 }
 
+input:checked~.state {
+    color: var(--accent-color);
+}
+
 :-ms-input-placeholder {
     opacity: 0.75;
 }
