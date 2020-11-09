@@ -43,7 +43,7 @@ let season_name_click_event = function() {
         season_checkbox.prop("checked", !season_checkbox.prop("checked"));
 
         // Checkmark all related episodes
-        let episode_container = $(season_block.attr("episode-container"));
+        let episode_container = $(season_block.data("episode-container"));
         let episode_checkboxes = episode_container.find("input");
         episode_checkboxes.prop("checked", season_checkbox.prop("checked"));
     });
@@ -57,7 +57,7 @@ let episode_name_click_event = function() {
         episode_checkbox.prop("checked", !episode_checkbox.prop("checked"));
 
         // Uncheck the season box
-        let season_container = $(episode_block.attr("season-container"));
+        let season_container = $(episode_block.data("season-container"));
         let season_checkbox = season_container.find("input");
         if (episode_checkbox.prop("checked") == false) {
             season_checkbox.prop("checked", false);
