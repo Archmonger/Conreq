@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" crossorigin="anonymous" />
 
 <!-- Icons (FontAwesome) -->
-<link rel="stylesheet" href="{% static 'css/fontawesome_all.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/fontawesome_all_5.15.1.min.css' %}" crossorigin="anonymous" />
 <link rel="preload" href="{% static 'webfonts/fa-solid-900.woff2' %}" as="font" type="font/woff2" crossorigin>
 
 <!-- Styling and JS (Bootstrap) -->
@@ -22,6 +22,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<!-- Image popups (jQuery Magnific Popup) -->
+<link rel="stylesheet" href="{% static 'css/magnific_popup_1.1.0.css' %}" crossorigin="anonymous">
+<script src="{% static 'js/magnific_popup_1.1.0.min.js' %}" crossorigin="anonymous"></script>
 
 <!-- Sliders/Carousels (TinySlider) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css" integrity="sha384-PZZ0iQUb2LawAE6IluKzBVRHVB85dkzT3VbPqYx+he9UEfPLUsTpu2B/Qwv6ueAk" crossorigin="anonymous">
@@ -39,5 +43,5 @@
 
 <!-- Static Conreq JS and CSS -->
 <link rel="stylesheet" href="{% static 'css/main.css' %}" crossorigin="anonymous" />
-<link rel="stylesheet" href="{% static 'css/mobile.css' %}" />
+<link rel="stylesheet" href="{% static 'css/mobile.css' %}" crossorigin="anonymous" />
 <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>{% endspaceless %}
