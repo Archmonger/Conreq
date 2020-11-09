@@ -136,6 +136,8 @@ var request_content = function({
         },
     };
     COMMAND_SOCKET.send(JSON.stringify(json_payload));
+
+    requested_toast_message();
 };
 
 // SENDABLE COMMAND: GENERATE EPISODE MODAL

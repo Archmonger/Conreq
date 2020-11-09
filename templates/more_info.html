@@ -168,7 +168,7 @@
                             <div class="request-button box-shadow no-highlighting available clickable" data-toggle="modal" data-target="#modal-container" onclick="generate_episode_modal()">
                                 AVAILABLE </div>
                             {% endif %} {% else %} {% if content_type == "movie" %}
-                            <div class="request-button box-shadow no-highlighting" onclick="request_content()">
+                            <div class="request-button box-shadow no-highlighting" onclick="request_content({})">
                                 <i class="fas fa-plus"></i> REQUEST </div>
                             {% endif %} {% if content_type == "tv" %}
                             <div class="request-button box-shadow no-highlighting" data-toggle="modal" data-target="#modal-container" onclick="generate_episode_modal()">

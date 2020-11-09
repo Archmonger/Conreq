@@ -77,8 +77,6 @@ let request_click_event = function() {
             request_content(params);
             $("#modal-container").modal("hide");
             console.log("Requested the whole show!");
-
-            requested_toast_message();
         }
         // Request parts of the show
         else if (season_numbers.length || episode_ids.length) {
@@ -88,8 +86,6 @@ let request_click_event = function() {
             $("#modal-container").modal("hide");
             console.log("Seasons numbers requested:", season_numbers);
             console.log("Episode IDs requested:", episode_ids);
-
-            requested_toast_message();
         }
         // User didn't select anything
         else {
