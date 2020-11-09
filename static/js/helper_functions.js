@@ -18,3 +18,27 @@ var element_ready = function(selector) {
         });
     });
 };
+
+// Requested toast message
+var requested_toast_message = function() {
+    iziToast.show({
+        icon: "fas fa-check-circle",
+        message: "Requested!",
+        displayMode: "replace",
+        messageColor: "var(--accent-color)",
+        iconColor: "var(--accent-color)",
+        progressBarColor: "var(--accent-color)",
+    });
+};
+
+// No selection toast message
+var no_selection_toast_message = function() {
+    iziToast.show({
+        icon: "fas fa-exclamation-triangle",
+        message: "You didn't select anything to request!",
+        displayMode: "replace",
+        messageColor: "#9a5c0f",
+        iconColor: "#c57615",
+        progressBarColor: "var(--accent-color)",
+    });
+};
