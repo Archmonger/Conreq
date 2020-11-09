@@ -66,7 +66,7 @@ function connect() {
             }
 
             // Place the new HTML on the page
-            selected_element[0].innerHTML = json_response.html;
+            selected_element[0].innerHTML = DOMPurify.sanitize(json_response.html);
             selected_element.show();
         }
     };
