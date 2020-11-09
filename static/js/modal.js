@@ -1,25 +1,29 @@
-// Select the target node
-let target = document.querySelector("#modal-content");
+let modal_selector = "#modal-content";
 
-// Create an observer instance
-let observer = new MutationObserver(function() {
-    select_all_click_event();
-    request_click_event();
-    season_name_click_event();
-    episode_name_click_event();
-    console.log("New modal observed! Setting up click events...");
+element_ready(modal_selector).then(function() {
+    // Select the target node
+    let target = document.querySelector(modal_selector);
+
+    // Create an observer instance
+    let observer = new MutationObserver(function() {
+        select_all_click_event();
+        request_click_event();
+        season_name_click_event();
+        episode_name_click_event();
+        console.log("New modal observed! Setting up click events...");
+    });
+
+    // Configuration of the observer
+    let config = {
+        attributes: false,
+        characterData: false,
+        subtree: false,
+        childList: true,
+    };
+
+    // Begin observing the modal
+    observer.observe(target, config);
 });
-
-// Configuration of the observer
-let config = {
-    attributes: false,
-    characterData: false,
-    subtree: false,
-    childList: true,
-};
-
-// Begin observing the modal
-observer.observe(target, config);
 
 // CLICK EVENTS
 
