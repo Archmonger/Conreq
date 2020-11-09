@@ -577,6 +577,11 @@ img.lazy:not([src]) {
     background: transparent;
 }
 
+.sidebar::-webkit-scrollbar,
+.viewport-container::-webkit-scrollbar {
+    display: none;
+}
+
 ::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background: rgb(65 146 123 / 0.5);
