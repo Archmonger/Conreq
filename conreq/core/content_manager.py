@@ -264,7 +264,7 @@ class ContentManager:
                 series["monitored"] = True
 
                 # Set specific seasons as monitored
-                if kwargs.__contains__("seasons"):
+                if kwargs.__contains__("seasons") and kwargs["seasons"] is not None:
                     for season in series["seasons"]:
                         if season["seasonNumber"] in kwargs["seasons"]:
                             season["monitored"] = True
@@ -284,7 +284,10 @@ class ContentManager:
                 response["episode_update_results"] = []
 
                 # Set specific episodes as monitored
-                if kwargs.__contains__("episode_ids"):
+                if (
+                    kwargs.__contains__("episode_ids")
+                    and kwargs["episode_ids"] is not None
+                ):
                     for episode in episodes:
                         if episode["id"] in kwargs["episode_ids"]:
                             episode["monitored"] = True
@@ -304,8 +307,11 @@ class ContentManager:
                     )
 
                 # Search for the whole show
-                if not kwargs.__contains__("seasons") and not kwargs.__contains__(
-                    "episode_ids"
+                if (
+                    not kwargs.__contains__("seasons") or kwargs["seasons"] is None
+                ) and (
+                    not kwargs.__contains__("episode_ids")
+                    or kwargs["episode_ids"] is None
                 ):
                     response["show_search_results"] = self.__sonarr.setCommand(
                         name="SeriesSearch", seriesId=kwargs["sonarr_id"]
@@ -313,7 +319,7 @@ class ContentManager:
                     return response
 
                 # Search for specific seasons
-                if kwargs.__contains__("seasons"):
+                if kwargs.__contains__("seasons") and kwargs["seasons"] is not None:
                     response["season_search_results"] = []
                     for season in kwargs["seasons"]:
                         response["season_search_results"].append(
@@ -325,7 +331,10 @@ class ContentManager:
                         )
 
                 # Search for specific episodes
-                if kwargs.__contains__("episode_ids"):
+                if (
+                    kwargs.__contains__("episode_ids")
+                    and kwargs["episode_ids"] is not None
+                ):
                     response["episode_search_results"] = self.__sonarr.setCommand(
                         name="EpisodeSearch",
                         episodeIds=kwargs["episode_ids"],

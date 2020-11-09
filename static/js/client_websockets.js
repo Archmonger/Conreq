@@ -113,13 +113,13 @@ function connect() {
 connect();
 
 // SENDABLE COMMAND: REQUEST CONTENT
-var request_content = function(
+var request_content = function({
     tmdb_id = null,
     tvdb_id = null,
     content_type = null,
     seasons = null,
-    episode_ids = null
-) {
+    episode_ids = null,
+}) {
     let obtained_params = obtain_common_parameters(
         tmdb_id,
         tvdb_id,

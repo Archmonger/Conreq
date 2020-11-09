@@ -4,9 +4,10 @@ let target = document.querySelector("#modal-content");
 // Create an observer instance
 let observer = new MutationObserver(function() {
     select_all_click_event();
+    request_click_event();
     season_name_click_event();
     episode_name_click_event();
-    console.log("mutation observed");
+    console.log("New modal observed! Setting up click events...");
 });
 
 // Configuration of the observer
@@ -35,6 +36,52 @@ let select_all_click_event = function() {
     });
 };
 
+let request_click_event = function() {
+    $(".modal-button.request-button").click(function() {
+        let params = {
+            tvdb_id: null,
+            seasons: null,
+            episode_ids: null,
+        };
+        let season_checkboxes = $(".season-checkbox");
+        let season_checkboxes_not_specials = $(".season-checkbox:not(.specials)");
+        let season_numbers = [];
+        let episode_ids = [];
+
+        // Iterate through every season checkbox
+        season_checkboxes.prop("checked", function(index, season_checkmark) {
+            // Whole season was requested
+            if (season_checkmark == true) {
+                season_numbers.push($(this).data("season-number"));
+            }
+            // Individual episode was requested
+            else if (season_checkmark == false) {
+                let episode_container = $($(this).data("episode-container"));
+                let episode_checkboxes = episode_container.find("input");
+                episode_checkboxes.prop("checked", function(index, episode_checkmark) {
+                    if (episode_checkmark == true) {
+                        episode_ids.push($(this).data("episode-id"));
+                    }
+                });
+            }
+        });
+
+        // Request the whole show
+        if (season_numbers.length == season_checkboxes_not_specials.length) {
+            request_content(params);
+            console.log("Requested the whole show!");
+        }
+        // Request parts of the show
+        else if (season_numbers.length || episode_ids.length) {
+            params.seasons = season_numbers;
+            params.episode_ids = episode_ids;
+            request_content(params);
+            console.log("Seasons numbers requested:", season_numbers);
+            console.log("Episode IDs requested:", episode_ids);
+        }
+    });
+};
+
 let season_name_click_event = function() {
     $(".season").click(function() {
         // Checkmark the season
@@ -43,7 +90,7 @@ let season_name_click_event = function() {
         season_checkbox.prop("checked", !season_checkbox.prop("checked"));
 
         // Checkmark all related episodes
-        let episode_container = $(season_block.data("episode-container"));
+        let episode_container = $(season_checkbox.data("episode-container"));
         let episode_checkboxes = episode_container.find("input");
         episode_checkboxes.prop("checked", season_checkbox.prop("checked"));
     });

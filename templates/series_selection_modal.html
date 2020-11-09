@@ -7,12 +7,12 @@
 <div class="modal-body">
     <div class="season-episode-container">
         {% for season in seasons %}
-        <div id="season-{{season.seasonNumber}}" class="season-block no-highlighting" data-episode-container="#episodes-season-{{season.seasonNumber}}">
+        <div id="season-{{season.seasonNumber}}" class="season-block no-highlighting">
 
             {% if season.statistics.conreqStatus != available %}
             <div class="modal-checkbox-container">
                 <div class="pretty p-icon p-curve p-smooth p-jelly">
-                    <input type="checkbox" class="{% if season.seasonNumber == 0 %} specials{% endif %}" />
+                    <input type="checkbox" class="season-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}" data-season-number="{{season.seasonNumber}}" data-episode-container="#episodes-season-{{season.seasonNumber}}" />
                     <div class="state">
                         <i class="icon fas fa-check"></i>
                         <label></label>
@@ -51,7 +51,7 @@
                 {% if episode.conreqStatus != available %}
                 <div class="modal-checkbox-container">
                     <div class="pretty p-icon p-curve p-smooth p-jelly">
-                        <input type="checkbox" class="{% if season.seasonNumber == 0 %} specials{% endif %}" episode-id="{{episode.id}}" />
+                        <input type="checkbox" class="episode-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}" data-episode-id="{{episode.id}}" />
                         <div class="state">
                             <i class="icon fas fa-check"></i>
                             <label></label>

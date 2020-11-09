@@ -1,7 +1,7 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from htmlmin.minify import html_minify
 
-from conreq import content_manager
+from conreq import content_manager, content_discovery
 from conreq.apps.more_info.views import series_modal
 
 # from channels.db import database_sync_to_async
@@ -47,7 +47,46 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
     async def __request_content(self, content):
         # TV show was requested
         if content["parameters"]["content_type"] == "tv":
-            print("requested tv")
+            # TODO: Obtain Sonarr root and quality profile ID from database
+            sonarr_root = content_manager.sonarr_root_dirs()[0]["path"]
+            sonarr_profile_id = content_manager.sonarr_quality_profiles()[0]["id"]
+
+            # Obtain the TVDB ID if needed
+            tvdb_id = content["parameters"]["tvdb_id"]
+            tmdb_id = content["parameters"]["tmdb_id"]
+            if tvdb_id is None and tmdb_id is not None:
+                tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
+
+            # print("tvdb ID ", tvdb_id)
+            # Request the show by the TVDB ID
+            if tvdb_id is not None:
+                # Check if the show is already within Sonarr's collection
+                preexisting_show = content_manager.get(tvdb_id=tvdb_id)
+
+                # If it doesn't already exists, add then request it
+                if preexisting_show is None:
+                    new_show = content_manager.add(
+                        tvdb_id=tvdb_id,
+                        quality_profile_id=sonarr_profile_id,
+                        root_dir=sonarr_root,
+                    )
+                    if new_show.__contains__("id"):
+                        content_manager.request(
+                            sonarr_id=new_show["id"],
+                            seasons=content["parameters"]["seasons"],
+                            episode_ids=content["parameters"]["episode_ids"],
+                        )
+                        print("requested tv")
+                    else:
+                        print(
+                            "Show was added to Sonarr, but Sonarr did not return an ID!"
+                        )
+                else:
+                    content_manager.request(
+                        sonarr_id=preexisting_show["id"],
+                        seasons=content["parameters"]["seasons"],
+                        episode_ids=content["parameters"]["episode_ids"],
+                    )
 
         # Movie was requested
         elif content["parameters"]["content_type"] == "movie":
