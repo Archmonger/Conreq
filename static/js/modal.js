@@ -9,7 +9,9 @@ element_ready(modal_selector).then(function() {
         select_all_click_event();
         request_click_event();
         season_name_click_event();
+        season_checkbox_click_event();
         episode_name_click_event();
+        episode_checkbox_click_event();
         console.log("New modal observed! Setting up click events...");
     });
 
@@ -102,6 +104,16 @@ let season_name_click_event = function() {
     });
 };
 
+let season_checkbox_click_event = function() {
+    $(".season-checkbox").click(function() {
+        // Checkmark all related episodes
+        let season_checkbox = $(this);
+        let episode_container = $(season_checkbox.data("episode-container"));
+        let episode_checkboxes = episode_container.find("input");
+        episode_checkboxes.prop("checked", season_checkbox.prop("checked"));
+    });
+};
+
 let episode_name_click_event = function() {
     $(".episode").click(function() {
         // Checkmark the individual episode
@@ -110,7 +122,31 @@ let episode_name_click_event = function() {
         episode_checkbox.prop("checked", !episode_checkbox.prop("checked"));
 
         // Uncheck the season box
-        let season_container = $(episode_block.data("season-container"));
+        let season_container = $(episode_checkbox.data("season-container"));
+        let season_checkbox = season_container.find("input");
+        if (episode_checkbox.prop("checked") == false) {
+            season_checkbox.prop("checked", false);
+        }
+
+        // Checkmark the season box if every episode is checked
+        else {
+            let all_episodes_container = $(this.parentElement.parentElement);
+            let episode_checkboxes = all_episodes_container.find("input");
+            let checkmarked_episode_checkboxes = episode_checkboxes.filter(
+                "input:checked"
+            );
+            if (episode_checkboxes.length == checkmarked_episode_checkboxes.length) {
+                season_checkbox.prop("checked", true);
+            }
+        }
+    });
+};
+
+let episode_checkbox_click_event = function() {
+    $(".episode-checkbox").click(function() {
+        // Uncheck the season box
+        let episode_checkbox = $(this);
+        let season_container = $(episode_checkbox.data("season-container"));
         let season_checkbox = season_container.find("input");
         if (episode_checkbox.prop("checked") == false) {
             season_checkbox.prop("checked", false);
