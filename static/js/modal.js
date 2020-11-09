@@ -77,6 +77,15 @@ let request_click_event = function() {
             request_content(params);
             $("#modal-container").modal("hide");
             console.log("Requested the whole show!");
+
+            iziToast.show({
+                icon: "fas fa-check-circle",
+                message: "Requested!",
+                displayMode: "replace",
+                messageColor: "var(--accent-color)",
+                iconColor: "var(--accent-color)",
+                progressBarColor: "var(--accent-color)",
+            });
         }
         // Request parts of the show
         else if (season_numbers.length || episode_ids.length) {
@@ -86,6 +95,26 @@ let request_click_event = function() {
             $("#modal-container").modal("hide");
             console.log("Seasons numbers requested:", season_numbers);
             console.log("Episode IDs requested:", episode_ids);
+
+            iziToast.show({
+                icon: "fas fa-check-circle",
+                message: "Requested!",
+                displayMode: "replace",
+                messageColor: "var(--accent-color)",
+                iconColor: "var(--accent-color)",
+                progressBarColor: "var(--accent-color)",
+            });
+        }
+        // User didn't select anything
+        else {
+            iziToast.show({
+                icon: "fas fa-exclamation-triangle",
+                message: "You didn't select anything to request!",
+                displayMode: "replace",
+                messageColor: "#9a5c0f",
+                iconColor: "#c57615",
+                progressBarColor: "var(--accent-color)",
+            });
         }
     });
 };
