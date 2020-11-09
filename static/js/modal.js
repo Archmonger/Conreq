@@ -183,7 +183,10 @@ let episode_checkbox_click_event = function() {
 
         // Checkmark the season box if every episode is checked
         else {
-            let all_episodes_container = $(this.parentElement.parentElement);
+            let all_episodes_container = $(
+                this.parentElement.parentElement.parentElement.parentElement
+            );
+            console.log(all_episodes_container);
             let episode_checkboxes = all_episodes_container.find("input");
             let checkmarked_episode_checkboxes = episode_checkboxes.filter(
                 "input:checked"
