@@ -73,6 +73,7 @@ let request_click_event = function() {
         // Request the whole show
         if (season_numbers.length == season_checkboxes_not_specials.length) {
             request_content(params);
+            $("#modal-container").modal("hide");
             console.log("Requested the whole show!");
         }
         // Request parts of the show
@@ -80,6 +81,7 @@ let request_click_event = function() {
             params.seasons = season_numbers;
             params.episode_ids = episode_ids;
             request_content(params);
+            $("#modal-container").modal("hide");
             console.log("Seasons numbers requested:", season_numbers);
             console.log("Episode IDs requested:", episode_ids);
         }
