@@ -6,7 +6,7 @@
             <a class="nav-tab group discover nav-link" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">
                 {{request}} <i id="discover-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="discover-tabs">
-                <a href="{% url 'discover:index' %}" class="nav-tab suboption discover {% if active_tab == discover %}active{% endif %}">
+                <a href="{% url 'discover:index' %}" class="nav-tab suboption discover {% if active_tab == combined %}active{% endif %}">
                     {{combined}} <i class="fas fa-filter"></i></a>
                 <a href="{% url 'discover:index' %}?content_type=tv" class="nav-tab suboption tv-shows {% if active_tab == tv_shows %}active{% endif %}">
                     {{tv_shows}} <i class="fas fa-filter"></i></a>
