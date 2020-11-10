@@ -5,11 +5,13 @@ from conreq.apps.helpers import (
     generate_context,
     set_many_conreq_status,
 )
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 
 
 # Create your views here.
+@login_required
 def discover(request, page=1):
 
     # Get the ID from the URL

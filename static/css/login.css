@@ -61,15 +61,31 @@ body,
     max-height: 100px;
 }
 
-.username,
-.password {
+input[type="text"],
+input[type="password"] {
     background: transparent;
     width: 80%;
     margin-bottom: 35px;
     background: rgb(0 0 0 / 0.25);
+    display: block;
+    border: none;
+    outline: none !important;
+    color: rgb(255 255 255 / 0.65);
+    padding: 10px;
+    font-size: var(--primary-font-size);
+    font-family: var(--global-font);
+    transition: background 0.3s ease, color 0.3s ease;
+    border-radius: 4px;
+    font-weight: 300;
 }
 
-.sign-in {
+input[type="text"]:focus,
+input[type="password"]:focus {
+    background: #fff;
+    color: var(--searchbar-bg);
+}
+
+input[type="submit"] {
     background: var(--accent-color);
     color: #FFF;
     width: 100px;
@@ -82,14 +98,15 @@ body,
     font-weight: 700;
     text-align: center;
     transition: background 0.3s ease;
+    border: none;
 }
 
-.sign-in:hover,
-.sign-in:active {
+input[type="submit"]:hover,
+input[type="submit"]:active {
     background: #249e7b;
 }
 
-.centered {
+form {
     display: flex;
     align-items: center;
     flex-direction: column;

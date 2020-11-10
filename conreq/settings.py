@@ -83,7 +83,6 @@ INSTALLED_APPS = [
     "channels",
     "conreq.apps.discover",
     "conreq.apps.more_info",
-    "conreq.apps.login",
     "conreq.apps.search",
 ]
 
@@ -167,6 +166,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_REDIRECT_URL = "/discover/"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

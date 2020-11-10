@@ -17,9 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path("", include("conreq.apps.login.urls")),
-    path("admin/", admin.site.urls),
-    path("discover/", include("conreq.apps.discover.urls")),
-    path("more_info/", include("conreq.apps.more_info.urls")),
-    path("search/", include("conreq.apps.search.urls")),
+    path("accounts/", include("django.contrib.auth.urls"), name="accounts"),
+    path("admin/", admin.site.urls, name="admin"),
+    path("", include("conreq.apps.discover.urls"), name="discover"),
+    path("more_info/", include("conreq.apps.more_info.urls"), name="more info"),
+    path("search/", include("conreq.apps.search.urls"), name="search"),
 ]

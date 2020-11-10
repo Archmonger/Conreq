@@ -1,0 +1,35 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include "head_content_login.html" %} {% load static %}
+</head>
+
+<body>
+    <div class="main">
+        <div class="login-box">
+            <div class="login-box-header">
+                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="login-brand">
+            </div>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %} {{form.username}} {{form.password}}
+                <input type="submit" value="Sign In">
+                <input type="hidden" name="next" value="{{next}}">
+            </form>
+
+            {% if form.errors %}
+            <script>
+                login_failed_toast_message();
+            </script>
+            {% endif %}
+        </div>
+        <div class="login-bg">
+            <div class="login-bg-tint">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endspaceless %}

@@ -12,6 +12,7 @@ from conreq.apps.helpers import (
 )
 from conreq.core.generic_tools import is_key_value_in_list
 from conreq.core.thread_helper import ReturnThread
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.template.loader import render_to_string
@@ -191,6 +192,7 @@ def preprocess_tmdb_result(tmdb_result):
 
 
 # Create your views here.
+@login_required
 def more_info(request):
     template = loader.get_template("more_info.html")
     thread_list = []

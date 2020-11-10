@@ -2,7 +2,8 @@
 from threading import Thread
 
 from conreq import content_discovery, searcher
-from conreq.apps.helpers import set_many_conreq_status, generate_context
+from conreq.apps.helpers import generate_context, set_many_conreq_status
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 
@@ -23,6 +24,7 @@ def convert_card_to_tmdb(index, all_results):
 
 
 # Create your views here.
+@login_required
 def search(request):
     # Get the ID from the URL
     query = request.GET.get("query", "")

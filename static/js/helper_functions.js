@@ -42,3 +42,15 @@ var no_selection_toast_message = function() {
         progressBarColor: "var(--accent-color)",
     });
 };
+
+// No selection toast message
+var login_failed_toast_message = function() {
+    iziToast.show({
+        icon: "fas fa-exclamation-triangle",
+        message: "Failed to log in!",
+        displayMode: "replace",
+        messageColor: "#9a5c0f",
+        iconColor: "#c57615",
+        progressBarColor: "var(--accent-color)",
+    });
+};
