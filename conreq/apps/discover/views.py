@@ -30,7 +30,7 @@ def discover(request, page=1):
     # Search for both content if requested
     else:
         tmdb_results = content_discovery.all(page)["results"]
-        active_tab = STATIC_CONTEXT_VARS["discover"]
+        active_tab = STATIC_CONTEXT_VARS["combined"]
 
     template = loader.get_template("discover.html")
 
