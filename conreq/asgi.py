@@ -25,7 +25,7 @@ application = ProtocolTypeRouter(
         "websocket": AllowedHostsOriginValidator(
             URLRouter([url("ws", CommandConsumer().as_asgi())])
         ),
-        # Use this when user authentication is complete
+        # Code below is broken. Is not 1:1 (browser tab to server socket)
         # "websocket": AllowedHostsOriginValidator(
         #     AuthMiddlewareStack(URLRouter([url("", CommandConsumer().as_asgi())]))
         # ),
