@@ -166,7 +166,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "/discover/"
+LOGIN_REDIRECT_URL = "discover:index"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
