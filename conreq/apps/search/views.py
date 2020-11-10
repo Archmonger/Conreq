@@ -2,25 +2,14 @@
 from threading import Thread
 
 from conreq import content_discovery, searcher
-from conreq.apps.helpers import generate_context, set_many_conreq_status
+from conreq.apps.helpers import (
+    convert_card_to_tmdb,
+    generate_context,
+    set_many_conreq_status,
+)
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
-
-
-def convert_card_to_tmdb(index, all_results):
-    # NOTE: For some reason, overriding values in all_results requires the list and index value.
-    # It will NOT work if attempting to change values by reference (ex. card = newCard).
-
-    # Convert Sonarr cards to TMDB
-    if all_results[index].__contains__("tvdbId"):
-        try:
-            tmdb_query = content_discovery.get_by_tvdb_id(all_results[index]["tvdbId"])
-            tmdb_result = tmdb_query["tv_results"][0]
-            all_results[index] = tmdb_result
-            all_results[index]["tmdbCard"] = True
-        except:
-            pass
 
 
 # Create your views here.
