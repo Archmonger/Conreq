@@ -4,6 +4,7 @@ from htmlmin.minify import html_minify
 from conreq import content_manager, content_discovery
 from conreq.apps.more_info.views import series_modal
 
+# from channels.auth import login
 # from channels.db import database_sync_to_async
 # from django.contrib.auth import get_user_model
 # from pprint import pprint
@@ -17,6 +18,12 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         """When the browser attempts to connect to the server."""
         # Accept the connection
         await self.accept()
+
+        # Attempt at websocket login that doesn't work (1:1 failure)
+        # # login the user to this session.
+        # await login(self.scope, self.scope["user"])
+        # # save the session (if the session backend does not access the db you can use `sync_to_async`)
+        # await database_sync_to_async(self.scope["session"].save)()
         # pprint(self.scope)
 
     # SENDING COMMANDS
@@ -32,6 +39,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
     # RECEIVING COMMANDS
     async def receive_json(self, content, **kwargs):
         """When the browser attempts to send a message to the server."""
+        # Other attempt at websocket login that doesn't work either (1:1 failure)
+        # # login the user to this session.
+        # await login(self.scope, self.scope["user"])
+        # # save the session (if the session backend does not access the db you can use `sync_to_async`)
+        # await database_sync_to_async(self.scope["session"].save)()
         print("received", content)
 
         if content["command_name"] == "request":
