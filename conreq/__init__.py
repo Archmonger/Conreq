@@ -27,8 +27,8 @@ content_manager = ContentManager(sonarr_url, sonarr_key, radarr_url, radarr_key)
 searcher = Search(sonarr_url, sonarr_key, radarr_url, radarr_key)
 credentials_file.close()
 
-if DEBUG:
-    try:
-        cache.clear()
-    except:
-        pass
+# if DEBUG:
+#     try:
+#         cache.clear()
+#     except:
+#         pass
