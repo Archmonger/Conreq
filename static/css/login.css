@@ -1,11 +1,10 @@
 :root {
-    /* Globals */
     --global-font: 'Roboto', sans-serif;
     --primary-font-size: 14px;
     --box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
     --accent-color: #258a6d;
-    /* Navbar */
     --searchbar-bg: #252525;
+    --logo-drop-shadow: drop-shadow(3px 3px 5px #2222224f);
 }
 
 html,
@@ -104,6 +103,12 @@ input[type="submit"] {
 input[type="submit"]:hover,
 input[type="submit"]:active {
     background: #249e7b;
+}
+
+input[type="submit" i]:focus {
+    outline: none;
+    -webkit-filter: brightness(1.1);
+    filter: brightness(1.1);
 }
 
 form {
