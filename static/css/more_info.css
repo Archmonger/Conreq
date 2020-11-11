@@ -547,6 +547,7 @@
 
 .mfp-arrow {
     transition: opacity 0.3s ease, transform 0.3s ease;
+    background: none !important;
 }
 
 .mfp-arrow:focus {
@@ -554,6 +555,11 @@
 }
 
 .mfp-arrow:hover {
+    opacity: 1;
+}
+
+.mfp-arrow:active {
+    margin-top: -55px;
     transform: scale(1.2);
     opacity: 1;
 }
