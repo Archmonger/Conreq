@@ -1,13 +1,10 @@
+from channels.auth import AnonymousUser, login
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from htmlmin.minify import html_minify
 
-from conreq import content_manager, content_discovery
+from conreq import content_discovery, content_manager
 from conreq.apps.more_info.views import series_modal
-
-# from channels.auth import login
-# from channels.db import database_sync_to_async
-# from django.contrib.auth import get_user_model
-# from pprint import pprint
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
@@ -18,13 +15,6 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         """When the browser attempts to connect to the server."""
         # Accept the connection
         await self.accept()
-
-        # Attempt at websocket login that doesn't work (1:1 failure)
-        # # login the user to this session.
-        # await login(self.scope, self.scope["user"])
-        # # save the session (if the session backend does not access the db you can use `sync_to_async`)
-        # await database_sync_to_async(self.scope["session"].save)()
-        # pprint(self.scope)
 
     # SENDING COMMANDS
     async def send_json(self, content, close=False):
@@ -40,20 +30,25 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
     async def receive_json(self, content, **kwargs):
         """When the browser attempts to send a message to the server."""
         # Other attempt at websocket login that doesn't work either (1:1 failure)
-        # # login the user to this session.
-        # await login(self.scope, self.scope["user"])
-        # # save the session (if the session backend does not access the db you can use `sync_to_async`)
-        # await database_sync_to_async(self.scope["session"].save)()
-        print("received", content)
-
-        if content["command_name"] == "request":
-            await self.__request_content(content)
-
-        elif content["command_name"] == "generate modal":
-            await self.__generate_modal(content)
-
+        if isinstance(self.scope["user"], AnonymousUser):
+            await self.__forbidden()
         else:
-            print("invalid websocket structure")
+            print("received", content)
+
+            # Log in the user to this session.
+            await login(self.scope, self.scope["user"])
+            # Save the session to the database
+            await database_sync_to_async(self.scope["session"].save)()
+
+            # Process the command
+            if content["command_name"] == "request":
+                await self.__request_content(content)
+
+            elif content["command_name"] == "generate modal":
+                await self.__generate_modal(content)
+
+            else:
+                print("invalid websocket structure")
 
     # COMMAND RESPONSE: REQUEST CONTENT
     async def __request_content(self, content):
@@ -156,3 +151,8 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 print("Invalid modal type!")
         else:
             print("Generate modal missing an ID!")
+
+    # COMMAND RESPONSE: FORBIDDEN
+    async def __forbidden(self):
+        response = {"command_name": "forbidden"}
+        await self.send_json(response)

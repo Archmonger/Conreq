@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 
 import os
 
-# from channels.auth import AuthMiddlewareStack
+from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 from django.conf.urls import url
@@ -23,11 +23,7 @@ application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
         "websocket": AllowedHostsOriginValidator(
-            URLRouter([url("ws", CommandConsumer().as_asgi())])
+            AuthMiddlewareStack(URLRouter([url("ws", CommandConsumer().as_asgi())]))
         ),
-        # Code below is broken. Is not 1:1 (browser tab to server socket)
-        # "websocket": AllowedHostsOriginValidator(
-        #     AuthMiddlewareStack(URLRouter([url("", CommandConsumer().as_asgi())]))
-        # ),
     }
 )
