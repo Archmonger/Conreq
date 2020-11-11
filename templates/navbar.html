@@ -11,8 +11,10 @@
         <i class="fas fa-search"></i>
     </div>
     <div class="username-container no-highlighting">
-        <div class="username full-name">username</div>
-        <div class="username first-letter">U</div>
+        {% if user.is_authenticated %}
+        <div class="username full-name">{{ user.get_username }}</div>
+        <div class="username first-letter">{{ user.get_username|make_list|first|capfirst }}</div>
+        {% endif %}
         <i class="fas fa-caret-down"></i>
     </div>
     <script src="{% static 'js/navbar.js' %}"></script>
