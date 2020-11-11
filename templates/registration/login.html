@@ -13,7 +13,9 @@
                 <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="login-brand">
             </div>
             <form method="post" action="{% url 'login' %}">
-                {% csrf_token %} {{form.username}} {{form.password}}
+                {% csrf_token %}
+                <input placeholder="username" autocapitalize="none" autocomplete="username" autofocus="" id="id_username" maxlength="150" name="username" required="" type="text">
+                <input placeholder="password" autocomplete="current-password" id="id_password" name="password" required="" type="password">
                 <input type="submit" value="Sign In">
                 <input type="hidden" name="next" value="{{next}}">
             </form>
