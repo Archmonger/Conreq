@@ -58,17 +58,7 @@
     .sidebar {
         top: var(--navbar-height) !important;
         z-index: 9999 !important;
-        height: calc(100vh - var(--navbar-height)) !important;
-        max-height: calc(100vh - var(--navbar-height)) !important;
-        min-height: calc(100vh - var(--navbar-height)) !important;
-        display: none !important;
-    }
-    .sidebar.collapsing,
-    .sidebar.collapse:not(.show) {
-        display: none !important;
-    }
-    .sidebar.show {
-        display: block !important;
+        transition: height 0.4s ease-in;
     }
     .viewport-container {
         z-index: 4 !important;

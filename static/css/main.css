@@ -323,9 +323,14 @@ button:focus {
     font-family: var(--global-font);
     font-weight: 300;
     box-shadow: var(--box-shadow);
-    display: block !important;
     overflow-y: auto;
     overflow-y: overlay;
+}
+
+@media only screen and (min-width: 801px) {
+    .sidebar.collapse:not(.show) {
+        display: block;
+    }
 }
 
 .sidebar .navpages {
