@@ -21,12 +21,17 @@ element_ready(viewport_selector).then(function() {
         // Lazy load on page updates
         lazyloader.update();
 
-        // Delete excessive viewport posters
-        let masonry_items = $(".viewport-posters > .masonry-item");
-        if (masonry_items.length > 650) {
-            masonry_grid.masonry("remove", masonry_items.slice(0, 625)).masonry('layout');
-            console.log("Deleting excess masonry items!");
-        }
+        // Delete old masonry items
+        // let masonry_items = $(".viewport-posters > .masonry-item");
+        // if (masonry_items.length > 650) {
+        // setTimeout(function() {
+        //     $(".viewport-container").scrollTop(0);
+        // }, 500);
+        // masonry_grid
+        //     .masonry("remove", masonry_items.slice(0, 625))
+        //     .masonry("layout");
+        // console.log("Deleting excess masonry items!");
+        // }
         console.log("Viewport changes observed!");
     });
 
