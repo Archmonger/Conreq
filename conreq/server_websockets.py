@@ -16,6 +16,17 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         # Accept the connection
         await self.accept()
 
+        # Attempt logging in the user
+        try:
+            # Log in the user to this session.
+            await login(self.scope, self.scope["user"])
+            # Save the session to the database
+            await database_sync_to_async(self.scope["session"].save)()
+        except Exception as exception:
+            # User could not be logged in
+            print(str(exception))
+            await self.__forbidden()
+
     # SENDING COMMANDS
     async def send_json(self, content, close=False):
         """Encode the given content as JSON and send it to the client."""
@@ -29,16 +40,13 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
     # RECEIVING COMMANDS
     async def receive_json(self, content, **kwargs):
         """When the browser attempts to send a message to the server."""
-        # Other attempt at websocket login that doesn't work either (1:1 failure)
+        print("received", content)
+        # Reject users that aren't logged in
         if isinstance(self.scope["user"], AnonymousUser):
             await self.__forbidden()
         else:
-            print("received", content)
-
-            # Log in the user to this session.
+            # Verify login status.
             await login(self.scope, self.scope["user"])
-            # Save the session to the database
-            await database_sync_to_async(self.scope["session"].save)()
 
             # Process the command
             if content["command_name"] == "request":
