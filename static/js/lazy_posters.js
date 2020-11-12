@@ -10,13 +10,24 @@ var lazyloader = new LazyLoad({
 let viewport_selector = ".viewport-container";
 
 element_ready(viewport_selector).then(function() {
+    // Lazy load page elements
+    lazyloader.update();
+
     // Select the target node
     let target = document.querySelector(viewport_selector);
 
     // Create an observer instance
     let observer = new MutationObserver(function() {
+        // Lazy load on page updates
         lazyloader.update();
-        console.log("New viewport observed! Setting up lazy loads...");
+
+        // Delete excessive viewport posters
+        let masonry_items = $(".viewport-posters > .masonry-item");
+        if (masonry_items.length > 650) {
+            masonry_grid.masonry("remove", masonry_items.slice(0, 625)).masonry('layout');
+            console.log("Deleting excess masonry items!");
+        }
+        console.log("Viewport changes observed!");
     });
 
     // Configuration of the observer

@@ -1,11 +1,11 @@
 // Create masonry grid
-let masonry_grid = $(".viewport-posters").masonry({
+var masonry_grid = $(".viewport-posters").masonry({
     itemSelector: ".masonry-item",
     gutter: 10,
     horizontalOrder: true,
     fitWidth: true,
-    transitionDuration: "0.8s",
-    stagger: "0.03s",
+    transitionDuration: "0s",
+    stagger: "0s",
 });
 
 // get Masonry instance
@@ -29,7 +29,7 @@ masonry_grid.infiniteScroll({
     prefill: true,
     elementScroll: ".viewport-container",
     history: false,
-    scrollThreshold: 1500,
+    scrollThreshold: 2000,
 });
 
 $(".viewport-posters").css("opacity", "1");
