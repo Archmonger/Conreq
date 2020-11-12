@@ -50,11 +50,13 @@ function connect() {
     // RECEIVABLE COMMANDS
     COMMAND_SOCKET.onmessage = function(response) {
         // Websocket message received, parse for JSON
-        console.log("Websocket message received.", response);
+        console.log(response);
         json_response = JSON.parse(response.data);
 
         // Check for valid commands
-        if (json_response.command_name == "render page element") {
+        if (json_response.command_name == "forbidden") {
+            location.reload();
+        } else if (json_response.command_name == "render page element") {
             // Determine what needs to be replaced
             let selected_element = $(json_response.selector);
             let parent_element = selected_element.parent();
@@ -72,13 +74,13 @@ function connect() {
     };
 
     // WEBSOCKET EVENT: ON OPEN
-    COMMAND_SOCKET.onopen = function(e) {
+    COMMAND_SOCKET.onopen = function(response) {
         RETRY_COUNTER = 0;
-        console.log("Websocket opened.", e);
+        console.log(response);
     };
 
     // WEBSOCKET EVENT: ON CLOSE
-    COMMAND_SOCKET.onclose = function(e) {
+    COMMAND_SOCKET.onclose = function() {
         // Automatically reconnect upon disconnection
         RETRY_COUNTER++;
         if (RETRY_COUNTER <= MAX_FAST_RETRIES) {
@@ -100,10 +102,10 @@ function connect() {
     };
 
     // WEBSOCKET EVENT: ON ERROR
-    COMMAND_SOCKET.onerror = function(err) {
+    COMMAND_SOCKET.onerror = function(error) {
         console.error(
             "Websocket encountered an error: ",
-            err.message,
+            error.message,
             "Closing socket..."
         );
         COMMAND_SOCKET.close();
