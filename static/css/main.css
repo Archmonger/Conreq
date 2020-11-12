@@ -113,17 +113,12 @@ a:hover {
     min-height: -moz-fit-content;
     min-height: fit-content;
     padding: var(--viewport-padding);
-}
-
-.viewport.discover {
-    margin-left: var(--poster-padding);
+    margin: auto;
 }
 
 .viewport-posters {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .bold {
@@ -403,17 +398,17 @@ button:focus {
 
 /* Posters */
 
+.masonry-item {
+    margin-bottom: var(--poster-padding);
+}
+
 .poster-container {
     margin: 0;
     border-radius: 5px;
     width: var(--poster-width);
     overflow: hidden;
-    display: inline-block;
-    margin-right: var(--poster-padding);
-    margin-bottom: var(--poster-padding);
     box-shadow: var(--poster-box-shadow);
     transition: transform 0.15s ease-in-out;
-    position: relative;
     z-index: 1;
     will-change: transform;
     background: var(--placeholder-gradient);

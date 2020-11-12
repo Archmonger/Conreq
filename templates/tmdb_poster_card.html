@@ -1,27 +1,29 @@
 {% load static %}
-<div class="poster-container no-highlighting {% if card.name %}tv{% elif card.title %}movie{% endif %}">
-    <i class="fas fa-ellipsis-v"></i>
-    <i class="fas fa-angle-down"></i>
-    <div class="description-tint"></div>
-    <a href="{% url 'more_info:index' %}?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
-        {% if card.poster_path %}
-        <img src="{% static 'images/transparent.png' %}"
-            data-src="{% if card.poster_path %}https://image.tmdb.org/t/p/w200{{card.poster_path}}{% endif %}"
-            class="poster lazy" />
-        {% else %}
-        <img src="{% static 'images/transparent.png' %}" class="poster" />
-        {% endif %}
-    </a>
+<div class="masonry-item">
+    <div class="poster-container no-highlighting {% if card.name %}tv{% elif card.title %}movie{% endif %}">
+        <i class="fas fa-ellipsis-v"></i>
+        <i class="fas fa-angle-down"></i>
+        <div class="description-tint"></div>
+        <a href="{% url 'more_info:index' %}?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
+            {% if card.poster_path %}
+            <img src="{% static 'images/transparent.png' %}"
+                data-src="{% if card.poster_path %}https://image.tmdb.org/t/p/w200{{card.poster_path}}{% endif %}"
+                class="poster lazy" />
+            {% else %}
+            <img src="{% static 'images/transparent.png' %}" class="poster" />
+            {% endif %}
+        </a>
 
-    <div class="poster-description-container">
-        <div class="poster-title">{% firstof card.name card.title "Unknown" %}</div>
-        {% if card.conreqStatus == available %}
-        <div class="availablity-dot green"></div>
-        {% elif card.conreqStatus == partial %}
-        <div class="availablity-dot yellow"></div>
-        {% else %}
-        <div class="availablity-dot red"></div>
-        {% endif %}
-        <div class="poster-description">{{card.overview}}</div>
+        <div class="poster-description-container">
+            <div class="poster-title">{% firstof card.name card.title "Unknown" %}</div>
+            {% if card.conreqStatus == available %}
+            <div class="availablity-dot green"></div>
+            {% elif card.conreqStatus == partial %}
+            <div class="availablity-dot yellow"></div>
+            {% else %}
+            <div class="availablity-dot red"></div>
+            {% endif %}
+            <div class="poster-description">{{card.overview}}</div>
+        </div>
     </div>
 </div>
