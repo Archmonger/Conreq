@@ -577,8 +577,7 @@ img.lazy:not([src]) {
     background: transparent;
 }
 
-.sidebar::-webkit-scrollbar,
-.viewport-container::-webkit-scrollbar {
+.sidebar::-webkit-scrollbar {
     display: none;
 }
 

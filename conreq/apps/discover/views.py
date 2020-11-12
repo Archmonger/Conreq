@@ -12,9 +12,10 @@ from django.template import loader
 
 # Create your views here.
 @login_required
-def discover(request, page=1):
-
-    # Get the ID from the URL
+def discover(request):
+    # Get the page number from the URL
+    page = int(request.GET.get("page", 1))
+    # Get the content type from the URL
     content_type = request.GET.get("content_type", None)
 
     # Search for TV content if requested
