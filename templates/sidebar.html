@@ -21,7 +21,7 @@
                     {{my_requests}}</a>
                 <a href="#" class="nav-tab suboption user {% if active_tab == my_issues %}active{% endif %}">
                     {{my_issues}}</a>
-                <a href="#" class="nav-tab suboption user">
+                <a href="{% url 'signout' %}" class="nav-tab suboption user">
                     {{sign_out}}</a>
             </div>
 

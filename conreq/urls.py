@@ -19,10 +19,11 @@ from django.urls import include, path
 
 urlpatterns = [
     path(
-        "login/",
+        "signin/",
         auth_views.LoginView.as_view(redirect_authenticated_user=True),
-        name="login",
+        name="signin",
     ),
+    path("signout/", auth_views.logout_then_login, name="signout"),
     path("admin/", admin.site.urls),
     path("", include("conreq.apps.discover.urls")),
     path("more_info/", include("conreq.apps.more_info.urls")),
