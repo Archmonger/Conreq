@@ -35,6 +35,9 @@
         --artwork-height: calc(var(--video-width) * 0.5625) !important;
         --artwork-width: 70vw !important;
     }
+     ::-webkit-scrollbar {
+        display: none !important;
+    }
     .navbar {
         z-index: 100 !important;
         display: flex !important;
