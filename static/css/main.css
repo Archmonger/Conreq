@@ -105,7 +105,6 @@ a:hover {
     overflow-x: hidden;
     overflow-y: auto;
     width: calc(100vw - var(--viewport-left));
-    scroll-behavior: smooth;
 }
 
 .viewport {

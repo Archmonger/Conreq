@@ -9,7 +9,7 @@ from conreq.core.thread_helper import ReturnThread, threaded_execution
 # TODO: Obtain these values from the database on init
 ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
-FETCH_MULTI_PAGE = 2
+FETCH_MULTI_PAGE = 1
 MAX_RECOMMENDED_PAGES = 7
 MAX_SIMILAR_PAGES = 1
 # Days, Hours, Minutes, Seconds
