@@ -8,8 +8,13 @@ var lazyloader = new LazyLoad({
 });
 
 let viewport_container_class = ".viewport-container";
+let viewport_class = ".viewport";
 
-element_ready(viewport_container_class).then(function() {
+element_ready(viewport_class).then(function() {
+    // Create viewport selectors
+    let viewport_container = $(viewport_container_class);
+    let viewport = $(viewport_class);
+
     // Lazy load page elements
     lazyloader.update();
 
@@ -18,21 +23,21 @@ element_ready(viewport_container_class).then(function() {
 
     // Create an observer instance
     let observer = new MutationObserver(function() {
-        // Lazy load and masonry on poster viewport page updates
+        // Lazyload and masonry logic
         lazyloader.update();
-
         if (document.querySelector(".viewport-posters")) {
-            // Delete old masonry items
+            // Logic to delete excess masonry items
             let masonry_items = $(".viewport-posters > .masonry-item");
             if (masonry_items.length > 300) {
                 console.log("Culling excess masonry items from the viewport");
+
                 // Save the previous scroll position
-                let before_removal_height = $(".viewport").height();
-                let before_removal_scroll_pos = $(viewport_container_class).scrollTop();
+                let before_removal_height = viewport.height();
+                let before_removal_scroll_pos = viewport_container.scrollTop();
 
                 // Delete half the elements, rounded down to the nearest row
                 let card_width = $(".masonry-item").width() + 10;
-                let viewport_width = $(".viewport").width();
+                let viewport_width = viewport.width();
                 let cards_per_row = Math.trunc((viewport_width + 10) / card_width);
                 masonry_grid
                     .masonry(
@@ -44,13 +49,15 @@ element_ready(viewport_container_class).then(function() {
                         )
                     )
                     .masonry("layout");
+
                 // Scroll to the previous position
-                let after_removal_height = $(".viewport").height();
+                let after_removal_height = viewport.height();
                 let viewport_height_difference =
                     before_removal_height - after_removal_height;
-                document
-                    .querySelector(".viewport-container")
-                    .scrollTo(0, before_removal_scroll_pos - viewport_height_difference);
+                viewport_container[0].scrollTo(
+                    0,
+                    before_removal_scroll_pos - viewport_height_difference
+                );
             }
             console.log("Updating poster viewport");
         }
