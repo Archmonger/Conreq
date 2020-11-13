@@ -6,6 +6,7 @@ var masonry_grid = $(".viewport-posters").masonry({
     fitWidth: true,
     transitionDuration: "0s",
     stagger: "0s",
+    isStill: true,
 });
 
 // get Masonry instance
