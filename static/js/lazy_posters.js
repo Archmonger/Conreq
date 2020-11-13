@@ -28,7 +28,7 @@ element_ready(viewport_class).then(function() {
         if (document.querySelector(".viewport-posters")) {
             // Logic to delete excess masonry items
             let masonry_items = $(".viewport-posters > .masonry-item");
-            if (masonry_items.length > 300) {
+            if (masonry_items.length > 400) {
                 console.log("Culling excess masonry items from the viewport");
 
                 // Save the previous scroll position
