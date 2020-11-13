@@ -555,7 +555,7 @@ img.lazy {
 }
 
 img.lazy.initial,
-img.lazy[data-ll-status="loaded"],
+img.lazy.loaded,
 img.lazy.error {
     opacity: 1;
 }
