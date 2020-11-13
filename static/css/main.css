@@ -105,13 +105,13 @@ a:hover {
     overflow-x: hidden;
     overflow-y: auto;
     width: calc(100vw - var(--viewport-left));
+    padding: var(--viewport-padding);
 }
 
 .viewport {
     min-height: -webkit-fit-content;
     min-height: -moz-fit-content;
     min-height: fit-content;
-    padding: var(--viewport-padding);
     margin: auto;
 }
 

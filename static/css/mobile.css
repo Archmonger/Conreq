@@ -27,7 +27,7 @@
         --viewport-left: 0 !important;
         --viewport-padding: 15px !important;
         /* Posters */
-        --poster-width: calc(25vw - var(--viewport-total-padding)) !important;
+        --poster-width: calc( (100vw - (var(--poster-padding) * 3) - (var(--viewport-total-padding) * 2)) / 4) !important;
         /* Videos */
         --video-height: calc(var(--video-width) * 0.5625) !important;
         --video-width: 70vw !important;
@@ -137,13 +137,13 @@
 @media only screen and (max-width: 600px) {
      :root {
         /* Posters */
-        --poster-width: calc(33vw - var(--viewport-total-padding)) !important;
+        --poster-width: calc( (100vw - (var(--poster-padding) * 2) - (var(--viewport-total-padding) * 2)) / 3) !important;
     }
 }
 
 @media only screen and (max-width: 450px) {
      :root {
         /* Posters */
-        --poster-width: calc(45vw - var(--viewport-total-padding)) !important;
+        --poster-width: calc( (100vw - var(--poster-padding) - (var(--viewport-total-padding) * 2)) / 2) !important;
     }
 }
