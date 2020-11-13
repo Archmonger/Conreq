@@ -11,6 +11,7 @@ ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
 MAX_RECOMMENDED_PAGES = 7
 MAX_SIMILAR_PAGES = 1
+MAX_SHUFFLED_PAGES = 30
 # Days, Hours, Minutes, Seconds
 EXTERNAL_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 DISCOVER_BY_FILTER_CACHE_TIMEOUT = 3 * 24 * 60 * 60
@@ -20,6 +21,7 @@ RECOMMENDED_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 SIMILAR_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 POPULAR_AND_TOP_CACHE_TIMEOUT = 3 * 24 * 60 * 60
 KEYWORDS_TO_IDS_CACHE_TIMEOUT = 30 * 24 * 60 * 60
+SHUFFLED_PAGE_CACHE_TIMEOUT = 1 * 24 * 60 * 60
 
 
 class ContentDiscovery:
@@ -44,7 +46,18 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(self.__all(page_number, page_multiplier))
+        # Shuffle the order of the first N many pages for randomized discovery
+        if page_number <= MAX_SHUFFLED_PAGES:
+            page = cache.handler(
+                "all page numbers cache",
+                function=self.__shuffled_page_numbers,
+                cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
+            )[page_number]
+        else:
+            page = page_number
+
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__all(page, page_multiplier))
 
     def tv(self, page_number, page_multiplier=1):
         """Get top and popular TV from TMDB.
@@ -52,7 +65,18 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(self.__tv(page_number, page_multiplier))
+        # Shuffle the order of the first N many pages for randomized discovery
+        if page_number <= MAX_SHUFFLED_PAGES:
+            page = cache.handler(
+                "tv page numbers cache",
+                function=self.__shuffled_page_numbers,
+                cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
+            )[page_number]
+        else:
+            page = page_number
+
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__tv(page, page_multiplier))
 
     def movies(self, page_number, page_multiplier=1):
         """Get top and popular TV from TMDB.
@@ -60,7 +84,18 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(self.__movies(page_number, page_multiplier))
+        # Shuffle the order of the first N many pages for randomized discovery
+        if page_number <= MAX_SHUFFLED_PAGES:
+            page = cache.handler(
+                "movie page numbers cache",
+                function=self.__shuffled_page_numbers,
+                cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
+            )[page_number]
+        else:
+            page = page_number
+
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__movies(page, page_multiplier))
 
     def popular(self, page_number, page_multiplier=1):
         """Get popular content from TMDB.
@@ -864,6 +899,12 @@ class ContentDiscovery:
                 self.__logger,
             )
             return {}
+
+    @staticmethod
+    def __shuffled_page_numbers():
+        temp_list = [*range(1, MAX_SHUFFLED_PAGES + 1)]
+        shuffle(temp_list)
+        return dict(enumerate(temp_list))
 
 
 # Test driver code
