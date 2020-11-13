@@ -18,7 +18,7 @@ STATIC_CONTEXT_VARS = {
     "available": "Available",
     "partial": "Partial",
     "downloading": "Downloading",
-    "request": "Request",
+    "discover": "Discover",
     "combined": "Combined",
     "tv_shows": "TV Shows",
     "movies": "Movies",

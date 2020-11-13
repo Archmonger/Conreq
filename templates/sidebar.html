@@ -4,7 +4,7 @@
         <div id="all-tab-groups" class="all-tab-groups">
 
             <a class="nav-tab group discover nav-link" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">
-                {{request}} <i id="discover-fa" class="fas fa-angle-up"></i></a>
+                {{discover}} <i id="discover-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="discover-tabs">
                 <a href="{% url 'discover:index' %}" class="nav-tab suboption discover {% if active_tab == combined %}active{% endif %}">
                     {{combined}} <i class="fas fa-filter"></i></a>
