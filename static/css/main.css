@@ -101,7 +101,7 @@ a:hover {
     left: var(--viewport-left);
     top: var(--navbar-height);
     position: fixed;
-    height: calc(100vh - var(--navbar-height));
+    height: calc(100% - var(--navbar-height));
     overflow-x: hidden;
     overflow-y: auto;
     width: calc(100vw - var(--viewport-left));
@@ -307,7 +307,7 @@ button:focus {
 
 .sidebar {
     z-index: 2;
-    height: 100%;
+    height: calc(100% - var(--navbar-height));
     width: var(--sidebar-width);
     position: fixed;
     top: var(--sidebar-top);
