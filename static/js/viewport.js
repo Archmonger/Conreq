@@ -30,7 +30,7 @@ masonry_grid.infiniteScroll({
     prefill: true,
     elementScroll: ".viewport-container",
     history: false,
-    scrollThreshold: 2000,
+    scrollThreshold: 1500,
 });
 
 $(".viewport-posters").css("opacity", "1");
