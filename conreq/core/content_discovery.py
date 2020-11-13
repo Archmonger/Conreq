@@ -904,7 +904,7 @@ class ContentDiscovery:
     def __shuffled_page_numbers():
         temp_list = [*range(1, MAX_SHUFFLED_PAGES + 1)]
         shuffle(temp_list)
-        return dict(enumerate(temp_list))
+        return dict(enumerate(temp_list, start=1))
 
 
 # Test driver code
