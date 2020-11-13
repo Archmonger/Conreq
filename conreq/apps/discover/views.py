@@ -20,12 +20,12 @@ def discover(request):
 
     # Search for TV content if requested
     if content_type == "tv":
-        tmdb_results = content_discovery.tv(page)["results"]
+        tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
         active_tab = STATIC_CONTEXT_VARS["tv_shows"]
 
     # Search for movie content if requested
     elif content_type == "movie":
-        tmdb_results = content_discovery.movies(page)["results"]
+        tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
         active_tab = STATIC_CONTEXT_VARS["movies"]
 
     # Search for both content if requested
