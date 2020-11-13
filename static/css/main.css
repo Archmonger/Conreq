@@ -582,7 +582,7 @@ img.lazy:not([src]) {
 
 ::-webkit-scrollbar-thumb {
     border-radius: 3px;
-    background: rgb(65 146 123 / 0.5);
+    background: rgb(65 146 123 / 0.6);
 }
 
 ::-webkit-scrollbar-track,
