@@ -24,12 +24,12 @@
 }
 
 .more-info-availablity-dot {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     display: inline-block;
-    margin-left: 2px;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
+    margin-left: 5px;
     border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
@@ -427,6 +427,11 @@
     border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
+.quick-info-block.availability .quick-info {
+    display: flex;
+    align-items: center;
+}
+
 .more-info-poster-container {
     width: 100%;
     height: auto;
@@ -475,26 +480,22 @@
     color: var(--grid-object-font-color);
     padding: var(--grid-object-padding);
     font-size: 15px;
-    line-height: 18px;
 }
 
 .quick-info-block {
     font-size: inherit;
     color: inherit;
+    margin-bottom: 18px;
 }
 
 .quick-info.bold {
-    margin-bottom: 3.5px;
+    margin-bottom: 5px;
 }
 
 .quick-info {
     font-size: inherit;
     display: block;
     color: inherit;
-}
-
-.quick-info-block {
-    margin-bottom: 12px;
 }
 
 .quick-info-btn {

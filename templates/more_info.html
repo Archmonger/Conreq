@@ -35,14 +35,14 @@
                                 <div class="quick-info"> {{content.original_name}} </div>
                             </div>
                             {% endif %}
-                            <div class="quick-info-block">
+                            <div class="quick-info-block availability">
                                 <div class="quick-info bold"> Availabity </div>
                                 <div class="quick-info">
                                     {% if content.conreqStatus == available %} Available
                                     <div class="more-info-availablity-dot green"> </div>
                                     {% elif content.conreqStatus == partial %} Partial
                                     <div class="more-info-availablity-dot yellow"> </div>
-                                    {% else %} Unavailable
+                                    {% else %} Not Downloaded
                                     <div class="more-info-availablity-dot red"> </div>
                                     {% endif %}
                                 </div>
