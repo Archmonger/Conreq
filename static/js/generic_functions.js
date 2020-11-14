@@ -23,8 +23,10 @@ var element_ready = function(selector) {
 var requested_toast_message = function() {
     iziToast.show({
         icon: "fas fa-check-circle",
-        message: "Requested!",
+        title: "Requested!",
+        message: "Server is searching for a download...",
         displayMode: "replace",
+        titleColor: "var(--accent-color)",
         messageColor: "var(--accent-color)",
         iconColor: "var(--accent-color)",
         progressBarColor: "var(--accent-color)",
@@ -35,8 +37,10 @@ var requested_toast_message = function() {
 var no_selection_toast_message = function() {
     iziToast.show({
         icon: "fas fa-exclamation-triangle",
-        message: "You didn't select anything to request!",
+        title: "Rejected!",
+        message: "No items selected.",
         displayMode: "replace",
+        titleColor: "#9a5c0f",
         messageColor: "#9a5c0f",
         iconColor: "#c57615",
         progressBarColor: "var(--accent-color)",
@@ -47,8 +51,10 @@ var no_selection_toast_message = function() {
 var login_failed_toast_message = function() {
     iziToast.show({
         icon: "fas fa-exclamation-triangle",
-        message: "Failed to log in!",
+        title: "Error!",
+        message: "Invalid login credentials.",
         displayMode: "replace",
+        titleColor: "#9a5c0f",
         messageColor: "#9a5c0f",
         iconColor: "#c57615",
         progressBarColor: "var(--accent-color)",
