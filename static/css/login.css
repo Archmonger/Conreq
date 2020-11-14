@@ -46,7 +46,6 @@ body,
     border-radius: 4px;
     box-shadow: var(--box-shadow);
     max-width: 750px;
-    overflow: hidden;
     padding: 25px;
 }
 
@@ -115,7 +114,6 @@ form {
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 25vh;
     justify-content: space-evenly;
 }
 
