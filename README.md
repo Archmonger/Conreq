@@ -1,4 +1,4 @@
-# Conreq Pre-Alpha Instructions
+# Conreq Public Alpha Instructions
 
 ## Prerequisites
 
