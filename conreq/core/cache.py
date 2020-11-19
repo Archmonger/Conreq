@@ -142,7 +142,7 @@ def handler(
         # If the user wants to force update the cache, nothing
         # was in cache, or cache was expired, run function()
         if cached_results is None or force_update_cache:
-            function_results = function(**kwargs)
+            function_results = function(*args, **kwargs)
             log.handler(
                 cache_name + " function " + function.__name__ + " executed!",
                 log.INFO,
@@ -153,7 +153,7 @@ def handler(
 
         if cached_results is None:
             log.handler(
-                cache_name + " is not in the cache handler!",
+                cache_name + " is not in the cache!",
                 log.INFO,
                 __logger,
             )
@@ -176,4 +176,4 @@ def handler(
                 __logger,
             )
 
-        return cache.get(cache_key)
+        return None

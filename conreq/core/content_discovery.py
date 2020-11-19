@@ -39,7 +39,7 @@ class ContentDiscovery:
         self.__logger = log.get_logger("conreq.core.content_discovery")
         log.configure(self.__logger, log.DEBUG)
 
-    # Exposed class methods
+    # Public class methods
     def all(self, page_number, page_multiplier=1):
         """Get top and popular content from TMDB.
 
@@ -56,8 +56,15 @@ class ContentDiscovery:
         else:
             page = page_number
 
-        # Shuffle the results on each page
-        return self.__shuffle_results(self.__all(page, page_multiplier))
+        return cache.handler(
+            "all cache",
+            self.__all,
+            page,
+            False,
+            SHUFFLED_PAGE_CACHE_TIMEOUT,
+            page,
+            page_multiplier,
+        )
 
     def tv(self, page_number, page_multiplier=1):
         """Get top and popular TV from TMDB.
@@ -75,8 +82,15 @@ class ContentDiscovery:
         else:
             page = page_number
 
-        # Shuffle the results on each page
-        return self.__shuffle_results(self.__tv(page, page_multiplier))
+        return cache.handler(
+            "tv cache",
+            self.__tv,
+            page,
+            False,
+            SHUFFLED_PAGE_CACHE_TIMEOUT,
+            page,
+            page_multiplier,
+        )
 
     def movies(self, page_number, page_multiplier=1):
         """Get top and popular TV from TMDB.
@@ -94,8 +108,15 @@ class ContentDiscovery:
         else:
             page = page_number
 
-        # Shuffle the results on each page
-        return self.__shuffle_results(self.__movies(page, page_multiplier))
+        return cache.handler(
+            "movie cache",
+            self.__movies,
+            page,
+            False,
+            SHUFFLED_PAGE_CACHE_TIMEOUT,
+            page,
+            page_multiplier,
+        )
 
     def popular(self, page_number, page_multiplier=1):
         """Get popular content from TMDB.
@@ -103,7 +124,7 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(self.__popular(page_number, page_multiplier))
+        return self.__popular(page_number, page_multiplier)
 
     def top(self, page_number, page_multiplier=1):
         """Get top content from TMDB.
@@ -111,7 +132,7 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(self.__top(page_number, page_multiplier))
+        return self.__top(page_number, page_multiplier)
 
     def popular_movies(self, page_number, page_multiplier=1):
         """Get popular movies from TMDB.
@@ -119,9 +140,7 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(
-            self.__popular_movies(page_number, page_multiplier)
-        )
+        return self.__popular_movies(page_number, page_multiplier)
 
     def top_movies(self, page_number, page_multiplier=1):
         """Get top movies from TMDB.
@@ -129,7 +148,7 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(self.__top_movies(page_number, page_multiplier))
+        return self.__top_movies(page_number, page_multiplier)
 
     def popular_tv(self, page_number, page_multiplier=1):
         """Get popular TV from TMDB.
@@ -137,7 +156,7 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(self.__popular_tv(page_number, page_multiplier))
+        return self.__popular_tv(page_number, page_multiplier)
 
     def top_tv(self, page_number, page_multiplier=1):
         """Get top TV from TMDB.
@@ -145,7 +164,7 @@ class ContentDiscovery:
         Args:
             page_number: An Integer that is the page number to return.
         """
-        return self.__shuffle_results(self.__top_tv(page_number, page_multiplier))
+        return self.__top_tv(page_number, page_multiplier)
 
     def discover_by_filter(self, content_type, **kwargs):
         """Filter by keywords or any other TMDB filter capable arguements.
@@ -547,35 +566,45 @@ class ContentDiscovery:
             self.__top_tv,
         ]
         results = threaded_execution(function_list, [page_number, page_multiplier])
-        return self.__merge_results(*results)
+
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__merge_results(*results))
 
     def __tv(self, page_number, page_multiplier):
         # Merge popular_tv and top_tv results together
         function_list = [self.__popular_tv, self.__top_tv]
         results = threaded_execution(function_list, [page_number, page_multiplier])
-        return self.__merge_results(*results)
+
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__merge_results(*results))
 
     def __movies(self, page_number, page_multiplier):
         # Merge popular_movies and top_movies results together
         function_list = [self.__popular_movies, self.__top_movies]
         results = threaded_execution(function_list, [page_number, page_multiplier])
-        return self.__merge_results(*results)
+
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__merge_results(*results))
 
     def __popular(self, page_number, page_multiplier):
         # Merge popular_movies and popular_tv results together
         function_list = [self.__popular_movies, self.__popular_tv]
         results = threaded_execution(function_list, [page_number, page_multiplier])
-        return self.__merge_results(*results)
+
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__merge_results(*results))
 
     def __top(self, page_number, page_multiplier):
         # Merge top_movies and top_tv results together
         function_list = [self.__top_movies, self.__top_tv]
         results = threaded_execution(function_list, [page_number, page_multiplier])
-        return self.__merge_results(*results)
+
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__merge_results(*results))
 
     def __popular_movies(self, page_number, page_multiplier):
         # Obtain disovery results through the movie.popular function. Store results in cache.
-        return self.__threaded_multi_page_cached(
+        return self.__multi_page_fetch(
             "popular movie cache",
             tmdb.Movies().popular,
             page_number,
@@ -585,7 +614,7 @@ class ContentDiscovery:
 
     def __top_movies(self, page_number, page_multiplier):
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
-        return self.__threaded_multi_page_cached(
+        return self.__multi_page_fetch(
             "top movie cache",
             tmdb.Movies().top_rated,
             page_number,
@@ -595,13 +624,13 @@ class ContentDiscovery:
 
     def __popular_tv(self, page_number, page_multiplier):
         # Obtain disovery results through the tv.popular function. Store results in cache.
-        return self.__threaded_multi_page_cached(
+        return self.__multi_page_fetch(
             "popular tv cache", tmdb.TV().popular, page_number, "tv", page_multiplier
         )
 
     def __top_tv(self, page_number, page_multiplier):
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
-        return self.__threaded_multi_page_cached(
+        return self.__multi_page_fetch(
             "top tv cache", tmdb.TV().top_rated, page_number, "tv", page_multiplier
         )
 
@@ -697,7 +726,7 @@ class ContentDiscovery:
             )
             return {}
 
-    def __threaded_multi_page_cached(
+    def __multi_page_fetch(
         self, cache_name, function, page_number, content_type, page_multiplier
     ):
         # Obtain multiple pages of TMDB queries
