@@ -196,10 +196,6 @@
     filter: brightness(120%);
 }
 
-.more-info-reviews {
-    will-change: transform;
-}
-
 .more-info-reviews .bold {
     margin-bottom: 5px;
     text-align: right;
@@ -280,7 +276,6 @@
 
 .carousel-inner-container.tns-carousel {
     display: flex;
-    will-change: transform;
 }
 
 .carousel-controls {
@@ -446,7 +441,6 @@
     width: 100%;
     height: calc(var(--left-column-width) * 1.5);
     transition: opacity 1.5s ease;
-    will-change: opacity;
 }
 
 .more-info-collection-btn {
@@ -460,7 +454,6 @@
     font-weight: 700;
     box-shadow: var(--box-shadow);
     transition: background 0.3s ease;
-    will-change: background;
     cursor: pointer;
 }
 

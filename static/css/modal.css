@@ -6,7 +6,6 @@
 
 .modal-content {
     background: var(--navbar-bg);
-    will-change: height;
 }
 
 .spinner-border {
@@ -24,7 +23,6 @@
     max-height: 50vh;
     overflow-y: auto;
     overflow-y: overlay;
-    will-change: height;
 }
 
 
@@ -40,7 +38,6 @@
     color: var(--modal-top-button-color);
     font-size: 20px;
     transition: color 0.3s ease;
-    will-change: color;
     cursor: pointer;
 }
 
@@ -69,7 +66,6 @@
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s ease;
-    will-change: background;
 }
 
 .select-button {

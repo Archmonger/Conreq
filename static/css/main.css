@@ -219,7 +219,6 @@ input:checked~.state {
     left: calc(50% - (var(--searchbar-width) / 2));
     border-radius: 4px;
     transition: background 0.4s ease, color 0.4s ease;
-    will-change: background, color;
     color: var(--searchbar-font-color);
     overflow: hidden;
 }
@@ -294,7 +293,6 @@ input:checked~.state {
 
 button {
     transition: background 0.3s ease;
-    will-change: background;
 }
 
 button:focus {
@@ -412,14 +410,12 @@ button:focus {
 }
 
 .poster-container {
-    margin: 0;
     border-radius: 5px;
     width: var(--poster-width);
     overflow: hidden;
     box-shadow: var(--poster-box-shadow);
     transition: transform 0.15s ease-in-out;
     z-index: 1;
-    will-change: transform;
     background: var(--placeholder-gradient);
     height: auto;
     min-height: calc(var(--poster-container-height) / 2);
@@ -431,7 +427,6 @@ button:focus {
     width: var(--poster-width);
     height: var(--poster-height);
     display: block;
-    will-change: transform, filter;
     transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
     transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
     transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
@@ -446,7 +441,6 @@ button:focus {
 }
 
 .poster-container:hover {
-    z-index: 5;
     transform: scale(1.05);
 }
 
@@ -512,7 +506,6 @@ button:focus {
     padding-bottom: 2px;
     font-size: 18px;
     transition: color 0.3s ease, background-color 0.3s ease;
-    will-change: color, background-color;
     text-align: center;
 }
 
@@ -535,7 +528,6 @@ button:focus {
     -webkit-filter: drop-shadow(0 0 2px #000000);
     filter: drop-shadow(0 0 2px #000000);
     z-index: 7;
-    will-change: color, filter;
 }
 
 .poster-container:hover .fa-ellipsis-v {
@@ -550,7 +542,6 @@ button:focus {
 
 .availablity-text {
     position: absolute;
-    top: 5px;
     top: calc(var(--poster-height) - 30px);
     left: 5px;
     opacity: 0;
