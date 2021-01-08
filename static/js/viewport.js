@@ -1,3 +1,9 @@
+// Create the lazyloader
+var lazyloader = new LazyLoad({
+    threshold: 0,
+    callback_error: callback_error,
+});
+
 // Create masonry grid
 var masonry_grid = $(".viewport-posters").masonry({
     itemSelector: ".masonry-item",
