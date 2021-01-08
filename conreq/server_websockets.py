@@ -4,7 +4,7 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from htmlmin.minify import html_minify
 
 from conreq import content_discovery, content_manager
-from conreq.apps.more_info.views import series_modal
+from conreq.apps.more_info.views import series_modal_component
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
@@ -145,7 +145,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         ):
             # Episode modal
             if content["parameters"]["modal_type"] == "episode selector":
-                response["html"] = series_modal(
+                response["html"] = series_modal_component(
                     tmdb_id=content["parameters"]["tmdb_id"],
                     tvdb_id=content["parameters"]["tvdb_id"],
                 )
