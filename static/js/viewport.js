@@ -23,14 +23,16 @@ if (url_params.has("content_type")) {
 }
 
 // Configure infinite scrolling
-masonry_grid.infiniteScroll({
-    path: discover_path,
-    append: ".masonry-item",
-    outlayer: masonry_instance,
-    prefill: true,
-    elementScroll: ".viewport-container",
-    history: false,
-    scrollThreshold: 2000,
-});
+if ($(".infinite-scroll").length) {
+    masonry_grid.infiniteScroll({
+        path: discover_path,
+        append: ".masonry-item",
+        outlayer: masonry_instance,
+        prefill: true,
+        elementScroll: ".viewport-container",
+        history: false,
+        scrollThreshold: 2000,
+    });
+}
 
 $(".viewport-posters").css("opacity", "1");

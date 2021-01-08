@@ -11,7 +11,7 @@
 
         {% include "navbar.html" %} {% include "sidebar.html" %}
         <div class="viewport-container">
-            <div class="viewport viewport-posters discover">
+            <div class="viewport viewport-posters infinite-scroll">
                 {% for card in all_cards %} {% if card.poster_path and card.conreq_valid_id %} {% include "tmdb_poster_card.html" %} {% endif %} {% endfor %}
             </div>
             <script src="{% static 'js/viewport.js' %}"></script>
