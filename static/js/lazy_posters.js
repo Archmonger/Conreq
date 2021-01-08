@@ -2,8 +2,14 @@ var callback_error = function(element) {
     element.src = "/static/images/transparent.png";
 };
 
-let viewport_container_class = ".viewport-container";
+let viewport_container_class = ".viewport-loader";
 let viewport_class = ".viewport";
+
+// Create the lazyloader
+var lazyloader = new LazyLoad({
+    threshold: 0,
+    callback_error: callback_error,
+});
 
 element_ready(viewport_class).then(function() {
     // Create viewport selectors

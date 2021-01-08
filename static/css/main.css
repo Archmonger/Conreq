@@ -96,7 +96,8 @@ a:hover {
     outline: none;
 }
 
-.viewport-container {
+.viewport-container,
+.viewport-loader {
     z-index: 1;
     left: var(--viewport-left);
     top: var(--navbar-height);
@@ -106,6 +107,7 @@ a:hover {
     overflow-y: auto;
     width: calc(100vw - var(--viewport-left));
     padding: var(--viewport-padding);
+    display: flex;
 }
 
 .viewport {
@@ -185,6 +187,11 @@ input:checked~.state {
 :-ms-input-placeholder,
 ::-ms-input-placeholder {
     opacity: 0.75;
+}
+
+.spinner-border {
+    margin: auto;
+    color: var(--accent-color);
 }
 
 

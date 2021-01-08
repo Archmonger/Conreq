@@ -4,7 +4,8 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from htmlmin.minify import html_minify
 
 from conreq import content_discovery, content_manager
-from conreq.apps.more_info.views import series_modal_component
+from conreq.apps.more_info.views import series_modal
+from conreq.apps.discover.views import discover_viewport
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
@@ -54,6 +55,9 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
             elif content["command_name"] == "generate modal":
                 await self.__generate_modal(content)
+
+            elif content["command_name"] == "generate discover tab":
+                await self.__generate_discover_tab(content)
 
             else:
                 print("invalid websocket structure")
@@ -145,7 +149,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         ):
             # Episode modal
             if content["parameters"]["modal_type"] == "episode selector":
-                response["html"] = series_modal_component(
+                response["html"] = series_modal(
                     tmdb_id=content["parameters"]["tmdb_id"],
                     tvdb_id=content["parameters"]["tvdb_id"],
                 )
@@ -159,6 +163,17 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 print("Invalid modal type!")
         else:
             print("Generate modal missing an ID!")
+
+    # COMMAND RESPONSE: GENERATE MODAL
+    async def __generate_discover_tab(self, content):
+        response = {
+            "command_name": "render page element",
+            "selector": ".viewport-loader",
+            "html": None,
+        }
+
+        response["html"] = discover_viewport(content["parameters"]["content_type"])
+        await self.send_json(response)
 
     # COMMAND RESPONSE: FORBIDDEN
     async def __forbidden(self):
