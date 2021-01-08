@@ -70,6 +70,10 @@ if not SECRET_KEY:
 
 ALLOWED_HOSTS = ["*"]
 
+# TODO: Obtain from environment
+FIELD_ENCRYPTION_KEYS = [
+    "n8vot4na8os4twcf38d6otnhjg8t63t6a3wgrtrtg6t8g63wshh89306q4f1"
+]
 
 # Application definition
 
@@ -81,9 +85,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "channels",
+    "encrypted_fields", # Allow for encrypted text in the DB
+    "solo", # Allow for single-row fields in the DB
     "conreq.apps.discover",
     "conreq.apps.more_info",
     "conreq.apps.search",
+    "conreq.apps.settings",
 ]
 
 MIDDLEWARE = [

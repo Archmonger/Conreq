@@ -7,6 +7,7 @@ __pycache__
 db.sqlite3
 media
 cache/
+migrations/
 
 # Backup files #
 *.bak
@@ -121,3 +122,4 @@ GitHub.sublime-settings
 
 # Custom
 credentials.json
+.dccache
