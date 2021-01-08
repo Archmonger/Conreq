@@ -33,7 +33,7 @@ def discover(request):
         tmdb_results = content_discovery.all(page)["results"]
         active_tab = STATIC_CONTEXT_VARS["combined"]
 
-    template = loader.get_template("discover.html")
+    template = loader.get_template("primary/base.html")
 
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)

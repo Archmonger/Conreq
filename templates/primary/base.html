@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include "primary/head_content.html" %}
+</head>
+
+<body>
+    <div class="main">
+        {% include "primary/navbar.html" %} {% include "primary/sidebar.html" %} {% include "modal/default.html" %}
+
+        <div class="viewport-container">
+        </div>
+        <script src="{% static 'js/viewport.js' %}"></script>
+    </div>
+</body>
+
+</html>

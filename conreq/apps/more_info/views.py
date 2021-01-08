@@ -164,4 +164,4 @@ def series_modal_component(tmdb_id=None, tvdb_id=None):
             print("Retrying content fetch")
 
     context = generate_context({"seasons": series["seasons"]})
-    return render_to_string("modal/series_selection_component.html", context)
+    return render_to_string("modal/series_selection.html", context)

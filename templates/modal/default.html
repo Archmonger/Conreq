@@ -1,0 +1,10 @@
+{% load static %}
+<div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-hidden="true">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}" />
+    <div id="modal-dialog" class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="spinner-border loading-animation" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div id="modal-content" class="modal-content"></div>
+    </div>
+</div>
