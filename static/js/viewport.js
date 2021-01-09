@@ -22,7 +22,6 @@ let update_active_tab = function() {
 
 // Adds all click events required
 let add_click_events = function() {
-    console.log("added events");
     $(".request-button.tv").click(function() {
         generate_episode_modal();
     });
@@ -36,6 +35,7 @@ let destroy_viewport = function() {
     if (masonry_grid != null) {
         if (infinite_scroller_created) {
             masonry_grid.infiniteScroll("destroy");
+            infinite_scroller_created = false;
         }
         masonry_grid.masonry("destroy");
         masonry_grid = null;
