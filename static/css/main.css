@@ -96,11 +96,18 @@ a:hover {
     outline: none;
 }
 
-.viewport-container,
-.viewport-loader {
+.viewport-container {
     z-index: 1;
     left: var(--viewport-left);
     top: var(--navbar-height);
+    position: fixed;
+    height: calc(100% - var(--navbar-height));
+    width: calc(100vw - var(--viewport-left));
+    display: flex;
+}
+
+.viewport-loader {
+    z-index: 1;
     position: fixed;
     height: calc(100% - var(--navbar-height));
     overflow-x: hidden;

@@ -30,51 +30,6 @@ let obtain_common_parameters = function(
     return results;
 };
 
-// Create masonry grid
-var masonry_grid;
-
-var refresh_viewport = function() {
-    masonry_grid = $(".viewport-posters").masonry({
-        itemSelector: ".masonry-item",
-        gutter: 10,
-        horizontalOrder: true,
-        fitWidth: true,
-        transitionDuration: "0s",
-        stagger: "0s",
-        isStill: true,
-    });
-    // get Masonry instance
-    let masonry_instance = masonry_grid.data("masonry");
-
-    // Determine what path to fetch infinite scrolling content on
-    let url_params = new URLSearchParams(window.location.search);
-    let discover_path = "discover/";
-    if (url_params.has("content_type")) {
-        discover_path +=
-            "?content_type=" + url_params.get("content_type") + "&page={{#}}";
-    } else {
-        discover_path += "?page={{#}}";
-    }
-
-    // Configure infinite scrolling
-    if ($(".infinite-scroll").length) {
-        masonry_grid.infiniteScroll({
-            path: discover_path,
-            append: ".masonry-item",
-            outlayer: masonry_instance,
-            prefill: true,
-            elementScroll: ".viewport-loader",
-            history: false,
-            scrollThreshold: 2000,
-        });
-    }
-
-    $(".viewport-posters").css("opacity", "1");
-
-    // Lazy load page elements
-    lazyloader.update();
-};
-
 // Make the function wait until the connection is made...
 var waitForSocketConnection = function(socket, callback) {
     setTimeout(function() {
@@ -86,7 +41,7 @@ var waitForSocketConnection = function(socket, callback) {
         } else {
             waitForSocketConnection(socket, callback);
         }
-    }, 5); // wait 5 milisecond for the connection...
+    }, 100); // wait 100 miliseconds for the connection
 };
 
 // WEBSOCKET CREATION
@@ -129,8 +84,6 @@ function connect() {
             // Place the new HTML on the page
             selected_element[0].innerHTML = DOMPurify.sanitize(json_response.html);
             selected_element.show();
-
-            refresh_viewport();
         }
     };
 
@@ -205,7 +158,7 @@ var request_content = function({
 
 // SENDABLE COMMAND: GENERATE EPISODE MODAL
 var generate_episode_modal = function(tmdb_id = null, tvdb_id = null) {
-    // Hide the old modal content
+    // Hide the old content
     $("#modal-content").hide();
     // Display the loading animation
     $("#modal-dialog .spinner-border").show();
@@ -217,23 +170,6 @@ var generate_episode_modal = function(tmdb_id = null, tvdb_id = null) {
             modal_type: "episode selector",
             tmdb_id: obtained_params.tmdb_id,
             tvdb_id: obtained_params.tvdb_id,
-        },
-    };
-    COMMAND_SOCKET.send(JSON.stringify(json_payload));
-};
-
-// SENDABLE COMMAND: GENERATE DISCOVER TAB
-var generate_discover_tab = function(content_type = null) {
-    // Hide the old modal content
-    $(".viewport").hide();
-    // Display the loading animation
-    $(".viewport-container>.spinner-border").show();
-
-    let obtained_params = obtain_common_parameters(null, null, content_type);
-    let json_payload = {
-        command_name: "generate discover tab",
-        parameters: {
-            content_type: obtained_params.content_type,
         },
     };
     COMMAND_SOCKET.send(JSON.stringify(json_payload));

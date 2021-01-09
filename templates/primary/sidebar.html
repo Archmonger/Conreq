@@ -6,20 +6,20 @@
             <a class="nav-tab group discover nav-link" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">
                 {{discover}} <i id="discover-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="discover-tabs">
-                <a href="{% url 'discover:index' %}" class="nav-tab suboption discover {% if active_tab == combined %}active{% endif %}">
+                <a href="#{% url 'discover:discover page' %}" class="nav-tab suboption discover">
                     {{combined}} <i class="fas fa-filter"></i></a>
-                <a href="{% url 'discover:index' %}?content_type=tv" class="nav-tab suboption tv-shows {% if active_tab == tv_shows %}active{% endif %}">
+                <a href="#{% url 'discover:discover page' %}?content_type=tv" class="nav-tab suboption tv-shows">
                     {{tv_shows}} <i class="fas fa-filter"></i></a>
-                <a href="{% url 'discover:index' %}?content_type=movie" class="nav-tab suboption movies {% if active_tab == movies %}active{% endif %}">
+                <a href="#{% url 'discover:discover page' %}?content_type=movie" class="nav-tab suboption movies">
                     {{movies}} <i class="fas fa-filter"></i></a>
             </div>
 
             <a class="nav-tab group user nav-link" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true" aria-controls="user-tabs">
                 {{user_options}} <i id="user-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="user-tabs">
-                <a href="#" class="nav-tab suboption user {% if active_tab == my_requests %}active{% endif %}">
+                <a href="#" class="nav-tab suboption user">
                     {{my_requests}}</a>
-                <a href="#" class="nav-tab suboption user {% if active_tab == my_issues %}active{% endif %}">
+                <a href="#" class="nav-tab suboption user">
                     {{my_issues}}</a>
                 <a href="{% url 'signout' %}" class="nav-tab suboption user">
                     {{sign_out}}</a>
@@ -28,15 +28,15 @@
             <a class="nav-tab group admin nav-link" data-toggle="collapse" data-target="#admin-tabs" aria-expanded="true" aria-controls="admin-tabs">
                 {{admin}} <i id="admin-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="admin-tabs">
-                <a href="#" class="nav-tab suboption admin {% if active_tab == all_requests %}active{% endif %}">
+                <a href="#" class="nav-tab suboption admin">
                     {{all_requests}}</a>
-                <a href="#" class="nav-tab suboption admin {% if active_tab == all_issues %}active{% endif %}">
+                <a href="#" class="nav-tab suboption admin">
                     {{all_issues}}</a>
-                <a href="#" class="nav-tab suboption admin {% if active_tab == email_users %}active{% endif %}">
+                <a href="#" class="nav-tab suboption admin">
                     {{email_users}}</a>
-                <a href="#" class="nav-tab suboption admin {% if active_tab == manage_users %}active{% endif %}">
+                <a href="#" class="nav-tab suboption admin">
                     {{manage_users}}</a>
-                <a href="#" class="nav-tab suboption admin {% if active_tab == settings %}active{% endif %}">
+                <a href="#" class="nav-tab suboption admin">
                     {{settings}}</a>
             </div>
 
