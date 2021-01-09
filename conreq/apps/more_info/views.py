@@ -125,7 +125,6 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
-@login_required
 def series_modal(tmdb_id=None, tvdb_id=None):
     # Determine the TVDB ID
     if tvdb_id is not None:

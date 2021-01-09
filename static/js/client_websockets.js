@@ -4,7 +4,7 @@ let obtain_common_parameters = function(
     tvdb_id = null,
     content_type = null
 ) {
-    let url_params = new URLSearchParams(window.location.search);
+    let url_params = new URLSearchParams(window.location.hash.split("?")[1]);
     let results = { tmdb_id: null, tvdb_id: null, content_type: null };
 
     // Content Type

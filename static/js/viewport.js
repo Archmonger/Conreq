@@ -52,6 +52,17 @@ let update_active_tab = function() {
     });
 };
 
+// Adds all click events required
+let add_click_events = function() {
+    console.log("added events");
+    $(".request-button.tv").click(function() {
+        generate_episode_modal();
+    });
+    $(".request-button.movie").click(function() {
+        request_content({});
+    });
+};
+
 // Preforms any actions needed to prepare the viewport
 let refresh_viewport = function() {
     // Destroy old JS elements
@@ -132,6 +143,9 @@ let generate_viewport = function() {
         refresh_viewport();
         $(".viewport-container>.spinner-border").hide();
         $(".viewport-loader>*").fadeIn();
+
+        // Add any click events needed
+        add_click_events();
     });
 };
 
