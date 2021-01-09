@@ -123,7 +123,7 @@ let generate_viewport = function() {
     update_active_tab();
 
     // Hide the old content and display the loading animation
-    $(".viewport-loader").fadeOut();
+    $(".viewport-loader>*").fadeOut();
     $(".viewport-container>.spinner-border").show();
 
     // Fetch the new content, display it, and hide the loading animation
@@ -131,7 +131,7 @@ let generate_viewport = function() {
         $(".viewport-loader")[0].innerHTML = DOMPurify.sanitize(viewport_html);
         refresh_viewport();
         $(".viewport-container>.spinner-border").hide();
-        $(".viewport-loader").fadeIn();
+        $(".viewport-loader>*").fadeIn();
     });
 };
 
