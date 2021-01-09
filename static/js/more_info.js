@@ -7,10 +7,10 @@ var create_all_carousels = function() {
     create_cast_carousel();
 };
 
-let reviewCarousel;
+var review_carousel = null;
 var create_review_carousel = function() {
     if ($(".more-info-reviews").length) {
-        reviewCarousel = tns({
+        review_carousel = tns({
             container: ".more-info-reviews",
             items: 1,
             speed: 300,
@@ -34,7 +34,7 @@ var create_review_carousel = function() {
     }
 };
 
-let videosCarousel;
+var videos_carousel = null;
 let youtube_card_template = `<iframe class="youtube-player" type="text/html" src="https://www.youtube.com/embed/{{video.key}}?modestbranding=1" frameborder="0" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen = "webkitallowfullscreen"></iframe>`;
 var create_video_carousel = function() {
     // Create the youtube iframes from the given template
@@ -45,7 +45,7 @@ var create_video_carousel = function() {
     });
     // Set up the carousel
     if ($(".videos-inner-container").length) {
-        videosCarousel = tns({
+        videos_carousel = tns({
             container: ".videos-inner-container",
             controlsContainer: ".videos-carousel-controls",
             swipeAngle: 60,
@@ -62,10 +62,10 @@ var create_video_carousel = function() {
     }
 };
 
-let recommendedCarousel;
+var recommended_carousel = null;
 var create_recommended_carousel = function() {
     if ($(".recommended-inner-container").length) {
-        recommendedCarousel = tns({
+        recommended_carousel = tns({
             container: ".recommended-inner-container",
             controlsContainer: ".recommended-carousel-controls",
             swipeAngle: 60,
@@ -82,10 +82,10 @@ var create_recommended_carousel = function() {
     }
 };
 
-let imagesCarousel;
+var images_carousel = null;
 var create_image_carousel = function() {
     if ($(".artwork-inner-container").length) {
-        imagesCarousel = tns({
+        images_carousel = tns({
             container: ".artwork-inner-container",
             controlsContainer: ".artwork-carousel-controls",
             swipeAngle: 60,
@@ -125,10 +125,10 @@ var create_image_carousel = function() {
     }
 };
 
-let collectionCarousel;
+var collection_carousel = null;
 var create_collection_carousel = function() {
     if ($(".collection-inner-container").length) {
-        collectionCarousel = tns({
+        collection_carousel = tns({
             container: ".collection-inner-container",
             controlsContainer: ".collection-carousel-controls",
             swipeAngle: 60,
@@ -151,10 +151,10 @@ var create_collection_carousel = function() {
     }
 };
 
-let castCarousel;
+var cast_carousel = null;
 var create_cast_carousel = function() {
     if ($(".cast-inner-container").length) {
-        castCarousel = tns({
+        cast_carousel = tns({
             container: ".cast-inner-container",
             controlsContainer: ".cast-carousel-controls",
             swipeAngle: 60,

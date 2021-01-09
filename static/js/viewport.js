@@ -1,5 +1,38 @@
 // Initialize a global masonry grid
-var masonry_grid;
+var masonry_grid = null;
+
+// Destroys old viewport JS instances
+let destroy_viewport = function() {
+    if (masonry_grid != null) {
+        masonry_grid.infiniteScroll("destroy");
+        masonry_grid.masonry("destroy");
+        masonry_grid = null;
+    }
+    if (review_carousel != null) {
+        review_carousel.destroy();
+        review_carousel = null;
+    }
+    if (videos_carousel != null) {
+        videos_carousel.destroy();
+        videos_carousel = null;
+    }
+    if (recommended_carousel != null) {
+        recommended_carousel.destroy();
+        recommended_carousel = null;
+    }
+    if (images_carousel != null) {
+        images_carousel.destroy();
+        images_carousel = null;
+    }
+    if (collection_carousel != null) {
+        collection_carousel.destroy();
+        collection_carousel = null;
+    }
+    if (cast_carousel != null) {
+        cast_carousel.destroy();
+        cast_carousel = null;
+    }
+};
 
 // Updates the current tab based on the URL
 let update_active_tab = function() {
@@ -21,10 +54,13 @@ let update_active_tab = function() {
 
 // Preforms any actions needed to prepare the viewport
 let refresh_viewport = function() {
+    // Destroy old JS elements
+    destroy_viewport();
+
     // Create any carousels that need to be made
     create_all_carousels();
 
-    // Create the masonry gridd
+    // Create the masonry grid
     masonry_grid = $(".viewport-posters").masonry({
         itemSelector: ".masonry-item",
         gutter: 10,
@@ -34,9 +70,6 @@ let refresh_viewport = function() {
         stagger: "0s",
         isStill: true,
     });
-
-    // get Masonry instance
-    let masonry_instance = masonry_grid.data("masonry");
 
     // Determine what path to fetch infinite scrolling content on
     let url_params = new URLSearchParams(window.location.search);
@@ -53,14 +86,19 @@ let refresh_viewport = function() {
         masonry_grid.infiniteScroll({
             path: discover_path,
             append: ".masonry-item",
-            outlayer: masonry_instance,
+            outlayer: masonry_grid.data("masonry"),
             prefill: true,
             elementScroll: ".viewport-loader",
             history: false,
             scrollThreshold: 2000,
         });
+
+        masonry_grid.on("append.infiniteScroll", function() {
+            cull_old_posters();
+        });
     }
 
+    // Display the posters (initially hidden to avoid visual glitches)
     $(".viewport-posters").css("opacity", "1");
 
     // Lazy load page elements
@@ -97,8 +135,7 @@ let generate_viewport = function() {
     });
 };
 
-waitForSocketConnection(COMMAND_SOCKET, generate_viewport);
-
+// Fetch a new page when the URL changes
 if ("onhashchange" in window) {
     // Window anchor change event supported?
     window.onhashchange = function() {
@@ -113,3 +150,6 @@ if ("onhashchange" in window) {
         }
     }, 100);
 }
+
+// Obtain the initial page
+waitForSocketConnection(COMMAND_SOCKET, generate_viewport);
