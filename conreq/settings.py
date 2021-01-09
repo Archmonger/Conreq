@@ -176,7 +176,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "discover:index"
+LOGIN_REDIRECT_URL = "homepage:index"
 LOGIN_URL = "/signin/"
 
 # Internationalization
