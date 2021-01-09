@@ -1,23 +1,12 @@
 # from django.shortcuts import render
 from conreq import content_discovery
-from conreq.apps.helpers import (
-    STATIC_CONTEXT_VARS,
-    generate_context,
-    set_many_conreq_status,
-)
+from conreq.apps.helpers import set_many_conreq_status
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
-from django.template.loader import render_to_string
+
 
 # Create your views here.
-@login_required
-def homepage(request):
-    template = loader.get_template("primary/base.html")
-    context = generate_context({})
-    return HttpResponse(template.render(context, request))
-
-
 @login_required
 def discover_all(request):
     template = loader.get_template("viewport/discover.html")

@@ -59,7 +59,10 @@ if not DATA_DIR:
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # TODO: Store secret key in database
-SECRET_KEY = os.environ.get("SECRET_KEY")
+if DEBUG:
+    SECRET_KEY = "v34586n97tmnuyic4grq7834578gnc4t538475cytwzuoyh2367twgytugser12937fd"
+else:
+    SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
     log.handler(
         "SECRET_KEY not configured, using a random temporary key.",
@@ -71,9 +74,8 @@ if not SECRET_KEY:
 ALLOWED_HOSTS = ["*"]
 
 # TODO: Obtain from environment
-FIELD_ENCRYPTION_KEYS = [
-    "n8vot4na8os4twcf38d6otnhjg8t63t6a3wgrtrtg6t8g63wshh89306q4f1"
-]
+FIELD_ENCRYPTION_KEYS = ["n8vot4na8os4twcf38d6otnhjg8t63t6a3wgrtrtg6t8g63wshh89306q4f1"]
+API_KEY = ""
 
 # Application definition
 
@@ -85,8 +87,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "channels",
-    "encrypted_fields", # Allow for encrypted text in the DB
-    "solo", # Allow for single-row fields in the DB
+    "encrypted_fields",  # Allow for encrypted text in the DB
+    "solo",  # Allow for single-row fields in the DB
+    "conreq.apps.homepage",
     "conreq.apps.discover",
     "conreq.apps.more_info",
     "conreq.apps.search",
