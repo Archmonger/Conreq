@@ -80,7 +80,7 @@ let generate_viewport = function() {
     update_active_tab();
 
     // Hide the old content and display the loading animation
-    $(".viewport").hide();
+    $(".viewport").fadeOut();
     $(".viewport-container>.spinner-border").show();
 
     // Fetch the new content, display it, and hide the loading animation
