@@ -30,20 +30,6 @@ let obtain_common_parameters = function(
     return results;
 };
 
-// Make the function wait until the connection is made...
-var waitForSocketConnection = function(socket, callback) {
-    setTimeout(function() {
-        if (socket.readyState === 1) {
-            console.log("Websocket connection established");
-            if (callback != null) {
-                callback();
-            }
-        } else {
-            waitForSocketConnection(socket, callback);
-        }
-    }, 100); // wait 100 miliseconds for the connection
-};
-
 // WEBSOCKET CREATION
 var COMMAND_SOCKET = null;
 let RETRY_COUNTER = 0;

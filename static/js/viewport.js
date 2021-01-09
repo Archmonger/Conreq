@@ -139,17 +139,17 @@ let generate_viewport = function() {
 if ("onhashchange" in window) {
     // Window anchor change event supported?
     window.onhashchange = function() {
-        waitForSocketConnection(COMMAND_SOCKET, generate_viewport);
+        generate_viewport();
     };
 } else {
     // Window anchor change event not supported
     var storedHash = window.location.hash;
     window.setInterval(function() {
         if (window.location.hash != storedHash) {
-            waitForSocketConnection(COMMAND_SOCKET, generate_viewport);
+            generate_viewport();
         }
     }, 100);
 }
 
 // Obtain the initial page
-waitForSocketConnection(COMMAND_SOCKET, generate_viewport);
+generate_viewport();
