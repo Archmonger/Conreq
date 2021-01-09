@@ -18,7 +18,7 @@ def search(request):
     # Get the ID from the URL
     query = request.GET.get("query", "")
     content_type = request.GET.get("content_type", None)
-    template = loader.get_template("search.html")
+    template = loader.get_template("viewport/search.html")
 
     # Determine which search method to use (tv/movie/all)
     if content_type == "tv":
