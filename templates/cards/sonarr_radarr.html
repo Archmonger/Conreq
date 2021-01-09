@@ -10,11 +10,12 @@
             <div class="availablity-text">Available {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i
                     class="fas fa-video"></i>{% endif %} </div>
             {% elif card.conreqStatus == partial %}
-            <div class="availablity-text">Partially Available {% if card.name %}<i class="fas fa-tv"></i>{% elif
-                card.title %}<i class="fas fa-video"></i>{% endif %} </div>
+            <div class="availablity-text">Partially Available {% if card.name %}<i class="fas fa-tv"></i>
+                {% elif card.title %}<i class="fas fa-video"></i>{% endif %} </div>
             {% else %}
-            <div class="availablity-text">Requestable {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i
-                    class="fas fa-video"></i>{% endif %} </div>
+            <div class="availablity-text">Requestable {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}
+                <i class="fas fa-video"></i>{% endif %}
+            </div>
             {% endif %}
 
             <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy" />
