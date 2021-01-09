@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from conreq import content_discovery
-from conreq.apps.helpers import set_many_conreq_status
+from conreq.apps.helpers import generate_context, set_many_conreq_status
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -20,9 +20,11 @@ def discover_all(request):
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)
 
-    context = {
-        "all_cards": tmdb_results,
-    }
+    context = generate_context(
+        {
+            "all_cards": tmdb_results,
+        }
+    )
 
     return HttpResponse(template.render(context, request))
 
@@ -40,9 +42,11 @@ def discover_tv(request):
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)
 
-    context = {
-        "all_cards": tmdb_results,
-    }
+    context = generate_context(
+        {
+            "all_cards": tmdb_results,
+        }
+    )
 
     return HttpResponse(template.render(context, request))
 
@@ -60,8 +64,10 @@ def discover_movies(request):
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)
 
-    context = {
-        "all_cards": tmdb_results,
-    }
+    context = generate_context(
+        {
+            "all_cards": tmdb_results,
+        }
+    )
 
     return HttpResponse(template.render(context, request))
