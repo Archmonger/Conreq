@@ -4,14 +4,17 @@
         <i class="fas fa-ellipsis-v"></i>
         <i class="fas fa-angle-down"></i>
         <div class="description-tint"></div>
-        <a href="{% url 'more_info:index' %}?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
-            
+        <a href="#{% url 'more_info:index' %}?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
+
             {% if card.conreqStatus == available %}
-            <div class="availablity-text">Available {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i class="fas fa-video"></i>{% endif %} </div>
+            <div class="availablity-text">Available {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i
+                    class="fas fa-video"></i>{% endif %} </div>
             {% elif card.conreqStatus == partial %}
-            <div class="availablity-text">Partially Available {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i class="fas fa-video"></i>{% endif %} </div>
+            <div class="availablity-text">Partially Available {% if card.name %}<i class="fas fa-tv"></i>{% elif
+                card.title %}<i class="fas fa-video"></i>{% endif %} </div>
             {% else %}
-            <div class="availablity-text">Requestable {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i class="fas fa-video"></i>{% endif %} </div>
+            <div class="availablity-text">Requestable {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i
+                    class="fas fa-video"></i>{% endif %} </div>
             {% endif %}
 
             {% if card.poster_path %}

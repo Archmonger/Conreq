@@ -21,6 +21,10 @@ let update_active_tab = function() {
 
 // Preforms any actions needed to prepare the viewport
 let refresh_viewport = function() {
+    // Create any carousels that need to be made
+    create_all_carousels();
+
+    // Create the masonry gridd
     masonry_grid = $(".viewport-posters").masonry({
         itemSelector: ".masonry-item",
         gutter: 10,
@@ -30,6 +34,7 @@ let refresh_viewport = function() {
         stagger: "0s",
         isStill: true,
     });
+
     // get Masonry instance
     let masonry_instance = masonry_grid.data("masonry");
 

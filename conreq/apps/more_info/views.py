@@ -22,7 +22,7 @@ MAX_SERIES_FETCH_RETRIES = 20
 # Create your views here.
 @login_required
 def more_info(request):
-    template = loader.get_template("more_info.html")
+    template = loader.get_template("viewport/more_info.html")
     thread_list = []
 
     # Get the ID from the URL

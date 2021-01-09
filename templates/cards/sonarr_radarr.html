@@ -4,7 +4,7 @@
         <i class="fas fa-ellipsis-v"></i>
         <i class="fas fa-angle-down"></i>
         <div class="description-tint"></div>
-        <a href="{% url 'more_info:index' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
+        <a href="#{% url 'more_info:index' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
 
             {% if card.conreqStatus == available %}
             <div class="availablity-text">Available {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i
