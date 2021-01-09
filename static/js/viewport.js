@@ -73,7 +73,7 @@ let refresh_viewport = function() {
 
     // Determine what path to fetch infinite scrolling content on
     let url_params = new URLSearchParams(window.location.search);
-    let discover_path = "discover/";
+    let discover_path = window.location.hash.split("#/")[1];
     if (url_params.has("content_type")) {
         discover_path +=
             "?content_type=" + url_params.get("content_type") + "&page={{#}}";

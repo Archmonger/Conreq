@@ -12,98 +12,67 @@ from django.template.loader import render_to_string
 
 # Create your views here.
 @login_required
-def discover(request):
-    # Get the page number from the URL
-    page = int(request.GET.get("page", 1))
-    # Get the content type from the URL
-    content_type = request.GET.get("content_type", None)
-
-    # Search for TV content if requested
-    if content_type == "tv":
-        tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
-        active_tab = STATIC_CONTEXT_VARS["tv_shows"]
-
-    # Search for movie content if requested
-    elif content_type == "movie":
-        tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
-        active_tab = STATIC_CONTEXT_VARS["movies"]
-
-    # Search for both content if requested
-    else:
-        tmdb_results = content_discovery.all(page)["results"]
-        active_tab = STATIC_CONTEXT_VARS["combined"]
-
+def homepage(request):
     template = loader.get_template("primary/base.html")
-
-    # Set conreq status for all cards
-    set_many_conreq_status(tmdb_results)
-
-    context = generate_context(
-        {
-            "all_cards": tmdb_results,
-            "active_tab": active_tab,
-        }
-    )
+    context = generate_context({})
     return HttpResponse(template.render(context, request))
 
 
 @login_required
-def discover_page(request):
+def discover_all(request):
+    template = loader.get_template("viewport/discover.html")
+
     # Get the page number from the URL
     page = int(request.GET.get("page", 1))
-    # Get the content type from the URL
-    content_type = request.GET.get("content_type", None)
 
-    # Search for TV content if requested
-    if content_type == "tv":
-        tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
-        active_tab = STATIC_CONTEXT_VARS["tv_shows"]
-
-    # Search for movie content if requested
-    elif content_type == "movie":
-        tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
-        active_tab = STATIC_CONTEXT_VARS["movies"]
-
-    # Search for both content if requested
-    else:
-        tmdb_results = content_discovery.all(page)["results"]
-        active_tab = STATIC_CONTEXT_VARS["combined"]
-
-    template = loader.get_template("viewport/discover.html")
+    # Search for TV content
+    tmdb_results = content_discovery.all(page, page_multiplier=2)["results"]
 
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)
 
-    context = generate_context(
-        {
-            "all_cards": tmdb_results,
-            "active_tab": active_tab,
-        }
-    )
+    context = {
+        "all_cards": tmdb_results,
+    }
+
     return HttpResponse(template.render(context, request))
 
 
-def discover_viewport(content_type):
-    # Search for TV content if requested
-    if content_type == "tv":
-        tmdb_results = content_discovery.tv(page_number=1, page_multiplier=2)["results"]
+@login_required
+def discover_tv(request):
+    template = loader.get_template("viewport/discover.html")
 
-    # Search for movie content if requested
-    elif content_type == "movie":
-        tmdb_results = content_discovery.movies(page_number=1, page_multiplier=2)[
-            "results"
-        ]
+    # Get the page number from the URL
+    page = int(request.GET.get("page", 1))
 
-    # Search for both content if requested
-    else:
-        tmdb_results = content_discovery.all(page_number=1)["results"]
+    # Search for TV content
+    tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
 
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)
 
-    context = generate_context(
-        {
-            "all_cards": tmdb_results,
-        }
-    )
-    return render_to_string("viewport/discover.html", context)
+    context = {
+        "all_cards": tmdb_results,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def discover_movies(request):
+    template = loader.get_template("viewport/discover.html")
+
+    # Get the page number from the URL
+    page = int(request.GET.get("page", 1))
+
+    # Search for TV content
+    tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
+
+    # Set conreq status for all cards
+    set_many_conreq_status(tmdb_results)
+
+    context = {
+        "all_cards": tmdb_results,
+    }
+
+    return HttpResponse(template.render(context, request))

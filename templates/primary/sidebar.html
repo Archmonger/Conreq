@@ -8,9 +8,9 @@
             <div class="collapse show" id="discover-tabs">
                 <a href="#{% url 'discover:discover page' %}" class="nav-tab suboption discover">
                     {{combined}} <i class="fas fa-filter"></i></a>
-                <a href="#{% url 'discover:discover page' %}?content_type=tv" class="nav-tab suboption tv-shows">
+                <a href="#{% url 'discover:discover tv page' %}" class="nav-tab suboption tv-shows">
                     {{tv_shows}} <i class="fas fa-filter"></i></a>
-                <a href="#{% url 'discover:discover page' %}?content_type=movie" class="nav-tab suboption movies">
+                <a href="#{% url 'discover:discover movies page' %}" class="nav-tab suboption movies">
                     {{movies}} <i class="fas fa-filter"></i></a>
             </div>
 

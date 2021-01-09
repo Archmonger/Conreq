@@ -4,7 +4,6 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from htmlmin.minify import html_minify
 
 from conreq import content_discovery, content_manager
-from conreq.apps.discover.views import discover_viewport
 from conreq.apps.more_info.views import series_modal
 
 
