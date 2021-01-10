@@ -60,3 +60,30 @@ var login_failed_toast_message = function() {
         progressBarColor: "var(--accent-color)",
     });
 };
+
+// Server disconnected toast message
+var disconnected_toast_message = function() {
+    iziToast.show({
+        icon: "fas fa-exclamation-triangle",
+        title: "Disconnected!",
+        message: "Trying to reconnect...",
+        displayMode: "replace",
+        titleColor: "#9a5c0f",
+        messageColor: "#9a5c0f",
+        iconColor: "#c57615",
+        progressBarColor: "var(--accent-color)",
+    });
+};
+
+// Server reconnected toast message
+var reconnected_toast_message = function() {
+    iziToast.show({
+        icon: "fas fa-check-circle",
+        title: "Reconnected!",
+        displayMode: "replace",
+        titleColor: "var(--accent-color)",
+        messageColor: "var(--accent-color)",
+        iconColor: "var(--accent-color)",
+        progressBarColor: "var(--accent-color)",
+    });
+};

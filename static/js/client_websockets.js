@@ -1,3 +1,5 @@
+let first_websocket_connection = true;
+
 // HELPER FUNCTIONS
 let obtain_common_parameters = function(
     tmdb_id = null,
@@ -76,11 +78,18 @@ function connect() {
     // WEBSOCKET EVENT: ON OPEN
     COMMAND_SOCKET.onopen = function(response) {
         RETRY_COUNTER = 0;
+        if (first_websocket_connection) {
+            first_websocket_connection = false;
+        } else {
+            reconnected_toast_message();
+        }
         console.log(response);
     };
 
     // WEBSOCKET EVENT: ON CLOSE
     COMMAND_SOCKET.onclose = function() {
+        disconnected_toast_message();
+
         // Automatically reconnect upon disconnection
         RETRY_COUNTER++;
         if (RETRY_COUNTER <= MAX_FAST_RETRIES) {
@@ -103,6 +112,8 @@ function connect() {
 
     // WEBSOCKET EVENT: ON ERROR
     COMMAND_SOCKET.onerror = function(error) {
+        disconnected_toast_message();
+
         console.error(
             "Websocket encountered an error: ",
             error.message,
