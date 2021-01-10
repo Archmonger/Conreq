@@ -47,7 +47,7 @@ function connect() {
     } else {
         ws_start = "ws://";
     }
-    let endpoint = ws_start + loc.host + "/ws";
+    let endpoint = ws_start + loc.host;
     COMMAND_SOCKET = new WebSocket(endpoint);
 
     // RECEIVABLE COMMANDS
