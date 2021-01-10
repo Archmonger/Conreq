@@ -177,7 +177,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_REDIRECT_URL = "homepage:index"
-LOGIN_URL = "/signin"
+LOGIN_URL = "/signin/"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

@@ -1,7 +1,7 @@
 // Search Event Action
 $("#content-search").on("enterKey", function(e) {
     let parameters = $(this).val();
-    window.location = "#/search?query=" + encodeURI(parameters);
+    window.location = "#/search/?query=" + encodeURI(parameters);
 });
 
 // Search Event Listener
