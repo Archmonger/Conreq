@@ -204,6 +204,37 @@ input:checked~.state {
     color: var(--accent-color);
 }
 
+.text-input-container {
+    background: #2525251c;
+    border-radius: 4px;
+    transition: background 0.4s ease, color 0.4s ease;
+    color: var(--searchbar-font-color);
+    overflow: hidden;
+    height: 35px;
+}
+
+.text-input-container:focus-within {
+    background: #fff;
+    color: var(--searchbar-bg);
+}
+
+.text-input-container input {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    background: none;
+    color: inherit;
+    border: none;
+    font-size: var(--primary-font-size);
+    padding-left: 15px;
+    padding-right: 15px;
+    outline: none !important;
+}
+
+.pretty.p-switch .state:before {
+    border: 2px solid #bdc3c7;
+}
+
 
 /* Navbar */
 

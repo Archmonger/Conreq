@@ -4,9 +4,6 @@
 }
 
 .viewport-settings {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
     width: 100%;
     max-width: calc(1920px - var(--sidebar-width) - var(--viewport-total-padding));
 }
@@ -29,7 +26,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 60px;
+    min-height: 70px;
 }
 
 .settings-item-title {
@@ -37,7 +34,7 @@
     font-weight: 500;
 }
 
-input[type="text"] {
+input[type="text"]:not(#content-search) {
     width: 100%;
 }
 
@@ -47,4 +44,6 @@ input[type="text"] {
 
 .check-update-button {
     align-self: center;
+    width: auto;
+    margin: auto;
 }
