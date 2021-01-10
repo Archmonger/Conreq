@@ -127,7 +127,7 @@ let generate_viewport = function() {
     if (window_location == "" || window_location == null) {
         if (window.history.replaceState) {
             //prevents browser from storing history with each change:
-            window.history.replaceState({}, null, "#/discover/");
+            window.history.replaceState({}, null, "#/discover");
             window_location = window.location.hash.split("#")[1];
         }
     }
