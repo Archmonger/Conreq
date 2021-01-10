@@ -2,4 +2,3 @@
 <div class="viewport viewport-posters infinite-scroll">
     {% for card in all_cards %} {% if card.poster_path and card.conreq_valid_id %} {% include "cards/tmdb.html" %} {% endif %} {% endfor %}
 </div>
-<script src="{% static 'js/viewport.js' %}"></script>
