@@ -76,8 +76,8 @@
     background: var(--accent-color);
 }
 
-.request-button:hover,
-.modal-confirm-button:hover {
+.request-button:hover:not(.available),
+.modal-confirm-button:hover:not(.available) {
     background: #2ba180;
 }
 
