@@ -208,7 +208,7 @@ input:checked~.state {
     background: #2525251c;
     border-radius: 4px;
     transition: background 0.4s ease, color 0.4s ease;
-    color: var(--searchbar-font-color);
+    color: rgb(0 0 0);
     overflow: hidden;
     height: 35px;
 }
