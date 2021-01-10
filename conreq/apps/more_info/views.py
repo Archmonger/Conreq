@@ -68,7 +68,7 @@ def more_info(request):
 
         # Recommended content
         tmdb_recommended = similar_and_recommended_thread.join()
-        if isinstance(tmdb_recommended, list) and len(tmdb_recommended) == 0:
+        if not isinstance(tmdb_recommended, dict) or len(tmdb_recommended) == 0:
             tmdb_recommended = None
 
         # Checking Conreq status for all recommended content
