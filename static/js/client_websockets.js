@@ -1,4 +1,5 @@
 let first_websocket_connection = true;
+let display_disconnected_toast = true;
 
 // HELPER FUNCTIONS
 let obtain_common_parameters = function(
@@ -78,6 +79,8 @@ function connect() {
     // WEBSOCKET EVENT: ON OPEN
     COMMAND_SOCKET.onopen = function(response) {
         RETRY_COUNTER = 0;
+        display_disconnected_toast = true;
+
         if (first_websocket_connection) {
             first_websocket_connection = false;
         } else {
@@ -88,7 +91,11 @@ function connect() {
 
     // WEBSOCKET EVENT: ON CLOSE
     COMMAND_SOCKET.onclose = function() {
-        disconnected_toast_message();
+        // Toast message to notify that the user has disconnected from the server
+        if (display_disconnected_toast) {
+            disconnected_toast_message();
+            display_disconnected_toast = false;
+        }
 
         // Automatically reconnect upon disconnection
         RETRY_COUNTER++;
@@ -112,7 +119,10 @@ function connect() {
 
     // WEBSOCKET EVENT: ON ERROR
     COMMAND_SOCKET.onerror = function(error) {
-        disconnected_toast_message();
+        if (display_disconnected_toast) {
+            disconnected_toast_message();
+            display_disconnected_toast = false;
+        }
 
         console.error(
             "Websocket encountered an error: ",
