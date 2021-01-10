@@ -173,6 +173,13 @@ a:hover {
     cursor: pointer;
 }
 
+.line-clamp-1 {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 input:checked~.state {
     color: var(--accent-color);
 }

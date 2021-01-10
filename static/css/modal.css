@@ -154,13 +154,6 @@
     background: rgba(255, 255, 255, 0.03);
 }
 
-.line-clamp-1 {
-    display: -webkit-box !important;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
 .modal-checkbox-container,
 .modal-season-container {
     display: flex;
