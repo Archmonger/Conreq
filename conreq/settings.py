@@ -140,8 +140,6 @@ TEMPLATES = [
     },
 ]
 
-
-WSGI_APPLICATION = "conreq.wsgi.application"
 ASGI_APPLICATION = "conreq.asgi.application"
 
 # Database
