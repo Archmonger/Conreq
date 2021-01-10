@@ -114,9 +114,6 @@ let refresh_viewport = function() {
         infinite_scroller_created = true;
     }
 
-    // Display the posters (initially hidden to avoid visual glitches)
-    $(".viewport-posters").css("opacity", "1");
-
     // Lazy load page elements
     lazyloader.update();
 };

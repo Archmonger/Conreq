@@ -124,11 +124,6 @@ a:hover {
     margin: auto;
 }
 
-.viewport-posters {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
 .bold {
     font-weight: 700;
 }
