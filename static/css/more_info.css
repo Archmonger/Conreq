@@ -90,7 +90,7 @@
     color: #FFF;
 }
 
-.request-button {
+.conreq-button {
     color: #FFF;
     font-family: var(--global-font);
     font-weight: 400;
@@ -110,11 +110,11 @@
     transition-timing-function: ease;
 }
 
-.request-button.available {
+.conreq-button.available {
     background-color: rgb(204, 123, 25);
 }
 
-.request-button:hover:not(.available) {
+.conreq-button:hover:not(.available) {
     background: #2ba180;
     cursor: pointer;
 }

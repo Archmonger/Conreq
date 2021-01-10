@@ -1,0 +1,138 @@
+{% load static %}
+<div class="viewport viewport-settings">
+    <div class="settings-group">
+        <div class="settings-group-title">About Conreq</div>
+        <div class="settings-input-group">
+            <div class="settings-item-group info">
+                <div class="settings-item-title info">System Information: </div>
+                <div class="settings-item-details info">Windows 10</div>
+            </div>
+            <div class="settings-item-group info">
+                <div class="settings-item-title info">Conreq Revision: </div>
+                <div class="settings-item-details info">15225</div>
+            </div>
+            <div class="conreq-button check-update-button box-shadow no-highlighting">
+                Check for Updates
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Basic Configuration</div>
+            <div class="settings-input-group">
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Base URL</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Application Name</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Application URL/Web Domain</div>
+                    <input type="text" class="settings-item small-input" placeholder="https://example.com" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">API Key</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Language</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Logo Image</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Custom CSS Styling</div>
+                    <textarea class="settings-item large-input" name="message" rows="10" cols="30">The cat was playing in the garden.</textarea>
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item toggler pretty p-switch p-fill">
+                        <input type="checkbox" />
+                        <div class="state">
+                            <label>Automatically Resolve Issues</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item toggler pretty p-switch p-fill">
+                        <input type="checkbox" />
+                        <div class="state">
+                            <label>Allow Guest Login/Requests</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Sonarr Configuration</div>
+            <div class="settings-input-group">
+                <div class="settings-item-group">
+                    <div class="settings-item-title">URL</div>
+                    <input type="text" class="settings-item small-input" placeholder="http://192.168.86.50:8989" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">API Key</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Anime Quality Profile</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">TV Quality Profile</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Anime Folder Path</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">TV Folder Path</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item toggler pretty p-switch p-fill">
+                        <input type="checkbox" />
+                        <div class="state">
+                            <label>Season Folders</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Radarr Configuration</div>
+            <div class="settings-input-group">
+                <div class="settings-item-group">
+                    <div class="settings-item-title">URL</div>
+                    <input type="text" class="settings-item small-input" placeholder="http://192.168.86.50:8989" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">API Key</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Anime Movies Quality Profile</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Movies Quality Profile</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Anime Movies Folder Path</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+                <div class="settings-item-group">
+                    <div class="settings-item-title">Movies Folder Path</div>
+                    <input type="text" class="settings-item small-input" placeholder="Temporary Text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="{% static 'js/viewport.js' %}"></script>

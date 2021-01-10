@@ -150,16 +150,16 @@
                 </div>
                 <i class="fas fa-ellipsis-v">
                 </i> {% if content.conreqStatus == available %} {% if content_type == "movie" %}
-                <div class="request-button box-shadow no-highlighting available"> AVAILABLE </div>
+                <div class="conreq-button request-button box-shadow no-highlighting available"> AVAILABLE </div>
                 {% endif %} {% if content_type == "tv" %}
-                <div class="request-button box-shadow no-highlighting available clickable tv" data-toggle="modal" data-target="#modal-container">
+                <div class="conreq-button request-button box-shadow no-highlighting available clickable tv" data-toggle="modal" data-target="#modal-container">
                     AVAILABLE </div>
                 {% endif %} {% else %} {% if content_type == "movie" %}
-                <div class="request-button box-shadow no-highlighting movie">
+                <div class="conreq-button request-button box-shadow no-highlighting movie">
                     <i class="fas fa-plus"></i> REQUEST
                 </div>
                 {% endif %} {% if content_type == "tv" %}
-                <div class="request-button box-shadow no-highlighting tv" data-toggle="modal" data-target="#modal-container">
+                <div class="conreq-button request-button box-shadow no-highlighting tv" data-toggle="modal" data-target="#modal-container">
                     <i class="fas fa-plus"></i> REQUEST
                 </div>
                 {% endif %} {% endif %}

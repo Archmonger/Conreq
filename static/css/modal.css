@@ -72,11 +72,11 @@
     background: #828282;
 }
 
-.request-button {
+.conreq-button {
     background: var(--accent-color);
 }
 
-.request-button:hover:not(.available),
+.conreq-button:hover:not(.available),
 .modal-confirm-button:hover:not(.available) {
     background: #2ba180;
 }
