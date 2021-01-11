@@ -32,6 +32,7 @@ STATIC_CONTEXT_VARS = {
     "all_requests": "All Requests",
     "all_issues": "All Issues",
     "settings": "Settings",
+    "server_settings": "Server Settings",
     "youtube": "YouTube",
 }
 

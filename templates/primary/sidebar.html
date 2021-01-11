@@ -21,6 +21,8 @@
                     {{my_requests}}</a>
                 <a href="#" class="nav-tab suboption user">
                     {{my_issues}}</a>
+                <a href="#" class="nav-tab suboption user">
+                    {{settings}}</a>
                 <a href="{% url 'signout' %}" class="nav-tab suboption user">
                     {{sign_out}}</a>
             </div>
@@ -37,7 +39,7 @@
                 <a href="#" class="nav-tab suboption admin">
                     {{manage_users}}</a>
                 <a href="#{% url 'settings:server' %}" class="nav-tab suboption admin">
-                    {{settings}}</a>
+                    {{server_settings}}</a>
             </div>
 
         </div>
