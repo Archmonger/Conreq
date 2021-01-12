@@ -1,9 +1,11 @@
 {% load static %}
-<div class="viewport more-info">
+<div class="viewport more-info" data-aos="fade-zoom-in" data-aos-duration="1500">
     <div class="more-info-grid">
         <div class="left-group">
             <div class="more-info-poster-container">
-                <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.poster_path content.remotePoster %}" class="more-info-poster lazy"> {% if content.belongs_to_collection %}
+                <img src="{% static 'images/transparent.png' %}"
+                    data-src="{% firstof content.poster_path content.remotePoster %}" class="more-info-poster lazy">
+                {% if content.belongs_to_collection %}
                 <div class="more-info-collection-btn no-highlighting">VIEW COLLECTION </div>
                 {% endif %}
             </div>
@@ -152,14 +154,16 @@
                 </i> {% if content.conreqStatus == available %} {% if content_type == "movie" %}
                 <div class="conreq-button request-button box-shadow no-highlighting available"> AVAILABLE </div>
                 {% endif %} {% if content_type == "tv" %}
-                <div class="conreq-button request-button box-shadow no-highlighting available clickable tv" data-toggle="modal" data-target="#modal-container">
+                <div class="conreq-button request-button box-shadow no-highlighting available clickable tv"
+                    data-toggle="modal" data-target="#modal-container">
                     AVAILABLE </div>
                 {% endif %} {% else %} {% if content_type == "movie" %}
                 <div class="conreq-button request-button box-shadow no-highlighting movie">
                     <i class="fas fa-plus"></i> REQUEST
                 </div>
                 {% endif %} {% if content_type == "tv" %}
-                <div class="conreq-button request-button box-shadow no-highlighting tv" data-toggle="modal" data-target="#modal-container">
+                <div class="conreq-button request-button box-shadow no-highlighting tv" data-toggle="modal"
+                    data-target="#modal-container">
                     <i class="fas fa-plus"></i> REQUEST
                 </div>
                 {% endif %} {% endif %}
@@ -290,8 +294,9 @@
         </div>
     </div>
 </div>
-<div class="movie-backdrop-container">
+<div class="movie-backdrop-container" data-aos="fade-down" data-aos-delay="550" data-aos-duration="1500">
     <div class="backdrop-tint"></div>
-    <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.backdrop_path content.backdropPath %}" class="more-info-backdrop lazy">
+    <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.backdrop_path content.backdropPath %}"
+        class="more-info-backdrop lazy">
     <div class="backdrop-placeholder-gradient"></div>
 </div>
