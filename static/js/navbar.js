@@ -10,3 +10,6 @@ $("#content-search").keyup(function(e) {
         $(this).trigger("enterKey");
     }
 });
+
+// Slide in animations for navbar, sidebar, and viewport
+AOS.init();
