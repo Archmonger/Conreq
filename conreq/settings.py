@@ -74,7 +74,9 @@ if not SECRET_KEY:
 ALLOWED_HOSTS = ["*"]
 
 # TODO: Obtain from environment
-FIELD_ENCRYPTION_KEYS = ["n8vot4na8os4twcf38d6otnhjg8t63t6a3wgrtrtg6t8g63wshh89306q4f1"]
+FIELD_ENCRYPTION_KEYS = [
+    "f164ec6bd6fbc4aef5647abc15199da0f9badcc1d2127bde2087ae0d794a9a0b"
+]
 API_KEY = ""
 
 # Application definition

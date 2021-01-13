@@ -5,6 +5,7 @@ from htmlmin.minify import html_minify
 
 from conreq import content_discovery, content_manager
 from conreq.apps.more_info.views import series_modal
+from conreq.apps.settings.models import ConreqConfig
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
@@ -164,46 +165,131 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             print("Generate modal missing an ID!")
 
     # COMMAND RESPONSE: SERVER SETTINGS
+    @database_sync_to_async
     async def __server_settings(self, content):
+        conreq_config = ConreqConfig.get_solo()
         response = {"command_name": "server settings", "success": True}
 
         # TODO: Validate user is admin before changing settings
         try:
             # Basic Configuration
-            if content["setting_name"] == "Base URL":
-                pass
+            if content["parameters"]["setting_name"] == "Conreq Base URL":
+                conreq_config.conreq_base_url = content["parameters"]["value"]
+
+            elif content["parameters"]["setting_name"] == "Conreq Application Name":
+                conreq_config.conreq_app_name = content["parameters"]["value"]
+
+            elif (
+                content["parameters"]["setting_name"]
+                == "Conreq Application URL/Web Domain"
+            ):
+                conreq_config.conreq_app_url = content["parameters"]["value"]
+
+            elif content["parameters"]["setting_name"] == "Conreq API Key":
+                conreq_config.conreq_api_key = content["parameters"]["value"]
+
+            elif content["parameters"]["setting_name"] == "Conreq Language":
+                conreq_config.conreq_language = content["parameters"]["value"]
+
+            elif content["parameters"]["setting_name"] == "Conreq Logo Image":
+                conreq_config.conreq_app_logo = content["parameters"]["value"]
+
+            elif (
+                content["parameters"]["setting_name"] == "Conreq Custom CSS Stylesheet"
+            ):
+                conreq_config.conreq_custom_css = content["parameters"]["value"]
+
+            elif (
+                content["parameters"]["setting_name"]
+                == "Conreq Automatically Resolve Issues"
+            ):
+                conreq_config.conreq_simple_posters = content["parameters"]["value"]
+
+            elif (
+                content["parameters"]["setting_name"]
+                == "Conreq Allow Guest Login/Requests"
+            ):
+                conreq_config.conreq_simple_posters = content["parameters"]["value"]
+
+            elif (
+                content["parameters"]["setting_name"]
+                == "Conreq Simple/Minimal Poster Cards"
+            ):
+                conreq_config.conreq_simple_posters = content["parameters"]["value"]
 
             # Sonarr Settings
-            elif content["setting_name"] == "Sonarr URL":
-                print(content["value"])
+            elif content["parameters"]["setting_name"] == "Sonarr URL":
+                conreq_config.sonarr_url = content["parameters"]["value"]
 
-            elif content["setting_name"] == "Sonarr API Key":
-                print(content["value"])
+            elif content["parameters"]["setting_name"] == "Sonarr API Key":
+                conreq_config.sonarr_api_key = content["parameters"]["value"]
 
-            elif content["setting_name"] == "Sonarr Anime Quality Profile":
-                print(content["value"])
+            elif (
+                content["parameters"]["setting_name"] == "Sonarr Anime Quality Profile"
+            ):
+                conreq_config.sonarr_anime_quality_profile = content["parameters"][
+                    "value"
+                ]
 
-            elif content["setting_name"] == "Sonarr TV Quality Profile":
-                print(content["value"])
+            elif content["parameters"]["setting_name"] == "Sonarr TV Quality Profile":
+                conreq_config.sonarr_tv_quality_profile = content["parameters"]["value"]
 
-            elif content["setting_name"] == "Sonarr Anime Folder Path":
-                print(content["value"])
+            elif content["parameters"]["setting_name"] == "Sonarr Anime Folder Path":
+                conreq_config.sonarr_anime_folder = content["parameters"]["value"]
 
-            elif content["setting_name"] == "Sonarr TV Folder Path":
-                print(content["value"])
+            elif content["parameters"]["setting_name"] == "Sonarr TV Folder Path":
+                conreq_config.sonarr_tv_folder = content["parameters"]["value"]
 
-            elif content["setting_name"] == "Enable Sonarr":
-                print(content["value"])
+            elif content["parameters"]["setting_name"] == "Enable Sonarr":
+                conreq_config.sonarr_enabled = content["parameters"]["value"]
 
-            elif content["setting_name"] == "Season Folders":
-                print(content["value"])
+            elif content["parameters"]["setting_name"] == "Season Folders":
+                conreq_config.sonarr_season_folders = content["parameters"]["value"]
 
+            # Radarr Settings
+            elif content["parameters"]["setting_name"] == "Radarr URL":
+                conreq_config.radarr_url = content["parameters"]["value"]
+
+            elif content["parameters"]["setting_name"] == "Radarr API Key":
+                conreq_config.radarr_api_key = content["parameters"]["value"]
+
+            elif (
+                content["parameters"]["setting_name"]
+                == "Radarr Anime Movies Quality Profile"
+            ):
+                conreq_config.radarr_anime_quality_profile = content["parameters"][
+                    "value"
+                ]
+
+            elif (
+                content["parameters"]["setting_name"] == "Radarr Movies Quality Profile"
+            ):
+                conreq_config.radarr_movie_quality_profile = content["parameters"][
+                    "value"
+                ]
+
+            elif (
+                content["parameters"]["setting_name"]
+                == "Radarr Anime Movies Folder Path"
+            ):
+                conreq_config.radarr_anime_folder = content["parameters"]["value"]
+
+            elif content["parameters"]["setting_name"] == "Radarr Movies Folder Path":
+                conreq_config.radarr_movie_folder = content["parameters"]["value"]
+
+            elif content["parameters"]["setting_name"] == "Enable Radarr":
+                conreq_config.radarr_enabled = content["parameters"]["value"]
+
+            # Failure
             else:
                 print(
-                    "User request to change setting name "
-                    + content["setting_name"]
-                    + ", which is currently not handled."
+                    'Server setting "'
+                    + content["parameters"]["setting_name"]
+                    + '" is currently not handled!'
                 )
+                response["success"] = False
+
+            conreq_config.save()
 
         except:
             response["success"] = False
