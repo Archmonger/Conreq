@@ -165,9 +165,8 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             print("Generate modal missing an ID!")
 
     # COMMAND RESPONSE: SERVER SETTINGS
-    @database_sync_to_async
     async def __server_settings(self, content):
-        conreq_config = ConreqConfig.get_solo()
+        conreq_config = await database_sync_to_async(ConreqConfig.get_solo)()
         response = {"command_name": "server settings", "success": True}
 
         # TODO: Validate user is admin before changing settings
@@ -192,24 +191,28 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 conreq_config.conreq_language = content["parameters"]["value"]
 
             elif content["parameters"]["setting_name"] == "Conreq Logo Image":
-                conreq_config.conreq_app_logo = content["parameters"]["value"]
+                pass
+                # conreq_config.conreq_app_logo = content["parameters"]["value"]
 
             elif (
                 content["parameters"]["setting_name"] == "Conreq Custom CSS Stylesheet"
             ):
                 conreq_config.conreq_custom_css = content["parameters"]["value"]
+                conreq_config.conreq_custom_css
 
             elif (
                 content["parameters"]["setting_name"]
                 == "Conreq Automatically Resolve Issues"
             ):
-                conreq_config.conreq_simple_posters = content["parameters"]["value"]
+                conreq_config.conreq_auto_resolve_issues = content["parameters"][
+                    "value"
+                ]
 
             elif (
                 content["parameters"]["setting_name"]
                 == "Conreq Allow Guest Login/Requests"
             ):
-                conreq_config.conreq_simple_posters = content["parameters"]["value"]
+                conreq_config.conreq_guest_login = content["parameters"]["value"]
 
             elif (
                 content["parameters"]["setting_name"]
@@ -243,7 +246,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             elif content["parameters"]["setting_name"] == "Enable Sonarr":
                 conreq_config.sonarr_enabled = content["parameters"]["value"]
 
-            elif content["parameters"]["setting_name"] == "Season Folders":
+            elif content["parameters"]["setting_name"] == "Sonarr Season Folders":
                 conreq_config.sonarr_season_folders = content["parameters"]["value"]
 
             # Radarr Settings
@@ -289,7 +292,8 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 )
                 response["success"] = False
 
-            conreq_config.save()
+            if response["success"]:
+                await database_sync_to_async(conreq_config.save)()
 
         except:
             response["success"] = False

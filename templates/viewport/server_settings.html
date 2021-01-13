@@ -1,3 +1,5 @@
+{% load solo_tags %}
+{% get_solo 'settings.ConreqConfig' as server_settings %}
 <div class="viewport viewport-settings" data-aos="fade-zoom-in" data-aos-duration="1500">
     <div class="settings-group">
         <div class="settings-group-title bold">About Conreq</div>
@@ -8,7 +10,7 @@
             </div>
             <div class="settings-item-group info">
                 <div class="settings-item-title line-clamp-1 info">Conreq Revision</div>
-                <div class="settings-item-details info">15225</div>
+                <div class="settings-item-details info">0</div>
             </div>
             <div class="conreq-button check-update-button box-shadow no-highlighting">
                 Check for Updates
@@ -24,7 +26,7 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="ex. conreq/"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Conreq Base URL" />
+                        data-setting-name="Conreq Base URL" value="{{ server_settings.conreq_base_url }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -32,7 +34,7 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="ex. RequestCentral"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Conreq Application Name" />
+                        data-setting-name="Conreq Application Name" value="{{ server_settings.conreq_app_name }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -40,7 +42,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. https://conreq.example.com" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Application URL/Web Domain" />
+                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Application URL/Web Domain"
+                        value="{{ server_settings.conreq_app_url }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -48,7 +51,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="----Key---- ||Refresh Btn||" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq API Key" />
+                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq API Key"
+                        value="{{ server_settings.conreq_api_key }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -56,7 +60,7 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Conreq Language" />
+                        data-setting-name="Conreq Language" value="{{ server_settings.conreq_language }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -64,7 +68,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="----filename---- ||Upload Btn||" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Logo Image" />
+                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Logo Image"
+                        value="{{ server_settings.conreq_app_logo.name }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -72,7 +77,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. https://example.com/my_custom_styles.css" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom CSS Stylesheet" />
+                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom CSS Stylesheet"
+                        value="{{ server_settings.conreq_custom_css }}" />
                 </div>
             </div>
         </div>
@@ -80,7 +86,7 @@
             <div class="settings-item-group">
                 <div class="settings-item toggler admin pretty p-switch p-fill"
                     data-setting-name="Conreq Automatically Resolve Issues">
-                    <input type="checkbox" />
+                    <input type="checkbox" {% if server_settings.conreq_auto_resolve_issues %} checked {% endif %} />
                     <div class="state">
                         <label>Automatically Resolve Issues</label>
                     </div>
@@ -89,7 +95,7 @@
             <div class="settings-item-group">
                 <div class="settings-item toggler admin pretty p-switch p-fill"
                     data-setting-name="Conreq Allow Guest Login/Requests">
-                    <input type="checkbox" />
+                    <input type="checkbox" {% if server_settings.conreq_guest_login %} checked {% endif %} />
                     <div class="state">
                         <label>Allow Guest Login/Requests</label>
                     </div>
@@ -98,7 +104,7 @@
             <div class="settings-item-group">
                 <div class="settings-item toggler admin pretty p-switch p-fill"
                     data-setting-name="Conreq Simple/Minimal Poster Cards">
-                    <input type="checkbox" />
+                    <input type="checkbox" {% if server_settings.conreq_simple_posters %} checked {% endif %} />
                     <div class="state">
                         <label>Simple/Minimal Poster Cards</label>
                     </div>
@@ -115,14 +121,16 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. http://192.168.86.50:8989" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Sonarr URL" />
+                        autocapitalize="off" spellcheck="false" data-setting-name="Sonarr URL"
+                        value="{{ server_settings.sonarr_url }}" />
                 </div>
             </div>
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">API Key</div>
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Key" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" data-setting-name="Sonarr API Key" />
+                        autocorrect="off" autocapitalize="off" spellcheck="false" data-setting-name="Sonarr API Key"
+                        value="{{ server_settings.sonarr_api_key }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -130,7 +138,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Sonarr Anime Quality Profile" />
+                        data-setting-name="Sonarr Anime Quality Profile"
+                        value="{{ server_settings.sonarr_anime_quality_profile }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -138,7 +147,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Sonarr TV Quality Profile" />
+                        data-setting-name="Sonarr TV Quality Profile"
+                        value="{{ server_settings.sonarr_tv_quality_profile }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -146,7 +156,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Sonarr Anime Folder Path" />
+                        data-setting-name="Sonarr Anime Folder Path"
+                        value="{{ server_settings.sonarr_anime_folder }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -154,14 +165,14 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Sonarr TV Folder Path" />
+                        data-setting-name="Sonarr TV Folder Path" value="{{ server_settings.sonarr_tv_folder }}" />
                 </div>
             </div>
         </div>
         <div class="settings-input-group">
             <div class="settings-item-group">
                 <div class="settings-item toggler admin pretty p-switch p-fill" data-setting-name="Enable Sonarr">
-                    <input type="checkbox" />
+                    <input type="checkbox" {% if server_settings.sonarr_enabled %} checked {% endif %} />
                     <div class="state">
                         <label>Enable Sonarr</label>
                     </div>
@@ -170,7 +181,7 @@
             <div class="settings-item-group">
                 <div class="settings-item toggler admin pretty p-switch p-fill"
                     data-setting-name="Sonarr Season Folders">
-                    <input type="checkbox" />
+                    <input type="checkbox" {% if server_settings.sonarr_season_folders %} checked {% endif %} />
                     <div class="state">
                         <label>Season Folders</label>
                     </div>
@@ -187,14 +198,16 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. http://192.168.86.50:7878" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Radarr URL" />
+                        autocapitalize="off" spellcheck="false" data-setting-name="Radarr URL"
+                        value="{{ server_settings.radarr_url }}" />
                 </div>
             </div>
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">API Key</div>
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Key" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" data-setting-name="Radarr API Key" />
+                        autocorrect="off" autocapitalize="off" spellcheck="false" data-setting-name="Radarr API Key"
+                        value="{{ server_settings.radarr_api_key }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -202,7 +215,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Radarr Anime Movies Quality Profile" />
+                        data-setting-name="Radarr Anime Movies Quality Profile"
+                        value="{{ server_settings.radarr_anime_quality_profile }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -210,7 +224,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Radarr Movies Quality Profile" />
+                        data-setting-name="Radarr Movies Quality Profile"
+                        value="{{ server_settings.radarr_movies_quality_profile }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -218,7 +233,8 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Radarr Anime Movies Folder Path" />
+                        data-setting-name="Radarr Anime Movies Folder Path"
+                        value="{{ server_settings.radarr_anime_folder }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -226,13 +242,14 @@
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Radarr Movies Folder Path" />
+                        data-setting-name="Radarr Movies Folder Path"
+                        value="{{ server_settings.radarr_movies_folder }}" />
                 </div>
             </div>
             <div class="settings-input-group">
                 <div class="settings-item-group">
                     <div class="settings-item toggler admin pretty p-switch p-fill" data-setting-name="Enable Radarr">
-                        <input type="checkbox" />
+                        <input type="checkbox" {% if server_settings.radarr_enabled %} checked {% endif %} />
                         <div class="state">
                             <label>Enable Radarr</label>
                         </div>

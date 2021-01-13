@@ -93,7 +93,7 @@ var settings_save_failed_toast_message = function () {
   iziToast.show({
     icon: "fas fa-exclamation-triangle",
     title: "Error!",
-    message: "Failed to save settings.",
+    message: "Failed to save settings. Check logs for details.",
     displayMode: "replace",
     titleColor: "#9a5c0f",
     messageColor: "#9a5c0f",
