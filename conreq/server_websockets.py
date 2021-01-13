@@ -40,7 +40,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
     # RECEIVING COMMANDS
     async def receive_json(self, content, **kwargs):
         """When the browser attempts to send a message to the server."""
-        print("received", content)
+        print(content)
         # Reject users that aren't logged in
         if isinstance(self.scope["user"], AnonymousUser):
             await self.__forbidden()
@@ -54,6 +54,9 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
             elif content["command_name"] == "generate modal":
                 await self.__generate_modal(content)
+
+            elif content["command_name"] == "server settings":
+                await self.__server_settings(content)
 
             else:
                 print("Invalid websocket command")
@@ -159,6 +162,54 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 print("Invalid modal type!")
         else:
             print("Generate modal missing an ID!")
+
+    # COMMAND RESPONSE: SERVER SETTINGS
+    async def __server_settings(self, content):
+        response = {"command_name": "server settings", "success": True}
+
+        # TODO: Validate user is admin before changing settings
+        try:
+            # Basic Configuration
+            if content["setting_name"] == "Base URL":
+                pass
+
+            # Sonarr Settings
+            elif content["setting_name"] == "Sonarr URL":
+                print(content["value"])
+
+            elif content["setting_name"] == "Sonarr API Key":
+                print(content["value"])
+
+            elif content["setting_name"] == "Sonarr Anime Quality Profile":
+                print(content["value"])
+
+            elif content["setting_name"] == "Sonarr TV Quality Profile":
+                print(content["value"])
+
+            elif content["setting_name"] == "Sonarr Anime Folder Path":
+                print(content["value"])
+
+            elif content["setting_name"] == "Sonarr TV Folder Path":
+                print(content["value"])
+
+            elif content["setting_name"] == "Enable Sonarr":
+                print(content["value"])
+
+            elif content["setting_name"] == "Season Folders":
+                print(content["value"])
+
+            else:
+                print(
+                    "User request to change setting name "
+                    + content["setting_name"]
+                    + ", which is currently not handled."
+                )
+
+        except:
+            response["success"] = False
+
+        # Send a message to the user
+        await self.send_json(response)
 
     # COMMAND RESPONSE: FORBIDDEN
     async def __forbidden(self):
