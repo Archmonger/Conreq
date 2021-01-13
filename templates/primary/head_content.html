@@ -1,4 +1,6 @@
 {% load static %}
+{% load solo_tags %}
+{% get_solo 'settings.ConreqConfig' as server_settings %}
 <title>Conreq</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -11,32 +13,47 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
 <!-- Font (Roboto) -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    crossorigin="anonymous" />
 
 <!-- Icons (FontAwesome) -->
 <link rel="stylesheet" href="{% static 'css/libraries/fontawesome_all_5.15.1.min.css' %}" crossorigin="anonymous" />
 <link rel="preload" href="{% static 'css/webfonts/fa-solid-900.woff2' %}" as="font" type="font/woff2" crossorigin>
 
 <!-- Styling and JS (Bootstrap) -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
 
 <!-- Image popups (jQuery Magnific Popup) -->
 <link rel="stylesheet" href="{% static 'css/libraries/magnific_popup_1.1.0.css' %}" crossorigin="anonymous">
 <script src="{% static 'js/libraries/magnific_popup_1.1.0.min.js' %}" crossorigin="anonymous"></script>
 
 <!-- Sliders/Carousels (TinySlider) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css" integrity="sha384-PZZ0iQUb2LawAE6IluKzBVRHVB85dkzT3VbPqYx+he9UEfPLUsTpu2B/Qwv6ueAk" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/min/tiny-slider.js" integrity="sha384-17ZL7z7TDMjv+bN855ZqaY8prxaSVXFicbC8iyJfMz2Ng5ElaurJF2GCSUutad6e" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css"
+    integrity="sha384-PZZ0iQUb2LawAE6IluKzBVRHVB85dkzT3VbPqYx+he9UEfPLUsTpu2B/Qwv6ueAk" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/min/tiny-slider.js"
+    integrity="sha384-17ZL7z7TDMjv+bN855ZqaY8prxaSVXFicbC8iyJfMz2Ng5ElaurJF2GCSUutad6e"
+    crossorigin="anonymous"></script>
 
 <!-- Scrollbar (Simplebar) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@5.3.0/dist/simplebar.css" integrity="sha384-ygCRjo5PuB2wXMcaFVhoILj0PAzFKbtybp3MIcD31oCXzcQCi0Dbj2LH8fQ1f+Eb" crossorigin="anonymous" />
-<script src="https://cdn.jsdelivr.net/npm/simplebar@5.3.0/dist/simplebar.min.js" integrity="sha384-Sq5pifl8fz5srEQvJr/36ly7vMVeeubmw9K+xAmer/7qmEIooJPdUVrsFLU60ti4" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@5.3.0/dist/simplebar.css"
+    integrity="sha384-ygCRjo5PuB2wXMcaFVhoILj0PAzFKbtybp3MIcD31oCXzcQCi0Dbj2LH8fQ1f+Eb" crossorigin="anonymous" />
+<script src="https://cdn.jsdelivr.net/npm/simplebar@5.3.0/dist/simplebar.min.js"
+    integrity="sha384-Sq5pifl8fz5srEQvJr/36ly7vMVeeubmw9K+xAmer/7qmEIooJPdUVrsFLU60ti4"
+    crossorigin="anonymous"></script>
 
 <!-- Checkboxes (Pretty-Checkbox) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" integrity="sha384-ICB8i/maQ/5+tGLDUEcswB7Ch+OO9Oj8Z4Ov/Gs0gxqfTgLLkD3F43MhcEJ2x6/D" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"
+    integrity="sha384-ICB8i/maQ/5+tGLDUEcswB7Ch+OO9Oj8Z4Ov/Gs0gxqfTgLLkD3F43MhcEJ2x6/D" crossorigin="anonymous">
 
 <!-- XSS Protection (DOM Purify) -->
 <script src="{% static 'js/libraries/dom_purify_2.2.min.js' %}" crossorigin="anonymous"></script>
@@ -46,23 +63,35 @@
 <script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
 
 <!-- Masonry Layout (Desandro Masonry) -->
-<script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+    integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
+    crossorigin="anonymous"></script>
 
 <!-- Infinite Scrolling (Desandro Infinite Scroll) -->
-<script src="https://unpkg.com/infinite-scroll@3.0.6/dist/infinite-scroll.pkgd.min.js" integrity="sha384-2o0eDtiURg21bbJ8Gfe0FVoA7nyRucxrUJH+rtZ46TKP8+D66f2ayNyUcBv6QDbM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/infinite-scroll@3.0.6/dist/infinite-scroll.pkgd.min.js"
+    integrity="sha384-2o0eDtiURg21bbJ8Gfe0FVoA7nyRucxrUJH+rtZ46TKP8+D66f2ayNyUcBv6QDbM"
+    crossorigin="anonymous"></script>
 
 <!-- Lazy Loading -->
-<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js" integrity="sha384-kRtC+xB8cw+Y0KUfSp5bAwFpjBrYzkokPi0bNVo+/S2YOMfXSFSaQIts2DkuEBGd" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js"
+    integrity="sha384-kRtC+xB8cw+Y0KUfSp5bAwFpjBrYzkokPi0bNVo+/S2YOMfXSFSaQIts2DkuEBGd"
+    crossorigin="anonymous"></script>
 
 <!-- Animate on Scroll (AOS) -->
-<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+    integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"
+    integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
+    crossorigin="anonymous"></script>
 
 <!-- Static Conreq JS and CSS -->
 <link rel="stylesheet" href="{% static 'css/main.css' %}" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'css/mobile.css' %}" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'css/more_info.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/settings.css' %}" crossorigin="anonymous">
+{% if server_settings.conreq_simple_posters %}
+<link rel="stylesheet" href="{% static 'css/simple_posters.css' %}" crossorigin="anonymous">
+{% endif %}
 <script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>

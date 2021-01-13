@@ -1,13 +1,13 @@
 .poster-container .fa-angle-down {
     padding-top: 0px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgb(255 255 255);
     -webkit-filter: drop-shadow(0 0 2px #000000);
     filter: drop-shadow(0 0 2px #000000);
-    background: #0000004d;
+    background: linear-gradient(360deg, #00000030, transparent);
 }
 
 .poster-container .fa-angle-down:hover {
-    background: #00000057;
+    background: linear-gradient(360deg, #0000004d, transparent);
     color: rgba(255, 255, 255, 1);
 }
 
@@ -17,4 +17,8 @@
 
 .cast.poster-container {
     height: auto;
+}
+
+.availablity-text{
+    display: none;
 }
