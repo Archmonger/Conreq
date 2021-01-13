@@ -73,12 +73,21 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title line-clamp-1">Custom CSS Stylesheet</div>
+                <div class="settings-item-title line-clamp-1">Custom CSS</div>
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. https://example.com/my_custom_styles.css" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom CSS Stylesheet"
+                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom CSS"
                         value="{{ server_settings.conreq_custom_css }}" />
+                </div>
+            </div>
+            <div class="settings-item-group">
+                <div class="settings-item-title line-clamp-1">Custom JavaScript</div>
+                <div class="text-input-container">
+                    <input type="text" class="settings-item small-text-input admin"
+                        placeholder="ex. https://example.com/my_custom_styles.css" autocomplete="off" autocorrect="off"
+                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom JS"
+                        value="{{ server_settings.conreq_custom_js }}" />
                 </div>
             </div>
         </div>
@@ -107,6 +116,14 @@
                     <input type="checkbox" {% if server_settings.conreq_simple_posters %} checked {% endif %} />
                     <div class="state">
                         <label>Simple/Minimal Poster Cards</label>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-item-group">
+                <div class="settings-item toggler admin pretty p-switch p-fill" data-setting-name="Conreq Dark Theme">
+                    <input type="checkbox" {% if server_settings.conreq_dark_theme %} checked {% endif %} />
+                    <div class="state">
+                        <label>Dark Theme</label>
                     </div>
                 </div>
             </div>

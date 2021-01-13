@@ -194,11 +194,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 pass
                 # conreq_config.conreq_app_logo = content["parameters"]["value"]
 
-            elif (
-                content["parameters"]["setting_name"] == "Conreq Custom CSS Stylesheet"
-            ):
+            elif content["parameters"]["setting_name"] == "Conreq Custom CSS":
                 conreq_config.conreq_custom_css = content["parameters"]["value"]
-                conreq_config.conreq_custom_css
+
+            elif content["parameters"]["setting_name"] == "Conreq Custom JS":
+                conreq_config.conreq_custom_js = content["parameters"]["value"]
 
             elif (
                 content["parameters"]["setting_name"]
@@ -219,6 +219,9 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 == "Conreq Simple/Minimal Poster Cards"
             ):
                 conreq_config.conreq_simple_posters = content["parameters"]["value"]
+
+            elif content["parameters"]["setting_name"] == "Conreq Dark Theme":
+                conreq_config.conreq_dark_theme = content["parameters"]["value"]
 
             # Sonarr Settings
             elif content["parameters"]["setting_name"] == "Sonarr URL":
