@@ -33,6 +33,8 @@ let add_event_listeners = function () {
 
   // Server Settings menu events
   $('input[type="text"].settings-item.admin').each(function () {
+    let setting_name = $(this).data("setting-name");
+    let current_value = $(this).val();
     previous_admin_settings[setting_name] = current_value;
   });
   $('input[type="text"].settings-item.admin').on("keypress", function (e) {
