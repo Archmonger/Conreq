@@ -10,4 +10,5 @@ django-htmlmin==0.11.0
 django-solo==1.1.5
 pillow==8.1.0
 django-searchable-encrypted-fields==0.1.9
+django-cleanup==5.1.0
 Twisted[tls,http2]==20.3.0

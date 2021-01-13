@@ -88,14 +88,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "channels",
-    "encrypted_fields",  # Allow for encrypted text in the DB
-    "solo",  # Allow for single-row fields in the DB
     "conreq.apps.homepage",
     "conreq.apps.discover",
     "conreq.apps.more_info",
     "conreq.apps.search",
     "conreq.apps.settings",
+    "channels",  # Websocket library
+    "encrypted_fields",  # Allow for encrypted text in the DB
+    "solo",  # Allow for single-row fields in the DB
+    "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
 ]
 
 MIDDLEWARE = [
