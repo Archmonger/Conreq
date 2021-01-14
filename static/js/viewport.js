@@ -134,10 +134,10 @@ let refresh_viewport = function () {
       prefill: true,
       elementScroll: ".viewport-loader",
       history: false,
-      scrollThreshold: 0,
+      scrollThreshold: $(".viewport-container").height() * 3,
     });
 
-    masonry_grid.on("append.infiniteScroll", function () {
+    masonry_grid.on("load.infiniteScroll", function () {
       cull_old_posters();
     });
 
