@@ -103,18 +103,16 @@ a:hover {
     position: fixed;
     height: calc(100% - var(--navbar-height));
     width: calc(100vw - var(--viewport-left));
-    display: flex;
 }
 
 .viewport-loader {
     z-index: 1;
-    position: fixed;
-    height: calc(100% - var(--navbar-height));
+    position: relative;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     width: calc(100vw - var(--viewport-left));
     padding: var(--viewport-padding);
-    display: flex;
 }
 
 .viewport {
@@ -202,6 +200,11 @@ input:checked~.state {
     z-index: 999;
     margin: auto;
     color: var(--accent-color);
+}
+.viewport-container>.spinner-border{
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 .text-input-container {
