@@ -134,7 +134,7 @@ let refresh_viewport = function () {
       prefill: true,
       elementScroll: ".viewport-loader",
       history: false,
-      scrollThreshold: 2000,
+      scrollThreshold: 0,
     });
 
     masonry_grid.on("append.infiniteScroll", function () {
