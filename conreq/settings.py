@@ -43,27 +43,21 @@ MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", True)
 
-# Logging for the settings configuration
-__logger = log.get_logger("conreq.settings")
-log.configure(__logger, log.DEBUG)
+
+# Logging
 log.configure(log.get_logger(), log.INFO)
 if DEBUG:
     log.console_stream(log.get_logger(), log.WARNING)
 
 
-# Project paths
+# Project Paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.environ.get("DATA_DIR")
 if not DATA_DIR:
-    log.handler(
-        "DATA_DIR not configured, using default data directory.",
-        log.WARNING,
-        __logger,
-    )
     DATA_DIR = BASE_DIR
 
 
-# Security related settings
+# Security Settings
 if DEBUG:
     SECRET_KEY = "v34586n97tmnuyic4grq7834578gnc4t538475cytwzuoyh2367twgytugser12937fd"
 
@@ -78,11 +72,11 @@ FIELD_ENCRYPTION_KEYS = [
 API_KEY = ""
 
 
-# Application settings
+# Application Settings
 HTML_MINIFY = True
 
 
-# Application definitions
+# Application Definitions
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -117,7 +111,7 @@ MIDDLEWARE = [
 ]
 
 
-# Caching database
+# Caching Database
 CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
@@ -130,7 +124,7 @@ CACHES = {
 }
 
 
-# URL Routing
+# URL Routing and Page Rendering
 ROOT_URLCONF = "conreq.urls"
 ASGI_APPLICATION = "conreq.asgi.application"
 
@@ -174,7 +168,7 @@ else:
     }
 
 
-# Password validation
+# Password Validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -204,7 +198,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static Files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, "static-deploy")
 STATIC_URL = "/static/"
