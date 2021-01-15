@@ -38,6 +38,8 @@ def get_bool_from_env(name, default_value):
 # Environment Variables
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = get_bool_from_env("DEBUG", True)
+DB_ENGINE = get_bool_from_env("DB_ENGINE", "")
+MYSQL_CONFIG_FILE = get_bool_from_env("MYSQL_CONFIG_FILE", "")
 
 # Logging for the settings configuration
 __logger = log.get_logger("conreq.settings")
@@ -156,15 +158,25 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
-        "OPTIONS": {
-            "timeout": 30,
-        },
+if DB_ENGINE.upper() == "MYSQL" and MYSQL_CONFIG_FILE != "":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "OPTIONS": {
+                "read_default_file": MYSQL_CONFIG_FILE,
+            },
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
+            "OPTIONS": {
+                "timeout": 30,
+            },
+        }
+    }
 
 
 # Password validation
