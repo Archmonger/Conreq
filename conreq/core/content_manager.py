@@ -21,7 +21,7 @@ class ContentManager:
         radarr_api_key: String containing the Radarr API key.
     """
 
-    def __init__(self):
+    def __init__(self, periodic_refresh=False):
         # Initialized values
         conreq_config = ConreqConfig.get_solo()
         self.__sonarr_url = conreq_config.sonarr_url
@@ -38,7 +38,8 @@ class ContentManager:
         log.configure(self.__logger, log.DEBUG)
 
         # Periodically run a task to re-populate the cache every minute
-        Thread(target=self.refresh_content, daemon=True).start()
+        if periodic_refresh:
+            Thread(target=self.refresh_content, daemon=True).start()
 
     def get(self, obtain_season_info=False, force_update_cache=False, **kwargs):
         """Gets content information and computes the conreqStatus of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
