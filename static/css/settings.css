@@ -17,7 +17,7 @@
     display: grid;
     flex-direction: column;
     margin: 0;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
     -moz-column-gap: 20px;
     column-gap: 50px;
 }
@@ -33,6 +33,29 @@
     line-height: 1.5;
     font-weight: 500;
 }
+
+.settings-item.text-display-only {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: var(--primary-font-size);
+}
+
+.settings-item.text-display-only .settings-item-text{
+    width: calc(100% - 15px);
+}
+
+.settings-item .fas {
+    margin-left: 15px;
+    font-size: 18px;
+}
+
+.settings-item .fas:first {
+    margin-left: auto;
+}
+
 
 input[type="text"]:not(#content-search) {
     width: 100%;

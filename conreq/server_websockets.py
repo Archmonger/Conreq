@@ -1,11 +1,12 @@
 from channels.auth import AnonymousUser, login
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from django.core.management.utils import get_random_secret_key
 from htmlmin.minify import html_minify
 
-from conreq.bootup import content_discovery, content_manager
 from conreq.apps.more_info.views import series_modal
 from conreq.apps.settings.models import ConreqConfig
+from conreq.bootup import content_discovery, content_manager
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
@@ -185,7 +186,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 conreq_config.conreq_app_url = content["parameters"]["value"]
 
             elif content["parameters"]["setting_name"] == "Conreq API Key":
-                conreq_config.conreq_api_key = content["parameters"]["value"]
+                conreq_config.conreq_api_key = get_random_secret_key()
 
             elif content["parameters"]["setting_name"] == "Conreq Language":
                 conreq_config.conreq_language = content["parameters"]["value"]

@@ -1,3 +1,4 @@
+from django.core.management.utils import get_random_secret_key
 from django.db import models
 from encrypted_fields.fields import EncryptedCharField
 from solo.models import SingletonModel
@@ -5,7 +6,7 @@ from solo.models import SingletonModel
 # Create your models here.
 class ConreqConfig(SingletonModel):
     # Basic settings
-    conreq_api_key = models.CharField(max_length=100, default="")
+    conreq_api_key = models.CharField(max_length=100, default=get_random_secret_key())
     conreq_secret_key = models.CharField(max_length=100, default="")
     conreq_base_url = models.CharField(max_length=100, default="")
     conreq_app_name = models.CharField(max_length=100, default="")
