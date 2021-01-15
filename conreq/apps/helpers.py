@@ -1,7 +1,7 @@
 from calendar import month_name
 from threading import Thread
 
-from conreq import content_discovery, content_manager
+from conreq.first_run import content_discovery, content_manager
 from conreq.core import cache, log
 from conreq.core.generic_tools import is_key_value_in_list
 

@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 from threading import Thread
 
-from conreq import content_discovery, searcher
+from conreq.first_run import content_discovery, searcher
 from conreq.apps.helpers import (
     convert_card_to_tmdb,
     generate_context,
