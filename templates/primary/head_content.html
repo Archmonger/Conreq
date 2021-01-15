@@ -97,3 +97,11 @@
 <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/lazy_posters.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/more_info.js' %}" crossorigin="anonymous"></script>
+
+<!-- User defined CSS and JS -->
+{% if server_settings.conreq_custom_css %}
+<link rel="stylesheet" href="{{ server_settings.conreq_custom_css }}" crossorigin="anonymous">
+{% endif %}
+{% if server_settings.conreq_custom_js %}
+<script src="{{ server_settings.conreq_custom_js }}" crossorigin="anonymous"></script>
+{% endif %}
