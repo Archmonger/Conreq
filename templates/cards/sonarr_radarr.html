@@ -1,10 +1,11 @@
 {% load static %} {% if card.tmdbCard %} {% include "cards/tmdb.html" %} {% else %}
 <div class="masonry-item">
     <div class="poster-container no-highlighting {{card.contentType}}">
-        <i class="fas fa-ellipsis-v"></i>
-        <i class="fas fa-angle-down"></i>
+        <i class="fas fa-ellipsis-v clickable"></i>
+        <i class="fas fa-angle-down clickable"></i>
         <div class="description-tint"></div>
-        <a href="#{% url 'more_info:main' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
+        <a
+            href="#{% url 'more_info:main' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
 
             {% if card.conreqStatus == available %}
             <div class="availablity-text">Available {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i
