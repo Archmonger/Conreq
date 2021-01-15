@@ -27,10 +27,11 @@ def get_bool_from_env(name, default_value):
         try:
             return ast.literal_eval(value)
         except Exception as exception:
-            log.handler(
-                str(exception),
-                log.WARNING,
-                __logger,
+            print(
+                "Could not evaluate value of "
+                + name
+                + " as a boolean\n"
+                + str(exception)
             )
     return default_value
 
