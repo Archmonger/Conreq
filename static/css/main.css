@@ -102,13 +102,6 @@ a:hover {
     top: var(--navbar-height);
     position: fixed;
     height: calc(100% - var(--navbar-height));
-    width: calc(100vw - var(--viewport-left));
-}
-
-.viewport-loader {
-    z-index: 1;
-    position: relative;
-    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     width: calc(100vw - var(--viewport-left));

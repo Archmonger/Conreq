@@ -132,12 +132,12 @@ let refresh_viewport = function () {
       append: ".masonry-item",
       outlayer: masonry_grid.data("masonry"),
       prefill: true,
-      elementScroll: ".viewport-loader",
+      elementScroll: ".viewport-container",
       history: false,
-      scrollThreshold: 0,
+      scrollThreshold: $(".viewport-container").height() * 2,
     });
 
-    masonry_grid.on("load.infiniteScroll", function () {
+    masonry_grid.on("append.infiniteScroll", function () {
       cull_old_posters();
     });
 
@@ -166,14 +166,14 @@ let generate_viewport = function () {
   update_active_tab();
 
   // Hide the old content and display the loading animation
-  $(".viewport-loader>*").hide();
-  $(".viewport-container>.spinner-border").show();
+  $(".viewport-container>*:not(.loading-animation)").hide();
+  $(".viewport-container>.loading-animation").show();
 
   // Fetch the new content, display it, and hide the loading animation
   $.get(window_location, function (viewport_html) {
-    $(".viewport-loader")[0].innerHTML = DOMPurify.sanitize(viewport_html);
+    $(".viewport-container")[0].innerHTML = DOMPurify.sanitize(viewport_html);
     refresh_viewport();
-    $(".viewport-container>.spinner-border").hide();
+    $(".viewport-container>.loading-animation").hide();
 
     // Add any click events needed
     add_event_listeners();

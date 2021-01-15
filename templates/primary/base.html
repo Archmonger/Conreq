@@ -10,14 +10,10 @@
     <div class="main">
         {% include "primary/navbar.html" %} {% include "primary/sidebar.html" %} {% include "modal/default.html" %}
         <div class="viewport-container">
-            <div class="spinner-border loading-animation" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <div class="viewport-loader" data-aos="fade-up" data-aos-duration="1500">
-            </div>
+            {% include "primary/loading_animation.html" %}
         </div>
-        <script src="{% static 'js/more_info.js' %}" crossorigin="anonymous"></script>
-        <script src="{% static 'js/viewport.js' %}"></script>
+
+        <script src="{% static 'js/viewport.js' %}" crossorigin="anonymous"></script>
     </div>
 </body>
 
