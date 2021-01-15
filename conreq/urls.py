@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 
 urlpatterns = [
@@ -31,3 +32,6 @@ urlpatterns = [
     path("settings/", include("conreq.apps.settings.urls")),
     path("", include("conreq.apps.homepage.urls")),
 ]
+
+# TODO: Change this serve files some other way (Perhaps Nginx). This method is potentially insecure.
+urlpatterns += staticfiles_urlpatterns()
