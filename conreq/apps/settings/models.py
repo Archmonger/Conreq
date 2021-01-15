@@ -6,7 +6,7 @@ from solo.models import SingletonModel
 # Create your models here.
 class ConreqConfig(SingletonModel):
     # Basic settings
-    conreq_api_key = models.CharField(max_length=100, default=get_random_secret_key())
+    conreq_api_key = models.CharField(max_length=100, default="")
     conreq_secret_key = models.CharField(max_length=100, default="")
     conreq_base_url = models.CharField(max_length=100, default="")
     conreq_app_name = models.CharField(max_length=100, default="")
