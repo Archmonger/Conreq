@@ -32,6 +32,3 @@ urlpatterns = [
     path("settings/", include("conreq.apps.settings.urls")),
     path("", include("conreq.apps.homepage.urls")),
 ]
-
-# TODO: Change this serve files some other way (Perhaps Nginx). This method is potentially insecure.
-urlpatterns += staticfiles_urlpatterns()

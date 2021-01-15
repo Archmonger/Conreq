@@ -6,7 +6,8 @@ logs
 __pycache__
 db.sqlite3
 media
-cache/
+cache
+static-deploy
 
 # Backup files #
 *.bak

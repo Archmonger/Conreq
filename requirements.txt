@@ -13,3 +13,4 @@ pillow==8.1.0
 django-searchable-encrypted-fields==0.1.9
 django-cleanup==5.1.0
 daphne==3.0.1
+whitenoise[brotli]==5.2.0
