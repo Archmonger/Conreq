@@ -1,7 +1,6 @@
 from threading import Thread
 from time import sleep
 
-from conreq.bootup import content_discovery, content_manager, searcher
 from conreq.apps.helpers import (
     generate_context,
     preprocess_arr_result,
@@ -9,11 +8,15 @@ from conreq.apps.helpers import (
     set_many_conreq_status,
     set_single_conreq_status,
 )
+from conreq.core.content_discovery import ContentDiscovery
+from conreq.core.content_manager import ContentManager
+from conreq.core.search import Search
 from conreq.core.thread_helper import ReturnThread
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.template.loader import render_to_string
+
 
 # TODO: Obtain this value from the database on init
 MAX_SERIES_FETCH_RETRIES = 20
@@ -22,6 +25,7 @@ MAX_SERIES_FETCH_RETRIES = 20
 # Create your views here.
 @login_required
 def more_info(request):
+    content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/more_info.html")
     thread_list = []
 
@@ -95,6 +99,7 @@ def more_info(request):
         )
 
     elif tvdb_id is not None:
+        searcher = Search()
         # Fallback for TVDB
         arr_result = searcher.television(tvdb_id)[0]
         thread_list = []
@@ -126,6 +131,8 @@ def more_info(request):
 
 
 def series_modal(tmdb_id=None, tvdb_id=None):
+    content_discovery = ContentDiscovery()
+    content_manager = ContentManager()
     # Determine the TVDB ID
     if tvdb_id is not None:
         pass

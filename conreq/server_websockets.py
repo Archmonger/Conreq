@@ -6,7 +6,8 @@ from htmlmin.minify import html_minify
 
 from conreq.apps.more_info.views import series_modal
 from conreq.apps.settings.models import ConreqConfig
-from conreq.bootup import content_discovery, content_manager
+from conreq.core.content_discovery import ContentDiscovery
+from conreq.core.content_manager import ContentManager
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
@@ -65,6 +66,9 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
     # COMMAND RESPONSE: REQUEST CONTENT
     async def __request_content(self, content):
+        content_manager = ContentManager()
+        content_discovery = ContentDiscovery()
+
         # TV show was requested
         if content["parameters"]["content_type"] == "tv":
             # TODO: Obtain Sonarr root and quality profile ID from database

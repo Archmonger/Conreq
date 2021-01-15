@@ -3,6 +3,7 @@
 from math import floor, log10
 from threading import Thread
 
+from conreq.apps.settings.models import ConreqConfig
 from conreq.core import cache, log
 from conreq.core.generic_tools import clean_string
 from conreq.core.thread_helper import ReturnThread
@@ -22,19 +23,13 @@ class Search:
         radarr_api_key: String containing the Radarr API key.
     """
 
-    def __init__(
-        self,
-        sonarr_url,
-        sonarr_api_key,
-        radarr_url,
-        radarr_api_key,
-    ):
+    def __init__(self):
         # Initialized values
-        # TODO: Obtain these values from the database on init
-        self.__sonarr_url = sonarr_url
-        self.__sonarr_api_key = sonarr_api_key
-        self.__radarr_url = radarr_url
-        self.__radarr_api_key = radarr_api_key
+        conreq_config = ConreqConfig.get_solo()
+        self.__sonarr_url = conreq_config.sonarr_url
+        self.__sonarr_api_key = conreq_config.sonarr_api_key
+        self.__radarr_url = conreq_config.radarr_url
+        self.__radarr_api_key = conreq_config.radarr_api_key
 
         # Connections to Sonarr and Radarr
         self.__sonarr = SonarrAPI(self.__sonarr_url, self.__sonarr_api_key)

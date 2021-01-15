@@ -1,8 +1,9 @@
 from calendar import month_name
 from threading import Thread
 
-from conreq.bootup import content_discovery, content_manager
 from conreq.core import cache, log
+from conreq.core.content_discovery import ContentDiscovery
+from conreq.core.content_manager import ContentManager
 from conreq.core.generic_tools import is_key_value_in_list
 
 __logger = log.get_logger("conreq.apps.helpers")
@@ -73,6 +74,7 @@ def __set_many_conreq_status(card, radarr_library, sonarr_library):
 
 
 def set_many_conreq_status(results):
+    content_manager = ContentManager()
     # Fetch Sonarr and Radarr libraries
     radarr_library = cache.handler(
         "radarr library cache",
@@ -101,6 +103,8 @@ def set_many_conreq_status(results):
 
 
 def set_single_conreq_status(card):
+    content_manager = ContentManager()
+    content_discovery = ContentDiscovery()
     try:
         # Compute conreq status of a Sonarr card
         if card.__contains__("tvdbId"):
@@ -316,6 +320,7 @@ def preprocess_tmdb_result(tmdb_result):
 
 
 def convert_card_to_tmdb(index, all_results):
+    content_discovery = ContentDiscovery()
     # NOTE: For some reason, overriding values in all_results requires the list and index value.
     # It will NOT work if attempting to change values by reference (ex. card = newCard).
 

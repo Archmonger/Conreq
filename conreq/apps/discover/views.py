@@ -1,14 +1,14 @@
 # from django.shortcuts import render
-from conreq.bootup import content_discovery
 from conreq.apps.helpers import generate_context, set_many_conreq_status
+from conreq.core.content_discovery import ContentDiscovery
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 
-
 # Create your views here.
 @login_required
 def discover_all(request):
+    content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")
 
     # Get the page number from the URL
@@ -31,6 +31,7 @@ def discover_all(request):
 
 @login_required
 def discover_tv(request):
+    content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")
 
     # Get the page number from the URL
@@ -53,6 +54,7 @@ def discover_tv(request):
 
 @login_required
 def discover_movies(request):
+    content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")
 
     # Get the page number from the URL
