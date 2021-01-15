@@ -17,8 +17,10 @@ from django.core.management.utils import get_random_secret_key
 
 from conreq.core import log
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# Settings Helper Function
+# Helper Functions
 def get_bool_from_env(name, default_value):
     if name in os.environ:
         value = os.environ[name]
@@ -33,11 +35,9 @@ def get_bool_from_env(name, default_value):
     return default_value
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
+# Environment Variables
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_bool_from_env("CONREQ_DEBUG", True)
+DEBUG = get_bool_from_env("DEBUG", True)
 
 # Logging for the settings configuration
 __logger = log.get_logger("conreq.settings")
@@ -46,22 +46,24 @@ log.configure(log.get_logger(), log.INFO)
 if DEBUG:
     log.console_stream(log.get_logger(), log.WARNING)
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+# Project paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.environ.get("DATA_DIR")
 if not DATA_DIR:
-    # log.handler(
-    #     "DATA_DIR not configured, using default data directory.",
-    #     log.WARNING,
-    #     __logger,
-    # )
+    log.handler(
+        "DATA_DIR not configured, using default data directory.",
+        log.WARNING,
+        __logger,
+    )
     DATA_DIR = BASE_DIR
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# TODO: Store secret key in database
+
+# Security related settings
 if DEBUG:
     SECRET_KEY = "v34586n97tmnuyic4grq7834578gnc4t538475cytwzuoyh2367twgytugser12937fd"
 else:
+    # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
     log.handler(
@@ -73,20 +75,24 @@ if not SECRET_KEY:
 
 ALLOWED_HOSTS = ["*"]
 
-# TODO: Obtain from environment
 FIELD_ENCRYPTION_KEYS = [
     "f164ec6bd6fbc4aef5647abc15199da0f9badcc1d2127bde2087ae0d794a9a0b"
 ]
 API_KEY = ""
 
-# Application definition
 
+# Application settings
+HTML_MINIFY = True
+
+
+# Application definitions
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "conreq.apps.homepage",
     "conreq.apps.discover",
@@ -113,8 +119,8 @@ MIDDLEWARE = [
     "htmlmin.middleware.MarkRequestMiddleware",
 ]
 
-HTML_MINIFY = True
 
+# Caching database
 CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
@@ -126,7 +132,10 @@ CACHES = {
     }
 }
 
+
+# URL Routing
 ROOT_URLCONF = "conreq.urls"
+ASGI_APPLICATION = "conreq.asgi.application"
 
 TEMPLATES = [
     {
@@ -144,11 +153,9 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = "conreq.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -162,7 +169,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -181,9 +187,9 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_REDIRECT_URL = "homepage:index"
 LOGIN_URL = "/signin/"
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
