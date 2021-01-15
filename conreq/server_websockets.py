@@ -3,7 +3,7 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from htmlmin.minify import html_minify
 
-from conreq.first_run import content_discovery, content_manager
+from conreq.bootup import content_discovery, content_manager
 from conreq.apps.more_info.views import series_modal
 from conreq.apps.settings.models import ConreqConfig
 

@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-from conreq.first_run import content_discovery
+from conreq.bootup import content_discovery
 from conreq.apps.helpers import generate_context, set_many_conreq_status
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse

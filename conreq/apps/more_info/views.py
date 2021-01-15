@@ -1,7 +1,7 @@
 from threading import Thread
 from time import sleep
 
-from conreq.first_run import content_discovery, content_manager, searcher
+from conreq.bootup import content_discovery, content_manager, searcher
 from conreq.apps.helpers import (
     generate_context,
     preprocess_arr_result,
