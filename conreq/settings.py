@@ -38,8 +38,10 @@ def get_bool_from_env(name, default_value):
 # Environment Variables
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = get_bool_from_env("DEBUG", True)
-DB_ENGINE = get_bool_from_env("DB_ENGINE", "")
-MYSQL_CONFIG_FILE = get_bool_from_env("MYSQL_CONFIG_FILE", "")
+DB_ENGINE = os.environ.get("DB_ENGINE", "")
+MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", True)
 
 # Logging for the settings configuration
 __logger = log.get_logger("conreq.settings")
@@ -64,15 +66,8 @@ if not DATA_DIR:
 # Security related settings
 if DEBUG:
     SECRET_KEY = "v34586n97tmnuyic4grq7834578gnc4t538475cytwzuoyh2367twgytugser12937fd"
-else:
-    # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = os.environ.get("SECRET_KEY")
-if not SECRET_KEY:
-    log.handler(
-        "SECRET_KEY not configured, using a random temporary key.",
-        log.WARNING,
-        __logger,
-    )
+
+elif USE_ROLLING_SECRET_KEY or not SECRET_KEY:
     SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = ["*"]
