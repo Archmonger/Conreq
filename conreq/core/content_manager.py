@@ -68,7 +68,9 @@ class ContentManager:
                 )
 
                 # Find our TMDB ID within Radarr
-                if results.__contains__(str(kwargs["tmdb_id"])):
+                if isinstance(results, dict) and results.__contains__(
+                    str(kwargs["tmdb_id"])
+                ):
                     return results[str(kwargs["tmdb_id"])]
 
                 # Return None if couldn't find the movie
