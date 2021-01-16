@@ -29,6 +29,7 @@
                     {{sign_out}}</a>
             </div>
 
+            {% if user.is_staff %}
             <a class="nav-tab group admin nav-link" data-toggle="collapse" data-target="#admin-tabs"
                 aria-expanded="true" aria-controls="admin-tabs">
                 {{admin}} <i id="admin-fa" class="fas fa-angle-up"></i></a>
@@ -44,6 +45,7 @@
                 <a href="#{% url 'settings:server' %}" class="nav-tab suboption admin">
                     {{server_settings}}</a>
             </div>
+            {% endif %}
 
         </div>
     </div>
