@@ -2,7 +2,7 @@ wheel
 Twisted[tls,http2]==20.3.0
 pyarr==0.9.4
 requests==2.25.0
-tmdbsimple==2.7.0
+tmdbsimple==2.6.0
 strsim==0.0.3
 django==3.1.5
 diskcache==5.1.0
