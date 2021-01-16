@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import ast
+import json
 import os
+import secrets
 
 from django.core.management.utils import get_random_secret_key
 
@@ -67,9 +69,28 @@ elif USE_ROLLING_SECRET_KEY or not SECRET_KEY:
 
 ALLOWED_HOSTS = ["*"]
 
-FIELD_ENCRYPTION_KEYS = [
-    "f164ec6bd6fbc4aef5647abc15199da0f9badcc1d2127bde2087ae0d794a9a0b"
-]
+
+# Database Encryption Key
+conreq_config_file = os.path.join(DATA_DIR, "config.json")
+if not os.path.exists(conreq_config_file):
+    # Create the file if it doesn't exist
+    with open(conreq_config_file, "w") as file:
+        file.write("{}")
+
+with open(conreq_config_file, "r+") as file:
+    # Read the file and create a new key if needed
+    config = json.load(file)
+    if (
+        isinstance(config, dict)
+        and config.__contains__("DB_ENCRYPTION_KEY")
+        and config["DB_ENCRYPTION_KEY"] is not None
+        and config["DB_ENCRYPTION_KEY"] != ""
+    ):
+        FIELD_ENCRYPTION_KEYS = [config["DB_ENCRYPTION_KEY"]]
+    else:
+        FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
+        file.seek(0)
+        file.write(json.dumps({"DB_ENCRYPTION_KEY": FIELD_ENCRYPTION_KEYS[0]}))
 
 
 # Application Settings
@@ -186,7 +207,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_REDIRECT_URL = "homepage:index"
-LOGIN_URL = "/signin/"
+LOGIN_URL = "signin"
 
 
 # Internationalization

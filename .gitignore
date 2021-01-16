@@ -3,11 +3,13 @@ logs
 *.log
 *.pot
 *.pyc
+.dccache
 __pycache__
 db.sqlite3
 media
 cache
 static-deploy
+config.json
 
 # Backup files #
 *.bak
@@ -119,7 +121,3 @@ GitHub.sublime-settings
 .vscode/extensions.json
 .history
 %SystemDrive%
-
-# Custom
-credentials.json
-.dccache
