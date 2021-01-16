@@ -175,7 +175,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         response = {"command_name": "server settings", "success": True}
 
         # Validate user is admin before changing settings
-        if self.scope["user"].is_superuser:
+        if self.scope["user"].is_staff:
             try:
                 # Basic Configuration
                 if content["parameters"]["setting_name"] == "Conreq Application Name":
