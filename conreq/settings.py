@@ -138,7 +138,7 @@ INSTALLED_APPS = [
     "conreq.apps.discover",
     "conreq.apps.more_info",
     "conreq.apps.search",
-    "conreq.apps.settings",
+    "conreq.apps.server_settings",
     "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB

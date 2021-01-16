@@ -1,7 +1,7 @@
 {% load solo_tags %}
 {% load djversion_tags %}
 {% load static %}
-{% get_solo 'settings.ConreqConfig' as server_settings %}
+{% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% project_version as VERSION %}
 
 {% include "primary/loading_animation.html" %}

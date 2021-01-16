@@ -8,7 +8,7 @@ from django.template import loader
 
 # Create your views here.
 @login_required
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def server_settings(request):
     template = loader.get_template("viewport/server_settings.html")
 

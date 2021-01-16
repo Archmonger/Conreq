@@ -5,7 +5,7 @@ from django.core.management.utils import get_random_secret_key
 from htmlmin.minify import html_minify
 
 from conreq.apps.more_info.views import series_modal
-from conreq.apps.settings.models import ConreqConfig
+from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 

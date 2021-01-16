@@ -3,7 +3,7 @@
 from math import floor, log10
 from threading import Thread
 
-from conreq.apps.settings.models import ConreqConfig
+from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core import cache, log
 from conreq.core.generic_tools import clean_string
 from conreq.core.thread_helper import ReturnThread

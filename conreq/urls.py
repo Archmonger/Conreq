@@ -35,6 +35,6 @@ urlpatterns = [
     path("discover/", include("conreq.apps.discover.urls")),
     path("more_info/", include("conreq.apps.more_info.urls")),
     path("search/", include("conreq.apps.search.urls")),
-    path("settings/", include("conreq.apps.settings.urls")),
+    path("settings/", include("conreq.apps.server_settings.urls")),
     path("", include("conreq.apps.homepage.urls")),
 ]

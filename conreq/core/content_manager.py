@@ -3,7 +3,7 @@
 from threading import Thread
 from time import sleep
 
-from conreq.apps.settings.models import ConreqConfig
+from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core import cache, log
 from PyArr import RadarrAPI, SonarrAPI
 
