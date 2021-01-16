@@ -43,8 +43,7 @@ def get_bool_from_env(name, default_value):
 DEBUG = get_bool_from_env("DEBUG", True)
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
-SECRET_KEY = os.environ.get("SECRET_KEY")
-USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", True)
+USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", not DEBUG)
 
 
 # Logging
@@ -61,25 +60,27 @@ if not DATA_DIR:
 
 
 # Security Settings
-if DEBUG:
-    SECRET_KEY = "v34586n97tmnuyic4grq7834578gnc4t538475cytwzuoyh2367twgytugser12937fd"
-
-elif USE_ROLLING_SECRET_KEY or not SECRET_KEY:
+if USE_ROLLING_SECRET_KEY:
     SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = ["*"]
 
 
-# Database Encryption Key
+# Encryption Keys
 conreq_settings_file = os.path.join(DATA_DIR, "settings.json")
+file_update_needed = False
+file_contents = {}
+
+# Create the file if it doesn't exist
 if not os.path.exists(conreq_settings_file):
-    # Create the file if it doesn't exist
     with open(conreq_settings_file, "w") as file:
         file.write("{}")
 
+# Read the file
 with open(conreq_settings_file, "r+") as file:
-    # Read the file and create a new key if needed
     config = json.load(file)
+
+    # Check for DB Encryption Key
     if (
         isinstance(config, dict)
         and config.__contains__("DB_ENCRYPTION_KEY")
@@ -87,10 +88,36 @@ with open(conreq_settings_file, "r+") as file:
         and config["DB_ENCRYPTION_KEY"] != ""
     ):
         FIELD_ENCRYPTION_KEYS = [config["DB_ENCRYPTION_KEY"]]
+        file_contents["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS
+
+    # A new DB Encryption Key is needed
     else:
         FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
-        file.seek(0)
-        file.write(json.dumps({"DB_ENCRYPTION_KEY": FIELD_ENCRYPTION_KEYS[0]}))
+        file_contents["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS[0]
+        file_update_needed = True
+
+    # Check for Secret Key
+    if (
+        isinstance(config, dict)
+        and config.__contains__("SECRET_KEY")
+        and config["SECRET_KEY"] is not None
+        and config["SECRET_KEY"] != ""
+        and not USE_ROLLING_SECRET_KEY
+    ):
+        SECRET_KEY = config["SECRET_KEY"]
+        file_contents["DB_ENCRYPTION_KEY"] = SECRET_KEY
+
+    # A new Secret Key is needed
+    elif not USE_ROLLING_SECRET_KEY:
+        SECRET_KEY = get_random_secret_key()
+        file_contents["SECRET_KEY"] = SECRET_KEY
+        file_update_needed = True
+
+# Save the new file if needed
+if file_update_needed:
+    with open(conreq_settings_file, "w") as file:
+        print("Updating settings.json to ", file_contents)
+        file.write(json.dumps(file_contents))
 
 
 # Application Settings
