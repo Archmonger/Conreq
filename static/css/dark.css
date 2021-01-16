@@ -35,7 +35,7 @@ body {
     color: rgb(255 255 255 / 0.75);
 }
 
-.nav-tab.group{
+.nav-tab.group, .nav-tab.group.collapsed:last-of-type[aria-expanded="false"]{
     border-color: rgb(255 255 255 / 0.1);
 }
 

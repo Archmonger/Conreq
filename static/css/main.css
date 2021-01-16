@@ -433,8 +433,8 @@ button:focus {
     transform: rotate(180deg);
 }
 
-.all-tab-groups .nav-tab.group:last-of-type {
-    border-bottom: var(--navpages-button-border) !important;
+.nav-tab.group.collapsed:last-of-type[aria-expanded="false"] {
+    border-bottom: var(--navpages-button-border);
 }
 
 .nav-tab.group .fas {
