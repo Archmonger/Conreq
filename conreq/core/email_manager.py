@@ -106,26 +106,26 @@ class EmailManager:
 
 
 # Test driver code
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    email_manager = EmailManager(
-        sender_name="My Name",
-        sender_email="example@gmail.com",
-        sender_password="password",
-        smtp_server_url="smtp.gmail.com",
-        smtp_server_port="587",
-    )
-    email_manager.send_email(
-        "receiver@gmail.com",
-        open("template_1.html", "r").read(),
-        content_name="Avengers: End Game",
-        content_type="movie",
-        content_description="After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.",
-        server_name="PlexyFlix",
-        server_message="Come check it out on our website!",
-        poster_img_url="https://image.tmdb.org/t/p/w600_and_h900_bestv2/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
-        watch_now_href="#",
-        server_href="#",
-        notifications_href="#",
-        unsubscribe_href="#",
-    )
+#     email_manager = EmailManager(
+#         sender_name="My Name",
+#         sender_email="example@gmail.com",
+#         sender_password="password",
+#         smtp_server_url="smtp.gmail.com",
+#         smtp_server_port="587",
+#     )
+#     email_manager.send_email(
+#         "receiver@gmail.com",
+#         open("template_1.html", "r").read(),
+#         content_name="Avengers: End Game",
+#         content_type="movie",
+#         content_description="After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.",
+#         server_name="PlexyFlix",
+#         server_message="Come check it out on our website!",
+#         poster_img_url="https://image.tmdb.org/t/p/w600_and_h900_bestv2/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+#         watch_now_href="#",
+#         server_href="#",
+#         notifications_href="#",
+#         unsubscribe_href="#",
+#     )
