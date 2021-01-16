@@ -9,7 +9,7 @@ class ConreqConfig(SingletonModel):
     conreq_api_key = models.CharField(max_length=100, default="")
     conreq_secret_key = models.CharField(max_length=100, default="")
     conreq_base_url = models.CharField(max_length=100, default="")
-    conreq_app_name = models.CharField(max_length=100, default="")
+    conreq_app_name = models.CharField(max_length=100, default="Conreq")
     conreq_language = models.CharField(max_length=100, default="")
     conreq_app_logo = models.ImageField()
     conreq_app_url = models.URLField(default="")
