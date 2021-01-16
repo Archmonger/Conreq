@@ -25,7 +25,7 @@ class ConreqConfig(SingletonModel):
     sonarr_anime_folder = models.FilePathField(default="")
     sonarr_tv_quality_profile = models.PositiveIntegerField(default=1)
     sonarr_tv_folder = models.FilePathField(default="")
-    sonarr_enabled = models.BooleanField(default=True)
+    sonarr_enabled = models.BooleanField(default=False)
     sonarr_season_folders = models.BooleanField(default=True)
 
     # Radarr Settings
@@ -35,7 +35,7 @@ class ConreqConfig(SingletonModel):
     radarr_anime_folder = models.FilePathField(default="")
     radarr_movies_quality_profile = models.PositiveIntegerField(default=1)
     radarr_movies_folder = models.FilePathField(default="")
-    radarr_enabled = models.BooleanField(default=True)
+    radarr_enabled = models.BooleanField(default=False)
 
     # Email settings
     email_smtp_server = models.URLField(default="")
