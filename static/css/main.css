@@ -117,6 +117,16 @@ a:hover {
 
 .empty-viewport{
     text-align: center;
+    min-width: -webkit-fit-content;
+    min-width: -moz-fit-content;
+    min-width: fit-content;
+    width: 30%;
+    max-width: 100%;
+    margin: auto;
+    margin-top: 10px;
+    padding: 40px;
+    border-radius: 6px;
+    box-shadow: var(--box-shadow);
 }
 
 .bold {
