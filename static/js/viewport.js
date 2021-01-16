@@ -111,7 +111,7 @@ let add_event_listeners = function () {
       previous_admin_settings[setting_name] = current_value;
     }
   });
-  $(".settings-item.toggler.admin").change(function (e) {
+  $(".toggler .settings-item.admin").change(function (e) {
     let setting_name = $(this).data("setting-name");
     let current_value = $(this).children("input").is(":checked");
     change_server_setting(setting_name, current_value);

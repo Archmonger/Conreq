@@ -1,150 +1,173 @@
+@media only screen and (max-width: 1250px) {
+  /*  Settings Menu    */
+  .settings-input-group {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
 @media only screen and (max-width: 1150px) {
-     :root {
-        /* Videos */
-        --video-height: calc(var(--video-width) * 0.5625) !important;
-        --video-width: 30vw !important;
-        /* Artwork */
-        --artwork-height: calc(var(--video-width) * 0.5625) !important;
-        --artwork-width: 30vw !important;
-    }
+  :root {
+    /* Videos */
+    --video-height: calc(var(--video-width) * 0.5625) !important;
+    --video-width: 30vw !important;
+    /* Artwork */
+    --artwork-height: calc(var(--video-width) * 0.5625) !important;
+    --artwork-width: 30vw !important;
+  }
 }
 
 @media only screen and (max-width: 880px) {
-     :root {
-        /* More Info Grid */
-        --left-column-width: 175px !important;
-    }
+  :root {
+    /* More Info Grid */
+    --left-column-width: 175px !important;
+  }
 }
 
 @media only screen and (max-width: 800px) {
-     :root {
-        /* Sidebar */
-        --sidebar-width: 100% !important;
-        --sidebar-top: 0 !important;
-        /* Navbar */
-        --searchbar-width: 70% !important;
-        /* Viewport */
-        --viewport-left: 0 !important;
-        --viewport-padding: 15px !important;
-        /* Posters */
-        --poster-width: calc( (100vw - (var(--poster-padding) * 3) - (var(--viewport-total-padding) * 2)) / 4) !important;
-        /* Videos */
-        --video-height: calc(var(--video-width) * 0.5625) !important;
-        --video-width: 70vw !important;
-        /* Artwork */
-        --artwork-height: calc(var(--video-width) * 0.5625) !important;
-        --artwork-width: 70vw !important;
-    }
-     ::-webkit-scrollbar {
-        display: none !important;
-    }
-    .navbar {
-        z-index: 100 !important;
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        justify-content: space-between !important;
-    }
-    .navbar-brand-container {
-        display: none !important;
-    }
-    .searchbar {
-        left: 0px !important;
-        position: relative !important;
-        margin: auto 0 !important;
-    }
-    .username-container {
-        margin: calc((var(--navbar-height) - 35px)/2) 0 !important;
-        position: relative !important;
-        padding-right: 0 !important;
-        color: rgba(255, 255, 255, .75) !important;
-    }
-    .sidebar {
-        top: var(--navbar-height) !important;
-        z-index: 9999 !important;
-        transition: height 0.4s ease-in;
-    }
-    .viewport-container,
-    .viewport-loader {
-        z-index: 4 !important;
-        width: 100vw !important;
-    }
-    .navbar .navbar-toggler {
-        display: inline-block !important;
-        border: none !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        background: none !important;
-    }
-    .navbar .username.full-name {
-        display: none !important;
-    }
-    .navbar .username.first-letter {
-        display: inline-block !important;
-    }
-    .navbar .username-container {
-        border-radius: 50% !important;
-        background: var(--accent-color) !important;
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 35px !important;
-        height: 35px !important;
-    }
-    .username-container .fa-caret-down {
-        padding-left: 2px !important;
-    }
-    .navpages-tab.suboption {
-        padding-top: 20px !important;
-        padding-bottom: 20px !important;
-    }
-    /* More Info */
-    .more-info-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        width: calc(100vw - var(--viewport-padding) * 2) !important;
-    }
-    .more-info-poster-container {
-        margin: 0 auto !important;
-        width: 55vw !important;
-    }
-    .more-info-poster-container img {
-        height: calc(55vw * 1.5) !important;
-    }
-    .more-info-grid .request-button {
-        position: fixed !important;
-        bottom: 20px !important;
-        right: 20px !important;
-        z-index: 999 !important;
-        border-radius: 500px !important;
-    }
-    .tns-controls {
-        display: none !important;
-    }
-    .main-title,
-    .main-rating {
-        display: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    .more-info-main-info {
-        height: 0 !important;
-    }
-    .more-info {
-        margin-bottom: 80px !important;
-    }
+  :root {
+    /* Sidebar */
+    --sidebar-width: 100% !important;
+    --sidebar-top: 0 !important;
+    /* Navbar */
+    --searchbar-width: 70% !important;
+    /* Viewport */
+    --viewport-left: 0 !important;
+    --viewport-padding: 15px !important;
+    /* Posters */
+    --poster-width: calc(
+      (
+          100vw - (var(--poster-padding) * 3) -
+            (var(--viewport-total-padding) * 2)
+        ) / 4
+    ) !important;
+    /* Videos */
+    --video-height: calc(var(--video-width) * 0.5625) !important;
+    --video-width: 70vw !important;
+    /* Artwork */
+    --artwork-height: calc(var(--video-width) * 0.5625) !important;
+    --artwork-width: 70vw !important;
+  }
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+  .navbar {
+    z-index: 100 !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+  }
+  .navbar-brand-container {
+    display: none !important;
+  }
+  .searchbar {
+    left: 0px !important;
+    position: relative !important;
+    margin: auto 0 !important;
+  }
+  .username-container {
+    margin: calc((var(--navbar-height) - 35px) / 2) 0 !important;
+    position: relative !important;
+    padding-right: 0 !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+  }
+  .sidebar {
+    top: var(--navbar-height) !important;
+    z-index: 9999 !important;
+    transition: height 0.4s ease-in;
+  }
+  .viewport-container,
+  .viewport-loader {
+    z-index: 4 !important;
+    width: 100vw !important;
+  }
+  .navbar .navbar-toggler {
+    display: inline-block !important;
+    border: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    background: none !important;
+  }
+  .navbar .username.full-name {
+    display: none !important;
+  }
+  .navbar .username.first-letter {
+    display: inline-block !important;
+  }
+  .navbar .username-container {
+    border-radius: 50% !important;
+    background: var(--accent-color) !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 35px !important;
+    height: 35px !important;
+  }
+  .username-container .fa-caret-down {
+    padding-left: 2px !important;
+  }
+  .navpages-tab.suboption {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  /* More Info */
+  .more-info-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: calc(100vw - var(--viewport-padding) * 2) !important;
+  }
+  .more-info-poster-container {
+    margin: 0 auto !important;
+    width: 55vw !important;
+  }
+  .more-info-poster-container img {
+    height: calc(55vw * 1.5) !important;
+  }
+  .more-info-grid .request-button {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 999 !important;
+    border-radius: 500px !important;
+  }
+  .tns-controls {
+    display: none !important;
+  }
+  .main-title,
+  .main-rating {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .more-info-main-info {
+    height: 0 !important;
+  }
+  .more-info {
+    margin-bottom: 80px !important;
+  }
+  /*  Settings Menu    */
+  .settings-input-group {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media only screen and (max-width: 600px) {
-     :root {
-        /* Posters */
-        --poster-width: calc( (100vw - (var(--poster-padding) * 2) - (var(--viewport-total-padding) * 2)) / 3) !important;
-    }
+  :root {
+    /* Posters */
+    --poster-width: calc(
+      (
+          100vw - (var(--poster-padding) * 2) -
+            (var(--viewport-total-padding) * 2)
+        ) / 3
+    ) !important;
+  }
 }
 
 @media only screen and (max-width: 450px) {
-     :root {
-        /* Posters */
-        --poster-width: calc( (100vw - var(--poster-padding) - (var(--viewport-total-padding) * 2)) / 2) !important;
-    }
+  :root {
+    /* Posters */
+    --poster-width: calc(
+      (100vw - var(--poster-padding) - (var(--viewport-total-padding) * 2)) / 2
+    ) !important;
+  }
 }

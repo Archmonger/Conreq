@@ -6,22 +6,6 @@
 
 {% include "primary/loading_animation.html" %}
 <div class="viewport viewport-settings" data-aos="fade-zoom-in" data-aos-duration="1500">
-    <div class="settings-group">
-        <div class="settings-group-title bold">About Conreq</div>
-        <div class="settings-input-group">
-            <div class="settings-item-group info">
-                <div class="settings-item-title line-clamp-1 info">System Information</div>
-                <div class="settings-item-details info">{{ os_platform }}</div>
-            </div>
-            <div class="settings-item-group info">
-                <div class="settings-item-title line-clamp-1 info">Current Git Commit</div>
-                <div class="settings-item-details info">{{ VERSION }}</div>
-            </div>
-            <div class="conreq-button check-update-button box-shadow no-highlighting">
-                Check for Updates
-            </div>
-        </div>
-    </div>
 
     <div class="settings-group">
         <div class="settings-group-title bold">Basic Configuration</div>
@@ -92,8 +76,8 @@
             </div>
         </div>
         <div class="settings-input-group">
-            <div class="settings-item-group">
-                <div class="settings-item toggler admin pretty p-switch p-fill"
+            <div class="settings-item-group toggler">
+                <div class="settings-item admin pretty p-switch p-fill"
                     data-setting-name="Conreq Automatically Resolve Issues">
                     <input type="checkbox" {% if server_settings.conreq_auto_resolve_issues %} checked {% endif %} />
                     <div class="state">
@@ -101,8 +85,8 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="settings-item-group">
-                <div class="settings-item toggler admin pretty p-switch p-fill"
+            <!-- <div class="settings-item-group toggler">
+                <div class="settings-item admin pretty p-switch p-fill"
                     data-setting-name="Conreq Allow Guest Login/Requests">
                     <input type="checkbox" {% if server_settings.conreq_guest_login %} checked {% endif %} />
                     <div class="state">
@@ -110,8 +94,8 @@
                     </div>
                 </div>
             </div> -->
-            <div class="settings-item-group">
-                <div class="settings-item toggler admin pretty p-switch p-fill"
+            <div class="settings-item-group toggler">
+                <div class="settings-item admin pretty p-switch p-fill"
                     data-setting-name="Conreq Simple/Minimal Poster Cards">
                     <input type="checkbox" {% if server_settings.conreq_simple_posters %} checked {% endif %} />
                     <div class="state">
@@ -119,8 +103,8 @@
                     </div>
                 </div>
             </div>
-            <div class="settings-item-group">
-                <div class="settings-item toggler admin pretty p-switch p-fill" data-setting-name="Conreq Dark Theme">
+            <div class="settings-item-group toggler">
+                <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Conreq Dark Theme">
                     <input type="checkbox" {% if server_settings.conreq_dark_theme %} checked {% endif %} />
                     <div class="state">
                         <label>Dark Theme</label>
@@ -187,17 +171,16 @@
             </div>
         </div>
         <div class="settings-input-group">
-            <div class="settings-item-group">
-                <div class="settings-item toggler admin pretty p-switch p-fill" data-setting-name="Enable Sonarr">
+            <div class="settings-item-group toggler">
+                <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Enable Sonarr">
                     <input type="checkbox" {% if server_settings.sonarr_enabled %} checked {% endif %} />
                     <div class="state">
                         <label>Enable Sonarr</label>
                     </div>
                 </div>
             </div>
-            <div class="settings-item-group">
-                <div class="settings-item toggler admin pretty p-switch p-fill"
-                    data-setting-name="Sonarr Season Folders">
+            <div class="settings-item-group toggler">
+                <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Sonarr Season Folders">
                     <input type="checkbox" {% if server_settings.sonarr_season_folders %} checked {% endif %} />
                     <div class="state">
                         <label>Season Folders</label>
@@ -264,14 +247,31 @@
                 </div>
             </div>
             <div class="settings-input-group">
-                <div class="settings-item-group">
-                    <div class="settings-item toggler admin pretty p-switch p-fill" data-setting-name="Enable Radarr">
+                <div class="settings-item-group toggler">
+                    <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Enable Radarr">
                         <input type="checkbox" {% if server_settings.radarr_enabled %} checked {% endif %} />
                         <div class="state">
                             <label>Enable Radarr</label>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-group">
+        <div class="settings-group-title bold">About Conreq</div>
+        <div class="settings-input-group">
+            <div class="settings-item-group info">
+                <div class="settings-item-title line-clamp-1 info">System Information</div>
+                <div class="settings-item-details info">{{ os_platform }}</div>
+            </div>
+            <div class="settings-item-group info">
+                <div class="settings-item-title line-clamp-1 info">Current Git Commit</div>
+                <div class="settings-item-details info">{{ VERSION }}</div>
+            </div>
+            <div class="conreq-button check-update-button box-shadow no-highlighting">
+                Check for Updates
             </div>
         </div>
     </div>
