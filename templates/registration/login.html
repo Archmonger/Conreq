@@ -1,10 +1,12 @@
 {% load static %}
+{% load solo_tags %}
+{% get_solo 'settings.ConreqConfig' as server_settings %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8"> {% load static %}
-    <title>Conreq</title>
+    <title>{{ server_settings.conreq_app_name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Preconnections -->
