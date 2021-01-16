@@ -66,7 +66,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
     # COMMAND RESPONSE: REQUEST CONTENT
     async def __request_content(self, content):
-        content_manager = ContentManager()
+        content_manager = await database_sync_to_async(ContentManager)()
         content_discovery = ContentDiscovery()
 
         # TV show was requested
@@ -154,7 +154,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         ):
             # Episode modal
             if content["parameters"]["modal_type"] == "episode selector":
-                response["html"] = series_modal(
+                response["html"] = await database_sync_to_async(series_modal)(
                     tmdb_id=content["parameters"]["tmdb_id"],
                     tvdb_id=content["parameters"]["tvdb_id"],
                 )
