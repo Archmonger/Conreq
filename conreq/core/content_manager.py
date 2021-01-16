@@ -22,16 +22,16 @@ class ContentManager:
     """
 
     def __init__(self, periodic_refresh=False):
-        # Initialized values
-        conreq_config = ConreqConfig.get_solo()
-        self.__sonarr_url = conreq_config.sonarr_url
-        self.__sonarr_api_key = conreq_config.sonarr_api_key
-        self.__radarr_url = conreq_config.radarr_url
-        self.__radarr_api_key = conreq_config.radarr_api_key
+        # Database values
+        self.conreq_config = ConreqConfig.get_solo()
 
         # Connections to Sonarr and Radarr
-        self.__sonarr = SonarrAPI(self.__sonarr_url, self.__sonarr_api_key)
-        self.__radarr = RadarrAPI(self.__radarr_url, self.__radarr_api_key)
+        self.__sonarr = SonarrAPI(
+            self.conreq_config.sonarr_url, self.conreq_config.sonarr_api_key
+        )
+        self.__radarr = RadarrAPI(
+            self.conreq_config.radarr_url, self.conreq_config.radarr_api_key
+        )
 
         # Creating a logger (for log files)
         self.__logger = log.get_logger("conreq.core.content_manager")
@@ -506,7 +506,7 @@ class ContentManager:
 
     def get_all_radarr_content(self):
         try:
-            if self.__radarr_url and self.__radarr_api_key:
+            if self.conreq_config.radarr_url and self.conreq_config.radarr_api_key:
                 # Get the latest list of Radarr's collection
                 results = self.__radarr.getMovie()
 
@@ -535,7 +535,7 @@ class ContentManager:
 
     def get_all_sonarr_content(self):
         try:
-            if self.__sonarr_url and self.__sonarr_api_key:
+            if self.conreq_config.sonarr_url and self.conreq_config.sonarr_api_key:
                 # Get the latest list of Sonarr's collection
                 results = self.__sonarr.getSeries()
 
