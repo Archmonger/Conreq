@@ -11,15 +11,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <!-- Icons (FontAwesome) -->
-    <link rel="stylesheet" href="{% static 'css/fontawesome_all_5.15.1.min.css' %}" crossorigin="anonymous" />
-    <link rel="preload" href="{% static 'webfonts/fa-solid-900.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{% static 'css/libraries/fontawesome_all_5.15.1.min.css' %}" crossorigin="anonymous" />
+    <link rel="preload" href="{% static 'css/webfonts/fa-solid-900.woff2' %}" as="font" type="font/woff2" crossorigin>
 
     <!-- Notification Popups (izi Toast) -->
-    <link rel="stylesheet" href="{% static 'css/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous" />
-    <script src="{% static 'js/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/libraries/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous" />
+    <script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
 
     <!-- Font (Roboto) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap"
+        crossorigin="anonymous" />
 
     <!-- Static Conreq JS and CSS -->
     <link rel="stylesheet" href="{% static 'css/mobile.css' %}" crossorigin="anonymous" />
@@ -35,8 +36,10 @@
             </div>
             <form method="post" action="{% url 'signin' %}">
                 {% csrf_token %}
-                <input placeholder="username" autocapitalize="none" autocomplete="username" autofocus="" id="id_username" maxlength="150" name="username" required="" type="text">
-                <input placeholder="password" autocapitalize="none" autocomplete="current-password" id="id_password" name="password" required="" type="password">
+                <input placeholder="username" autocapitalize="none" autocomplete="username" autofocus=""
+                    id="id_username" maxlength="150" name="username" required="" type="text">
+                <input placeholder="password" autocapitalize="none" autocomplete="current-password" id="id_password"
+                    name="password" required="" type="password">
                 <input type="submit" value="Sign In">
                 <input type="hidden" name="next" value="{{next}}">
             </form>
