@@ -1,0 +1,44 @@
+:root {
+    --navpages-font-color: rgb(255 255 255 / 0.75); 
+    --grid-object-bg: linear-gradient(90deg, #2a2a2a, hsl(0 0% 12% / 1));
+    --grid-object-font-color: rgb(255 255 255 / 0.75);
+    --poster-bg-color: #191919;
+    }
+
+html {
+    background: #000000;
+    background: var(--navbar-bg);
+}
+
+body {
+    background: linear-gradient(145deg, rgb(29 28 28 / 80%), rgb(36 37 37 / 82%), hsl(0 0% 12% / 1), rgb(0 0 0 / 58%));
+}
+
+.sidebar {
+    background: linear-gradient(90deg, #2a2a2a, hsl(0 0% 12% / 1));
+}
+
+.description-tint {
+    background: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), #191919);
+}
+
+.text-input-container {
+    background: rgb(255 255 255 / 0.08);
+    color: rgb(255 255 255 / 0.75);
+}
+
+.viewport{
+    color: rgb(255 255 255 / 0.75);
+}
+
+.nav-tab.group .fas{
+    color: rgb(255 255 255 / 0.75);
+}
+
+.nav-tab.group{
+    border-color: rgb(255 255 255 / 0.1);
+}
+
+.review{
+    background: var(--poster-bg-color);
+}

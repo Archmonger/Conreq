@@ -92,6 +92,9 @@
 {% if server_settings.conreq_simple_posters %}
 <link rel="stylesheet" href="{% static 'css/simple_posters.css' %}" crossorigin="anonymous">
 {% endif %}
+{% if server_settings.conreq_dark_theme %}
+<link rel="stylesheet" href="{% static 'css/dark.css' %}" crossorigin="anonymous">
+{% endif %}
 <script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>>
