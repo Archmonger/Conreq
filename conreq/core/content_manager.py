@@ -92,7 +92,9 @@ class ContentManager:
                 )
 
                 # Find our TVDB ID within Sonarr
-                if results.__contains__(str(kwargs["tvdb_id"])):
+                if isinstance(results, dict) and results.__contains__(
+                    str(kwargs["tvdb_id"])
+                ):
                     series = results[str(kwargs["tvdb_id"])]
 
                     # Obtain season information if needed
@@ -504,18 +506,25 @@ class ContentManager:
 
     def get_all_radarr_content(self):
         try:
-            # Get the latest list of Radarr's collection
-            results = self.__radarr.getMovie()
+            if self.__radarr_url and self.__radarr_api_key:
+                # Get the latest list of Radarr's collection
+                results = self.__radarr.getMovie()
 
-            # Set up a dictionary of results with IDs as keys
-            results_with_ids = {}
-            for movie in results:
-                if movie.__contains__("tmdbId"):
-                    self.__check_status(movie)
-                    results_with_ids[str(movie["tmdbId"])] = movie
+                # Set up a dictionary of results with IDs as keys
+                results_with_ids = {}
+                for movie in results:
+                    if movie.__contains__("tmdbId"):
+                        self.__check_status(movie)
+                        results_with_ids[str(movie["tmdbId"])] = movie
 
-            # Return all movies
-            return results_with_ids
+                # Return all movies
+                return results_with_ids
+
+            log.handler(
+                "Radarr URL or API key is unset!",
+                log.WARNING,
+                self.__logger,
+            )
 
         except:
             log.handler(
@@ -523,23 +532,29 @@ class ContentManager:
                 log.ERROR,
                 self.__logger,
             )
-            return None
 
     def get_all_sonarr_content(self):
         try:
-            # Get the latest list of Sonarr's collection
-            results = self.__sonarr.getSeries()
+            if self.__sonarr_url and self.__sonarr_api_key:
+                # Get the latest list of Sonarr's collection
+                results = self.__sonarr.getSeries()
 
-            # Set up a dictionary of results with IDs as keys
-            results_with_ids = {}
-            for series in results:
-                if series.__contains__("tvdbId"):
-                    self.__check_status(series)
+                # Set up a dictionary of results with IDs as keys
+                results_with_ids = {}
+                for series in results:
+                    if series.__contains__("tvdbId"):
+                        self.__check_status(series)
 
-                    results_with_ids[str(series["tvdbId"])] = series
+                        results_with_ids[str(series["tvdbId"])] = series
 
-            # Return all movies
-            return results_with_ids
+                # Return all movies
+                return results_with_ids
+
+            log.handler(
+                "Sonarr URL or API key is unset!",
+                log.WARNING,
+                self.__logger,
+            )
 
         except:
             log.handler(
@@ -547,7 +562,6 @@ class ContentManager:
                 log.ERROR,
                 self.__logger,
             )
-            return None
 
     def __season_info_and_status(self, series):
         # Obtain the episodes
@@ -655,61 +669,61 @@ class ContentManager:
         return content
 
 
-if __name__ == "__main__":
-    content_manager = ContentManager(
-        "https://x",
-        "x",
-        "https://x",
-        "x",
-    )
-    # print("\n#### Get Movies Test ####")
-    # pprint(content_manager.get(tmdb_id="tt0114709"))
-    # pprint(content_manager.get(tmdb_id="tt2245084"))
+# if __name__ == "__main__":
+#     content_manager = ContentManager(
+#         "https://x",
+#         "x",
+#         "https://x",
+#         "x",
+#     )
+# print("\n#### Get Movies Test ####")
+# pprint(content_manager.get(tmdb_id="tt0114709"))
+# pprint(content_manager.get(tmdb_id="tt2245084"))
 
-    # print("\n#### Get TV Test ####")
-    # pprint(content_manager.get(tvdb_id=373345))
-    # pprint(content_manager.get(tvdb_id=305074))
+# print("\n#### Get TV Test ####")
+# pprint(content_manager.get(tvdb_id=373345))
+# pprint(content_manager.get(tvdb_id=305074))
 
-    # print("\n#### Sonarr Quality Profiles Test ####")
-    # pprint(content_manager.sonarr_quality_profiles())
-    # print("\n#### Radarr Quality Profiles Test ####")
-    # pprint(content_manager.radarr_quality_profiles())
+# print("\n#### Sonarr Quality Profiles Test ####")
+# pprint(content_manager.sonarr_quality_profiles())
+# print("\n#### Radarr Quality Profiles Test ####")
+# pprint(content_manager.radarr_quality_profiles())
 
-    # print("\n#### Sonarr Root Dirs Test ####")
-    # pprint(content_manager.sonarr_root_dirs())
-    # print("\n#### Radarr Root Dirs Test ####")
-    # pprint(content_manager.radarr_root_dirs())
+# print("\n#### Sonarr Root Dirs Test ####")
+# pprint(content_manager.sonarr_root_dirs())
+# print("\n#### Radarr Root Dirs Test ####")
+# pprint(content_manager.radarr_root_dirs())
 
-    # print("\n#### Add Movie Test ####")
-    # radarr_root = content_manager.radarr_root_dirs()[0]["path"]
-    # pprint(
-    #     content_manager.add(
-    #         tmdb_id="tt1979376", quality_profile_id=1, root_dir=radarr_root
-    #     )
-    # )
+# print("\n#### Add Movie Test ####")
+# radarr_root = content_manager.radarr_root_dirs()[0]["path"]
+# pprint(
+#     content_manager.add(
+#         tmdb_id="tt1979376", quality_profile_id=1, root_dir=radarr_root
+#     )
+# )
 
-    # print("\n#### Add Anime Test ####")
-    # sonarr_root = content_manager.sonarr_root_dirs()[0]["path"]
-    # pprint(
-    #     content_manager.add(
-    #         tvdb_id="83277",
-    #         series_type="Anime",
-    #         quality_profile_id=1,
-    #         root_dir=sonarr_root,
-    #     )
-    # )
+# print("\n#### Add Anime Test ####")
+# sonarr_root = content_manager.sonarr_root_dirs()[0]["path"]
+# pprint(
+#     content_manager.add(
+#         tvdb_id="83277",
+#         series_type="Anime",
+#         quality_profile_id=1,
+#         root_dir=sonarr_root,
+#     )
+# )
 
-    # print("\n#### Request TV Test ####")
-    # pprint(content_manager.request(sonarr_id=30, episode_ids=[4635]))
-    # pprint(content_manager.request(sonarr_id=30))
-    # pprint(content_manager.request(sonarr_id=30, seasons=[1]))
+# print("\n#### Request TV Test ####")
+# pprint(content_manager.request(sonarr_id=30, episode_ids=[4635]))
+# pprint(content_manager.request(sonarr_id=30))
+# pprint(content_manager.request(sonarr_id=30, seasons=[1]))
 
-    # print("\n#### Request Movies Test ####")
-    # pprint(content_manager.request(radarr_id=4))
+# print("\n#### Request Movies Test ####")
+# pprint(content_manager.request(radarr_id=4))
 
-    # print("\n#### Redownload Movies Test")
-    # pprint(content_manager.redownload(radarr_id=4))
+# print("\n#### Redownload Movies Test")
+# pprint(content_manager.redownload(radarr_id=4))
 
-    # print("\n#### Delete Test ####")
-    # pprint(content_manager.delete(episode_file_ids=["210"]))
-    # pprint(content_manager.delete(radarr_id=3))
+# print("\n#### Delete Test ####")
+# pprint(content_manager.delete(episode_file_ids=["210"]))
+# pprint(content_manager.delete(radarr_id=3))

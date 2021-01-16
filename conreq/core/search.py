@@ -69,6 +69,7 @@ class Search:
 
             # Sort the results with our conreq ranking algorithm
             return self.__set_conreq_rank(query, results_list[0] + results_list[1])
+
         except:
             log.handler(
                 "Searching for all failed!",
@@ -85,19 +86,27 @@ class Search:
             conreq_rank: Calculate conreq similarity ranking and sort the results (True/False)
         """
         try:
+            if self.__sonarr_url and self.__sonarr_api_key:
+                log.handler(
+                    "Searching for " + query + " (TV)",
+                    log.INFO,
+                    self.__logger,
+                )
+
+                return cache.handler(
+                    "sonarr search cache",
+                    function=self.__television,
+                    page_key=query,
+                    query=query,
+                    cache_duration=SEARCH_CACHE_TIMEOUT,
+                )
+
             log.handler(
-                "Searching for " + query + " (TV)",
-                log.INFO,
+                "Sonarr URL or API key is unset!",
+                log.WARNING,
                 self.__logger,
             )
-
-            return cache.handler(
-                "sonarr search cache",
-                function=self.__television,
-                page_key=query,
-                query=query,
-                cache_duration=SEARCH_CACHE_TIMEOUT,
-            )
+            return []
 
         except:
             log.handler(
@@ -114,19 +123,27 @@ class Search:
             query: A string containing a search term.
         """
         try:
+            if self.__radarr_url and self.__radarr_api_key:
+                log.handler(
+                    "Searching for " + query + " (MOVIE)",
+                    log.INFO,
+                    self.__logger,
+                )
+
+                return cache.handler(
+                    "radarr search cache",
+                    function=self.__movie,
+                    page_key=query,
+                    query=query,
+                    cache_duration=SEARCH_CACHE_TIMEOUT,
+                )
+
             log.handler(
-                "Searching for " + query + " (MOVIE)",
-                log.INFO,
+                "Radarr URL or API key is unset!",
+                log.WARNING,
                 self.__logger,
             )
-
-            return cache.handler(
-                "radarr search cache",
-                function=self.__movie,
-                page_key=query,
-                query=query,
-                cache_duration=SEARCH_CACHE_TIMEOUT,
-            )
+            return []
 
         except:
             log.handler(
