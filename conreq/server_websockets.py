@@ -177,10 +177,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         # TODO: Validate user is admin before changing settings
         try:
             # Basic Configuration
-            if content["parameters"]["setting_name"] == "Conreq Base URL":
-                conreq_config.conreq_base_url = content["parameters"]["value"]
-
-            elif content["parameters"]["setting_name"] == "Conreq Application Name":
+            if content["parameters"]["setting_name"] == "Conreq Application Name":
                 conreq_config.conreq_app_name = content["parameters"]["value"]
 
             elif (
