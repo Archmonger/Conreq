@@ -1,9 +1,10 @@
 {% load static %}
-<div id="sidebar" class="sidebar no-highlighting collapse" data-aos="fade-right" data-aos-duration="1000">
+<div id="sidebar" class="sidebar no-highlighting collapsed" data-aos="fade-right" data-aos-duration="1000">
     <div id="navpages" class="navpages">
         <div id="all-tab-groups" class="all-tab-groups">
 
-            <a class="nav-tab group discover nav-link" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">
+            <a class="nav-tab group discover nav-link" data-toggle="collapse" data-target="#discover-tabs"
+                aria-expanded="true" aria-controls="discover-tabs">
                 {{discover}} <i id="discover-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="discover-tabs">
                 <a href="#{% url 'discover:all' %}" class="nav-tab suboption discover">
@@ -14,7 +15,8 @@
                     {{movies}} <i class="fas fa-filter"></i></a>
             </div>
 
-            <a class="nav-tab group user nav-link" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true" aria-controls="user-tabs">
+            <a class="nav-tab group user nav-link" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true"
+                aria-controls="user-tabs">
                 {{user_options}} <i id="user-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="user-tabs">
                 <a href="#" class="nav-tab suboption user">
@@ -27,7 +29,8 @@
                     {{sign_out}}</a>
             </div>
 
-            <a class="nav-tab group admin nav-link" data-toggle="collapse" data-target="#admin-tabs" aria-expanded="true" aria-controls="admin-tabs">
+            <a class="nav-tab group admin nav-link" data-toggle="collapse" data-target="#admin-tabs"
+                aria-expanded="true" aria-controls="admin-tabs">
                 {{admin}} <i id="admin-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="admin-tabs">
                 <a href="#" class="nav-tab suboption admin">

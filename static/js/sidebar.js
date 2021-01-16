@@ -1,7 +1,13 @@
 new SimpleBar($("#sidebar")[0]);
 
-$(".nav-tab.suboption").each(function () {
+$(".nav-tab.suboption, .navbar-toggler").each(function () {
   $(this).click(function () {
-    $("#sidebar").collapse("hide");
+    if (window.matchMedia("(max-width: 800px)").matches) {
+      if ($("#sidebar").hasClass("collapsed")) {
+        $("#sidebar").removeClass("collapsed");
+      } else {
+        $("#sidebar").addClass("collapsed");
+      }
+    }
   });
 });

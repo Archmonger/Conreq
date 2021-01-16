@@ -75,6 +75,9 @@
     z-index: 9999 !important;
     transition: height 0.4s ease-in;
   }
+  .sidebar.collapsed {
+    display: none;
+  }
   .viewport-container,
   .viewport-loader {
     z-index: 4 !important;
