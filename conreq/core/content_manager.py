@@ -506,25 +506,26 @@ class ContentManager:
 
     def get_all_radarr_content(self):
         try:
-            if self.conreq_config.radarr_url and self.conreq_config.radarr_api_key:
-                # Get the latest list of Radarr's collection
-                results = self.__radarr.getMovie()
+            if self.conreq_config.radarr_enabled:
+                if self.conreq_config.radarr_url and self.conreq_config.radarr_api_key:
+                    # Get the latest list of Radarr's collection
+                    results = self.__radarr.getMovie()
 
-                # Set up a dictionary of results with IDs as keys
-                results_with_ids = {}
-                for movie in results:
-                    if movie.__contains__("tmdbId"):
-                        self.__check_status(movie)
-                        results_with_ids[str(movie["tmdbId"])] = movie
+                    # Set up a dictionary of results with IDs as keys
+                    results_with_ids = {}
+                    for movie in results:
+                        if movie.__contains__("tmdbId"):
+                            self.__check_status(movie)
+                            results_with_ids[str(movie["tmdbId"])] = movie
 
-                # Return all movies
-                return results_with_ids
+                    # Return all movies
+                    return results_with_ids
 
-            log.handler(
-                "Radarr URL or API key is unset!",
-                log.WARNING,
-                self.__logger,
-            )
+                log.handler(
+                    "Radarr URL or API key is unset!",
+                    log.WARNING,
+                    self.__logger,
+                )
 
         except:
             log.handler(
@@ -535,26 +536,27 @@ class ContentManager:
 
     def get_all_sonarr_content(self):
         try:
-            if self.conreq_config.sonarr_url and self.conreq_config.sonarr_api_key:
-                # Get the latest list of Sonarr's collection
-                results = self.__sonarr.getSeries()
+            if self.conreq_config.sonarr_enabled:
+                if self.conreq_config.sonarr_url and self.conreq_config.sonarr_api_key:
+                    # Get the latest list of Sonarr's collection
+                    results = self.__sonarr.getSeries()
 
-                # Set up a dictionary of results with IDs as keys
-                results_with_ids = {}
-                for series in results:
-                    if series.__contains__("tvdbId"):
-                        self.__check_status(series)
+                    # Set up a dictionary of results with IDs as keys
+                    results_with_ids = {}
+                    for series in results:
+                        if series.__contains__("tvdbId"):
+                            self.__check_status(series)
 
-                        results_with_ids[str(series["tvdbId"])] = series
+                            results_with_ids[str(series["tvdbId"])] = series
 
-                # Return all movies
-                return results_with_ids
+                    # Return all movies
+                    return results_with_ids
 
-            log.handler(
-                "Sonarr URL or API key is unset!",
-                log.WARNING,
-                self.__logger,
-            )
+                log.handler(
+                    "Sonarr URL or API key is unset!",
+                    log.WARNING,
+                    self.__logger,
+                )
 
         except:
             log.handler(
