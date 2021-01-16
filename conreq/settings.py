@@ -122,7 +122,8 @@ if file_update_needed:
 
 # Application Settings
 HTML_MINIFY = True
-
+DJVERSION_GIT_USE_COMMIT = True
+DJVERSION_GIT_REPO_PATH = BASE_DIR
 
 # Application Definitions
 INSTALLED_APPS = [
@@ -142,6 +143,7 @@ INSTALLED_APPS = [
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
+    "djversion",  # Obtains the git commit as a version number
 ]
 
 MIDDLEWARE = [

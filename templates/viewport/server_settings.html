@@ -1,6 +1,10 @@
-{% load solo_tags %} {% load static %}
-{% include "primary/loading_animation.html" %}
+{% load solo_tags %}
+{% load djversion_tags %}
+{% load static %}
 {% get_solo 'settings.ConreqConfig' as server_settings %}
+{% project_version as VERSION %}
+
+{% include "primary/loading_animation.html" %}
 <div class="viewport viewport-settings" data-aos="fade-zoom-in" data-aos-duration="1500">
     <div class="settings-group">
         <div class="settings-group-title bold">About Conreq</div>
@@ -10,8 +14,8 @@
                 <div class="settings-item-details info">{{ os_platform }}</div>
             </div>
             <div class="settings-item-group info">
-                <div class="settings-item-title line-clamp-1 info">Conreq Version</div>
-                <div class="settings-item-details info">v0.25</div>
+                <div class="settings-item-title line-clamp-1 info">Current Git Commit</div>
+                <div class="settings-item-details info">{{ VERSION }}</div>
             </div>
             <div class="conreq-button check-update-button box-shadow no-highlighting">
                 Check for Updates
