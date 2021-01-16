@@ -71,13 +71,13 @@ ALLOWED_HOSTS = ["*"]
 
 
 # Database Encryption Key
-conreq_config_file = os.path.join(DATA_DIR, "config.json")
-if not os.path.exists(conreq_config_file):
+conreq_settings_file = os.path.join(DATA_DIR, "settings.json")
+if not os.path.exists(conreq_settings_file):
     # Create the file if it doesn't exist
-    with open(conreq_config_file, "w") as file:
+    with open(conreq_settings_file, "w") as file:
         file.write("{}")
 
-with open(conreq_config_file, "r+") as file:
+with open(conreq_settings_file, "r+") as file:
     # Read the file and create a new key if needed
     config = json.load(file)
     if (
