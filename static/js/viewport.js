@@ -37,7 +37,7 @@ let cull_old_posters = function () {
     let before_deletion_height = viewport.height();
 
     // If there are posters to delete, do it.
-    if (num_of_posters_to_delete > 0) {
+    if (num_of_posters_to_delete > 0 && masonry_grid != null) {
       // Make sure we have the latest scroll position
       scroll_position = viewport_container.scrollTop();
 
