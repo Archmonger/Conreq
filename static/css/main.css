@@ -115,6 +115,10 @@ a:hover {
     margin: auto;
 }
 
+.empty-viewport{
+    text-align: center;
+}
+
 .bold {
     font-weight: 700;
 }

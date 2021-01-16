@@ -1,5 +1,14 @@
 {% load static %}
 {% include "primary/loading_animation.html" %}
 <div class="viewport viewport-posters search" data-aos="fade-zoom-in" data-aos-duration="1500">
-    {% for card in all_cards %} {% include "cards/sonarr_radarr.html" %} {% endfor %}
+    {% if all_cards %}
+    {% for card in all_cards %}
+    {% include "cards/sonarr_radarr.html" %}
+    {% endfor %}
+
+    {% else %}
+    <div class="empty-viewport">
+        No search results were found!
+    </div>
+    {% endif %}
 </div>
