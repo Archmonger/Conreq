@@ -44,6 +44,7 @@ DEBUG = get_bool_from_env("DEBUG", True)
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", not DEBUG)
+USE_SSL = get_bool_from_env("USE_SSL", False)
 
 
 # Logging
@@ -61,9 +62,23 @@ if not DATA_DIR:
 
 # Security Settings
 if USE_ROLLING_SECRET_KEY:
-    SECRET_KEY = get_random_secret_key()
+    SECRET_KEY = get_random_secret_key()  # Key used for cryptographic signing
 
 ALLOWED_HOSTS = ["*"]
+SECURE_BROWSER_XSS_FILTER = (
+    True  # Sets "X-XSS-Protection: 1; mode=block" header on all responses
+)
+
+if USE_SSL:
+    SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+    SECURE_HSTS_PRELOAD = True  # Allow for HSTS preload
+    SECURE_HSTS_SECONDS = 31536000  # Allow for HSTS preload
+    SESSION_COOKIE_SECURE = True  # Only send cookie over HTTPS
+    CSRF_USE_SESSIONS = True  # Store CSRF token within session cookie
+    CSRF_COOKIE_SECURE = True  # Only send cookie over HTTPS
+    CSRF_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
+    LANGUAGE_COOKIE_SECURE = True  # Only send cookie over HTTPS
+    LANGUAGE_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
 
 
 # Encryption Keys
@@ -125,6 +140,7 @@ HTML_MINIFY = True
 DJVERSION_GIT_USE_COMMIT = True
 DJVERSION_GIT_REPO_PATH = BASE_DIR
 
+
 # Application Definitions
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -148,7 +164,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files on Daphne securely
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -156,8 +172,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "htmlmin.middleware.HtmlMinifyMiddleware",
-    "htmlmin.middleware.MarkRequestMiddleware",
+    "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
+    "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
 
 
