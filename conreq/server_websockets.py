@@ -45,7 +45,10 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         """When the browser attempts to send a message to the server."""
         print(content)
         # Reject users that aren't logged in
-        if isinstance(self.scope["user"], AnonymousUser):
+        if (
+            isinstance(self.scope["user"], AnonymousUser)
+            or not self.scope["user"].is_authenticated
+        ):
             await self.__forbidden()
         else:
             # Verify login status.
