@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import ast
 import json
 import os
 import secrets
@@ -24,17 +23,10 @@ from conreq.core import log
 
 # Helper Functions
 def get_bool_from_env(name, default_value):
-    if name in os.environ:
-        value = os.environ[name]
-        try:
-            return ast.literal_eval(value)
-        except Exception as exception:
-            print(
-                "Could not evaluate value of "
-                + name
-                + " as a boolean\n"
-                + str(exception)
-            )
+    if name.lower() == "true":
+        return True
+    if name.lower() == "false":
+        return False
     return default_value
 
 
