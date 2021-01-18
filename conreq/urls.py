@@ -19,6 +19,16 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
+# Helper Functions
+def get_bool_from_env(name, default_value):
+    if name.lower() == "true":
+        return True
+    if name.lower() == "false":
+        return False
+    return default_value
+
+
+DEBUG = get_bool_from_env("DEBUG", True)
 BASE_URL = SECRET_KEY = os.environ.get("BASE_URL", "")
 if isinstance(BASE_URL, str) and BASE_URL and not BASE_URL.endswith("/"):
     BASE_URL = BASE_URL + "/"
@@ -31,10 +41,13 @@ urlpatterns = [
         name="signin",
     ),
     path(BASE_URL + "signout/", auth_views.logout_then_login, name="signout"),
-    path("admin/", admin.site.urls),
     path("discover/", include("conreq.apps.discover.urls")),
     path("more_info/", include("conreq.apps.more_info.urls")),
     path("search/", include("conreq.apps.search.urls")),
     path("settings/", include("conreq.apps.server_settings.urls")),
     path("", include("conreq.apps.homepage.urls")),
 ]
+
+
+if DEBUG:
+    urlpatterns.append(path("admin/", admin.site.urls))
