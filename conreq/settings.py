@@ -23,9 +23,10 @@ from conreq.core import log
 
 # Helper Functions
 def get_bool_from_env(name, default_value):
-    if name.lower() == "true":
+    env_var = os.environ.get(name)
+    if env_var.lower() == "true":
         return True
-    if name.lower() == "false":
+    if env_var.lower() == "false":
         return False
     return default_value
 
