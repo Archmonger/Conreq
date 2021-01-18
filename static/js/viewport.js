@@ -224,14 +224,14 @@ let generate_viewport = function () {
   update_active_tab();
 
   // Hide the old content and display the loading animation
-  $(".viewport-container>*:not(.loading-animation)").hide();
-  $(".viewport-container>.loading-animation").show();
+  $(".viewport-container>*:not(.loading-animation-container)").hide();
+  $(".viewport-container>.loading-animation-container").show();
 
   // Fetch the new content, display it, and hide the loading animation
   $.get(window_location, function (viewport_html) {
     $(".viewport-container")[0].innerHTML = DOMPurify.sanitize(viewport_html);
     refresh_viewport();
-    $(".viewport-container>.loading-animation").hide();
+    $(".viewport-container>.loading-animation-container").hide();
 
     // Add any click events needed
     add_event_listeners();

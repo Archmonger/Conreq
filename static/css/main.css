@@ -218,10 +218,11 @@ input:checked ~ .state {
   margin: auto;
   color: var(--accent-color);
 }
-.viewport-container > .spinner-border {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+
+.viewport-container > .loading-animation-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 .text-input-container {
@@ -484,9 +485,6 @@ button:focus {
   display: block;
   transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
   transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
   transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
     -webkit-filter 0.3s ease;
   z-index: 6;
@@ -587,9 +585,6 @@ button:focus {
   font-size: 19px;
   transition: color 0.3s ease, opacity 0.3s ease, -webkit-filter 0.3s ease;
   transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease, -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
   transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
     -webkit-filter 0.3s ease;
   opacity: 0;
