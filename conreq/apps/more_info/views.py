@@ -51,7 +51,7 @@ def more_info(request):
         thread.start()
         thread_list.append(thread)
 
-        # Pre-parse data attributes within tmdb_result
+        # Pre-process data attributes within tmdb_result
         thread = Thread(target=preprocess_tmdb_result, args=[tmdb_result])
         thread.start()
         thread_list.append(thread)

@@ -1,10 +1,12 @@
 from calendar import month_name
+from io import StringIO
 from threading import Thread
 
 from conreq.core import cache, log
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.generic_tools import is_key_value_in_list
+from markdown import Markdown
 
 __logger = log.get_logger("conreq.apps.helpers")
 log.configure(__logger, log.DEBUG)
@@ -36,6 +38,24 @@ STATIC_CONTEXT_VARS = {
     "server_settings": "Server Settings",
     "youtube": "YouTube",
 }
+
+# Helper to remove markdown from string
+def __unmark_element(element, stream=None):
+    if stream is None:
+        stream = StringIO()
+    if element.text:
+        stream.write(element.text)
+    for sub in element:
+        __unmark_element(sub, stream)
+    if element.tail:
+        stream.write(element.tail)
+    return stream.getvalue()
+
+
+# Patching the markdown module to remove markdown
+Markdown.output_formats["plain"] = __unmark_element
+__md = Markdown(output_format="plain")
+__md.stripTopLevelTags = False
 
 
 def generate_context(dict1):
@@ -236,6 +256,7 @@ def preprocess_tmdb_result(tmdb_result):
             tmdb_result["reviews"]["results"] = None
         else:
             for review in tmdb_result["reviews"]["results"]:
+                review["content"] = __md.convert(review["content"])
                 if len(review["content"]) > 400:
                     review["content"] = review["content"][:400] + "..."
     # Keywords (Tags)
