@@ -3,13 +3,12 @@ from time import sleep
 
 from conreq.apps.helpers import (
     generate_context,
+    obtain_sonarr_parameters,
     preprocess_arr_result,
     preprocess_tmdb_result,
     set_many_conreq_status,
     set_single_conreq_status,
-    find_key_val_in_list,
 )
-from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.search import Search
@@ -134,7 +133,6 @@ def more_info(request):
 def series_modal(tmdb_id=None, tvdb_id=None):
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
-    conreq_config = ConreqConfig.get_solo()
     # Determine the TVDB ID
     if tvdb_id is not None:
         pass
@@ -149,36 +147,15 @@ def series_modal(tmdb_id=None, tvdb_id=None):
     # TODO: Obtain radarr root and quality profile ID from database
     if requested_show is None:
 
-        # Determine series type, root directory, and profile ID
-        if tmdb_id is None:
-            tmdb_id = content_discovery.get_by_tvdb_id(tvdb_id)["tv_results"]["id"]
-
-        is_anime = content_discovery.is_anime(tmdb_id, "tv")
-
-        if is_anime:
-            series_type = "Anime"
-            all_root_dirs = content_manager.sonarr_root_dirs()
-            sonarr_root = find_key_val_in_list(
-                "id", conreq_config.sonarr_anime_folder, all_root_dirs
-            )["path"]
-            sonarr_profile_id = content_manager.sonarr_quality_profiles()[
-                conreq_config.sonarr_anime_quality_profile
-            ]["id"]
-
-        else:
-            series_type = "Standard"
-            sonarr_root = content_manager.sonarr_root_dirs()[
-                conreq_config.sonarr_tv_folder
-            ]["path"]
-            sonarr_profile_id = content_manager.sonarr_quality_profiles()[
-                conreq_config.sonarr_tv_quality_profile
-            ]["id"]
+        sonarr_params = obtain_sonarr_parameters(
+            content_discovery, content_manager, tmdb_id, tvdb_id
+        )
 
         requested_show = content_manager.add(
             tvdb_id=tvdb_id,
-            quality_profile_id=sonarr_profile_id,
-            root_dir=sonarr_root,
-            series_type=series_type,
+            quality_profile_id=sonarr_params["sonarr_profile_id"],
+            root_dir=sonarr_params["sonarr_root"],
+            series_type=sonarr_params["series_type"],
         )
 
     # Keep refreshing until we get the series from Sonarr

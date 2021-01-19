@@ -2,6 +2,7 @@ from calendar import month_name
 from io import StringIO
 from threading import Thread
 
+from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core import cache, log
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
@@ -358,3 +359,44 @@ def convert_card_to_tmdb(index, all_results):
 
 def find_key_val_in_list(key, value, search_list):
     return list(filter(lambda x: x[key] == value, search_list))[0]
+
+
+def obtain_sonarr_parameters(
+    content_discovery,
+    content_manager,
+    tmdb_id=None,
+    tvdb_id=None,
+):
+    """Returns the common parameters needed for adding a series to Sonarr."""
+    conreq_config = ConreqConfig.get_solo()
+
+    # Determine series type, root directory, and profile ID
+    if tmdb_id is None:
+        tmdb_id = content_discovery.get_by_tvdb_id(tvdb_id)["tv_results"]["id"]
+
+    is_anime = content_discovery.is_anime(tmdb_id, "tv")
+
+    if is_anime:
+        series_type = "Anime"
+        all_root_dirs = content_manager.sonarr_root_dirs()
+        sonarr_root = find_key_val_in_list(
+            "id", conreq_config.sonarr_anime_folder, all_root_dirs
+        )["path"]
+        sonarr_profile_id = content_manager.sonarr_quality_profiles()[
+            conreq_config.sonarr_anime_quality_profile
+        ]["id"]
+
+    else:
+        series_type = "Standard"
+        sonarr_root = content_manager.sonarr_root_dirs()[
+            conreq_config.sonarr_tv_folder
+        ]["path"]
+        sonarr_profile_id = content_manager.sonarr_quality_profiles()[
+            conreq_config.sonarr_tv_quality_profile
+        ]["id"]
+
+    return {
+        "sonarr_profile_id": sonarr_profile_id,
+        "sonarr_root": sonarr_root,
+        "series_type": series_type,
+    }
