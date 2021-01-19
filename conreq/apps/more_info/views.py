@@ -156,6 +156,7 @@ def series_modal(tmdb_id=None, tvdb_id=None):
             quality_profile_id=sonarr_params["sonarr_profile_id"],
             root_dir=sonarr_params["sonarr_root"],
             series_type=sonarr_params["series_type"],
+            season_folders=sonarr_params["season_folders"],
         )
 
     # Keep refreshing until we get the series from Sonarr

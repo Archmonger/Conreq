@@ -169,6 +169,7 @@ class ContentManager:
                     kwargs["tvdb_id"],
                     kwargs["quality_profile_id"],
                     kwargs["root_dir"],
+                    seasonFolder=kwargs["season_folders"],
                     monitored=False,
                     ignoreEpisodesWithFiles=True,
                     ignoreEpisodesWithoutFiles=True,

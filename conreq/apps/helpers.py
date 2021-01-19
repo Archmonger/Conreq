@@ -375,6 +375,7 @@ def obtain_sonarr_parameters(
         tmdb_id = content_discovery.get_by_tvdb_id(tvdb_id)["tv_results"]["id"]
 
     is_anime = content_discovery.is_anime(tmdb_id, "tv")
+    season_folders = conreq_config.sonarr_season_folders
 
     if is_anime:
         series_type = "Anime"
@@ -399,4 +400,5 @@ def obtain_sonarr_parameters(
         "sonarr_profile_id": sonarr_profile_id,
         "sonarr_root": sonarr_root,
         "series_type": series_type,
+        "season_folders": season_folders,
     }
