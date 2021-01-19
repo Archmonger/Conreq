@@ -191,13 +191,23 @@
                     {% endif %}
                 </div>
             </div>
-
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">TV Folder Path</div>
-                <div class="text-input-container">
-                    <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Sonarr TV Folder Path" value="{{ server_settings.sonarr_tv_folder }}" />
+                <div class="text-input-container dropdown no-highlighting
+                {% if sonarr_folders %} clickable {% endif %}">
+                    <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="settings-item-text line-clamp-1 ">
+                            {{ current_sonarr_tv_folder }}
+                        </div>
+                    </div>
+                    {% if sonarr_folders %}
+                    <div class="dropdown-menu" data-setting-name="Sonarr TV Folder Path">
+                        {% for dropdown_item in sonarr_folders %}
+                        {% include "dropdown/item.html" %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
