@@ -48,6 +48,34 @@ def server_settings(request):
         # List of all dropdown entries
         sonarr_folders.append({"id": path["id"], "label": path["path"]})
 
+    # Radarr Quality Profiles
+    radarr_quality_profiles = []
+    current_radarr_anime_quality_profile = ""
+    current_radarr_movies_quality_profile = ""
+    for profile in content_manger.radarr_quality_profiles():
+        # Current anime movies profile
+        if conreq_config.radarr_anime_quality_profile == profile["id"]:
+            current_radarr_anime_quality_profile = profile["name"]
+        # Current TV profile
+        if conreq_config.radarr_movies_quality_profile == profile["id"]:
+            current_radarr_movies_quality_profile = profile["name"]
+        # List of all dropdown entries
+        radarr_quality_profiles.append({"id": profile["id"], "label": profile["name"]})
+
+    # Sonarr Folder Paths
+    radarr_folders = []
+    current_radarr_anime_folder = ""
+    current_radarr_movies_folder = ""
+    for path in content_manger.radarr_root_dirs():
+        # Current anime movies dirs
+        if conreq_config.radarr_anime_folder == path["id"]:
+            current_radarr_anime_folder = path["path"]
+        # Current TV dirs
+        if conreq_config.radarr_anime_folder == path["id"]:
+            current_radarr_movies_folder = path["path"]
+        # List of all dropdown entries
+        radarr_folders.append({"id": path["id"], "label": path["path"]})
+
     context = {
         "os_platform": platform(),
         "sonarr_quality_profiles": sonarr_quality_profiles,
@@ -56,6 +84,12 @@ def server_settings(request):
         "sonarr_folders": sonarr_folders,
         "current_sonarr_anime_folder": current_sonarr_anime_folder,
         "current_sonarr_tv_folder": current_sonarr_tv_folder,
+        "radarr_quality_profiles": radarr_quality_profiles,
+        "current_radarr_anime_quality_profile": current_radarr_anime_quality_profile,
+        "current_radarr_movies_quality_profile": current_radarr_movies_quality_profile,
+        "radarr_folders": radarr_folders,
+        "current_radarr_anime_folder": current_radarr_anime_folder,
+        "current_radarr_movies_folder": current_radarr_movies_folder,
     }
 
     return HttpResponse(template.render(context, request))

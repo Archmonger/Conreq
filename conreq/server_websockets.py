@@ -274,7 +274,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
                 elif (
                     content["parameters"]["setting_name"]
-                    == "Radarr Anime Movies Quality Profile"
+                    == "Radarr Anime Quality Profile"
                 ):
                     conreq_config.radarr_anime_quality_profile = content["parameters"][
                         "value"
@@ -289,8 +289,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                     ]
 
                 elif (
-                    content["parameters"]["setting_name"]
-                    == "Radarr Anime Movies Folder Path"
+                    content["parameters"]["setting_name"] == "Radarr Anime Folder Path"
                 ):
                     conreq_config.radarr_anime_folder = content["parameters"]["value"]
 
