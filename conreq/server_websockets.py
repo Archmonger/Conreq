@@ -4,6 +4,7 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.core.management.utils import get_random_secret_key
 from htmlmin.minify import html_minify
 
+from conreq.apps.helpers import obtain_sonarr_parameters
 from conreq.apps.more_info.views import series_modal
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.content_discovery import ContentDiscovery
@@ -74,17 +75,12 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
         # TV show was requested
         if content["parameters"]["content_type"] == "tv":
-            # TODO: Obtain Sonarr root and quality profile ID from database
-            sonarr_root = content_manager.sonarr_root_dirs()[0]["path"]
-            sonarr_profile_id = content_manager.sonarr_quality_profiles()[0]["id"]
-
             # Obtain the TVDB ID if needed
             tvdb_id = content["parameters"]["tvdb_id"]
             tmdb_id = content["parameters"]["tmdb_id"]
             if tvdb_id is None and tmdb_id is not None:
                 tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
 
-            # print("tvdb ID ", tvdb_id)
             # Request the show by the TVDB ID
             if tvdb_id is not None:
                 # Check if the show is already within Sonarr's collection
@@ -92,10 +88,15 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
                 # If it doesn't already exists, add then request it
                 if preexisting_show is None:
+                    sonarr_params = obtain_sonarr_parameters(
+                        content_discovery, content_manager, tmdb_id, tvdb_id
+                    )
                     new_show = content_manager.add(
                         tvdb_id=tvdb_id,
-                        quality_profile_id=sonarr_profile_id,
-                        root_dir=sonarr_root,
+                        quality_profile_id=sonarr_params["sonarr_profile_id"],
+                        root_dir=sonarr_params["sonarr_root"],
+                        series_type=sonarr_params["series_type"],
+                        season_folders=sonarr_params["season_folders"],
                     )
                     if new_show.__contains__("id"):
                         content_manager.request(
