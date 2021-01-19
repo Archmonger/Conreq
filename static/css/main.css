@@ -234,6 +234,10 @@ input:checked ~ .state {
   height: 35px;
 }
 
+.text-input-container.dropdown {
+  overflow: visible;
+}
+
 .text-input-container:focus-within {
   background: #fff;
   color: var(--searchbar-bg);
@@ -487,6 +491,8 @@ button:focus {
   transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
   transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
     -webkit-filter 0.3s ease;
+  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
+    -webkit-filter 0.3s ease;
   z-index: 6;
   position: relative;
 }
@@ -585,6 +591,8 @@ button:focus {
   font-size: 19px;
   transition: color 0.3s ease, opacity 0.3s ease, -webkit-filter 0.3s ease;
   transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
+    -webkit-filter 0.3s ease;
   transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
     -webkit-filter 0.3s ease;
   opacity: 0;
