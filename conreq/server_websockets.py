@@ -4,7 +4,7 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.core.management.utils import get_random_secret_key
 from htmlmin.minify import html_minify
 
-from conreq.apps.helpers import obtain_sonarr_parameters
+from conreq.apps.helpers import obtain_radarr_parameters, obtain_sonarr_parameters
 from conreq.apps.more_info.views import series_modal
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.content_discovery import ContentDiscovery
@@ -131,8 +131,8 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             if preexisting_movie is None:
                 new_movie = content_manager.add(
                     tmdb_id=content["parameters"]["tmdb_id"],
-                    quality_profile_id=radarr_profile_id,
-                    root_dir=radarr_root,
+                    quality_profile_id=radarr_params["radarr_profile_id"],
+                    root_dir=radarr_params["radarr_root"],
                 )
                 if new_movie.__contains__("id"):
                     content_manager.request(radarr_id=new_movie["id"])

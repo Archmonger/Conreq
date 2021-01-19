@@ -398,3 +398,32 @@ def obtain_sonarr_parameters(
         "series_type": series_type,
         "season_folders": season_folders,
     }
+
+
+def obtain_radarr_parameters(
+    content_discovery,
+    content_manager,
+    tmdb_id=None,
+):
+    """Returns the common parameters needed for adding a series to Radarr."""
+    conreq_config = ConreqConfig.get_solo()
+
+    is_anime = content_discovery.is_anime(tmdb_id, "movie")
+    all_root_dirs = content_manager.radarr_root_dirs()
+
+    if is_anime:
+        radarr_root = find_key_val_in_list(
+            "id", conreq_config.radarr_anime_folder, all_root_dirs
+        )["path"]
+        radarr_profile_id = conreq_config.radarr_anime_quality_profile
+
+    else:
+        radarr_root = find_key_val_in_list(
+            "id", conreq_config.radarr_movies_folder, all_root_dirs
+        )["path"]
+        radarr_profile_id = conreq_config.radarr_movies_quality_profile
+
+    return {
+        "radarr_profile_id": radarr_profile_id,
+        "radarr_root": radarr_root,
+    }
