@@ -376,25 +376,21 @@ def obtain_sonarr_parameters(
 
     is_anime = content_discovery.is_anime(tmdb_id, "tv")
     season_folders = conreq_config.sonarr_season_folders
+    all_root_dirs = content_manager.sonarr_root_dirs()
 
     if is_anime:
         series_type = "Anime"
-        all_root_dirs = content_manager.sonarr_root_dirs()
         sonarr_root = find_key_val_in_list(
             "id", conreq_config.sonarr_anime_folder, all_root_dirs
         )["path"]
-        sonarr_profile_id = content_manager.sonarr_quality_profiles()[
-            conreq_config.sonarr_anime_quality_profile
-        ]["id"]
+        sonarr_profile_id = conreq_config.sonarr_anime_quality_profile
 
     else:
         series_type = "Standard"
-        sonarr_root = content_manager.sonarr_root_dirs()[
-            conreq_config.sonarr_tv_folder
-        ]["path"]
-        sonarr_profile_id = content_manager.sonarr_quality_profiles()[
-            conreq_config.sonarr_tv_quality_profile
-        ]["id"]
+        sonarr_root = find_key_val_in_list(
+            "id", conreq_config.sonarr_tv_folder, all_root_dirs
+        )["path"]
+        sonarr_profile_id = conreq_config.sonarr_tv_quality_profile
 
     return {
         "sonarr_profile_id": sonarr_profile_id,
