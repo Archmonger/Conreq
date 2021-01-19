@@ -354,3 +354,7 @@ def convert_card_to_tmdb(index, all_results):
             all_results[index]["tmdbCard"] = True
         except:
             pass
+
+
+def find_key_val_in_list(key, value, search_list):
+    return list(filter(lambda x: x[key] == value, search_list))[0]
