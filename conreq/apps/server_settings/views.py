@@ -2,11 +2,14 @@
 from platform import platform
 
 from conreq.apps.server_settings.models import ConreqConfig
+from conreq.core import log
 from conreq.core.content_manager import ContentManager
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.template import loader
 
+__logger = log.get_logger("conreq.apps.server_settings.views")
+log.configure(__logger, log.DEBUG)
 
 # Create your views here.
 @login_required
@@ -20,61 +23,83 @@ def server_settings(request):
     # Obtain sonarr and radarr information
     content_manger = ContentManager()
 
-    # Sonarr Quality Profiles
-    sonarr_quality_profiles = []
-    current_sonarr_anime_quality_profile = ""
-    current_sonarr_tv_quality_profile = ""
-    for profile in content_manger.sonarr_quality_profiles():
-        # Current anime profile
-        if conreq_config.sonarr_anime_quality_profile == profile["id"]:
-            current_sonarr_anime_quality_profile = profile["name"]
-        # Current TV profile
-        if conreq_config.sonarr_tv_quality_profile == profile["id"]:
-            current_sonarr_tv_quality_profile = profile["name"]
-        # List of all dropdown entries
-        sonarr_quality_profiles.append({"id": profile["id"], "label": profile["name"]})
+    if conreq_config.sonarr_enabled:
+        # Sonarr Quality Profiles
+        sonarr_quality_profiles = []
+        current_sonarr_anime_quality_profile = ""
+        current_sonarr_tv_quality_profile = ""
+        try:
+            for profile in content_manger.sonarr_quality_profiles():
+                # Current anime profile
+                if conreq_config.sonarr_anime_quality_profile == profile["id"]:
+                    current_sonarr_anime_quality_profile = profile["name"]
+                # Current TV profile
+                if conreq_config.sonarr_tv_quality_profile == profile["id"]:
+                    current_sonarr_tv_quality_profile = profile["name"]
+                # List of all dropdown entries
+                sonarr_quality_profiles.append(
+                    {"id": profile["id"], "label": profile["name"]}
+                )
+        except:
+            log.handler(
+                "Failed to obtain Sonarr Quality Profiles!", log.ERROR, __logger
+            )
 
-    # Sonarr Folder Paths
-    sonarr_folders = []
-    current_sonarr_anime_folder = ""
-    current_sonarr_tv_folder = ""
-    for path in content_manger.sonarr_root_dirs():
-        # Current anime dirs
-        if conreq_config.sonarr_anime_folder == path["id"]:
-            current_sonarr_anime_folder = path["path"]
-        # Current TV dirs
-        if conreq_config.sonarr_anime_folder == path["id"]:
-            current_sonarr_tv_folder = path["path"]
-        # List of all dropdown entries
-        sonarr_folders.append({"id": path["id"], "label": path["path"]})
+        # Sonarr Folder Paths
+        sonarr_folders = []
+        current_sonarr_anime_folder = ""
+        current_sonarr_tv_folder = ""
+        try:
+            for path in content_manger.sonarr_root_dirs():
+                # Current anime dirs
+                if conreq_config.sonarr_anime_folder == path["id"]:
+                    current_sonarr_anime_folder = path["path"]
+                # Current TV dirs
+                if conreq_config.sonarr_anime_folder == path["id"]:
+                    current_sonarr_tv_folder = path["path"]
+                # List of all dropdown entries
+                sonarr_folders.append({"id": path["id"], "label": path["path"]})
+        except:
+            log.handler("Failed to obtain Sonarr Folder Paths!", log.ERROR, __logger)
 
-    # Radarr Quality Profiles
-    radarr_quality_profiles = []
-    current_radarr_anime_quality_profile = ""
-    current_radarr_movies_quality_profile = ""
-    for profile in content_manger.radarr_quality_profiles():
-        # Current anime movies profile
-        if conreq_config.radarr_anime_quality_profile == profile["id"]:
-            current_radarr_anime_quality_profile = profile["name"]
-        # Current TV profile
-        if conreq_config.radarr_movies_quality_profile == profile["id"]:
-            current_radarr_movies_quality_profile = profile["name"]
-        # List of all dropdown entries
-        radarr_quality_profiles.append({"id": profile["id"], "label": profile["name"]})
+    if conreq_config.radarr_enabled:
+        # Radarr Quality Profiles
+        radarr_quality_profiles = []
+        current_radarr_anime_quality_profile = ""
+        current_radarr_movies_quality_profile = ""
+        try:
+            for profile in content_manger.radarr_quality_profiles():
+                # Current anime movies profile
+                if conreq_config.radarr_anime_quality_profile == profile["id"]:
+                    current_radarr_anime_quality_profile = profile["name"]
+                # Current TV profile
+                if conreq_config.radarr_movies_quality_profile == profile["id"]:
+                    current_radarr_movies_quality_profile = profile["name"]
+                # List of all dropdown entries
+                radarr_quality_profiles.append(
+                    {"id": profile["id"], "label": profile["name"]}
+                )
+        except:
+            log.handler(
+                "Failed to obtain Radarr Quality Profiles!", log.ERROR, __logger
+            )
 
-    # Sonarr Folder Paths
-    radarr_folders = []
-    current_radarr_anime_folder = ""
-    current_radarr_movies_folder = ""
-    for path in content_manger.radarr_root_dirs():
-        # Current anime movies dirs
-        if conreq_config.radarr_anime_folder == path["id"]:
-            current_radarr_anime_folder = path["path"]
-        # Current TV dirs
-        if conreq_config.radarr_anime_folder == path["id"]:
-            current_radarr_movies_folder = path["path"]
-        # List of all dropdown entries
-        radarr_folders.append({"id": path["id"], "label": path["path"]})
+        # Radarr Folder Paths
+        radarr_folders = []
+        current_radarr_anime_folder = ""
+        current_radarr_movies_folder = ""
+        try:
+            for path in content_manger.radarr_root_dirs():
+                # Current anime movies dirs
+                if conreq_config.radarr_anime_folder == path["id"]:
+                    current_radarr_anime_folder = path["path"]
+                # Current TV dirs
+                if conreq_config.radarr_anime_folder == path["id"]:
+                    current_radarr_movies_folder = path["path"]
+                # List of all dropdown entries
+                radarr_folders.append({"id": path["id"], "label": path["path"]})
+        except:
+            log.handler("Failed to obtain Radarr Folder Paths!", log.ERROR, __logger)
 
     context = {
         "os_platform": platform(),
