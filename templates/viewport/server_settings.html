@@ -141,7 +141,7 @@
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="settings-item-text line-clamp-1 ">
-                            {{ current_sonarr_quality_profile }}
+                            {{ current_sonarr_anime_quality_profile }}
                         </div>
                     </div>
                     {% if sonarr_quality_profiles %}
@@ -155,11 +155,21 @@
             </div>
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">TV Quality Profile</div>
-                <div class="text-input-container">
-                    <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Sonarr TV Quality Profile"
-                        value="{{ server_settings.sonarr_tv_quality_profile }}" />
+                <div class="text-input-container dropdown no-highlighting
+                {% if sonarr_quality_profiles %} clickable {% endif %}">
+                    <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="settings-item-text line-clamp-1 ">
+                            {{ current_sonarr_tv_quality_profile }}
+                        </div>
+                    </div>
+                    {% if sonarr_quality_profiles %}
+                    <div class="dropdown-menu" data-setting-name="Sonarr TV Quality Profile">
+                        {% for dropdown_item in sonarr_quality_profiles %}
+                        {% include "dropdown/item.html" %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="settings-item-group">

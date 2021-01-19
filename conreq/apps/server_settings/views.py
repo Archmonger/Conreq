@@ -20,18 +20,25 @@ def server_settings(request):
     # Obtain sonarr and radarr information
     content_manger = ContentManager()
 
-    # Sonarr Anime Quality Profiles
+    # Sonarr Quality Profiles
     sonarr_quality_profiles = []
-    current_sonarr_quality_profile = ""
+    current_sonarr_anime_quality_profile = ""
+    current_sonarr_tv_quality_profile = ""
     for profile in content_manger.sonarr_quality_profiles():
+        # Current anime profile
         if conreq_config.sonarr_anime_quality_profile == profile["id"]:
-            current_sonarr_quality_profile = profile["name"]
+            current_sonarr_anime_quality_profile = profile["name"]
+        # Current TV profile
+        if conreq_config.sonarr_tv_quality_profile == profile["id"]:
+            current_sonarr_tv_quality_profile = profile["name"]
+        # List of all dropdown entries
         sonarr_quality_profiles.append({"id": profile["id"], "label": profile["name"]})
 
     context = {
         "os_platform": platform(),
         "sonarr_quality_profiles": sonarr_quality_profiles,
-        "current_sonarr_quality_profile": current_sonarr_quality_profile,
+        "current_sonarr_anime_quality_profile": current_sonarr_anime_quality_profile,
+        "current_sonarr_tv_quality_profile": current_sonarr_tv_quality_profile,
     }
 
     return HttpResponse(template.render(context, request))
