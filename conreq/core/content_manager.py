@@ -163,7 +163,6 @@ class ContentManager:
 
             # Add a show, season, or episode with a specific TVDB ID to Sonarr.
             if kwargs.__contains__("tvdb_id"):
-                # Add the whole show to Sonarr's collection
                 # Add the show to Sonarr's collection
                 series_id = self.__sonarr.addSeries(
                     kwargs["tvdb_id"],
