@@ -459,21 +459,6 @@ class ContentManager:
         """Returns the quality profiles available within Radarr"""
         return self.__radarr.getQualityProfiles()
 
-    def check_download_status(self, **kwargs):
-        """Check to see if Sonarr or Radarr content is being downloaded.
-        Returns a list of everything being downloaded with a specific ID."""
-        # TODO: Create this method and integrate into __check_status
-        # Return a Percentage or None
-        try:
-            # Check download status for a specific movie in Radarr.
-            if kwargs.__contains__("tmdb_id"):
-                pass
-            # Check download status for anything the related to a specific show in Sonarr.
-            if kwargs.__contains__("tvdb_id"):
-                pass
-        except:
-            pass
-
     def refresh_content(self):
         """Refreshes Sonarr and Radarr's content"""
         while 1:

@@ -4,7 +4,7 @@ from conreq.core.generic_tools import generate_cache_key, obtain_key_from_cache_
 from conreq.core.thread_helper import ReturnThread
 from django.core.cache import cache
 
-# TODO: Obtain these values from the database on init
+# Globals
 DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
 
 # Creating a logger (for log files)

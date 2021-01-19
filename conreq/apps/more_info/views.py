@@ -18,7 +18,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.template.loader import render_to_string
 
-# TODO: Obtain this value from the database on init
+# Globals
 MAX_SERIES_FETCH_RETRIES = 20
 
 

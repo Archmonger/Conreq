@@ -3,7 +3,7 @@ import logging
 import os
 from traceback import format_exc
 
-# TODO: Obtain these values from the database on init
+# Globals
 LOG_FORMAT = "%(asctime)s %(levelname)s %(name)s: %(message)s"
 DEBUG = logging.DEBUG
 INFO = logging.INFO
@@ -11,8 +11,11 @@ WARNING = logging.WARNING
 ERROR = logging.ERROR
 CRITICAL = logging.CRITICAL
 
-# TODO: Obtain this DATA_DIR from the database on init. LOGS_DIR exists within DATA_DIR.
-__LOGS_DIR = "logs"
+__DATA_DIR = os.environ.get("DATA_DIR", "")
+if __DATA_DIR != "" and not __DATA_DIR.endswith("/"):
+    __DATA_DIR = __DATA_DIR + "/"
+
+__LOGS_DIR = __DATA_DIR + "logs"
 if not os.path.exists(__LOGS_DIR):
     os.mkdir(__LOGS_DIR)
 
@@ -71,26 +74,6 @@ def configure(logger, level):
 
         # Configure the logger's minimum level
         logger.setLevel(level)
-
-
-def logger_format(logger, formatting):
-    """Sets the log format to be used for the current logger and future logger instances.
-    For formatting information, see logging.Formatter()
-
-    Args:
-        logger: A logger objected obtained from logging.getLogger().
-        formatting: String containing Logging module format
-    """
-    # TODO: Change this to a database save
-    global LOG_FORMAT
-    LOG_FORMAT = formatting
-
-    # Configure the output format
-    formatter = logging.Formatter(LOG_FORMAT)
-
-    # Configure the logger's output format
-    for handle in logger.handlers:
-        handle.setFormatter(formatter)
 
 
 def console_stream(logger, level):

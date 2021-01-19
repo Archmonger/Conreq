@@ -6,7 +6,7 @@ from conreq.core import cache, log
 from conreq.core.generic_tools import is_key_value_in_list, obtain_key_from_cache_key
 from conreq.core.thread_helper import ReturnThread, threaded_execution
 
-# TODO: Obtain these values from the database on init
+# Globals
 ANIME_CHECK_FALLBACK = True
 LANGUAGE = "en"
 MAX_RECOMMENDED_PAGES = 7
@@ -32,7 +32,6 @@ class ContentDiscovery:
 
     def __init__(self):
         # Initialize the TMDB API library
-        # TODO: Obtain this value from the database on init
         tmdb.API_KEY = "112fd4c96274603f68620c78067d5422"
 
         # Creating a logger (for log files)
@@ -490,7 +489,7 @@ class ContentDiscovery:
                 )
 
             log.handler(
-                "The " + str(content_type) + " " + str(tmdb_id) + " is not anime.",
+                str(tmdb_id) + " is not anime.",
                 log.INFO,
                 self.__logger,
             )

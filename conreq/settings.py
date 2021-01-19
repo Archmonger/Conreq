@@ -39,7 +39,7 @@ DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", not DEBUG)
 USE_SSL = get_bool_from_env("USE_SSL", False)
-
+DATA_DIR = os.environ.get("DATA_DIR")
 
 # Logging
 log.configure(log.get_logger(), log.INFO)
@@ -49,7 +49,6 @@ if DEBUG:
 
 # Project Paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.environ.get("DATA_DIR")
 if not DATA_DIR:
     DATA_DIR = BASE_DIR
 
