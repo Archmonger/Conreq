@@ -284,7 +284,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                     content["parameters"]["setting_name"]
                     == "Radarr Movies Quality Profile"
                 ):
-                    conreq_config.radarr_movie_quality_profile = content["parameters"][
+                    conreq_config.radarr_movies_quality_profile = content["parameters"][
                         "value"
                     ]
 
@@ -296,7 +296,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 elif (
                     content["parameters"]["setting_name"] == "Radarr Movies Folder Path"
                 ):
-                    conreq_config.radarr_movie_folder = content["parameters"]["value"]
+                    conreq_config.radarr_movies_folder = content["parameters"]["value"]
 
                 elif content["parameters"]["setting_name"] == "Enable Radarr":
                     conreq_config.radarr_enabled = content["parameters"]["value"]

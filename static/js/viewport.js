@@ -111,10 +111,17 @@ let add_event_listeners = function () {
       previous_admin_settings[setting_name] = current_value;
     }
   });
-  $(".toggler .settings-item.admin").change(function (e) {
+  $(".toggler .settings-item.admin").change(function () {
     let setting_name = $(this).data("setting-name");
     let current_value = $(this).children("input").is(":checked");
     change_server_setting(setting_name, current_value);
+  });
+  $(".text-input-container.dropdown .dropdown-item").click(function () {
+    let setting_name = $(this).parent().data("setting-name");
+    let dropdown_id = $(this).data("id");
+    change_server_setting(setting_name, dropdown_id);
+    let new_text = $(this).text();
+    $(this).parent().parent().find(".settings-item-text").text(new_text);
   });
 };
 
