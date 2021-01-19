@@ -88,9 +88,9 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
                 # If it doesn't already exists, add then request it
                 if preexisting_show is None:
-                    sonarr_params = obtain_sonarr_parameters(
-                        content_discovery, content_manager, tmdb_id, tvdb_id
-                    )
+                    sonarr_params = await database_sync_to_async(
+                        obtain_sonarr_parameters
+                    )(content_discovery, content_manager, tmdb_id, tvdb_id)
                     new_show = content_manager.add(
                         tvdb_id=tvdb_id,
                         quality_profile_id=sonarr_params["sonarr_profile_id"],
@@ -118,9 +118,9 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
         # Movie was requested
         elif content["parameters"]["content_type"] == "movie":
-            # TODO: Obtain radarr root and quality profile ID from database
-            radarr_root = content_manager.radarr_root_dirs()[0]["path"]
-            radarr_profile_id = content_manager.radarr_quality_profiles()[0]["id"]
+            radarr_params = await database_sync_to_async(obtain_radarr_parameters)(
+                content_discovery, content_manager, content["parameters"]["tmdb_id"]
+            )
 
             # Check if the movie is already within Radarr's collection
             preexisting_movie = content_manager.get(
