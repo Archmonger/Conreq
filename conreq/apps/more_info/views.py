@@ -130,6 +130,7 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
+# TODO: Pass down the user object and validate login status
 def series_modal(tmdb_id=None, tvdb_id=None):
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
@@ -144,7 +145,6 @@ def series_modal(tmdb_id=None, tvdb_id=None):
     requested_show = content_manager.get(tvdb_id=tvdb_id)
 
     # If it doesn't already exists, add then add it
-    # TODO: Obtain radarr root and quality profile ID from database
     if requested_show is None:
 
         sonarr_params = obtain_sonarr_parameters(
