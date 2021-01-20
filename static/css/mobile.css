@@ -72,7 +72,7 @@
   }
   .sidebar {
     top: var(--navbar-height);
-    z-index: 9999;
+    z-index: 99;
     transition: height 0.4s ease-in;
   }
   .sidebar.collapsed {
@@ -130,7 +130,7 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 999;
+    z-index: 97;
     border-radius: 50%;
     font-size: 0;
     display: flex;
