@@ -277,19 +277,19 @@ class Search:
 
 
 # Test driver code
-if __name__ == "__main__":
-    search = Search(
-        "x",
-        "x",
-        "x",
-        "x",
-    )
+# if __name__ == "__main__":
+#     search = Search(
+#         "x",
+#         "x",
+#         "x",
+#         "x",
+#     )
 
-    # print("\n#### Find Movies Test ####")
-    # pprint(search.movie("Finding Nemo")[:5])
-    # print("\n#### Find TV Test ####")
-    # pprint(search.television("Toradora")[:5])
-    # print("\n#### Find All Test ####")
-    # pprint(search.all("The Black")[:5])
-    # print("\n#### Find All Test (Cached) ####")
-    # pprint(search.all("The Black")[:5])
+# print("\n#### Find Movies Test ####")
+# pprint(search.movie("Finding Nemo")[:5])
+# print("\n#### Find TV Test ####")
+# pprint(search.television("Toradora")[:5])
+# print("\n#### Find All Test ####")
+# pprint(search.all("The Black")[:5])
+# print("\n#### Find All Test (Cached) ####")
+# pprint(search.all("The Black")[:5])
