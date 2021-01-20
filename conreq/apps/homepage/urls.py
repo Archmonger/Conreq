@@ -12,11 +12,11 @@ app_name = "homepage"
 
 if BASE_URL:
     urlpatterns = [
-        path(BASE_URL + "", views.homepage, name="index"),
-        path("", views.homepage, name="root"),
+        path(BASE_URL + "", views.initialization, name="index"),
+        path("", views.initialization, name="root"),
     ]
 
 else:
     urlpatterns = [
-        path("", views.homepage, name="index"),
+        path("", views.initialization, name="index"),
     ]
