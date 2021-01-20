@@ -1,6 +1,7 @@
 from channels.auth import AnonymousUser, login
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from django.core.exceptions import ValidationError
 from django.core.management.utils import get_random_secret_key
 from htmlmin.minify import html_minify
 
@@ -176,7 +177,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
     # COMMAND RESPONSE: SERVER SETTINGS
     async def __server_settings(self, content):
         conreq_config = await database_sync_to_async(ConreqConfig.get_solo)()
-        response = {"command_name": "server settings", "success": True}
+        response = {
+            "command_name": "server settings",
+            "success": True,
+            "error_message": "Failed to save settings. Check logs for details.",
+        }
 
         # Validate user is admin before changing settings
         if self.scope["user"].is_staff:
@@ -302,7 +307,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 elif content["parameters"]["setting_name"] == "Enable Radarr":
                     conreq_config.radarr_enabled = content["parameters"]["value"]
 
-                # Failure
+                # Unhandled setting failure
                 else:
                     print(
                         'Server setting "'
@@ -310,12 +315,26 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                         + '" is currently not handled!'
                     )
                     response["success"] = False
+                    response["error_message"] = "Unhandled server setting!"
 
+                # Model fails validation schema
+                try:
+                    conreq_config.clean_fields()
+                except ValidationError as error:
+                    for field, message in dict(error).items():
+                        response["success"] = False
+                        response["error_message"] = field + ": " + message[0]
+                        # Send a message to the user
+                        await self.send_json(response)
+
+                # Save the model if it passes all checks
                 if response["success"]:
                     await database_sync_to_async(conreq_config.save)()
 
             except:
                 response["success"] = False
+                # TODO: Add logging
+                print("Unknown error has occurred within server websockets")
 
             # Send a message to the user
             await self.send_json(response)

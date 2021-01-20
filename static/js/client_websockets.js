@@ -77,7 +77,7 @@ function connect() {
       if (json_response.success) {
         settings_save_success_toast_message();
       } else {
-        settings_save_failed_toast_message();
+        settings_save_failed_toast_message(json_response.error_message);
       }
     } else {
       console.log(
