@@ -131,7 +131,16 @@
     bottom: 20px;
     right: 20px;
     z-index: 999;
-    border-radius: 500px;
+    border-radius: 50%;
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+  }
+  .more-info-grid .request-button .fas {
+    font-size: 22px;
   }
   .tns-controls {
     display: none;
