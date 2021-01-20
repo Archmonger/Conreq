@@ -42,8 +42,9 @@ def initialization(request):
 
     # Run the first time initialization if needed
     if conreq_config.conreq_initialized is False:
+        pass
         # Generate the first run template
-        template = loader.get_template("initialization/first_run.html")
+        # template = loader.get_template("initialization/first_run.html")
         # return HttpResponse(template.render({}, request))
 
     # If a base URL is set, redirect the user to it
