@@ -163,13 +163,12 @@ let destroy_viewport = function () {
     cast_carousel.destroy();
     cast_carousel = null;
   }
+
+  $(".viewport-container>*:not(.loading-animation-container)").remove();
 };
 
 // Preforms any actions needed to prepare the viewport
 let refresh_viewport = function () {
-  // Destroy old JS elements
-  destroy_viewport();
-
   // Create any carousels that need to be made
   create_all_carousels();
 
@@ -234,8 +233,10 @@ let generate_viewport = function () {
   // Change the current tab
   update_active_tab();
 
-  // Hide the old content and display the loading animation
-  $(".viewport-container>*:not(.loading-animation-container)").remove();
+  // Destroy old JS elements and event handlers
+  destroy_viewport();
+
+  // Display the loading animation
   $(".viewport-container>.loading-animation-container").show();
 
   // Fetch the new content, display it, and hide the loading animation
