@@ -1,8 +1,9 @@
+import secrets
+
 from channels.auth import AnonymousUser, login
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.core.exceptions import ValidationError
-from django.core.management.utils import get_random_secret_key
 from htmlmin.minify import html_minify
 
 from conreq.apps.helpers import obtain_radarr_parameters, obtain_sonarr_parameters
@@ -197,14 +198,10 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                     conreq_config.conreq_app_url = content["parameters"]["value"]
 
                 elif content["parameters"]["setting_name"] == "Conreq API Key":
-                    conreq_config.conreq_api_key = get_random_secret_key()
+                    conreq_config.conreq_api_key = secrets.token_hex(16)
 
                 elif content["parameters"]["setting_name"] == "Conreq Language":
                     conreq_config.conreq_language = content["parameters"]["value"]
-
-                elif content["parameters"]["setting_name"] == "Conreq Logo Image":
-                    pass
-                    # conreq_config.conreq_app_logo = content["parameters"]["value"]
 
                 elif content["parameters"]["setting_name"] == "Conreq Custom CSS":
                     conreq_config.conreq_custom_css = content["parameters"]["value"]

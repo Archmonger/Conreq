@@ -123,6 +123,10 @@ let add_event_listeners = function () {
     let new_text = $(this).text();
     $(this).parent().parent().find(".settings-item-text").text(new_text);
   });
+  $(".refresh-conreq-api").click(function () {
+    let setting_name = $(this).data("setting-name");
+    change_server_setting(setting_name);
+  });
 };
 
 // Destroys old viewport JS instances
