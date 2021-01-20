@@ -235,7 +235,7 @@ let generate_viewport = function () {
   update_active_tab();
 
   // Hide the old content and display the loading animation
-  $(".viewport-container>*:not(.loading-animation-container)").hide();
+  $(".viewport-container>*:not(.loading-animation-container)").remove();
   $(".viewport-container>.loading-animation-container").show();
 
   // Fetch the new content, display it, and hide the loading animation
