@@ -77,7 +77,6 @@ if USE_SSL:
 # Encryption Keys
 conreq_settings_file = os.path.join(DATA_DIR, "settings.json")
 file_update_needed = False
-file_contents = {}
 
 # Create the file if it doesn't exist
 if not os.path.exists(conreq_settings_file):
@@ -86,46 +85,42 @@ if not os.path.exists(conreq_settings_file):
 
 # Read the file
 with open(conreq_settings_file, "r+") as file:
-    config = json.load(file)
+    config_file = json.load(file)
 
-    # Check for DB Encryption Key
+    # Obtain the DB Encryption Key from the file
     if (
-        isinstance(config, dict)
-        and config.__contains__("DB_ENCRYPTION_KEY")
-        and config["DB_ENCRYPTION_KEY"] is not None
-        and config["DB_ENCRYPTION_KEY"] != ""
+        config_file.__contains__("DB_ENCRYPTION_KEY")
+        and config_file["DB_ENCRYPTION_KEY"] is not None
+        and config_file["DB_ENCRYPTION_KEY"] != ""
     ):
-        FIELD_ENCRYPTION_KEYS = [config["DB_ENCRYPTION_KEY"]]
-        file_contents["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS
+        FIELD_ENCRYPTION_KEYS = [config_file["DB_ENCRYPTION_KEY"]]
 
-    # A new DB Encryption Key is needed
+    # DB Encryption Key wasn't found, a new one is needed
     else:
         FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
-        file_contents["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS[0]
+        config_file["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS[0]
         file_update_needed = True
 
-    # Check for Secret Key
+    # Obtain the Secret Key from the file
     if (
-        isinstance(config, dict)
-        and config.__contains__("SECRET_KEY")
-        and config["SECRET_KEY"] is not None
-        and config["SECRET_KEY"] != ""
+        config_file.__contains__("SECRET_KEY")
+        and config_file["SECRET_KEY"] is not None
+        and config_file["SECRET_KEY"] != ""
         and not USE_ROLLING_SECRET_KEY
     ):
-        SECRET_KEY = config["SECRET_KEY"]
-        file_contents["DB_ENCRYPTION_KEY"] = SECRET_KEY
+        SECRET_KEY = config_file["SECRET_KEY"]
 
-    # A new Secret Key is needed
+    # Secret Key wasn't found, a new one is needed
     elif not USE_ROLLING_SECRET_KEY:
         SECRET_KEY = get_random_secret_key()
-        file_contents["SECRET_KEY"] = SECRET_KEY
+        config_file["SECRET_KEY"] = SECRET_KEY
         file_update_needed = True
 
 # Save the new file if needed
 if file_update_needed:
     with open(conreq_settings_file, "w") as file:
-        print("Updating settings.json to ", file_contents)
-        file.write(json.dumps(file_contents))
+        print("Updating settings.json to ", config_file)
+        file.write(json.dumps(config_file))
 
 
 # Application Settings
