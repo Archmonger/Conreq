@@ -79,9 +79,11 @@ function connect() {
       } else {
         settings_save_failed_toast_message(json_response.error_message);
       }
+    } else if (json_response.command_name == "new conreq api key") {
+      $("#conreq-api-key").text(json_response.value);
     } else {
       console.log(
-        "Unknown command " + json_response.command_name + "received!"
+        "Unknown command " + json_response.command_name + " received!"
       );
     }
   };

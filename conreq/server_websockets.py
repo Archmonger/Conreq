@@ -199,6 +199,12 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
                 elif content["parameters"]["setting_name"] == "Conreq API Key":
                     conreq_config.conreq_api_key = secrets.token_hex(16)
+                    await self.send_json(
+                        {
+                            "command_name": "new conreq api key",
+                            "value": conreq_config.conreq_api_key,
+                        }
+                    )
 
                 elif content["parameters"]["setting_name"] == "Conreq Language":
                     conreq_config.conreq_language = content["parameters"]["value"]
