@@ -22,12 +22,21 @@ def server_settings(request):
 
     # Obtain sonarr and radarr information
     content_manger = ContentManager()
+    sonarr_quality_profiles = []
+    current_sonarr_anime_quality_profile = ""
+    current_sonarr_tv_quality_profile = ""
+    sonarr_folders = []
+    current_sonarr_anime_folder = ""
+    current_sonarr_tv_folder = ""
+    radarr_quality_profiles = []
+    current_radarr_anime_quality_profile = ""
+    current_radarr_movies_quality_profile = ""
+    radarr_folders = []
+    current_radarr_anime_folder = ""
+    current_radarr_movies_folder = ""
 
     if conreq_config.sonarr_enabled:
         # Sonarr Quality Profiles
-        sonarr_quality_profiles = []
-        current_sonarr_anime_quality_profile = ""
-        current_sonarr_tv_quality_profile = ""
         try:
             for profile in content_manger.sonarr_quality_profiles():
                 # Current anime profile
@@ -46,9 +55,6 @@ def server_settings(request):
             )
 
         # Sonarr Folder Paths
-        sonarr_folders = []
-        current_sonarr_anime_folder = ""
-        current_sonarr_tv_folder = ""
         try:
             for path in content_manger.sonarr_root_dirs():
                 # Current anime dirs
@@ -64,9 +70,6 @@ def server_settings(request):
 
     if conreq_config.radarr_enabled:
         # Radarr Quality Profiles
-        radarr_quality_profiles = []
-        current_radarr_anime_quality_profile = ""
-        current_radarr_movies_quality_profile = ""
         try:
             for profile in content_manger.radarr_quality_profiles():
                 # Current anime movies profile
@@ -85,9 +88,6 @@ def server_settings(request):
             )
 
         # Radarr Folder Paths
-        radarr_folders = []
-        current_radarr_anime_folder = ""
-        current_radarr_movies_folder = ""
         try:
             for path in content_manger.radarr_root_dirs():
                 # Current anime movies dirs
