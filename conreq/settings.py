@@ -64,6 +64,9 @@ LOGGING = {
         "main": {
             "format": "%(asctime)s %(levelname)s %(name)s: %(message)s",
         },
+        "minimal": {
+            "format": "%(levelname)s %(name)s: %(message)s",
+        },
     },
     "handlers": {
         "conreq_logs": {
@@ -77,7 +80,7 @@ LOGGING = {
         "console": {
             "level": LOG_LEVEL,
             "class": "logging.StreamHandler",
-            "formatter": "main",
+            "formatter": "minimal",
         },
         "access_logs": {
             "level": "INFO",
