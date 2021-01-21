@@ -32,6 +32,10 @@ def get_bool_from_env(name, default_value):
     return default_value
 
 
+# Project Paths
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 # Environment Variables
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = get_bool_from_env("DEBUG", True)
@@ -39,18 +43,13 @@ DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", False)
 USE_SSL = get_bool_from_env("USE_SSL", False)
-DATA_DIR = os.environ.get("DATA_DIR", "")
+DATA_DIR = os.environ.get("DATA_DIR", BASE_DIR)
 
 
 # Logging
-if DATA_DIR == "":
-    LOG_DIR = "logs/"
-elif DATA_DIR.endswith("/"):
-    LOG_DIR = DATA_DIR + "logs"
-elif not DATA_DIR.endswith("/"):
-    LOG_DIR = DATA_DIR + "/logs"
-CONREQ_LOG_FILE = LOG_DIR + "conreq.log"
-ACCESS_LOG_FILE = LOG_DIR + "access.log"
+LOG_DIR = os.path.join(DATA_DIR, "logs")
+CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
+ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
 
 # Log level
 if DEBUG:
@@ -149,12 +148,6 @@ LOGGING = {
         },
     },
 }
-
-
-# Project Paths
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if not DATA_DIR:
-    DATA_DIR = BASE_DIR
 
 
 # Security Settings
