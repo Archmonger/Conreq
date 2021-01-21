@@ -1,7 +1,7 @@
 from threading import Thread
 from time import sleep
 
-from conreq.apps.helpers import (
+from conreq.helpers.views import (
     generate_context,
     obtain_sonarr_parameters,
     preprocess_arr_result,

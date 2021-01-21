@@ -3,7 +3,7 @@ from random import shuffle
 
 import tmdbsimple as tmdb
 from conreq.core import cache, log
-from conreq.core.generic_tools import is_key_value_in_list, obtain_key_from_cache_key
+from conreq.helpers.generic import is_key_value_in_list, obtain_key_from_cache_key
 from conreq.core.thread_helper import ReturnThread, threaded_execution
 
 # Globals
@@ -446,7 +446,7 @@ class ContentDiscovery:
                 api_results = tmdb.TV(tmdb_id).keywords()
 
                 # Check if the content contains Keyword: Anime
-                if is_key_value_in_list(api_results["results"], "name", "anime"):
+                if is_key_value_in_list("name", "anime", api_results["results"]):
                     return True
 
                 # Check if fallback method is enabled
@@ -454,7 +454,7 @@ class ContentDiscovery:
                     tv_info = tmdb.TV(tmdb_id).info()
                     # Check if genere is Animation and Country is Japan
                     if (
-                        is_key_value_in_list(tv_info["genres"], "name", "Animation")
+                        is_key_value_in_list("name", "Animation", tv_info["genres"])
                         and "JP" in tv_info["origin_country"]
                     ):
                         return True
@@ -464,7 +464,7 @@ class ContentDiscovery:
                 api_results = tmdb.Movies(tmdb_id).keywords()
 
                 # Check if the content contains Keyword: Anime
-                if is_key_value_in_list(api_results["keywords"], "name", "anime"):
+                if is_key_value_in_list("name", "anime", api_results["keywords"]):
                     return True
 
                 # Check if fallback method is enabled
@@ -473,9 +473,9 @@ class ContentDiscovery:
 
                     # Check if genere is Animation and Country is Japan
                     if is_key_value_in_list(
-                        movie_info["genres"], "name", "Animation"
+                        "name", "Animation", movie_info["genres"]
                     ) and is_key_value_in_list(
-                        movie_info["production_countries"], "iso_3166_1", "JP"
+                        "iso_3166_1", "JP", movie_info["production_countries"]
                     ):
                         return True
 

@@ -6,7 +6,7 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.core.exceptions import ValidationError
 from htmlmin.minify import html_minify
 
-from conreq.apps.helpers import obtain_radarr_parameters, obtain_sonarr_parameters
+from conreq.helpers.views import obtain_radarr_parameters, obtain_sonarr_parameters
 from conreq.apps.more_info.views import series_modal
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.content_discovery import ContentDiscovery

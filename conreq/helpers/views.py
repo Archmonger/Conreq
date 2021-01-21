@@ -6,7 +6,7 @@ from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core import cache, log
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
-from conreq.core.generic_tools import is_key_value_in_list
+from conreq.helpers.generic import is_key_value_in_list
 from markdown import Markdown
 
 __logger = log.get_logger(__name__)
@@ -214,7 +214,7 @@ def preprocess_arr_result(arr_result):
         and len(arr_result["images"]) != 0
     ):
         backdrop = is_key_value_in_list(
-            arr_result["images"], "coverType", "fanart", return_item=True
+            "coverType", "fanart", arr_result["images"], return_item=True
         )
         if backdrop is not False:
             arr_result["backdropPath"] = backdrop["url"]
@@ -376,14 +376,14 @@ def obtain_sonarr_parameters(
     if is_anime:
         series_type = "Anime"
         sonarr_root = is_key_value_in_list(
-            "id", conreq_config.sonarr_anime_folder, all_root_dirs
+            "id", conreq_config.sonarr_anime_folder, all_root_dirs, return_item=True
         )["path"]
         sonarr_profile_id = conreq_config.sonarr_anime_quality_profile
 
     else:
         series_type = "Standard"
         sonarr_root = is_key_value_in_list(
-            "id", conreq_config.sonarr_tv_folder, all_root_dirs
+            "id", conreq_config.sonarr_tv_folder, all_root_dirs, return_item=True
         )["path"]
         sonarr_profile_id = conreq_config.sonarr_tv_quality_profile
 
@@ -408,13 +408,13 @@ def obtain_radarr_parameters(
 
     if is_anime:
         radarr_root = is_key_value_in_list(
-            "id", conreq_config.radarr_anime_folder, all_root_dirs
+            "id", conreq_config.radarr_anime_folder, all_root_dirs, return_item=True
         )["path"]
         radarr_profile_id = conreq_config.radarr_anime_quality_profile
 
     else:
         radarr_root = is_key_value_in_list(
-            "id", conreq_config.radarr_movies_folder, all_root_dirs
+            "id", conreq_config.radarr_movies_folder, all_root_dirs, return_item=True
         )["path"]
         radarr_profile_id = conreq_config.radarr_movies_quality_profile
 

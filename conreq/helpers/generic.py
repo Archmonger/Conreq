@@ -18,7 +18,7 @@ def obtain_key_from_cache_key(cache_key):
     return cache_key[cache_key.find("_key") + len("_key") :]
 
 
-def is_key_value_in_list(search_list, key, value, return_item=False):
+def is_key_value_in_list(key, value, search_list, return_item=False):
     # Iterate through each result and check for the key/value pair
     for item in search_list:
         if item.__contains__(key) and item[key] == value:

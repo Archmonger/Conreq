@@ -1,7 +1,7 @@
 import os
 import secrets
 
-from conreq.apps.helpers import generate_context
+from conreq.helpers.views import generate_context
 from conreq.apps.server_settings.models import ConreqConfig
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse

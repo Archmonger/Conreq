@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 from threading import Thread
 
-from conreq.apps.helpers import (
+from conreq.helpers.views import (
     convert_card_to_tmdb,
     generate_context,
     set_many_conreq_status,
