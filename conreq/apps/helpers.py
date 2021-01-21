@@ -356,10 +356,6 @@ def convert_card_to_tmdb(index, all_results):
             pass
 
 
-def find_key_val_in_list(key, value, search_list):
-    return list(filter(lambda x: x[key] == value, search_list))[0]
-
-
 def obtain_sonarr_parameters(
     content_discovery,
     content_manager,
@@ -379,14 +375,14 @@ def obtain_sonarr_parameters(
 
     if is_anime:
         series_type = "Anime"
-        sonarr_root = find_key_val_in_list(
+        sonarr_root = is_key_value_in_list(
             "id", conreq_config.sonarr_anime_folder, all_root_dirs
         )["path"]
         sonarr_profile_id = conreq_config.sonarr_anime_quality_profile
 
     else:
         series_type = "Standard"
-        sonarr_root = find_key_val_in_list(
+        sonarr_root = is_key_value_in_list(
             "id", conreq_config.sonarr_tv_folder, all_root_dirs
         )["path"]
         sonarr_profile_id = conreq_config.sonarr_tv_quality_profile
@@ -411,13 +407,13 @@ def obtain_radarr_parameters(
     all_root_dirs = content_manager.radarr_root_dirs()
 
     if is_anime:
-        radarr_root = find_key_val_in_list(
+        radarr_root = is_key_value_in_list(
             "id", conreq_config.radarr_anime_folder, all_root_dirs
         )["path"]
         radarr_profile_id = conreq_config.radarr_anime_quality_profile
 
     else:
-        radarr_root = find_key_val_in_list(
+        radarr_root = is_key_value_in_list(
             "id", conreq_config.radarr_movies_folder, all_root_dirs
         )["path"]
         radarr_profile_id = conreq_config.radarr_movies_quality_profile
