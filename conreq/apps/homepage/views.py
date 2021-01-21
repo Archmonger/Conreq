@@ -1,7 +1,7 @@
 import os
 import secrets
 
-from conreq.helpers.views import generate_context
+from conreq.utils.apps import generate_context
 from conreq.apps.server_settings.models import ConreqConfig
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -43,7 +43,7 @@ def initialization(request):
     # Run the first time initialization if needed
     if conreq_config.conreq_initialized is False:
         pass
-        # Generate the first run template
+        # Display the first run template
         # template = loader.get_template("initialization/first_run.html")
         # return HttpResponse(template.render({}, request))
 

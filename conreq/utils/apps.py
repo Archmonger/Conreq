@@ -6,7 +6,7 @@ from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core import cache, log
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
-from conreq.helpers.generic import is_key_value_in_list
+from conreq.utils.generic import is_key_value_in_list
 from markdown import Markdown
 
 __logger = log.get_logger(__name__)

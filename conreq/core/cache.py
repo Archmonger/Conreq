@@ -1,6 +1,6 @@
 """Conreq Caching: Simplified caching module."""
 from conreq.core import log
-from conreq.helpers.generic import generate_cache_key, obtain_key_from_cache_key
+from conreq.utils.generic import generate_cache_key, obtain_key_from_cache_key
 from conreq.core.thread_helper import ReturnThread
 from django.core.cache import cache
 
