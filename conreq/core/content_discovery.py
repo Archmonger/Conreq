@@ -35,8 +35,7 @@ class ContentDiscovery:
         tmdb.API_KEY = "112fd4c96274603f68620c78067d5422"
 
         # Creating a logger (for log files)
-        self.__logger = log.get_logger("conreq.core.content_discovery")
-        log.configure(self.__logger, log.DEBUG)
+        self.__logger = log.get_logger(__name__)
 
     # Public class methods
     def all(self, page_number, page_multiplier=1):

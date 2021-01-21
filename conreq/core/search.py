@@ -39,8 +39,7 @@ class Search:
         self.__damerau = Damerau()
 
         # Create a logger (for log files)
-        self.__logger = log.get_logger("conreq.core.search")
-        log.configure(self.__logger, log.DEBUG)
+        self.__logger = log.get_logger(__name__)
 
     def all(self, query):
         """Search Sonarr and Radarr for a query. Sort the

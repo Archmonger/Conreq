@@ -9,8 +9,7 @@ from conreq.core.content_manager import ContentManager
 from conreq.core.generic_tools import is_key_value_in_list
 from markdown import Markdown
 
-__logger = log.get_logger("conreq.apps.helpers")
-log.configure(__logger, log.DEBUG)
+__logger = log.get_logger(__name__)
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
 TMDB_POSTER_300_URL = "https://image.tmdb.org/t/p/w300"

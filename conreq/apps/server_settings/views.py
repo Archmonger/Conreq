@@ -8,8 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.template import loader
 
-__logger = log.get_logger("conreq.apps.server_settings.views")
-log.configure(__logger, log.DEBUG)
+__logger = log.get_logger(__name__)
 
 # Create your views here.
 @login_required

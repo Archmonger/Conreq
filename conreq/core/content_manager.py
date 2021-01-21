@@ -34,8 +34,7 @@ class ContentManager:
         )
 
         # Creating a logger (for log files)
-        self.__logger = log.get_logger("conreq.core.content_manager")
-        log.configure(self.__logger, log.DEBUG)
+        self.__logger = log.get_logger(__name__)
 
         # Periodically run a task to re-populate the cache every minute
         if periodic_refresh:

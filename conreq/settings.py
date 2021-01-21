@@ -39,12 +39,116 @@ DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", False)
 USE_SSL = get_bool_from_env("USE_SSL", False)
-DATA_DIR = os.environ.get("DATA_DIR")
+DATA_DIR = os.environ.get("DATA_DIR", "")
+
 
 # Logging
-log.configure(log.get_logger(), log.INFO)
+if DATA_DIR == "":
+    LOG_DIR = "logs/"
+elif DATA_DIR.endswith("/"):
+    LOG_DIR = DATA_DIR + "logs"
+elif not DATA_DIR.endswith("/"):
+    LOG_DIR = DATA_DIR + "/logs"
+CONREQ_LOG_FILE = LOG_DIR + "conreq.log"
+ACCESS_LOG_FILE = LOG_DIR + "access.log"
+
+# Log level
 if DEBUG:
-    log.console_stream(log.get_logger(), log.WARNING)
+    LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+else:
+    LOG_LEVEL = os.environ.get("LOG_LEVEL", "WARNING")
+
+# Configure the logging backend
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "main": {
+            "format": "%(asctime)s %(levelname)s %(name)s: %(message)s",
+        },
+    },
+    "handlers": {
+        "conreq_logs": {
+            "level": LOG_LEVEL,
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "main",
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 5,
+            "filename": CONREQ_LOG_FILE,
+        },
+        "console": {
+            "level": LOG_LEVEL,
+            "class": "logging.StreamHandler",
+            "formatter": "main",
+        },
+        "access_logs": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "main",
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 5,
+            "filename": ACCESS_LOG_FILE,
+        },
+    },
+    "root": {
+        "handlers": ["console", "conreq_logs"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "django": {
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+        "django.request": {
+            "level": "INFO",
+            "handlers": ["console", "access_logs"],
+            "propagate": False,
+        },
+        "django.server": {
+            "level": "INFO",
+            "handlers": ["console", "access_logs"],
+            "propagate": False,
+        },
+        "django.channels.server": {
+            "level": "INFO",
+            "handlers": ["console", "access_logs"],
+            "propagate": False,
+        },
+        "django.security.*": {
+            "level": "INFO",
+            "handlers": ["console", "access_logs"],
+            "propagate": False,
+        },
+        "django.db.backends": {
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+        "django.db.backends.schema": {
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+        "conreq": {
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+        "conreq.core": {
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+        "conreq.core.*": {
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+        "conreq.apps": {
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+        "conreq.apps.*": {
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+    },
+}
 
 
 # Project Paths

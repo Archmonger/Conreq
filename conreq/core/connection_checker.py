@@ -41,8 +41,7 @@ class ConnectionChecker:
         self.__radarr_api_key = radarr_api_key
 
         # Creating a logger (for log files)
-        self.__logger = log.get_logger("conreq.core.connection_checker")
-        log.configure(self.__logger, log.DEBUG)
+        self.__logger = log.get_logger(__name__)
 
         # Create some regex rules to validate links
         self.__url_validator = re.compile(

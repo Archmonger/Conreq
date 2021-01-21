@@ -8,8 +8,7 @@ from django.core.cache import cache
 DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
 
 # Creating a logger (for log files)
-__logger = log.get_logger("conreq.core.cache")
-log.configure(__logger, log.DEBUG)
+__logger = log.get_logger(__name__)
 
 
 def handler(
@@ -36,7 +35,7 @@ def handler(
     # Looks through cache and will perform a search if needed.
     try:
         log.handler(
-            "Accessed cache " + cache_name,
+            cache_name + " - Accessed.",
             log.DEBUG,
             __logger,
         )
@@ -62,7 +61,7 @@ def handler(
                     )
                     log.handler(
                         cache_name
-                        + " multi-execution generated cache key "
+                        + " - Multi-execution generated cache key "
                         + cache_key,
                         log.DEBUG,
                         __logger,
@@ -73,8 +72,9 @@ def handler(
                 cached_results = cache.get_many(requested_keys)
                 log.handler(
                     cache_name
-                    + " multi-execution available keys: "
-                    + str(len(cached_results)),
+                    + " - Multi-execution detected "
+                    + str(len(cached_results))
+                    + " available keys.",
                     log.INFO,
                     __logger,
                 )
@@ -100,8 +100,9 @@ def handler(
                 if bool(missing_keys):
                     log.handler(
                         cache_name
-                        + " multi-execution missing keys: "
-                        + str(len(missing_keys)),
+                        + " - Multi-execution detected "
+                        + str(len(missing_keys))
+                        + " missing keys.",
                         log.INFO,
                         __logger,
                     )
@@ -113,7 +114,7 @@ def handler(
                 # If results were none, log it.
                 if cached_results is None:
                     log.handler(
-                        cache_name + " multi-execution had no results!",
+                        cache_name + " - Multi-execution generated no results!",
                         log.WARNING,
                         __logger,
                     )
@@ -124,7 +125,7 @@ def handler(
         cache_key = generate_cache_key(cache_name, args, kwargs, page_key)
 
         log.handler(
-            cache_name + " generated cache key " + cache_key,
+            cache_name + " - Generated cache key " + cache_key,
             log.DEBUG,
             __logger,
         )
@@ -133,7 +134,7 @@ def handler(
         # No function was provided, just return bare cache value
         if function is None:
             log.handler(
-                cache_name + " requested raw cache values.",
+                cache_name + " - Requested raw cache values.",
                 log.DEBUG,
                 __logger,
             )
@@ -144,7 +145,7 @@ def handler(
         if cached_results is None or force_update_cache:
             function_results = function(*args, **kwargs)
             log.handler(
-                cache_name + " function " + function.__name__ + " executed!",
+                cache_name + " - Function " + function.__name__ + " has been executed!",
                 log.INFO,
                 __logger,
             )
@@ -153,7 +154,7 @@ def handler(
 
         if cached_results is None:
             log.handler(
-                cache_name + " is not in the cache!",
+                cache_name + " - No cached results found!",
                 log.INFO,
                 __logger,
             )
@@ -162,7 +163,7 @@ def handler(
         return cached_results
 
     except:
-        # If the search threw an exception, return a cached value.
+        # If the function threw an exception, return none.
         if isinstance(function, dict):
             log.handler(
                 "Function list failed to execute!",
