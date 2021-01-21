@@ -1,5 +1,5 @@
 """Conreq Caching: Simplified caching module."""
-from conreq.core import log
+from conreq.utils import log
 from conreq.utils.generic import (
     ReturnThread,
     generate_cache_key,

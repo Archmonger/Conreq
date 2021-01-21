@@ -3,9 +3,9 @@ from io import StringIO
 from threading import Thread
 
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core import cache, log
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
+from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
 from markdown import Markdown
 

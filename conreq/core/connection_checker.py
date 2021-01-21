@@ -3,7 +3,7 @@ import re
 from time import sleep
 
 import requests
-from conreq.core import log
+from conreq.utils import log
 
 CONNECTION_RETRY_TIMEOUT = 1
 MAX_CONNECTION_RETRIES = 5

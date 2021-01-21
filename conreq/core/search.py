@@ -4,7 +4,7 @@ from math import floor, log10
 from threading import Thread
 
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core import cache, log
+from conreq.utils import cache, log
 from conreq.utils.generic import ReturnThread, clean_string
 from PyArr import RadarrAPI, SonarrAPI
 from similarity.damerau import Damerau

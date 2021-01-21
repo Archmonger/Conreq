@@ -2,7 +2,7 @@
 from random import shuffle
 
 import tmdbsimple as tmdb
-from conreq.core import cache, log
+from conreq.utils import cache, log
 from conreq.utils.generic import (
     ReturnThread,
     is_key_value_in_list,

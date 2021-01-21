@@ -16,7 +16,6 @@ import secrets
 
 from django.core.management.utils import get_random_secret_key
 
-from conreq.core import log
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/

@@ -2,8 +2,8 @@
 from platform import platform
 
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core import log
 from conreq.core.content_manager import ContentManager
+from conreq.utils import log
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.template import loader

@@ -4,7 +4,7 @@ from threading import Thread
 from time import sleep
 
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core import cache, log
+from conreq.utils import cache, log
 from PyArr import RadarrAPI, SonarrAPI
 
 # Days, Hours, Minutes, Seconds
