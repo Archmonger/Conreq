@@ -1,6 +1,9 @@
 from threading import Thread
 from time import sleep
 
+from conreq.core.content_discovery import ContentDiscovery
+from conreq.core.content_manager import ContentManager
+from conreq.core.search import Search
 from conreq.utils.apps import (
     generate_context,
     obtain_sonarr_parameters,
@@ -9,10 +12,7 @@ from conreq.utils.apps import (
     set_many_conreq_status,
     set_single_conreq_status,
 )
-from conreq.core.content_discovery import ContentDiscovery
-from conreq.core.content_manager import ContentManager
-from conreq.core.search import Search
-from conreq.core.thread_helper import ReturnThread
+from conreq.utils.generic import ReturnThread
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader

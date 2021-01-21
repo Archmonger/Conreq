@@ -3,8 +3,12 @@ from random import shuffle
 
 import tmdbsimple as tmdb
 from conreq.core import cache, log
-from conreq.utils.generic import is_key_value_in_list, obtain_key_from_cache_key
-from conreq.core.thread_helper import ReturnThread, threaded_execution
+from conreq.utils.generic import (
+    ReturnThread,
+    is_key_value_in_list,
+    obtain_key_from_cache_key,
+    threaded_execution,
+)
 
 # Globals
 ANIME_CHECK_FALLBACK = True
