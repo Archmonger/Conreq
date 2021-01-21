@@ -3,7 +3,7 @@ from time import sleep
 
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
-from conreq.core.search import Search
+from conreq.core.content_search import Search
 from conreq.utils.apps import (
     generate_context,
     obtain_sonarr_parameters,
