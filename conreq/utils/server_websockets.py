@@ -163,6 +163,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 response["html"] = await database_sync_to_async(series_modal)(
                     tmdb_id=content["parameters"]["tmdb_id"],
                     tvdb_id=content["parameters"]["tvdb_id"],
+                    user=self.scope["user"],
                 )
                 await self.send_json(response)
 

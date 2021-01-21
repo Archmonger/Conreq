@@ -130,48 +130,49 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
-# TODO: Pass down the user object and validate login status
-def series_modal(tmdb_id=None, tvdb_id=None):
-    content_discovery = ContentDiscovery()
-    content_manager = ContentManager()
-    # Determine the TVDB ID
-    if tvdb_id is not None:
-        pass
+def series_modal(user, tmdb_id=None, tvdb_id=None):
+    # Validate login status
+    if user.is_authenticated:
+        content_discovery = ContentDiscovery()
+        content_manager = ContentManager()
+        # Determine the TVDB ID
+        if tvdb_id is not None:
+            pass
 
-    elif tmdb_id is not None:
-        tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
+        elif tmdb_id is not None:
+            tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
 
-    # Check if the show is already within Sonarr's collection
-    requested_show = content_manager.get(tvdb_id=tvdb_id)
+        # Check if the show is already within Sonarr's collection
+        requested_show = content_manager.get(tvdb_id=tvdb_id)
 
-    # If it doesn't already exists, add then add it
-    if requested_show is None:
+        # If it doesn't already exists, add then add it
+        if requested_show is None:
 
-        sonarr_params = obtain_sonarr_parameters(
-            content_discovery, content_manager, tmdb_id, tvdb_id
-        )
-
-        requested_show = content_manager.add(
-            tvdb_id=tvdb_id,
-            quality_profile_id=sonarr_params["sonarr_profile_id"],
-            root_dir=sonarr_params["sonarr_root"],
-            series_type=sonarr_params["series_type"],
-            season_folders=sonarr_params["season_folders"],
-        )
-
-    # Keep refreshing until we get the series from Sonarr
-    series = content_manager.get(tvdb_id=tvdb_id, obtain_season_info=True)
-    if series is None:
-        series_fetch_retries = 0
-        while series is None:
-            if series_fetch_retries > MAX_SERIES_FETCH_RETRIES:
-                break
-            series_fetch_retries = series_fetch_retries + 1
-            sleep(0.5)
-            series = content_manager.get(
-                tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
+            sonarr_params = obtain_sonarr_parameters(
+                content_discovery, content_manager, tmdb_id, tvdb_id
             )
-            print("Retrying content fetch")
 
-    context = generate_context({"seasons": series["seasons"]})
-    return render_to_string("modal/series_selection.html", context)
+            requested_show = content_manager.add(
+                tvdb_id=tvdb_id,
+                quality_profile_id=sonarr_params["sonarr_profile_id"],
+                root_dir=sonarr_params["sonarr_root"],
+                series_type=sonarr_params["series_type"],
+                season_folders=sonarr_params["season_folders"],
+            )
+
+        # Keep refreshing until we get the series from Sonarr
+        series = content_manager.get(tvdb_id=tvdb_id, obtain_season_info=True)
+        if series is None:
+            series_fetch_retries = 0
+            while series is None:
+                if series_fetch_retries > MAX_SERIES_FETCH_RETRIES:
+                    break
+                series_fetch_retries = series_fetch_retries + 1
+                sleep(0.5)
+                series = content_manager.get(
+                    tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
+                )
+                print("Retrying content fetch")
+
+        context = generate_context({"seasons": series["seasons"]})
+        return render_to_string("modal/series_selection.html", context)
