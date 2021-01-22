@@ -3,18 +3,22 @@ import secrets
 from channels.auth import AnonymousUser, login
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
-from django.core.exceptions import ValidationError
-from htmlmin.minify import html_minify
-
-from conreq.utils.apps import obtain_radarr_parameters, obtain_sonarr_parameters
 from conreq.apps.more_info.views import series_modal
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
+from conreq.utils import log
+from conreq.utils.apps import obtain_radarr_parameters, obtain_sonarr_parameters
+from django.core.exceptions import ValidationError
+from htmlmin.minify import html_minify
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
     """Communicates with the browser to perform actions on-demand."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__logger = log.get_logger(__name__)
 
     # INITIAL CONNECTION
     async def connect(self):
@@ -28,9 +32,13 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             await login(self.scope, self.scope["user"])
             # Save the session to the database
             await database_sync_to_async(self.scope["session"].save)()
-        except Exception as exception:
+        except:
             # User could not be logged in
-            print(str(exception))
+            log.handler(
+                "Websocked failed to connect, perhaps login failure.",
+                log.ERROR,
+                self.__logger,
+            )
             await self.__forbidden()
 
     # SENDING COMMANDS
@@ -46,7 +54,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
     # RECEIVING COMMANDS
     async def receive_json(self, content, **kwargs):
         """When the browser attempts to send a message to the server."""
-        print(content)
+        log.handler(
+            content,
+            log.INFO,
+            self.__logger,
+        )
         # Reject users that aren't logged in
         if (
             isinstance(self.scope["user"], AnonymousUser)
@@ -68,7 +80,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 await self.__server_settings(content)
 
             else:
-                print("Invalid websocket command")
+                log.handler(
+                    "Invalid websocket command.",
+                    log.ERROR,
+                    self.__logger,
+                )
 
     # COMMAND RESPONSE: REQUEST CONTENT
     async def __request_content(self, content):
@@ -106,10 +122,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                             seasons=content["parameters"]["seasons"],
                             episode_ids=content["parameters"]["episode_ids"],
                         )
-                        print("requested tv")
                     else:
-                        print(
-                            "Show was added to Sonarr, but Sonarr did not return an ID!"
+                        log.handler(
+                            "Show was added to Sonarr, but Sonarr did not return an ID!",
+                            log.ERROR,
+                            self.__logger,
                         )
                 else:
                     content_manager.request(
@@ -139,7 +156,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 if new_movie.__contains__("id"):
                     content_manager.request(radarr_id=new_movie["id"])
                 else:
-                    print("Movie was added to Radarr, but Radarr did not return an ID!")
+                    log.handler(
+                        "Movie was added to Radarr, but Radarr did not return an ID!",
+                        log.ERROR,
+                        self.__logger,
+                    )
 
             # If it already existed, just request it
             else:
@@ -172,9 +193,17 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 pass
 
             else:
-                print("Invalid modal type!")
+                log.handler(
+                    "Invalid modal type!",
+                    log.ERROR,
+                    self.__logger,
+                )
         else:
-            print("Generate modal missing an ID!")
+            log.handler(
+                "Generate modal command was missing an ID!",
+                log.ERROR,
+                self.__logger,
+            )
 
     # COMMAND RESPONSE: SERVER SETTINGS
     async def __server_settings(self, content):
@@ -313,10 +342,12 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
                 # Unhandled setting failure
                 else:
-                    print(
+                    log.handler(
                         'Server setting "'
                         + content["parameters"]["setting_name"]
-                        + '" is currently not handled!'
+                        + '" is currently not handled!',
+                        log.WARNING,
+                        self.__logger,
                     )
                     response["success"] = False
                     response["error_message"] = "Unhandled server setting!"
@@ -337,8 +368,11 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
             except:
                 response["success"] = False
-                # TODO: Add logging
-                print("Unknown error has occurred within server websockets")
+                log.handler(
+                    "Unknown error has occurred within server websocket!",
+                    log.ERROR,
+                    self.__logger,
+                )
 
             # Send a message to the user
             await self.send_json(response)

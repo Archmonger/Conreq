@@ -13,7 +13,7 @@ CRITICAL = logging.CRITICAL
 get_logger = logging.getLogger
 
 
-def handler(message, level, logger):
+def handler(msg, level, logger):
     """Submits a message to the log handler.
 
     Args:
@@ -22,7 +22,7 @@ def handler(message, level, logger):
         level: Logging module log level (ex. logging.WARNING)
     """
     # Remove trailing whitespace from the message
-    message = message.rstrip()
+    message = str(msg).rstrip()
 
     # Log within a different stream depending on severity
     if level == DEBUG:
