@@ -6,7 +6,24 @@
 - Install [Visual Studio Code](https://code.visualstudio.com/)
 - _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_ -> _MSVC_ and _Windows 10 SDK_)
 
-## Set up the environment
+## Set up the deployment environment
+
+Install through [Docker](https://github.com/Roxedus/docker-conreq).
+Available environment variables
+
+```javascript
+DEBUG = true
+DATA_DIR = /example/directory
+USE_ROLLING_SECRET_KEY = true
+DB_ENGINE = MYSQL (or SQLITE3)
+MYSQL_CONFIG_FILE = /location/to/file.cnf
+BASE_URL = requests
+USE_SSL = false
+SSL_CERT = /path/to/cert.pem
+SSL_KEY = /path/to/key.poem
+```
+
+## Set up the development environment
 
 1. Pull the repository from GitHub.
 2. Navigate to the repository folder. At this folder location, open PowerShell as administrator.
