@@ -15,7 +15,7 @@ def discover_all(request):
     page = int(request.GET.get("page", 1))
 
     # Search for TV content
-    tmdb_results = content_discovery.all(page, page_multiplier=2)["results"]
+    tmdb_results = content_discovery.all(page)["results"]
 
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)
@@ -38,7 +38,7 @@ def discover_tv(request):
     page = int(request.GET.get("page", 1))
 
     # Search for TV content
-    tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
+    tmdb_results = content_discovery.tv(page)["results"]
 
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)
@@ -61,7 +61,7 @@ def discover_movies(request):
     page = int(request.GET.get("page", 1))
 
     # Search for TV content
-    tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
+    tmdb_results = content_discovery.movies(page)["results"]
 
     # Set conreq status for all cards
     set_many_conreq_status(tmdb_results)
