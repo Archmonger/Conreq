@@ -1,5 +1,7 @@
 # Conreq Public Alpha Instructions
 
+Want to contribute? Check out our [Development Guide](https://github.com/Archmonger/Conreq/wiki/Development-Guide) and join us on [Discord](https://discord.gg/stdT9Ug9ar)!
+
 ## Prerequisites
 
 - Install [Python 3.8](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
