@@ -93,7 +93,7 @@ LOGGING = {
     },
     "root": {
         "handlers": ["console", "conreq_logs"],
-        "level": "WARNING",
+        "level": "INFO",
     },
     "loggers": {
         "django": {
