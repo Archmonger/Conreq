@@ -650,7 +650,7 @@ class ContentManager:
 
         log.handler(
             "Could not determine conreqStatus!\n" + str(content),
-            log.WARNING,
+            log.INFO,
             self.__logger,
         )
         content["conreqStatus"] = "Unknown"

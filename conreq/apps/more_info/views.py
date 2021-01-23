@@ -4,6 +4,7 @@ from time import sleep
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.content_search import Search
+from conreq.utils import log
 from conreq.utils.apps import (
     generate_context,
     obtain_sonarr_parameters,
@@ -21,6 +22,7 @@ from django.template.loader import render_to_string
 # Globals
 MAX_SERIES_FETCH_RETRIES = 20
 
+__logger = log.get_logger(__name__)
 
 # Create your views here.
 @login_required
@@ -172,7 +174,11 @@ def series_modal(user, tmdb_id=None, tvdb_id=None):
                 series = content_manager.get(
                     tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
                 )
-                print("Retrying content fetch")
+                log.handler(
+                    "Retrying content fetch!",
+                    log.INFO,
+                    __logger,
+                )
 
         context = generate_context({"seasons": series["seasons"]})
         return render_to_string("modal/series_selection.html", context)
