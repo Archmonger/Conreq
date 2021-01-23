@@ -1,6 +1,6 @@
 # Conreq Public Alpha Instructions
 
-Want to contribute? Check out our [Development Guide](https://github.com/Archmonger/Conreq/wiki/Development-Guide) and join us on [Discord](https://discord.gg/stdT9Ug9ar)!
+Want to contribute? Check out our [Development Guide](https://github.com/Archmonger/Conreq/wiki/Development-Guide) and join us on [Discord](https://discord.gg/b4B7zFCB5E)!
 
 ## Prerequisites
 
