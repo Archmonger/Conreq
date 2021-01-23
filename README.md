@@ -9,13 +9,13 @@
 ## Set up the deployment environment
 
 Install through [Docker](https://github.com/Roxedus/docker-conreq).
-Available environment variables
+Available environment variables:
 
 ```javascript
 DEBUG = true
 DATA_DIR = /example/directory
 USE_ROLLING_SECRET_KEY = true
-DB_ENGINE = MYSQL (or SQLITE3)
+DB_ENGINE = MYSQL (defaults to SQLITE3)
 MYSQL_CONFIG_FILE = /location/to/file.cnf
 BASE_URL = requests
 USE_SSL = false
