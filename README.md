@@ -55,6 +55,11 @@ SSL_KEY = /path/to/key.poem               //default: none
    - Ctrl+Shift+P -> Python: Select Linter -> `pylint`
    - Settings -> Linting: Pylint Args -> Add Item -> `--disable=line-too-long,bare-except,bad-continuation`
    
+# UX Design Mockups   
+[Desktop](https://xd.adobe.com/view/17a8150c-a224-467c-af36-36171641d656-42fb/)
+
+[Mobile](https://xd.adobe.com/view/aaef68b5-ddb9-4987-a758-771215bfe578-ffbc/)
+   
 # Screenshots
 ![Login screen](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_1.png?raw=true)
 ![Discover tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_2.png?raw=true)
