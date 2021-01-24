@@ -2,13 +2,7 @@
 
 Want to contribute? Check out our [Development Guide](https://github.com/Archmonger/Conreq/wiki/Development-Guide) and join us on [Discord](https://discord.gg/b4B7zFCB5E)!
 
-## Prerequisites
-
-- Install [Python 3.8](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
-- Install [Visual Studio Code](https://code.visualstudio.com/)
-- _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_ -> _MSVC_ and _Windows 10 SDK_)
-
-## Set up the deployment environment
+## Installation (Deployment Environment)
 
 Install through [Docker](https://github.com/Roxedus/docker-conreq).
 Available environment variables:
@@ -25,7 +19,15 @@ SSL_CERT = /path/to/cert.pem              //default: none
 SSL_KEY = /path/to/key.poem               //default: none
 ```
 
-## Set up the development environment
+## Creating a Development Environment
+
+### Software
+
+- Install [Python 3.8](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
+- Install [Visual Studio Code](https://code.visualstudio.com/)
+- _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_ -> _MSVC_ and _Windows 10 SDK_)
+
+### Setting Up the Environment
 
 1. Pull the repository from GitHub.
 2. Navigate to the repository folder. At this folder location, open PowerShell as administrator.
@@ -39,14 +41,14 @@ SSL_KEY = /path/to/key.poem               //default: none
 10. Create the Django admin account by typing `./venv/Scripts/python.exe manage.py createsuperuser`.
 11. Run the Django project by typing `./venv/Scripts/python.exe manage.py runserver`
 
-## Visual Studio Code Extensions (Optional)
+### Visual Studio Code Extensions (Optional)
 
 - GitHub
 - GitLens
 - Python
 - MagicPython
 
-## Visual Studio Code Settings (Optional)
+### Visual Studio Code Settings (Optional)
 
 1. If your terminal does not show venv (ex. `(venv) ...`), type `./venv/Scripts/Activate`.
 2. Type `pip install -r requirements_dev.txt` to install Python packages within the virtual environment.
