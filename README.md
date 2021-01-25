@@ -16,7 +16,7 @@ MYSQL_CONFIG_FILE = /location/to/file.cnf //default: none
 BASE_URL = requests                       //default: none
 USE_SSL = true                            //default: false
 SSL_CERT = /path/to/cert.pem              //default: none
-SSL_KEY = /path/to/key.poem               //default: none
+SSL_KEY = /path/to/key.pem                //default: none
 ```
 
 ## Creating a Development Environment
