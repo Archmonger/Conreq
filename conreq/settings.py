@@ -72,7 +72,7 @@ LOGGING = {
     },
     "handlers": {
         "conreq_logs": {
-            "level": LOG_LEVEL,
+            "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "main",
             "maxBytes": 1024 * 1024 * 5,  # 5 MB
@@ -80,7 +80,7 @@ LOGGING = {
             "filename": CONREQ_LOG_FILE,
         },
         "console": {
-            "level": LOG_LEVEL,
+            "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "minimal",
         },
@@ -99,7 +99,7 @@ LOGGING = {
     },
     "loggers": {
         "django": {
-            "level": LOG_LEVEL,
+            "level": "INFO",
             "propagate": True,
         },
         "django.request": {
@@ -116,6 +116,10 @@ LOGGING = {
             "level": "INFO",
             "handlers": ["console", "access_logs"],
             "propagate": False,
+        },
+        "daphne": {
+            "level": "INFO",
+            "propagate": True,
         },
         "django.security.*": {
             "level": "INFO",
