@@ -50,7 +50,7 @@ LOG_DIR = os.path.join(DATA_DIR, "logs")
 CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
 ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
 if not os.path.exists(LOG_DIR):
-    os.mkdir(LOG_DIR)
+    os.makedirs(LOG_DIR)
 
 # Log level
 if DEBUG:
