@@ -1,5 +1,3 @@
-import os
-
 from conreq.utils.generic import get_base_url
 from django.urls import path
 

@@ -1,4 +1,3 @@
-import os
 import secrets
 
 from conreq.apps.server_settings.models import ConreqConfig
