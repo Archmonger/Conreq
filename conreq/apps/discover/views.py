@@ -1,11 +1,14 @@
 # from django.shortcuts import render
-from conreq.utils.apps import generate_context, set_many_conreq_status
 from conreq.core.content_discovery import ContentDiscovery
+from conreq.utils.apps import generate_context, set_many_conreq_status
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
+from django.views.decorators.cache import cache_page
+
 
 # Create your views here.
+@cache_page(60)
 @login_required
 def discover_all(request):
     content_discovery = ContentDiscovery()
@@ -29,6 +32,7 @@ def discover_all(request):
     return HttpResponse(template.render(context, request))
 
 
+@cache_page(60)
 @login_required
 def discover_tv(request):
     content_discovery = ContentDiscovery()
@@ -52,6 +56,7 @@ def discover_tv(request):
     return HttpResponse(template.render(context, request))
 
 
+@cache_page(60)
 @login_required
 def discover_movies(request):
     content_discovery = ContentDiscovery()

@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.template.loader import render_to_string
+from django.views.decorators.cache import cache_page
 
 # Globals
 MAX_SERIES_FETCH_RETRIES = 20
@@ -25,6 +26,7 @@ MAX_SERIES_FETCH_RETRIES = 20
 __logger = log.get_logger(__name__)
 
 # Create your views here.
+@cache_page(1 * 24 * 60 * 60)
 @login_required
 def more_info(request):
     content_discovery = ContentDiscovery()
