@@ -1,16 +1,15 @@
 import os
 import secrets
 
-from conreq.utils.apps import generate_context
 from conreq.apps.server_settings.models import ConreqConfig
+from conreq.utils.apps import generate_context
+from conreq.utils.generic import get_base_url
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
 
-BASE_URL = SECRET_KEY = os.environ.get("BASE_URL", "")
-if isinstance(BASE_URL, str) and BASE_URL and not BASE_URL.endswith("/"):
-    BASE_URL = BASE_URL + "/"
+BASE_URL = get_base_url()
 
 # Create your views here.
 def initialization(request):

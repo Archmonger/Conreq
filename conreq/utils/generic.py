@@ -1,3 +1,4 @@
+import os
 from re import sub as substitution
 from threading import Thread
 
@@ -85,3 +86,12 @@ def clean_string(string):
         return substitution(r"\W+", "", string).lower()
     except:
         return string
+
+
+def get_base_url():
+    base_url = os.environ.get("BASE_URL", "")
+    if isinstance(base_url, str) and base_url:
+        base_url = base_url.replace("/", "")
+        base_url = base_url + "/"
+    print("base url", base_url)
+    return base_url

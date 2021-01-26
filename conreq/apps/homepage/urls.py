@@ -1,12 +1,11 @@
 import os
 
+from conreq.utils.generic import get_base_url
 from django.urls import path
 
 from . import views
 
-BASE_URL = SECRET_KEY = os.environ.get("BASE_URL", "")
-if isinstance(BASE_URL, str) and BASE_URL and not BASE_URL.endswith("/"):
-    BASE_URL = BASE_URL + "/"
+BASE_URL = get_base_url()
 
 app_name = "homepage"
 

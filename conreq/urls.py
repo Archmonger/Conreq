@@ -19,6 +19,9 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
+from conreq.utils.generic import get_base_url
+
+
 # Helper Functions
 def get_bool_from_env(name, default_value):
     env_var = os.environ.get(name)
@@ -31,9 +34,7 @@ def get_bool_from_env(name, default_value):
 
 
 DEBUG = get_bool_from_env("DEBUG", True)
-BASE_URL = SECRET_KEY = os.environ.get("BASE_URL", "")
-if isinstance(BASE_URL, str) and BASE_URL and not BASE_URL.endswith("/"):
-    BASE_URL = BASE_URL + "/"
+BASE_URL = get_base_url()
 
 
 urlpatterns = [
