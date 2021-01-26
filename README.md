@@ -30,16 +30,14 @@ SSL_KEY = /path/to/key.pem                //default: none
 ### Setting Up the Environment
 
 1. Pull the repository from GitHub.
-2. Navigate to the repository folder. At this folder location, open PowerShell as administrator.
-3. Type `python -m venv venv` to create a virtual environment.
-4. _If using Windows:_ type `set-executionpolicy remotesigned` and select Yes to All to allow Python scripts to run on your computer.
+2. Open a terminal (ex. Command Prompt or PowerShell) as administrator at the root of the repository.
+3. _If using Windows:_ type `set-executionpolicy remotesigned` and select Yes to All to allow Python scripts to run on your computer.
+4. Type `python -m venv venv` to create a Python virtual environment.
 5. Type `./venv/Scripts/activate` to enter the virtual environment.
-6. Type `pip install -r requirements.txt` to install Python packages within the virtual environment.
-7. Open the project folder in Visual Studio Code (File -> Open Folder).
-8. Open up the terminal within VS code.
-9. Create the Django database by typing `./venv/Scripts/python.exe manage.py migrate`.
-10. Create the Django admin account by typing `./venv/Scripts/python.exe manage.py createsuperuser`.
-11. Run the Django project by typing `./venv/Scripts/python.exe manage.py runserver`
+6. Type `pip install -r requirements.txt` to install all Python dependencies within the virtual environment.
+7. Create and/or update the database by typing `python manage.py migrate`.
+8. Create the Conreq admin account by typing `python manage.py createsuperuser`.
+9. Run Conreq by typing `python manage.py runserver`
 
 ### Visual Studio Code Extensions (Optional)
 
