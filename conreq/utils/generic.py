@@ -52,6 +52,7 @@ def threaded_execution(function_list, args_list):
 
 
 def generate_cache_key(cache_name, cache_args, cache_kwargs, key):
+    """Generates a key to be used with django caching"""
     return clean_string(
         cache_name
         + "_args"
@@ -64,12 +65,12 @@ def generate_cache_key(cache_name, cache_args, cache_kwargs, key):
 
 
 def obtain_key_from_cache_key(cache_key):
-    # Returns values after the keyword "_key"
+    """Parses the cache key and returns any values after the string '_key'"""
     return cache_key[cache_key.find("_key") + len("_key") :]
 
 
 def is_key_value_in_list(key, value, search_list, return_item=False):
-    # Iterate through each result and check for the key/value pair
+    """Iterate through each result and check for the key/value pair"""
     for item in search_list:
         if item.__contains__(key) and item[key] == value:
             if return_item:
@@ -81,7 +82,7 @@ def is_key_value_in_list(key, value, search_list, return_item=False):
 
 
 def clean_string(string):
-    # Removes non-alphanumerics from a string
+    """Removes non-alphanumerics from a string"""
     try:
         return substitution(r"\W+", "", string).lower()
     except:
@@ -89,6 +90,7 @@ def clean_string(string):
 
 
 def get_base_url():
+    """Obtains the base URL from the environment variables"""
     base_url = os.environ.get("BASE_URL", "")
     if isinstance(base_url, str) and base_url:
         base_url = base_url.replace("/", "")
@@ -97,6 +99,7 @@ def get_base_url():
 
 
 def get_bool_from_env(name, default_value):
+    """Obtains a boolean from an environment variable"""
     env_var = os.environ.get(name)
     if isinstance(env_var, str):
         if env_var.lower() == "true":
