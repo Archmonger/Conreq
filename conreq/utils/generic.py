@@ -93,5 +93,14 @@ def get_base_url():
     if isinstance(base_url, str) and base_url:
         base_url = base_url.replace("/", "")
         base_url = base_url + "/"
-    print("base url", base_url)
     return base_url
+
+
+def get_bool_from_env(name, default_value):
+    env_var = os.environ.get(name)
+    if isinstance(env_var, str):
+        if env_var.lower() == "true":
+            return True
+        if env_var.lower() == "false":
+            return False
+    return default_value

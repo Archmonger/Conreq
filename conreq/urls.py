@@ -13,25 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-import os
-
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from conreq.utils.generic import get_base_url
-
-
-# Helper Functions
-def get_bool_from_env(name, default_value):
-    env_var = os.environ.get(name)
-    if isinstance(env_var, str):
-        if env_var.lower() == "true":
-            return True
-        if env_var.lower() == "false":
-            return False
-    return default_value
-
+from conreq.utils.generic import get_base_url, get_bool_from_env
 
 DEBUG = get_bool_from_env("DEBUG", True)
 BASE_URL = get_base_url()

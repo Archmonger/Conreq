@@ -16,19 +16,10 @@ import secrets
 
 from django.core.management.utils import get_random_secret_key
 
+from conreq.utils.generic import get_bool_from_env
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-# Helper Functions
-def get_bool_from_env(name, default_value):
-    env_var = os.environ.get(name)
-    if isinstance(env_var, str):
-        if env_var.lower() == "true":
-            return True
-        if env_var.lower() == "false":
-            return False
-    return default_value
 
 
 # Project Paths
