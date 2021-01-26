@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
+from django.views.decorators.cache import cache_page
 
 BASE_URL = get_base_url()
 
@@ -52,6 +53,7 @@ def initialization(request):
     return homepage(request)
 
 
+@cache_page(1)
 @login_required
 def homepage(request):
     # Generate the base template
