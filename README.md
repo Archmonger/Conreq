@@ -5,15 +5,18 @@ Want to contribute? Check out our [Development Guide](https://github.com/Archmon
 ## Installation (Deployment Environment)
 
 Install through [Docker](https://github.com/Roxedus/docker-conreq).
-Available environment variables:
+Here's a list of all available environment variables:
 
 ```javascript
 DEBUG = false                             //default: true (disabling debug will enable security features)
-DATA_DIR = /example/directory             //default: none (uses base directory)
+TZ = America/Los_Angeles                  //default: Europe/London (used for timestamps on log files)
+BASE_URL = requests                       //default: none
+DATA_DIR = /example/directory             //default: none (if not set, base directory is used)
+
 USE_ROLLING_SECRET_KEY = true             //default: false
 DB_ENGINE = MYSQL                         //default: SQLITE3
 MYSQL_CONFIG_FILE = /location/to/file.cnf //default: none
-BASE_URL = requests                       //default: none
+
 USE_SSL = true                            //default: false
 SSL_CERT = /path/to/cert.pem              //default: none
 SSL_KEY = /path/to/key.pem                //default: none
