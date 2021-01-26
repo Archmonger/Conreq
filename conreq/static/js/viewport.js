@@ -217,7 +217,7 @@ let refresh_viewport = function () {
 };
 
 // Obtains the viewport content based on the URL, then updates the current tab
-let generate_viewport = function () {
+var generate_viewport = function () {
   // Read the URL hash to determine what page we are on
   let window_location = window.location.hash.split("#")[1];
 
@@ -240,6 +240,7 @@ let generate_viewport = function () {
   $(".viewport-container>.loading-animation-container").show();
 
   // Fetch the new content, display it, and hide the loading animation
+  viewport_loaded = false;
   $.get(window_location, function (viewport_html) {
     $(".viewport-container")[0].innerHTML = DOMPurify.sanitize(viewport_html);
     refresh_viewport();
@@ -248,6 +249,9 @@ let generate_viewport = function () {
 
     // Add any click events needed
     add_event_listeners();
+
+    // Save that the page was successfully loaded
+    viewport_loaded = true;
   });
 };
 

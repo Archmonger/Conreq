@@ -1,5 +1,6 @@
 let first_websocket_connection = true;
 let display_disconnected_toast = true;
+var viewport_loaded = false;
 
 // HELPER FUNCTIONS
 let obtain_common_parameters = function (
@@ -96,7 +97,16 @@ function connect() {
     if (first_websocket_connection) {
       first_websocket_connection = false;
     } else {
+      // Show a message saying we reconnected
       reconnected_toast_message();
+
+      // Reload the viewport if the last page didn't load
+      if (viewport_loaded == false) {
+        console.log(
+          "Viewport previously failed to load... Reloading the viewport!"
+        );
+        generate_viewport();
+      }
     }
     console.log(response);
   };
