@@ -35,7 +35,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         except:
             # User could not be logged in
             log.handler(
-                "Websocked failed to connect, perhaps login failure.",
+                "Websocket login failure on initial connection!",
                 log.ERROR,
                 self.__logger,
             )
