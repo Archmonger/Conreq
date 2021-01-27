@@ -4,19 +4,20 @@
 
 <head>
     {% include "primary/head_content_slim.html" %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="main">
-        <div class="login-box">
-            <div class="login-box-header">
-                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="login-brand">
+        <div class="default-box">
+            <div class="default-box-header">
+                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
             </div>
-            <form method="post" action="{% url 'signin' %}">
+            <form method="post" action="{% url 'signin' %}" class="sign-in-form">
                 {% csrf_token %}
-                <input placeholder="username" autocapitalize="none" autocomplete="username" autofocus=""
+                <input placeholder="Username" autocapitalize="none" autocomplete="username" autofocus=""
                     id="id_username" maxlength="150" name="username" required="" type="text">
-                <input placeholder="password" autocapitalize="none" autocomplete="current-password" id="id_password"
+                <input placeholder="Password" autocapitalize="none" autocomplete="current-password" id="id_password"
                     name="password" required="" type="password">
                 <input type="submit" value="Sign In">
                 <input type="hidden" name="next" value="{{ next }}">
@@ -28,8 +29,8 @@
             </script>
             {% endif %}
         </div>
-        <div class="login-bg">
-            <div class="login-bg-tint">
+        <div class="default-bg">
+            <div class="default-bg-tint">
             </div>
         </div>
     </div>

@@ -93,3 +93,17 @@ var settings_save_success_toast_message = function () {
     progressBarColor: "var(--accent-color)",
   });
 };
+
+// Password confirm failed
+var passwords_dont_match_toast_message = function () {
+  iziToast.show({
+    icon: "fas fa-exclamation-triangle",
+    title: "Error!",
+    message: "Passwords don't match!",
+    displayMode: "replace",
+    titleColor: "#9a5c0f",
+    messageColor: "#9a5c0f",
+    iconColor: "#c57615",
+    progressBarColor: "var(--accent-color)",
+  });
+};

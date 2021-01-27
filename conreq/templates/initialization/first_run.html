@@ -4,10 +4,79 @@
 
 <head>
     {% include "primary/head_content_slim.html" %}
+    <link rel="stylesheet" href="{% static 'css/first_run.css' %}" crossorigin="anonymous" />
 </head>
 
 <body>
     <div class="main">
+
+        <div class="default-box">
+            <div class="default-box-header">
+                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
+            </div>
+            <form id="initialization-form" action="">
+
+                <h1>FIRST TIME SETUP</h1>
+
+
+                <div class="tab" style="display: flex;">
+                    <h2>Create your admin account</h2>
+                    <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+                        autocapitalize="off" spellcheck="false" type="email" required="">
+                    <input placeholder="Username" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+                        autocapitalize="off" spellcheck="false" type="text" required="" name="username"
+                        autocomplete="username" maxlength="150">
+                    <input placeholder="Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+                        autocapitalize="off" spellcheck="false" type="password" required="" name="password"
+                        autocomplete="current-password" id="password">
+                    <input placeholder="Confirm Password" oninput="this.className = ''" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" type="password" required=""
+                        id="confirm_password">
+                </div>
+
+
+                <div class="tab">
+                    <h2>Set up Sonarr (optional)</h2>
+                    <input placeholder="Sonarr URL (ex. http://192.168.86.50:8989)" oninput="this.className = ''"
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text">
+                    <input placeholder="Sonarr API Key" oninput="this.className = ''" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text">
+                </div>
+
+
+                <div class="tab">
+                    <h2>Set up Radarr (optional)</h2>
+                    <input placeholder="Radarr URL (ex. http://192.168.86.50:7878)" oninput="this.className = ''"
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text">
+                    <input placeholder="Radarr API Key" oninput="this.className = ''" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text">
+                </div>
+
+
+                <!-- Previous and next (or submit) buttons -->
+                <div id="box-nav-container">
+                    <button type="button" id="prevBtn" onclick="previousTab()"
+                        style="visibility: hidden;">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextTab()">Next</button>
+                </div>
+
+                <!-- Circles which indicates the step of the form -->
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step active"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+
+            </form>
+        </div>
+        <div class="default-bg">
+            <div class="default-bg-tint">
+            </div>
+        </div>
+
+
+
+        <script src="{% static 'js/first_run.js' %}" crossorigin="anonymous"></script>
     </div>
 </body>
 
