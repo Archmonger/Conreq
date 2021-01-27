@@ -1,4 +1,3 @@
-# from django.shortcuts import render
 from platform import platform
 
 from conreq.apps.server_settings.models import ConreqConfig

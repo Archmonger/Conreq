@@ -3,7 +3,7 @@
   line-height: 1.5;
 }
 
-.viewport-settings {
+.viewport.settings {
   width: 100%;
   max-width: calc(
     1920px - var(--sidebar-width) - var(--viewport-total-padding)

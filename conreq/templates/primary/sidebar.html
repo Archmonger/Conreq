@@ -40,7 +40,7 @@
                     {{all_issues}}</a>
                 <!-- <a href="#" class="nav-tab suboption admin">
                     {{email_users}}</a> -->
-                <a href="#" class="nav-tab suboption admin">
+                <a href="#{% url 'manage_users:main' %}" class="nav-tab suboption admin">
                     {{manage_users}}</a>
                 <a href="#{% url 'server_settings:main' %}" class="nav-tab suboption admin">
                     {{server_settings}}</a>
