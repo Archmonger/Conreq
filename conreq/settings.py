@@ -333,6 +333,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+    {
+        "NAME": "pwned_passwords_django.validators.PwnedPasswordsValidator",
+        "OPTIONS": {
+            "error_message": "Cannot use a compromised password. This password was detected %(amount)d time(s) on 'haveibeenpwned.com'.",
+            "help_message": "Your password can't be a compromised password.",
+        },
+    },
 ]
 
 LOGIN_REDIRECT_URL = "homepage:index"
