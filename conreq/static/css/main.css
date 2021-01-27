@@ -575,7 +575,7 @@ button:focus {
   padding-top: calc(var(--poster-details-height) - 18px);
   padding-bottom: 2px;
   font-size: 18px;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, background 0.3s ease;
   text-align: center;
 }
 
