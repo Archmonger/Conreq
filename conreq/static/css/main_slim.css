@@ -4,7 +4,7 @@
   --box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
     0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
   --accent-color: #258a6d;
-  --searchbar-bg: #252525;
+  --input-bg: #252525;
   --logo-drop-shadow: drop-shadow(3px 3px 5px #2222224f);
 }
 
@@ -108,7 +108,7 @@ input[type="password"]:focus,
 input[type="email"]:focus,
 input[type="url"]:focus {
   background: #fff;
-  color: var(--searchbar-bg);
+  color: var(--input-bg);
 }
 
 button,
