@@ -50,3 +50,9 @@ body {
 .review {
   background: var(--poster-bg-color);
 }
+
+@media only screen and (max-width: 800px) {
+  .sidebar {
+    background: #1f1f1f;
+  }
+}
