@@ -10,6 +10,7 @@
   left: 50%;
   bottom: 3px;
   transform: translate(-50%, 0%);
+  line-height: 1.15;
 }
 
 .poster-container .fa-angle-down:hover {
