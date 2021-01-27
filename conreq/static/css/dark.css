@@ -1,44 +1,52 @@
 :root {
-    --navpages-font-color: rgb(255 255 255 / 0.75); 
-    --grid-object-bg: linear-gradient(90deg, #2a2a2a, hsl(0 0% 12% / 1));
-    --grid-object-font-color: rgb(255 255 255 / 0.75);
-    --poster-bg-color: #191919;
-    }
+  --navpages-font-color: rgb(255 255 255 / 0.75);
+  --grid-object-bg: linear-gradient(90deg, #2a2a2a, hsl(0 0% 12% / 1));
+  --grid-object-font-color: rgb(255 255 255 / 0.75);
+  --poster-bg-color: #191919;
+  --navbar-bg: transparent;
+  --searchbar-bg: rgb(0 0 0 / 0.45);
+}
 
 html {
-    background: #000000;
-    background: var(--navbar-bg);
+  background: #363636;
 }
 
 body {
-    background: linear-gradient(145deg, rgb(29 28 28 / 80%), rgb(36 37 37 / 82%), hsl(0 0% 12% / 1), rgb(0 0 0 / 58%));
+  background: linear-gradient(
+    145deg,
+    rgba(18, 23, 25, 0.8),
+    rgba(18, 23, 25, 0.25),
+    rgba(18, 23, 25, 0.15),
+    rgba(0, 0, 0, 0)
+  );
 }
 
 .sidebar {
-    background: linear-gradient(90deg, #2a2a2a, hsl(0 0% 12% / 1));
+  background: transparent;
 }
 
 .description-tint {
-    background: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), #191919);
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), #191919);
 }
 
 .text-input-container {
-    background: rgb(255 255 255 / 0.08);
-    color: rgb(255 255 255 / 0.75);
+  background: rgb(255 255 255 / 0.08);
+  color: rgb(255 255 255 / 0.75);
 }
 
-.viewport{
-    color: rgb(255 255 255 / 0.75);
+.viewport {
+  color: rgb(255 255 255 / 0.75);
 }
 
-.nav-tab.group .fas{
-    color: rgb(255 255 255 / 0.75);
+.nav-tab.group .fas {
+  color: rgb(255 255 255 / 0.75);
 }
 
-.nav-tab.group, .nav-tab.group.collapsed:last-of-type[aria-expanded="false"]{
-    border-color: rgb(255 255 255 / 0.1);
+.nav-tab.group,
+.nav-tab.group.collapsed:last-of-type[aria-expanded="false"] {
+  border-color: rgb(255 255 255 / 0.1);
 }
 
-.review{
-    background: var(--poster-bg-color);
+.review {
+  background: var(--poster-bg-color);
 }

@@ -442,6 +442,10 @@ button:focus {
   border-bottom: var(--navpages-button-border);
 }
 
+.nav-tab.group:first-of-type {
+  border-top: none;
+}
+
 .nav-tab.group .fas {
   float: right;
   color: rgba(0, 0, 0, 0.5);
@@ -491,22 +495,6 @@ button:focus {
   display: block;
   transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
   transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-    -webkit-filter 0.3s ease;
   z-index: 6;
   position: relative;
 }
@@ -605,22 +593,6 @@ button:focus {
   font-size: 19px;
   transition: color 0.3s ease, opacity 0.3s ease, -webkit-filter 0.3s ease;
   transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease,
-    -webkit-filter 0.3s ease;
   opacity: 0;
   -webkit-filter: drop-shadow(0 0 2px #000000);
   filter: drop-shadow(0 0 2px #000000);
