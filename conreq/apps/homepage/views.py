@@ -1,4 +1,4 @@
-from conreq.apps.homepage.forms import initializationForm
+from conreq.apps.homepage.forms import InitializationForm
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils.apps import generate_context, initialize_conreq
 from conreq.utils.generic import get_base_url
@@ -21,7 +21,7 @@ def initialization(request):
         # User submitted the first time setup form
         if request.method == "POST":
 
-            form = initializationForm(request.POST)
+            form = InitializationForm(request.POST)
 
             # Create the superuser and set up the database if the form is valid
             if form.is_valid():
