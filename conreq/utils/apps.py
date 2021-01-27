@@ -8,7 +8,6 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
-from django.contrib.auth import get_user_model
 from markdown import Markdown
 
 __logger = log.get_logger(__name__)
@@ -426,12 +425,12 @@ def obtain_radarr_parameters(
     }
 
 
-def initialize_database(conreq_config, request):
+def initialize_conreq(conreq_config, form):
     # Obtain the sonarr/radarr parameters
-    conreq_config.sonarr_url = request.POST.get("sonarr_url")
-    conreq_config.sonarr_api_key = request.POST.get("sonarr_api_key")
-    conreq_config.radarr_url = request.POST.get("radarr_url")
-    conreq_config.radarr_api_key = request.POST.get("radarr_api_key")
+    conreq_config.sonarr_url = form.cleaned_data.get("sonarr_url")
+    conreq_config.sonarr_api_key = form.cleaned_data.get("sonarr_api_key")
+    conreq_config.radarr_url = form.cleaned_data.get("radarr_url")
+    conreq_config.radarr_api_key = form.cleaned_data.get("radarr_api_key")
 
     # Ensure API key is configured
     if not conreq_config.conreq_api_key:
@@ -451,15 +450,4 @@ def initialize_database(conreq_config, request):
 
     # Remember that the database has been initialized
     conreq_config.conreq_initialized = True
-
-
-def initialize_admin_account(request):
-    email = request.POST.get("email")
-    username = request.POST.get("username")
-    password = request.POST.get("password")
-
-    user_database = get_user_model()
-
-    user_database.objects.create_superuser(
-        username=username, email=email, password=password
-    )
+    conreq_config.save()

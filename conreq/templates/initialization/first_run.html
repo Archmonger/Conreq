@@ -21,37 +21,54 @@
 
                 <div class="tab" style="display: flex;">
                     <h2>Create your admin account</h2>
+                    {{ form.email.errors }}
                     <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" type="email" required="" name="email">
+                        autocapitalize="off" spellcheck="false" type="email" required="" name="email"
+                        value="{{ form.data.email }}">
+
+                    {{ form.username.errors }}
                     <input placeholder="Username" oninput="this.className = ''" autocomplete="off" autocorrect="off"
                         autocapitalize="off" spellcheck="false" type="text" required="" name="username"
-                        autocomplete="username" maxlength="150">
+                        autocomplete="username" maxlength="150" value="{{ form.data.email }}">
+
+                    {{ form.password2.errors }}
                     <input placeholder="Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" type="password" required="" name="password"
-                        autocomplete="current-password" id="password">
+                        autocapitalize="off" spellcheck="false" type="password" required="" name="password1"
+                        autocomplete="current-password" id="password" value="{{ form.data.password1 }}">
+
                     <input placeholder="Confirm Password" oninput="this.className = ''" autocomplete="off"
                         autocorrect="off" autocapitalize="off" spellcheck="false" type="password" required=""
-                        id="confirm_password">
+                        id="confirm_password" name="password2" value="{{ form.data.password2 }}">
                 </div>
 
 
                 <div class="tab">
                     <h2>Set up Sonarr (optional)</h2>
+
+                    {{ form.sonarr_url.errors }}
                     <input placeholder="Sonarr URL (ex. http://192.168.86.50:8989)" oninput="this.className = ''"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text"
-                        name="sonarr_url">
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="url"
+                        name="sonarr_url" value="{{ form.data.sonarr_url }}">
+
+                    {{ form.sonarr_api_key.errors }}
                     <input placeholder="Sonarr API Key" oninput="this.className = ''" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text" name="sonarr_api_key">
+                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text" name="sonarr_api_key"
+                        value="{{ form.data.sonarr_api_key }}">
                 </div>
 
 
                 <div class="tab">
                     <h2>Set up Radarr (optional)</h2>
+
+                    {{ form.radarr_url.errors }}
                     <input placeholder="Radarr URL (ex. http://192.168.86.50:7878)" oninput="this.className = ''"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text"
-                        name="radarr_url">
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="url"
+                        name="radarr_url" value="{{ form.data.radarr_url }}">
+
+                    {{ form.radarr_api_key.errors }}
                     <input placeholder="Radarr API Key" oninput="this.className = ''" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text" name="radarr_api_key">
+                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text" name="radarr_api_key"
+                        value="{{ form.data.radarr_api_key }}">
                 </div>
 
 
@@ -77,7 +94,11 @@
         </div>
 
 
-
+        {% if form.errors %}
+        <script>
+            conreq_initialization_fail();
+        </script>
+        {% endif %}
         <script src="{% static 'js/first_run.js' %}" crossorigin="anonymous"></script>
     </div>
 </body>

@@ -107,3 +107,17 @@ var passwords_dont_match_toast_message = function () {
     progressBarColor: "var(--accent-color)",
   });
 };
+
+// Failed to perform conreq first time setup
+var conreq_initialization_fail = function () {
+  iziToast.show({
+    icon: "fas fa-exclamation-triangle",
+    title: "Error!",
+    message: "One or more issues detected with submission!",
+    displayMode: "replace",
+    titleColor: "#9a5c0f",
+    messageColor: "#9a5c0f",
+    iconColor: "#c57615",
+    progressBarColor: "var(--accent-color)",
+  });
+};

@@ -1,12 +1,9 @@
+from conreq.apps.homepage.forms import initializationForm
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.utils.apps import (
-    generate_context,
-    initialize_admin_account,
-    initialize_database,
-)
+from conreq.utils.apps import generate_context, initialize_conreq
 from conreq.utils.generic import get_base_url
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
@@ -24,21 +21,25 @@ def initialization(request):
         # User submitted the first time setup form
         if request.method == "POST":
 
-            # Set up the initial database values
-            initialize_database(conreq_config, request)
+            form = initializationForm(request.POST)
 
-            # Save values to the database if they're valid
-            try:
-                conreq_config.clean_fields()
-                initialize_admin_account(request)
-                # conreq_config.save()
+            # Create the superuser and set up the database if the form is valid
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get("username")
+                password = form.cleaned_data.get("password1")
+                user = authenticate(username=username, password=password)
+                user.is_staff = True
+                user.is_admin = True
+                user.is_superuser = True
+                user.save()
+                login(request, user)
+                initialize_conreq(conreq_config, form)
+                return redirect("homepage:index")
 
-            except ValidationError as issues:
-                print(vars(issues))
-                # template = loader.get_template("initialization/first_run.html")
-                # return HttpResponse(
-                #     template.render({"form_errors": issues.error_dict}, request)
-                # )
+            # Form data wasn't valid, so return the error codes
+            template = loader.get_template("initialization/first_run.html")
+            return HttpResponse(template.render({"form": form}, request))
 
         # User needs to fill out the first time setup
         template = loader.get_template("initialization/first_run.html")

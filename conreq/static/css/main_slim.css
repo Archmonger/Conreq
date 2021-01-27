@@ -60,6 +60,9 @@ body,
   box-shadow: var(--box-shadow);
   max-width: 750px;
   padding: 25px;
+  max-height: 90%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .default-box-brand {
@@ -86,7 +89,8 @@ body,
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+input[type="url"] {
   width: 80%;
   margin-bottom: 35px;
   background: rgb(0 0 0 / 0.25);
@@ -100,7 +104,9 @@ input[type="email"] {
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus {
   background: #fff;
   color: var(--searchbar-bg);
 }
