@@ -597,6 +597,8 @@ button:focus {
   -webkit-filter: drop-shadow(0 0 2px #000000);
   filter: drop-shadow(0 0 2px #000000);
   z-index: 7;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
 }
 
 .poster-container:hover .fa-ellipsis-v {
