@@ -14,15 +14,15 @@
             <div class="default-box-header">
                 <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
             </div>
-            <form id="initialization-form" action="">
-
+            <form id="initialization-form" method="post" action="{% url 'homepage:index' %}">
+                {% csrf_token %}
                 <h1>FIRST TIME SETUP</h1>
 
 
                 <div class="tab" style="display: flex;">
                     <h2>Create your admin account</h2>
                     <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" type="email" required="">
+                        autocapitalize="off" spellcheck="false" type="email" required="" name="email">
                     <input placeholder="Username" oninput="this.className = ''" autocomplete="off" autocorrect="off"
                         autocapitalize="off" spellcheck="false" type="text" required="" name="username"
                         autocomplete="username" maxlength="150">
@@ -38,18 +38,20 @@
                 <div class="tab">
                     <h2>Set up Sonarr (optional)</h2>
                     <input placeholder="Sonarr URL (ex. http://192.168.86.50:8989)" oninput="this.className = ''"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text">
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text"
+                        name="sonarr_url">
                     <input placeholder="Sonarr API Key" oninput="this.className = ''" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text">
+                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text" name="sonarr_api_key">
                 </div>
 
 
                 <div class="tab">
                     <h2>Set up Radarr (optional)</h2>
                     <input placeholder="Radarr URL (ex. http://192.168.86.50:7878)" oninput="this.className = ''"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text">
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text"
+                        name="radarr_url">
                     <input placeholder="Radarr API Key" oninput="this.className = ''" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text">
+                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text" name="radarr_api_key">
                 </div>
 
 

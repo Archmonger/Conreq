@@ -34,8 +34,7 @@ function nextTab() {
 
   // if you have reached the end of the form, submit it
   if (current_tab_num == last_tab_num) {
-    console.log("submitting");
-    // document.getElementById("regForm").submit();
+    document.getElementById("initialization-form").submit();
     return false;
   }
 

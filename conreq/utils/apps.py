@@ -1,5 +1,6 @@
 from calendar import month_name
 from io import StringIO
+from secrets import token_hex
 from threading import Thread
 
 from conreq.apps.server_settings.models import ConreqConfig
@@ -7,6 +8,7 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
+from django.contrib.auth import get_user_model
 from markdown import Markdown
 
 __logger = log.get_logger(__name__)
@@ -422,3 +424,42 @@ def obtain_radarr_parameters(
         "radarr_profile_id": radarr_profile_id,
         "radarr_root": radarr_root,
     }
+
+
+def initialize_database(conreq_config, request):
+    # Obtain the sonarr/radarr parameters
+    conreq_config.sonarr_url = request.POST.get("sonarr_url")
+    conreq_config.sonarr_api_key = request.POST.get("sonarr_api_key")
+    conreq_config.radarr_url = request.POST.get("radarr_url")
+    conreq_config.radarr_api_key = request.POST.get("radarr_api_key")
+
+    # Ensure API key is configured
+    if not conreq_config.conreq_api_key:
+        conreq_config.conreq_api_key = token_hex(16)
+
+    # Ensure URL or API key is configured if sonarr is enabled
+    if (
+        not conreq_config.sonarr_url or not conreq_config.sonarr_api_key
+    ) and conreq_config.sonarr_enabled:
+        conreq_config.sonarr_enabled = False
+
+    # Ensure URL or API key is configured if radarr is enabled
+    if (
+        not conreq_config.radarr_url or not conreq_config.radarr_api_key
+    ) and conreq_config.radarr_enabled:
+        conreq_config.radarr_enabled = False
+
+    # Remember that the database has been initialized
+    conreq_config.conreq_initialized = True
+
+
+def initialize_admin_account(request):
+    email = request.POST.get("email")
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+
+    user_database = get_user_model()
+
+    user_database.objects.create_superuser(
+        username=username, email=email, password=password
+    )
