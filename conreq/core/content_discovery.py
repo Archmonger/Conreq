@@ -451,6 +451,11 @@ class ContentDiscovery:
 
                 # Check if the content contains Keyword: Anime
                 if is_key_value_in_list("name", "anime", api_results["results"]):
+                    log.handler(
+                        str(tmdb_id) + " is anime.",
+                        log.INFO,
+                        self.__logger,
+                    )
                     return True
 
                 # Check if fallback method is enabled
@@ -461,6 +466,11 @@ class ContentDiscovery:
                         is_key_value_in_list("name", "Animation", tv_info["genres"])
                         and "JP" in tv_info["origin_country"]
                     ):
+                        log.handler(
+                            str(tmdb_id) + " is anime, based on fallback detection.",
+                            log.INFO,
+                            self.__logger,
+                        )
                         return True
 
             # Movies: Obtain the keywords for a specific ID
@@ -469,6 +479,11 @@ class ContentDiscovery:
 
                 # Check if the content contains Keyword: Anime
                 if is_key_value_in_list("name", "anime", api_results["keywords"]):
+                    log.handler(
+                        str(tmdb_id) + " is anime.",
+                        log.INFO,
+                        self.__logger,
+                    )
                     return True
 
                 # Check if fallback method is enabled
@@ -481,6 +496,11 @@ class ContentDiscovery:
                     ) and is_key_value_in_list(
                         "iso_3166_1", "JP", movie_info["production_countries"]
                     ):
+                        log.handler(
+                            str(tmdb_id) + " is anime, based on fallback detection.",
+                            log.INFO,
+                            self.__logger,
+                        )
                         return True
 
             # Content Type was invalid
