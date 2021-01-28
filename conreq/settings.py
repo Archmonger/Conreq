@@ -245,11 +245,12 @@ INSTALLED_APPS = [
     "solo",  # Allow for single-row fields in the DB
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
     "djversion",  # Obtains the git commit as a version number
+    "awesome_django_timezones",  # Automatically change timezones
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files on Daphne securely
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -259,6 +260,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
     "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
+    "awesome_django_timezones.middleware.TimezonesMiddleware",  # Automatically change timezones
 ]
 
 
