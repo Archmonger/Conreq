@@ -4,6 +4,9 @@ let infinite_scroller_created = false;
 let previous_admin_settings = new Map();
 let viewport_container_class = ".viewport-container";
 let viewport_class = ".viewport";
+let modal_content = $("#modal-content");
+let modal_container = $("#modal-container");
+let modal_loader = $("#modal-container .loading-animation");
 
 // Create the lazyloader
 let callback_error = function (element) {
@@ -83,7 +86,7 @@ let update_active_tab = function () {
 let add_event_listeners = function () {
   // More Info page events
   $(".request-button.tv").click(function () {
-    generate_episode_modal();
+    generate_series_modal();
   });
   $(".request-button.movie").click(function () {
     request_content({});
@@ -225,7 +228,7 @@ let refresh_viewport = function () {
 // Obtains the viewport content based on the URL, then updates the current tab
 var generate_viewport = function () {
   // Read the URL hash to determine what page we are on
-  let window_location = window.location.hash.split("#")[1];
+  let window_location = get_window_location();
 
   // If there is no hash, add one
   if (window_location == "" || window_location == null) {
@@ -305,3 +308,23 @@ if ("onhashchange" in window) {
     }
   }, 100);
 }
+
+// Fetches the series modal via AJAX
+let generate_series_modal = function () {
+  // Show the loading icon
+  modal_content.hide();
+  modal_loader.show();
+
+  // Fetch the series modal
+  $.get(
+    "/more_info/series_modal/?" + get_window_parameters(),
+    function (modal_html) {
+      // Place the new HTML on the page
+      modal_content[0].innerHTML = DOMPurify.sanitize(modal_html);
+
+      // Show the new content
+      modal_loader.hide();
+      modal_content.show();
+    }
+  );
+};

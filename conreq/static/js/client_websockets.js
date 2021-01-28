@@ -60,20 +60,6 @@ function connect() {
     // Check for valid commands
     if (json_response.command_name == "forbidden") {
       location.reload();
-    } else if (json_response.command_name == "render page element") {
-      // Determine what needs to be replaced
-      let selected_element = $(json_response.selector);
-      let parent_element = selected_element.parent();
-
-      // Show the loading icon
-      let loading_icon = parent_element.children(".loading-animation");
-      if (loading_icon.length) {
-        loading_icon.hide();
-      }
-
-      // Place the new HTML on the page
-      selected_element[0].innerHTML = DOMPurify.sanitize(json_response.html);
-      selected_element.show();
     } else if (json_response.command_name == "server settings") {
       if (json_response.success) {
         settings_save_success_toast_message();
@@ -183,25 +169,6 @@ var request_content = function ({
   COMMAND_SOCKET.send(JSON.stringify(json_payload));
 
   requested_toast_message();
-};
-
-// SENDABLE COMMAND: GENERATE EPISODE MODAL
-var generate_episode_modal = function (tmdb_id = null, tvdb_id = null) {
-  // Hide the old content
-  $("#modal-content").hide();
-  // Display the loading animation
-  $("#modal-dialog .spinner-border").show();
-
-  let obtained_params = obtain_common_parameters(tmdb_id, tvdb_id);
-  let json_payload = {
-    command_name: "generate modal",
-    parameters: {
-      modal_type: "episode selector",
-      tmdb_id: obtained_params.tmdb_id,
-      tvdb_id: obtained_params.tvdb_id,
-    },
-  };
-  COMMAND_SOCKET.send(JSON.stringify(json_payload));
 };
 
 // SENDABLE COMMAND: CHANGE SERVER SETTING

@@ -73,9 +73,6 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             if content["command_name"] == "request":
                 await self.__request_content(content)
 
-            elif content["command_name"] == "generate modal":
-                await self.__generate_modal(content)
-
             elif content["command_name"] == "server settings":
                 await self.__server_settings(content)
 
@@ -165,45 +162,6 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             # If it already existed, just request it
             else:
                 content_manager.request(radarr_id=preexisting_movie["id"])
-
-    # COMMAND RESPONSE: GENERATE MODAL
-    async def __generate_modal(self, content):
-        response = {
-            "command_name": "render page element",
-            "selector": "#modal-content",
-            "html": None,
-        }
-
-        # Check if an ID is present
-        if (
-            content["parameters"]["tvdb_id"] is not None
-            or content["parameters"]["tmdb_id"] is not None
-        ):
-            # Episode modal
-            if content["parameters"]["modal_type"] == "episode selector":
-                response["html"] = await database_sync_to_async(series_modal)(
-                    tmdb_id=content["parameters"]["tmdb_id"],
-                    tvdb_id=content["parameters"]["tvdb_id"],
-                    user=self.scope["user"],
-                )
-                await self.send_json(response)
-
-            # Content info modal
-            elif content["parameters"]["modal_type"] == "content info":
-                pass
-
-            else:
-                log.handler(
-                    "Invalid modal type!",
-                    log.ERROR,
-                    self.__logger,
-                )
-        else:
-            log.handler(
-                "Generate modal command was missing an ID!",
-                log.ERROR,
-                self.__logger,
-            )
 
     # COMMAND RESPONSE: SERVER SETTINGS
     async def __server_settings(self, content):

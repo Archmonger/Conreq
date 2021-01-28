@@ -1,173 +1,169 @@
 /* Modal Container */
 
 .modal-open .modal {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .modal-content {
-    background: var(--navbar-bg);
+  background: #3f3f3f;
 }
-
 
 /* Modal Body */
 
 .modal-body {
-    background: var(--searchbar-bg);
-    color: #FFF;
-    padding: 0;
-    max-height: 50vh;
-    overflow-y: auto;
-    overflow-y: overlay;
+  background: var(--searchbar-bg);
+  color: #fff;
+  padding: 0;
+  max-height: 50vh;
+  overflow-y: auto;
+  overflow-y: overlay;
 }
-
 
 /* Modal Header */
 
 .modal-header {
-    border: none;
-    align-items: flex-end;
-    justify-content: flex-end;
+  border: none;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .modal .fa-window-close {
-    color: var(--modal-top-button-color);
-    font-size: 20px;
-    transition: color 0.3s ease;
-    cursor: pointer;
+  color: var(--modal-top-button-color);
+  font-size: 20px;
+  transition: color 0.3s ease;
+  cursor: pointer;
 }
 
 .modal .fa-window-close:hover {
-    color: #fff;
+  color: #fff;
 }
-
 
 /* Modal Footer */
 
 .modal-footer {
-    border: none;
+  border: none;
 }
 
 .modal-button {
-    color: #fff;
-    font-family: var(--global-font);
-    font-size: 17px;
-    line-height: 40px;
-    text-align: center;
-    width: auto;
-    padding-left: 15px;
-    padding-right: 15px;
-    height: 40px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
+  color: #fff;
+  font-family: var(--global-font);
+  font-size: 17px;
+  line-height: 40px;
+  text-align: center;
+  width: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 40px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .select-button {
-    background: #6d6d6d;
-    margin-right: 16px;
+  background: #6d6d6d;
+  margin-right: 16px;
 }
 
 .select-button:hover {
-    background: #828282;
+  background: #828282;
 }
 
 .conreq-button {
-    background: var(--accent-color);
+  background: var(--accent-color);
 }
 
 .conreq-button:hover:not(.available),
 .modal-confirm-button:hover:not(.available) {
-    background: #2ba180;
+  background: #2ba180;
 }
-
 
 /* Seasons/Episode Modal Styling */
 
 .season-block {
-    padding: 0px 15px;
-    display: grid;
-    grid-template-columns: 30px auto 30px;
+  padding: 0px 15px;
+  display: grid;
+  grid-template-columns: 30px auto 30px;
 }
 
-.season-block>* {
-    padding: 15px 0px;
+.season-block > * {
+  padding: 15px 0px;
 }
 
 .season-block .fa-angle-down {
-    grid-column: 3;
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    height: auto;
-    width: 100%;
-    text-align: center;
-    font-size: 20px;
+  grid-column: 3;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  height: auto;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
 }
 
 .season-block .fa-angle-down:hover {
-    color: #fff;
+  color: #fff;
 }
 
 .season-block .fa-angle-down:not(.collapsed) {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .season-block .season {
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 24px;
-    display: flex;
-    align-items: center;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 24px;
+  display: flex;
+  align-items: center;
 }
 
 .season-block .modal-season-dropdown-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .episode-block {
-    padding: 7px 15px;
-    display: grid;
-    grid-template-columns: 30px auto;
-    color: rgba(255, 255, 255, 0.5);
+  padding: 7px 15px;
+  display: grid;
+  grid-template-columns: 30px auto;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.episode-block>.modal-checkbox-container {
-    grid-column: 1;
+.episode-block > .modal-checkbox-container {
+  grid-column: 1;
 }
 
 .episode-block .episode {
-    color: rgba(255, 255, 255, 0.5);
-    grid-column: 2;
-    line-height: 20px;
-    display: flex;
-    align-items: center;
+  color: rgba(255, 255, 255, 0.5);
+  grid-column: 2;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
 }
 
-.episode-block .episode>*:not(.modal-dot) {
-    display: inline-block;
-    margin-right: 5px;
+.episode-block .episode > *:not(.modal-dot) {
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .episode-container {
-    background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .modal-checkbox-container,
 .modal-season-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .modal-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    margin-left: 5px;
-    margin-right: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-left: 5px;
+  margin-right: 10px;
 }

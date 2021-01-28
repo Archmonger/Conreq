@@ -121,3 +121,20 @@ var conreq_initialization_fail = function () {
     progressBarColor: "var(--accent-color)",
   });
 };
+
+// Gets the current window location from the hash
+var get_window_location = function () {
+  // Read the URL hash to determine what page we are on
+  return window.location.hash.split(/#(.+)/)[1];
+};
+
+// Gets the current window location from the hash
+var get_window_parameters = function () {
+  // Read the URL hash to determine what page we are on
+  let window_hash = window.location.hash;
+
+  if (window_hash.includes("?")) {
+    return window.location.hash.split(/\?(.+)/)[1];
+  }
+  return "";
+};
