@@ -24,20 +24,22 @@ BASE_URL = get_base_url()
 
 
 urlpatterns = [
+    path("", include("conreq.apps.homepage.urls")),
     path(
-        BASE_URL + "signin/",
+        BASE_URL + "sign_in/",
         auth_views.LoginView.as_view(redirect_authenticated_user=True),
-        name="signin",
+        name="sign_in",
     ),
-    path(BASE_URL + "signout/", auth_views.logout_then_login, name="signout"),
+    path(BASE_URL + "sign_out/", auth_views.logout_then_login, name="sign_out"),
+    path(BASE_URL + "sign_up/", include("conreq.apps.sign_up.urls")),
+    # Viewport Locations
     path("discover/", include("conreq.apps.discover.urls")),
     path("more_info/", include("conreq.apps.more_info.urls")),
     path("search/", include("conreq.apps.search.urls")),
     path("manage_users/", include("conreq.apps.manage_users.urls")),
     path("server_settings/", include("conreq.apps.server_settings.urls")),
-    path("", include("conreq.apps.homepage.urls")),
 ]
 
 
 if DEBUG:
-    urlpatterns.append(path("admin/", admin.site.urls))
+    urlpatterns.append(path(BASE_URL + "admin/", admin.site.urls))

@@ -240,6 +240,7 @@ INSTALLED_APPS = [
     "conreq.apps.search",
     "conreq.apps.server_settings",
     "conreq.apps.manage_users",
+    "conreq.apps.sign_up",
     "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
@@ -346,7 +347,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_REDIRECT_URL = "homepage:index"
-LOGIN_URL = "signin"
+LOGIN_URL = "sign_in"
 
 
 # Internationalization

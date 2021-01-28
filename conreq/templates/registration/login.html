@@ -13,7 +13,7 @@
             <div class="default-box-header">
                 <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
             </div>
-            <form method="post" action="{% url 'signin' %}" class="sign-in-form">
+            <form method="post" action="{% url 'sign_in' %}" class="sign-in-form">
                 {% csrf_token %}
                 <input placeholder="Username" autocapitalize="none" autocomplete="username" autofocus=""
                     id="id_username" maxlength="150" name="username" required="" type="text">

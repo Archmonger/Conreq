@@ -426,6 +426,7 @@ def obtain_radarr_parameters(
 
 
 def initialize_conreq(conreq_config, form):
+    """Sets up the initial database values during Conreq's first run sequence."""
     # Obtain the sonarr/radarr parameters
     conreq_config.sonarr_url = form.cleaned_data.get("sonarr_url")
     conreq_config.sonarr_api_key = form.cleaned_data.get("sonarr_api_key")
