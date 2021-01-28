@@ -19,7 +19,9 @@
             </div>
             {% endif %}
 
-            <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy" />
+            <div class="poster-fix">
+                <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy" />
+            </div>
         </a>
 
         <div class="poster-description-container">

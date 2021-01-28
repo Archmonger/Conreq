@@ -2,7 +2,11 @@
 <div class="poster-container cast no-highlighting">
     <div class="description-tint"></div>
     <a href="#">
-        <img src="{% static 'images/transparent.png' %}" data-src="{% if card.profile_path %}https://image.tmdb.org/t/p/w200{{card.profile_path}}{% endif %}" class="poster lazy" />
+        <div class="poster-fix">
+            <img src="{% static 'images/transparent.png' %}"
+                data-src="{% if card.profile_path %}https://image.tmdb.org/t/p/w200{{card.profile_path}}{% endif %}"
+                class="poster lazy" />
+        </div>
     </a>
 
     <div class="poster-description-container">

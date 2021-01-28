@@ -19,13 +19,15 @@
             </div>
             {% endif %}
 
-            {% if card.poster_path %}
-            <img src="{% static 'images/transparent.png' %}"
-                data-src="{% if card.poster_path %}https://image.tmdb.org/t/p/w200{{card.poster_path}}{% endif %}"
-                class="poster lazy" />
-            {% else %}
-            <img src="{% static 'images/transparent.png' %}" class="poster" />
-            {% endif %}
+            <div class="poster-fix">
+                {% if card.poster_path %}
+                <img src="{% static 'images/transparent.png' %}"
+                    data-src="{% if card.poster_path %}https://image.tmdb.org/t/p/w200{{card.poster_path}}{% endif %}"
+                    class="poster lazy" />
+                {% else %}
+                <img src="{% static 'images/transparent.png' %}" class="poster" />
+                {% endif %}
+            </div>
         </a>
 
         <div class="poster-description-container">

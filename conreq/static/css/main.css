@@ -10,7 +10,7 @@
   --green-dot: #39b54a;
   --red-dot: #ff0000;
   --yellow-dot: #ffff00;
-  --placeholder-gradient: linear-gradient(135deg, var(--accent-color), #161d21);
+  --placeholder-gradient: var(--poster-bg-color);
   /* Sidebar */
   --sidebar-bg: #fdfdfd;
   --sidebar-top: var(--navbar-height);
@@ -483,11 +483,17 @@ button:focus {
   box-shadow: var(--poster-box-shadow);
   transition: transform 0.15s ease-in-out;
   z-index: 1;
-  background: var(--placeholder-gradient);
+  background: var(--poster-bg-color);
   height: auto;
   min-height: calc(var(--poster-container-height) / 2);
   max-height: var(--poster-container-height);
   transform: scale(1);
+}
+
+.poster-fix {
+  width: var(--poster-width);
+  height: var(--poster-height);
+  overflow: hidden;
 }
 
 .poster {
@@ -513,7 +519,6 @@ button:focus {
 .poster-description-container {
   z-index: 7;
   position: relative;
-  background: var(--poster-bg-color);
   height: var(--poster-details-height);
   overflow: hidden;
 }
@@ -624,7 +629,7 @@ button:focus {
   padding: 5px;
   font-size: 12px;
   line-height: 14px;
-  background: var(--navbar-bg);
+  background: var(--poster-bg-color);
   font-weight: 700;
 }
 
