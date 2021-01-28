@@ -192,6 +192,10 @@
   .table-wrapper .desktop-only.fourth {
     display: none !important;
   }
+  /* Content Preview Modal Button */
+  .poster-container .fa-angle-down {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 450px) {
