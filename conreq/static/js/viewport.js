@@ -203,26 +203,28 @@ let refresh_viewport = function () {
   }
 
   // Configure infinite scrolling
-  if ($(".infinite-scroll").length) {
-    masonry_grid.infiniteScroll({
-      path: discover_path,
-      append: ".masonry-item",
-      outlayer: masonry_grid.data("masonry"),
-      prefill: true,
-      elementScroll: ".viewport-container",
-      history: false,
-      scrollThreshold: $(".viewport-container").height() * 2,
-    });
+  setTimeout(function () {
+    if ($(".infinite-scroll").length) {
+      masonry_grid.infiniteScroll({
+        path: discover_path,
+        append: ".masonry-item",
+        outlayer: masonry_grid.data("masonry"),
+        prefill: true,
+        elementScroll: ".viewport-container",
+        history: false,
+        scrollThreshold: $(".viewport-container").height() * 2,
+      });
 
-    masonry_grid.on("append.infiniteScroll", function () {
-      cull_old_posters();
-    });
+      masonry_grid.on("append.infiniteScroll", function () {
+        cull_old_posters();
+      });
 
-    infinite_scroller_created = true;
-  }
+      infinite_scroller_created = true;
+    }
 
-  // Lazy load page elements
-  lazyloader.update();
+    // Lazy load page elements
+    lazyloader.update();
+  }, 10);
 };
 
 // Obtains the viewport content based on the URL, then updates the current tab
