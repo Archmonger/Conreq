@@ -86,7 +86,7 @@ let update_active_tab = function () {
 let add_event_listeners = function () {
   // More Info page events
   $(".request-button.tv").click(function () {
-    generate_series_modal();
+    generate_modal("/more_info/series_modal/");
   });
   $(".request-button.movie").click(function () {
     request_content({});
@@ -309,22 +309,19 @@ if ("onhashchange" in window) {
   }, 100);
 }
 
-// Fetches the series modal via AJAX
-let generate_series_modal = function () {
+// Fetches a modal via AJAX
+let generate_modal = function (modal_url) {
   // Show the loading icon
   modal_content.hide();
   modal_loader.show();
 
   // Fetch the series modal
-  $.get(
-    "/more_info/series_modal/?" + get_window_parameters(),
-    function (modal_html) {
-      // Place the new HTML on the page
-      modal_content[0].innerHTML = DOMPurify.sanitize(modal_html);
+  $.get(modal_url + "?" + get_window_parameters(), function (modal_html) {
+    // Place the new HTML on the page
+    modal_content[0].innerHTML = DOMPurify.sanitize(modal_html);
 
-      // Show the new content
-      modal_loader.hide();
-      modal_content.show();
-    }
-  );
+    // Show the new content
+    modal_loader.hide();
+    modal_content.show();
+  });
 };
