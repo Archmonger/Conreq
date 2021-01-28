@@ -18,3 +18,4 @@ django-project-version[git]==0.13.0
 markdown==3.3.3
 pwned-passwords-django==1.4.1
 awesome-django-timezones==0.3.0
+pymysql==1.0.2

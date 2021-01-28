@@ -15,7 +15,7 @@ DATA_DIR = /example/directory             //default: none (if not set, base dire
 
 USE_ROLLING_SECRET_KEY = true             //default: false
 DB_ENGINE = MYSQL                         //default: SQLITE3
-MYSQL_CONFIG_FILE = /location/to/file.cnf //default: none
+MYSQL_CONFIG_FILE = /config/mysql.cnf     //default: none
 
 USE_SSL = true                            //default: false
 SSL_CERT = /path/to/cert.pem              //default: none
