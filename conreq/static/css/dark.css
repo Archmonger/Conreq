@@ -78,6 +78,10 @@ table.table-striped.table-hover tbody tr:hover {
   color: rgb(255 255 255 / 0.75);
 }
 
+.table-title {
+  background: rgb(29 29 29);
+}
+
 .table td,
 .table th {
   border-color: rgb(255 255 255 / 0.2) !important;

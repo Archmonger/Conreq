@@ -4,12 +4,10 @@
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
-                <div>
-                    <h2 class="desktop-only fourth">User Management</h2>
-                </div>
-                <div>
-                    <a href="#" class="btn btn-primary"> <span> <i class="fas fa-plus"></i>Add New
-                            User</span></a>
+                <h2 class="desktop-only fourth">User Management</h2>
+                <div id="invite-user" class="conreq-button">
+                    <i class="fas fa-user-plus"></i>
+                    Invite
                 </div>
             </div>
         </div>
@@ -19,7 +17,7 @@
                     <th>Username</th>
                     <th class="desktop-only fourth max-width">Email Address</th>
                     <th class="desktop-only first max-width">Date Joined</th>
-                    <th class="desktop-only second">Last Login</th>
+                    <th class="desktop-only second">Last Seen</th>
                     <th class="desktop-only third">Co-Admin</th>
                     <th>Action</th>
                 </tr>
@@ -33,8 +31,8 @@
                     <td class="desktop-only second">{{ user.last_login }}</td>
                     <td class="desktop-only third">{{ user.is_staff }}</td>
                     <td>
-                        <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
-                                class="fas fa-cog"></i></a>
+                        <!-- <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
+                                class="fas fa-cog"></i></a> -->
                         <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
