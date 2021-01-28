@@ -666,6 +666,7 @@ img.lazy:not([src]) {
 
 ::-webkit-scrollbar {
   width: 7px;
+  height: 7px;
   background: transparent;
 }
 

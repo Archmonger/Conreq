@@ -1,3 +1,10 @@
+@media only screen and (max-width: 1300px) {
+  /* Tables */
+  .table-wrapper .desktop-only.first {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 1250px) {
   /*  Settings Menu    */
   .settings-input-group {
@@ -14,12 +21,20 @@
     --artwork-height: calc(var(--video-width) * 0.5625);
     --artwork-width: 30vw;
   }
+  /* Tables */
+  .table-wrapper .desktop-only.second {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 880px) {
   :root {
     /* More Info Grid */
     --left-column-width: 175px;
+  }
+  /* Tables */
+  .table-wrapper .desktop-only.third {
+    display: none;
   }
 }
 
@@ -172,6 +187,10 @@
             (var(--viewport-total-padding) * 2)
         ) / 3
     );
+  }
+  /* Tables */
+  .table-wrapper .desktop-only.fourth {
+    display: none !important;
   }
 }
 
