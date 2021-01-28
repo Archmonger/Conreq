@@ -90,12 +90,16 @@ let add_event_listeners = function () {
   });
 
   // Server Settings menu events
-  $('input[type="text"].settings-item.admin').each(function () {
+  $(
+    'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin'
+  ).each(function () {
     let setting_name = $(this).data("setting-name");
     let current_value = $(this).val();
     previous_admin_settings[setting_name] = current_value;
   });
-  $('input[type="text"].settings-item.admin').on("keypress", function (e) {
+  $(
+    'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin'
+  ).on("keypress", function (e) {
     let setting_name = $(this).data("setting-name");
     let current_value = $(this).val();
     if (e.which == 13) {
@@ -103,7 +107,9 @@ let add_event_listeners = function () {
       previous_admin_settings[setting_name] = current_value;
     }
   });
-  $('input[type="text"].settings-item.admin').focusout(function () {
+  $(
+    'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin'
+  ).focusout(function () {
     let setting_name = $(this).data("setting-name");
     let current_value = $(this).val();
     if (previous_admin_settings[setting_name] != current_value) {
