@@ -1,5 +1,14 @@
 {% load static %}
 {% include "primary/loading_animation.html" %}
 <div class="viewport manage-users" data-aos="fade-zoom-in" data-aos-duration="1500">
-    Temporary Text
+    {% for user in users %}
+    <p>
+        {{ user.username }}
+        {{ user.email }}
+        {{ user.date_joined }}
+        {{ user.last_login }}
+        {{ user.is_staff }}
+    </p>
+
+    {% endfor %}
 </div>
