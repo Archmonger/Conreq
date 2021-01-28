@@ -11,7 +11,7 @@
 /* Modal Body */
 
 .modal-body {
-  background: var(--searchbar-bg);
+  background: #252525;
   color: #fff;
   padding: 0;
   max-height: 50vh;

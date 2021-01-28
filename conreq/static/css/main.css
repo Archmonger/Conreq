@@ -243,7 +243,7 @@ input:checked ~ .state {
 
 .text-input-container:focus-within {
   background: #fff;
-  color: var(--searchbar-bg);
+  color: #252525;
 }
 
 .text-input-container input {
@@ -714,5 +714,5 @@ html * {
 
 .text-input:focus {
   background: #fff;
-  color: var(--searchbar-bg);
+  color: #252525;
 }
