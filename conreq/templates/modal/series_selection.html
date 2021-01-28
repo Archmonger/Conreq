@@ -12,7 +12,9 @@
             {% if season.statistics.conreqStatus != available %}
             <div class="modal-checkbox-container">
                 <div class="pretty p-icon p-curve p-smooth p-jelly">
-                    <input type="checkbox" class="season-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}" data-season-number="{{season.seasonNumber}}" data-episode-container="#episodes-season-{{season.seasonNumber}}" />
+                    <input type="checkbox" class="season-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                        data-season-number="{{season.seasonNumber}}"
+                        data-episode-container="#episodes-season-{{season.seasonNumber}}" />
                     <div class="state">
                         <i class="icon fas fa-check"></i>
                         <label></label>
@@ -40,18 +42,22 @@
                 </div>
             </div>
             <div class="modal-season-dropdown-container">
-                <i class="fas fa-angle-down collapsed" data-toggle="collapse" data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false" aria-controls="episodes-season-{{season.seasonNumber}}"></i>
+                <i class="fas fa-angle-down collapsed" data-toggle="collapse"
+                    data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
+                    aria-controls="episodes-season-{{season.seasonNumber}}"></i>
             </div>
 
         </div>
         <div id="episodes-season-{{season.seasonNumber}}" class="episode-container collapse no-highlighting">
-            {% for episode in season.episodes %}
+            {% for episode in season.episodes|dictsort:"episodeNumber" %}
             <div class="episode-block">
 
                 {% if episode.conreqStatus != available %}
                 <div class="modal-checkbox-container">
                     <div class="pretty p-icon p-curve p-smooth p-jelly">
-                        <input type="checkbox" class="episode-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}" data-episode-id="{{episode.id}}" data-season-container="#season-{{season.seasonNumber}}" />
+                        <input type="checkbox"
+                            class="episode-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                            data-episode-id="{{episode.id}}" data-season-container="#season-{{season.seasonNumber}}" />
                         <div class="state">
                             <i class="icon fas fa-check"></i>
                             <label></label>
@@ -71,11 +77,15 @@
                     <div class="episode-number bold">
                         {% firstof episode.episodeNumber "Unknown" %}
                     </div>
-                    {% if episode.absoluteEpisodeNumber %} {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
+
+                    {% if episode.absoluteEpisodeNumber %}
+                    {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
                     <div class="absolute-episode-number bold">
                         ({{episode.absoluteEpisodeNumber}})
                     </div>
-                    {% endif %} {% endif %}
+                    {% endif %}
+                    {% endif %}
+
                     <div class="episode-separator"> </div>
                     <div class="episode-name line-clamp-1">
                         {% firstof episode.title "Unknown" %}
