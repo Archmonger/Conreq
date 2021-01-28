@@ -245,7 +245,10 @@ var generate_viewport = function () {
     $(".viewport-container")[0].innerHTML = DOMPurify.sanitize(viewport_html);
     refresh_viewport();
     $(".viewport-container>.loading-animation-container").hide();
-    $(".viewport-container>.viewport").css("opacity", "1");
+
+    setTimeout(function () {
+      $(".viewport-container>.viewport").css("opacity", "1");
+    }, 10);
 
     // Add any click events needed
     add_event_listeners();

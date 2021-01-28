@@ -1,6 +1,6 @@
 {% load static %}
 {% include "primary/loading_animation.html" %}
-<div class="viewport discover viewport-posters infinite-scroll" data-aos="fade-zoom-in" data-aos-duration="1500">
+<div class="viewport discover viewport-posters infinite-scroll">
     {% for card in all_cards %}
     {% if card.poster_path and card.conreq_valid_id %}
     {% include "cards/tmdb.html" %}
