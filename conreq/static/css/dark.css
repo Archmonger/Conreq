@@ -1,6 +1,6 @@
 :root {
   --navpages-font-color: rgb(255 255 255 / 0.75);
-  --grid-object-bg: linear-gradient(90deg, #2a2a2a, hsl(0 0% 12% / 1));
+  --grid-object-bg: linear-gradient(90deg, #2a2a2a, hsl(0deg 0% 22%));
   --grid-object-font-color: rgb(255 255 255 / 0.75);
   --poster-bg-color: #191919;
   --navbar-bg: transparent;
@@ -55,4 +55,30 @@ body {
   .sidebar {
     background: #1f1f1f;
   }
+}
+
+/* Manage Users */
+.table-wrapper {
+  background: var(--grid-object-bg);
+}
+
+table.table-striped tbody tr:nth-of-type(odd) {
+  background: transparent;
+}
+
+table.table-striped.table-hover tbody tr:hover {
+  background: rgb(255 255 255 / 0.05);
+}
+
+.table-hover tbody tr:hover {
+  color: rgb(255 255 255 / 1);
+}
+
+.table {
+  color: rgb(255 255 255 / 0.75);
+}
+
+.table td,
+.table th {
+  border-color: rgb(255 255 255 / 0.2) !important;
 }
