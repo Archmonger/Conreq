@@ -95,8 +95,7 @@ LOGGING = {
         },
         "django.request": {
             "level": "INFO",
-            "handlers": ["console", "access_logs"],
-            "propagate": False,
+            "propagate": True,
         },
         "django.server": {
             "level": "INFO",
