@@ -109,7 +109,7 @@ var passwords_dont_match_toast_message = function () {
 };
 
 // Failed to perform conreq first time setup
-var conreq_initialization_fail = function () {
+var conreq_submission_failed_toast_message = function () {
   iziToast.show({
     icon: "fas fa-exclamation-triangle",
     title: "Error!",

@@ -115,10 +115,11 @@ button,
 input[type="submit"] {
   background: var(--accent-color);
   color: #fff;
-  width: 100px;
+  width: auto;
+  min-width: 100px;
   margin-top: 30px;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 4px;
   text-align: center;
   transition: background 0.3s ease;
@@ -149,6 +150,18 @@ form {
 
 a {
   text-decoration: none;
+}
+
+/* Info text */
+h1 {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+h2 {
+  margin: 0;
+  margin-bottom: 35px;
+  font-weight: 700;
 }
 
 @media only screen and (max-width: 1000px) {

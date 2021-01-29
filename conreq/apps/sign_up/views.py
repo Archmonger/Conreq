@@ -6,15 +6,15 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.cache import cache
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
-from django.views.decorators.cache import cache_page
 
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 
 # Create your views here.
-@cache_page(60 * 60)
 def invite_code(request):
-    pass
+    template = loader.get_template("registration/sign_up.html")
+    context = generate_context({})
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
