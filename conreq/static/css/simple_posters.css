@@ -57,15 +57,10 @@
 }
 
 .content-type-icon {
-  font-size: 0;
   line-height: 1;
   top: unset;
   bottom: 5px;
   left: 5px;
-}
-
-.content-type-icon > .fas {
-  font-size: 12px;
 }
 
 .poster-container:hover .content-type-icon {
