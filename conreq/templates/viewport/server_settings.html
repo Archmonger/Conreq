@@ -96,7 +96,8 @@
             <div class="settings-item-group toggler">
                 <div class="settings-item admin pretty p-switch p-fill"
                     data-setting-name="Conreq Simple/Minimal Poster Cards">
-                    <input type="checkbox" {% if server_settings.conreq_simple_posters %} checked {% endif %} />
+                    <input {% if server_settings.conreq_simple_posters %} checked {% endif %} type="checkbox"
+                        class="reload-needed" />
                     <div class="state">
                         <label>Simple/Minimal Poster Cards</label>
                     </div>
@@ -104,7 +105,8 @@
             </div>
             <div class="settings-item-group toggler">
                 <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Conreq Dark Theme">
-                    <input type="checkbox" {% if server_settings.conreq_dark_theme %} checked {% endif %} />
+                    <input {% if server_settings.conreq_dark_theme %} checked {% endif %} type="checkbox"
+                        class="reload-needed" />
                     <div class="state">
                         <label>Dark Theme</label>
                     </div>

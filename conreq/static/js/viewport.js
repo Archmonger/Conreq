@@ -1,4 +1,3 @@
-// Initialize a global masonry grid
 let masonry_grid = null;
 let infinite_scroller_created = false;
 let previous_admin_settings = new Map();
@@ -7,6 +6,7 @@ let viewport_class = ".viewport";
 let modal_content = $("#modal-content");
 let modal_container = $("#modal-container");
 let modal_loader = $("#modal-container .loading-animation");
+let reload_needed = false;
 
 // Create the lazyloader
 let callback_error = function (element) {
@@ -136,6 +136,9 @@ let add_event_listeners = function () {
     let setting_name = $(this).data("setting-name");
     change_server_setting(setting_name);
   });
+  $(".reload-needed").click(function () {
+    reload_needed = true;
+  });
 
   // User Management events
   $(".action-btn.delete").click(function () {
@@ -252,6 +255,11 @@ let refresh_viewport = function () {
 
 // Obtains the viewport content based on the URL, then updates the current tab
 var generate_viewport = function () {
+  // Check if the whole webpage needs to be reloaded
+  if (reload_needed) {
+    location.reload();
+  }
+
   // Read the URL hash to determine what page we are on
   let window_location = get_window_location();
 
