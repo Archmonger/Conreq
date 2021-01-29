@@ -521,6 +521,7 @@ button:focus {
   position: relative;
   height: var(--poster-details-height);
   overflow: hidden;
+  width: var(--poster-width);
 }
 
 .tv .poster-description-container {
