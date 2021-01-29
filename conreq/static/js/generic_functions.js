@@ -126,7 +126,8 @@ var conreq_submission_failed_toast_message = function () {
 var invite_copied_toast_message = function () {
   iziToast.show({
     icon: "fas fa-check-circle",
-    message: "Invite link has been copied to clipboard!",
+    title: "Valid for 7 days.",
+    message: "Invite link has been copied to clipboard! ",
     displayMode: "replace",
     titleColor: "var(--accent-color)",
     messageColor: "var(--accent-color)",
