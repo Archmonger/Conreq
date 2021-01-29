@@ -34,7 +34,9 @@
                         <!-- <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
                                 class="fas fa-cog"></i></a> -->
                         {% if not user.is_superuser %}
-                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
+                        <div class="delete action-btn clickable" title="Delete"
+                            data-url="{% url 'manage_users:delete' %}" data-username="{{ user.username }}"><i
+                                class="fas fa-trash"></i></div>
                         {% endif %}
                     </td>
                 </tr>
