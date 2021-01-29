@@ -192,6 +192,9 @@
   .table-wrapper .desktop-only.fourth {
     display: none !important;
   }
+  .table-wrapper .row {
+    flex-direction: row-reverse;
+  }
   /* Content Preview Modal Button */
   .poster-container .fa-angle-down {
     display: none;
