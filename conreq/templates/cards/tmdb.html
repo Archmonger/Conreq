@@ -7,17 +7,13 @@
         <a
             href="#{% url 'more_info:main' %}?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
 
-            {% if card.conreqStatus == available %}
-            <div class="availablity-text">Available {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}<i
-                    class="fas fa-video"></i>{% endif %} </div>
-            {% elif card.conreqStatus == partial %}
-            <div class="availablity-text">Partially Available {% if card.name %}<i class="fas fa-tv"></i>
-                {% elif card.title %}<i class="fas fa-video"></i>{% endif %} </div>
-            {% else %}
-            <div class="availablity-text">Requestable {% if card.name %}<i class="fas fa-tv"></i>{% elif card.title %}
-                <i class="fas fa-video"></i>{% endif %}
+            <div class="content-type-icon">
+                {% if card.name %}
+                <i class="fas fa-tv"></i>
+                {% elif card.title %}
+                <i class="fas fa-video"></i>
+                {% endif %}
             </div>
-            {% endif %}
 
             <div class="poster-fix">
                 {% if card.poster_path %}

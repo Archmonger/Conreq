@@ -524,14 +524,6 @@ button:focus {
   width: var(--poster-width);
 }
 
-.tv .poster-description-container {
-  border-top: var(--tv-indicator-hr);
-}
-
-.movie .poster-description-container {
-  border-top: var(--movie-indicator-hr);
-}
-
 .poster-title {
   font-family: var(--global-font);
   font-weight: 300;
@@ -616,7 +608,7 @@ button:focus {
   filter: drop-shadow(0 0 3px #000000);
 }
 
-.availablity-text {
+.content-type-icon {
   position: absolute;
   top: calc(var(--poster-height) - 30px);
   left: 5px;
@@ -632,7 +624,7 @@ button:focus {
   font-weight: 700;
 }
 
-.poster-container:hover > a:hover > .availablity-text {
+.poster-container:hover > a:hover > .content-type-icon {
   opacity: 1;
 }
 

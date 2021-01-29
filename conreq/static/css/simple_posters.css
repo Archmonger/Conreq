@@ -56,7 +56,7 @@
   height: auto;
 }
 
-.availablity-text {
+.content-type-icon {
   font-size: 0;
   line-height: 1;
   top: unset;
@@ -64,10 +64,10 @@
   left: 5px;
 }
 
-.availablity-text > .fas {
+.content-type-icon > .fas {
   font-size: 12px;
 }
 
-.poster-container:hover .availablity-text {
+.poster-container:hover .content-type-icon {
   opacity: 1;
 }
