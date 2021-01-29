@@ -27,7 +27,9 @@ urlpatterns = [
     path("", include("conreq.apps.homepage.urls")),
     path(
         BASE_URL + "sign_in/",
-        auth_views.LoginView.as_view(redirect_authenticated_user=True),
+        auth_views.LoginView.as_view(
+            redirect_authenticated_user=True, template_name="registration/sign_in.html"
+        ),
         name="sign_in",
     ),
     path(BASE_URL + "sign_out/", auth_views.logout_then_login, name="sign_out"),
