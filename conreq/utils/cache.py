@@ -148,7 +148,7 @@ def handler(
         if cached_results is None or force_update_cache:
             function_results = function(*args, **kwargs)
             log.handler(
-                cache_name + " - Function " + function.__name__ + " has been executed!",
+                cache_name + " - " + function.__name__ + "()",
                 log.INFO,
                 __logger,
             )
