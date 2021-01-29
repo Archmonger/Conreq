@@ -136,6 +136,8 @@ let add_event_listeners = function () {
     let setting_name = $(this).data("setting-name");
     change_server_setting(setting_name);
   });
+
+  // User Management events
   $(".action-btn.delete").click(function () {
     let btn = $(this);
     let delete_query =
@@ -144,6 +146,17 @@ let add_event_listeners = function () {
       if (result.success) {
         btn.parent().parent().remove();
       }
+    });
+  });
+  $(".conreq-button.invite-user").click(function () {
+    let btn = $(this);
+    let generate_invite_url = btn.data("generate-invite-url");
+    let sign_up_url = window.location.origin + btn.data("sign-up-url");
+    $.get(generate_invite_url, function (result) {
+      let invite_link =
+        sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
+      copy_to_clipboard(invite_link);
+      invite_copied_toast_message();
     });
   });
 };

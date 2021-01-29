@@ -5,7 +5,9 @@
         <div class="table-title">
             <div class="row">
                 <h2 class="desktop-only fourth">User Management</h2>
-                <div id="invite-user" class="conreq-button">
+                <div class="conreq-button invite-user"
+                    data-generate-invite-url="{% url 'sign_up:generate_invite_code' %}"
+                    data-sign-up-url="{% url 'sign_up:invite_code' %}">
                     <i class="fas fa-user-plus"></i>
                     Invite
                 </div>

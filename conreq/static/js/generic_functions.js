@@ -122,6 +122,19 @@ var conreq_initialization_fail = function () {
   });
 };
 
+// Invite link has been copied to cliboard
+var invite_copied_toast_message = function () {
+  iziToast.show({
+    icon: "fas fa-check-circle",
+    message: "Invite link has been copied to clipboard!",
+    displayMode: "replace",
+    titleColor: "var(--accent-color)",
+    messageColor: "var(--accent-color)",
+    iconColor: "var(--accent-color)",
+    progressBarColor: "var(--accent-color)",
+  });
+};
+
 // Gets the current window location from the hash
 var get_window_location = function () {
   // Read the URL hash to determine what page we are on
@@ -137,4 +150,17 @@ var get_window_parameters = function () {
     return window.location.hash.split(/\?(.+)/)[1];
   }
   return "";
+};
+
+// Copies the text of an element to the clipboard
+var copy_to_clipboard = function (str) {
+  const el = document.createElement("textarea");
+  el.value = str;
+  el.setAttribute("readonly", "");
+  el.style.position = "absolute";
+  el.style.left = "-99999px";
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
 };
