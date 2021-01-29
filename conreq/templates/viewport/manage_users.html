@@ -33,7 +33,9 @@
                     <td>
                         <!-- <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
                                 class="fas fa-cog"></i></a> -->
+                        {% if not user.is_superuser %}
                         <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
