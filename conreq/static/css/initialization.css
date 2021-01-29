@@ -44,17 +44,3 @@ input.invalid {
   width: 90%;
   justify-content: space-between;
 }
-
-/* Error lists */
-ul.errorlist {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 10px;
-  color: rgb(255 131 131 / 75%);
-  width: 80%;
-}
-
-ul.errorlist > li {
-  color: inherit;
-}
