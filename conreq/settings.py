@@ -240,6 +240,7 @@ INSTALLED_APPS = [
     "conreq.apps.server_settings",
     "conreq.apps.manage_users",
     "conreq.apps.sign_up",
+    "conreq.apps.user_requests",
     "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
