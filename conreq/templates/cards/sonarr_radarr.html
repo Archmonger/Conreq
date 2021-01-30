@@ -9,7 +9,8 @@
         <i class="fas fa-ellipsis-v clickable"></i>
         <i class="fas fa-angle-down clickable"></i>
         <div class="description-tint"></div>
-        <a href="#{% url 'more_info:main' %}?tvdb_id={{card.tvdbId}}&content_type={{card.contentType}}">
+        <a
+            href="#{% url 'more_info:main' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
 
             <div class="content-type-icon">
                 <i class="fas fa-tv"></i>
