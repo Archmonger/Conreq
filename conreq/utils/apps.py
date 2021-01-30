@@ -43,6 +43,7 @@ STATIC_CONTEXT_VARS = {
 
 # Helper to remove markdown from string
 def __unmark_element(element, stream=None):
+    """Processing function to removes markdown from an element."""
     if stream is None:
         stream = StringIO()
     if element.text:
@@ -61,11 +62,13 @@ __md.stripTopLevelTags = False
 
 
 def generate_context(dict1):
+    """Creates a context dictionary with common context variables."""
     res = {**dict1, **STATIC_CONTEXT_VARS}
     return res
 
 
 def __set_many_conreq_status(card, radarr_library, sonarr_library):
+    """Threaded portion of set_many_conreq_status."""
     # Sonarr card
     if card.__contains__("tvdbId"):
         if sonarr_library is not None and sonarr_library.__contains__(
@@ -96,6 +99,7 @@ def __set_many_conreq_status(card, radarr_library, sonarr_library):
 
 
 def set_many_conreq_status(results):
+    """Sets the availabily on list of cards."""
     content_manager = ContentManager()
     # Fetch Sonarr and Radarr libraries
     radarr_library = cache.handler(
@@ -125,6 +129,7 @@ def set_many_conreq_status(results):
 
 
 def set_single_conreq_status(card):
+    """Sets the availabily on a single card."""
     content_manager = ContentManager()
     content_discovery = ContentDiscovery()
     try:
@@ -172,6 +177,7 @@ def set_single_conreq_status(card):
 
 
 def preprocess_arr_result(arr_result):
+    """Pre-processing to allow for viewing within the More Info screen."""
     # Prepare data attributes for the HTML
     # Summary
     if (
@@ -223,6 +229,7 @@ def preprocess_arr_result(arr_result):
 
 
 def preprocess_tmdb_result(tmdb_result):
+    """Pre-processing to allow for viewing within the More Info screen."""
     # Prepare data attributes for the HTML
     # Summary
     if (
@@ -343,6 +350,7 @@ def preprocess_tmdb_result(tmdb_result):
 
 
 def convert_card_to_tmdb(index, all_results):
+    """Attempt to convert Sonarr/Radarr cards to TMDB equivalents."""
     content_discovery = ContentDiscovery()
     # NOTE: For some reason, overriding values in all_results requires the list and index value.
     # It will NOT work if attempting to change values by reference (ex. card = newCard).
@@ -459,6 +467,7 @@ def initialize_conreq(conreq_config, form):
 
 
 def add_request_to_db(content_id, source, content_type, user):
+    """Adds a request to the User Requests table."""
     if not len(
         UserRequest.objects.filter(
             content_id=content_id,
