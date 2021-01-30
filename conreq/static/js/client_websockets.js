@@ -143,34 +143,6 @@ function connect() {
 
 connect();
 
-// SENDABLE COMMAND: REQUEST CONTENT
-var request_content = function ({
-  tmdb_id = null,
-  tvdb_id = null,
-  content_type = null,
-  seasons = null,
-  episode_ids = null,
-}) {
-  let obtained_params = obtain_common_parameters(
-    tmdb_id,
-    tvdb_id,
-    content_type
-  );
-  let json_payload = {
-    command_name: "request",
-    parameters: {
-      tmdb_id: obtained_params.tmdb_id,
-      tvdb_id: obtained_params.tvdb_id,
-      content_type: obtained_params.content_type,
-      seasons: seasons,
-      episode_ids: episode_ids,
-    },
-  };
-  COMMAND_SOCKET.send(JSON.stringify(json_payload));
-
-  requested_toast_message();
-};
-
 // SENDABLE COMMAND: CHANGE SERVER SETTING
 var change_server_setting = function (setting_name = null, value = null) {
   let json_payload = {

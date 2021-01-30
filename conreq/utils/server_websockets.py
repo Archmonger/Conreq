@@ -3,12 +3,8 @@ import secrets
 from channels.auth import AnonymousUser, login
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
-from conreq.apps.more_info.views import series_modal
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core.content_discovery import ContentDiscovery
-from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.apps import obtain_radarr_parameters, obtain_sonarr_parameters
 from django.core.exceptions import ValidationError
 from htmlmin.minify import html_minify
 
@@ -69,11 +65,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             # Verify login status.
             await login(self.scope, self.scope["user"])
 
-            # Process the command
-            if content["command_name"] == "request":
-                await self.__request_content(content)
-
-            elif content["command_name"] == "server settings":
+            if content["command_name"] == "server settings":
                 await self.__server_settings(content)
 
             else:
@@ -82,86 +74,6 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                     log.ERROR,
                     self.__logger,
                 )
-
-    # COMMAND RESPONSE: REQUEST CONTENT
-    async def __request_content(self, content):
-        content_manager = await database_sync_to_async(ContentManager)()
-        content_discovery = ContentDiscovery()
-
-        # TV show was requested
-        if content["parameters"]["content_type"] == "tv":
-            # Obtain the TVDB ID if needed
-            tvdb_id = content["parameters"]["tvdb_id"]
-            tmdb_id = content["parameters"]["tmdb_id"]
-            if tvdb_id is None and tmdb_id is not None:
-                tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
-
-            # Request the show by the TVDB ID
-            if tvdb_id is not None:
-                # Check if the show is already within Sonarr's collection
-                preexisting_show = content_manager.get(tvdb_id=tvdb_id)
-
-                # If it doesn't already exists, add then request it
-                if preexisting_show is None:
-                    sonarr_params = await database_sync_to_async(
-                        obtain_sonarr_parameters
-                    )(content_discovery, content_manager, tmdb_id, tvdb_id)
-                    new_show = content_manager.add(
-                        tvdb_id=tvdb_id,
-                        quality_profile_id=sonarr_params["sonarr_profile_id"],
-                        root_dir=sonarr_params["sonarr_root"],
-                        series_type=sonarr_params["series_type"],
-                        season_folders=sonarr_params["season_folders"],
-                    )
-                    if new_show.__contains__("id"):
-                        content_manager.request(
-                            sonarr_id=new_show["id"],
-                            seasons=content["parameters"]["seasons"],
-                            episode_ids=content["parameters"]["episode_ids"],
-                        )
-                    else:
-                        log.handler(
-                            "Show was added to Sonarr, but Sonarr did not return an ID!",
-                            log.ERROR,
-                            self.__logger,
-                        )
-                else:
-                    content_manager.request(
-                        sonarr_id=preexisting_show["id"],
-                        seasons=content["parameters"]["seasons"],
-                        episode_ids=content["parameters"]["episode_ids"],
-                    )
-
-        # Movie was requested
-        elif content["parameters"]["content_type"] == "movie":
-            radarr_params = await database_sync_to_async(obtain_radarr_parameters)(
-                content_discovery, content_manager, content["parameters"]["tmdb_id"]
-            )
-
-            # Check if the movie is already within Radarr's collection
-            preexisting_movie = content_manager.get(
-                tmdb_id=content["parameters"]["tmdb_id"]
-            )
-
-            # If it doesn't already exists, add then request it
-            if preexisting_movie is None:
-                new_movie = content_manager.add(
-                    tmdb_id=content["parameters"]["tmdb_id"],
-                    quality_profile_id=radarr_params["radarr_profile_id"],
-                    root_dir=radarr_params["radarr_root"],
-                )
-                if new_movie.__contains__("id"):
-                    content_manager.request(radarr_id=new_movie["id"])
-                else:
-                    log.handler(
-                        "Movie was added to Radarr, but Radarr did not return an ID!",
-                        log.ERROR,
-                        self.__logger,
-                    )
-
-            # If it already existed, just request it
-            else:
-                content_manager.request(radarr_id=preexisting_movie["id"])
 
     # COMMAND RESPONSE: SERVER SETTINGS
     async def __server_settings(self, content):

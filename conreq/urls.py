@@ -34,6 +34,7 @@ urlpatterns = [
     ),
     path(BASE_URL + "sign_out/", auth_views.logout_then_login, name="sign_out"),
     path(BASE_URL + "sign_up/", include("conreq.apps.sign_up.urls")),
+    path(BASE_URL + "request/", include("conreq.apps.user_requests.urls")),
     # Viewport Locations
     path("discover/", include("conreq.apps.discover.urls")),
     path("more_info/", include("conreq.apps.more_info.urls")),

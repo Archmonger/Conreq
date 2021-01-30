@@ -4,6 +4,7 @@ from secrets import token_hex
 from threading import Thread
 
 from conreq.apps.server_settings.models import ConreqConfig
+from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import cache, log
@@ -448,3 +449,13 @@ def initialize_conreq(conreq_config, form):
     # Remember that the database has been initialized
     conreq_config.conreq_initialized = True
     conreq_config.save()
+
+
+def add_request_to_db(content_id, source, user):
+    new_request = UserRequest(
+        content_id=content_id,
+        source=source,
+        requested_by=user,
+    )
+    new_request.clean_fields()
+    new_request.save()

@@ -165,3 +165,36 @@ var copy_to_clipboard = function (str) {
   document.execCommand("copy");
   document.body.removeChild(el);
 };
+
+// Request Content
+var request_content = function ({
+  tmdb_id = null,
+  tvdb_id = null,
+  content_type = null,
+  seasons = null,
+  episode_ids = null,
+}) {
+  let obtained_params = obtain_common_parameters(
+    tmdb_id,
+    tvdb_id,
+    content_type
+  );
+  let json_payload = {
+    tmdb_id: obtained_params.tmdb_id,
+    tvdb_id: obtained_params.tvdb_id,
+    content_type: obtained_params.content_type,
+    seasons: seasons,
+    episode_ids: episode_ids,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: $(".modal-button.request-button").data("request-url"),
+    headers: {
+      "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
+    },
+    data: JSON.stringify(json_payload),
+    contentType: "application/json; charset=utf-8",
+    dataType: "application/json; charset=UTF-8",
+  });
+};
