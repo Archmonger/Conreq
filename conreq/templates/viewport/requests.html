@@ -1,0 +1,14 @@
+{% load static %}
+{% include "primary/loading_animation.html" %}
+<div class="viewport requests viewport-posters">
+    {% if all_cards %}
+    {% for card in all_cards %}
+    {% include "cards/sonarr_radarr.html" %}
+    {% endfor %}
+
+    {% else %}
+    <div class="empty-viewport">
+        No requests were found!
+    </div>
+    {% endif %}
+</div>

@@ -19,7 +19,7 @@
                 aria-controls="user-tabs">
                 {{user_options}} <i id="user-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="user-tabs">
-                <a href="#" class="nav-tab suboption user">
+                <a href="#{% url 'user_requests:my_requests' %}" class="nav-tab suboption user">
                     {{my_requests}}</a>
                 <a href="#" class="nav-tab suboption user">
                     {{my_issues}}</a>

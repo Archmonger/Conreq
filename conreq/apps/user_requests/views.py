@@ -1,15 +1,19 @@
 import json
 
+from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.apps import (
     add_request_to_db,
+    generate_context,
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
 )
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden, JsonResponse
+from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
+from django.template import loader
+from django.views.decorators.cache import cache_page
 
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
@@ -18,7 +22,7 @@ __logger = log.get_logger(__name__)
 # Create your views here.
 @login_required
 def request_content(request):
-    # User submitted the registration form
+    # User submitted a new request
     if request.method == "POST":
         request_parameters = json.loads(request.body.decode("utf-8"))
         log.handler(
@@ -57,11 +61,20 @@ def request_content(request):
                     )
 
                 # Save and request
-                add_request_to_db(
-                    content_id=tvdb_id,
-                    source="tvdb",
-                    user=request.user,
-                )
+                if tmdb_id:
+                    add_request_to_db(
+                        content_id=tmdb_id,
+                        source="tmdb",
+                        content_type="tv",
+                        user=request.user,
+                    )
+                else:
+                    add_request_to_db(
+                        content_id=tvdb_id,
+                        source="tvdb",
+                        content_type="tv",
+                        user=request.user,
+                    )
                 content_manager.request(
                     sonarr_id=show["id"],
                     seasons=request_parameters["seasons"],
@@ -96,6 +109,7 @@ def request_content(request):
             add_request_to_db(
                 content_id=tmdb_id,
                 source="tmdb",
+                content_type="movie",
                 user=request.user,
             )
             content_manager.request(radarr_id=movie["id"])
@@ -109,3 +123,62 @@ def request_content(request):
         return JsonResponse({})
 
     return HttpResponseForbidden()
+
+
+@cache_page(1)
+@login_required
+def my_requests(request):
+    template = loader.get_template("viewport/requests.html")
+
+    content_discovery = ContentDiscovery()
+    content_manager = ContentManager()
+    user_requests = UserRequest.objects.filter(requested_by=request.user)
+
+    all_cards = []
+    for entry in user_requests.values():
+        # Fetch TMDB entry
+        if entry["source"] == "tmdb":
+            card = content_discovery.get_by_tmdb_id(
+                tmdb_id=entry["content_id"],
+                content_type=entry["content_type"],
+                obtain_extras=False,
+            )
+            if card is not None:
+                card["tmdbCard"] = True
+                all_cards.append(card)
+
+        # Fetch TVDB entry
+        if entry["source"] == "tvdb":
+            # Attempt to convert card to TMDB
+            conversion = content_discovery.get_by_tvdb_id(tvdb_id=entry["content_id"])
+            # Conversion found
+            if conversion.__contains__("tv_results") and conversion["tv_results"]:
+                card = conversion["tv_results"][0]
+                card["tmdbCard"] = True
+                all_cards.append(card)
+
+                # Convert all requests to use this new ID
+                old_requests = UserRequest.objects.filter(
+                    content_id=entry["content_id"]
+                )
+                old_requests.update(content_id=card["id"], source="tmdb")
+
+            # Fallback to checking sonarr's database
+            else:
+                card = content_manager.get(tvdb_id=entry["content_id"])
+
+        if card is None:
+            log.handler(
+                entry["content_type"]
+                + " from "
+                + entry["source"]
+                + " with ID "
+                + entry["content_id"]
+                + " no longer exists!",
+                log.WARNING,
+                __logger,
+            )
+
+    context = generate_context({"all_cards": all_cards})
+
+    return HttpResponse(template.render(context, request))

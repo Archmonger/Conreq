@@ -451,15 +451,19 @@ def initialize_conreq(conreq_config, form):
     conreq_config.save()
 
 
-def add_request_to_db(content_id, source, user):
+def add_request_to_db(content_id, source, content_type, user):
     if not len(
         UserRequest.objects.filter(
-            content_id=content_id, source=source, requested_by=user
+            content_id=content_id,
+            source=source,
+            content_type=content_type,
+            requested_by=user,
         )
     ):
         new_request = UserRequest(
             content_id=content_id,
             source=source,
+            content_type=content_type,
             requested_by=user,
         )
         new_request.clean_fields()
