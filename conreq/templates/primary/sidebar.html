@@ -34,7 +34,7 @@
                 aria-expanded="true" aria-controls="admin-tabs">
                 {{admin}} <i id="admin-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="admin-tabs">
-                <a href="#" class="nav-tab suboption admin">
+                <a href="#{% url 'user_requests:all_requests' %}" class="nav-tab suboption admin">
                     {{all_requests}}</a>
                 <a href="#" class="nav-tab suboption admin">
                     {{all_issues}}</a>
