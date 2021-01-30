@@ -101,7 +101,7 @@ def request_content(request):
             content_manager.request(radarr_id=movie["id"])
 
             log.handler(
-                request.user.username + " requested movie " + movie["name"],
+                request.user.username + " requested movie " + movie["title"],
                 log.INFO,
                 __logger,
             )

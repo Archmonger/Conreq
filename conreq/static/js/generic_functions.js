@@ -189,7 +189,7 @@ var request_content = function ({
 
   $.ajax({
     type: "POST",
-    url: $(".modal-button.request-button").data("request-url"),
+    url: $(".request-button").data("request-url"),
     headers: {
       "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
     },

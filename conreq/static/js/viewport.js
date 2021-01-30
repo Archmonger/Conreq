@@ -92,6 +92,7 @@ let add_event_listeners = function () {
   });
   $(".request-button.movie").click(function () {
     request_content({});
+    requested_toast_message();
   });
 
   // Server Settings menu events
