@@ -481,3 +481,13 @@ def add_request_to_db(content_id, source, content_type, user):
             log.DEBUG,
             __logger,
         )
+
+
+def request_is_unique(entry, request_dict):
+    """Checks if a row in the request model is unique."""
+    key = entry["source"] + entry["content_type"] + entry["content_id"]
+    if not request_dict.__contains__(key):
+        request_dict[key] = True
+        return True
+
+    return False

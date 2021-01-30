@@ -9,6 +9,7 @@ from conreq.utils.apps import (
     generate_context,
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
+    request_is_unique,
     set_many_conreq_status,
 )
 from conreq.utils.generic import is_key_value_in_list
@@ -214,9 +215,11 @@ def all_requests(request):
     user_requests = UserRequest.objects.all().order_by("id").reverse()
 
     all_cards = []
+    request_dict = {}
+
     for entry in user_requests.values():
         # Fetch TMDB entry
-        if entry["source"] == "tmdb":
+        if entry["source"] == "tmdb" and request_is_unique(entry, request_dict):
             card = content_discovery.get_by_tmdb_id(
                 tmdb_id=entry["content_id"],
                 content_type=entry["content_type"],
@@ -227,7 +230,7 @@ def all_requests(request):
                 all_cards.append(card)
 
         # Fetch TVDB entry
-        if entry["source"] == "tvdb":
+        if entry["source"] == "tvdb" and request_is_unique(entry, request_dict):
             # Attempt to convert card to TMDB
             conversion = content_discovery.get_by_tvdb_id(tvdb_id=entry["content_id"])
             # Conversion found
@@ -258,7 +261,7 @@ def all_requests(request):
 
                 all_cards.append(card)
 
-        if card is None:
+        if card is None and not request_is_unique(entry, request_dict):
             log.handler(
                 entry["content_type"]
                 + " from "
