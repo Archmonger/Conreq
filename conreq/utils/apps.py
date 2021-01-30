@@ -452,10 +452,21 @@ def initialize_conreq(conreq_config, form):
 
 
 def add_request_to_db(content_id, source, user):
-    new_request = UserRequest(
-        content_id=content_id,
-        source=source,
-        requested_by=user,
-    )
-    new_request.clean_fields()
-    new_request.save()
+    if not len(
+        UserRequest.objects.filter(
+            content_id=content_id, source=source, requested_by=user
+        )
+    ):
+        new_request = UserRequest(
+            content_id=content_id,
+            source=source,
+            requested_by=user,
+        )
+        new_request.clean_fields()
+        new_request.save()
+
+        log.handler(
+            "Added " + str(content_id) + " to the user request database.",
+            log.DEBUG,
+            __logger,
+        )
