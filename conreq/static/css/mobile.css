@@ -176,6 +176,16 @@
   .settings-input-group {
     grid-template-columns: minmax(0, 1fr);
   }
+  /* Posters */
+  .poster-container .poster-description-container {
+    opacity: 1 !important;
+  }
+  .poster-container .content-type-icon {
+    opacity: 1;
+  }
+  .poster-container .fa-ellipsis-v {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -195,7 +205,7 @@
   .table-wrapper .row {
     flex-direction: row-reverse;
   }
-  /* Content Preview Modal Button */
+  /* Posters */
   .poster-container .fa-angle-down {
     display: none;
   }
