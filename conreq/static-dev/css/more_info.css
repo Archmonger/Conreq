@@ -86,8 +86,10 @@
   right: 27px;
   top: 20px;
   font-size: 28px;
-  -webkit-filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  -webkit-filter: drop-shadow(0 0 5px rgb(0 0 0));
+  filter: drop-shadow(0 0 5px rgb(0 0 0));
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(0 0 0 / 0.5);
   transition: color 0.3s ease;
 }
 

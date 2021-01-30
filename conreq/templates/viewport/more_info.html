@@ -155,7 +155,7 @@
                     <div class="inline light rating">
                         {% firstof content.vote_average content.ratings.value "-" %} / 10 </div>
                 </div>
-                <i class="fas fa-ellipsis-v">
+                <i class="fas fa-ellipsis-v clickable">
                 </i>
                 {% if content.conreqStatus == available %}
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
