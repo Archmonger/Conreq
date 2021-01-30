@@ -367,14 +367,21 @@ def obtain_sonarr_parameters(
     """Returns the common parameters needed for adding a series to Sonarr."""
     conreq_config = ConreqConfig.get_solo()
 
-    # Determine series type, root directory, and profile ID
+    # Attempt to convert TVDB to TMDB if possible
     if tmdb_id is None:
-        tmdb_id = content_discovery.get_by_tvdb_id(tvdb_id)["tv_results"]["id"]
+        conversion = content_discovery.get_by_tvdb_id(tvdb_id)
+        if conversion.__contains__("tv_results") and conversion["tv_results"]:
+            tmdb_id = conversion["tv_results"][0]["id"]
 
-    is_anime = content_discovery.is_anime(tmdb_id, "tv")
+    # Determine series type, root directory, and profile ID
+    is_anime = False
+    if tmdb_id is not None:
+        is_anime = content_discovery.is_anime(tmdb_id, "tv")
+
     season_folders = conreq_config.sonarr_season_folders
     all_root_dirs = content_manager.sonarr_root_dirs()
 
+    # Generate parameters
     if is_anime:
         series_type = "Anime"
         sonarr_root = is_key_value_in_list(
