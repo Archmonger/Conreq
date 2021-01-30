@@ -41,94 +41,71 @@ def request_content(request):
             # Request the show by the TVDB ID
             if tvdb_id is not None:
                 # Check if the show is already within Sonarr's collection
-                preexisting_show = content_manager.get(tvdb_id=tvdb_id)
+                show = content_manager.get(tvdb_id=tvdb_id)
 
                 # If it doesn't already exists, add then request it
-                if preexisting_show is None:
+                if show is None:
                     sonarr_params = obtain_sonarr_parameters(
                         content_discovery, content_manager, tmdb_id, tvdb_id
                     )
-                    new_show = content_manager.add(
+                    show = content_manager.add(
                         tvdb_id=tvdb_id,
                         quality_profile_id=sonarr_params["sonarr_profile_id"],
                         root_dir=sonarr_params["sonarr_root"],
                         series_type=sonarr_params["series_type"],
                         season_folders=sonarr_params["season_folders"],
                     )
-                    if new_show.__contains__("id"):
-                        add_request_to_db(
-                            content_id=tvdb_id,
-                            source="tvdb",
-                            user=request.user,
-                        )
-                        content_manager.request(
-                            sonarr_id=new_show["id"],
-                            seasons=request_parameters["seasons"],
-                            episode_ids=request_parameters["episode_ids"],
-                        )
 
-                    # For some reason the new show did not contain an ID
-                    else:
-                        log.handler(
-                            "Show was added to Sonarr, but Sonarr did not return an ID!",
-                            log.ERROR,
-                            __logger,
-                        )
+                # Save and request
+                add_request_to_db(
+                    content_id=tvdb_id,
+                    source="tvdb",
+                    user=request.user,
+                )
+                content_manager.request(
+                    sonarr_id=show["id"],
+                    seasons=request_parameters["seasons"],
+                    episode_ids=request_parameters["episode_ids"],
+                )
 
-                # Request a show that's already within Sonarr
-                else:
-                    add_request_to_db(
-                        content_id=tvdb_id,
-                        source="tvdb",
-                        user=request.user,
-                    )
-                    content_manager.request(
-                        sonarr_id=preexisting_show["id"],
-                        seasons=request_parameters["seasons"],
-                        episode_ids=request_parameters["episode_ids"],
-                    )
+                log.handler(
+                    request.user.username + " requested TV series " + show["title"],
+                    log.INFO,
+                    __logger,
+                )
 
         # Movie was requested
         elif request_parameters["content_type"] == "movie":
+            tmdb_id = request_parameters["tmdb_id"]
             radarr_params = obtain_radarr_parameters(
-                content_discovery, content_manager, request_parameters["tmdb_id"]
+                content_discovery, content_manager, tmdb_id
             )
 
             # Check if the movie is already within Radarr's collection
-            preexisting_movie = content_manager.get(
-                tmdb_id=request_parameters["tmdb_id"]
-            )
+            movie = content_manager.get(tmdb_id=tmdb_id)
 
             # If it doesn't already exists, add then request it
-            if preexisting_movie is None:
-                new_movie = content_manager.add(
-                    tmdb_id=request_parameters["tmdb_id"],
+            if movie is None:
+                movie = content_manager.add(
+                    tmdb_id=tmdb_id,
                     quality_profile_id=radarr_params["radarr_profile_id"],
                     root_dir=radarr_params["radarr_root"],
                 )
-                if new_movie.__contains__("id"):
-                    add_request_to_db(
-                        content_id=request_parameters["tmdb_id"],
-                        source="tmdb",
-                        user=request.user,
-                    )
-                    content_manager.request(radarr_id=new_movie["id"])
-                else:
-                    log.handler(
-                        "Movie was added to Radarr, but Radarr did not return an ID!",
-                        log.ERROR,
-                        __logger,
-                    )
 
-            # If it already existed, just request it
-            else:
-                add_request_to_db(
-                    content_id=request_parameters["tmdb_id"],
-                    source="tmdb",
-                    user=request.user,
-                )
-                content_manager.request(radarr_id=preexisting_movie["id"])
+            # Save and request
+            add_request_to_db(
+                content_id=tmdb_id,
+                source="tmdb",
+                user=request.user,
+            )
+            content_manager.request(radarr_id=movie["id"])
 
-    return JsonResponse({})
+            log.handler(
+                request.user.username + " requested movie " + movie["name"],
+                log.INFO,
+                __logger,
+            )
 
-    # return HttpResponseForbidden()
+        return JsonResponse({})
+
+    return HttpResponseForbidden()
