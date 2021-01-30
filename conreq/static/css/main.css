@@ -296,7 +296,7 @@ input:checked ~ .state {
 
 .searchbar:focus-within {
   background: #fff;
-  color: var(--searchbar-bg);
+  color: #252525;
 }
 
 .searchbar input {
