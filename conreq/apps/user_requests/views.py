@@ -9,7 +9,9 @@ from conreq.utils.apps import (
     generate_context,
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
+    set_many_conreq_status,
 )
+from conreq.utils.generic import is_key_value_in_list
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
@@ -167,6 +169,18 @@ def my_requests(request):
             else:
                 card = content_manager.get(tvdb_id=entry["content_id"])
 
+                # Determine if the card has a known poster image
+                if isinstance(card, dict):
+                    card["contentType"] = entry["content_type"]
+                    if card.__contains__("images"):
+                        remote_poster = is_key_value_in_list(
+                            "coverType", "poster", card["images"], return_item=True
+                        )
+                        if remote_poster:
+                            card["remotePoster"] = remote_poster["remoteUrl"]
+
+                all_cards.append(card)
+
         if card is None:
             log.handler(
                 entry["content_type"]
@@ -178,6 +192,10 @@ def my_requests(request):
                 log.WARNING,
                 __logger,
             )
+
+    # Set the availability
+    content_discovery.determine_id_validity({"results": all_cards})
+    set_many_conreq_status(all_cards)
 
     context = generate_context({"all_cards": all_cards})
 
