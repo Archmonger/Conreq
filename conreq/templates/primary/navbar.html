@@ -9,7 +9,7 @@
     <div class="searchbar form-inline">
         <input type="text" id="content-search" placeholder="Search..." autocomplete="off" autocorrect="off"
             autocapitalize="off" spellcheck="false" data-search-url="{% url 'search:main' %}" />
-        <i class="fas fa-search"></i>
+        <i class="fas fa-search clickable"></i>
     </div>
     <div class="username-container no-highlighting clickable">
         {% if user.is_authenticated %}
