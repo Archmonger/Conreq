@@ -165,6 +165,19 @@ let add_event_listeners = function () {
       invite_copied_toast_message();
     });
   });
+
+  // Poster click events
+  add_poster_click_events();
+};
+
+// Separate poster click events function to support InfiniteScroll
+let add_poster_click_events = function () {
+  $(".poster-container .fa-angle-down").each(function () {
+    $(this).unbind("click");
+    $(this).click(function () {
+      console.log("test");
+    });
+  });
 };
 
 // Destroys old viewport JS instances
@@ -246,6 +259,7 @@ let refresh_viewport = function () {
 
       masonry_grid.on("append.infiniteScroll", function () {
         cull_old_posters();
+        add_poster_click_events();
       });
 
       infinite_scroller_created = true;
