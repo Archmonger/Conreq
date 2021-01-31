@@ -173,7 +173,6 @@ let add_poster_click_events = function () {
     $(this).unbind("click");
     $(this).click(function () {
       generate_modal($(this).data("modal-url"));
-      console.log("test");
     });
   });
 };

@@ -21,6 +21,7 @@ var generate_modal = function (modal_url) {
     season_checkbox_click_event();
     episode_name_click_event();
     episode_checkbox_click_event();
+    expand_click_event();
   });
 };
 
@@ -169,5 +170,11 @@ let episode_checkbox_click_event = function () {
         season_checkbox.prop("checked", true);
       }
     }
+  });
+};
+
+let expand_click_event = function () {
+  $("#modal-container .fa-expand").click(function () {
+    $("#modal-container").modal("hide");
   });
 };
