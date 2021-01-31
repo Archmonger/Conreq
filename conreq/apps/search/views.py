@@ -11,9 +11,11 @@ from conreq.utils.apps import (
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
+from django.views.decorators.cache import cache_page
 
 
 # Create your views here.
+@cache_page(60 * 60)
 @login_required
 def search(request):
     content_discovery = ContentDiscovery()
