@@ -17,7 +17,6 @@ from conreq.utils.generic import ReturnThread
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
-from django.template.loader import render_to_string
 from django.views.decorators.cache import cache_page
 
 # Globals
