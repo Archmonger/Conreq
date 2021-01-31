@@ -144,7 +144,7 @@ let add_event_listeners = function () {
   $(".action-btn.delete").click(function () {
     let btn = $(this);
     let delete_query =
-      btn.data("url") + "?username=" + encodeURI(btn.data("username"));
+      btn.data("delete-url") + "?username=" + encodeURI(btn.data("username"));
     post_url(delete_query, function (result) {
       if (result.success) {
         btn.parent().parent().remove();

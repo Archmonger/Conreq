@@ -37,7 +37,7 @@
                                 class="fas fa-cog"></i></a> -->
                         {% if not user.is_superuser %}
                         <div class="delete action-btn clickable" title="Delete"
-                            data-url="{% url 'manage_users:delete' %}" data-username="{{ user.username }}"><i
+                            data-delete-url="{% url 'manage_users:delete' %}" data-username="{{ user.username }}"><i
                                 class="fas fa-trash"></i></div>
                         {% endif %}
                     </td>
