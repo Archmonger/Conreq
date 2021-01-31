@@ -210,3 +210,18 @@ var post_url = function (url, callback) {
     success: callback,
   });
 };
+
+// Post JSON to a URL
+var post_json = function (url, data, callback) {
+  $.ajax({
+    type: "POST",
+    url: url,
+    headers: {
+      "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
+    },
+    data: JSON.stringify(data),
+    contentType: "application/json; charset=utf-8",
+    dataType: "application/json; charset=UTF-8",
+    success: callback,
+  });
+};
