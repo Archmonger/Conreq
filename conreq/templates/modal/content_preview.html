@@ -3,111 +3,81 @@
     <span class="sr-only">Loading...</span>
 </div>
 <div id="modal-content" class="modal-content content-preview">
-    <div class="modal-header">
-        <i class="fas fa-expand"></i>
-        <div data-dismiss="modal" aria-label="Close">
-            <i class="fas fa-window-close"></i>
-        </div>
-    </div>
-    <div class="modal-body">
-        <div class="season-episode-container">
-            {% for season in seasons %}
-            <div id="season-{{season.seasonNumber}}" class="season-block no-highlighting">
 
-                {% if season.statistics.conreqStatus != available %}
-                <div class="modal-checkbox-container">
-                    <div class="pretty p-icon p-curve p-smooth p-jelly">
-                        <input type="checkbox"
-                            class="season-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
-                            data-season-number="{{season.seasonNumber}}"
-                            data-episode-container="#episodes-season-{{season.seasonNumber}}" />
-                        <div class="state">
-                            <i class="icon fas fa-check"></i>
-                            <label></label>
-                        </div>
+    <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster">
+    <div class="grid-modal-right">
+        <div class="modal-header">
+            <a
+                href="#{% url 'more_info:main' %}?tmdb_id={{content.id}}&content_type={% if content.name %}tv{% elif content.title %}movie{% endif %}">
+                <i class="fas fa-expand"></i>
+            </a>
+            <div data-dismiss="modal" aria-label="Close">
+                <i class="fas fa-window-close"></i>
+            </div>
+        </div>
+
+        <div class="info">
+            <div class="title bold">{% firstof content.title content.name "Unknown" %}</div>
+            <div class="mini-info-grid">
+                <div class="modal-info-block">
+                    <div class="modal-info bold"> Availability: </div>
+                    <div class="modal-info">
+                        {% if content.conreqStatus == available %} Available
+                        <div class="more-info-availablity-dot green"> </div>
+                        {% elif content.conreqStatus == partial %} Partial
+                        <div class="more-info-availablity-dot yellow"> </div>
+                        {% else %} Not Downloaded
+                        <div class="more-info-availablity-dot red"> </div>
+                        {% endif %}
                     </div>
                 </div>
-                {% else %}
-                <div></div>
+
+                <div class="modal-info-block">
+                    <div class="modal-info bold"> Content Type: </div>
+                    <div class="modal-info">
+                        {% if content.name %}
+                        Television
+                        {% elif content.title %}
+                        Movie
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="modal-info-block">
+                    <div class="modal-info bold"> Request Status: </div>
+                    <div class="modal-info"> Not Requested </div>
+                </div>
+
+
+                {% if content.name %}
+                <div class="modal-info-block">
+                    <div class="modal-info bold"> Last Aired: </div>
+                    <div class="modal-info"> {% firstof content.last_air_date_formatted "Unknown" %} </div>
+                </div>
+                {% elif content.title %}
+                <div class="modal-info-block">
+                    <div class="modal-info bold"> Release Date: </div>
+                    <div class="modal-info"> {% firstof content.release_date_formatted "Unknown" %} </div>
+                </div>
                 {% endif %}
 
-                <div class="modal-season-container">
-                    <div class="season {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
+                <div class="modal-info-block">
+                    <div class="modal-info bold"> Release Status: </div>
+                    <div class="modal-info"> {{content.status}} </div>
+                </div>
 
-                        {% if season.statistics.conreqStatus == available %}
-                        <div class="modal-dot green"></div>
-                        {% elif season.statistics.conreqStatus == partial %}
-                        <div class="modal-dot yellow"></div>
-                        {% else %}
-                        <div class="modal-dot red"></div>
-                        {% endif %}
-
-                        <div class="season-name line-clamp-1">
-                            {% if season.seasonNumber == 0 %} Specials
-                            {% else %} Season {{season.seasonNumber}} {% endif %}
-                        </div>
+                <div class="modal-info-block">
+                    <div class="modal-info bold"> Score: </div>
+                    <div class="modal-info"> {% firstof content.vote_average content.ratings.value "-" %} / 10
                     </div>
                 </div>
-                <div class="modal-season-dropdown-container">
-                    <i class="fas fa-angle-down collapsed" data-toggle="collapse"
-                        data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
-                        aria-controls="episodes-season-{{season.seasonNumber}}"></i>
-                </div>
-
             </div>
-            <div id="episodes-season-{{season.seasonNumber}}" class="episode-container collapse no-highlighting">
-                {% for episode in season.episodes|dictsort:"episodeNumber" %}
-                <div class="episode-block">
-
-                    {% if episode.conreqStatus != available %}
-                    <div class="modal-checkbox-container">
-                        <div class="pretty p-icon p-curve p-smooth p-jelly">
-                            <input type="checkbox"
-                                class="episode-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
-                                data-episode-id="{{episode.id}}"
-                                data-season-container="#season-{{season.seasonNumber}}" />
-                            <div class="state">
-                                <i class="icon fas fa-check"></i>
-                                <label></label>
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
-                    <div></div>
-                    {% endif %}
-
-                    <div class="episode {% if episode.conreqStatus != available %}clickable{% endif %}">
-                        {% if episode.conreqStatus == available %}
-                        <div class="modal-dot green"></div>
-                        {% else %}
-                        <div class="modal-dot red"></div>
-                        {% endif %}
-                        <div class="episode-number bold">
-                            {% firstof episode.episodeNumber "Unknown" %}
-                        </div>
-
-                        {% if episode.absoluteEpisodeNumber %}
-                        {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
-                        <div class="absolute-episode-number bold">
-                            ({{episode.absoluteEpisodeNumber}})
-                        </div>
-                        {% endif %}
-                        {% endif %}
-
-                        <div class="episode-separator"> </div>
-                        <div class="episode-name line-clamp-1">
-                            {% firstof episode.title "Unknown" %}
-                        </div>
-
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endfor %}
+            <div class="description">{% firstof content.overview "No summary available."%}</div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <div class="modal-button conreq-button request-button no-highlighting"
-            data-request-url="{% url 'user_requests:request_content' %}"> <i class="fas fa-plus"></i> REQUEST</div>
+
+        <div class="modal-footer">
+            <div class="modal-button conreq-button request-button no-highlighting"
+                data-request-url="{% url 'user_requests:request_content' %}"> <i class="fas fa-plus"></i> REQUEST</div>
+        </div>
     </div>
 </div

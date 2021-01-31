@@ -496,7 +496,7 @@ button:focus {
   overflow: hidden;
 }
 
-.poster {
+.viewport .poster {
   width: var(--poster-width);
   height: var(--poster-height);
   display: block;
@@ -506,7 +506,7 @@ button:focus {
   position: relative;
 }
 
-.poster:hover {
+.viewport .poster:hover {
   -webkit-filter: brightness(113%);
   filter: brightness(113%);
   transform: scale(1.08);

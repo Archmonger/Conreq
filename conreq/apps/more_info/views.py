@@ -204,6 +204,8 @@ def content_preview_modal(request):
         content = content_discovery.get_by_tmdb_id(
             tmdb_id, content_type, obtain_extras=False
         )
+        set_single_conreq_status(content)
+        preprocess_tmdb_result(content)
         context = generate_context({"content": content})
         template = loader.get_template("modal/content_preview.html")
         return HttpResponse(template.render(context, request))
