@@ -344,20 +344,3 @@ if ("onhashchange" in window) {
     }
   }, 100);
 }
-
-// Fetches a modal via AJAX
-let generate_modal = function (modal_url) {
-  // Show the loading icon
-  modal_content.hide();
-  modal_loader.show();
-
-  // Fetch the series modal
-  $.get(modal_url + "?" + get_window_parameters(), function (modal_html) {
-    // Place the new HTML on the page
-    modal_content[0].innerHTML = DOMPurify.sanitize(modal_html);
-
-    // Show the new content
-    modal_loader.hide();
-    modal_content.show();
-  });
-};

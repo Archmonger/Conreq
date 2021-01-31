@@ -3,6 +3,23 @@ let modal_selector = "#modal-content";
 // Select the target node
 let target = document.querySelector(modal_selector);
 
+// Fetches a modal via AJAX
+var generate_modal = function (modal_url) {
+  // Show the loading icon
+  modal_content.hide();
+  modal_loader.show();
+
+  // Fetch the series modal
+  $.get(modal_url + "?" + get_window_parameters(), function (modal_html) {
+    // Place the new HTML on the page
+    modal_content[0].innerHTML = DOMPurify.sanitize(modal_html);
+
+    // Show the new content
+    modal_loader.hide();
+    modal_content.show();
+  });
+};
+
 // Create an observer instance
 let observer = new MutationObserver(function () {
   select_all_click_event();
