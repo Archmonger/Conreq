@@ -8,6 +8,7 @@
 
 <body>
     <div class="main">
+        {% csrf_token %}
         {% include "primary/navbar.html" %}
         {% include "primary/sidebar.html" %}
         {% include "modal/default.html" %}
@@ -16,7 +17,7 @@
         </div>
 
         <script src="{% static 'js/viewport.js' %}" crossorigin="anonymous"></script>
-        <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>>
+        <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>
     </div>
 </body>
 
