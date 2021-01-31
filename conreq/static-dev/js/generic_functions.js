@@ -198,3 +198,15 @@ var request_content = function ({
     dataType: "application/json; charset=UTF-8",
   });
 };
+
+// Post to a URL
+var post_url = function (url, callback) {
+  $.ajax({
+    type: "POST",
+    url: url,
+    headers: {
+      "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
+    },
+    success: callback,
+  });
+};
