@@ -156,6 +156,8 @@
                 </div>
                 <i class="fas fa-ellipsis-v clickable">
                 </i>
+
+
                 {% if content.conreqStatus == available %}
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="conreq-button request-button box-shadow no-highlighting available"> AVAILABLE </div>
@@ -166,21 +168,26 @@
                     AVAILABLE </div>
                 {% endif %}
 
+
                 {% else %}
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
-                <div class="conreq-button request-button box-shadow no-highlighting movie"
-                    data-request-url="{% url 'user_requests:request_content' %}">
-                    <i class="fas fa-plus"></i> REQUEST
+                <div class="conreq-button request-button no-highlighting"
+                    data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
+                    data-tmdb-id="{{content.id}}">
+                    <i class="fas fa-plus"></i>
+                    REQUEST
                 </div>
                 {% endif %}
                 {% if content_type == "tv" and server_settings.sonarr_enabled %}
-                <div class="conreq-button request-button box-shadow no-highlighting tv" data-toggle="modal"
-                    data-target="#modal-container" data-modal-url="{% url 'more_info:series_modal' %}">
-                    <i class=" fas fa-plus"></i> REQUEST
+                <div class="conreq-button series-modal-button no-highlighting" data-content-type="tv"
+                    data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
+                    <i class="fas fa-plus"></i>
+                    REQUEST
                 </div>
                 {% endif %}
-
                 {% endif %}
+
+
             </div>
             <div class="more-info-overview grid-block contains-carousel">
                 <div class="more-info-summary">

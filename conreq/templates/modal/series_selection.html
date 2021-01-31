@@ -110,7 +110,11 @@
     </div>
     <div class="modal-footer">
         <div class="modal-button select-button no-highlighting"> SELECT ALL</div>
-        <div class="modal-button conreq-button request-button no-highlighting"
-            data-request-url="{% url 'user_requests:request_content' %}"> <i class="fas fa-plus"></i> REQUEST</div>
+        <div class="conreq-button request-button no-highlighting"
+            data-request-url="{% url 'user_requests:request_content' %}" data-content-type="tv"
+            data-tvdb-id="{{tvdb_id}}">
+            <i class="fas fa-plus"></i>
+            REQUEST
+        </div>
     </div>
 </div>

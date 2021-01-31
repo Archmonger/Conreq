@@ -79,8 +79,21 @@
         </div>
 
         <div class="modal-footer">
-            <div class="modal-button conreq-button request-button no-highlighting"
-                data-request-url="{% url 'user_requests:request_content' %}"> <i class="fas fa-plus"></i> REQUEST</div>
+            {% if content.name %}
+            <div class="conreq-button series-modal-button no-highlighting" data-content-type="tv"
+                data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
+                <i class="fas fa-plus"></i>
+                REQUEST
+            </div>
+            {% elif content.title %}
+            <div class="conreq-button request-button no-highlighting"
+                data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
+                data-tmdb-id="{{content.id}}">
+                <i class="fas fa-plus"></i>
+                REQUEST
+            </div>
+            {% endif %}
+
         </div>
     </div>
 </div

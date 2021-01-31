@@ -2,38 +2,6 @@ let first_websocket_connection = true;
 let display_disconnected_toast = true;
 var viewport_loaded = false;
 
-// HELPER FUNCTIONS
-let obtain_common_parameters = function (
-  tmdb_id = null,
-  tvdb_id = null,
-  content_type = null
-) {
-  let url_params = new URLSearchParams(window.location.hash.split("?")[1]);
-  let results = { tmdb_id: null, tvdb_id: null, content_type: null };
-
-  // Content Type
-  if (content_type != null) {
-    results.content_type = content_type;
-  } else if (url_params.has("content_type")) {
-    results.content_type = url_params.get("content_type");
-  }
-  // TMDB ID
-  if (tmdb_id != null) {
-    results.tmdb_id = tmdb_id;
-  } else if (url_params.has("tmdb_id")) {
-    results.tmdb_id = url_params.get("tmdb_id");
-  }
-  // TVDB ID
-  if (tvdb_id != null) {
-    results.tvdb_id = tvdb_id;
-  } else if (url_params.has("tvdb_id")) {
-    results.tvdb_id = url_params.get("tvdb_id");
-  }
-
-  // Return calculated parameters
-  return results;
-};
-
 // WEBSOCKET CREATION
 var COMMAND_SOCKET = null;
 let RETRY_COUNTER = 0;

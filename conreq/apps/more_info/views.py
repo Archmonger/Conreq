@@ -36,7 +36,7 @@ def more_info(request):
     tmdb_id = request.GET.get("tmdb_id", None)
     tvdb_id = request.GET.get("tvdb_id", None)
 
-    if tmdb_id is not None:
+    if tmdb_id:
         content_type = request.GET.get("content_type", None)
 
         # Get all the basic metadata for a given ID
@@ -101,7 +101,7 @@ def more_info(request):
             }
         )
 
-    elif tvdb_id is not None:
+    elif tvdb_id:
         searcher = Search()
         # Fallback for TVDB
         arr_result = searcher.television(tvdb_id)[0]
@@ -144,10 +144,10 @@ def series_modal(request):
     tvdb_id = request.GET.get("tvdb_id", None)
 
     # Determine the TVDB ID
-    if tvdb_id is not None:
+    if tvdb_id:
         pass
 
-    elif tmdb_id is not None:
+    elif tmdb_id:
         tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
 
     # Check if the show is already within Sonarr's collection
@@ -186,12 +186,12 @@ def series_modal(request):
                 __logger,
             )
 
-    context = generate_context({"seasons": series["seasons"]})
+    context = generate_context({"seasons": series["seasons"], "tvdb_id": tvdb_id})
     template = loader.get_template("modal/series_selection.html")
     return HttpResponse(template.render(context, request))
 
 
-# @cache_page(60)
+@cache_page(60)
 @login_required
 def content_preview_modal(request):
     content_discovery = ContentDiscovery()

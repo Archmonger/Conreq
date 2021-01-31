@@ -84,13 +84,8 @@ let update_active_tab = function () {
 // Adds viewport related event listeners
 let add_event_listeners = function () {
   // More Info page events
-  $(".request-button.tv").click(function () {
-    generate_modal($(this).data("modal-url") + "?" + get_window_parameters());
-  });
-  $(".request-button.movie").click(function () {
-    request_content({});
-    requested_toast_message();
-  });
+  request_click_event();
+  series_modal_click_event();
 
   // Server Settings menu events
   $(
@@ -164,11 +159,11 @@ let add_event_listeners = function () {
   });
 
   // Poster click events
-  add_poster_click_events();
+  add_poster_click_event();
 };
 
 // Separate poster click events function to support InfiniteScroll
-let add_poster_click_events = function () {
+let add_poster_click_event = function () {
   $(".poster-container .fa-angle-down").each(function () {
     $(this).unbind("click");
     $(this).click(function () {
@@ -256,7 +251,7 @@ let refresh_viewport = function () {
 
       masonry_grid.on("append.infiniteScroll", function () {
         cull_old_posters();
-        add_poster_click_events();
+        add_poster_click_event();
       });
 
       infinite_scroller_created = true;

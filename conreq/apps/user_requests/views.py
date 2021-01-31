@@ -40,13 +40,18 @@ def request_content(request):
         # TV show was requested
         if request_parameters["content_type"] == "tv":
             # Obtain the TVDB ID if needed
-            tvdb_id = request_parameters["tvdb_id"]
-            tmdb_id = request_parameters["tmdb_id"]
-            if tvdb_id is None and tmdb_id is not None:
+            tvdb_id = None
+            tmdb_id = None
+            if request_parameters.__contains__("tvdb_id"):
+                tvdb_id = request_parameters["tvdb_id"]
+            if request_parameters.__contains__("tmdb_id"):
+                tmdb_id = request_parameters["tmdb_id"]
+
+            if not tvdb_id and tmdb_id:
                 tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
 
             # Request the show by the TVDB ID
-            if tvdb_id is not None:
+            if tvdb_id:
                 # Check if the show is already within Sonarr's collection
                 show = content_manager.get(tvdb_id=tvdb_id)
 
