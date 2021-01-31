@@ -137,15 +137,12 @@ def more_info(request):
 @cache_page(60)
 @login_required
 def series_modal(request):
-    template = loader.get_template("modal/series_selection.html")
+    content_discovery = ContentDiscovery()
+    content_manager = ContentManager()
 
     # Get the ID from the URL
     tmdb_id = request.GET.get("tmdb_id", None)
     tvdb_id = request.GET.get("tvdb_id", None)
-
-    # Validate login status
-    content_discovery = ContentDiscovery()
-    content_manager = ContentManager()
 
     # Determine the TVDB ID
     if tvdb_id is not None:
@@ -191,4 +188,23 @@ def series_modal(request):
             )
 
     context = generate_context({"seasons": series["seasons"]})
+    template = loader.get_template("modal/series_selection.html")
     return HttpResponse(template.render(context, request))
+
+
+# @cache_page(60)
+@login_required
+def content_preview_modal(request):
+    content_discovery = ContentDiscovery()
+
+    # Get the ID from the URL
+    tmdb_id = request.GET.get("tmdb_id", None)
+    content_type = request.GET.get("content_type", None)
+
+    if tmdb_id and content_type:
+        content = content_discovery.get_by_tmdb_id(
+            tmdb_id, content_type, obtain_extras=False
+        )
+        context = generate_context({"content": content})
+        template = loader.get_template("modal/content_preview.html")
+        return HttpResponse(template.render(context, request))

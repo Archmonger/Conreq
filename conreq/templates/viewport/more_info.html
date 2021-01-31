@@ -171,13 +171,13 @@
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="conreq-button request-button box-shadow no-highlighting movie"
                     data-request-url="{% url 'user_requests:request_content' %}">
-                    <i class="fas fa-plus"></i>REQUEST
+                    <i class="fas fa-plus"></i> REQUEST
                 </div>
                 {% endif %}
                 {% if content_type == "tv" and server_settings.sonarr_enabled %}
                 <div class="conreq-button request-button box-shadow no-highlighting tv" data-toggle="modal"
-                    data-target="#modal-container">
-                    <i class="fas fa-plus"></i> REQUEST
+                    data-target="#modal-container" data-modal-url="{% url 'more_info:series_modal' %}">
+                    <i class=" fas fa-plus"></i> REQUEST
                 </div>
                 {% endif %}
 

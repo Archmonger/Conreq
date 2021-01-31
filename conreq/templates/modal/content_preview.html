@@ -1,71 +1,105 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/modal.css' %}" />
-<div class="modal-tint">
-    <div class="modal-container">
-        <div class="modal-fa-holder">
-            <i class="fas fa-window-close"></i>
-            <a href="{% url 'more_info:main' %}">
-                <i class="fas fa-expand"></i>
-            </a>
-        </div>
-        <img class="modal-poster" src="#" alt="" />
-        <div class="modal-title">Aquaman</div>
-        <div class="modal-info">
-            <div class="modal-info-text-left">
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Availabity:
-                        <div class="info">
-                            Unavailable
-                            <div class="modal-dot red"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Request Status:
-                        <div class="info">
-                            Unrequested
-                            <div class="modal-dot red"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Content Type:
-                        <div class="info">Movie</div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-info-text-right">
-                <div class="info-block">
-                    <div class="info info-bold">
-                        In Cinemas:
-                        <div class="info">December 2018</div>
-                    </div>
-                </div>
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Genres:
-                        <div class="info">Fantasy, Adventure</div>
-                    </div>
-                </div>
-                <div class="info-block">
-                    <div class="info info-bold">
-                        Score:
-                        <div class="info">6.3 / 10</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-description">
-            Once home to the most advanced civilization on Earth, the city of Atlantis is now an underwater kingdom ruled by the power-hungry King Orm. With a vast army at his disposal, Orm plans to conquer the remaining oceanic people -- and then the surface world.
-            Standing in his way is Aquaman, Orm's half-human, half-Atlantean brother and true heir to the throne. With help from royal counselor Vulko, must retrieve the legendary Trident of Atlan and embrace his destiny as protector of the deep.
-        </div>
-        <div class="modal-request-button-container">
-            <div class="modal-request-button">
-                <i class="fas fa-plus"></i> REQUEST
-            </div>
-        </div>
+<div class="modal-header">
+    <div data-dismiss="modal" aria-label="Close">
+        <i class="fas fa-window-close"></i>
     </div>
+</div>
+<div class="modal-body">
+    <div class="season-episode-container">
+        {% for season in seasons %}
+        <div id="season-{{season.seasonNumber}}" class="season-block no-highlighting">
+
+            {% if season.statistics.conreqStatus != available %}
+            <div class="modal-checkbox-container">
+                <div class="pretty p-icon p-curve p-smooth p-jelly">
+                    <input type="checkbox" class="season-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                        data-season-number="{{season.seasonNumber}}"
+                        data-episode-container="#episodes-season-{{season.seasonNumber}}" />
+                    <div class="state">
+                        <i class="icon fas fa-check"></i>
+                        <label></label>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div></div>
+            {% endif %}
+
+            <div class="modal-season-container">
+                <div class="season {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
+
+                    {% if season.statistics.conreqStatus == available %}
+                    <div class="modal-dot green"></div>
+                    {% elif season.statistics.conreqStatus == partial %}
+                    <div class="modal-dot yellow"></div>
+                    {% else %}
+                    <div class="modal-dot red"></div>
+                    {% endif %}
+
+                    <div class="season-name line-clamp-1">
+                        {% if season.seasonNumber == 0 %} Specials {% else %} Season {{season.seasonNumber}} {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-season-dropdown-container">
+                <i class="fas fa-angle-down collapsed" data-toggle="collapse"
+                    data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
+                    aria-controls="episodes-season-{{season.seasonNumber}}"></i>
+            </div>
+
+        </div>
+        <div id="episodes-season-{{season.seasonNumber}}" class="episode-container collapse no-highlighting">
+            {% for episode in season.episodes|dictsort:"episodeNumber" %}
+            <div class="episode-block">
+
+                {% if episode.conreqStatus != available %}
+                <div class="modal-checkbox-container">
+                    <div class="pretty p-icon p-curve p-smooth p-jelly">
+                        <input type="checkbox"
+                            class="episode-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                            data-episode-id="{{episode.id}}" data-season-container="#season-{{season.seasonNumber}}" />
+                        <div class="state">
+                            <i class="icon fas fa-check"></i>
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div></div>
+                {% endif %}
+
+                <div class="episode {% if episode.conreqStatus != available %}clickable{% endif %}">
+                    {% if episode.conreqStatus == available %}
+                    <div class="modal-dot green"></div>
+                    {% else %}
+                    <div class="modal-dot red"></div>
+                    {% endif %}
+                    <div class="episode-number bold">
+                        {% firstof episode.episodeNumber "Unknown" %}
+                    </div>
+
+                    {% if episode.absoluteEpisodeNumber %}
+                    {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
+                    <div class="absolute-episode-number bold">
+                        ({{episode.absoluteEpisodeNumber}})
+                    </div>
+                    {% endif %}
+                    {% endif %}
+
+                    <div class="episode-separator"> </div>
+                    <div class="episode-name line-clamp-1">
+                        {% firstof episode.title "Unknown" %}
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="modal-button select-button no-highlighting"> SELECT ALL</div>
+    <div class="modal-button conreq-button request-button no-highlighting"
+        data-request-url="{% url 'user_requests:request_content' %}"> <i class="fas fa-plus"></i> REQUEST</div>
 </div>

@@ -10,7 +10,7 @@ var generate_modal = function (modal_url) {
   modal_loader.show();
 
   // Fetch the series modal
-  $.get(modal_url + "?" + get_window_parameters(), function (modal_html) {
+  $.get(modal_url, function (modal_html) {
     // Place the new HTML on the page
     modal_content[0].innerHTML = DOMPurify.sanitize(modal_html);
 

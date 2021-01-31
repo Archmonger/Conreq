@@ -88,7 +88,7 @@ let update_active_tab = function () {
 let add_event_listeners = function () {
   // More Info page events
   $(".request-button.tv").click(function () {
-    generate_modal("/more_info/series_modal/");
+    generate_modal($(this).data("modal-url") + "?" + get_window_parameters());
   });
   $(".request-button.movie").click(function () {
     request_content({});
@@ -175,6 +175,7 @@ let add_poster_click_events = function () {
   $(".poster-container .fa-angle-down").each(function () {
     $(this).unbind("click");
     $(this).click(function () {
+      generate_modal($(this).data("modal-url"));
       console.log("test");
     });
   });

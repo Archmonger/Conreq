@@ -7,13 +7,20 @@
 <div class="masonry-item">
     <div class="poster-container no-highlighting {{card.contentType}}">
         <i class="fas fa-ellipsis-v clickable"></i>
-        <i class="fas fa-angle-down clickable"></i>
+        {% if card.tmdbId %}
+        <i class="fas fa-angle-down clickable" data-toggle="modal" data-target="#modal-container"
+            data-modal-url="{% url 'more_info:content_preview_modal' %}?tmdb_id={{card.tmdbId}}&content_type={{card.contentType}}"></i>
+        {% endif %}
         <div class="description-tint"></div>
         <a
             href="#{% url 'more_info:main' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
 
             <div class="content-type-icon">
+                {% if card.contentType == "tv" %}
                 <i class="fas fa-tv"></i>
+                {% else %}
+                <i class="fas fa-video"></i>
+                {% endif %}
             </div>
 
             <div class="poster-fix">
