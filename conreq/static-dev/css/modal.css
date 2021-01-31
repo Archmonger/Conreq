@@ -213,6 +213,7 @@
 
 .modal-content.content-preview .info {
   height: -webkit-fill-available;
+  margin-right: 25px;
 }
 
 .modal-content.content-preview .title {
@@ -224,12 +225,11 @@
 .modal-content.content-preview .description {
   color: rgba(255, 255, 255, 0.7);
   font-size: 16px;
-  margin-right: 25px;
   margin-top: 10px;
   padding-right: 10px;
   line-height: 1.2;
   min-height: 150px;
-  max-height: 300px;
+  max-height: 250px;
   overflow-y: auto;
 }
 
@@ -239,7 +239,6 @@
   grid-template-rows: -webkit-min-content -webkit-min-content -webkit-min-content;
   grid-template-rows: min-content min-content min-content;
   background: #252525;
-  margin-right: 25px;
   padding: 13px;
   padding-top: 6px;
   padding-left: 8px;
