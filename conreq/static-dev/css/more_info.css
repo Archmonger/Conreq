@@ -235,19 +235,19 @@
   background: var(--accent-color);
 }
 
-.cast.poster-container {
+.viewport .cast.poster-container {
   height: var(--cast-poster-card-height);
 }
 
-.cast.poster-container .description-tint {
+.viewport .cast.poster-container .description-tint {
   --poster-details-height: var(--cast-poster-card-details-height);
 }
 
-.cast.poster-container .poster-description {
+.viewport .cast.poster-container .poster-description {
   text-align: left;
 }
 
-.cast.poster-container .poster-title {
+.viewport .cast.poster-container .poster-title {
   width: 100%;
 }
 
@@ -311,7 +311,7 @@
   margin: 0px 10px 0px 20px !important;
 }
 
-.tns-inner .poster-container {
+.viewport .tns-inner .poster-container {
   margin: 0;
 }
 

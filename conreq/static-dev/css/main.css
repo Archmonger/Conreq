@@ -476,7 +476,7 @@ button:focus {
   margin-bottom: var(--poster-padding);
 }
 
-.poster-container {
+.viewport .poster-container {
   border-radius: 5px;
   width: var(--poster-width);
   overflow: hidden;
@@ -512,7 +512,7 @@ button:focus {
   transform: scale(1.08);
 }
 
-.poster-container:hover {
+.viewport .poster-container:hover {
   transform: scale(1.05);
 }
 
@@ -564,7 +564,7 @@ button:focus {
   filter: brightness(25%);
 }
 
-.poster-container .fa-angle-down {
+.viewport .poster-container .fa-angle-down {
   position: absolute;
   bottom: 0px;
   color: rgba(255, 255, 255, 0.5);
@@ -578,12 +578,12 @@ button:focus {
   text-align: center;
 }
 
-.poster-container .fa-angle-down:hover {
+.viewport .poster-container .fa-angle-down:hover {
   background-color: rgb(255 255 255 / 10%);
   color: rgba(255, 255, 255, 0.85);
 }
 
-.poster-container .fa-ellipsis-v {
+.viewport .poster-container .fa-ellipsis-v {
   position: absolute;
   padding: 8px 9px;
   right: 0px;
@@ -598,7 +598,7 @@ button:focus {
   z-index: 7;
 }
 
-.poster-container:hover .fa-ellipsis-v {
+.viewport .poster-container:hover .fa-ellipsis-v {
   opacity: 1;
 }
 
@@ -624,7 +624,7 @@ button:focus {
   font-weight: 700;
 }
 
-.poster-container:hover > a:hover > .content-type-icon {
+.viewport .poster-container:hover > a:hover > .content-type-icon {
   opacity: 1;
 }
 

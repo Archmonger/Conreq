@@ -1,4 +1,4 @@
-.poster-container .fa-angle-down {
+.viewport .poster-container .fa-angle-down {
   padding-top: 0px;
   color: #000000;
   background: #e4e4e4;
@@ -13,16 +13,16 @@
   line-height: 1.15;
 }
 
-.poster-container .fa-ellipsis-v {
+.viewport .poster-container .fa-ellipsis-v {
   display: none;
 }
 
-.poster-container .fa-angle-down:hover {
+.viewport .poster-container .fa-angle-down:hover {
   color: var(--accent-color);
   background: #ffffff;
 }
 
-.poster-container .poster-description-container {
+.viewport .poster-container .poster-description-container {
   opacity: 0;
   position: absolute;
   top: -2px;
@@ -43,7 +43,7 @@
   margin: 8px 7px;
 }
 
-.poster-container:hover .poster-description-container {
+.viewport .poster-container:hover .poster-description-container {
   opacity: 1;
 }
 
@@ -51,13 +51,13 @@
   display: none;
 }
 
-.poster-container .poster:hover {
+.viewport .poster-container .poster:hover {
   -webkit-filter: none;
   filter: none;
   transform: none;
 }
 
-.cast.poster-container {
+.viewport .cast.poster-container {
   height: auto;
 }
 
@@ -68,6 +68,6 @@
   left: 5px;
 }
 
-.poster-container:hover .content-type-icon {
+.viewport .poster-container:hover .content-type-icon {
   opacity: 1;
 }

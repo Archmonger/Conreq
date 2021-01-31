@@ -28,7 +28,7 @@
 }
 @media only screen and (max-width: 1000px) {
   /* Posters */
-  .poster-container .fa-angle-down {
+  .viewport .poster-container .fa-angle-down {
     display: none;
   }
 }
@@ -183,13 +183,13 @@
     grid-template-columns: minmax(0, 1fr);
   }
   /* Posters */
-  .poster-container .poster-description-container {
+  .viewport .poster-container .poster-description-container {
     opacity: 1 !important;
   }
-  .poster-container .content-type-icon {
+  .viewport .poster-container .content-type-icon {
     opacity: 1;
   }
-  .poster-container .fa-ellipsis-v {
+  .viewport .poster-container .fa-ellipsis-v {
     display: none;
   }
 }

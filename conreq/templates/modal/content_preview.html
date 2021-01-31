@@ -4,7 +4,10 @@
 </div>
 <div id="modal-content" class="modal-content content-preview">
 
-    <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster">
+    <div class="poster-container">
+        <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster">
+    </div>
+
     <div class="grid-modal-right">
         <div class="modal-header">
             <a

@@ -171,26 +171,32 @@
 
 /* Content Preview Modal */
 .modal-content.content-preview {
-  display: grid;
-  grid-template-columns: 300px auto;
-  grid-template-rows: auto auto auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.modal-content.content-preview .poster-container {
+  min-width: 35%;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-content.content-preview .poster {
-  grid-column: 1;
-  grid-row: 1 / 4;
-  margin: 25px;
   border-radius: 6px;
-  max-width: -webkit-fill-available;
+  width: 100%;
+  -o-object-fit: contain;
+  object-fit: contain;
 }
 
 .modal-content.content-preview .grid-modal-right {
-  grid-column: 2;
-  grid-row: 1 / 4;
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
+  min-width: 65%;
 }
 
 .modal-content.content-preview .modal-header {
