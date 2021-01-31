@@ -26,6 +26,12 @@
     display: none;
   }
 }
+@media only screen and (max-width: 1000px) {
+  /* Posters */
+  .poster-container .fa-angle-down {
+    display: none;
+  }
+}
 
 @media only screen and (max-width: 880px) {
   :root {
@@ -204,10 +210,6 @@
   }
   .table-wrapper .row {
     flex-direction: row-reverse;
-  }
-  /* Posters */
-  .poster-container .fa-angle-down {
-    display: none;
   }
 }
 
