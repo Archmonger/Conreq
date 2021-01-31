@@ -27,14 +27,15 @@
   justify-content: flex-end;
 }
 
-.modal .fa-window-close {
+.modal-header .fas {
   color: var(--modal-top-button-color);
   font-size: 20px;
   transition: color 0.3s ease;
   cursor: pointer;
+  padding-left: 25px;
 }
 
-.modal .fa-window-close:hover {
+.modal-header .fas:hover {
   color: #fff;
 }
 
