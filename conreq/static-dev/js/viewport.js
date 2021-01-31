@@ -3,9 +3,6 @@ let infinite_scroller_created = false;
 let previous_admin_settings = new Map();
 let viewport_container_class = ".viewport-container";
 let viewport_class = ".viewport";
-let modal_content = $("#modal-content");
-let modal_container = $("#modal-container");
-let modal_loader = $("#modal-container .loading-animation");
 let reload_needed = false;
 
 // Create the lazyloader

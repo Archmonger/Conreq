@@ -1,63 +1,25 @@
 {% load static %}
-<div class="modal-header">
-    <div data-dismiss="modal" aria-label="Close">
-        <i class="fas fa-window-close"></i>
-    </div>
+<div class="spinner-border loading-animation" role="status">
+    <span class="sr-only">Loading...</span>
 </div>
-<div class="modal-body">
-    <div class="season-episode-container">
-        {% for season in seasons %}
-        <div id="season-{{season.seasonNumber}}" class="season-block no-highlighting">
-
-            {% if season.statistics.conreqStatus != available %}
-            <div class="modal-checkbox-container">
-                <div class="pretty p-icon p-curve p-smooth p-jelly">
-                    <input type="checkbox" class="season-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
-                        data-season-number="{{season.seasonNumber}}"
-                        data-episode-container="#episodes-season-{{season.seasonNumber}}" />
-                    <div class="state">
-                        <i class="icon fas fa-check"></i>
-                        <label></label>
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <div></div>
-            {% endif %}
-
-            <div class="modal-season-container">
-                <div class="season {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
-
-                    {% if season.statistics.conreqStatus == available %}
-                    <div class="modal-dot green"></div>
-                    {% elif season.statistics.conreqStatus == partial %}
-                    <div class="modal-dot yellow"></div>
-                    {% else %}
-                    <div class="modal-dot red"></div>
-                    {% endif %}
-
-                    <div class="season-name line-clamp-1">
-                        {% if season.seasonNumber == 0 %} Specials {% else %} Season {{season.seasonNumber}} {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="modal-season-dropdown-container">
-                <i class="fas fa-angle-down collapsed" data-toggle="collapse"
-                    data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
-                    aria-controls="episodes-season-{{season.seasonNumber}}"></i>
-            </div>
-
+<div id="modal-content" class="modal-content">
+    <div class="modal-header">
+        <div data-dismiss="modal" aria-label="Close">
+            <i class="fas fa-window-close"></i>
         </div>
-        <div id="episodes-season-{{season.seasonNumber}}" class="episode-container collapse no-highlighting">
-            {% for episode in season.episodes|dictsort:"episodeNumber" %}
-            <div class="episode-block">
+    </div>
+    <div class="modal-body">
+        <div class="season-episode-container">
+            {% for season in seasons %}
+            <div id="season-{{season.seasonNumber}}" class="season-block no-highlighting">
 
-                {% if episode.conreqStatus != available %}
+                {% if season.statistics.conreqStatus != available %}
                 <div class="modal-checkbox-container">
                     <div class="pretty p-icon p-curve p-smooth p-jelly">
                         <input type="checkbox"
-                            class="episode-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
-                            data-episode-id="{{episode.id}}" data-season-container="#season-{{season.seasonNumber}}" />
+                            class="season-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                            data-season-number="{{season.seasonNumber}}"
+                            data-episode-container="#episodes-season-{{season.seasonNumber}}" />
                         <div class="state">
                             <i class="icon fas fa-check"></i>
                             <label></label>
@@ -68,38 +30,83 @@
                 <div></div>
                 {% endif %}
 
-                <div class="episode {% if episode.conreqStatus != available %}clickable{% endif %}">
-                    {% if episode.conreqStatus == available %}
-                    <div class="modal-dot green"></div>
-                    {% else %}
-                    <div class="modal-dot red"></div>
-                    {% endif %}
-                    <div class="episode-number bold">
-                        {% firstof episode.episodeNumber "Unknown" %}
-                    </div>
+                <div class="modal-season-container">
+                    <div class="season {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
 
-                    {% if episode.absoluteEpisodeNumber %}
-                    {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
-                    <div class="absolute-episode-number bold">
-                        ({{episode.absoluteEpisodeNumber}})
-                    </div>
-                    {% endif %}
-                    {% endif %}
+                        {% if season.statistics.conreqStatus == available %}
+                        <div class="modal-dot green"></div>
+                        {% elif season.statistics.conreqStatus == partial %}
+                        <div class="modal-dot yellow"></div>
+                        {% else %}
+                        <div class="modal-dot red"></div>
+                        {% endif %}
 
-                    <div class="episode-separator"> </div>
-                    <div class="episode-name line-clamp-1">
-                        {% firstof episode.title "Unknown" %}
+                        <div class="season-name line-clamp-1">
+                            {% if season.seasonNumber == 0 %} Specials
+                            {% else %} Season {{season.seasonNumber}} {% endif %}
+                        </div>
                     </div>
-
                 </div>
+                <div class="modal-season-dropdown-container">
+                    <i class="fas fa-angle-down collapsed" data-toggle="collapse"
+                        data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
+                        aria-controls="episodes-season-{{season.seasonNumber}}"></i>
+                </div>
+
+            </div>
+            <div id="episodes-season-{{season.seasonNumber}}" class="episode-container collapse no-highlighting">
+                {% for episode in season.episodes|dictsort:"episodeNumber" %}
+                <div class="episode-block">
+
+                    {% if episode.conreqStatus != available %}
+                    <div class="modal-checkbox-container">
+                        <div class="pretty p-icon p-curve p-smooth p-jelly">
+                            <input type="checkbox"
+                                class="episode-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                                data-episode-id="{{episode.id}}"
+                                data-season-container="#season-{{season.seasonNumber}}" />
+                            <div class="state">
+                                <i class="icon fas fa-check"></i>
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div></div>
+                    {% endif %}
+
+                    <div class="episode {% if episode.conreqStatus != available %}clickable{% endif %}">
+                        {% if episode.conreqStatus == available %}
+                        <div class="modal-dot green"></div>
+                        {% else %}
+                        <div class="modal-dot red"></div>
+                        {% endif %}
+                        <div class="episode-number bold">
+                            {% firstof episode.episodeNumber "Unknown" %}
+                        </div>
+
+                        {% if episode.absoluteEpisodeNumber %}
+                        {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
+                        <div class="absolute-episode-number bold">
+                            ({{episode.absoluteEpisodeNumber}})
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+                        <div class="episode-separator"> </div>
+                        <div class="episode-name line-clamp-1">
+                            {% firstof episode.title "Unknown" %}
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
             </div>
             {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
-<div class="modal-footer">
-    <div class="modal-button select-button no-highlighting"> SELECT ALL</div>
-    <div class="modal-button conreq-button request-button no-highlighting"
-        data-request-url="{% url 'user_requests:request_content' %}"> <i class="fas fa-plus"></i> REQUEST</div>
-</div>
+    <div class="modal-footer">
+        <div class="modal-button conreq-button request-button no-highlighting"
+            data-request-url="{% url 'user_requests:request_content' %}"> <i class="fas fa-plus"></i> REQUEST</div>
+    </div>
+</div
