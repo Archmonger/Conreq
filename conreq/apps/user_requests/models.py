@@ -9,3 +9,4 @@ class UserRequest(models.Model):
     source = models.CharField(max_length=30)
     content_type = models.CharField(max_length=30)
     requested_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_requested = models.DateTimeField(auto_now_add=True)
