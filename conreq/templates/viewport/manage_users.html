@@ -20,7 +20,7 @@
                     <th class="desktop-only fourth max-width">Email Address</th>
                     <th class="desktop-only first max-width">Date Joined</th>
                     <th class="desktop-only second">Last Seen</th>
-                    <th class="desktop-only third">Co-Admin</th>
+                    <th class="desktop-only third">Staff Member</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -31,7 +31,7 @@
                     <td class="desktop-only fourth max-width">{{ user.email }}</td>
                     <td class="desktop-only first max-width">{{ user.date_joined }}</td>
                     <td class="desktop-only second">{{ user.last_login }}</td>
-                    <td class="desktop-only third">{{ user.is_staff }}</td>
+                    <td class="desktop-only third">{{ user.is_staff|yesno:"Yes,No" }}</td>
                     <td>
                         <!-- <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
                                 class="fas fa-cog"></i></a> -->
