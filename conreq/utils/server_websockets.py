@@ -62,9 +62,6 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         ):
             await self.__forbidden()
         else:
-            # Verify login status.
-            await login(self.scope, self.scope["user"])
-
             if content["command_name"] == "server settings":
                 await self.__server_settings(content)
 
