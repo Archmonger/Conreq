@@ -229,21 +229,11 @@ let refresh_viewport = function () {
     isStill: true,
   });
 
-  // Determine what path to fetch infinite scrolling content on
-  let url_params = new URLSearchParams(window.location.search);
-  let discover_path = window.location.hash.split("#/")[1];
-  if (url_params.has("content_type")) {
-    discover_path +=
-      "?content_type=" + url_params.get("content_type") + "&page={{#}}";
-  } else {
-    discover_path += "?page={{#}}";
-  }
-
   // Configure infinite scrolling
-  setTimeout(function () {
-    if ($(".infinite-scroll").length) {
+  if ($(".infinite-scroll").length) {
+    setTimeout(function () {
       masonry_grid.infiniteScroll({
-        path: discover_path,
+        path: get_window_location() + "?page={{#}}",
         append: ".masonry-item",
         outlayer: masonry_grid.data("masonry"),
         prefill: true,
@@ -258,11 +248,11 @@ let refresh_viewport = function () {
       });
 
       infinite_scroller_created = true;
-    }
+    }, 500);
+  }
 
-    // Lazy load page elements
-    lazyloader.update();
-  }, 10);
+  // Lazy load page elements
+  lazyloader.update();
 };
 
 // Obtains the viewport content based on the URL, then updates the current tab
