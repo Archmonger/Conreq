@@ -34,7 +34,7 @@ MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", False)
 USE_SSL = get_bool_from_env("USE_SSL", False)
 DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
-
+X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 
 # Logging
 LOG_DIR = os.path.join(DATA_DIR, "logs")

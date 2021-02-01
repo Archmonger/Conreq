@@ -8,15 +8,19 @@ Install through [Docker](https://github.com/Roxedus/docker-conreq).
 Here's a list of all available environment variables:
 
 ```python
+# General Settings
+TZ = "America/Los_Angeles"                # default: Europe/London (log file timezone in "TZ Database" format)
+
+# Data Storage
+BASE_URL = "requests"                     # default: none
+DATA_DIR = "/example/directory"           # default: none (if not set, base directory is used)
+DB_ENGINE = "MYSQL"                       # default: SQLITE3
+MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
+
+# Security
 DEBUG = False                             #default: true (disabling debug will enable security features)
-TZ = "America/Los_Angeles"                #default: Europe/London (log file timezone in "TZ Database" format)
-BASE_URL = "requests"                     #default: none
-DATA_DIR = "/example/directory"           #default: none (if not set, base directory is used)
-
-USE_ROLLING_SECRET_KEY = true             #default: false
-DB_ENGINE = "MYSQL"                       #default: SQLITE3
-MYSQL_CONFIG_FILE = "/config/mysql.cnf"   #default: none
-
+USE_ROLLING_SECRET_KEY = True             #default: false
+X_FRAME_OPTIONS = "SAMEORIGIN"            #default DENY
 USE_SSL = True                            #default: false
 SSL_CERT = "/path/to/cert.pem"            #default: none
 SSL_KEY = "/path/to/key.pem"              #default: none
@@ -59,13 +63,15 @@ SSL_KEY = "/path/to/key.pem"              #default: none
 4. Enabling Python Linting
    - Ctrl+Shift+P -> Python: Select Linter -> `pylint`
    - Settings -> Linting: Pylint Args -> Add Item -> `--disable=line-too-long,bare-except,bad-continuation`
-   
-# UX Design Mockups   
+
+# UX Design Mockups
+
 [Desktop](https://xd.adobe.com/view/17a8150c-a224-467c-af36-36171641d656-42fb/)
 
 [Mobile](https://xd.adobe.com/view/aaef68b5-ddb9-4987-a758-771215bfe578-ffbc/)
-   
+
 # Screenshots
+
 ![Login screen](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_1.png?raw=true)
 ![Discover tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_2.png?raw=true)
 ![More Info Tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_3.png?raw=true)
