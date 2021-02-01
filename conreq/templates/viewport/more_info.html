@@ -8,7 +8,8 @@
         <div class="left-group">
             <div class="more-info-poster-container">
                 <img src="{% static 'images/transparent.png' %}"
-                    data-src="{% firstof content.poster_path content.remotePoster %}" class="more-info-poster lazy">
+                    data-src="{% firstof content.poster_path content.remotePoster %}" class="more-info-poster lazy"
+                    draggable="false">
                 {% if content.belongs_to_collection %}
                 <div class="more-info-collection-btn no-highlighting">VIEW COLLECTION </div>
                 {% endif %}

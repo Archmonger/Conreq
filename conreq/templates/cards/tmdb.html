@@ -20,9 +20,9 @@
                 {% if card.poster_path %}
                 <img src="{% static 'images/transparent.png' %}"
                     data-src="{% if card.poster_path %}https://image.tmdb.org/t/p/w200{{card.poster_path}}{% endif %}"
-                    class="poster lazy" />
+                    class="poster lazy" draggable="false" />
                 {% else %}
-                <img src="{% static 'images/transparent.png' %}" class="poster" />
+                <img src="{% static 'images/transparent.png' %}" class="poster" draggable="false" />
                 {% endif %}
             </div>
         </a>

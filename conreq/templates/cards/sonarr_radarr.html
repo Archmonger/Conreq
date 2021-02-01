@@ -24,7 +24,12 @@
             </div>
 
             <div class="poster-fix">
-                <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy" />
+                {% if card.remotePoster %}
+                <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy"
+                    draggable="false" />
+                {% else %}
+                <img src="{% static 'images/transparent.png' %}" class="poster" draggable="false" />
+                {% endif %}
             </div>
         </a>
 
