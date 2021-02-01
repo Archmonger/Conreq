@@ -1,4 +1,7 @@
 {% load static %}
+{% load solo_tags %}
+{% get_solo 'server_settings.ConreqConfig' as server_settings %}
+
 <div class="spinner-border loading-animation" role="status">
     <span class="sr-only">Loading...</span>
 </div>
@@ -79,13 +82,13 @@
         </div>
 
         <div class="modal-footer">
-            {% if content.name %}
+            {% if content.name and server_settings.sonarr_enabled and content.conreqStatus != available %}
             <div class="conreq-button series-modal-button no-highlighting" data-content-type="tv"
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
                 <i class="fas fa-plus"></i>
                 REQUEST
             </div>
-            {% elif content.title %}
+            {% elif content.title and server_settings.radarr_enabled and content.conreqStatus != available %}
             <div class="conreq-button request-button no-highlighting"
                 data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
                 data-tmdb-id="{{content.id}}">
