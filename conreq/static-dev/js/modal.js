@@ -66,6 +66,9 @@ var request_click_event = function () {
         post_json($(this).data("request-url"), params, function () {
           requested_toast_message();
           $("#modal-container").modal("hide");
+          $(".request-button").remove();
+        }).fail(function () {
+          conreq_no_response_toast_message();
         });
       }
       // Request a TV show
@@ -96,6 +99,8 @@ var request_click_event = function () {
           post_json($(this).data("request-url"), params, function () {
             requested_toast_message();
             $("#modal-container").modal("hide");
+          }).fail(function () {
+            conreq_no_response_toast_message();
           });
         }
 
@@ -106,6 +111,8 @@ var request_click_event = function () {
           post_json($(this).data("request-url"), params, function () {
             requested_toast_message();
             $("#modal-container").modal("hide");
+          }).fail(function () {
+            conreq_no_response_toast_message();
           });
         }
         // User didn't select anything

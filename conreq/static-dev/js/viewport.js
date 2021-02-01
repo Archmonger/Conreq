@@ -144,6 +144,8 @@ let add_event_listeners = function () {
       if (result.success) {
         btn.parent().parent().remove();
       }
+    }).fail(function () {
+      conreq_no_response_toast_message();
     });
   });
   $(".conreq-button.invite-user").click(function () {

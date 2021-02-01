@@ -193,6 +193,7 @@ var post_url = function (url, callback) {
     },
     success: callback,
   });
+  return http_request;
 };
 
 // Post JSON to a URL
@@ -208,4 +209,5 @@ var post_json = function (url, data, callback) {
     contentType: "application/json; charset=utf-8",
     success: callback,
   });
+  return http_request;
 };
