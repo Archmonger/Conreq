@@ -1,3 +1,5 @@
+var http_request = $.ajax({});
+
 // Requested toast message
 var requested_toast_message = function () {
   iziToast.show({
@@ -168,7 +170,8 @@ var copy_to_clipboard = function (str) {
 
 // Post to a URL
 var post_url = function (url, callback) {
-  $.ajax({
+  http_request.abort();
+  http_request = $.ajax({
     type: "POST",
     url: url,
     headers: {
@@ -180,7 +183,8 @@ var post_url = function (url, callback) {
 
 // Post JSON to a URL
 var post_json = function (url, data, callback) {
-  $.ajax({
+  http_request.abort();
+  http_request = $.ajax({
     type: "POST",
     url: url,
     headers: {

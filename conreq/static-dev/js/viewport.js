@@ -150,7 +150,8 @@ let add_event_listeners = function () {
     let btn = $(this);
     let generate_invite_url = btn.data("generate-invite-url");
     let sign_up_url = window.location.origin + btn.data("sign-up-url");
-    $.get(generate_invite_url, function (result) {
+    http_request.abort();
+    http_request = $.get(generate_invite_url, function (result) {
       let invite_link =
         sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
       copy_to_clipboard(invite_link);
@@ -292,7 +293,8 @@ var generate_viewport = function () {
 
   // Fetch the new content, display it, and hide the loading animation
   viewport_loaded = false;
-  $.get(window_location, function (viewport_html) {
+  http_request.abort();
+  http_request = $.get(window_location, function (viewport_html) {
     $(".viewport-container")[0].innerHTML = DOMPurify.sanitize(viewport_html);
     refresh_viewport();
     $(".viewport-container>.loading-animation-container").hide();
