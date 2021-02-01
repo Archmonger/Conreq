@@ -4,7 +4,7 @@ from conreq.apps.sign_up.forms import UserForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.cache import cache
-from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.template import loader
 
@@ -34,7 +34,7 @@ def invite(request):
 
         # Invite code invalid!
         else:
-            return HttpResponseForbidden()
+            return redirect("homepage:index")
 
         # Submission wasn't valid, so return the error codes
         template = loader.get_template("registration/sign_up.html")
@@ -46,7 +46,7 @@ def invite(request):
         return HttpResponse(template.render({}, request))
 
     # User tried to use an invalid invite code!
-    return HttpResponseForbidden()
+    return redirect("homepage:index")
 
 
 @login_required
