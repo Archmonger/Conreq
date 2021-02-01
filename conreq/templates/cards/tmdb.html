@@ -1,7 +1,6 @@
 {% load static %}
 <div class="masonry-item">
     <div class="poster-container no-highlighting {% if card.name %}tv{% elif card.title %}movie{% endif %}">
-        <i class="fas fa-ellipsis-v clickable"></i>
         <i class="fas fa-angle-down clickable" data-toggle="modal" data-target="#modal-container"
             data-modal-url="{% url 'more_info:content_preview_modal' %}?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}"></i>
         <div class="description-tint"></div>

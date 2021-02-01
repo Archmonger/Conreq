@@ -13,10 +13,6 @@
   line-height: 1.15;
 }
 
-.viewport .poster-container .fa-ellipsis-v {
-  display: none;
-}
-
 .viewport .poster-container .fa-angle-down:hover {
   color: var(--accent-color);
   background: #ffffff;

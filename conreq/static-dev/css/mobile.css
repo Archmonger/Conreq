@@ -189,9 +189,6 @@
   .viewport .poster-container .content-type-icon {
     opacity: 1;
   }
-  .viewport .poster-container .fa-ellipsis-v {
-    display: none;
-  }
 }
 
 @media only screen and (max-width: 600px) {

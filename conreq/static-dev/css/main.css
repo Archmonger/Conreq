@@ -583,31 +583,6 @@ button:focus {
   color: rgba(255, 255, 255, 0.85);
 }
 
-.viewport .poster-container .fa-ellipsis-v {
-  position: absolute;
-  padding: 8px 9px;
-  right: 0px;
-  top: 0px;
-  color: #e4e4e4;
-  font-size: 19px;
-  transition: color 0.3s ease, opacity 0.3s ease, -webkit-filter 0.3s ease;
-  transition: color 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-  opacity: 0;
-  -webkit-filter: drop-shadow(0 0 2px #000000);
-  filter: drop-shadow(0 0 2px #000000);
-  z-index: 7;
-}
-
-.viewport .poster-container:hover .fa-ellipsis-v {
-  opacity: 1;
-}
-
-.fa-ellipsis-v:hover {
-  color: #fff;
-  -webkit-filter: drop-shadow(0 0 3px #000000);
-  filter: drop-shadow(0 0 3px #000000);
-}
-
 .content-type-icon {
   position: absolute;
   top: calc(var(--poster-height) - 30px);
