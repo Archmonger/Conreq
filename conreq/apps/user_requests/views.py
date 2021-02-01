@@ -17,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
@@ -134,6 +135,7 @@ def request_content(request):
 
 
 @cache_page(1)
+@vary_on_cookie
 @login_required
 def my_requests(request):
     template = loader.get_template("viewport/requests.html")
