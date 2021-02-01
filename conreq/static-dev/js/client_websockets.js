@@ -62,7 +62,6 @@ function connect() {
         generate_viewport();
       }
     }
-    console.log(response);
   };
 
   // WEBSOCKET EVENT: ON CLOSE
