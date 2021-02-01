@@ -32,14 +32,15 @@
                         {% endif %}
                     </div>
                 </div>
-                {% if content.conreqStatus != available %}
                 <div class="quick-info-block">
-                    <div class="quick-info bold"> Request Status </div>
+                    <div class="quick-info bold"> Requested </div>
                     <div class="quick-info">
-                        <div class="" id="movie-request-status"> Not Requested </div>
+                        <div class="" id="movie-request-status">
+                            {{ requested|yesno:"Yes,No" }}
+                        </div>
                     </div>
                 </div>
-                {% endif %} {% if content.status %}
+                {% if content.status %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Release Status </div>
                     <div class="quick-info"> {{content.status}} </div>

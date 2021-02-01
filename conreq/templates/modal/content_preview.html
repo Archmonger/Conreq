@@ -48,8 +48,10 @@
                 </div>
 
                 <div class="modal-info-block">
-                    <div class="modal-info bold"> Request Status: </div>
-                    <div class="modal-info"> Not Requested </div>
+                    <div class="modal-info bold"> Requested: </div>
+                    <div class="modal-info">
+                        {{ requested|yesno:"Yes,No" }}
+                    </div>
                 </div>
 
 

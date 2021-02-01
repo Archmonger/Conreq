@@ -1,6 +1,7 @@
 from threading import Thread
 from time import sleep
 
+from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.content_search import Search
@@ -40,7 +41,7 @@ def more_info(request):
         content_type = request.GET.get("content_type", None)
 
         # Get all the basic metadata for a given ID
-        tmdb_result = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
+        content = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
 
         # Get recommended results
         similar_and_recommended_thread = ReturnThread(
@@ -50,24 +51,24 @@ def more_info(request):
         similar_and_recommended_thread.start()
 
         # Checking Conreq status of the current TMDB ID
-        thread = Thread(target=set_single_conreq_status, args=[tmdb_result])
+        thread = Thread(target=set_single_conreq_status, args=[content])
         thread.start()
         thread_list.append(thread)
 
         # Pre-process data attributes within tmdb_result
-        thread = Thread(target=preprocess_tmdb_result, args=[tmdb_result])
+        thread = Thread(target=preprocess_tmdb_result, args=[content])
         thread.start()
         thread_list.append(thread)
 
         # Get collection information
         if (
-            tmdb_result.__contains__("belongs_to_collection")
-            and tmdb_result["belongs_to_collection"] is not None
+            content.__contains__("belongs_to_collection")
+            and content["belongs_to_collection"] is not None
         ):
             tmdb_collection = True
             tmdb_collection_thread = ReturnThread(
                 target=content_discovery.collections,
-                args=[tmdb_result["belongs_to_collection"]["id"]],
+                args=[content["belongs_to_collection"]["id"]],
             )
             tmdb_collection_thread.start()
         else:
@@ -91,29 +92,40 @@ def more_info(request):
         if tmdb_collection is not None:
             tmdb_collection = tmdb_collection_thread.join()
 
+        # Check if the user has already requested this
+        requested = False
+        if UserRequest.objects.filter(
+            content_id=content["id"],
+            source="tmdb",
+            content_type=content["content_type"],
+            requested_by=request.user,
+        ):
+            requested = True
+
         # Generate context for page rendering
         context = generate_context(
             {
-                "content": tmdb_result,
+                "content": content,
                 "recommended": tmdb_recommended,
                 "collection": tmdb_collection,
-                "content_type": tmdb_result["content_type"],
+                "content_type": content["content_type"],
+                "requested": requested,
             }
         )
 
     elif tvdb_id:
         searcher = Search()
         # Fallback for TVDB
-        arr_result = searcher.television(tvdb_id)[0]
+        content = searcher.television(tvdb_id)[0]
         thread_list = []
 
         # Preprocess results
-        thread = Thread(target=preprocess_arr_result, args=[arr_result])
+        thread = Thread(target=preprocess_arr_result, args=[content])
         thread.start()
         thread_list.append(thread)
 
         # Obtain conreq status
-        thread = Thread(target=set_single_conreq_status, args=[arr_result])
+        thread = Thread(target=set_single_conreq_status, args=[content])
         thread.start()
         thread_list.append(thread)
 
@@ -124,8 +136,8 @@ def more_info(request):
         # Generate context for page rendering
         context = generate_context(
             {
-                "content": arr_result,
-                "content_type": arr_result["contentType"],
+                "content": content,
+                "content_type": content["contentType"],
             }
         )
 
@@ -201,11 +213,23 @@ def content_preview_modal(request):
     content_type = request.GET.get("content_type", None)
 
     if tmdb_id and content_type:
+        # Fetch and process
         content = content_discovery.get_by_tmdb_id(
             tmdb_id, content_type, obtain_extras=False
         )
         set_single_conreq_status(content)
         preprocess_tmdb_result(content)
-        context = generate_context({"content": content})
+
+        # Check if the user has already requested this
+        requested = False
+        if UserRequest.objects.filter(
+            content_id=content["id"],
+            source="tmdb",
+            content_type=content["content_type"],
+            requested_by=request.user,
+        ):
+            requested = True
+
+        context = generate_context({"content": content, "requested": requested})
         template = loader.get_template("modal/content_preview.html")
         return HttpResponse(template.render(context, request))
