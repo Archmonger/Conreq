@@ -2,9 +2,7 @@
 {% load solo_tags %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
 
-<div class="spinner-border loading-animation" role="status">
-    <span class="sr-only">Loading...</span>
-</div>
+{% include "primary/loading_animation.html" %}
 <div id="modal-content" class="modal-content content-preview">
 
     <div class="poster-container">
