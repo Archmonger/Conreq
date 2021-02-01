@@ -11,11 +11,16 @@
 
     <div class="grid-modal-right">
         <div class="modal-header">
-            <a
-                href="#{% url 'more_info:main' %}?tmdb_id={{content.id}}&content_type={% if content.name %}tv{% elif content.title %}movie{% endif %}">
-                <i class="fas fa-expand"></i>
-            </a>
-            <div data-dismiss="modal" aria-label="Close">
+            <div class="modal-header-btn-container">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="modal-header-btn-container">
+                <a
+                    href="#{% url 'more_info:main' %}?tmdb_id={{content.id}}&content_type={% if content.name %}tv{% elif content.title %}movie{% endif %}">
+                    <i class="fas fa-expand"></i>
+                </a>
+            </div>
+            <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
                 <i class="fas fa-window-close"></i>
             </div>
         </div>

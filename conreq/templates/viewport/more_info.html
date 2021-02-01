@@ -156,8 +156,6 @@
                     <div class="inline light rating">
                         {% firstof content.vote_average content.ratings.value "-" %} / 10 </div>
                 </div>
-                <i class="fas fa-ellipsis-v clickable">
-                </i>
 
 
                 {% if content.conreqStatus == available %}
@@ -190,6 +188,7 @@
                 {% endif %}
                 {% endif %}
 
+                <div class="conreq-button report-button"> <i class="fas fa-exclamation"></i> </div>
 
             </div>
             <div class="more-info-overview grid-block contains-carousel">

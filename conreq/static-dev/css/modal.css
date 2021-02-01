@@ -32,6 +32,9 @@
   font-size: 20px;
   transition: color 0.3s ease;
   cursor: pointer;
+}
+
+.modal-header-btn-container {
   padding-left: 25px;
 }
 

@@ -79,22 +79,8 @@
   text-align: center;
 }
 
-.more-info-main-info .fa-ellipsis-v {
-  display: block;
-  color: rgba(255, 255, 255, 0.7);
-  position: absolute;
-  right: 27px;
-  top: 20px;
-  font-size: 28px;
-  -webkit-filter: drop-shadow(0 0 5px rgb(0 0 0));
-  filter: drop-shadow(0 0 5px rgb(0 0 0));
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: rgb(0 0 0 / 0.5);
-  transition: color 0.3s ease;
-}
-
-.more-info-main-info .fa-ellipsis-v:hover {
-  color: #fff;
+.more-info-main-info .conreq-button {
+  margin-left: 25px;
 }
 
 .conreq-button {
@@ -124,6 +110,15 @@
 .conreq-button:hover:not(.available) {
   background: #2ba180;
   cursor: pointer;
+}
+
+.conreq-button.report-button {
+  background: #a53939;
+  width: 40px;
+}
+
+.conreq-button.report-button:hover {
+  background: #d04141;
 }
 
 .more-info-overview {
