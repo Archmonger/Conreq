@@ -9,17 +9,17 @@ Here's a list of all available environment variables:
 
 ```python
 # General Settings
-TZ = "America/Los_Angeles"                # default: Europe/London (log file timezone in "TZ Database" format)
+TZ = "America/Los_Angeles"                # default: Europe/London (timezone for log files, in "TZ Database" format)
 
 # Data Storage
 BASE_URL = "requests"                     # default: none
-DATA_DIR = "/example/directory"           # default: none (if not set, base directory is used)
+DATA_DIR = "/example/directory"           # default: ./data
 DB_ENGINE = "MYSQL"                       # default: SQLITE3
 MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
-DEBUG = False                             # default: true (disabling debug will enable security features)
-USE_ROLLING_SECRET_KEY = True             # default: false
+DEBUG = False                             # default: true ("true" will enable security features)
+USE_ROLLING_SECRET_KEY = True             # default: false (sign users out when app restarts)
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default DENY
 USE_SSL = True                            # default: false
 SSL_CERT = "/path/to/cert.pem"            # default: none
