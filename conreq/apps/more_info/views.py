@@ -193,7 +193,7 @@ def series_modal(request):
                 tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
             )
             log.handler(
-                "Sonarr is still downloading series information! Conreq is waiting...",
+                "Sonarr did not have the series information! Conreq is waiting...",
                 log.INFO,
                 __logger,
             )
