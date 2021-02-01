@@ -108,7 +108,10 @@ function connect() {
   };
 }
 
-connect();
+// First connection attempt (Delayed for Cloudflare compatbility)
+setTimeout(function () {
+  connect();
+}, 3000);
 
 // SENDABLE COMMAND: CHANGE SERVER SETTING
 var change_server_setting = function (setting_name = null, value = null) {
