@@ -18,12 +18,12 @@ DB_ENGINE = "MYSQL"                       # default: SQLITE3
 MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
-DEBUG = False                             #default: true (disabling debug will enable security features)
-USE_ROLLING_SECRET_KEY = True             #default: false
-X_FRAME_OPTIONS = "SAMEORIGIN"            #default DENY
-USE_SSL = True                            #default: false
-SSL_CERT = "/path/to/cert.pem"            #default: none
-SSL_KEY = "/path/to/key.pem"              #default: none
+DEBUG = False                             # default: true (disabling debug will enable security features)
+USE_ROLLING_SECRET_KEY = True             # default: false
+X_FRAME_OPTIONS = "SAMEORIGIN"            # default DENY
+USE_SSL = True                            # default: false
+SSL_CERT = "/path/to/cert.pem"            # default: none
+SSL_KEY = "/path/to/key.pem"              # default: none
 ```
 
 ## Creating a Development Environment
