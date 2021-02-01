@@ -98,7 +98,6 @@ def more_info(request):
             content_id=content["id"],
             source="tmdb",
             content_type=content["content_type"],
-            requested_by=request.user,
         ):
             requested = True
 
@@ -226,7 +225,6 @@ def content_preview_modal(request):
             content_id=content["id"],
             source="tmdb",
             content_type=content["content_type"],
-            requested_by=request.user,
         ):
             requested = True
 
