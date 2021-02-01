@@ -7,7 +7,7 @@ var generate_modal = function (modal_url) {
   $("#modal-container .loading-animation").show();
 
   // Fetch the series modal
-  $.get(modal_url, function (modal_html) {
+  http_request = $.get(modal_url, function (modal_html) {
     // Place the new HTML on the page
     modal_dialog[0].innerHTML = DOMPurify.sanitize(modal_html);
 
@@ -23,6 +23,10 @@ var generate_modal = function (modal_url) {
     episode_name_click_event();
     episode_checkbox_click_event();
     expand_click_event();
+  }).fail(function () {
+    // Server could'get fetch the modal!
+    $("#modal-container").modal("hide");
+    conreq_no_response_toast_message();
   });
 };
 

@@ -138,6 +138,20 @@ var invite_copied_toast_message = function () {
   });
 };
 
+// Failed to fetch something
+var conreq_no_response_toast_message = function () {
+  iziToast.show({
+    icon: "fas fa-exclamation-triangle",
+    title: "Error!",
+    message: "The server did not respond!",
+    displayMode: "replace",
+    titleColor: "#9a5c0f",
+    messageColor: "#9a5c0f",
+    iconColor: "#c57615",
+    progressBarColor: "var(--accent-color)",
+  });
+};
+
 // Gets the current window location from the hash
 var get_window_location = function () {
   // Read the URL hash to determine what page we are on
