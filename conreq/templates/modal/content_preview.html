@@ -102,7 +102,12 @@
             </div>
             {% endif %}
 
-            {% if content.conreqStatus == available %}
+
+            {% if content.name and content.conreqStatus == available %}
+            <div class="conreq-button series-modal-button no-highlighting available clickable" data-content-type="tv"
+                data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
+                VIEW EPISODES </div>
+            {% elif content.title and content.conreqStatus == available %}
             <div class="conreq-button box-shadow no-highlighting available"> AVAILABLE </div>
             {% endif %}
 
