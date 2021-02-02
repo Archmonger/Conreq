@@ -258,11 +258,13 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
     "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
     "awesome_django_timezones.middleware.TimezonesMiddleware",  # Automatically change timezones
 ]
+
+if X_FRAME_OPTIONS.lower() != "false":
+    MIDDLEWARE.append("django.middleware.clickjacking.XFrameOptionsMiddleware")
 
 
 # Caching Database
