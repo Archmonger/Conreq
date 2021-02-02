@@ -152,10 +152,10 @@ LOGGING = {
 if USE_ROLLING_SECRET_KEY:
     SECRET_KEY = get_random_secret_key()  # Key used for cryptographic signing
 
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = "no-referrer"
 ALLOWED_HOSTS = ["*"]
-SECURE_BROWSER_XSS_FILTER = (
-    True  # Sets "X-XSS-Protection: 1; mode=block" header on all responses
-)
+SECURE_BROWSER_XSS_FILTER = True
 
 if USE_SSL:
     SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
