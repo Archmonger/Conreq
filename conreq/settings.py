@@ -220,8 +220,7 @@ if UPDATE_SETTINGS_FILE:
 
 # Application Settings
 HTML_MINIFY = True
-DJVERSION_GIT_USE_COMMIT = True
-DJVERSION_GIT_REPO_PATH = BASE_DIR
+DJVERSION_VERSION = "0.9.0"
 
 
 # Application Definitions
