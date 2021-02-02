@@ -61,7 +61,7 @@ def server_settings(request):
                 if conreq_config.sonarr_anime_folder == path["id"]:
                     current_sonarr_anime_folder = path["path"]
                 # Current TV dirs
-                if conreq_config.sonarr_anime_folder == path["id"]:
+                if conreq_config.sonarr_tv_folder == path["id"]:
                     current_sonarr_tv_folder = path["path"]
                 # List of all dropdown entries
                 sonarr_folders.append({"id": path["id"], "label": path["path"]})
@@ -94,7 +94,7 @@ def server_settings(request):
                 if conreq_config.radarr_anime_folder == path["id"]:
                     current_radarr_anime_folder = path["path"]
                 # Current TV dirs
-                if conreq_config.radarr_anime_folder == path["id"]:
+                if conreq_config.radarr_movies_folder == path["id"]:
                     current_radarr_movies_folder = path["path"]
                 # List of all dropdown entries
                 radarr_folders.append({"id": path["id"], "label": path["path"]})
