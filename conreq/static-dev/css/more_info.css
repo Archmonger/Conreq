@@ -80,7 +80,7 @@
 }
 
 .more-info-main-info .conreq-button {
-  margin-left: 25px;
+  margin-left: 15px;
 }
 
 .conreq-button {
@@ -97,7 +97,6 @@
   border-radius: 4px;
   background: var(--accent-color);
   float: right;
-  margin-left: 0px;
   font-weight: bold;
   transition-duration: 0.3s;
   transition-timing-function: ease;
@@ -114,7 +113,6 @@
 
 .conreq-button.report-button {
   background: #a53939;
-  width: 40px;
 }
 
 .conreq-button.report-button:hover {
