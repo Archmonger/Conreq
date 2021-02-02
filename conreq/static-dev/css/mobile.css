@@ -162,19 +162,15 @@
     height: 45px;
   }
   .more-info-grid .report-button {
-    position: fixed;
-    bottom: 20px;
-    right: 75px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
     z-index: 97;
-    border-radius: 50%;
-    font-size: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
   }
-  .more-info-grid .request-button.available {
+  .more-info-grid .conreq-button.available {
     display: none;
   }
   .more-info-grid .conreq-button .fas {
