@@ -195,11 +195,6 @@
   overflow: hidden;
 }
 
-.review:hover {
-  -webkit-filter: brightness(120%);
-  filter: brightness(120%);
-}
-
 .more-info-reviews .bold {
   margin-bottom: 5px;
   text-align: right;
