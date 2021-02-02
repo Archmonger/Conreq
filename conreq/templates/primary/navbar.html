@@ -14,7 +14,7 @@
     <div class="username-container dropdown">
         <div class="no-highlighting clickable" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if user.is_authenticated %}
-            <div class="username full-name">{{ user.get_username }}</div>
+            <div class="username full-name">{{ user.get_username|truncatechars:22 }}</div>
             <div class="username first-letter">{{ user.get_username|make_list|first|capfirst }}</div>
             {% endif %}
             <i class="fas fa-caret-down"></i>
