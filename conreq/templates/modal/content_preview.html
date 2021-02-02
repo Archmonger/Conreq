@@ -6,7 +6,7 @@
 <div id="modal-content" class="modal-content content-preview">
 
     <div class="poster-container">
-        <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster">
+        <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster box-shadow">
     </div>
 
     <div class="grid-modal-right">
@@ -109,7 +109,7 @@
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
                 VIEW EPISODES </div>
             {% elif content.title and content.conreqStatus == available %}
-            <div class="conreq-button box-shadow no-highlighting available"> AVAILABLE </div>
+            <div class="conreq-button no-highlighting available"> AVAILABLE </div>
             {% endif %}
 
         </div>
