@@ -1,4 +1,5 @@
 let modal_dialog = $("#modal-dialog");
+let ongoing_request = null;
 
 // Fetches a modal via AJAX
 var generate_modal = function (modal_url) {
@@ -60,6 +61,13 @@ var request_click_event = function () {
       let season_numbers = [];
       let episode_ids = [];
 
+      // Prevent the user from spamming the request button
+      if (ongoing_request == this) {
+        return false;
+      } else {
+        ongoing_request = this;
+      }
+
       // Request a movie
       if (params.content_type == "movie") {
         // request_content(params);
@@ -67,8 +75,10 @@ var request_click_event = function () {
           requested_toast_message();
           $("#modal-container").modal("hide");
           $(".request-button").remove();
+          ongoing_request = null;
         }).fail(function () {
           conreq_no_response_toast_message();
+          ongoing_request = null;
         });
       }
       // Request a TV show
