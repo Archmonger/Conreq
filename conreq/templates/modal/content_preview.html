@@ -87,6 +87,7 @@
         </div>
 
         <div class="modal-footer">
+            <!-- "Request" buttons -->
             {% if content.name and server_settings.sonarr_enabled and content.conreqStatus != available %}
             <div class="conreq-button series-modal-button no-highlighting" data-content-type="tv"
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
@@ -102,7 +103,7 @@
             </div>
             {% endif %}
 
-
+            <!-- "Available" and "View Episodes" buttons -->
             {% if content.name and content.conreqStatus == available %}
             <div class="conreq-button series-modal-button no-highlighting available clickable" data-content-type="tv"
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
