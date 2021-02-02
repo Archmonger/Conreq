@@ -69,6 +69,7 @@ function connect() {
     // Toast message to notify that the user has disconnected from the server
     if (display_disconnected_toast) {
       disconnected_toast_message();
+      first_websocket_connection = false;
       display_disconnected_toast = false;
     }
 
@@ -96,6 +97,7 @@ function connect() {
   COMMAND_SOCKET.onerror = function (error) {
     if (display_disconnected_toast) {
       disconnected_toast_message();
+      first_websocket_connection = false;
       display_disconnected_toast = false;
     }
 
