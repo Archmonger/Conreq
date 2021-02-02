@@ -599,6 +599,21 @@ button:focus {
   font-weight: 700;
 }
 
+.requested-by {
+  position: absolute;
+  top: calc(var(--poster-height) - 30px);
+  right: 5px;
+  transition: opacity 0.6s ease;
+  z-index: 7;
+  color: rgb(255 255 255 / 0.75);
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 12px;
+  line-height: 14px;
+  background: var(--poster-bg-color);
+  font-weight: 700;
+}
+
 .viewport .poster-container:hover > a:hover > .content-type-icon {
   opacity: 1;
 }

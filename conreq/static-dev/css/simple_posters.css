@@ -18,6 +18,17 @@
   background: #ffffff;
 }
 
+.requested-by {
+  top: calc(var(--poster-height) - 55px);
+  left: 5px;
+  right: unset;
+  opacity: 0;
+}
+
+.viewport .poster-container:hover > a:hover > .requested-by {
+  opacity: 1;
+}
+
 .viewport .poster-container .poster-description-container {
   opacity: 0;
   position: absolute;

@@ -224,7 +224,12 @@ def all_requests(request):
     all_cards = []
     request_dict = {}
 
-    for entry in user_requests.values():
+    for entry in user_requests.values(
+        "content_id",
+        "source",
+        "content_type",
+        "requested_by__username",
+    ):
         # Fetch TMDB entry
         if entry["source"] == "tmdb" and request_is_unique(entry, request_dict):
             card = content_discovery.get_by_tmdb_id(
@@ -234,6 +239,7 @@ def all_requests(request):
             )
             if card is not None:
                 card["tmdbCard"] = True
+                card["requested_by"] = entry["requested_by__username"]
                 all_cards.append(card)
 
         # Fetch TVDB entry
@@ -244,6 +250,7 @@ def all_requests(request):
             if conversion.__contains__("tv_results") and conversion["tv_results"]:
                 card = conversion["tv_results"][0]
                 card["tmdbCard"] = True
+                card["requested_by"] = entry["requested_by__username"]
                 all_cards.append(card)
 
                 # Convert all requests to use this new ID
@@ -266,6 +273,7 @@ def all_requests(request):
                         if remote_poster:
                             card["remotePoster"] = remote_poster["remoteUrl"]
 
+                card["requested_by"] = entry["requested_by__username"]
                 all_cards.append(card)
 
         if card is None and not request_is_unique(entry, request_dict):

@@ -14,6 +14,12 @@
         <a
             href="#{% url 'more_info:main' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
 
+            {% if card.requested_by and user.is_staff %}
+            <div class="requested-by">
+                {{ card.requested_by|truncatechars:12 }}
+            </div>
+            {% endif %}
+
             <div class="content-type-icon">
                 {% if card.contentType == "tv" %}
                 <i class="fas fa-tv"></i>

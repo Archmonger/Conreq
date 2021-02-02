@@ -7,6 +7,12 @@
         <a
             href="#{% url 'more_info:main' %}?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
 
+            {% if card.requested_by and user.is_staff %}
+            <div class="requested-by">
+                {{ card.requested_by|truncatechars:12 }}
+            </div>
+            {% endif %}
+
             <div class="content-type-icon">
                 {% if card.name %}
                 <i class="fas fa-tv"></i>
