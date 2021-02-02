@@ -509,22 +509,6 @@
   background: #2ba180;
 }
 
-.quick-info-btn.movie {
-  background: var(--movie-color);
-}
-
-.quick-info-btn.movie:hover {
-  background: #d47808;
-}
-
-.quick-info-btn.tv {
-  background: var(--tv-color);
-}
-
-.quick-info-btn.tv:hover {
-  background: #008bc2;
-}
-
 .quick-info-extra-spacing {
   line-height: 18px;
 }

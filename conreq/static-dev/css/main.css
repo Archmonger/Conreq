@@ -404,16 +404,6 @@ button:focus {
   background-color: var(--accent-color);
 }
 
-.all-tab-groups .suboption.tv-shows:hover,
-.all-tab-groups .suboption.tv-shows.active {
-  background-color: var(--tv-color);
-}
-
-.all-tab-groups .suboption.movies:hover,
-.all-tab-groups .suboption.movies.active {
-  background-color: var(--movie-color);
-}
-
 .all-tab-groups .nav-tab {
   text-decoration: none;
   font-size: var(--primary-font-size);
