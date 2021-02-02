@@ -103,7 +103,11 @@
 }
 
 .conreq-button.available {
-  background-color: rgb(204, 123, 25);
+  background-color: rgb(27 125 158);
+}
+
+.conreq-button.series-modal-button.available:hover {
+  background-color: rgb(30 138 174);
 }
 
 .conreq-button:hover:not(.available) {
