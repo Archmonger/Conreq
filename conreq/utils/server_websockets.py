@@ -135,6 +135,14 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 elif content["parameters"]["setting_name"] == "Conreq Dark Theme":
                     conreq_config.conreq_dark_theme = content["parameters"]["value"]
 
+                elif (
+                    content["parameters"]["setting_name"]
+                    == "Conreq Organizr User Authentication"
+                ):
+                    conreq_config.conreq_http_header_auth = content["parameters"][
+                        "value"
+                    ]
+
                 # Sonarr Settings
                 elif content["parameters"]["setting_name"] == "Sonarr URL":
                     conreq_config.sonarr_url = content["parameters"]["value"]

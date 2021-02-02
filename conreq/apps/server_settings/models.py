@@ -16,6 +16,7 @@ class ConreqConfig(SingletonModel):
     conreq_auto_resolve_issues = models.BooleanField(default=True)
     conreq_guest_login = models.BooleanField(default=False)
     conreq_dark_theme = models.BooleanField(default=True)
+    conreq_http_header_auth = models.BooleanField(default=False)
     conreq_initialized = models.BooleanField(default=False)
 
     # Sonarr settings

@@ -112,6 +112,16 @@
                     </div>
                 </div>
             </div>
+            <div class="settings-item-group toggler">
+                <div class="settings-item admin pretty p-switch p-fill"
+                    data-setting-name="Conreq Organizr User Authentication">
+                    <input {% if server_settings.conreq_http_header_auth %} checked {% endif %} type="checkbox"
+                        class="reload-needed" />
+                    <div class="state">
+                        <label>Organizr User Authentication</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
