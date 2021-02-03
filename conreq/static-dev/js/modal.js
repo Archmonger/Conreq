@@ -19,14 +19,14 @@ var generate_modal = function (modal_url) {
     $("#modal-container").modal("show");
 
     // Add click events
-    select_all_click_event();
     request_click_event();
     series_modal_click_event();
-    season_name_click_event();
-    season_checkbox_click_event();
-    episode_name_click_event();
-    episode_checkbox_click_event();
-    expand_click_event();
+    modal_select_all_click_event();
+    modal_expand_click_event();
+    row_title_click_event();
+    row_checkbox_click_event();
+    row_suboption_title_click_event();
+    row_suboption_checkbox_click_event();
   }).fail(function () {
     // Server couldn't fetch the modal
     conreq_no_response_toast_message();
@@ -45,19 +45,6 @@ var generate_modal = function (modal_url) {
 };
 
 // CLICK EVENTS
-let select_all_click_event = function () {
-  $(".modal-button.select-button").click(function () {
-    let modal_text = this.innerHTML;
-    if (modal_text == "SELECT ALL") {
-      this.innerHTML = "UNSELECT ALL";
-      $(".modal input:not(.specials)").prop("checked", true);
-    } else {
-      this.innerHTML = "SELECT ALL";
-      $(".modal input:not(.specials)").prop("checked", false);
-    }
-  });
-};
-
 var request_click_event = function () {
   $(".request-button").each(function () {
     $(this).unbind("click");
@@ -69,8 +56,8 @@ var request_click_event = function () {
         seasons: null,
         episode_ids: null,
       };
-      let season_checkboxes = $(".season-checkbox");
-      let season_checkboxes_not_specials = $(".season-checkbox:not(.specials)");
+      let season_checkboxes = $(".checkbox");
+      let season_checkboxes_not_specials = $(".checkbox:not(.specials)");
       let season_numbers = [];
       let episode_ids = [];
 
@@ -86,8 +73,8 @@ var request_click_event = function () {
         // request_content(params);
         post_json($(this).data("request-url"), params, function () {
           requested_toast_message();
+          $(".request-button").text("REQUESTED");
           $("#modal-container").modal("hide");
-          $(".request-button").remove();
           ongoing_request = null;
         }).fail(function () {
           conreq_no_response_toast_message();
@@ -104,7 +91,7 @@ var request_click_event = function () {
           }
           // Individual episode was requested
           else if (season_checkmark == false) {
-            let episode_container = $($(this).data("episode-container"));
+            let episode_container = $($(this).data("all-suboptions-container"));
             let episode_checkboxes = episode_container.find("input");
             episode_checkboxes.prop(
               "checked",
@@ -121,6 +108,7 @@ var request_click_event = function () {
         if (season_numbers.length == season_checkboxes_not_specials.length) {
           post_json($(this).data("request-url"), params, function () {
             requested_toast_message();
+            $(".series-modal-button").text("REQUESTED");
             $("#modal-container").modal("hide");
           }).fail(function () {
             conreq_no_response_toast_message();
@@ -133,6 +121,7 @@ var request_click_event = function () {
           params.episode_ids = episode_ids;
           post_json($(this).data("request-url"), params, function () {
             requested_toast_message();
+            $(".series-modal-button").text("REQUESTED");
             $("#modal-container").modal("hide");
           }).fail(function () {
             conreq_no_response_toast_message();
@@ -189,32 +178,45 @@ var report_modal_click_event = function () {
   });
 };
 
-let season_name_click_event = function () {
-  $(".season").click(function () {
+let modal_select_all_click_event = function () {
+  $(".modal .select-all-button").click(function () {
+    let modal_text = this.innerHTML;
+    if (modal_text == "SELECT ALL") {
+      this.innerHTML = "UNSELECT ALL";
+      $(".modal input:not(.specials)").prop("checked", true);
+    } else {
+      this.innerHTML = "SELECT ALL";
+      $(".modal input:not(.specials)").prop("checked", false);
+    }
+  });
+};
+
+let row_title_click_event = function () {
+  $(".modal .row-title-container").click(function () {
     // Checkmark the season
-    let season_block = $(this.parentElement.parentElement);
+    let season_block = $(this.parentElement);
     let season_checkbox = season_block.find("input");
     season_checkbox.prop("checked", !season_checkbox.prop("checked"));
 
     // Checkmark all related episodes
-    let episode_container = $(season_checkbox.data("episode-container"));
+    let episode_container = $(season_checkbox.data("all-suboptions-container"));
     let episode_checkboxes = episode_container.find("input");
     episode_checkboxes.prop("checked", season_checkbox.prop("checked"));
   });
 };
 
-let season_checkbox_click_event = function () {
-  $(".season-checkbox").click(function () {
+let row_checkbox_click_event = function () {
+  $(".modal .checkbox").click(function () {
     // Checkmark all related episodes
     let season_checkbox = $(this);
-    let episode_container = $(season_checkbox.data("episode-container"));
+    let episode_container = $(season_checkbox.data("all-suboptions-container"));
     let episode_checkboxes = episode_container.find("input");
     episode_checkboxes.prop("checked", season_checkbox.prop("checked"));
   });
 };
 
-let episode_name_click_event = function () {
-  $(".episode").click(function () {
+let row_suboption_title_click_event = function () {
+  $(".modal .suboption-title-container").click(function () {
     // Checkmark the individual episode
     let episode_block = $(this.parentElement);
     let episode_checkbox = episode_block.find("input");
@@ -241,8 +243,8 @@ let episode_name_click_event = function () {
   });
 };
 
-let episode_checkbox_click_event = function () {
-  $(".episode-checkbox").click(function () {
+let row_suboption_checkbox_click_event = function () {
+  $(".modal .suboption-checkbox").click(function () {
     // Uncheck the season box
     let episode_checkbox = $(this);
     let season_container = $(episode_checkbox.data("season-container"));
@@ -268,8 +270,8 @@ let episode_checkbox_click_event = function () {
   });
 };
 
-let expand_click_event = function () {
-  $("#modal-container .fa-expand").click(function () {
+let modal_expand_click_event = function () {
+  $(".modal .fa-expand").click(function () {
     $("#modal-container").modal("hide");
   });
 };

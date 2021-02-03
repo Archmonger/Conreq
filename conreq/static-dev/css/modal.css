@@ -48,53 +48,28 @@
   border: none;
 }
 
-.modal-button {
-  color: #fff;
-  font-family: var(--global-font);
-  font-size: 17px;
-  line-height: 40px;
-  text-align: center;
-  width: auto;
-  padding-left: 15px;
-  padding-right: 15px;
-  height: 40px;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.select-button {
+.conreq-button.select-all-button:not(.available) {
   background: #6d6d6d;
   margin-right: 16px;
 }
 
-.select-button:hover {
+.conreq-button.select-all-button:hover:not(.available) {
   background: #828282;
-}
-
-.conreq-button {
-  background: var(--accent-color);
-}
-
-.conreq-button:hover:not(.available),
-.modal-confirm-button:hover:not(.available) {
-  background: #2ba180;
 }
 
 /* Seasons/Episode Modal Styling */
 
-.season-block {
+.row-container {
   padding: 0px 15px;
   display: grid;
   grid-template-columns: 30px auto 30px;
 }
 
-.season-block > * {
+.row-container > * {
   padding: 15px 0px;
 }
 
-.season-block .fa-angle-down {
+.row-container .fa-angle-down {
   grid-column: 3;
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
@@ -104,15 +79,15 @@
   font-size: 20px;
 }
 
-.season-block .fa-angle-down:hover {
+.row-container .fa-angle-down:hover {
   color: #fff;
 }
 
-.season-block .fa-angle-down:not(.collapsed) {
+.row-container .fa-angle-down:not(.collapsed) {
   transform: rotate(180deg);
 }
 
-.season-block .season {
+.row-container .row-title {
   font-weight: 700;
   color: rgba(255, 255, 255, 0.7);
   line-height: 24px;
@@ -120,24 +95,24 @@
   align-items: center;
 }
 
-.season-block .modal-season-dropdown-container {
+.row-container .row-collapse-icon-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.episode-block {
+.suboption-row-container {
   padding: 7px 15px;
   display: grid;
   grid-template-columns: 30px auto;
   color: rgba(255, 255, 255, 0.5);
 }
 
-.episode-block > .modal-checkbox-container {
+.suboption-row-container > .checkbox-container {
   grid-column: 1;
 }
 
-.episode-block .episode {
+.suboption-row-container .suboption-title-container {
   color: rgba(255, 255, 255, 0.5);
   grid-column: 2;
   line-height: 20px;
@@ -145,17 +120,17 @@
   align-items: center;
 }
 
-.episode-block .episode > *:not(.modal-dot) {
+.suboption-row-container .suboption-title-container > *:not(.modal-dot) {
   display: inline-block;
   margin-right: 5px;
 }
 
-.episode-container {
+.all-suboptions-container {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.modal-checkbox-container,
-.modal-season-container {
+.checkbox-container,
+.row-title-container {
   display: flex;
   align-items: center;
   justify-content: flex-start;
