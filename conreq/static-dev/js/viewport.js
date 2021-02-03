@@ -256,7 +256,7 @@ let refresh_viewport = function () {
   lazyloader.update();
 };
 
-// Obtains the viewport content based on the URL, then updates the current tab
+// Fetch the new viewport and update the current tab
 var generate_viewport = function () {
   // Check if the whole webpage needs to be reloaded
   if (reload_needed) {
@@ -275,33 +275,40 @@ var generate_viewport = function () {
     }
   }
 
-  // Change the current tab
-  update_active_tab();
-
-  // Destroy old JS elements and event handlers
-  destroy_viewport();
-
-  // Display the loading animation
-  $(".viewport-container>.loading-animation-container").show();
-
-  // Fetch the new content, display it, and hide the loading animation
+  // Asynchronously fetch new viewport content
   viewport_loaded = false;
   http_request.abort();
   http_request = $.get(window_location, function (viewport_html) {
+    // Save that the page was successfully loaded
+    viewport_loaded = true;
+
+    // Change the current tab
+    update_active_tab();
+
+    // Destroy old JS elements and event handlers
+    destroy_viewport();
+
+    // Inject and configure the new content
     $(".viewport-container")[0].innerHTML = DOMPurify.sanitize(viewport_html);
     refresh_viewport();
-    $(".viewport-container>.loading-animation-container").hide();
+    add_event_listeners();
 
+    // Display the new content
+    $(".viewport-container>.loading-animation-container").hide();
+    $(".viewport-container>*:not(.loading-animation-container)").show();
     setTimeout(function () {
       $(".viewport-container>.viewport").css("opacity", "1");
     }, 10);
-
-    // Add any click events needed
-    add_event_listeners();
-
-    // Save that the page was successfully loaded
-    viewport_loaded = true;
   });
+
+  // If the page is taking too long to load, show a loading animation
+  setTimeout(function () {
+    if (!viewport_loaded) {
+      // Hide the viewport and display the loading animation
+      $(".viewport-container>*:not(.loading-animation-container)").hide();
+      $(".viewport-container>.loading-animation-container").show();
+    }
+  }, 1000);
 };
 
 // Perform actions whenever the HTML on the page changes
