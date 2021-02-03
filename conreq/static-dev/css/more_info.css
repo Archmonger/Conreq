@@ -102,6 +102,10 @@
   transition-timing-function: ease;
 }
 
+.conreq-button.available {
+  background: #333333;
+}
+
 .conreq-button.series-modal-button.available:hover,
 .conreq-button:hover:not(.available) {
   background: #2ba180;
