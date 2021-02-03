@@ -8,16 +8,62 @@
         </div>
     </div>
     <div class="modal-body">
-        <div>
-            {% for season in seasons %}
-            <div id="season-{{season.seasonNumber}}" class="row-container no-highlighting">
+        {% for season in seasons %}
+        <div id="season-{{season.seasonNumber}}" class="row-container no-highlighting">
 
-                {% if season.statistics.conreqStatus != available %}
+            {% if season.statistics.conreqStatus != available %}
+            <div class="checkbox-container">
+                <div class="pretty p-icon p-curve p-smooth p-jelly">
+                    <input type="checkbox" class="checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                        data-season-number="{{season.seasonNumber}}"
+                        data-all-suboptions-container="#episodes-season-{{season.seasonNumber}}" />
+                    <div class="state">
+                        <i class="icon fas fa-check"></i>
+                        <label></label>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div></div>
+            {% endif %}
+
+            <div class="row-title-container">
+                <div class="row-title {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
+
+                    {% if season.statistics.conreqStatus == available %}
+                    <div class="modal-dot green"></div>
+                    {% elif season.statistics.conreqStatus == partial %}
+                    <div class="modal-dot yellow"></div>
+                    {% else %}
+                    <div class="modal-dot red"></div>
+                    {% endif %}
+
+                    <div class="line-clamp-1">
+                        {% if season.seasonNumber == 0 %}
+                        Specials
+                        {% else %}
+                        Season {{season.seasonNumber}}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row-collapse-icon-container">
+                <i class="fas fa-angle-down collapsed" data-toggle="collapse"
+                    data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
+                    aria-controls="episodes-season-{{season.seasonNumber}}"></i>
+            </div>
+
+        </div>
+        <div id="episodes-season-{{season.seasonNumber}}" class="all-suboptions-container collapse no-highlighting">
+            {% for episode in season.episodes|dictsort:"episodeNumber" %}
+            <div class="suboption-row-container">
+
+                {% if episode.conreqStatus != available %}
                 <div class="checkbox-container">
                     <div class="pretty p-icon p-curve p-smooth p-jelly">
-                        <input type="checkbox" class="checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
-                            data-season-number="{{season.seasonNumber}}"
-                            data-all-suboptions-container="#episodes-season-{{season.seasonNumber}}" />
+                        <input type="checkbox"
+                            class="suboption-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                            data-episode-id="{{episode.id}}" data-season-container="#season-{{season.seasonNumber}}" />
                         <div class="state">
                             <i class="icon fas fa-check"></i>
                             <label></label>
@@ -28,84 +74,34 @@
                 <div></div>
                 {% endif %}
 
-                <div class="row-title-container">
-                    <div class="row-title {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
-
-                        {% if season.statistics.conreqStatus == available %}
-                        <div class="modal-dot green"></div>
-                        {% elif season.statistics.conreqStatus == partial %}
-                        <div class="modal-dot yellow"></div>
-                        {% else %}
-                        <div class="modal-dot red"></div>
-                        {% endif %}
-
-                        <div class="line-clamp-1">
-                            {% if season.seasonNumber == 0 %}
-                            Specials
-                            {% else %}
-                            Season {{season.seasonNumber}}
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <div class="row-collapse-icon-container">
-                    <i class="fas fa-angle-down collapsed" data-toggle="collapse"
-                        data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
-                        aria-controls="episodes-season-{{season.seasonNumber}}"></i>
-                </div>
-
-            </div>
-            <div id="episodes-season-{{season.seasonNumber}}" class="all-suboptions-container collapse no-highlighting">
-                {% for episode in season.episodes|dictsort:"episodeNumber" %}
-                <div class="suboption-row-container">
-
-                    {% if episode.conreqStatus != available %}
-                    <div class="checkbox-container">
-                        <div class="pretty p-icon p-curve p-smooth p-jelly">
-                            <input type="checkbox"
-                                class="suboption-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
-                                data-episode-id="{{episode.id}}"
-                                data-season-container="#season-{{season.seasonNumber}}" />
-                            <div class="state">
-                                <i class="icon fas fa-check"></i>
-                                <label></label>
-                            </div>
-                        </div>
-                    </div>
+                <div class="suboption-title-container {% if episode.conreqStatus != available %}clickable{% endif %}">
+                    {% if episode.conreqStatus == available %}
+                    <div class="modal-dot green"></div>
                     {% else %}
-                    <div></div>
+                    <div class="modal-dot red"></div>
+                    {% endif %}
+                    <div class="episode-number bold">
+                        {% firstof episode.episodeNumber "Unknown" %}
+                    </div>
+
+                    {% if episode.absoluteEpisodeNumber %}
+                    {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
+                    <div class="absolute-episode-number bold">
+                        ({{episode.absoluteEpisodeNumber}})
+                    </div>
+                    {% endif %}
                     {% endif %}
 
-                    <div
-                        class="suboption-title-container {% if episode.conreqStatus != available %}clickable{% endif %}">
-                        {% if episode.conreqStatus == available %}
-                        <div class="modal-dot green"></div>
-                        {% else %}
-                        <div class="modal-dot red"></div>
-                        {% endif %}
-                        <div class="episode-number bold">
-                            {% firstof episode.episodeNumber "Unknown" %}
-                        </div>
-
-                        {% if episode.absoluteEpisodeNumber %}
-                        {% if episode.absoluteEpisodeNumber != episode.episodeNumber %}
-                        <div class="absolute-episode-number bold">
-                            ({{episode.absoluteEpisodeNumber}})
-                        </div>
-                        {% endif %}
-                        {% endif %}
-
-                        <div class="episode-separator"> </div>
-                        <div class="suboption-title line-clamp-1">
-                            {% firstof episode.title "Unknown" %}
-                        </div>
-
+                    <div class="episode-separator"> </div>
+                    <div class="suboption-title line-clamp-1">
+                        {% firstof episode.title "Unknown" %}
                     </div>
+
                 </div>
-                {% endfor %}
             </div>
             {% endfor %}
         </div>
+        {% endfor %}
     </div>
     <div class="modal-footer">
         <div class="conreq-button select-all-button no-highlighting"> SELECT ALL</div>
