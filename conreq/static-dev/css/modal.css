@@ -23,8 +23,15 @@
 
 .modal-header {
   border: none;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+
+.modal-header.mini {
   align-items: flex-end;
   justify-content: flex-end;
+  flex-direction: row;
 }
 
 .modal-header .fas {
@@ -40,6 +47,12 @@
 
 .modal-header .fas:hover {
   color: #fff;
+}
+
+.modal-header .title {
+  color: #fff;
+  font-weight: 700;
+  line-height: 1;
 }
 
 /* Modal Footer */
