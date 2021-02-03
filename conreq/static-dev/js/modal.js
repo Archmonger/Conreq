@@ -149,6 +149,21 @@ var series_modal_click_event = function () {
   });
 };
 
+var report_modal_click_event = function () {
+  $(".report-modal-button").each(function () {
+    $(this).unbind("click");
+    $(this).click(function () {
+      let params = {
+        tmdb_id: $(this).data("tmdb-id"),
+        tvdb_id: $(this).data("tvdb-id"),
+        content_type: $(this).data("content-type"),
+      };
+      $("#modal-container").modal("show");
+      generate_modal($(this).data("modal-url") + "?" + $.param(params));
+    });
+  });
+};
+
 let season_name_click_event = function () {
   $(".season").click(function () {
     // Checkmark the season

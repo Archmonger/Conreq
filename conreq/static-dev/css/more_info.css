@@ -108,10 +108,12 @@
   cursor: pointer;
 }
 
+.conreq-button.report-button,
 .conreq-button.report-modal-button {
   background: #a53939;
 }
 
+.conreq-button.report-button:hover,
 .conreq-button.report-modal-button:hover {
   background: #d04141;
 }

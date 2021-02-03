@@ -38,6 +38,7 @@ urlpatterns = [
     # Viewport Locations
     path("discover/", include("conreq.apps.discover.urls")),
     path("more_info/", include("conreq.apps.more_info.urls")),
+    path("report_issue/", include("conreq.apps.issue_reporting.urls")),
     path("search/", include("conreq.apps.search.urls")),
     path("manage_users/", include("conreq.apps.manage_users.urls")),
     path("server_settings/", include("conreq.apps.server_settings.urls")),

@@ -1,0 +1,22 @@
+{% load static %}
+
+{% include "primary/loading_animation.html" %}
+<div id="modal-content" class="modal-content">
+    <div class="modal-header">
+        <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
+            <i class="fas fa-window-close"></i>
+        </div>
+    </div>
+    <div class="modal-body">
+        <p>Here's some sample text</p>
+        <p>Another row of text</p>
+        <p>Wow, words are so cool!</p>
+    </div>
+    <div class="modal-footer">
+        <div class="conreq-button report-button no-highlighting"
+            data-request-url="{% url 'issue_reporting:report_issue' %}" data-content-type="tv"
+            data-tvdb-id="{{tvdb_id}}">
+            REPORT ISSUE
+        </div>
+    </div>
+</div>
