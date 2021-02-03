@@ -87,6 +87,7 @@ let add_event_listeners = function () {
   request_click_event();
   series_modal_click_event();
   report_modal_click_event();
+  content_preview_modal_click_event();
 
   // Server Settings menu events
   $(
@@ -161,19 +162,6 @@ let add_event_listeners = function () {
       invite_copied_toast_message();
     });
   });
-
-  // Poster click events
-  add_poster_click_event();
-};
-
-// Separate poster click events function to support InfiniteScroll
-let add_poster_click_event = function () {
-  $(".poster-container .fa-angle-down").each(function () {
-    $(this).unbind("click");
-    $(this).click(function () {
-      generate_modal($(this).data("modal-url"));
-    });
-  });
 };
 
 // Destroys old viewport JS instances
@@ -245,7 +233,7 @@ let refresh_viewport = function () {
 
       masonry_grid.on("append.infiniteScroll", function () {
         cull_old_posters();
-        add_poster_click_event();
+        content_preview_modal_click_event();
       });
 
       infinite_scroller_created = true;
