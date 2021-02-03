@@ -26,7 +26,7 @@ MAX_SERIES_FETCH_RETRIES = 20
 __logger = log.get_logger(__name__)
 
 # Create your views here.
-@cache_page(60)
+# @cache_page(60)
 @login_required
 def more_info(request):
     content_discovery = ContentDiscovery()
