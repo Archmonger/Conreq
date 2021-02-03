@@ -296,7 +296,7 @@ var generate_viewport = function () {
       $(".viewport-container>*:not(.loading-animation-container)").hide();
       $(".viewport-container>.loading-animation-container").show();
     }
-  }, 1000);
+  }, 600);
 };
 
 // Perform actions whenever the HTML on the page changes
