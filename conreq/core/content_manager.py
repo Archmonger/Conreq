@@ -123,6 +123,14 @@ class ContentManager:
             )
             return None
 
+        except KeyError:
+            log.handler(
+                "Content not ready yet!",
+                log.WARNING,
+                self.__logger,
+            )
+            return None
+
         except:
             log.handler(
                 "Failed to get content!",
