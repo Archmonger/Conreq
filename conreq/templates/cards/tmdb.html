@@ -14,7 +14,7 @@
             </div>
             {% endif %}
 
-            <div class="content-type-icon">
+            <div class="content-type-icon {% if not card.poster_path %}opacity-1{% endif %}">
                 {% if card.name %}
                 <i class="fas fa-tv"></i>
                 {% elif card.title %}
@@ -33,7 +33,7 @@
             </div>
         </a>
 
-        <div class="poster-description-container">
+        <div class="poster-description-container {% if not card.poster_path %}opacity-1{% endif %}">
             <div class="poster-title">{% firstof card.name card.title "Unknown" %}</div>
             {% if card.conreqStatus == available %}
             <div class="availablity-dot green"></div>

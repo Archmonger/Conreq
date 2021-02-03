@@ -20,7 +20,7 @@
             </div>
             {% endif %}
 
-            <div class="content-type-icon">
+            <div class="content-type-icon {% if not card.remotePoster %}opacity-1{% endif %}">
                 {% if card.contentType == "tv" %}
                 <i class="fas fa-tv"></i>
                 {% else %}
@@ -38,7 +38,7 @@
             </div>
         </a>
 
-        <div class="poster-description-container">
+        <div class="poster-description-container {% if not card.remotePoster %}opacity-1{% endif %}">
             <div class="poster-title">{% firstof card.title "Unknown" %}</div>
             {% if card.conreqStatus == available %}
             <div class="availablity-dot green"></div>

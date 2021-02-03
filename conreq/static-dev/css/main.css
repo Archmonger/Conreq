@@ -203,6 +203,10 @@ a:hover {
   line-height: 1.5;
 }
 
+.opacity-1 {
+  opacity: 1 !important;
+}
+
 input:checked ~ .state {
   color: var(--accent-color);
 }
@@ -497,6 +501,9 @@ button:focus {
   display: block;
   transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
   transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
+  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
+  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
+    -webkit-filter 0.3s ease;
   z-index: 6;
   position: relative;
 }
