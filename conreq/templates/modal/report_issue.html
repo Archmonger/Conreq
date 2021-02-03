@@ -7,9 +7,10 @@
             <i class="fas fa-window-close"></i>
         </div>
     </div>
-    <div class="modal-body">
 
-        <div id="{{issue_number}}" class="row-container no-highlighting">
+    <div class="modal-body">
+        {% for issue in issues %}
+        <div id="{{ forloop.counter0 }}" class="row-container no-highlighting">
             <div class="checkbox-container">
                 <div class="pretty p-icon p-curve p-smooth p-jelly">
                     <input type="checkbox" class="checkbox" />
@@ -19,16 +20,15 @@
                     </div>
                 </div>
             </div>
-
             <div class="row-title-container">
                 <div class="row-title line-clamp-1 clickable">
-                    Issue Name
+                    {{issue}}
                 </div>
             </div>
         </div>
-
-
+        {% endfor %}
     </div>
+
     <div class="modal-footer">
         <div class="conreq-button report-button no-highlighting"
             data-request-url="{% url 'issue_reporting:report_issue' %}" data-content-type="tv"
