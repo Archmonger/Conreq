@@ -8,7 +8,7 @@ from django.views.decorators.cache import cache_page
 
 # (Issue name, Resolution)
 ISSUE_LIST = [
-    ("Video does not match what was requested.", "REDOWNLOAD VIDEO"),
+    ("Video does not match what was expected.", "REDOWNLOAD VIDEO"),
     ("Video does not load.", "REDOWNLOAD VIDEO"),
     ("Video does not exist.", "REMOVE THEN REDOWNLOAD VIDEO"),
     ("Video is in the wrong category/folder.", "CHANGE ROOT FOLDER"),
