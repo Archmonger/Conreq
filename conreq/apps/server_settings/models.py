@@ -12,7 +12,7 @@ class ConreqConfig(SingletonModel):
     conreq_app_url = models.URLField(default="", blank=True)
     conreq_custom_css = models.CharField(max_length=100, default="", blank=True)
     conreq_custom_js = models.CharField(max_length=100, default="", blank=True)
-    conreq_simple_posters = models.BooleanField(default=False)
+    conreq_simple_posters = models.BooleanField(default=True)
     conreq_auto_resolve_issues = models.BooleanField(default=True)
     conreq_guest_login = models.BooleanField(default=False)
     conreq_dark_theme = models.BooleanField(default=True)
