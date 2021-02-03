@@ -176,8 +176,8 @@
                 </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
                 <div class="conreq-button series-modal-button box-shadow no-highlighting" data-content-type="tv"
-                    data-tmdb-id="{% firstof content.tmbdId content.id %}" data-tvdb-id="{{content.tvdbId}}"
-                    data-modal-url="{% url 'more_info:series_modal' %}">
+                    data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
+                    data-tvdb-id="{{content.tvdbId}}" data-modal-url="{% url 'more_info:series_modal' %}">
                     <i class="fas fa-plus"></i>
                     REQUEST
                 </div>
@@ -186,7 +186,8 @@
 
                 <!-- "Report" button -->
                 <div class="conreq-button report-modal-button box-shadow no-highlighting"
-                    data-tmdb-id="{% firstof content.tmbdId content.id %}" data-tvdb-id="{{content.tvdbId}}"
+                    data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
+                    data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
                     data-modal-url="{% url 'issue_reporting:report_issue_modal' %}">
                     <i class="fas fa-exclamation-circle"></i>
                     ISSUE
