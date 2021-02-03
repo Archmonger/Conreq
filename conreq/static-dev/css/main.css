@@ -141,6 +141,11 @@ a:hover {
   box-shadow: var(--box-shadow);
 }
 
+.masonry-item.poster-container.too-few-results {
+  height: var(--poster-height);
+  padding: 15px;
+}
+
 .bold {
   font-weight: 700;
 }
