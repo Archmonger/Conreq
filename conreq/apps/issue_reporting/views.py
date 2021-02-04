@@ -5,7 +5,7 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.apps import add_unique_to_db, generate_context
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
@@ -94,11 +94,85 @@ def report_issue_modal(request):
 
 # @cache_page(60)
 @login_required
+@user_passes_test(lambda u: u.is_staff)
 def all_issues(request):
     # Get the parameters from the URL
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
     reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
+    json_fields = ["issues", "seasons", "episode_ids"]
+
+    all_cards = []
+    for entry in reported_issues.values(
+        "reported_by__username",
+        "content_id",
+        "source",
+        "resolved",
+        "content_type",
+        *json_fields
+    ):
+        # Fetch TMDB entry
+        if entry["source"] == "tmdb":
+            card = content_discovery.get_by_tmdb_id(
+                tmdb_id=entry["content_id"],
+                content_type=entry["content_type"],
+                obtain_extras=False,
+            )
+            if card is not None:
+                card["tmdbCard"] = True
+                all_cards.append({**card, **entry})
+
+        # Fetch TVDB entry
+        if entry["source"] == "tvdb":
+            # Attempt to convert card to TMDB
+            conversion = content_discovery.get_by_tvdb_id(tvdb_id=entry["content_id"])
+            # Conversion found
+            if conversion.__contains__("tv_results") and conversion["tv_results"]:
+                card = conversion["tv_results"][0]
+                card["tmdbCard"] = True
+                all_cards.append({**card, **entry})
+
+                # Convert all requests to use this new ID
+                old_requests = ReportedIssue.objects.filter(
+                    content_id=entry["content_id"], source="tvdb"
+                )
+                old_requests.update(content_id=card["id"], source="tmdb")
+
+            # Fallback to checking sonarr's database
+            else:
+                card = content_manager.get(tvdb_id=entry["content_id"])
+                all_cards.append({**card, **entry})
+
+        if card is None:
+            log.handler(
+                entry["content_type"]
+                + " from "
+                + entry["source"]
+                + " with ID "
+                + entry["content_id"]
+                + " no longer exists!",
+                log.WARNING,
+                __logger,
+            )
+
+    # Convert any JSON fields into python
+    for field_name in json_fields:
+        for card in all_cards:
+            card[field_name] = json.loads(card[field_name])
+
+    context = generate_context({"all_cards": all_cards})
+    template = loader.get_template("viewport/reported_issues.html")
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def my_issues(request):
+    # Get the parameters from the URL
+    content_discovery = ContentDiscovery()
+    content_manager = ContentManager()
+    reported_issues = (
+        ReportedIssue.objects.filter(reported_by=request.user).order_by("id").reverse()
+    )
     json_fields = ["issues", "seasons", "episode_ids"]
 
     all_cards = []
