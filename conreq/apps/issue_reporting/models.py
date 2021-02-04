@@ -15,6 +15,6 @@ class ReportedIssue(models.Model):
     source = models.CharField(max_length=30)
     content_type = models.CharField(max_length=30)
 
-    seasons = models.TextField(blank=True)
-    episode_numbers = models.TextField(blank=True)
-    episode_ids = models.TextField(blank=True)
+    seasons = models.TextField(default="[]")
+    episode_numbers = models.TextField(default="[]")
+    episode_ids = models.TextField(default="[]")
