@@ -1,7 +1,7 @@
 <div class="masonry-item">
     <div class="issue-container">
 
-        <div class="content-type-icon {% if not card.poster_path %}opacity-1{% endif %}">
+        <div class="content-type-icon">
             {% if card.content_type == "tv" %}
             <i class="fas fa-tv"></i>
             {% elif card.content_type == "movie" %}
@@ -15,7 +15,7 @@
         </div>
 
         <div class="category">
-            <div class="title">Issues</div>
+            <div class="title">Issue{{ card.issues|pluralize:",s" }}</div>
             {% for issue in card.issues %}
             {{issue}}
             {% endfor %}
@@ -23,21 +23,23 @@
 
         {% if card.seasons %}
         <div class="category">
-            <div class="title">Seasons</div>
+            <div class="title">Season{{ card.seasons|pluralize:",s" }}</div>
             {{ card.seasons|join:", " }}
         </div>
         {% endif %}
 
         {% if card.episode_ids %}
         <div class="category">
-            <div class="title">Episodes</div>
+            <div class="title">Episode{{ card.episode_ids|pluralize:",s" }}</div>
             {{ card.episode_ids|join:", " }}
         </div>
         {% endif %}
 
         <div class="category">
             <div class="title">Reported By</div>
-            {{card.reported_by__username}}
+            <div class="line-clamp-1">
+                {{card.reported_by__username}}
+            </div>
         </div>
 
     </div>
