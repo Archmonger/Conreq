@@ -8,18 +8,21 @@ from django.views.decorators.cache import cache_page
 
 # (Issue name, Resolution)
 ISSUE_LIST = [
-    ("Video does not match what was expected.", "REDOWNLOAD VIDEO"),
-    ("Video does not load.", "REDOWNLOAD VIDEO"),
-    ("Video does not exist or is missing.", "REMOVE THEN REDOWNLOAD VIDEO"),
-    ("Video is in the wrong category/folder.", "CHANGE ROOT FOLDER"),
-    ("Wrong video length.", "REDOWNLOAD VIDEO"),
-    ("Wrong audio language.", "REDOWNLOAD VIDEO"),
-    ("Wrong subtitle language.", "REDOWNLOAD SUBTITLES"),
-    ("Bad or corrupt video.", "REDOWNLOAD VIDEO"),
-    ("Bad or corrupt audio.", "REDOWNLOAD VIDEO"),
-    ("Bad subtitles.", "REDOWNLOAD SUBTITLES"),
-    ("Missing subtitles.", "REDOWNLOAD SUBTITLES"),
-    ("Other:", "NOTIFY ADMIN"),
+    ("Video does not match what was expected.", ["RENAME CONTENT", "REDOWNLOAD VIDEO"]),
+    ("Video does not load.", ["REDOWNLOAD VIDEO"]),
+    (
+        "Video does not exist or is missing.",
+        ["CHANGE ROOT FOLDER", "RENAME CONTENT", "REDOWNLOAD VIDEO"],
+    ),
+    ("Video is in the wrong category/folder.", ["CHANGE ROOT FOLDER"]),
+    ("Wrong video length.", ["REDOWNLOAD VIDEO"]),
+    ("Wrong audio language.", ["REDOWNLOAD VIDEO"]),
+    ("Wrong subtitle language.", ["REDOWNLOAD SUBTITLES"]),
+    ("Bad or corrupt video.", ["REDOWNLOAD VIDEO"]),
+    ("Bad or corrupt audio.", ["REDOWNLOAD VIDEO"]),
+    ("Bad subtitles.", ["REDOWNLOAD SUBTITLES"]),
+    ("Missing subtitles.", ["REDOWNLOAD SUBTITLES"]),
+    ("Other:", ["NOTIFY ADMIN"]),
 ]
 
 # Create your views here.
