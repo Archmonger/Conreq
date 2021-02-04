@@ -87,6 +87,7 @@ let add_event_listeners = function () {
   request_click_event();
   series_modal_click_event();
   report_modal_click_event();
+  report_selection_modal_click_event();
   content_preview_modal_click_event();
 
   // Server Settings menu events

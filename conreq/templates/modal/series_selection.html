@@ -106,11 +106,20 @@
     </div>
     <div class="modal-footer">
         <div class="conreq-button select-all-button no-highlighting"> SELECT ALL</div>
+
+        {% if report_modal %}
+        <div class="conreq-button report-modal-button no-highlighting"
+            data-modal-url="{% url 'issue_reporting:report_issue_modal' %}" data-content-type="tv"
+            data-tvdb-id="{{tvdb_id}}">
+            NEXT STEP
+        </div>
+        {% else %}
         <div class="conreq-button request-button no-highlighting"
             data-request-url="{% url 'user_requests:request_content' %}" data-content-type="tv"
             data-tvdb-id="{{tvdb_id}}">
             <i class="fas fa-plus"></i>
             REQUEST
         </div>
+        {% endif %}
     </div>
 </div>

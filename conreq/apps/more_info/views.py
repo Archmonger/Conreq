@@ -144,11 +144,12 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+# @cache_page(60)
 @login_required
 def series_modal(request):
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
+    report_modal = request.GET.get("report_modal", False)
 
     # Get the ID from the URL
     tmdb_id = request.GET.get("tmdb_id", None)
@@ -197,7 +198,9 @@ def series_modal(request):
                 __logger,
             )
 
-    context = generate_context({"seasons": series["seasons"], "tvdb_id": tvdb_id})
+    context = generate_context(
+        {"seasons": series["seasons"], "tvdb_id": tvdb_id, "report_modal": report_modal}
+    )
     template = loader.get_template("modal/series_selection.html")
     return HttpResponse(template.render(context, request))
 

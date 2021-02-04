@@ -27,6 +27,7 @@ var generate_modal = function (modal_url) {
     row_checkbox_click_event();
     row_suboption_title_click_event();
     row_suboption_checkbox_click_event();
+    report_modal_click_event();
   }).fail(function () {
     // Server couldn't fetch the modal
     conreq_no_response_toast_message();
@@ -158,6 +159,21 @@ var content_preview_modal_click_event = function () {
         tmdb_id: $(this).data("tmdb-id"),
         tvdb_id: $(this).data("tvdb-id"),
         content_type: $(this).data("content-type"),
+      };
+      generate_modal($(this).data("modal-url") + "?" + $.param(params));
+    });
+  });
+};
+
+var report_selection_modal_click_event = function () {
+  $(".report-selection-modal-button").each(function () {
+    $(this).unbind("click");
+    $(this).click(function () {
+      let params = {
+        tmdb_id: $(this).data("tmdb-id"),
+        tvdb_id: $(this).data("tvdb-id"),
+        content_type: $(this).data("content-type"),
+        report_modal: true,
       };
       generate_modal($(this).data("modal-url") + "?" + $.param(params));
     });

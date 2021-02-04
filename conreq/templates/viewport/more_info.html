@@ -185,6 +185,7 @@
                 {% endif %}
 
                 <!-- "Report" button -->
+                {% if content_type == "movie" %}
                 <div class="conreq-button report-modal-button box-shadow no-highlighting"
                     data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
                     data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
@@ -192,6 +193,15 @@
                     <i class="fas fa-exclamation-circle"></i>
                     ISSUE
                 </div>
+                {% elif content_type == "tv"%}
+                <div class="conreq-button report-selection-modal-button box-shadow no-highlighting"
+                    data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
+                    data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
+                    data-modal-url="{% url 'more_info:series_modal' %}">
+                    <i class="fas fa-exclamation-circle"></i>
+                    ISSUE
+                </div>
+                {% endif%}
 
             </div>
             <div class="more-info-overview grid-block contains-carousel">
