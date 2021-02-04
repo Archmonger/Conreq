@@ -5,7 +5,7 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.apps import (
-    add_request_to_db,
+    add_unique_to_db,
     generate_context,
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
@@ -71,18 +71,20 @@ def request_content(request):
 
                 # Save and request
                 if tmdb_id:
-                    add_request_to_db(
+                    add_unique_to_db(
+                        UserRequest,
                         content_id=tmdb_id,
                         source="tmdb",
                         content_type="tv",
-                        user=request.user,
+                        requested_by=request.user,
                     )
                 else:
-                    add_request_to_db(
+                    add_unique_to_db(
+                        UserRequest,
                         content_id=tvdb_id,
                         source="tvdb",
                         content_type="tv",
-                        user=request.user,
+                        requested_by=request.user,
                     )
                 content_manager.request(
                     sonarr_id=show["id"],
@@ -115,11 +117,12 @@ def request_content(request):
                 )
 
             # Save and request
-            add_request_to_db(
+            add_unique_to_db(
+                UserRequest,
                 content_id=tmdb_id,
                 source="tmdb",
                 content_type="movie",
-                user=request.user,
+                requested_by=request.user,
             )
             content_manager.request(radarr_id=movie["id"])
 

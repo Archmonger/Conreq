@@ -4,7 +4,6 @@ from secrets import token_hex
 from threading import Thread
 
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import cache, log
@@ -466,30 +465,12 @@ def initialize_conreq(conreq_config, form):
     conreq_config.save()
 
 
-def add_request_to_db(content_id, source, content_type, user):
-    """Adds a request to the User Requests table."""
-    if not len(
-        UserRequest.objects.filter(
-            content_id=content_id,
-            source=source,
-            content_type=content_type,
-            requested_by=user,
-        )
-    ):
-        new_request = UserRequest(
-            content_id=content_id,
-            source=source,
-            content_type=content_type,
-            requested_by=user,
-        )
+def add_unique_to_db(model, **kwargs):
+    """Adds a row to the database only if all parameters are unique."""
+    if not len(model.objects.filter(**kwargs)):
+        new_request = model(**kwargs)
         new_request.clean_fields()
         new_request.save()
-
-        log.handler(
-            "Added " + str(content_id) + " to the user request database.",
-            log.DEBUG,
-            __logger,
-        )
 
 
 def request_is_unique(entry, request_dict):
