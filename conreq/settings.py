@@ -220,7 +220,7 @@ if UPDATE_SETTINGS_FILE:
 
 # Application Settings
 HTML_MINIFY = True
-DJVERSION_VERSION = "0.9.0"
+DJVERSION_VERSION = "0.10.0"
 
 
 # Application Definitions
