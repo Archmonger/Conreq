@@ -29,6 +29,7 @@ var generate_modal = function (modal_url) {
     row_suboption_title_click_event();
     row_suboption_checkbox_click_event();
     report_modal_click_event();
+    report_click_event();
   }).fail(function () {
     // Server couldn't fetch the modal
     conreq_no_response_toast_message();
@@ -68,7 +69,6 @@ var request_click_event = function () {
 
       // Request a movie
       if (params.content_type == "movie") {
-        // request_content(params);
         post_json($(this).data("request-url"), params, function () {
           requested_toast_message();
           $(".request-btn").text("REQUESTED");
@@ -204,6 +204,54 @@ var report_modal_click_event = function () {
           no_selection_toast_message();
         }
       }
+    });
+  });
+};
+
+var report_click_event = function () {
+  $(".report-btn").each(function () {
+    $(this).unbind("click");
+    $(this).click(function () {
+      let params = {
+        tmdb_id: $(this).data("tmdb-id"),
+        tvdb_id: $(this).data("tvdb-id"),
+        content_type: $(this).data("content-type"),
+        issue_ids: $(".checkbox:checked")
+          .map(function () {
+            return $(this).data("issue-id");
+          })
+          .get(),
+      };
+
+      // Ensure the user selected something
+      if (!params.issue_ids.length) {
+        no_selection_toast_message();
+        return false;
+      }
+
+      // Save the episodes/seasons reported in the previous step
+      if (params.content_type == "tv" && report_selection) {
+        params.seasons = report_selection.seasons;
+        params.episode_ids = report_selection.episode_ids;
+      }
+
+      // Prevent the user from spamming the button
+      if (ongoing_request == this) {
+        return false;
+      } else {
+        ongoing_request = this;
+      }
+
+      // Request a movie
+      post_json($(this).data("report-url"), params, function () {
+        reported_toast_message();
+        $(".request-btn").text("REQUESTED");
+        $("#modal-container").modal("hide");
+        ongoing_request = null;
+      }).fail(function () {
+        conreq_no_response_toast_message();
+        ongoing_request = null;
+      });
     });
   });
 };

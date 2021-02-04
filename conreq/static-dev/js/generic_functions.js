@@ -5,7 +5,21 @@ var requested_toast_message = function () {
   iziToast.show({
     icon: "fas fa-check-circle",
     title: "Requested!",
-    message: "Server is searching for a download...",
+    message: "Server is searching for a download.",
+    displayMode: "replace",
+    titleColor: "var(--accent-color)",
+    messageColor: "var(--accent-color)",
+    iconColor: "var(--accent-color)",
+    progressBarColor: "var(--accent-color)",
+  });
+};
+
+// Reported toast message
+var reported_toast_message = function () {
+  iziToast.show({
+    icon: "fas fa-check-circle",
+    title: "Reported!",
+    message: "Server is looking for a solution.",
     displayMode: "replace",
     titleColor: "var(--accent-color)",
     messageColor: "var(--accent-color)",
@@ -19,7 +33,7 @@ var no_selection_toast_message = function () {
   iziToast.show({
     icon: "fas fa-exclamation-triangle",
     title: "Rejected!",
-    message: "No items selected.",
+    message: "Nothing was selected.",
     displayMode: "replace",
     titleColor: "#9a5c0f",
     messageColor: "#9a5c0f",
