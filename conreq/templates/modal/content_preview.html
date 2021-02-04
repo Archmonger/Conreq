@@ -12,7 +12,13 @@
     <div class="grid-modal-right">
         <div class="modal-header mini">
             <div class="modal-header-btn-container">
-                <i class="fas fa-exclamation-circle"></i>
+                {% if content.name %}
+                <i class="fas fa-exclamation-circle report-selection-modal-btn" data-tmdb-id="{{content.id}}"
+                    data-content-type="tv" data-modal-url="{% url 'more_info:series_modal' %}"></i>
+                {% elif content.title %}
+                <i class="fas fa-exclamation-circle report-modal-btn" data-tmdb-id="{{content.id}}"
+                    data-content-type="movie" data-modal-url="{% url 'issue_reporting:report_issue_modal' %}"></i>
+                {% endif %}
             </div>
             <div class="modal-header-btn-container">
                 <a

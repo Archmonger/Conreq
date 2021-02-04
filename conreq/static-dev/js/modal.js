@@ -30,6 +30,7 @@ var generate_modal = function (modal_url) {
     row_suboption_checkbox_click_event();
     report_modal_click_event();
     report_click_event();
+    report_selection_modal_click_event();
   }).fail(function () {
     // Server couldn't fetch the modal
     conreq_no_response_toast_message();
