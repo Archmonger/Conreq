@@ -103,7 +103,12 @@ def all_issues(request):
 
     all_cards = []
     for entry in reported_issues.values(
-        "reported_by__username", "content_id", "source", "content_type", *json_fields
+        "reported_by__username",
+        "content_id",
+        "source",
+        "resolved",
+        "content_type",
+        *json_fields
     ):
         # Fetch TMDB entry
         if entry["source"] == "tmdb":
