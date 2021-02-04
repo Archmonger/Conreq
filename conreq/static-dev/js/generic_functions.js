@@ -216,6 +216,9 @@ var post_json = function (url, data, callback) {
 var modal_checkbox_aggregator = function () {
   let season_checkboxes = $(".checkbox");
   let season_checkboxes_not_specials = $(".checkbox:not(.specials)");
+  let season_checkboxes_not_specials_checked = $(
+    ".checkbox:not(.specials):checked"
+  );
   let seasons = [];
   let episode_ids = [];
   let params = {
@@ -242,7 +245,10 @@ var modal_checkbox_aggregator = function () {
   });
 
   // Request the whole show
-  if (seasons.length == season_checkboxes_not_specials.length) {
+  if (
+    season_checkboxes_not_specials_checked.length ==
+    season_checkboxes_not_specials.length
+  ) {
     return true;
   }
 
