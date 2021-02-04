@@ -142,7 +142,7 @@ a:hover {
 }
 
 .masonry-item.poster-container.too-few-results {
-  height: var(--poster-height);
+  height: var(--poster-container-height);
   padding: 15px;
 }
 
