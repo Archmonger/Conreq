@@ -194,6 +194,7 @@ var report_modal_click_event = function () {
         // Parts of the show are checkboxed
         else if (
           current_selection.seasons.length ||
+          current_selection.episodes.length ||
           current_selection.episode_ids.length
         ) {
           report_selection = current_selection;
@@ -232,8 +233,7 @@ var report_click_event = function () {
 
       // Save the episodes/seasons reported in the previous step
       if (params.content_type == "tv" && report_selection) {
-        params.seasons = report_selection.seasons;
-        params.episode_ids = report_selection.episode_ids;
+        $.extend(params, report_selection);
       }
 
       // Prevent the user from spamming the button
@@ -337,7 +337,6 @@ let row_suboption_checkbox_click_event = function () {
       let all_episodes_container = $(
         this.parentElement.parentElement.parentElement.parentElement
       );
-      console.log(all_episodes_container);
       let episode_checkboxes = all_episodes_container.find("input");
       let checkmarked_episode_checkboxes = episode_checkboxes.filter(
         "input:checked"

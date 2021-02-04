@@ -28,10 +28,10 @@
         </div>
         {% endif %}
 
-        {% if card.episode_ids %}
+        {% if card.episodes %}
         <div class="category">
-            <div class="title">Episode{{ card.episode_ids|pluralize:",s" }}</div>
-            {{ card.episode_ids|join:", " }}
+            <div class="title">Episode{{ card.episodes|pluralize:",s" }}</div>
+            {{ card.episodes|join:", " }}
         </div>
         {% endif %}
 

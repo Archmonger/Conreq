@@ -228,18 +228,21 @@ var post_json = function (url, data, callback) {
 
 // Determine what seasons/episodes were selected
 var modal_checkbox_aggregator = function () {
+  let params = {
+    seasons: [],
+    episodes: [],
+    episode_ids: [],
+  };
+
   let season_checkboxes = $(".checkbox");
   let season_checkboxes_not_specials = $(".checkbox:not(.specials)");
   let season_checkboxes_not_specials_checked = $(
     ".checkbox:not(.specials):checked"
   );
-  let seasons = [];
-  let episode_ids = [];
-  let params = {
-    seasons: [],
-    episode_ids: [],
-  };
 
+  let seasons = [];
+  let episodes = [];
+  let episode_ids = [];
   // Iterate through every season checkbox
   season_checkboxes.prop("checked", function (index, season_checkmark) {
     // Whole season was requested
@@ -252,6 +255,7 @@ var modal_checkbox_aggregator = function () {
       let episode_checkboxes = episode_container.find("input");
       episode_checkboxes.prop("checked", function (index, episode_checkmark) {
         if (episode_checkmark == true) {
+          episodes.push($(this).data("episode"));
           episode_ids.push($(this).data("episode-id"));
         }
       });
@@ -267,8 +271,9 @@ var modal_checkbox_aggregator = function () {
   }
 
   // Request parts of the show
-  else if (seasons.length || episode_ids.length) {
+  else if (seasons.length || episode_ids.length || episodes.length) {
     params.seasons = seasons;
+    params.episodes = episodes;
     params.episode_ids = episode_ids;
     return params;
   }

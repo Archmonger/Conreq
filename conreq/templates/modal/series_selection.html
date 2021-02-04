@@ -64,6 +64,7 @@
                     <div class="pretty p-icon p-curve p-smooth p-jelly">
                         <input type="checkbox"
                             class="suboption-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
+                            data-episode="S{{season.seasonNumber|stringformat:'02d'}}E{{episode.episodeNumber|stringformat:'02d'}}"
                             data-episode-id="{{episode.id}}" data-season-container="#season-{{season.seasonNumber}}" />
                         <div class="state">
                             <i class="icon fas fa-check"></i>

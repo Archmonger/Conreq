@@ -56,6 +56,7 @@ def report_issue(request):
         all_resolutions = [ISSUE_LIST[i][1] for i in request_parameters["issue_ids"]]
         resolutions = json.dumps(list(set([j for i in all_resolutions for j in i])))
         seasons = json.dumps(request_parameters.get("seasons", []))
+        episodes = json.dumps(request_parameters.get("episodes", []))
         episode_ids = json.dumps(request_parameters.get("episode_ids", []))
 
         # Add the report to the database
@@ -68,6 +69,7 @@ def report_issue(request):
             source=source,
             content_type=content_type,
             seasons=seasons,
+            episodes=episodes,
             episode_ids=episode_ids,
         )
 
@@ -100,7 +102,7 @@ def all_issues(request):
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
     reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
-    json_fields = ["issues", "seasons", "episode_ids"]
+    json_fields = ["issues", "seasons", "episodes"]
 
     all_cards = []
     for entry in reported_issues.values(
@@ -173,7 +175,7 @@ def my_issues(request):
     reported_issues = (
         ReportedIssue.objects.filter(reported_by=request.user).order_by("id").reverse()
     )
-    json_fields = ["issues", "seasons", "episode_ids"]
+    json_fields = ["issues", "seasons", "episodes"]
 
     all_cards = []
     for entry in reported_issues.values(
