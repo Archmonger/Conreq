@@ -78,6 +78,7 @@ var request_click_event = function () {
           ongoing_request = null;
         });
       }
+
       // Request a TV show
       else if (params.content_type == "tv") {
         let selection = modal_checkbox_aggregator();
@@ -87,8 +88,10 @@ var request_click_event = function () {
             requested_toast_message();
             $(".series-modal-button").text("REQUESTED");
             $("#modal-container").modal("hide");
+            ongoing_request = null;
           }).fail(function () {
             conreq_no_response_toast_message();
+            ongoing_request = null;
           });
         }
 
@@ -100,13 +103,16 @@ var request_click_event = function () {
             requested_toast_message();
             $(".series-modal-button").text("REQUESTED");
             $("#modal-container").modal("hide");
+            ongoing_request = null;
           }).fail(function () {
             conreq_no_response_toast_message();
+            ongoing_request = null;
           });
         }
         // User didn't select anything
         else {
           no_selection_toast_message();
+          ongoing_request = null;
         }
       }
     });
