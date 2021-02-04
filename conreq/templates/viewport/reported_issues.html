@@ -9,12 +9,7 @@
 
     {% if not all_cards %}
     <div class="empty-viewport">
-        No requests were found!
+        No issues were found!
     </div>
-
-    {% elif 7 > all_cards|length %}
-    {% for x in "1234567" %}
-    <div></div>
-    {% endfor %}
     {% endif %}
 </div>
