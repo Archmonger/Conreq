@@ -173,27 +173,36 @@ var report_modal_click_event = function () {
         content_type: $(this).data("content-type"),
       };
 
-      // Determine what checkboxes are checked
-      let current_selection = modal_checkbox_aggregator();
-      report_selection = null;
-
-      // All non-special seasons were checkboxed
-      if (current_selection == true) {
+      // Report an issue with a movie
+      if (params.content_type == "movie") {
+        report_selection = null;
         generate_modal($(this).data("modal-url") + "?" + $.param(params));
       }
 
-      // Parts of the show are checkboxed
-      else if (
-        current_selection.seasons.length ||
-        current_selection.episode_ids.length
-      ) {
-        report_selection = current_selection;
-        generate_modal($(this).data("modal-url") + "?" + $.param(params));
-      }
+      // Report an issue with a TV show
+      else if (params.content_type == "tv") {
+        // Determine what checkboxes are checked
+        let current_selection = modal_checkbox_aggregator();
+        report_selection = null;
 
-      // User didn't select anything
-      else {
-        no_selection_toast_message();
+        // All non-special seasons were checkboxed
+        if (current_selection == true) {
+          generate_modal($(this).data("modal-url") + "?" + $.param(params));
+        }
+
+        // Parts of the show are checkboxed
+        else if (
+          current_selection.seasons.length ||
+          current_selection.episode_ids.length
+        ) {
+          report_selection = current_selection;
+          generate_modal($(this).data("modal-url") + "?" + $.param(params));
+        }
+
+        // User didn't select anything
+        else {
+          no_selection_toast_message();
+        }
       }
     });
   });
