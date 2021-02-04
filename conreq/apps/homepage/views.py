@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 BASE_URL = get_base_url()
 
@@ -71,7 +72,8 @@ def initialization(request):
     return homepage(request)
 
 
-@cache_page(1)
+@cache_page(60)
+@vary_on_cookie
 @login_required
 def homepage(request):
     # Generate the base template

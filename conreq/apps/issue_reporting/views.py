@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 __logger = log.get_logger(__name__)
 
@@ -94,7 +95,7 @@ def report_issue_modal(request):
     return HttpResponse(template.render(context, request))
 
 
-# @cache_page(60)
+@cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def all_issues(request):
@@ -167,6 +168,8 @@ def all_issues(request):
     return HttpResponse(template.render(context, request))
 
 
+@cache_page(1)
+@vary_on_cookie
 @login_required
 def my_issues(request):
     # Get the parameters from the URL
