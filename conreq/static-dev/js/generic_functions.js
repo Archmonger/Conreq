@@ -157,7 +157,7 @@ var conreq_no_response_toast_message = function () {
   iziToast.show({
     icon: "fas fa-exclamation-triangle",
     title: "Error!",
-    message: "The server did not respond!",
+    message: "The server failed to process this request!",
     displayMode: "replace",
     titleColor: "#9a5c0f",
     messageColor: "#9a5c0f",
