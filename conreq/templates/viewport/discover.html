@@ -1,6 +1,6 @@
 {% load static %}
 {% include "primary/loading_animation_container.html" %}
-<div class="viewport discover viewport-posters infinite-scroll">
+<div class="viewport discover viewport-masonry infinite-scroll">
     {% for card in all_cards %}
     {% if card.poster_path and card.conreq_valid_id %}
     {% include "cards/tmdb.html" %}

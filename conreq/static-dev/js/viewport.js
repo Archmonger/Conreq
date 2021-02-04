@@ -18,9 +18,9 @@ var lazyloader = new LazyLoad({
 let cull_old_posters = function () {
   let viewport_container = $(viewport_container_class);
   let viewport = $(viewport_class);
-  if (document.querySelector(".viewport-posters")) {
+  if (document.querySelector(".viewport-masonry")) {
     // Logic to delete excess masonry items
-    let masonry_items = $(".viewport-posters > .masonry-item");
+    let masonry_items = $(".viewport-masonry > .masonry-item");
 
     // Calculate the current state of the viewport
     let scroll_position = viewport_container.scrollTop();
@@ -209,7 +209,7 @@ let refresh_viewport = function () {
   create_all_carousels();
 
   // Create the masonry grid
-  masonry_grid = $(".viewport-posters").masonry({
+  masonry_grid = $(".viewport-masonry").masonry({
     itemSelector: ".masonry-item",
     gutter: 10,
     horizontalOrder: true,
