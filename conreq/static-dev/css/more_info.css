@@ -79,12 +79,12 @@
   text-align: center;
 }
 
-.more-info-main-info .conreq-btn {
+.more-info-main-info .standard-btn {
   margin-left: 15px;
 }
 
-.modal .conreq-btn.report-modal-btn,
-.conreq-btn {
+.modal .standard-btn.report-modal-btn,
+.standard-btn {
   color: #fff;
   font-family: var(--global-font);
   font-weight: 400;
@@ -103,26 +103,26 @@
   transition-timing-function: ease;
 }
 
-.conreq-btn.available {
+.standard-btn.available {
   background: #333333;
 }
 
-.modal .conreq-btn.report-modal-btn:hover,
-.conreq-btn.series-modal-btn.available:hover,
-.conreq-btn:hover:not(.available) {
+.modal .standard-btn.report-modal-btn:hover,
+.standard-btn.series-modal-btn.available:hover,
+.standard-btn:hover:not(.available) {
   background: #2ba180;
   cursor: pointer;
 }
 
-.conreq-btn.report-selection-modal-btn,
-.conreq-btn.report-btn,
-.conreq-btn.report-modal-btn {
+.standard-btn.report-selection-modal-btn,
+.standard-btn.report-btn,
+.standard-btn.report-modal-btn {
   background: #a53939;
 }
 
-.conreq-btn.report-selection-modal-btn:hover,
-.conreq-btn.report-btn:hover,
-.conreq-btn.report-modal-btn:hover {
+.standard-btn.report-selection-modal-btn:hover,
+.standard-btn.report-btn:hover,
+.standard-btn.report-modal-btn:hover {
   background: #d04141;
 }
 

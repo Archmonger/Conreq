@@ -173,10 +173,10 @@
     padding: 0;
     width: 40px;
   }
-  .more-info-grid .conreq-btn.available {
+  .more-info-grid .standard-btn.available {
     display: none;
   }
-  .more-info-grid .conreq-btn .fas {
+  .more-info-grid .standard-btn .fas {
     font-size: 22px;
   }
   .tns-controls {

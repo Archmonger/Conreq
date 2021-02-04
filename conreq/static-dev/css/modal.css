@@ -61,12 +61,12 @@
   border: none;
 }
 
-.conreq-btn.select-all-btn:not(.available) {
+.standard-btn.select-all-btn:not(.available) {
   background: #6d6d6d;
   margin-right: 16px;
 }
 
-.conreq-btn.select-all-btn:hover:not(.available) {
+.standard-btn.select-all-btn:hover:not(.available) {
   background: #828282;
 }
 
