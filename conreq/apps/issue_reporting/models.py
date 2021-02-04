@@ -9,10 +9,12 @@ class ReportedIssue(models.Model):
     resolutions = models.TextField()
     reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
     date_reported = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
 
     content_id = models.CharField(max_length=30)
     source = models.CharField(max_length=30)
     content_type = models.CharField(max_length=30)
 
     seasons = models.TextField(blank=True)
+    episode_numbers = models.TextField(blank=True)
     episode_ids = models.TextField(blank=True)
