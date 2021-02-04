@@ -59,7 +59,7 @@
             {% for episode in season.episodes|dictsort:"episodeNumber" %}
             <div class="suboption-row-container">
 
-                {% if episode.conreqStatus != available %}
+                {% if episode.conreqStatus != available or report_modal %}
                 <div class="checkbox-container">
                     <div class="pretty p-icon p-curve p-smooth p-jelly">
                         <input type="checkbox"
