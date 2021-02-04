@@ -57,10 +57,6 @@ var request_click_event = function () {
         seasons: null,
         episode_ids: null,
       };
-      let season_checkboxes = $(".checkbox");
-      let season_checkboxes_not_specials = $(".checkbox:not(.specials)");
-      let season_numbers = [];
-      let episode_ids = [];
 
       // Prevent the user from spamming the request button
       if (ongoing_request == this) {
@@ -84,29 +80,9 @@ var request_click_event = function () {
       }
       // Request a TV show
       else if (params.content_type == "tv") {
-        // Iterate through every season checkbox
-        season_checkboxes.prop("checked", function (index, season_checkmark) {
-          // Whole season was requested
-          if (season_checkmark == true) {
-            season_numbers.push($(this).data("season-number"));
-          }
-          // Individual episode was requested
-          else if (season_checkmark == false) {
-            let episode_container = $($(this).data("all-suboptions-container"));
-            let episode_checkboxes = episode_container.find("input");
-            episode_checkboxes.prop(
-              "checked",
-              function (index, episode_checkmark) {
-                if (episode_checkmark == true) {
-                  episode_ids.push($(this).data("episode-id"));
-                }
-              }
-            );
-          }
-        });
-
+        let selection = modal_checkbox_aggregator();
         // Request the whole show
-        if (season_numbers.length == season_checkboxes_not_specials.length) {
+        if (selection == true) {
           post_json($(this).data("request-url"), params, function () {
             requested_toast_message();
             $(".series-modal-button").text("REQUESTED");
@@ -117,9 +93,9 @@ var request_click_event = function () {
         }
 
         // Request parts of the show
-        else if (season_numbers.length || episode_ids.length) {
-          params.seasons = season_numbers;
-          params.episode_ids = episode_ids;
+        else if (selection.seasons.length || selection.episode_ids.length) {
+          params.seasons = selection.seasons;
+          params.episode_ids = selection.episode_ids;
           post_json($(this).data("request-url"), params, function () {
             requested_toast_message();
             $(".series-modal-button").text("REQUESTED");
