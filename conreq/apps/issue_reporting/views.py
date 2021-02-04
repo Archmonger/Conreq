@@ -25,6 +25,7 @@ ISSUE_LIST = [
     ("Wrong video length.", ["REDOWNLOAD VIDEO"]),
     ("Wrong audio language.", ["REDOWNLOAD VIDEO"]),
     ("Wrong subtitle language.", ["REDOWNLOAD SUBTITLES"]),
+    ("Low quality video.", ["UPGRADE VIDEO"]),
     ("Bad or corrupt video.", ["REDOWNLOAD VIDEO"]),
     ("Bad or corrupt audio.", ["REDOWNLOAD VIDEO"]),
     ("Bad subtitles.", ["REDOWNLOAD SUBTITLES"]),
