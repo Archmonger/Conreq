@@ -23,3 +23,7 @@
 .issue-container .category:not(:last-child) {
   margin-bottom: 10px;
 }
+
+.issue-container .first.category {
+  padding-right: 25px;
+}

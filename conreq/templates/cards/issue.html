@@ -9,7 +9,7 @@
             {% endif %}
         </div>
 
-        <div class="category">
+        <div class="first category">
             <div class="title">Title</div>
             {% firstof card.name card.title %}
         </div>
@@ -17,7 +17,7 @@
         <div class="category">
             <div class="title">Issue{{ card.issues|pluralize:",s" }}</div>
             {% for issue in card.issues %}
-            {{issue}}
+            {{ issue }}
             {% endfor %}
         </div>
 
@@ -38,8 +38,20 @@
         <div class="category">
             <div class="title">Reported By</div>
             <div class="line-clamp-1">
-                {{card.reported_by__username}}
+                {{ card.reported_by__username }}
             </div>
+        </div>
+
+        <div class="category">
+            <div class="title">Resolved
+                {% if card.resolved %}
+                <div class="inline-availablity-dot green"> </div>
+                {% else %}
+                <div class="inline-availablity-dot red"> </div>
+                {% endif %}
+            </div>
+            {{ card.resolved|yesno:"Yes,No" }}
+
         </div>
 
     </div>
