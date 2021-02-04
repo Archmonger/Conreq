@@ -174,7 +174,7 @@ def my_requests(request):
 
                 # Convert all requests to use this new ID
                 old_requests = UserRequest.objects.filter(
-                    content_id=entry["content_id"]
+                    content_id=entry["content_id"], source="tvdb"
                 )
                 old_requests.update(content_id=card["id"], source="tmdb")
 
@@ -258,7 +258,7 @@ def all_requests(request):
 
                 # Convert all requests to use this new ID
                 old_requests = UserRequest.objects.filter(
-                    content_id=entry["content_id"]
+                    content_id=entry["content_id"], source="tvdb"
                 )
                 old_requests.update(content_id=card["id"], source="tmdb")
 

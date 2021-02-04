@@ -6,4 +6,5 @@ app_name = "issue_reporting"
 urlpatterns = [
     path("", views.report_issue, name="report_issue"),
     path("issue_modal/", views.report_issue_modal, name="report_issue_modal"),
+    path("all/", views.all_issues, name="all_issues"),
 ]
