@@ -27,6 +27,7 @@
 
 .viewport .poster-container:hover > a:hover > .requested-by {
   opacity: 1;
+  max-width: calc(100% - 10px);
 }
 
 .viewport .poster-container .poster-description-container {

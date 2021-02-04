@@ -16,7 +16,7 @@
 
             {% if card.requested_by and user.is_staff %}
             <div class="requested-by">
-                {{ card.requested_by|truncatechars:12 }}
+                {{ card.requested_by }}
             </div>
             {% endif %}
 

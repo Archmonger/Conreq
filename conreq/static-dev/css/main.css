@@ -199,6 +199,7 @@ a:hover {
   display: -webkit-box !important;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
   overflow: hidden;
 }
 
@@ -346,6 +347,10 @@ input:checked ~ .state {
   transition: color 0.3s ease;
 }
 
+.username-container > div:not(.dropdown-menu) {
+  display: flex;
+}
+
 .username-container:hover {
   color: #fff;
 }
@@ -357,6 +362,7 @@ input:checked ~ .state {
   line-height: 20px;
   display: inline;
   margin-right: 1px;
+  max-width: 200px;
 }
 
 .username-container .fa-caret-down {
@@ -596,6 +602,7 @@ button:focus {
   line-height: 14px;
   background: var(--poster-bg-color);
   font-weight: 700;
+  max-width: 110px;
 }
 
 .viewport .poster-container > a > .content-type-icon {

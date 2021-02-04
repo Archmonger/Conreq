@@ -112,7 +112,7 @@
     background: none;
   }
   .navbar .username.full-name {
-    display: none;
+    display: none !important;
   }
   .navbar .username.first-letter {
     display: inline-block;
