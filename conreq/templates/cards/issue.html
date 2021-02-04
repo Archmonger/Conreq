@@ -1,36 +1,5 @@
 <div class="masonry-item">
     <div class="issue-container">
-        <div> {% firstof card.name card.title %} </div>
-
-        <div>
-            <div class="title">Reported By</div>
-            {{card.reported_by__username}}
-        </div>
-
-        <div>
-            <div class="title">Issues</div>
-            {% for issue in card.issues %}
-            {{issue}}
-            {% endfor %}
-        </div>
-
-        {% if card.seasons %}
-        <div>
-            <div class="title">Seasons</div>
-            {% for season in card.seasons %}
-            {{season}}
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {% if card.episode_ids %}
-        <div>
-            <div class="title">Episodes</div>
-            {% for episode in card.episode_ids %}
-            {{episode}}
-            {% endfor %}
-        </div>
-        {% endif %}
 
         <div class="content-type-icon {% if not card.poster_path %}opacity-1{% endif %}">
             {% if card.content_type == "tv" %}
@@ -38,6 +7,37 @@
             {% elif card.content_type == "movie" %}
             <i class="fas fa-video"></i>
             {% endif %}
+        </div>
+
+        <div class="category">
+            <div class="title">Title</div>
+            {% firstof card.name card.title %}
+        </div>
+
+        <div class="category">
+            <div class="title">Issues</div>
+            {% for issue in card.issues %}
+            {{issue}}
+            {% endfor %}
+        </div>
+
+        {% if card.seasons %}
+        <div class="category">
+            <div class="title">Seasons</div>
+            {{ card.seasons|join:", " }}
+        </div>
+        {% endif %}
+
+        {% if card.episode_ids %}
+        <div class="category">
+            <div class="title">Episodes</div>
+            {{ card.episode_ids|join:", " }}
+        </div>
+        {% endif %}
+
+        <div class="category">
+            <div class="title">Reported By</div>
+            {{card.reported_by__username}}
         </div>
 
     </div>

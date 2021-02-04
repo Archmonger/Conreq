@@ -15,3 +15,11 @@
   top: 10px;
   right: 10px;
 }
+
+.issue-container .title {
+  font-weight: 700;
+}
+
+.issue-container .category:not(:last-child) {
+  margin-bottom: 10px;
+}
