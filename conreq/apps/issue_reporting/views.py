@@ -61,7 +61,7 @@ def report_issue(request):
         # Add the report to the database
         add_unique_to_db(
             ReportedIssue,
-            names=issue_names,
+            issues=issue_names,
             resolutions=resolutions,
             reported_by=request.user,
             content_id=content_id,
@@ -92,7 +92,7 @@ def report_issue_modal(request):
     return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+# @cache_page(60)
 @login_required
 def all_issues(request):
     # Get the parameters from the URL
@@ -102,7 +102,7 @@ def all_issues(request):
 
     all_cards = []
     for entry in reported_issues.values(
-        "names",
+        "issues",
         "reported_by__username",
         "content_id",
         "source",
@@ -156,5 +156,5 @@ def all_issues(request):
 
     context = generate_context({"all_cards": all_cards})
 
-    template = loader.get_template("viewport/requests.html")
+    template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))

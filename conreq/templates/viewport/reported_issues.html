@@ -1,0 +1,20 @@
+{% load static %}
+{% include "primary/loading_animation_container.html" %}
+<div class="viewport requests viewport-masonry">
+    {% if all_cards %}
+    {% for card in all_cards %}
+    {% include "cards/issue.html" %}
+    {% endfor %}
+    {% endif %}
+
+    {% if not all_cards %}
+    <div class="empty-viewport">
+        No requests were found!
+    </div>
+
+    {% elif 7 > all_cards|length %}
+    {% for x in "1234567" %}
+    <div></div>
+    {% endfor %}
+    {% endif %}
+</div>
