@@ -202,7 +202,7 @@
   .viewport .poster-container .poster-description-container {
     opacity: 1 !important;
   }
-  .viewport .poster-container .content-type-icon {
+  .viewport .poster-container > a > .content-type-icon {
     opacity: 1;
   }
   .viewport .poster-container .requested-by {

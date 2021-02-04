@@ -99,16 +99,11 @@ def all_issues(request):
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
     reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
+    json_fields = ["issues", "seasons", "episode_ids"]
 
     all_cards = []
     for entry in reported_issues.values(
-        "issues",
-        "reported_by__username",
-        "content_id",
-        "source",
-        "content_type",
-        "seasons",
-        "episode_ids",
+        "reported_by__username", "content_id", "source", "content_type", *json_fields
     ):
         # Fetch TMDB entry
         if entry["source"] == "tmdb":
@@ -154,7 +149,11 @@ def all_issues(request):
                 __logger,
             )
 
-    context = generate_context({"all_cards": all_cards})
+    # Convert any JSON fields into python
+    for field_name in json_fields:
+        for card in all_cards:
+            card[field_name] = json.loads(card[field_name])
 
+    context = generate_context({"all_cards": all_cards})
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))

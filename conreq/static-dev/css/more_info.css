@@ -192,9 +192,6 @@
   font-weight: 300;
   line-height: 18px;
   height: auto;
-  transition: -webkit-filter 0.5s ease;
-  transition: filter 0.5s ease;
-  transition: filter 0.5s ease, -webkit-filter 0.5s ease;
   overflow: hidden;
 }
 

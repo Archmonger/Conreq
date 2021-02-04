@@ -68,13 +68,13 @@
   height: auto;
 }
 
-.content-type-icon {
+.viewport .poster-container > a > .content-type-icon {
   line-height: 1;
   top: unset;
   bottom: 5px;
   left: 5px;
 }
 
-.viewport .poster-container:hover .content-type-icon {
+.viewport .poster-container:hover > a > .content-type-icon {
   opacity: 1;
 }
