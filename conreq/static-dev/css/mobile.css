@@ -147,8 +147,8 @@
   .more-info-poster-container img {
     height: calc(55vw * 1.5);
   }
-  .more-info-grid .series-modal-button,
-  .more-info-grid .request-button {
+  .more-info-grid .series-modal-btn,
+  .more-info-grid .request-btn {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -161,7 +161,7 @@
     width: 45px;
     height: 45px;
   }
-  .more-info-grid .report-modal-button {
+  .more-info-grid .report-modal-btn {
     position: absolute;
     top: 15px;
     right: 15px;
@@ -173,10 +173,10 @@
     padding: 0;
     width: 40px;
   }
-  .more-info-grid .conreq-button.available {
+  .more-info-grid .conreq-btn.available {
     display: none;
   }
-  .more-info-grid .conreq-button .fas {
+  .more-info-grid .conreq-btn .fas {
     font-size: 22px;
   }
   .tns-controls {

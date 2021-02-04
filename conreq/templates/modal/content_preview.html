@@ -89,13 +89,13 @@
         <div class="modal-footer">
             <!-- "Request" buttons -->
             {% if content.name and server_settings.sonarr_enabled and content.conreqStatus != available %}
-            <div class="conreq-button series-modal-button no-highlighting" data-content-type="tv"
+            <div class="conreq-btn series-modal-btn no-highlighting" data-content-type="tv"
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
                 <i class="fas fa-plus"></i>
                 REQUEST
             </div>
             {% elif content.title and server_settings.radarr_enabled and content.conreqStatus != available %}
-            <div class="conreq-button request-button no-highlighting"
+            <div class="conreq-btn request-btn no-highlighting"
                 data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
                 data-tmdb-id="{{content.id}}">
                 <i class="fas fa-plus"></i>
@@ -105,11 +105,11 @@
 
             <!-- "Available" and "View Episodes" buttons -->
             {% if content.name and content.conreqStatus == available %}
-            <div class="conreq-button series-modal-button no-highlighting available clickable" data-content-type="tv"
+            <div class="conreq-btn series-modal-btn no-highlighting available clickable" data-content-type="tv"
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
                 VIEW EPISODES </div>
             {% elif content.title and content.conreqStatus == available %}
-            <div class="conreq-button no-highlighting available"> AVAILABLE </div>
+            <div class="conreq-btn no-highlighting available"> AVAILABLE </div>
             {% endif %}
 
         </div>

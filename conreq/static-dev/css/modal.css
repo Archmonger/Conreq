@@ -35,7 +35,7 @@
 }
 
 .modal-header .fas {
-  color: var(--modal-top-button-color);
+  color: var(--modal-top-btn-color);
   font-size: 20px;
   transition: color 0.3s ease;
   cursor: pointer;
@@ -61,12 +61,12 @@
   border: none;
 }
 
-.conreq-button.select-all-button:not(.available) {
+.conreq-btn.select-all-btn:not(.available) {
   background: #6d6d6d;
   margin-right: 16px;
 }
 
-.conreq-button.select-all-button:hover:not(.available) {
+.conreq-btn.select-all-btn:hover:not(.available) {
   background: #828282;
 }
 

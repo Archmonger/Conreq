@@ -15,9 +15,9 @@
   --sidebar-bg: #fdfdfd;
   --sidebar-top: var(--navbar-height);
   --sidebar-width: 240px;
-  --navpages-button-padding-group: 15px 20px;
-  --navpages-button-padding-suboption: 15.5px 20px 15.5px 40px;
-  --navpages-button-border: 1px solid rgba(0, 0, 0, 0.1);
+  --navpages-btn-padding-group: 15px 20px;
+  --navpages-btn-padding-suboption: 15.5px 20px 15.5px 40px;
+  --navpages-btn-border: 1px solid rgba(0, 0, 0, 0.1);
   --navpages-font-color: #323232;
   /* Navbar */
   --navbar-bg: #3f3f3f;
@@ -53,7 +53,7 @@
   --movie-color: #b66707;
   --movie-indicator-hr: 2px solid var(--movie-color);
   /* Modal */
-  --modal-top-button-color: rgba(255, 255, 255, 0.7);
+  --modal-top-btn-color: rgba(255, 255, 255, 0.7);
   --modal-width: 780px;
   --modal-height: 380px;
   --modal-poster-width: 220px;
@@ -425,9 +425,9 @@ button:focus {
 
 .nav-tab.group {
   text-overflow: inherit;
-  padding: var(--navpages-button-padding-group);
-  border-bottom: var(--navpages-button-border);
-  border-top: var(--navpages-button-border);
+  padding: var(--navpages-btn-padding-group);
+  border-bottom: var(--navpages-btn-border);
+  border-top: var(--navpages-btn-border);
 }
 
 .nav-tab.group.collapsed {
@@ -439,7 +439,7 @@ button:focus {
 }
 
 .nav-tab.group.collapsed:last-of-type[aria-expanded="false"] {
-  border-bottom: var(--navpages-button-border);
+  border-bottom: var(--navpages-btn-border);
 }
 
 .nav-tab.group:first-of-type {
@@ -452,7 +452,7 @@ button:focus {
 }
 
 .nav-tab.suboption {
-  padding: var(--navpages-button-padding-suboption);
+  padding: var(--navpages-btn-padding-suboption);
 }
 
 .nav-tab.suboption .fas {
@@ -501,7 +501,8 @@ button:focus {
   display: block;
   transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
   transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
-  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
+  transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
+    -webkit-filter 0.3s ease;
   transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
     -webkit-filter 0.3s ease;
   z-index: 6;

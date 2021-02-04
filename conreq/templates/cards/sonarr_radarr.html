@@ -7,7 +7,7 @@
 <div class="masonry-item">
     <div class="poster-container no-highlighting {{card.contentType}}">
         {% if card.tmdbId %}
-        <i class="fas fa-angle-down content-preview-modal-button clickable" data-content-type=" {{card.contentType}}"
+        <i class="fas fa-angle-down content-preview-modal-btn clickable" data-content-type=" {{card.contentType}}"
             data-tmdb-id="{{card.tmdbId}}" data-modal-url="{% url 'more_info:content_preview_modal' %}"></i>
         {% endif %}
         <div class="description-tint"></div>

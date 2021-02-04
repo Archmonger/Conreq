@@ -151,7 +151,7 @@ let add_event_listeners = function () {
       conreq_no_response_toast_message();
     });
   });
-  $(".conreq-button.invite-user").click(function () {
+  $(".conreq-btn.invite-user").click(function () {
     let btn = $(this);
     let generate_invite_url = btn.data("generate-invite-url");
     let sign_up_url = window.location.origin + btn.data("sign-up-url");

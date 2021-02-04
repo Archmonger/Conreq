@@ -48,7 +48,7 @@ var generate_modal = function (modal_url) {
 
 // CLICK EVENTS
 var request_click_event = function () {
-  $(".request-button").each(function () {
+  $(".request-btn").each(function () {
     $(this).unbind("click");
     $(this).click(function () {
       let params = {
@@ -71,7 +71,7 @@ var request_click_event = function () {
         // request_content(params);
         post_json($(this).data("request-url"), params, function () {
           requested_toast_message();
-          $(".request-button").text("REQUESTED");
+          $(".request-btn").text("REQUESTED");
           $("#modal-container").modal("hide");
           ongoing_request = null;
         }).fail(function () {
@@ -87,7 +87,7 @@ var request_click_event = function () {
         if (selection == true) {
           post_json($(this).data("request-url"), params, function () {
             requested_toast_message();
-            $(".series-modal-button").text("REQUESTED");
+            $(".series-modal-btn").text("REQUESTED");
             $("#modal-container").modal("hide");
             ongoing_request = null;
           }).fail(function () {
@@ -102,7 +102,7 @@ var request_click_event = function () {
           params.episode_ids = selection.episode_ids;
           post_json($(this).data("request-url"), params, function () {
             requested_toast_message();
-            $(".series-modal-button").text("REQUESTED");
+            $(".series-modal-btn").text("REQUESTED");
             $("#modal-container").modal("hide");
             ongoing_request = null;
           }).fail(function () {
@@ -121,7 +121,7 @@ var request_click_event = function () {
 };
 
 var series_modal_click_event = function () {
-  $(".series-modal-button").each(function () {
+  $(".series-modal-btn").each(function () {
     $(this).unbind("click");
     $(this).click(function () {
       let params = {
@@ -135,7 +135,7 @@ var series_modal_click_event = function () {
 };
 
 var content_preview_modal_click_event = function () {
-  $(".content-preview-modal-button").each(function () {
+  $(".content-preview-modal-btn").each(function () {
     $(this).unbind("click");
     $(this).click(function () {
       let params = {
@@ -149,7 +149,7 @@ var content_preview_modal_click_event = function () {
 };
 
 var report_selection_modal_click_event = function () {
-  $(".report-selection-modal-button").each(function () {
+  $(".report-selection-modal-btn").each(function () {
     $(this).unbind("click");
     $(this).click(function () {
       let params = {
@@ -164,7 +164,7 @@ var report_selection_modal_click_event = function () {
 };
 
 var report_modal_click_event = function () {
-  $(".report-modal-button").each(function () {
+  $(".report-modal-btn").each(function () {
     $(this).unbind("click");
     $(this).click(function () {
       let params = {
@@ -209,7 +209,7 @@ var report_modal_click_event = function () {
 };
 
 let modal_select_all_click_event = function () {
-  $(".modal .select-all-button").click(function () {
+  $(".modal .select-all-btn").click(function () {
     let modal_text = this.innerHTML;
     if (modal_text == "SELECT ALL") {
       this.innerHTML = "UNSELECT ALL";

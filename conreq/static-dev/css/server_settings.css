@@ -64,7 +64,7 @@ input[type="text"]:not(#content-search) {
   font-weight: 500;
 }
 
-.check-update-button {
+.check-update-btn {
   align-self: center;
   width: auto;
   margin: auto;
