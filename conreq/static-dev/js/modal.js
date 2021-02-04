@@ -1,6 +1,7 @@
 let modal_dialog = $("#modal-dialog");
 let modal_loaded = false;
 let ongoing_request = null;
+let report_selection = null;
 
 // Fetches a modal via AJAX
 var generate_modal = function (modal_url) {
@@ -171,7 +172,29 @@ var report_modal_click_event = function () {
         tvdb_id: $(this).data("tvdb-id"),
         content_type: $(this).data("content-type"),
       };
-      generate_modal($(this).data("modal-url") + "?" + $.param(params));
+
+      // Determine what checkboxes are checked
+      let current_selection = modal_checkbox_aggregator();
+      report_selection = null;
+
+      // All non-special seasons were checkboxed
+      if (current_selection == true) {
+        generate_modal($(this).data("modal-url") + "?" + $.param(params));
+      }
+
+      // Parts of the show are checkboxed
+      else if (
+        current_selection.seasons.length ||
+        current_selection.episode_ids.length
+      ) {
+        report_selection = current_selection;
+        generate_modal($(this).data("modal-url") + "?" + $.param(params));
+      }
+
+      // User didn't select anything
+      else {
+        no_selection_toast_message();
+      }
     });
   });
 };
