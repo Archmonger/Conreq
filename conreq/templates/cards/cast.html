@@ -9,7 +9,7 @@
         </div>
     </a>
 
-    <div class="poster-description-container">
+    <div class="poster-description-container {% if not card.profile_path %}opacity-1{% endif %}">
         <div class="poster-title">{{card.name}}</div>
         <div class="poster-description">{{card.character}}</div>
     </div>
