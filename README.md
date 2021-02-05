@@ -1,6 +1,6 @@
-# Conreq Public Alpha Instructions
+# Conreq Beta Instructions
 
-Want to contribute? Check out our [Development Guide](https://github.com/Archmonger/Conreq/wiki/Development-Guide) and join us on [Discord](https://discord.gg/gQhGZzEjmX)!
+Have a question or want to contribute? Check out our [Development Guide](https://github.com/Archmonger/Conreq/wiki/Development-Guide) or join us on [Discord](https://discord.gg/gQhGZzEjmX)!
 
 ## Installation (Deployment Environment)
 
