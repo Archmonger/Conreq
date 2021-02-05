@@ -267,12 +267,13 @@ var generate_viewport = function () {
   // Asynchronously fetch new viewport content
   viewport_loaded = false;
   http_request.abort();
+
+  // Change the current tab
+  update_active_tab();
+
   http_request = $.get(window_location, function (viewport_html) {
     // Save that the page was successfully loaded
     viewport_loaded = true;
-
-    // Change the current tab
-    update_active_tab();
 
     // Destroy old JS elements and event handlers
     destroy_viewport();
