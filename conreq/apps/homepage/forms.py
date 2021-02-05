@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 
 class InitializationForm(UserCreationForm):
-    sonarr_url = forms.URLField(required=False)
+    sonarr_url = forms.CharField(max_length=255, required=False)
     sonarr_api_key = forms.CharField(max_length=50, required=False)
-    radarr_url = forms.URLField(required=False)
+    radarr_url = forms.CharField(max_length=255, required=False)
     radarr_api_key = forms.CharField(max_length=50, required=False)
 
     class Meta:

@@ -9,7 +9,7 @@ class ConreqConfig(SingletonModel):
     conreq_app_name = models.CharField(max_length=100, default="Conreq")
     conreq_language = models.CharField(max_length=100, default="en")
     conreq_app_logo = models.ImageField(blank=True)
-    conreq_app_url = models.URLField(default="", blank=True)
+    conreq_app_url = models.CharField(max_length=255, default="", blank=True)
     conreq_custom_css = models.CharField(max_length=100, default="", blank=True)
     conreq_custom_js = models.CharField(max_length=100, default="", blank=True)
     conreq_simple_posters = models.BooleanField(default=True)
@@ -20,7 +20,7 @@ class ConreqConfig(SingletonModel):
     conreq_initialized = models.BooleanField(default=False)
 
     # Sonarr settings
-    sonarr_url = models.URLField(default="", blank=True)
+    sonarr_url = models.CharField(max_length=255, default="", blank=True)
     sonarr_api_key = models.CharField(max_length=100, default="", blank=True)
     sonarr_anime_quality_profile = models.PositiveIntegerField(default=1)
     sonarr_anime_folder = models.PositiveIntegerField(default=1)
@@ -30,7 +30,7 @@ class ConreqConfig(SingletonModel):
     sonarr_season_folders = models.BooleanField(default=True)
 
     # Radarr Settings
-    radarr_url = models.URLField(default="", blank=True)
+    radarr_url = models.CharField(max_length=255, default="", blank=True)
     radarr_api_key = models.CharField(max_length=100, default="", blank=True)
     radarr_anime_quality_profile = models.PositiveIntegerField(default=1)
     radarr_anime_folder = models.PositiveIntegerField(default=1)
@@ -39,7 +39,7 @@ class ConreqConfig(SingletonModel):
     radarr_enabled = models.BooleanField(default=False)
 
     # Email settings
-    email_smtp_server = models.URLField(default="", blank=True)
+    email_smtp_server = models.CharField(max_length=255, default="", blank=True)
     email_smtp_port = models.PositiveIntegerField(default=587)
     email_username = EncryptedCharField(max_length=100, default="", blank=True)
     email_password = EncryptedCharField(max_length=100, default="", blank=True)
