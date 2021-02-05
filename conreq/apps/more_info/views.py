@@ -11,8 +11,8 @@ from conreq.utils.apps import (
     obtain_sonarr_parameters,
     preprocess_arr_result,
     preprocess_tmdb_result,
-    set_many_conreq_status,
-    set_single_conreq_status,
+    set_many_availability,
+    set_single_availability,
 )
 from conreq.utils.generic import ReturnThread
 from django.contrib.auth.decorators import login_required
@@ -50,8 +50,8 @@ def more_info(request):
         )
         similar_and_recommended_thread.start()
 
-        # Checking Conreq status of the current TMDB ID
-        thread = Thread(target=set_single_conreq_status, args=[content])
+        # Determine the availability of the current TMDB ID
+        thread = Thread(target=set_single_availability, args=[content])
         thread.start()
         thread_list.append(thread)
 
@@ -79,9 +79,9 @@ def more_info(request):
         if not isinstance(tmdb_recommended, dict) or len(tmdb_recommended) == 0:
             tmdb_recommended = None
 
-        # Checking Conreq status for all recommended content
+        # Determine the availability for all recommended content
         thread = Thread(
-            target=set_many_conreq_status, args=[tmdb_recommended["results"]]
+            target=set_many_availability, args=[tmdb_recommended["results"]]
         )
         thread.start()
         thread_list.append(thread)
@@ -123,8 +123,8 @@ def more_info(request):
         thread.start()
         thread_list.append(thread)
 
-        # Obtain conreq status
-        thread = Thread(target=set_single_conreq_status, args=[content])
+        # Determine the availability
+        thread = Thread(target=set_single_availability, args=[content])
         thread.start()
         thread_list.append(thread)
 
@@ -221,7 +221,7 @@ def content_preview_modal(request):
         content = content_discovery.get_by_tmdb_id(
             tmdb_id, content_type, obtain_extras=False
         )
-        set_single_conreq_status(content)
+        set_single_availability(content)
         preprocess_tmdb_result(content)
 
         # Check if the user has already requested this

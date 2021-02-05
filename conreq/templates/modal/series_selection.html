@@ -13,7 +13,7 @@
         <div id="season-{{season.seasonNumber}}" class="row-container no-highlighting">
 
             <div class="checkbox-container">
-                {% if season.statistics.conreqStatus != available or report_modal %}
+                {% if season.statistics.availability != available or report_modal %}
                 <div class="pretty p-icon p-curve p-smooth p-jelly">
                     <input type="checkbox" class="checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
                         data-season-number="{{season.seasonNumber}}"
@@ -27,11 +27,11 @@
             </div>
 
             <div class="row-title-container">
-                <div class="row-title {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
+                <div class="row-title {% if season.statistics.availability != available %}clickable{% endif %}">
 
-                    {% if season.statistics.conreqStatus == available %}
+                    {% if season.statistics.availability == available %}
                     <div class="modal-dot green"></div>
-                    {% elif season.statistics.conreqStatus == partial %}
+                    {% elif season.statistics.availability == partial %}
                     <div class="modal-dot yellow"></div>
                     {% else %}
                     <div class="modal-dot red"></div>
@@ -59,7 +59,7 @@
 
 
                 <div class="checkbox-container">
-                    {% if episode.conreqStatus != available or report_modal %}
+                    {% if episode.availability != available or report_modal %}
                     <div class="pretty p-icon p-curve p-smooth p-jelly">
                         <input type="checkbox"
                             class="suboption-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
@@ -73,8 +73,8 @@
                     {% endif %}
                 </div>
 
-                <div class="suboption-title-container {% if episode.conreqStatus != available %}clickable{% endif %}">
-                    {% if episode.conreqStatus == available %}
+                <div class="suboption-title-container {% if episode.availability != available %}clickable{% endif %}">
+                    {% if episode.availability == available %}
                     <div class="modal-dot green"></div>
                     {% else %}
                     <div class="modal-dot red"></div>

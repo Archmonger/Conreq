@@ -34,9 +34,9 @@
 
     <div class="poster-description-container {% if not card.poster_path %}opacity-1{% endif %}">
         <div class="poster-title">{% firstof card.name card.title "Unknown" %}</div>
-        {% if card.conreqStatus == available %}
+        {% if card.availability == available %}
         <div class="availablity-dot green"></div>
-        {% elif card.conreqStatus == partial %}
+        {% elif card.availability == partial %}
         <div class="availablity-dot yellow"></div>
         {% else %}
         <div class="availablity-dot red"></div>

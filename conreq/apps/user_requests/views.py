@@ -10,7 +10,7 @@ from conreq.utils.apps import (
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
     request_is_unique,
-    set_many_conreq_status,
+    set_many_availability,
 )
 from conreq.utils.generic import is_key_value_in_list
 from django.contrib.auth.decorators import login_required
@@ -208,7 +208,7 @@ def my_requests(request):
 
     # Set the availability
     content_discovery.determine_id_validity({"results": all_cards})
-    set_many_conreq_status(all_cards)
+    set_many_availability(all_cards)
 
     context = generate_context({"all_cards": all_cards})
 
@@ -293,7 +293,7 @@ def all_requests(request):
 
     # Set the availability
     content_discovery.determine_id_validity({"results": all_cards})
-    set_many_conreq_status(all_cards)
+    set_many_availability(all_cards)
 
     context = generate_context({"all_cards": all_cards})
 

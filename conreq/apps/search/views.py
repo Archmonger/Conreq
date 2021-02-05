@@ -6,7 +6,7 @@ from conreq.core.content_search import Search
 from conreq.utils.apps import (
     convert_card_to_tmdb,
     generate_context,
-    set_many_conreq_status,
+    set_many_availability,
 )
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -45,9 +45,9 @@ def search(request):
     for thread in thread_list:
         thread.join()
 
-    # Generate conreq status
+    # Determine the availability
     content_discovery.determine_id_validity({"results": arr_results})
-    set_many_conreq_status(arr_results)
+    set_many_availability(arr_results)
 
     context = generate_context(
         {

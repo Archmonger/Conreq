@@ -66,21 +66,21 @@ def generate_context(dict1):
     return res
 
 
-def __set_many_conreq_status(card, radarr_library, sonarr_library):
-    """Threaded portion of set_many_conreq_status."""
+def __set_many_availability(card, radarr_library, sonarr_library):
+    """Threaded portion of set_many_availability."""
     # Sonarr card
     if card.__contains__("tvdbId"):
         if sonarr_library is not None and sonarr_library.__contains__(
             str(card["tvdbId"])
         ):
-            card["conreqStatus"] = sonarr_library[str(card["tvdbId"])]["conreqStatus"]
+            card["availability"] = sonarr_library[str(card["tvdbId"])]["availability"]
 
     # Radarr card
     elif card.__contains__("tmdbId"):
         if radarr_library is not None and radarr_library.__contains__(
             str(card["tmdbId"])
         ):
-            card["conreqStatus"] = radarr_library[str(card["tmdbId"])]["conreqStatus"]
+            card["availability"] = radarr_library[str(card["tmdbId"])]["availability"]
 
     # TMDB TV card
     elif card.__contains__("name"):
@@ -89,15 +89,15 @@ def __set_many_conreq_status(card, radarr_library, sonarr_library):
             and card.__contains__("tvdb_id")
             and sonarr_library.__contains__(str(card["tvdb_id"]))
         ):
-            card["conreqStatus"] = sonarr_library[str(card["tvdb_id"])]["conreqStatus"]
+            card["availability"] = sonarr_library[str(card["tvdb_id"])]["availability"]
 
     # TMDB movie card
     elif card.__contains__("title"):
         if radarr_library is not None and radarr_library.__contains__(str(card["id"])):
-            card["conreqStatus"] = radarr_library[str(card["id"])]["conreqStatus"]
+            card["availability"] = radarr_library[str(card["id"])]["availability"]
 
 
-def set_many_conreq_status(results):
+def set_many_availability(results):
     """Sets the availabily on list of cards."""
     content_manager = ContentManager()
     # Fetch Sonarr and Radarr libraries
@@ -112,11 +112,11 @@ def set_many_conreq_status(results):
         cache_duration=70,
     )
 
-    # Generate conreq status if possible, or get the external ID if a TVDB ID is needed
+    # Generate the availability if possible, or get the external ID if a TVDB ID is needed
     thread_list = []
     for card in results:
         thread = Thread(
-            target=__set_many_conreq_status,
+            target=__set_many_availability,
             args=[card, radarr_library, sonarr_library],
         )
         thread.start()
@@ -127,35 +127,35 @@ def set_many_conreq_status(results):
     return results
 
 
-def set_single_conreq_status(card):
+def set_single_availability(card):
     """Sets the availabily on a single card."""
     content_manager = ContentManager()
     content_discovery = ContentDiscovery()
     try:
-        # Compute conreq status of a Sonarr card
+        # Compute the availability of a Sonarr card
         if card.__contains__("tvdbId"):
             content = content_manager.get(tvdb_id=card["tvdbId"])
             if content is not None:
-                card["conreqStatus"] = content["conreqStatus"]
+                card["availability"] = content["availability"]
 
-        # Compute conreq status of a Radarr card
+        # Compute the availability of a Radarr card
         elif card.__contains__("tmdbId"):
             content = content_manager.get(tmdb_id=card["tmdbId"])
             if content is not None:
-                card["conreqStatus"] = content["conreqStatus"]
+                card["availability"] = content["availability"]
 
-        # Compute conreq status of TV show
+        # Compute the availability of TV show
         elif card.__contains__("name"):
             external_id = content_discovery.get_external_ids(card["id"], "tv")
             content = content_manager.get(tvdb_id=external_id["tvdb_id"])
             if content is not None:
-                card["conreqStatus"] = content["conreqStatus"]
+                card["availability"] = content["availability"]
 
-        # Compute conreq status of movie
+        # Compute the availability of movie
         elif card.__contains__("title"):
             content = content_manager.get(tmdb_id=card["id"])
             if content is not None:
-                card["conreqStatus"] = content["conreqStatus"]
+                card["availability"] = content["availability"]
 
         # Something unexpected was passed in
         else:
@@ -168,7 +168,7 @@ def set_single_conreq_status(card):
 
     except:
         log.handler(
-            "Could not determine Conreq Status of card!\n" + card,
+            "Could not determine the availability of card!\n" + card,
             log.ERROR,
             __logger,
         )

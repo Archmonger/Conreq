@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from conreq.core.content_discovery import ContentDiscovery
-from conreq.utils.apps import generate_context, set_many_conreq_status
+from conreq.utils.apps import generate_context, set_many_availability
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -20,8 +20,8 @@ def discover_all(request):
     # Search for TV content
     tmdb_results = content_discovery.all(page)["results"]
 
-    # Set conreq status for all cards
-    set_many_conreq_status(tmdb_results)
+    # Set the availability for all cards
+    set_many_availability(tmdb_results)
 
     context = generate_context(
         {
@@ -44,8 +44,8 @@ def discover_tv(request):
     # Search for TV content
     tmdb_results = content_discovery.tv(page)["results"]
 
-    # Set conreq status for all cards
-    set_many_conreq_status(tmdb_results)
+    # Set the availability for all cards
+    set_many_availability(tmdb_results)
 
     context = generate_context(
         {
@@ -68,8 +68,8 @@ def discover_movies(request):
     # Search for TV content
     tmdb_results = content_discovery.movies(page)["results"]
 
-    # Set conreq status for all cards
-    set_many_conreq_status(tmdb_results)
+    # Set the availability for all cards
+    set_many_availability(tmdb_results)
 
     context = generate_context(
         {

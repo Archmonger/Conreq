@@ -37,7 +37,7 @@ class ContentManager:
         self.__logger = log.get_logger(__name__)
 
     def get(self, obtain_season_info=False, force_update_cache=False, **kwargs):
-        """Gets content information and computes the conreqStatus of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
+        """Gets content information and computes the availability of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
 
         Args:
             obtain_season_info: Boolean. If True, return season/episode information.
@@ -47,8 +47,8 @@ class ContentManager:
             tvdb_id: A string containing the TVDB ID.
 
         Returns:
-            1) JSON response containing the existing content, filled with conreqStatus key-value pairs.
-               conreqStatus has four available states: "Downloading", "Unavailable", "Partial", and "Available".
+            1) JSON response containing the existing content, filled with availability key-value pairs.
+               The availability has three available states: "Unavailable", "Partial", and "Available".
             2) None
         """
         try:
@@ -559,10 +559,10 @@ class ContentManager:
         # Obtain the episodes
         episodes = self.__sonarr.getEpisodesBySeriesId(series["id"])
         for season in series["seasons"]:
-            # Set the season conreq status
+            # Set the season availability
             self.__check_status(season["statistics"])
 
-            # Set the episode conreq status
+            # Set the episode availability
             season["episodes"] = []
             for episode in episodes:
                 if episode["seasonNumber"] == season["seasonNumber"]:
@@ -583,7 +583,7 @@ class ContentManager:
         # Check if an individual movie or episode does not exist (Sonarr and Radarr)
         try:
             if not content["hasFile"]:
-                content["conreqStatus"] = "Unavailable"
+                content["availability"] = "Unavailable"
                 return content
         except:
             pass
@@ -591,7 +591,7 @@ class ContentManager:
         # Check if a season or series is completely unavailable (Sonarr)
         try:
             if content["episodeFileCount"] == 0:
-                content["conreqStatus"] = "Unavailable"
+                content["availability"] = "Unavailable"
                 return content
         except:
             pass
@@ -607,7 +607,7 @@ class ContentManager:
                     content["episodeFileCount"] != 0
                     and content["episodeFileCount"] < content["episodeCount"]
                 ):
-                    content["conreqStatus"] = "Partial"
+                    content["availability"] = "Partial"
                     return content
 
             # Season
@@ -615,7 +615,7 @@ class ContentManager:
                 content["episodeFileCount"] != 0
                 and content["totalEpisodeCount"] > content["episodeCount"]
             ):
-                content["conreqStatus"] = "Partial"
+                content["availability"] = "Partial"
                 return content
         except:
             pass
@@ -631,7 +631,7 @@ class ContentManager:
                     content["episodeFileCount"] != 0
                     and content["episodeFileCount"] >= content["episodeCount"]
                 ):
-                    content["conreqStatus"] = "Available"
+                    content["availability"] = "Available"
                     return content
 
             # Season
@@ -639,7 +639,7 @@ class ContentManager:
                 content["episodeFileCount"] != 0
                 and content["totalEpisodeCount"] <= content["episodeCount"]
             ):
-                content["conreqStatus"] = "Available"
+                content["availability"] = "Available"
                 return content
         except:
             pass
@@ -647,17 +647,17 @@ class ContentManager:
         # Check if an individual movie or individual episode exists (Sonarr & Radarr)
         try:
             if content["hasFile"]:
-                content["conreqStatus"] = "Available"
+                content["availability"] = "Available"
                 return content
         except:
             pass
 
         log.handler(
-            "Could not determine conreqStatus!\n" + str(content),
+            "Could not determine availability!\n" + str(content),
             log.INFO,
             self.__logger,
         )
-        content["conreqStatus"] = "Unknown"
+        content["availability"] = "Unknown"
         return content
 
 
