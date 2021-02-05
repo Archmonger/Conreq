@@ -8,11 +8,17 @@
                 {{discover}} <i id="discover-fa" class="fas fa-angle-up"></i></a>
             <div class="collapse show" id="discover-tabs">
                 <a href="#{% url 'discover:all' %}" class="nav-tab suboption discover">
-                    {{combined}} <i class="fas fa-filter"></i></a>
+                    {{combined}}
+                    <!-- <i class="fas fa-filter"></i> -->
+                </a>
                 <a href="#{% url 'discover:tv' %}" class="nav-tab suboption">
-                    {{tv_shows}} <i class="fas fa-filter"></i></a>
+                    {{tv_shows}}
+                    <!-- <i class="fas fa-filter"></i> -->
+                </a>
                 <a href="#{% url 'discover:movies' %}" class="nav-tab suboption">
-                    {{movies}} <i class="fas fa-filter"></i></a>
+                    {{movies}}
+                    <!-- <i class="fas fa-filter"></i> -->
+                </a>
             </div>
 
             <a class="nav-tab group user nav-link" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true"
@@ -23,8 +29,6 @@
                     {{my_requests}}</a>
                 <a href="#{% url 'issue_reporting:my_issues' %}" class="nav-tab suboption user">
                     {{my_issues}}</a>
-                <!-- <a href="#" class="nav-tab suboption user">
-                    {{settings}}</a> -->
                 <a href="{% url 'sign_out' %}" class="nav-tab suboption user">
                     {{sign_out}}</a>
             </div>
@@ -38,8 +42,6 @@
                     {{all_requests}}</a>
                 <a href="#{% url 'issue_reporting:all_issues' %}" class="nav-tab suboption admin">
                     {{all_issues}}</a>
-                <!-- <a href="#" class="nav-tab suboption admin">
-                    {{email_users}}</a> -->
                 <a href="#{% url 'manage_users:main' %}" class="nav-tab suboption admin">
                     {{manage_users}}</a>
                 <a href="#{% url 'server_settings:main' %}" class="nav-tab suboption admin">
