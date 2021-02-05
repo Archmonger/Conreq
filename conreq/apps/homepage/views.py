@@ -7,8 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
-from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_cookie
 
 BASE_URL = get_base_url()
 
