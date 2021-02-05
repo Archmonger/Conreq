@@ -14,6 +14,7 @@ import json
 import os
 import secrets
 
+import requests
 from django.core.management.utils import get_random_secret_key
 
 from conreq.utils.generic import get_bool_from_env
@@ -58,7 +59,7 @@ HUEY = {
         "workers": 5,
     },
 }
-
+IPAPI_SUCCESS = requests.get("https://ipapi.co").status_code == 200
 
 # Logging
 LOG_DIR = os.path.join(DATA_DIR, "logs")
@@ -265,7 +266,6 @@ INSTALLED_APPS = [
     "solo",  # Allow for single-row fields in the DB
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
     "djversion",  # Obtains the git commit as a version number
-    "awesome_django_timezones",  # Automatically change timezones
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
 ]
@@ -281,12 +281,14 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
     "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
-    "awesome_django_timezones.middleware.TimezonesMiddleware",  # Automatically change timezones
 ]
-
-if X_FRAME_OPTIONS.lower() != "false":
+if X_FRAME_OPTIONS.lower() != "false":  # Block embedding conreq
     MIDDLEWARE.append("django.middleware.clickjacking.XFrameOptionsMiddleware")
-
+if IPAPI_SUCCESS:  # Automatically change timezones
+    INSTALLED_APPS.append("awesome_django_timezones")
+    MIDDLEWARE.append("awesome_django_timezones.middleware.TimezonesMiddleware")
+else:
+    print("Connection to ipapi.co was blocked. Timezone detection may be impacted.")
 
 # Caching Database
 CACHES = {
