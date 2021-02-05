@@ -36,6 +36,22 @@ USE_SSL = get_bool_from_env("USE_SSL", False)
 DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
 X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 
+
+# Application Settings
+HTML_MINIFY = True
+DJVERSION_VERSION = "0.13.0"
+HUEY = {
+    "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
+    "filename": os.path.join(DATA_DIR, "background_tasks.sqlite3"),
+    "results": True,  # Store return values of tasks.
+    "store_none": False,  # If a task returns None, do not save to results.
+    "immediate": False,  # If True, run tasks synchronously.
+    "consumer": {
+        "workers": 5,
+    },
+}
+
+
 # Logging
 LOG_DIR = os.path.join(DATA_DIR, "logs")
 CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
@@ -216,21 +232,6 @@ if UPDATE_SETTINGS_FILE:
     with open(SETTINGS_FILE, "w") as settings_file:
         print("Updating settings.json to ", settings)
         settings_file.write(json.dumps(settings))
-
-
-# Application Settings
-HTML_MINIFY = True
-DJVERSION_VERSION = "0.12.0"
-HUEY = {
-    "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
-    "filename": os.path.join(DATA_DIR, "background_tasks.sqlite3"),
-    "results": True,  # Store return values of tasks.
-    "store_none": False,  # If a task returns None, do not save to results.
-    "immediate": False,  # If True, run tasks synchronously.
-    "consumer": {
-        "workers": 5,
-    },
-}
 
 
 # Application Definitions
