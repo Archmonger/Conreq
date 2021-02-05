@@ -159,9 +159,12 @@
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="standard-btn box-shadow no-highlighting available"> AVAILABLE </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
-                <div class="standard-btn series-modal-btn box-shadow no-highlighting clickable" data-content-type="tv"
-                    data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
-                    VIEW EPISODES </div>
+                <div class="standard-btn series-modal-btn view-episodes box-shadow no-highlighting clickable"
+                    data-content-type="tv" data-tmdb-id="{{content.id}}"
+                    data-modal-url="{% url 'more_info:series_modal' %}">
+                    <i class="fas fa-plus"></i>
+                    VIEW EPISODES
+                </div>
                 {% endif %}
 
                 <!-- "Request" buttons -->

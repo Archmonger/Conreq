@@ -161,7 +161,8 @@
     width: 45px;
     height: 45px;
   }
-  .more-info-grid .report-modal-btn {
+  .more-info-grid .report-modal-btn,
+  .more-info-grid .report-selection-modal-btn {
     position: absolute;
     top: 15px;
     right: 15px;

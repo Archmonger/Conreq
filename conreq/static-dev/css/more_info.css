@@ -106,6 +106,9 @@
 .standard-btn.available {
   background: #333333;
 }
+.standard-btn.view-episodes .fa-plus {
+  font-size: 0;
+}
 
 .modal .standard-btn.report-modal-btn:hover,
 .standard-btn.series-modal-btn.available:hover,
