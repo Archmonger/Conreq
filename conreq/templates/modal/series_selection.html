@@ -12,8 +12,8 @@
         {% for season in seasons %}
         <div id="season-{{season.seasonNumber}}" class="row-container no-highlighting">
 
-            {% if season.statistics.conreqStatus != available %}
             <div class="checkbox-container">
+                {% if season.statistics.conreqStatus != available or report_modal %}
                 <div class="pretty p-icon p-curve p-smooth p-jelly">
                     <input type="checkbox" class="checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
                         data-season-number="{{season.seasonNumber}}"
@@ -23,10 +23,8 @@
                         <label></label>
                     </div>
                 </div>
+                {% endif %}
             </div>
-            {% else %}
-            <div></div>
-            {% endif %}
 
             <div class="row-title-container">
                 <div class="row-title {% if season.statistics.conreqStatus != available %}clickable{% endif %}">
@@ -59,8 +57,9 @@
             {% for episode in season.episodes|dictsort:"episodeNumber" %}
             <div class="suboption-row-container">
 
-                {% if episode.conreqStatus != available or report_modal %}
+
                 <div class="checkbox-container">
+                    {% if episode.conreqStatus != available or report_modal %}
                     <div class="pretty p-icon p-curve p-smooth p-jelly">
                         <input type="checkbox"
                             class="suboption-checkbox{% if season.seasonNumber == 0 %} specials{% endif %}"
@@ -71,10 +70,8 @@
                             <label></label>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
-                {% else %}
-                <div></div>
-                {% endif %}
 
                 <div class="suboption-title-container {% if episode.conreqStatus != available %}clickable{% endif %}">
                     {% if episode.conreqStatus == available %}
