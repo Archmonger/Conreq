@@ -21,7 +21,7 @@ class ContentManager:
         radarr_api_key: String containing the Radarr API key.
     """
 
-    def __init__(self, periodic_refresh=False):
+    def __init__(self):
         # Database values
         self.conreq_config = ConreqConfig.get_solo()
 
@@ -35,10 +35,6 @@ class ContentManager:
 
         # Creating a logger (for log files)
         self.__logger = log.get_logger(__name__)
-
-        # Periodically run a task to re-populate the cache every minute
-        if periodic_refresh:
-            Thread(target=self.refresh_content, daemon=True).start()
 
     def get(self, obtain_season_info=False, force_update_cache=False, **kwargs):
         """Gets content information and computes the conreqStatus of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
@@ -468,35 +464,35 @@ class ContentManager:
 
     def refresh_content(self):
         """Refreshes Sonarr and Radarr's content"""
-        while 1:
-            try:
+        try:
+            if self.conreq_config.radarr_enabled:
                 cache.handler(
                     "radarr library cache",
                     function=self.get_all_radarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
-            except:
-                log.handler(
-                    "Failed to refresh radarr!",
-                    log.WARNING,
-                    self.__logger,
-                )
+        except:
+            log.handler(
+                "Failed to refresh radarr!",
+                log.WARNING,
+                self.__logger,
+            )
 
-            try:
+        try:
+            if self.conreq_config.sonarr_enabled:
                 cache.handler(
                     "sonarr library cache",
                     function=self.get_all_sonarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
-            except:
-                log.handler(
-                    "Failed to refresh sonarr!",
-                    log.WARNING,
-                    self.__logger,
-                )
-            sleep(60)
+        except:
+            log.handler(
+                "Failed to refresh sonarr!",
+                log.WARNING,
+                self.__logger,
+            )
 
     def get_all_radarr_content(self):
         try:

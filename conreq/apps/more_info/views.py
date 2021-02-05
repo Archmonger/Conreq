@@ -181,7 +181,9 @@ def series_modal(request):
         )
 
     # Keep refreshing until we get the series from Sonarr
-    series = content_manager.get(tvdb_id=tvdb_id, obtain_season_info=True)
+    series = content_manager.get(
+        tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
+    )
     if series is None:
         series_fetch_retries = 0
         while series is None:

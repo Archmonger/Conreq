@@ -221,6 +221,16 @@ if UPDATE_SETTINGS_FILE:
 # Application Settings
 HTML_MINIFY = True
 DJVERSION_VERSION = "0.12.0"
+HUEY = {
+    "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
+    "filename": os.path.join(DATA_DIR, "background_tasks.sqlite3"),
+    "results": True,  # Store return values of tasks.
+    "store_none": False,  # If a task returns None, do not save to results.
+    "immediate": False,  # If True, run tasks synchronously.
+    "consumer": {
+        "workers": 5,
+    },
+}
 
 
 # Application Definitions
@@ -247,6 +257,7 @@ INSTALLED_APPS = [
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
     "djversion",  # Obtains the git commit as a version number
     "awesome_django_timezones",  # Automatically change timezones
+    "huey.contrib.djhuey",  # Queuing background tasks
 ]
 
 MIDDLEWARE = [
