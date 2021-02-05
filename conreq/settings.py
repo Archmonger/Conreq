@@ -40,6 +40,14 @@ X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 # Application Settings
 HTML_MINIFY = True
 DJVERSION_VERSION = "0.13.0"
+WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
+COMPRESS_OUTPUT_DIR = ""
+COMPRESS_OFFLINE = True
+COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
+COMPRESS_FILTERS = {
+    "css": ["compressor.filters.cssmin.rCSSMinFilter"],
+    "js": ["compressor.filters.jsmin.JSMinFilter"],
+}
 HUEY = {
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": os.path.join(DATA_DIR, "background_tasks.sqlite3"),
@@ -259,6 +267,7 @@ INSTALLED_APPS = [
     "djversion",  # Obtains the git commit as a version number
     "awesome_django_timezones",  # Automatically change timezones
     "huey.contrib.djhuey",  # Queuing background tasks
+    "compressor",  # Minifies CSS/JS files
 ]
 
 MIDDLEWARE = [
@@ -381,5 +390,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "conreq", "static-dev")]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
 ]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"

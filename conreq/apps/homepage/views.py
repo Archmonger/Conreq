@@ -72,8 +72,6 @@ def initialization(request):
     return homepage(request)
 
 
-@cache_page(60)
-@vary_on_cookie
 @login_required
 def homepage(request):
     # Generate the base template

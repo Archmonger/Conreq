@@ -1,6 +1,7 @@
-{% load static %}
+{% load static compress %}
 {% load solo_tags %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
+{% load static %}
 <meta charset="UTF-8">
 <title>{{ server_settings.conreq_app_name }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,10 +22,12 @@
     crossorigin="anonymous">
 
 <!-- Icons (FontAwesome) -->
-<link rel="stylesheet" href="{% static 'css/libraries/fontawesome_all_5.15.1.min.css' %}" crossorigin="anonymous">
-<link rel="preload" href="{% static 'css/webfonts/fa-solid-900.woff2' %}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/webfonts/fa-solid-900.woff2"
+    as="font" type="font/woff2" crossorigin="anonymous">
 
-<!-- Styling and JS (Bootstrap) -->
+<!-- Pre-made Styling and JS (Bootstrap) -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
@@ -36,10 +39,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
-
-<!-- Image popups (jQuery Magnific Popup) -->
-<link rel="stylesheet" href="{% static 'css/libraries/magnific_popup_1.1.0.css' %}" crossorigin="anonymous">
-<script src="{% static 'js/libraries/magnific_popup_1.1.0.min.js' %}" crossorigin="anonymous"></script>
 
 <!-- Sliders/Carousels (TinySlider) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css"
@@ -58,13 +57,6 @@
 <!-- Checkboxes (Pretty-Checkbox) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"
     integrity="sha384-ICB8i/maQ/5+tGLDUEcswB7Ch+OO9Oj8Z4Ov/Gs0gxqfTgLLkD3F43MhcEJ2x6/D" crossorigin="anonymous">
-
-<!-- XSS Protection (DOM Purify) -->
-<script src="{% static 'js/libraries/dom_purify_2.2.min.js' %}" crossorigin="anonymous"></script>
-
-<!-- Notification Popups (izi Toast) -->
-<link rel="stylesheet" href="{% static 'css/libraries/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous">
-<script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
 
 <!-- Masonry Layout (Desandro Masonry) -->
 <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
@@ -88,10 +80,12 @@
     integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
     crossorigin="anonymous"></script>
 
-<!-- Automatic Timezones (Awesome Django Timezones) -->
-<script src="{% static 'js/awesome_django_timezones.js' %}"></script>
-
-<!-- Static Conreq JS and CSS -->
+{% compress css %}
+<!-- Image popups (jQuery Magnific Popup) -->
+<link rel="stylesheet" href="{% static 'css/libraries/magnific_popup_1.1.0.css' %}" crossorigin="anonymous">
+<!-- Notification Popups (izi Toast) -->
+<link rel="stylesheet" href="{% static 'css/libraries/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous">
+<!-- Local CSS -->
 <link rel="stylesheet" href="{% static 'css/main.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/modal.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/more_info.css' %}" crossorigin="anonymous">
@@ -99,15 +93,30 @@
 <link rel="stylesheet" href="{% static 'css/manage_users.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/issues.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/mobile.css' %}" crossorigin="anonymous">
-{% if server_settings.conreq_simple_posters %}
-<link rel="stylesheet" href="{% static 'css/simple_posters.css' %}" crossorigin="anonymous">
-{% endif %}
-{% if server_settings.conreq_dark_theme %}
-<link rel="stylesheet" href="{% static 'css/dark.css' %}" crossorigin="anonymous">
-{% endif %}
+{% endcompress %}
+
+{% compress js %}
+<!-- Image popups (jQuery Magnific Popup) -->
+<script src="{% static 'js/libraries/magnific_popup_1.1.0.min.js' %}" crossorigin="anonymous"></script>
+<!-- Notification Popups (izi Toast) -->
+<script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
+<!-- XSS Protection (DOM Purify) -->
+<script src="{% static 'js/libraries/dom_purify_2.2.min.js' %}" crossorigin="anonymous"></script>
+<!-- Automatic Timezones (Awesome Django Timezones) -->
+<script src="{% static 'js/awesome_django_timezones.js' %}"></script>
+<!-- Local JS -->
 <script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/more_info.js' %}" crossorigin="anonymous"></script>
+{% endcompress %}
+
+<!-- User toggleable CSS and JS -->
+{% if server_settings.conreq_simple_posters %}
+{% include "compressed/simple_posters_css.html" %}
+{% endif %}
+{% if server_settings.conreq_dark_theme %}
+{% include "compressed/dark_css.html" %}
+{% endif %}
 
 <!-- User defined CSS and JS -->
 {% if server_settings.conreq_custom_css %}
