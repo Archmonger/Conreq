@@ -234,6 +234,7 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
+    "awesome_django_timezones",  # Automatically change timezones
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -255,7 +256,6 @@ if X_FRAME_OPTIONS.lower() != "false":
     MIDDLEWARE.append("django.middleware.clickjacking.XFrameOptionsMiddleware")
 if IPAPI_SUCCESS:
     # Automatically change timezones
-    INSTALLED_APPS.append("awesome_django_timezones")
     MIDDLEWARE.append("awesome_django_timezones.middleware.TimezonesMiddleware")
 if not IPAPI_SUCCESS:
     print('Connection to "ipapi.co" was blocked. Timezone detection will be impacted.')
@@ -353,7 +353,7 @@ USE_TZ = True
 
 
 # Static Files (CSS, JavaScript, Images)
-STATIC_ROOT = os.path.join(DATA_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "conreq", "static-dev")]
 STATICFILES_FINDERS = [
@@ -361,3 +361,4 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 ]
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
