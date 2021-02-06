@@ -42,7 +42,7 @@ X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 HTML_MINIFY = True
 DJVERSION_VERSION = "0.14.0"
 WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
-COMPRESS_OUTPUT_DIR = ""
+COMPRESS_OUTPUT_DIR = "minified"
 COMPRESS_OFFLINE = True
 COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
 COMPRESS_FILTERS = {
@@ -394,3 +394,4 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 ]
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"

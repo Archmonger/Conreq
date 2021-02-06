@@ -4,6 +4,7 @@ let previous_admin_settings = new Map();
 let viewport_container_class = ".viewport-container";
 let viewport_class = ".viewport";
 let reload_needed = false;
+var http_request = $.ajax({});
 
 // Create the lazyloader
 let callback_error = function (element) {

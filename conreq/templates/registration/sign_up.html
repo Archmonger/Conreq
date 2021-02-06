@@ -1,6 +1,7 @@
-{% load static %}
+{% load static compress %}
 {% load solo_tags %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,7 +56,10 @@
             conreq_submission_failed_toast_message();
         </script>
         {% endif %}
+
+        {% compress js %}
         <script src="{% static 'js/sign_up.js' %}" crossorigin="anonymous"></script>
+        {% endcompress %}
     </div>
 </body>
 

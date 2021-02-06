@@ -1,5 +1,3 @@
-var http_request = $.ajax({});
-
 // Requested toast message
 var requested_toast_message = function () {
   iziToast.show({
