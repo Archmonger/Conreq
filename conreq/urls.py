@@ -46,4 +46,7 @@ urlpatterns = [
 
 
 if DEBUG:
+    # Performance analysis tool
+    urlpatterns.append(path(BASE_URL + "silk/", include("silk.urls", namespace="silk")))
+    # Ability to edit the DB from admin/
     urlpatterns.append(path(BASE_URL + "admin/", admin.site.urls))

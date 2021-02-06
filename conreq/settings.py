@@ -282,13 +282,21 @@ MIDDLEWARE = [
     "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
     "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
-if X_FRAME_OPTIONS.lower() != "false":  # Block embedding conreq
+
+# Enabling apps/middleware based on flags
+if X_FRAME_OPTIONS.lower() != "false":
+    # Block embedding conreq
     MIDDLEWARE.append("django.middleware.clickjacking.XFrameOptionsMiddleware")
-if IPAPI_SUCCESS:  # Automatically change timezones
+if IPAPI_SUCCESS:
+    # Automatically change timezones
     INSTALLED_APPS.append("awesome_django_timezones")
     MIDDLEWARE.append("awesome_django_timezones.middleware.TimezonesMiddleware")
-else:
+if not IPAPI_SUCCESS:
     print("Connection to ipapi.co was blocked. Timezone detection may be impacted.")
+if DEBUG:
+    # Performance analysis tools
+    INSTALLED_APPS.append("silk")
+    MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
 
 # Caching Database
 CACHES = {
