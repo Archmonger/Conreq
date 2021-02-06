@@ -185,7 +185,6 @@
 .modal-content.content-preview .grid-modal-right {
   display: flex;
   flex-direction: column;
-  height: 100%;
   justify-content: space-between;
   min-width: 65%;
 }
