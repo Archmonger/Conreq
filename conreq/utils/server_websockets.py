@@ -1,4 +1,3 @@
-import os
 import secrets
 
 from channels.auth import AnonymousUser, login
@@ -169,14 +168,10 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 elif (
                     content["parameters"]["setting_name"] == "Sonarr Anime Folder Path"
                 ):
-                    conreq_config.sonarr_anime_folder = os.path.join(
-                        content["parameters"]["value"], ""
-                    )
+                    conreq_config.sonarr_anime_folder = content["parameters"]["value"]
 
                 elif content["parameters"]["setting_name"] == "Sonarr TV Folder Path":
-                    conreq_config.sonarr_tv_folder = os.path.join(
-                        content["parameters"]["value"], ""
-                    )
+                    conreq_config.sonarr_tv_folder = content["parameters"]["value"]
 
                 elif content["parameters"]["setting_name"] == "Enable Sonarr":
                     conreq_config.sonarr_enabled = content["parameters"]["value"]
@@ -210,16 +205,12 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 elif (
                     content["parameters"]["setting_name"] == "Radarr Anime Folder Path"
                 ):
-                    conreq_config.radarr_anime_folder = os.path.join(
-                        content["parameters"]["value"], ""
-                    )
+                    conreq_config.radarr_anime_folder = content["parameters"]["value"]
 
                 elif (
                     content["parameters"]["setting_name"] == "Radarr Movies Folder Path"
                 ):
-                    conreq_config.radarr_movies_folder = os.path.join(
-                        content["parameters"]["value"], ""
-                    )
+                    conreq_config.radarr_movies_folder = content["parameters"]["value"]
 
                 elif content["parameters"]["setting_name"] == "Enable Radarr":
                     conreq_config.radarr_enabled = content["parameters"]["value"]

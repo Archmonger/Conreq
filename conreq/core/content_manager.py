@@ -1,7 +1,5 @@
 """Conreq Content Manager: Talks with Sonarr/Radarr in order to add/remove content."""
-
-from threading import Thread
-from time import sleep
+from os.path import join as join_path
 
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
@@ -159,7 +157,7 @@ class ContentManager:
                 return self.__radarr.addMovie(
                     kwargs["tmdb_id"],
                     kwargs["quality_profile_id"],
-                    kwargs["root_dir"],
+                    join_path(kwargs["root_dir"], ""),
                     monitored=True,
                     searchForMovie=False,
                 )
@@ -170,7 +168,7 @@ class ContentManager:
                 series_id = self.__sonarr.addSeries(
                     kwargs["tvdb_id"],
                     kwargs["quality_profile_id"],
-                    kwargs["root_dir"],
+                    join_path(kwargs["root_dir"], ""),
                     seasonFolder=kwargs["season_folders"],
                     monitored=False,
                     ignoreEpisodesWithFiles=True,
