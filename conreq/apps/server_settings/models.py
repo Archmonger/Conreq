@@ -2,6 +2,7 @@ from conreq.apps.base.fields import ExtendedURLField
 from django.db import models
 from encrypted_fields.fields import EncryptedCharField
 from solo.models import SingletonModel
+from url_or_relative_url_field.fields import URLOrRelativeURLField
 
 
 # Create your models here.
@@ -12,8 +13,8 @@ class ConreqConfig(SingletonModel):
     conreq_language = models.CharField(max_length=100, default="en")
     conreq_app_logo = models.ImageField(blank=True)
     conreq_app_url = models.URLField(default="", blank=True)
-    conreq_custom_css = models.CharField(max_length=100, default="", blank=True)
-    conreq_custom_js = models.CharField(max_length=100, default="", blank=True)
+    conreq_custom_css = URLOrRelativeURLField(default="", blank=True)
+    conreq_custom_js = URLOrRelativeURLField(default="", blank=True)
     conreq_simple_posters = models.BooleanField(default=True)
     conreq_auto_resolve_issues = models.BooleanField(default=True)
     conreq_guest_login = models.BooleanField(default=False)

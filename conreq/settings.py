@@ -234,6 +234,7 @@ INSTALLED_APPS = [
     "djversion",  # Obtains the git commit as a version number
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
+    "url_or_relative_url_field",  # Validates relative URLs
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
