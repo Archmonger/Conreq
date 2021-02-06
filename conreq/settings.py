@@ -17,12 +17,11 @@ import secrets
 import requests
 from django.core.management.utils import get_random_secret_key
 
-from conreq.utils.generic import get_bool_from_env
-
+from conreq.utils.generic import get_bool_from_env, get_debug_from_env
 
 # Environment and Project Variables
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEBUG = get_bool_from_env("DEBUG", True)
+DEBUG = get_debug_from_env()
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 USE_ROLLING_SECRET_KEY = get_bool_from_env("USE_ROLLING_SECRET_KEY", False)

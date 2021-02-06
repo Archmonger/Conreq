@@ -107,3 +107,8 @@ def get_bool_from_env(name, default_value):
         if env_var.lower() == "false":
             return False
     return default_value
+
+
+def get_debug_from_env():
+    """Shortcut to obtain DEBUG from env variables"""
+    return get_bool_from_env("DEBUG", True)

@@ -17,9 +17,9 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from conreq.utils.generic import get_base_url, get_bool_from_env
+from conreq.utils.generic import get_base_url, get_debug_from_env
 
-DEBUG = get_bool_from_env("DEBUG", True)
+DEBUG = get_debug_from_env()
 BASE_URL = get_base_url()
 
 
