@@ -38,20 +38,19 @@ SSL_KEY = "/path/to/key.pem"              # default: none
 ### Software
 
 - Install [Python 3.8](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
-- Install [Visual Studio Code](https://code.visualstudio.com/)
+- Install [Visual Studio Code](https://code.visualstudio.com/) (Optional: Any editor would work)
 - _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
 
 ### Setting Up the Environment
 
 1. Pull the repository from GitHub.
 2. Open a terminal (ex. Command Prompt or PowerShell) as administrator at the root of the repository.
-3. _If using Windows:_ type `set-executionpolicy remotesigned` and select Yes to All to allow Python scripts to run on your computer.
+3. _If using Windows:_ type `set-executionpolicy remotesigned` and select Yes to All to allow external Python scripts to run on your computer.
 4. Type `python -m venv venv` to create a Python virtual environment.
 5. Type `./venv/Scripts/activate` to enter the virtual environment.
 6. Type `pip install -r requirements.txt` to install all Python dependencies within the virtual environment.
 7. Create and/or update the database by typing `python manage.py migrate`.
-8. Create the Conreq admin account by typing `python manage.py createsuperuser`.
-9. Run Conreq by typing `python manage.py runserver`
+8. Run Conreq by typing `python manage.py runserver`
 
 ### Visual Studio Code Extensions (Optional)
 
@@ -62,20 +61,15 @@ SSL_KEY = "/path/to/key.pem"              # default: none
 
 ### Visual Studio Code Settings (Optional)
 
-1. If your terminal does not show venv (ex. `(venv) ...`), type `./venv/Scripts/Activate`.
-2. Type `pip install -r requirements_dev.txt` to install Python packages within the virtual environment.
+1. If your terminal does not show venv (ex. `(venv) ...`), type `./venv/Scripts/activate`.
+2. Type `pip install -r requirements_dev.txt` to install VS Code editor packages within the virtual environment.
 3. Enable Python Formatting
    - Settings -> Editor: Format On Save -> `ON`
    - Settings -> Python Formatting Provider -> `Black`
 4. Enabling Python Linting
    - Ctrl+Shift+P -> Python: Select Linter -> `pylint`
    - Settings -> Linting: Pylint Args -> Add Item -> `--disable=line-too-long,bare-except,bad-continuation`
-
-# UX Design Mockups
-
-[Desktop](https://xd.adobe.com/view/17a8150c-a224-467c-af36-36171641d656-42fb/)
-
-[Mobile](https://xd.adobe.com/view/aaef68b5-ddb9-4987-a758-771215bfe578-ffbc/)
+   
 
 # Screenshots
 
