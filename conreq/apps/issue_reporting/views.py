@@ -52,14 +52,12 @@ def report_issue(request):
             content_id = request_parameters.get("tvdb_id", None)
             source = "tvdb"
         content_type = request_parameters.get("content_type", None)
-        issue_names = json.dumps(
-            [ISSUE_LIST[i][0] for i in request_parameters["issue_ids"]]
-        )
+        issue_names = [ISSUE_LIST[i][0] for i in request_parameters["issue_ids"]]
         all_resolutions = [ISSUE_LIST[i][1] for i in request_parameters["issue_ids"]]
-        resolutions = json.dumps(list(set([j for i in all_resolutions for j in i])))
-        seasons = json.dumps(request_parameters.get("seasons", []))
-        episodes = json.dumps(request_parameters.get("episodes", []))
-        episode_ids = json.dumps(request_parameters.get("episode_ids", []))
+        resolutions = list(set([j for i in all_resolutions for j in i]))
+        seasons = request_parameters.get("seasons", [])
+        episodes = request_parameters.get("episodes", [])
+        episode_ids = request_parameters.get("episode_ids", [])
 
         # Add the report to the database
         add_unique_to_db(
@@ -104,7 +102,6 @@ def all_issues(request):
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
     reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
-    json_fields = ["issues", "seasons", "episodes"]
 
     all_cards = []
     for entry in reported_issues.values(
@@ -113,7 +110,9 @@ def all_issues(request):
         "source",
         "resolved",
         "content_type",
-        *json_fields
+        "issues",
+        "seasons",
+        "episodes",
     ):
         # Fetch TMDB entry
         if entry["source"] == "tmdb":
@@ -158,11 +157,6 @@ def all_issues(request):
                 log.WARNING,
                 __logger,
             )
-
-    # Convert any JSON fields into python
-    for field_name in json_fields:
-        for card in all_cards:
-            card[field_name] = json.loads(card[field_name])
 
     context = generate_context({"all_cards": all_cards})
     template = loader.get_template("viewport/reported_issues.html")
@@ -179,7 +173,6 @@ def my_issues(request):
     reported_issues = (
         ReportedIssue.objects.filter(reported_by=request.user).order_by("id").reverse()
     )
-    json_fields = ["issues", "seasons", "episodes"]
 
     all_cards = []
     for entry in reported_issues.values(
@@ -188,7 +181,9 @@ def my_issues(request):
         "source",
         "resolved",
         "content_type",
-        *json_fields
+        "issues",
+        "seasons",
+        "episodes",
     ):
         # Fetch TMDB entry
         if entry["source"] == "tmdb":
@@ -233,11 +228,6 @@ def my_issues(request):
                 log.WARNING,
                 __logger,
             )
-
-    # Convert any JSON fields into python
-    for field_name in json_fields:
-        for card in all_cards:
-            card[field_name] = json.loads(card[field_name])
 
     context = generate_context({"all_cards": all_cards})
     template = loader.get_template("viewport/reported_issues.html")
