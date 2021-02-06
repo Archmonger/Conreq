@@ -258,7 +258,7 @@ if IPAPI_SUCCESS:
     # Automatically change timezones
     MIDDLEWARE.append("awesome_django_timezones.middleware.TimezonesMiddleware")
 if not IPAPI_SUCCESS:
-    print('Connection to "ipapi.co" was blocked. Timezone detection will be impacted.')
+    print('Connection to "ipapi.co" has failed. Timezone detection may be impacted.')
 if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
