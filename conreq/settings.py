@@ -19,16 +19,9 @@ from django.core.management.utils import get_random_secret_key
 
 from conreq.utils.generic import get_bool_from_env
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-
-# Project Paths
+# Environment and Project Variables
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Environment Variables
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = get_bool_from_env("DEBUG", True)
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
@@ -59,7 +52,11 @@ HUEY = {
         "workers": 5,
     },
 }
-IPAPI_SUCCESS = requests.get("https://ipapi.co").status_code == 200
+try:
+    IPAPI_SUCCESS = requests.get("https://ipapi.co").status_code == 200
+except:
+    IPAPI_SUCCESS = False
+
 
 # Logging
 LOG_DIR = os.path.join(DATA_DIR, "logs")
@@ -67,14 +64,10 @@ CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
 ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
-
-# Log level
 if DEBUG:
     LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 else:
     LOG_LEVEL = os.environ.get("LOG_LEVEL", "WARNING")
-
-# Configure the logging backend
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -118,14 +111,13 @@ LOGGING = {
             "level": "INFO",
             "propagate": True,
         },
-        "django.request": {
+        "django.security.*": {
             "level": "INFO",
             "propagate": True,
         },
-        "django.server": {
+        "django.request": {
             "level": "INFO",
-            "handlers": ["console", "access_logs"],
-            "propagate": False,
+            "propagate": True,
         },
         "django.channels.server": {
             "level": "INFO",
@@ -136,15 +128,6 @@ LOGGING = {
             "level": "INFO",
             "propagate": True,
         },
-        "django.security.*": {
-            "level": "INFO",
-            "handlers": ["console", "access_logs"],
-            "propagate": False,
-        },
-        "django.db.backends": {
-            "level": LOG_LEVEL,
-            "propagate": True,
-        },
         "django.db.backends.schema": {
             "level": LOG_LEVEL,
             "propagate": True,
@@ -153,19 +136,11 @@ LOGGING = {
             "level": LOG_LEVEL,
             "propagate": True,
         },
-        "conreq.core": {
+        "conreq.*": {
             "level": LOG_LEVEL,
             "propagate": True,
         },
-        "conreq.core.*": {
-            "level": LOG_LEVEL,
-            "propagate": True,
-        },
-        "conreq.apps": {
-            "level": LOG_LEVEL,
-            "propagate": True,
-        },
-        "conreq.apps.*": {
+        "conreq.*.*": {
             "level": LOG_LEVEL,
             "propagate": True,
         },
@@ -176,12 +151,10 @@ LOGGING = {
 # Security Settings
 if USE_ROLLING_SECRET_KEY:
     SECRET_KEY = get_random_secret_key()  # Key used for cryptographic signing
-
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "no-referrer"
 ALLOWED_HOSTS = ["*"]
 SECURE_BROWSER_XSS_FILTER = True
-
 if USE_SSL:
     SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
     SECURE_HSTS_PRELOAD = True  # Allow for HSTS preload
@@ -194,19 +167,16 @@ if USE_SSL:
     LANGUAGE_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
 
 
-# Settings File (ex. Encryption Keys)
+# External "settings.json" file
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 UPDATE_SETTINGS_FILE = False
-
-# Create the file if it doesn't exist
 if not os.path.exists(SETTINGS_FILE):
+    # Create the file if it doesn't exist
     with open(SETTINGS_FILE, "w") as settings_file:
         settings_file.write("{}")
-
-# Read the file
 with open(SETTINGS_FILE, "r+") as settings_file:
+    # Read the file
     settings = json.load(settings_file)
-
     # Obtain the DB Encryption Key from the file
     if (
         settings.__contains__("DB_ENCRYPTION_KEY")
@@ -214,13 +184,11 @@ with open(SETTINGS_FILE, "r+") as settings_file:
         and settings["DB_ENCRYPTION_KEY"] != ""
     ):
         FIELD_ENCRYPTION_KEYS = [settings["DB_ENCRYPTION_KEY"]]
-
     # DB Encryption Key wasn't found, a new one is needed
     else:
         FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
         settings["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS[0]
         UPDATE_SETTINGS_FILE = True
-
     # Obtain the Secret Key from the file
     if (
         settings.__contains__("SECRET_KEY")
@@ -229,14 +197,12 @@ with open(SETTINGS_FILE, "r+") as settings_file:
         and not USE_ROLLING_SECRET_KEY
     ):
         SECRET_KEY = settings["SECRET_KEY"]
-
-    # Secret Key wasn't found, a new one is needed
+    # New secret key is needed
     elif not USE_ROLLING_SECRET_KEY:
         SECRET_KEY = get_random_secret_key()
         settings["SECRET_KEY"] = SECRET_KEY
         UPDATE_SETTINGS_FILE = True
-
-# Save the new file if needed
+# Save settings.json if needed
 if UPDATE_SETTINGS_FILE:
     with open(SETTINGS_FILE, "w") as settings_file:
         print("Updating settings.json to ", settings)
@@ -269,7 +235,6 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
 ]
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
@@ -283,6 +248,7 @@ MIDDLEWARE = [
     "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
 
+
 # Enabling apps/middleware based on flags
 if X_FRAME_OPTIONS.lower() != "false":
     # Block embedding conreq
@@ -292,23 +258,11 @@ if IPAPI_SUCCESS:
     INSTALLED_APPS.append("awesome_django_timezones")
     MIDDLEWARE.append("awesome_django_timezones.middleware.TimezonesMiddleware")
 if not IPAPI_SUCCESS:
-    print("Connection to ipapi.co was blocked. Timezone detection may be impacted.")
+    print('Connection to "ipapi.co" was blocked. Timezone detection will be impacted.')
 if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
     MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
-
-# Caching Database
-CACHES = {
-    "default": {
-        "BACKEND": "diskcache.DjangoCache",
-        "LOCATION": os.path.join(DATA_DIR, "cache"),
-        "TIMEOUT": 300,  # Django setting for default timeout of each key.
-        "SHARDS": 8,  # Number of db files to create
-        "DATABASE_TIMEOUT": 0.010,  # 10 milliseconds
-        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte
-    }
-}
 
 
 # URL Routing and Page Rendering
@@ -332,11 +286,10 @@ TEMPLATES = [
 ]
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+# Databases
 if DB_ENGINE.upper() == "MYSQL" and MYSQL_CONFIG_FILE != "":
     DATABASES = {
-        "default": {
+        "default": {  # MySQL
             "ENGINE": "django.db.backends.mysql",
             "OPTIONS": {
                 "read_default_file": MYSQL_CONFIG_FILE,
@@ -345,7 +298,7 @@ if DB_ENGINE.upper() == "MYSQL" and MYSQL_CONFIG_FILE != "":
     }
 else:
     DATABASES = {
-        "default": {
+        "default": {  # SQLite
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
             "OPTIONS": {
@@ -353,10 +306,19 @@ else:
             },
         }
     }
+CACHES = {
+    "default": {
+        "BACKEND": "diskcache.DjangoCache",
+        "LOCATION": os.path.join(DATA_DIR, "cache"),
+        "TIMEOUT": 300,  # Django setting for default timeout of each key.
+        "SHARDS": 8,  # Number of db files to create
+        "DATABASE_TIMEOUT": 0.010,  # 10 milliseconds
+        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte
+    }
+}
 
 
-# Password Validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+# User Authenticaiton
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -378,13 +340,11 @@ AUTH_PASSWORD_VALIDATORS = [
         },
     },
 ]
-
 LOGIN_REDIRECT_URL = "base:index"
 LOGIN_URL = "sign_in"
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
@@ -393,7 +353,6 @@ USE_TZ = True
 
 
 # Static Files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_ROOT = os.path.join(DATA_DIR, "static")
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "conreq", "static-dev")]
