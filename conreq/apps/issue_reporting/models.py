@@ -6,7 +6,7 @@ User = get_user_model()
 
 # Create your models here.
 class ReportedIssue(models.Model):
-    issues = models.JSONField()
+    issues = JSONField()
     resolutions = models.TextField()
     reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
     date_reported = models.DateTimeField(auto_now_add=True)
