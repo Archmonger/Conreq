@@ -14,7 +14,7 @@
             <div class="default-box-header">
                 <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
             </div>
-            <form id="initialization-form" method="post" action="{% url 'homepage:index' %}">
+            <form id="initialization-form" method="post" action="{% url 'base:index' %}">
                 {% csrf_token %}
                 <h1>FIRST TIME SETUP</h1>
 

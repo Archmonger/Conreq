@@ -252,7 +252,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
-    "conreq.apps.homepage",
+    "conreq.apps.base",
     "conreq.apps.discover",
     "conreq.apps.more_info",
     "conreq.apps.search",
@@ -371,7 +371,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "homepage:index"
+LOGIN_REDIRECT_URL = "base:index"
 LOGIN_URL = "sign_in"
 
 

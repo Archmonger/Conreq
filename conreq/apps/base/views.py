@@ -1,4 +1,4 @@
-from conreq.apps.homepage.forms import InitializationForm
+from conreq.apps.base.forms import InitializationForm
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils.apps import generate_context, initialize_conreq
 from conreq.utils.generic import get_base_url
@@ -52,7 +52,7 @@ def initialization(request):
                 user.save()
                 login(request, user)
                 initialize_conreq(conreq_config, form)
-                return redirect("homepage:index")
+                return redirect("base:index")
 
             # Form data wasn't valid, so return the error codes
             template = loader.get_template("registration/initialization.html")
@@ -66,12 +66,12 @@ def initialization(request):
     if request.path[1:] != BASE_URL:
         return redirect("/" + BASE_URL)
 
-    # Render the homepage
-    return homepage(request)
+    # Render the base
+    return base(request)
 
 
 @login_required
-def homepage(request):
+def base(request):
     # Generate the base template
     template = loader.get_template("primary/base.html")
     context = generate_context({})

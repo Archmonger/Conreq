@@ -5,7 +5,7 @@ from . import views
 
 BASE_URL = get_base_url()
 
-app_name = "homepage"
+app_name = "base"
 
 if BASE_URL:
     urlpatterns = [

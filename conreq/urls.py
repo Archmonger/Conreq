@@ -24,7 +24,7 @@ BASE_URL = get_base_url()
 
 
 urlpatterns = [
-    path("", include("conreq.apps.homepage.urls")),
+    path("", include("conreq.apps.base.urls")),
     path(
         BASE_URL + "sign_in/",
         auth_views.LoginView.as_view(
