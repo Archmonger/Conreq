@@ -44,6 +44,9 @@ let cull_old_posters = function () {
       // Make sure we have the latest scroll position
       scroll_position = viewport_container.scrollTop();
 
+      // Scroll to the top before deleting to prevent double-loading tabs
+      viewport_container.scrollTop(0);
+
       // Delete the old elements
       masonry_grid
         .masonry("remove", masonry_items.slice(0, num_of_posters_to_delete))
