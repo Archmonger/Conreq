@@ -292,6 +292,9 @@ var generate_viewport = function () {
     refresh_viewport();
     add_event_listeners();
 
+    // Reset scroll position
+    $(viewport_container_class).scrollTop(0);
+
     // Display the new content
     $(".viewport-container>.loading-animation-container").hide();
     $(".viewport-container>*:not(.loading-animation-container)").show();
