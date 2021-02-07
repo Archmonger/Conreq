@@ -6,7 +6,6 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils import log
 from django.core.exceptions import ValidationError
-from htmlmin.minify import html_minify
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
@@ -36,16 +35,6 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
                 self.__logger,
             )
             await self.__forbidden()
-
-    # SENDING COMMANDS
-    async def send_json(self, content, close=False):
-        """Encode the given content as JSON and send it to the client."""
-        # Minify HTML (if possible)
-        if isinstance(content, dict) and content.__contains__("html"):
-            content["html"] = html_minify(content["html"])
-
-        # Send response
-        await super().send(text_data=await self.encode_json(content), close=close)
 
     # RECEIVING COMMANDS
     async def receive_json(self, content, **kwargs):
