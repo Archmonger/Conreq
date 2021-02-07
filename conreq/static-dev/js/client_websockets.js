@@ -53,14 +53,6 @@ function connect() {
     } else {
       // Show a message saying we reconnected
       reconnected_toast_message();
-
-      // Reload the viewport if the last page didn't load
-      if (viewport_loaded == false) {
-        console.log(
-          "Viewport previously failed to load... Reloading the viewport!"
-        );
-        generate_viewport();
-      }
     }
   };
 

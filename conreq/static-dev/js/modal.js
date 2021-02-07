@@ -7,7 +7,7 @@ let report_selection = null;
 var generate_modal = function (modal_url) {
   // Fetch the series modal
   modal_loaded = false;
-  http_request = $.get(modal_url, function (modal_html) {
+  get_url(modal_url, function (modal_html) {
     // Save that the modal was successfully loaded
     modal_loaded = true;
 

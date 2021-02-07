@@ -1,3 +1,5 @@
+var http_request = $.ajax({});
+
 // Requested toast message
 var requested_toast_message = function () {
   iziToast.show({
@@ -220,6 +222,33 @@ var post_json = function (url, data, callback) {
     data: JSON.stringify(data),
     contentType: "application/json; charset=utf-8",
     success: callback,
+  });
+  return http_request;
+};
+
+// Gets a URL
+var get_url = function (location, success = function () {}) {
+  http_request.abort();
+  http_request = $.get(location, function (response = null) {
+    return success(response);
+  });
+  return http_request;
+};
+
+// Gets a URL and retries if it fails
+let get_retry_counter = 0;
+var get_url_retry = async function (location, success = function () {}) {
+  http_request.abort();
+  http_request = $.get(location, function (response = null) {
+    get_retry_counter = 0;
+    return success(response);
+  }).fail(function () {
+    get_retry_counter++;
+    if (get_retry_counter <= 200) {
+      setTimeout(function () {
+        get_url_retry(location, success);
+      }, 200 * Math.min(get_retry_counter, 50));
+    }
   });
   return http_request;
 };

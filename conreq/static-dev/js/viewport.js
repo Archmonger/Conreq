@@ -4,7 +4,6 @@ let previous_admin_settings = new Map();
 let viewport_container_class = ".viewport-container";
 let viewport_class = ".viewport";
 let reload_needed = false;
-var http_request = $.ajax({});
 
 // Create the lazyloader
 let callback_error = function (element) {
@@ -159,8 +158,7 @@ let add_event_listeners = function () {
     let btn = $(this);
     let generate_invite_url = btn.data("generate-invite-url");
     let sign_up_url = window.location.origin + btn.data("sign-up-url");
-    http_request.abort();
-    http_request = $.get(generate_invite_url, function (result) {
+    get_url_retry(generate_invite_url, function (result) {
       let invite_link =
         sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
       copy_to_clipboard(invite_link);
@@ -268,14 +266,12 @@ var generate_viewport = function () {
     }
   }
 
-  // Asynchronously fetch new viewport content
-  viewport_loaded = false;
-  http_request.abort();
-
   // Change the current tab
   update_active_tab();
 
-  http_request = $.get(window_location, function (viewport_html) {
+  // Asynchronously fetch new viewport content
+  viewport_loaded = false;
+  get_url_retry(window_location, function (viewport_html) {
     // Save that the page was successfully loaded
     viewport_loaded = true;
 
