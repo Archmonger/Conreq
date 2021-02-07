@@ -1,7 +1,7 @@
 # from django.shortcuts import render
-from channels.db import database_sync_to_async as convert_to_async
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.utils.apps import generate_context, set_many_availability
+from conreq.utils.testing import convert_to_async
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader

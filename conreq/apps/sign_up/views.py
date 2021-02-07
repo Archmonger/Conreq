@@ -1,7 +1,7 @@
 from secrets import token_hex
 
-from channels.db import database_sync_to_async as convert_to_async
 from conreq.apps.sign_up.forms import UserForm
+from conreq.utils.testing import convert_to_async
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.cache import cache

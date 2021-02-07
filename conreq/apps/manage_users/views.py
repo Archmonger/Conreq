@@ -1,5 +1,5 @@
-from channels.db import database_sync_to_async as convert_to_async
 from conreq.utils.apps import generate_context
+from conreq.utils.testing import convert_to_async
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse

@@ -1,11 +1,11 @@
 import json
 
-from channels.db import database_sync_to_async as convert_to_async
 from conreq.apps.issue_reporting.models import ReportedIssue
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.apps import add_unique_to_db, generate_context
+from conreq.utils.testing import convert_to_async
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader

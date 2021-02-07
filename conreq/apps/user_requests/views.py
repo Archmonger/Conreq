@@ -1,6 +1,5 @@
 import json
 
-from channels.db import database_sync_to_async as convert_to_async
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
@@ -14,6 +13,7 @@ from conreq.utils.apps import (
     set_many_availability,
 )
 from conreq.utils.generic import is_key_value_in_list
+from conreq.utils.testing import convert_to_async
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
