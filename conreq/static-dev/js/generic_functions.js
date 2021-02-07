@@ -316,6 +316,7 @@ var modal_checkbox_aggregator = function () {
 var timer_start = function () {
   start_time = new Date();
 };
+timer_start();
 
 // Calculates seconds elapsed from timer_start()
 var timer_seconds = function () {

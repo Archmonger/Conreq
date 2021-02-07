@@ -238,13 +238,12 @@ let refresh_viewport = function () {
       masonry_grid.on("append.infiniteScroll", function () {
         cull_old_posters();
         content_preview_modal_click_event();
+        timer_start();
       });
 
       // Only load new page if X seconds have elapsed (rate limit)
-      timer_start();
       masonry_grid.on("scrollThreshold.infiniteScroll", function () {
         if (timer_seconds() >= 2) {
-          timer_start();
           masonry_grid.infiniteScroll("loadNextPage");
         }
       });
