@@ -1,5 +1,6 @@
 import json
 
+from conreq.apps.base.tasks import background_task
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
@@ -88,7 +89,8 @@ def request_content(request):
                         content_type="tv",
                         requested_by=request.user,
                     )
-                content_manager.request(
+                background_task(
+                    content_manager.request,
                     sonarr_id=show["id"],
                     seasons=request_parameters["seasons"],
                     episode_ids=request_parameters["episode_ids"],
@@ -126,7 +128,7 @@ def request_content(request):
                 content_type="movie",
                 requested_by=request.user,
             )
-            content_manager.request(radarr_id=movie["id"])
+            background_task(content_manager.request, radarr_id=movie["id"])
 
             log.handler(
                 request.user.username + " requested movie " + movie["title"],
