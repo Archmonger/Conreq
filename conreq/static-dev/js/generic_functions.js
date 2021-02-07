@@ -1,4 +1,5 @@
 var http_request = $.ajax({});
+let start_time, end_time;
 
 // Requested toast message
 var requested_toast_message = function () {
@@ -309,4 +310,20 @@ var modal_checkbox_aggregator = function () {
   else {
     return params;
   }
+};
+
+// Timer used for rate limiting the infinite scroller
+var timer_start = function () {
+  start_time = new Date();
+};
+
+// Calculates seconds elapsed from timer_start()
+var timer_seconds = function () {
+  end_time = new Date();
+  let time_diff = end_time - start_time; // in ms
+  // strip the ms
+  time_diff /= 1000;
+
+  // get seconds
+  return Math.round(time_diff);
 };
