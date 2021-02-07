@@ -1,3 +1,4 @@
+from channels.db import database_sync_to_async as convert_to_async
 from conreq.apps.base.forms import InitializationForm
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils.apps import generate_context, initialize_conreq
@@ -5,15 +6,16 @@ from conreq.utils.generic import get_base_url
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template import loader
 
 BASE_URL = get_base_url()
 
 # Create your views here.
-def initialization(request):
-    conreq_config = ConreqConfig.get_solo()
-    user_objects = get_user_model().objects
+async def initialization(request):
+    conreq_config = await convert_to_async(ConreqConfig.get_solo)()
+    user_model = await convert_to_async(get_user_model)()
+    user_objects = user_model.objects
 
     # Authenticate using Organizr headers
     organizr_username = request.headers.get("X-WEBAUTH-USER")
@@ -67,12 +69,11 @@ def initialization(request):
         return redirect("/" + BASE_URL)
 
     # Render the base
-    return base(request)
+    return await base(request)
 
 
+@convert_to_async
 @login_required
 def base(request):
     # Generate the base template
-    template = loader.get_template("primary/base.html")
-    context = generate_context({})
-    return HttpResponse(template.render(context, request))
+    return render(request, "primary/base.html", generate_context({}))
