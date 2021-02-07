@@ -1,4 +1,5 @@
 # from django.shortcuts import render
+from channels.db import database_sync_to_async as convert_to_async
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.utils.apps import generate_context, set_many_availability
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,7 @@ from django.views.decorators.cache import cache_page
 
 
 # Create your views here.
+@convert_to_async
 @cache_page(60)
 @login_required
 def discover_all(request):
@@ -32,6 +34,7 @@ def discover_all(request):
     return HttpResponse(template.render(context, request))
 
 
+@convert_to_async
 @cache_page(60)
 @login_required
 def discover_tv(request):
@@ -56,6 +59,7 @@ def discover_tv(request):
     return HttpResponse(template.render(context, request))
 
 
+@convert_to_async
 @cache_page(60)
 @login_required
 def discover_movies(request):

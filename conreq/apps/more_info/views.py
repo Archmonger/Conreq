@@ -1,6 +1,7 @@
 from threading import Thread
 from time import sleep
 
+from channels.db import database_sync_to_async as convert_to_async
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
@@ -26,6 +27,7 @@ MAX_SERIES_FETCH_RETRIES = 20
 __logger = log.get_logger(__name__)
 
 # Create your views here.
+@convert_to_async
 @cache_page(60)
 @login_required
 def more_info(request):
@@ -144,6 +146,7 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
+@convert_to_async
 @cache_page(60)
 @login_required
 def series_modal(request):
@@ -207,6 +210,7 @@ def series_modal(request):
     return HttpResponse(template.render(context, request))
 
 
+@convert_to_async
 @cache_page(60)
 @login_required
 def content_preview_modal(request):

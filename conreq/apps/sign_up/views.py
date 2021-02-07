@@ -1,5 +1,6 @@
 from secrets import token_hex
 
+from channels.db import database_sync_to_async as convert_to_async
 from conreq.apps.sign_up.forms import UserForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -12,6 +13,7 @@ from django.template import loader
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 
 # Create your views here.
+@convert_to_async
 def invite(request):
     # User submitted the registration form
     invite_code = request.GET.get("invite_code", "")
@@ -49,6 +51,7 @@ def invite(request):
     return redirect("base:index")
 
 
+@convert_to_async
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def generate_invite_code(request):

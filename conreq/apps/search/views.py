@@ -1,6 +1,7 @@
 # from django.shortcuts import render
 from threading import Thread
 
+from channels.db import database_sync_to_async as convert_to_async
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_search import Search
 from conreq.utils.apps import (
@@ -15,6 +16,7 @@ from django.views.decorators.cache import cache_page
 
 
 # Create your views here.
+@convert_to_async
 @cache_page(60 * 60)
 @login_required
 def search(request):

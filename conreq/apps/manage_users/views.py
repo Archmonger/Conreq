@@ -1,3 +1,4 @@
+from channels.db import database_sync_to_async as convert_to_async
 from conreq.utils.apps import generate_context
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -7,6 +8,7 @@ from django.views.decorators.cache import cache_page
 
 
 # Create your views here.
+@convert_to_async
 @cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
@@ -17,6 +19,7 @@ def manage_users(request):
     return HttpResponse(template.render(context, request))
 
 
+@convert_to_async
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def delete_user(request):

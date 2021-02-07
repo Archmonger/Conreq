@@ -1,5 +1,6 @@
 import json
 
+from channels.db import database_sync_to_async as convert_to_async
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
@@ -24,6 +25,7 @@ INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 __logger = log.get_logger(__name__)
 
 # Create your views here.
+@convert_to_async
 @login_required
 def request_content(request):
     # User submitted a new request
@@ -137,6 +139,7 @@ def request_content(request):
     return HttpResponseForbidden()
 
 
+@convert_to_async
 @cache_page(1)
 @vary_on_cookie
 @login_required
@@ -215,6 +218,7 @@ def my_requests(request):
     return HttpResponse(template.render(context, request))
 
 
+@convert_to_async
 @cache_page(1)
 @login_required
 def all_requests(request):

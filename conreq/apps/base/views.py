@@ -69,10 +69,4 @@ def initialization(request):
         return redirect("/" + BASE_URL)
 
     # Render the base
-    return base(request)
-
-
-@login_required
-def base(request):
-    # Generate the base template
-    return render(request, "primary/base.html", generate_context({}))
+    return login_required(render)(request, "primary/base.html", generate_context({}))
