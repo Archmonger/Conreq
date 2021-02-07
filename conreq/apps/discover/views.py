@@ -45,7 +45,7 @@ def discover_tv(request):
     page = int(request.GET.get("page", 1))
 
     # Search for TV content
-    tmdb_results = content_discovery.tv(page)["results"]
+    tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
@@ -70,7 +70,7 @@ def discover_movies(request):
     page = int(request.GET.get("page", 1))
 
     # Search for TV content
-    tmdb_results = content_discovery.movies(page)["results"]
+    tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
