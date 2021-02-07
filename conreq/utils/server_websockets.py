@@ -1,7 +1,7 @@
 import secrets
 
 from channels.auth import AnonymousUser, login
-from channels.db import database_sync_to_async
+from channels.db import database_sync_to_async as convert_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils import log
@@ -27,7 +27,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             # Log in the user to this session.
             await login(self.scope, self.scope["user"])
             # Save the session to the database
-            await database_sync_to_async(self.scope["session"].save)()
+            await convert_to_async(self.scope["session"].save)()
         except:
             # User could not be logged in
             log.handler(
@@ -74,7 +74,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
     # COMMAND RESPONSE: SERVER SETTINGS
     async def __server_settings(self, content):
-        conreq_config = await database_sync_to_async(ConreqConfig.get_solo)()
+        conreq_config = await convert_to_async(ConreqConfig.get_solo)()
         response = {
             "command_name": "server settings",
             "success": True,
@@ -239,7 +239,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
 
                 # Save the model if it passes all checks
                 if response["success"]:
-                    await database_sync_to_async(conreq_config.save)()
+                    await convert_to_async(conreq_config.save)()
 
             except:
                 response["success"] = False
