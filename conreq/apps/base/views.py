@@ -2,7 +2,7 @@ from conreq.apps.base.forms import InitializationForm
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils.apps import generate_context, initialize_conreq
 from conreq.utils.generic import get_base_url
-from conreq.utils.testing import convert_to_async
+from conreq.utils.testing import render_async
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -12,7 +12,7 @@ from django.template import loader
 BASE_URL = get_base_url()
 
 # Create your views here.
-@convert_to_async
+@render_async
 def initialization(request):
     conreq_config = ConreqConfig.get_solo()
     user_objects = get_user_model().objects

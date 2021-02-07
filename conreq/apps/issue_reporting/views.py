@@ -5,7 +5,7 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.apps import add_unique_to_db, generate_context
-from conreq.utils.testing import convert_to_async
+from conreq.utils.testing import render_async
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
@@ -35,7 +35,7 @@ ISSUE_LIST = [
 ]
 
 # Create your views here.
-@convert_to_async
+@render_async
 @login_required
 def report_issue(request):
     if request.method == "POST":
@@ -80,7 +80,7 @@ def report_issue(request):
     return HttpResponseForbidden()
 
 
-@convert_to_async
+@render_async
 @cache_page(60)
 @login_required
 def report_issue_modal(request):
@@ -97,7 +97,7 @@ def report_issue_modal(request):
     return HttpResponse(template.render(context, request))
 
 
-@convert_to_async
+@render_async
 @cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
@@ -167,7 +167,7 @@ def all_issues(request):
     return HttpResponse(template.render(context, request))
 
 
-@convert_to_async
+@render_async
 @cache_page(1)
 @vary_on_cookie
 @login_required

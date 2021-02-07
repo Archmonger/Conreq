@@ -13,7 +13,7 @@ from conreq.utils.apps import (
     set_many_availability,
 )
 from conreq.utils.generic import is_key_value_in_list
-from conreq.utils.testing import convert_to_async
+from conreq.utils.testing import render_async
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
@@ -25,7 +25,7 @@ INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 __logger = log.get_logger(__name__)
 
 # Create your views here.
-@convert_to_async
+@render_async
 @login_required
 def request_content(request):
     # User submitted a new request
@@ -139,7 +139,7 @@ def request_content(request):
     return HttpResponseForbidden()
 
 
-@convert_to_async
+@render_async
 @cache_page(1)
 @vary_on_cookie
 @login_required
@@ -218,7 +218,7 @@ def my_requests(request):
     return HttpResponse(template.render(context, request))
 
 
-@convert_to_async
+@render_async
 @cache_page(1)
 @login_required
 def all_requests(request):

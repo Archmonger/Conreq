@@ -8,6 +8,6 @@ def do_nothing(function=None):
 
 # Disable async view rendering in debug to allow for performance profiling
 if get_debug_from_env():
-    convert_to_async = do_nothing
+    render_async = do_nothing
 else:
-    convert_to_async = database_sync_to_async
+    render_async = database_sync_to_async

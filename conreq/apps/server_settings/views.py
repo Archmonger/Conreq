@@ -3,7 +3,7 @@ from platform import platform
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.testing import convert_to_async
+from conreq.utils.testing import render_async
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.template import loader
@@ -12,7 +12,7 @@ from django.views.decorators.cache import cache_page
 __logger = log.get_logger(__name__)
 
 # Create your views here.
-@convert_to_async
+@render_async
 @cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
