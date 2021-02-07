@@ -12,10 +12,10 @@ from django.template import loader
 BASE_URL = get_base_url()
 
 # Create your views here.
-async def initialization(request):
-    conreq_config = await convert_to_async(ConreqConfig.get_solo)()
-    user_model = await convert_to_async(get_user_model)()
-    user_objects = user_model.objects
+@convert_to_async
+def initialization(request):
+    conreq_config = ConreqConfig.get_solo()
+    user_objects = get_user_model().objects
 
     # Authenticate using Organizr headers
     organizr_username = request.headers.get("X-WEBAUTH-USER")
@@ -69,10 +69,9 @@ async def initialization(request):
         return redirect("/" + BASE_URL)
 
     # Render the base
-    return await base(request)
+    return base(request)
 
 
-@convert_to_async
 @login_required
 def base(request):
     # Generate the base template
