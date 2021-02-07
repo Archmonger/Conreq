@@ -11,7 +11,8 @@ Have a question or want to contribute? Join us on [Discord](https://discord.gg/g
 
 ## Installation (Deployment Environment)
 
-Install through Unraid Community Applications, or directly through [Docker](https://github.com/Roxedus/docker-conreq).
+Install through **[Unraid Community Applications](https://squidly271.github.io/forumpost0.html)**, **[Docker](https://github.com/Roxedus/docker-conreq)**, or **[Dockerhub](https://registry.hub.docker.com/r/roxedus/conreq)**.
+
 Here's a list of all available environment variables:
 
 ```python
