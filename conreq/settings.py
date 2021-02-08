@@ -48,7 +48,7 @@ COMPRESS_FILTERS = {
 HUEY = {
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": os.path.join(DATA_DIR, "background_tasks.sqlite3"),
-    "results": True,  # Store return values of tasks.
+    "results": False,  # Do not store return values of tasks.
     "store_none": False,  # If a task returns None, do not save to results.
     "immediate": False,  # If True, run tasks synchronously.
     "consumer": {
