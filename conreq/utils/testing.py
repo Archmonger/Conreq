@@ -23,16 +23,11 @@ class DoNothing(object):
 if get_debug_from_env():
     from silk.profiling.profiler import silk_profile
 
-    render_async = do_nothing
-
     class performance_metrics(silk_profile):
         pass
 
 
 else:
-    from channels.db import database_sync_to_async
-
-    render_async = database_sync_to_async
 
     class performance_metrics(DoNothing):
         pass

@@ -15,7 +15,7 @@ from conreq.utils.apps import (
     set_single_availability,
 )
 from conreq.utils.generic import ReturnThread
-from conreq.utils.testing import render_async, performance_metrics
+from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -27,7 +27,8 @@ MAX_SERIES_FETCH_RETRIES = 20
 __logger = log.get_logger(__name__)
 
 # Create your views here.
-@render_async
+
+
 @cache_page(60)
 @login_required
 @performance_metrics()
@@ -147,7 +148,6 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
-@render_async
 @cache_page(60)
 @login_required
 @performance_metrics()
@@ -212,7 +212,6 @@ def series_modal(request):
     return HttpResponse(template.render(context, request))
 
 
-@render_async
 @cache_page(60)
 @login_required
 @performance_metrics()
