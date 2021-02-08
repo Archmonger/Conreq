@@ -14,7 +14,7 @@ var lazyloader = new LazyLoad({
   callback_error: callback_error,
 });
 
-// Removes old posters from the infinite scroller
+// Removes old posters from the infinite scroller to save memory
 let cull_old_posters = function () {
   let viewport_container = $(viewport_container_class);
   let viewport = $(viewport_class);
@@ -24,8 +24,8 @@ let cull_old_posters = function () {
 
     // Calculate the current state of the viewport
     let scroll_position = viewport_container.scrollTop();
-    let card_width = $(".masonry-item").width() + 10;
-    let card_height = $(".masonry-item").height() + 10;
+    let card_width = $(".masonry-item").outerWidth() + 10;
+    let card_height = $(".masonry-item").outerHeight() + 10;
     let viewport_width = viewport.width();
     let viewport_container_height = viewport_container.height();
     let cards_per_row = (viewport_width + 10) / card_width;
@@ -36,29 +36,19 @@ let cull_old_posters = function () {
       )
     );
     let num_of_posters_to_delete = deletable_num_of_rows * cards_per_row;
-    let before_deletion_height = viewport.height();
 
     // If there are posters to delete, do it.
     if (num_of_posters_to_delete > 0 && masonry_grid != null) {
-      // Make sure we have the latest scroll position
-      scroll_position = viewport_container.scrollTop();
-
-      // Scroll to the top before deleting to prevent double-loading tabs
-      viewport_container.scrollTop(0);
-
-      // Delete the old elements
-      masonry_grid
-        .masonry("remove", masonry_items.slice(0, num_of_posters_to_delete))
-        .masonry("layout");
-
-      // Scroll to the previous position
-      viewport_container.scrollTop(
-        scroll_position - (before_deletion_height - viewport.height())
-      );
+      // Delete the contents of old elements
+      masonry_items
+        .slice(0, num_of_posters_to_delete)
+        .empty()
+        .css("padding", "10")
+        .text("Hidden to save memory.");
 
       // Output to console that posters have been deleted
       console.log(
-        "Deleting " +
+        "Hiding the content of " +
           num_of_posters_to_delete +
           " posters because a new page has loaded."
       );

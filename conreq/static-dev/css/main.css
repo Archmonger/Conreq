@@ -489,8 +489,7 @@ button:focus {
   z-index: 1;
   background: var(--poster-bg-color);
   height: auto;
-  min-height: calc(var(--poster-container-height) / 2);
-  max-height: var(--poster-container-height);
+  height: var(--poster-container-height);
   transform: scale(1);
 }
 
