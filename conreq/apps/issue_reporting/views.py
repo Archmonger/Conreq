@@ -31,6 +31,7 @@ ISSUE_LIST = [
     ("Bad or corrupt audio.", ["REDOWNLOAD VIDEO"]),
     ("Bad subtitles.", ["REDOWNLOAD SUBTITLES"]),
     ("Missing subtitles.", ["REDOWNLOAD SUBTITLES"]),
+    ("Cannot request.", ["NOTIFY ADMIN"]),
     ("Other.", ["NOTIFY ADMIN"]),
 ]
 
