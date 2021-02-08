@@ -3,7 +3,7 @@ from platform import platform
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.testing import render_async
+from conreq.utils.testing import render_async, performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.template import loader
@@ -16,6 +16,7 @@ __logger = log.get_logger(__name__)
 @cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
+@performance_metrics()
 def server_settings(request):
     template = loader.get_template("viewport/server_settings.html")
 

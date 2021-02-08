@@ -32,10 +32,14 @@ X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 
 # Application Settings
 DJVERSION_VERSION = "0.16.4"
-SILKY_PYTHON_PROFILER = True
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
 SILKY_ANALYZE_QUERIES = True
+SILKY_PYTHON_PROFILER = True
+SILKY_PYTHON_PROFILER_BINARY = True
+SILKY_PYTHON_PROFILER_RESULT_PATH = os.path.join(DATA_DIR, "profiling")
+if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
+    os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
 HTML_MINIFY = True
 WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 COMPRESS_OUTPUT_DIR = "minified"
@@ -47,7 +51,10 @@ COMPRESS_FILTERS = {
 }
 HUEY_STORAGE = os.path.join(DATA_DIR, "background_tasks.sqlite3")
 if os.path.exists(HUEY_STORAGE):
-    os.remove(HUEY_STORAGE)
+    try:
+        os.remove(HUEY_STORAGE)
+    except:
+        pass
 HUEY = {
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_STORAGE,

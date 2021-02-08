@@ -5,7 +5,7 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.apps import add_unique_to_db, generate_context
-from conreq.utils.testing import render_async
+from conreq.utils.testing import render_async, performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
@@ -38,6 +38,7 @@ ISSUE_LIST = [
 # Create your views here.
 @render_async
 @login_required
+@performance_metrics()
 def report_issue(request):
     if request.method == "POST":
         request_parameters = json.loads(request.body.decode("utf-8"))
@@ -84,6 +85,7 @@ def report_issue(request):
 @render_async
 @cache_page(60)
 @login_required
+@performance_metrics()
 def report_issue_modal(request):
     # Get the parameters from the URL
     context = generate_context(
@@ -102,6 +104,7 @@ def report_issue_modal(request):
 @cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
+@performance_metrics()
 def all_issues(request):
     # Get the parameters from the URL
     content_discovery = ContentDiscovery()
@@ -172,6 +175,7 @@ def all_issues(request):
 @cache_page(1)
 @vary_on_cookie
 @login_required
+@performance_metrics()
 def my_issues(request):
     # Get the parameters from the URL
     content_discovery = ContentDiscovery()

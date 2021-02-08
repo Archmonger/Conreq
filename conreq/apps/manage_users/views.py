@@ -1,5 +1,5 @@
 from conreq.utils.apps import generate_context
-from conreq.utils.testing import render_async
+from conreq.utils.testing import render_async, performance_metrics
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
@@ -12,6 +12,7 @@ from django.views.decorators.cache import cache_page
 @cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
+@performance_metrics()
 def manage_users(request):
     template = loader.get_template("viewport/manage_users.html")
     users = get_user_model().objects.values()
@@ -22,6 +23,7 @@ def manage_users(request):
 @render_async
 @login_required
 @user_passes_test(lambda u: u.is_staff)
+@performance_metrics()
 def delete_user(request):
     if request.method == "POST":
         try:

@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.utils.apps import generate_context, set_many_availability
-from conreq.utils.testing import render_async
+from conreq.utils.testing import render_async, performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -12,6 +12,7 @@ from django.views.decorators.cache import cache_page
 @render_async
 @cache_page(60)
 @login_required
+@performance_metrics()
 def discover_all(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")
@@ -37,6 +38,7 @@ def discover_all(request):
 @render_async
 @cache_page(60)
 @login_required
+@performance_metrics()
 def discover_tv(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")
@@ -62,6 +64,7 @@ def discover_tv(request):
 @render_async
 @cache_page(60)
 @login_required
+@performance_metrics()
 def discover_movies(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")

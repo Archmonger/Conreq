@@ -15,7 +15,7 @@ from conreq.utils.apps import (
     set_single_availability,
 )
 from conreq.utils.generic import ReturnThread
-from conreq.utils.testing import render_async
+from conreq.utils.testing import render_async, performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -30,6 +30,7 @@ __logger = log.get_logger(__name__)
 @render_async
 @cache_page(60)
 @login_required
+@performance_metrics()
 def more_info(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/more_info.html")
@@ -149,6 +150,7 @@ def more_info(request):
 @render_async
 @cache_page(60)
 @login_required
+@performance_metrics()
 def series_modal(request):
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
@@ -213,6 +215,7 @@ def series_modal(request):
 @render_async
 @cache_page(60)
 @login_required
+@performance_metrics()
 def content_preview_modal(request):
     content_discovery = ContentDiscovery()
 

@@ -8,7 +8,7 @@ from conreq.utils.apps import (
     generate_context,
     set_many_availability,
 )
-from conreq.utils.testing import render_async
+from conreq.utils.testing import render_async, performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -19,6 +19,7 @@ from django.views.decorators.cache import cache_page
 @render_async
 @cache_page(60 * 60)
 @login_required
+@performance_metrics()
 def search(request):
     content_discovery = ContentDiscovery()
     searcher = Search()

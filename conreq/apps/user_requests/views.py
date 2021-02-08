@@ -14,7 +14,7 @@ from conreq.utils.apps import (
     set_many_availability,
 )
 from conreq.utils.generic import is_key_value_in_list
-from conreq.utils.testing import render_async
+from conreq.utils.testing import render_async, performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
@@ -28,6 +28,7 @@ __logger = log.get_logger(__name__)
 # Create your views here.
 @render_async
 @login_required
+@performance_metrics()
 def request_content(request):
     # User submitted a new request
     if request.method == "POST":
@@ -145,6 +146,7 @@ def request_content(request):
 @cache_page(1)
 @vary_on_cookie
 @login_required
+@performance_metrics()
 def my_requests(request):
     template = loader.get_template("viewport/requests.html")
 
@@ -223,6 +225,7 @@ def my_requests(request):
 @render_async
 @cache_page(1)
 @login_required
+@performance_metrics()
 def all_requests(request):
     template = loader.get_template("viewport/requests.html")
 
