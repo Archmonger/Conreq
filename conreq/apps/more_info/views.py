@@ -22,7 +22,7 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 
 # Globals
-MAX_SERIES_FETCH_RETRIES = 20
+MAX_SERIES_FETCH_RETRIES = 5
 
 __logger = log.get_logger(__name__)
 
@@ -195,7 +195,6 @@ def series_modal(request):
             if series_fetch_retries > MAX_SERIES_FETCH_RETRIES:
                 break
             series_fetch_retries = series_fetch_retries + 1
-            sleep(0.5)
             series = content_manager.get(
                 tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
             )
