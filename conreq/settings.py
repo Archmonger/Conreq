@@ -45,9 +45,12 @@ COMPRESS_FILTERS = {
     "css": ["compressor.filters.cssmin.rCSSMinFilter"],
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
+HUEY_STORAGE = os.path.join(DATA_DIR, "background_tasks.sqlite3")
+if os.path.exists(HUEY_STORAGE):
+    os.remove(HUEY_STORAGE)
 HUEY = {
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
-    "filename": os.path.join(DATA_DIR, "background_tasks.sqlite3"),
+    "filename": HUEY_STORAGE,
     "results": False,  # Do not store return values of tasks.
     "store_none": False,  # If a task returns None, do not save to results.
     "immediate": False,  # If True, run tasks synchronously.
