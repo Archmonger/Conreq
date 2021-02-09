@@ -50,7 +50,7 @@ COMPRESS_FILTERS = {
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
 HUEY_STORAGE = os.path.join(DATA_DIR, "background_tasks.sqlite3")
-if os.path.exists(HUEY_STORAGE):
+if os.path.exists(HUEY_STORAGE) and DEBUG:
     try:
         os.remove(HUEY_STORAGE)
     except:
