@@ -370,6 +370,7 @@ input:checked ~ .state {
   font-size: inherit;
   display: inline;
   padding-left: 5px;
+  align-self: center;
 }
 
 .navbar .username.first-letter {
