@@ -18,7 +18,7 @@ from django.views.decorators.cache import cache_page
 # Create your views here.
 
 
-@cache_page(60 * 60)
+@cache_page(30)
 @login_required
 @performance_metrics()
 def search(request):
