@@ -31,7 +31,7 @@ X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 
 
 # Application Settings
-DJVERSION_VERSION = "0.17.3"
+DJVERSION_VERSION = "0.17.4"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
 SILKY_ANALYZE_QUERIES = True
@@ -50,7 +50,7 @@ COMPRESS_FILTERS = {
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
 HUEY_STORAGE = os.path.join(DATA_DIR, "background_tasks.sqlite3")
-if os.path.exists(HUEY_STORAGE):
+if os.path.exists(HUEY_STORAGE) and DEBUG:
     try:
         os.remove(HUEY_STORAGE)
     except:
