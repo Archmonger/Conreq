@@ -21,6 +21,8 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
+from .helpers import add_save_request_movie
+
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 __logger = log.get_logger(__name__)
@@ -74,28 +76,28 @@ def request_content(request):
                         season_folders=sonarr_params["season_folders"],
                     )
 
-                # Save and request
-                if tmdb_id:
-                    add_unique_to_db(
-                        UserRequest,
-                        content_id=tmdb_id,
-                        source="tmdb",
-                        content_type="tv",
-                        requested_by=request.user,
-                    )
-                else:
-                    add_unique_to_db(
-                        UserRequest,
-                        content_id=tvdb_id,
-                        source="tvdb",
-                        content_type="tv",
-                        requested_by=request.user,
-                    )
+                # Request
                 background_task(
                     content_manager.request,
                     sonarr_id=show["id"],
                     seasons=request_parameters["seasons"],
                     episode_ids=request_parameters["episode_ids"],
+                )
+
+                # Save to DB
+                if tmdb_id:
+                    content_id = tmdb_id
+                    source = "tmdb"
+                else:
+                    content_id = tvdb_id
+                    source = "tvdb"
+
+                add_unique_to_db(
+                    UserRequest,
+                    content_id=content_id,
+                    source=source,
+                    content_type="tv",
+                    requested_by=request.user,
                 )
 
                 log.handler(
@@ -111,31 +113,22 @@ def request_content(request):
                 content_discovery, content_manager, tmdb_id
             )
 
-            # Check if the movie is already within Radarr's collection
-            movie = content_manager.get(tmdb_id=tmdb_id)
+            # Request
+            background_task(
+                add_save_request_movie,
+                content_manager,
+                tmdb_id,
+                radarr_params,
+                request.user.username,
+            )
 
-            # If it doesn't already exists, add then request it
-            if movie is None:
-                movie = content_manager.add(
-                    tmdb_id=tmdb_id,
-                    quality_profile_id=radarr_params["radarr_profile_id"],
-                    root_dir=radarr_params["radarr_root"],
-                )
-
-            # Save and request
+            # Save to DB
             add_unique_to_db(
                 UserRequest,
                 content_id=tmdb_id,
                 source="tmdb",
                 content_type="movie",
                 requested_by=request.user,
-            )
-            background_task(content_manager.request, radarr_id=movie["id"])
-
-            log.handler(
-                request.user.username + " requested movie " + movie["title"],
-                log.INFO,
-                __logger,
             )
 
         return JsonResponse({})

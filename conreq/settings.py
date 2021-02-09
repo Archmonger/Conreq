@@ -120,6 +120,10 @@ LOGGING = {
         "level": "INFO",
     },
     "loggers": {
+        "daphne": {
+            "level": "INFO",
+            "propagate": True,
+        },
         "django": {
             "level": "INFO",
             "propagate": True,
@@ -137,10 +141,6 @@ LOGGING = {
             "handlers": ["console", "access_logs"],
             "propagate": False,
         },
-        "daphne": {
-            "level": "INFO",
-            "propagate": True,
-        },
         "django.db.backends.schema": {
             "level": LOG_LEVEL,
             "propagate": True,
@@ -157,6 +157,7 @@ LOGGING = {
             "level": LOG_LEVEL,
             "propagate": True,
         },
+        "huey": {"level": LOG_LEVEL, "propagate": True},
     },
 }
 
