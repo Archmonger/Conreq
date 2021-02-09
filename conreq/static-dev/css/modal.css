@@ -202,7 +202,7 @@
 }
 
 .modal-content.content-preview .info {
-  height: -webkit-fill-available;
+  height: auto;
   margin-right: 25px;
 }
 
