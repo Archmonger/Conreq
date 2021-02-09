@@ -1,4 +1,6 @@
 {% load static %}
+{% load solo_tags %}
+{% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% include "primary/loading_animation_container.html" %}
 <div class="viewport search viewport-masonry">
     {% if all_cards %}
@@ -8,7 +10,18 @@
 
     {% else %}
     <div class="empty-viewport">
+        {% if not server_settings.sonarr_enabled or not server_settings.radarr_enabled %}
+
+        {% if not server_settings.sonarr_enabled %}
+        <div>Sonarr is disabled, cannot show TV results.</div>
+        {% endif %}
+        {% if not server_settings.sonarr_enabled %}
+        <div>Radarr is disabled, cannot show Movie results.</div>
+        {% endif %}
+
+        {% else %}
         No search results were found!
+        {% endif %}
     </div>
     {% endif %}
 </div>
