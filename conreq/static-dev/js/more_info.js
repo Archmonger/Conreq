@@ -85,6 +85,8 @@ var create_recommended_carousel = function () {
           edgePadding: 20,
         });
 
+        content_preview_modal_click_event();
+
         $(".more-info-recommendations").collapse("show");
       }
     });
@@ -162,6 +164,8 @@ var create_collection_carousel = function () {
             behavior: "smooth",
           });
         });
+
+        content_preview_modal_click_event();
 
         $(".more-info-recommendations").collapse("show");
       }
