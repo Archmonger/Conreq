@@ -18,16 +18,16 @@ Here's a list of all available environment variables:
 ```python
 # General Settings
 TZ = "America/Los_Angeles"                # default: UTC (timezone for log files, in "TZ Database" format)
+BASE_URL = "requests"                     # default: none
 
 # Data Storage
-BASE_URL = "requests"                     # default: none
 DATA_DIR = "/example/directory"           # default: /config (defaults to "data" outside of docker)
 DB_ENGINE = "MYSQL"                       # default: SQLITE3
 MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
 DEBUG = False                             # default: true (NEVER enable this in production)
-USE_ROLLING_SECRET_KEY = True             # default: false (will sign out users when conreq restarts)
+ROTATE_SECRET_KEY = True             # default: false (will sign out users when conreq restarts)
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (false will disable X-Frame-Options)
 USE_SSL = True                            # default: false
 SSL_CERT = "/path/to/cert.pem"            # default: none
