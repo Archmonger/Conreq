@@ -7,7 +7,9 @@
 
 Conreq, a **Con**tent **Req**uesting platform.
 
-Have a question or want to contribute? Join us on [Discord](https://discord.gg/gQhGZzEjmX)! Also, check out our [Building Guide](https://github.com/Archmonger/Conreq/wiki/Building-Guide) and [Programmers Guide](https://github.com/Archmonger/Conreq/wiki/Programmers-Guide)!
+Want to join the community or have a question? Join us on [Discord](https://discord.gg/gQhGZzEjmX) or discuss with us on [GitHub Discussions](https://github.com/Archmonger/Conreq/discussions)!
+
+Are you a developer and want to contrinbute? Check out our [Building Guide](https://github.com/Archmonger/Conreq/wiki/Building-Guide) and [Programmers Guide](https://github.com/Archmonger/Conreq/wiki/Programmers-Guide)!
 
 ## Installation (Deployment Environment)
 
