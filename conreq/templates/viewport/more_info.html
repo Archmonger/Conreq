@@ -10,19 +10,24 @@
                 <img src="{% static 'images/transparent.png' %}"
                     data-src="{% firstof content.poster_path content.remotePoster %}" class="more-info-poster lazy"
                     draggable="false">
+
                 {% if content.belongs_to_collection %}
                 <div class="more-info-collection-btn no-highlighting">VIEW COLLECTION </div>
                 {% endif %}
+
             </div>
             <div class="more-info-quick-info">
+
                 {% if content.original_name %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Original Name </div>
                     <div class="quick-info"> {{content.original_name}} </div>
                 </div>
                 {% endif %}
+
                 <div class="quick-info-block availability">
                     <div class="quick-info bold"> Availabity </div>
+
                     <div class="quick-info">
                         {% if content.availability == available %} Available
                         <div class="inline-availablity-dot green"> </div>
@@ -32,6 +37,7 @@
                         <div class="inline-availablity-dot red"> </div>
                         {% endif %}
                     </div>
+
                 </div>
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Requested </div>
@@ -41,12 +47,14 @@
                         </div>
                     </div>
                 </div>
+
                 {% if content.status %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Release Status </div>
                     <div class="quick-info"> {{content.status}} </div>
                 </div>
                 {% endif %}
+
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Content Type </div>
 
@@ -60,6 +68,7 @@
                         </div>
                     </a>
                 </div>
+
                 {% if content.genres %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Genres </div>
@@ -70,23 +79,32 @@
                     </div>
                 </div>
                 {% endif %}
+
                 <br>
-                <br> {% if content.year %}
+                <br>
+
+                {% if content.year %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Year </div>
                     <div class="quick-info"> {{content.year}} </div>
                 </div>
-                {% endif %}{% if content.last_air_date_formatted %}
+                {% endif %}
+
+                {% if content.last_air_date_formatted %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Last Episode Air Date </div>
                     <div class="quick-info"> {{content.last_air_date_formatted}} </div>
                 </div>
-                {% endif %} {% if content.release_date_formatted %}
+                {% endif %}
+
+                {% if content.release_date_formatted %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Release Date </div>
                     <div class="quick-info"> {{content.release_date_formatted}} </div>
                 </div>
-                {% endif %} {% if content.spoken_languages %}
+                {% endif %}
+
+                {% if content.spoken_languages %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Languages </div>
                     <div class="quick-info">
@@ -95,22 +113,30 @@
                         {% endfor %}
                     </div>
                 </div>
-                {% endif %} {% if content.runtime %}
+                {% endif %}
+
+                {% if content.runtime %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Runtime </div>
                     <div class="quick-info"> {{content.runtime}} </div>
                 </div>
-                {% endif %} {% if content.budget %}
+                {% endif %}
+
+                {% if content.budget %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Budget </div>
                     <div class="quick-info"> ${{content.budget}} </div>
                 </div>
-                {% endif %} {% if content.revenue %}
+                {% endif %}
+
+                {% if content.revenue %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Revenue </div>
                     <div class="quick-info"> ${{content.revenue}} </div>
                 </div>
-                {% endif %} {% if content.production_companies %}
+                {% endif %}
+
+                {% if content.production_companies %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Production Companies </div>
                     <div class="quick-info">
@@ -129,20 +155,26 @@
                         {% endfor %}
                     </div>
                 </div>
-                {% endif %} {% if content.keywords.results %}
+                {% endif %}
+
+                {% if content.keywords.results %}
                 <br>
                 <br>
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Tags </div>
                     <div class="quick-info">
-                        {% if content.keywords.results %} {% for keyword in content.keywords.results %}
+                        {% if content.keywords.results %}
+                        {% for keyword in content.keywords.results %}
                         <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
-                        {% endfor %} {% elif content.keywords.keywords %} {% for keyword in content.keywords.keywords %}
+                        {% endfor %} {% elif content.keywords.keywords %}
+                        {% for keyword in content.keywords.keywords %}
                         <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
-                        {% endfor %} {% endif %}
+                        {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}
+
             </div>
         </div>
         <div class="right-group">
@@ -160,7 +192,7 @@
                 <div class="standard-btn box-shadow no-highlighting available"> AVAILABLE </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
                 <div class="standard-btn series-modal-btn view-episodes box-shadow no-highlighting clickable"
-                    data-content-type="tv" data-tmdb-id="{{content.id}}"
+                    data-content-type="tv" data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
                     data-modal-url="{% url 'more_info:series_modal' %}">
                     <i class="fas fa-plus"></i>
                     VIEW EPISODES
@@ -172,7 +204,7 @@
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="standard-btn request-btn box-shadow no-highlighting"
                     data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
-                    data-tmdb-id="{{content.id}}">
+                    data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}">
                     <i class="fas fa-plus"></i>
                     REQUEST
                 </div>
@@ -206,11 +238,13 @@
                 {% endif%}
 
             </div>
+
             <div class="more-info-overview grid-block contains-carousel">
                 <div class="more-info-summary">
                     <div class="bold more-info-head contains-carousel"> Overview </div>
                     {% firstof content.overview "No summary available."%}
                 </div>
+
                 {% if content.reviews.results %}
                 <div class="more-info-reviews">
                     {% for review in content.reviews.results %}
@@ -218,47 +252,20 @@
                     {% endfor %}
                 </div>
                 {% endif %}
+
             </div>
-            {% if recommended.results %}
-            <div class="more-info-recommendations grid-block contains-carousel">
-                <div class="bold more-info-head contains-carousel"> Recommendations
-                    <div class="recommended-carousel-controls carousel-controls tns-controls">
-                        <div class="recommended-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
-                        </div>
-                        <div class="recommended-next"><i id="discover-fa" class="fas fa-angle-right"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="recommended-outer-container carousel-outer-container">
-                    <div class="recommended-inner-container carousel-inner-container">
-                        {% for card in recommended.results %} {% if card.poster_path and card.conreq_valid_id %}
-                        <div class="poster-container-wrapper">
-                            {% include "cards/tmdb.html" %}
-                        </div>
-                        {% endif %} {% endfor %}
-                    </div>
-                </div>
+
+            {% if not content.tvdbId %}
+            <div id="recommended_loader"
+                data-url="{% url 'more_info:recommended' %}?tmdb_id={{content.id}}&content_type={{content_type}}"></div>
+            {% endif %}
+
+            {% if collection_id %}
+            <div id="collection_loader" data-url="{% url 'more_info:collection' %}?collection_id={{collection_id}}">
             </div>
-            {% endif %} {% if collection %}
-            <div class="more-info-collection grid-block contains-carousel">
-                <div class="bold more-info-head contains-carousel"> {{collection.name}}
-                    <div class="collection-carousel-controls carousel-controls tns-controls">
-                        <div class="collection-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
-                        </div>
-                        <div class="collection-next"><i id="discover-fa" class="fas fa-angle-right"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="collection-outer-container carousel-outer-container">
-                    <div class="collection-inner-container carousel-inner-container">
-                        {% for card in collection.parts %}
-                        <div class="poster-container-wrapper">
-                            {% include "cards/tmdb.html" %}
-                        </div> {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% endif %} {% if content.credits.cast %}
+            {% endif %}
+
+            {% if content.credits.cast %}
             <div class="more-info-cast grid-block contains-carousel">
                 <div class="bold more-info-head contains-carousel"> Cast Members
                     <div class="cast-carousel-controls carousel-controls tns-controls">
@@ -278,7 +285,9 @@
                     </div>
                 </div>
             </div>
-            {% endif %} {% if content.videos.results %}
+            {% endif %}
+
+            {% if content.videos.results %}
             <div class="more-info-videos grid-block contains-carousel">
                 <div class="bold more-info-head contains-carousel"> Videos and Trailers
                     <div class="videos-carousel-controls carousel-controls tns-controls">
@@ -298,7 +307,9 @@
                     </div>
                 </div>
             </div>
-            {% endif %} {% if content.images.backdrops %}
+            {% endif %}
+
+            {% if content.images.backdrops %}
             <div class="more-info-images grid-block contains-carousel">
                 <div class="bold more-info-head contains-carousel"> Artwork and Images
                     <div class="artwork-carousel-controls carousel-controls tns-controls">
@@ -319,6 +330,7 @@
                 </div>
             </div>
             {% endif %}
+
         </div>
     </div>
 </div>

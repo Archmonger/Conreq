@@ -1,6 +1,3 @@
-from threading import Thread
-from time import sleep
-
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
@@ -14,7 +11,6 @@ from conreq.utils.apps import (
     set_many_availability,
     set_single_availability,
 )
-from conreq.utils.generic import ReturnThread
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -47,54 +43,20 @@ def more_info(request):
         # Get all the basic metadata for a given ID
         content = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
 
-        # Get recommended results
-        similar_and_recommended_thread = ReturnThread(
-            target=content_discovery.similar_and_recommended,
-            args=[tmdb_id, content_type],
-        )
-        similar_and_recommended_thread.start()
-
         # Determine the availability of the current TMDB ID
-        thread = Thread(target=set_single_availability, args=[content])
-        thread.start()
-        thread_list.append(thread)
+        set_single_availability(content)
 
         # Pre-process data attributes within tmdb_result
-        thread = Thread(target=preprocess_tmdb_result, args=[content])
-        thread.start()
-        thread_list.append(thread)
+        preprocess_tmdb_result(content)
 
         # Get collection information
         if (
             content.__contains__("belongs_to_collection")
             and content["belongs_to_collection"] is not None
         ):
-            tmdb_collection = True
-            tmdb_collection_thread = ReturnThread(
-                target=content_discovery.collections,
-                args=[content["belongs_to_collection"]["id"]],
-            )
-            tmdb_collection_thread.start()
+            tmdb_collection_id = content["belongs_to_collection"]["id"]
         else:
-            tmdb_collection = None
-
-        # Recommended content
-        tmdb_recommended = similar_and_recommended_thread.join()
-        if not isinstance(tmdb_recommended, dict) or len(tmdb_recommended) == 0:
-            tmdb_recommended = None
-
-        # Determine the availability for all recommended content
-        thread = Thread(
-            target=set_many_availability, args=[tmdb_recommended["results"]]
-        )
-        thread.start()
-        thread_list.append(thread)
-
-        # Wait for thread computation to complete
-        for thread in thread_list:
-            thread.join()
-        if tmdb_collection is not None:
-            tmdb_collection = tmdb_collection_thread.join()
+            tmdb_collection_id = None
 
         # Check if the user has already requested this
         requested = False
@@ -109,8 +71,7 @@ def more_info(request):
         context = generate_context(
             {
                 "content": content,
-                "recommended": tmdb_recommended,
-                "collection": tmdb_collection,
+                "collection_id": tmdb_collection_id,
                 "content_type": content["content_type"],
                 "requested": requested,
             }
@@ -123,18 +84,10 @@ def more_info(request):
         thread_list = []
 
         # Preprocess results
-        thread = Thread(target=preprocess_arr_result, args=[content])
-        thread.start()
-        thread_list.append(thread)
+        preprocess_arr_result(content)
 
         # Determine the availability
-        thread = Thread(target=set_single_availability, args=[content])
-        thread.start()
-        thread_list.append(thread)
-
-        # Wait for thread computation to complete
-        for thread in thread_list:
-            thread.join()
+        set_single_availability(content)
 
         # Generate context for page rendering
         context = generate_context(
@@ -240,4 +193,50 @@ def content_preview_modal(request):
 
         context = generate_context({"content": content, "requested": requested})
         template = loader.get_template("modal/content_preview.html")
+        return HttpResponse(template.render(context, request))
+
+
+@cache_page(60)
+@login_required
+@performance_metrics()
+def recommended(request):
+    tmdb_id = request.GET.get("tmdb_id", None)
+    content_type = request.GET.get("content_type", None)
+    if tmdb_id and content_type:
+        content_discovery = ContentDiscovery()
+
+        tmdb_recommended = content_discovery.similar_and_recommended(
+            tmdb_id, content_type
+        )
+
+        if not isinstance(tmdb_recommended, dict) or not tmdb_recommended:
+            tmdb_recommended = None
+
+        else:
+            set_many_availability(tmdb_recommended["results"])
+
+        context = generate_context({"recommended": tmdb_recommended})
+        template = loader.get_template("viewport/more_info_recommended.html")
+        return HttpResponse(template.render(context, request))
+
+
+@cache_page(60)
+@login_required
+@performance_metrics()
+def collection(request):
+    collection_id = request.GET.get("collection_id", None)
+
+    if collection_id:
+        content_discovery = ContentDiscovery()
+
+        tmdb_collection = content_discovery.collections(collection_id)
+
+        if not isinstance(tmdb_collection, dict) or not tmdb_collection:
+            tmdb_collection = None
+
+        else:
+            set_many_availability(tmdb_collection["parts"])
+
+        context = generate_context({"collection": tmdb_collection})
+        template = loader.get_template("viewport/more_info_collection.html")
         return HttpResponse(template.render(context, request))

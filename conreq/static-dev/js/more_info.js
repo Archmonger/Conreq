@@ -64,20 +64,29 @@ var create_video_carousel = function () {
 
 var recommended_carousel = null;
 var create_recommended_carousel = function () {
-  if ($(".recommended-inner-container").length) {
-    recommended_carousel = tns({
-      container: ".recommended-inner-container",
-      controlsContainer: ".recommended-carousel-controls",
-      swipeAngle: 60,
-      autoWidth: true,
-      loop: false,
-      items: 3,
-      speed: 300,
-      mouseDrag: true,
-      gutter: 10,
-      nav: false,
-      slideBy: "page",
-      edgePadding: 20,
+  let loader = $("#recommended_loader");
+  if (loader.length) {
+    $.get(loader.data("url"), function (fetched_html) {
+      loader.replaceWith(DOMPurify.sanitize(fetched_html));
+
+      if ($(".recommended-inner-container").length) {
+        recommended_carousel = tns({
+          container: ".recommended-inner-container",
+          controlsContainer: ".recommended-carousel-controls",
+          swipeAngle: 60,
+          autoWidth: true,
+          loop: false,
+          items: 3,
+          speed: 300,
+          mouseDrag: true,
+          gutter: 10,
+          nav: false,
+          slideBy: "page",
+          edgePadding: 20,
+        });
+
+        $(".more-info-recommendations").collapse("show");
+      }
     });
   }
 };
@@ -127,26 +136,35 @@ var create_image_carousel = function () {
 
 var collection_carousel = null;
 var create_collection_carousel = function () {
-  if ($(".collection-inner-container").length) {
-    collection_carousel = tns({
-      container: ".collection-inner-container",
-      controlsContainer: ".collection-carousel-controls",
-      swipeAngle: 60,
-      autoWidth: true,
-      loop: false,
-      items: 3,
-      speed: 300,
-      mouseDrag: true,
-      gutter: 10,
-      nav: false,
-      slideBy: "page",
-      edgePadding: 20,
-    });
+  let loader = $("#collection_loader");
+  if (loader.length) {
+    $.get(loader.data("url"), function (fetched_html) {
+      loader.replaceWith(DOMPurify.sanitize(fetched_html));
 
-    $(".more-info-collection-btn").click(function () {
-      $(".more-info-collection")[0].scrollIntoView({
-        behavior: "smooth",
-      });
+      if ($(".collection-inner-container").length) {
+        collection_carousel = tns({
+          container: ".collection-inner-container",
+          controlsContainer: ".collection-carousel-controls",
+          swipeAngle: 60,
+          autoWidth: true,
+          loop: false,
+          items: 3,
+          speed: 300,
+          mouseDrag: true,
+          gutter: 10,
+          nav: false,
+          slideBy: "page",
+          edgePadding: 20,
+        });
+
+        $(".more-info-collection-btn").click(function () {
+          $(".more-info-collection")[0].scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+
+        $(".more-info-recommendations").collapse("show");
+      }
     });
   }
 };
