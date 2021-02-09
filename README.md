@@ -29,7 +29,7 @@ MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
 DEBUG = False                             # default: true (NEVER enable this in production)
-ROTATE_SECRET_KEY = True             # default: false (will sign out users when conreq restarts)
+ROTATE_SECRET_KEY = True                  # default: false (will sign out users when conreq restarts)
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (false will disable X-Frame-Options)
 USE_SSL = True                            # default: false
 SSL_CERT = "/path/to/cert.pem"            # default: none
@@ -38,6 +38,14 @@ SSL_KEY = "/path/to/key.pem"              # default: none
 
 # Screenshots
 
-![Login screen](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_1.png?raw=true)
-![Discover tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_2.png?raw=true)
-![More Info Tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_3.png?raw=true)
+| ![Login screen](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_1.png?raw=true) | ![Discover tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_2.png?raw=true) |
+| :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
+|                                                Login Screen                                                 |                                                Discover Tab                                                 |
+
+| ![More Info Tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_3.png?raw=true) | ![Content Preview Modal](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_5.png?raw=true) |
+| :----------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+|                                                More Info Tab                                                 |                                                Content Preview Modal                                                 |
+
+| ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_5.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_6.png?raw=true) |
+| :----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+|                                                Discover Tab Mobile                                                 |                                               More Info Tab on Mobile                                               |
