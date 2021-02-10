@@ -229,12 +229,13 @@ class ContentDiscovery:
         """
         try:
             thread_list = []
+            merged_results = None
 
             # Get recommended page one
             recommend_page_one = self.__recommended(tmdb_id, content_type, 1)
 
             # Gather additional recommended pages
-            if recommend_page_one["total_pages"] > 1:
+            if recommend_page_one and recommend_page_one["total_pages"] > 1:
                 for page_number in range(2, recommend_page_one["total_pages"]):
                     if page_number <= MAX_RECOMMENDED_PAGES:
                         thread = ReturnThread(
@@ -248,7 +249,7 @@ class ContentDiscovery:
             similar_page_one = self.__similar(tmdb_id, content_type, 1)
 
             # Gather up additional similar pages
-            if similar_page_one["total_pages"] > 1:
+            if similar_page_one and similar_page_one["total_pages"] > 1:
                 for page_number in range(2, similar_page_one["total_pages"]):
                     if page_number <= MAX_SIMILAR_PAGES:
                         thread = ReturnThread(
@@ -258,17 +259,26 @@ class ContentDiscovery:
                         thread.start()
                         thread_list.append(thread)
 
-            # Merge results of the first page of similar and recommended
-            merged_results = self.__merge_results(recommend_page_one, similar_page_one)
+            # Merge page one while waiting for the others to fetch
+            if recommend_page_one and similar_page_one:
+                merged_results = self.__merge_results(
+                    recommend_page_one, similar_page_one
+                )
+            # Either similar or recommended didn't have anything in them.
+            else:
+                merged_results = (
+                    recommend_page_one if recommend_page_one else similar_page_one
+                )
 
-            # Wait for all the threads to complete and merge them in
-            for thread in thread_list:
-                merged_results = self.__merge_results(merged_results, thread.join())
+            if merged_results:
+                # Wait for all the threads to complete and merge them in
+                for thread in thread_list:
+                    merged_results = self.__merge_results(merged_results, thread.join())
 
-            self.determine_id_validity(merged_results)
+                self.determine_id_validity(merged_results)
 
-            # Shuffle and return
-            return self.__shuffle_results(merged_results)
+                # Shuffle and return
+                return self.__shuffle_results(merged_results)
 
         except:
             log.handler(
