@@ -238,16 +238,16 @@ var get_url = function (location, success = function () {}) {
 
 // Gets a URL and retries if it fails
 let get_url_retries = 0;
-var get_url_retry = async function (location, success = function () {}) {
+var get_viewport = function (location, success = function () {}) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
     get_url_retries = 0;
     return success(response);
   }).fail(function () {
     get_url_retries++;
-    if (get_url_retries <= 5) {
+    if (get_url_retries <= 5 && this.url == get_window_location()) {
       setTimeout(function () {
-        get_url_retry(location, success);
+        get_viewport(location, success);
       }, 200 * (get_url_retries * 5));
     } else {
       conreq_no_response_toast_message();
