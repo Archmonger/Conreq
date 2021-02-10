@@ -471,13 +471,3 @@ def add_unique_to_db(model, **kwargs):
         new_request = model(**kwargs)
         new_request.clean_fields()
         new_request.save()
-
-
-def request_is_unique(entry, request_dict):
-    """Checks if a row in the request model is unique."""
-    key = entry["source"] + entry["content_type"] + entry["content_id"]
-    if not request_dict.__contains__(key):
-        request_dict[key] = True
-        return True
-
-    return False
