@@ -22,8 +22,6 @@ MAX_SERIES_FETCH_RETRIES = 5
 
 __logger = log.get_logger(__name__)
 
-# Create your views here.
-
 
 @cache_page(60)
 @login_required

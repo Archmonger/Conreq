@@ -35,8 +35,6 @@ ISSUE_LIST = [
     ("Other.", ["NOTIFY ADMIN"]),
 ]
 
-# Create your views here.
-
 
 @login_required
 @performance_metrics()

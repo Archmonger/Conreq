@@ -7,9 +7,6 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 
 
-# Create your views here.
-
-
 @cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)

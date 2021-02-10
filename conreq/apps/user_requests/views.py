@@ -24,8 +24,6 @@ from .helpers import add_save_request_movie, generate_requests_cards
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 __logger = log.get_logger(__name__)
 
-# Create your views here.
-
 
 @login_required
 @performance_metrics()

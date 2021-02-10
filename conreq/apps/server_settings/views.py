@@ -11,8 +11,6 @@ from django.views.decorators.cache import cache_page
 
 __logger = log.get_logger(__name__)
 
-# Create your views here.
-
 
 @cache_page(1)
 @login_required

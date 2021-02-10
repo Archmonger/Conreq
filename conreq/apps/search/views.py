@@ -1,4 +1,3 @@
-# from django.shortcuts import render
 from threading import Thread
 
 from conreq.core.content_discovery import ContentDiscovery
@@ -13,9 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
-
-
-# Create your views here.
 
 
 @cache_page(30)

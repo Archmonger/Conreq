@@ -11,8 +11,6 @@ from django.template import loader
 
 BASE_URL = get_base_url()
 
-# Create your views here.
-
 
 @performance_metrics()
 def initialization(request):
