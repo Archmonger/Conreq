@@ -35,7 +35,7 @@ class ContentDiscovery:
     """
 
     def __init__(self):
-        # Initialize the TMDB API library
+        # TMDB API key is safe to hard-code. It can only access publicly available data.
         tmdb.API_KEY = "112fd4c96274603f68620c78067d5422"
 
         # Creating a logger (for log files)
