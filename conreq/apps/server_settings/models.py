@@ -8,7 +8,7 @@ from url_or_relative_url_field.fields import URLOrRelativeURLField
 # Create your models here.
 class ConreqConfig(SingletonModel):
     # Basic settings
-    conreq_api_key = models.CharField(max_length=100, default="", blank=True)
+    conreq_api_key = models.CharField(max_length=255, default="", blank=True)
     conreq_app_name = models.CharField(max_length=100, default="Conreq")
     conreq_language = models.CharField(max_length=100, default="en")
     conreq_app_logo = models.ImageField(blank=True)
@@ -24,7 +24,7 @@ class ConreqConfig(SingletonModel):
 
     # Sonarr settings
     sonarr_url = ExtendedURLField(default="", blank=True)
-    sonarr_api_key = models.CharField(max_length=100, default="", blank=True)
+    sonarr_api_key = models.CharField(max_length=255, default="", blank=True)
     sonarr_anime_quality_profile = models.PositiveIntegerField(default=1)
     sonarr_anime_folder = models.PositiveIntegerField(default=1)
     sonarr_tv_quality_profile = models.PositiveIntegerField(default=1)
@@ -34,7 +34,7 @@ class ConreqConfig(SingletonModel):
 
     # Radarr Settings
     radarr_url = ExtendedURLField(default="", blank=True)
-    radarr_api_key = models.CharField(max_length=100, default="", blank=True)
+    radarr_api_key = models.CharField(max_length=255, default="", blank=True)
     radarr_anime_quality_profile = models.PositiveIntegerField(default=1)
     radarr_anime_folder = models.PositiveIntegerField(default=1)
     radarr_movies_quality_profile = models.PositiveIntegerField(default=1)
@@ -44,7 +44,7 @@ class ConreqConfig(SingletonModel):
     # Email settings
     email_smtp_server = models.CharField(max_length=255, default="", blank=True)
     email_smtp_port = models.PositiveIntegerField(default=587)
-    email_username = EncryptedCharField(max_length=100, default="", blank=True)
-    email_password = EncryptedCharField(max_length=100, default="", blank=True)
+    email_username = EncryptedCharField(max_length=255, default="", blank=True)
+    email_password = EncryptedCharField(max_length=255, default="", blank=True)
     email_sender_name = models.CharField(max_length=50, default="", blank=True)
     email_enable_tls = models.BooleanField(default=True)
