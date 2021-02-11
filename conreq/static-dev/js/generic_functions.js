@@ -330,3 +330,27 @@ var timer_seconds = function () {
   // get seconds
   return Math.round(time_diff);
 };
+
+// Change a server setting
+var change_server_setting = function (setting_name = null, value = null) {
+  let json_payload = {
+    setting_name: setting_name,
+    value: value,
+  };
+  post_json(
+    $(".viewport.server.settings").data("url"),
+    json_payload,
+    function (json_response) {
+      if (json_response.command_name == "new conreq api key") {
+        $("#conreq-api-key").text(json_response.value);
+      }
+      if (json_response.success) {
+        settings_save_success_toast_message();
+      } else {
+        settings_save_failed_toast_message(json_response.error_message);
+      }
+    }
+  ).fail(function () {
+    settings_save_failed_toast_message("Internal server error.");
+  });
+};

@@ -28,14 +28,6 @@ function connect() {
     // Check for valid commands
     if (json_response.command_name == "forbidden") {
       location.reload();
-    } else if (json_response.command_name == "server settings") {
-      if (json_response.success) {
-        settings_save_success_toast_message();
-      } else {
-        settings_save_failed_toast_message(json_response.error_message);
-      }
-    } else if (json_response.command_name == "new conreq api key") {
-      $("#conreq-api-key").text(json_response.value);
     } else {
       console.log(
         "Unknown command " + json_response.command_name + " received!"
@@ -104,15 +96,3 @@ function connect() {
 
 // First connection attempt
 connect();
-
-// SENDABLE COMMAND: CHANGE SERVER SETTING
-var change_server_setting = function (setting_name = null, value = null) {
-  let json_payload = {
-    command_name: "server settings",
-    parameters: {
-      setting_name: setting_name,
-      value: value,
-    },
-  };
-  COMMAND_SOCKET.send(JSON.stringify(json_payload));
-};
