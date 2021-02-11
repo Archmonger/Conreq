@@ -1,14 +1,20 @@
+from conreq.apps.base.tasks import background_task
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.apps import set_many_availability
+from conreq.utils.apps import (
+    add_unique_to_db,
+    obtain_radarr_parameters,
+    obtain_sonarr_parameters,
+    set_many_availability,
+)
 from conreq.utils.generic import is_key_value_in_list
 
 __logger = log.get_logger(__name__)
 
 
-def add_save_request_movie(content_manager, tmdb_id, radarr_params, username):
+def radarr_request_background_task(tmdb_id, content_manager, radarr_params, username):
     # Check if the movie is already within Radarr's collection
     movie = content_manager.get(tmdb_id=tmdb_id)
 
@@ -27,6 +33,93 @@ def add_save_request_movie(content_manager, tmdb_id, radarr_params, username):
         username + " requested movie " + movie["title"],
         log.INFO,
         __logger,
+    )
+
+
+def sonarr_request_background_task(
+    tvdb_id, request_parameters, content_manager, sonarr_params, username
+):
+    # Check if the show is already within Sonarr's collection
+    show = content_manager.get(tvdb_id=tvdb_id)
+
+    # If it doesn't already exists, add then request it
+    if show is None:
+        show = content_manager.add(
+            tvdb_id=tvdb_id,
+            quality_profile_id=sonarr_params["sonarr_profile_id"],
+            root_dir=sonarr_params["sonarr_root"],
+            series_type=sonarr_params["series_type"],
+            season_folders=sonarr_params["season_folders"],
+        )
+
+    # Request
+    content_manager.request(
+        sonarr_id=show["id"],
+        seasons=request_parameters["seasons"],
+        episode_ids=request_parameters["episode_ids"],
+    )
+
+    log.handler(
+        username + " requested TV series " + show["title"],
+        log.INFO,
+        __logger,
+    )
+
+
+def sonarr_request(
+    tvdb_id, tmdb_id, request, request_parameters, content_manager, content_discovery
+):
+    sonarr_params = obtain_sonarr_parameters(
+        content_discovery, content_manager, tmdb_id, tvdb_id
+    )
+
+    # Request in the background
+    background_task(
+        sonarr_request_background_task,
+        tvdb_id,
+        request_parameters,
+        content_manager,
+        sonarr_params,
+        request.user.username,
+    )
+
+    # Save to DB
+    if tmdb_id:
+        content_id = tmdb_id
+        source = "tmdb"
+    else:
+        content_id = tvdb_id
+        source = "tvdb"
+    add_unique_to_db(
+        UserRequest,
+        content_id=content_id,
+        source=source,
+        content_type="tv",
+        requested_by=request.user,
+    )
+
+
+def radarr_request(tmdb_id, request, content_manager, content_discovery):
+    radarr_params = obtain_radarr_parameters(
+        content_discovery, content_manager, tmdb_id
+    )
+
+    # Request in the background
+    background_task(
+        radarr_request_background_task,
+        tmdb_id,
+        content_manager,
+        radarr_params,
+        request.user.username,
+    )
+
+    # Save to DB
+    add_unique_to_db(
+        UserRequest,
+        content_id=tmdb_id,
+        source="tmdb",
+        content_type="movie",
+        requested_by=request.user,
     )
 
 
