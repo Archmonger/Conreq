@@ -13,12 +13,12 @@ from conreq.utils.apps import (
 )
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
 # Globals
-MAX_SERIES_FETCH_RETRIES = 5
+MAX_SERIES_FETCH_RETRIES = 10
 
 __logger = log.get_logger(__name__)
 
@@ -29,7 +29,6 @@ __logger = log.get_logger(__name__)
 def more_info(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/more_info.html")
-    thread_list = []
 
     # Get the ID from the URL
     tmdb_id = request.GET.get("tmdb_id", None)
@@ -155,11 +154,20 @@ def series_modal(request):
                 __logger,
             )
 
-    context = generate_context(
-        {"seasons": series["seasons"], "tvdb_id": tvdb_id, "report_modal": report_modal}
-    )
-    template = loader.get_template("modal/series_selection.html")
-    return HttpResponse(template.render(context, request))
+    # Series successfully obtained from Sonarr
+    if series:
+        context = generate_context(
+            {
+                "seasons": series["seasons"],
+                "tvdb_id": tvdb_id,
+                "report_modal": report_modal,
+            }
+        )
+        template = loader.get_template("modal/series_selection.html")
+        return HttpResponse(template.render(context, request))
+
+    # Sonarr couldn't process this request
+    return HttpResponseNotFound()
 
 
 @cache_page(60)
