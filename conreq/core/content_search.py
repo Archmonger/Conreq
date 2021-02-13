@@ -93,11 +93,13 @@ class Search:
                     )
 
                     return cache.handler(
-                        "sonarr search cache",
-                        function=self.__television,
+                        "sonarr search",
                         page_key=query,
-                        query=query,
+                        function=self.__television,
                         cache_duration=SEARCH_CACHE_TIMEOUT,
+                        kwargs={
+                            "query": query,
+                        },
                     )
 
                 log.handler(
@@ -131,11 +133,13 @@ class Search:
                     )
 
                     return cache.handler(
-                        "radarr search cache",
-                        function=self.__movie,
+                        "radarr search",
                         page_key=query,
-                        query=query,
+                        function=self.__movie,
                         cache_duration=SEARCH_CACHE_TIMEOUT,
+                        kwargs={
+                            "query": query,
+                        },
                     )
 
                 log.handler(

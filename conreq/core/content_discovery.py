@@ -51,7 +51,7 @@ class ContentDiscovery:
         # Shuffle the order of the first N many pages for randomized discovery
         if page_number <= MAX_SHUFFLED_PAGES:
             page = cache.handler(
-                "all page numbers cache",
+                "discover all page numbers",
                 function=self.__shuffled_page_numbers,
                 cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
             )[page_number]
@@ -59,13 +59,11 @@ class ContentDiscovery:
             page = page_number
 
         return cache.handler(
-            "all cache",
-            self.__all,
-            page,
-            False,
-            SHUFFLED_PAGE_CACHE_TIMEOUT,
-            page,
-            page_multiplier,
+            "discover all",
+            page_key=page,
+            function=self.__all,
+            cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
+            args=[page, page_multiplier],
         )
 
     def tv(self, page_number, page_multiplier=1):
@@ -77,7 +75,7 @@ class ContentDiscovery:
         # Shuffle the order of the first N many pages for randomized discovery
         if page_number <= MAX_SHUFFLED_PAGES:
             page = cache.handler(
-                "tv page numbers cache",
+                "discover tv page numbers",
                 function=self.__shuffled_page_numbers,
                 cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
             )[page_number]
@@ -85,13 +83,11 @@ class ContentDiscovery:
             page = page_number
 
         return cache.handler(
-            "tv cache",
-            self.__tv,
-            page,
-            False,
-            SHUFFLED_PAGE_CACHE_TIMEOUT,
-            page,
-            page_multiplier,
+            "discover tv",
+            page_key=page,
+            function=self.__tv,
+            cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
+            args=[page, page_multiplier],
         )
 
     def movies(self, page_number, page_multiplier=1):
@@ -103,7 +99,7 @@ class ContentDiscovery:
         # Shuffle the order of the first N many pages for randomized discovery
         if page_number <= MAX_SHUFFLED_PAGES:
             page = cache.handler(
-                "movie page numbers cache",
+                "discover movies page numbers",
                 function=self.__shuffled_page_numbers,
                 cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
             )[page_number]
@@ -111,13 +107,11 @@ class ContentDiscovery:
             page = page_number
 
         return cache.handler(
-            "movie cache",
-            self.__movies,
-            page,
-            False,
-            SHUFFLED_PAGE_CACHE_TIMEOUT,
-            page,
-            page_multiplier,
+            "discover movies",
+            page_key=page,
+            function=self.__movies,
+            cache_duration=SHUFFLED_PAGE_CACHE_TIMEOUT,
+            args=[page, page_multiplier],
         )
 
     def popular(self, page_number, page_multiplier=1):
@@ -191,21 +185,21 @@ class ContentDiscovery:
             # Perform a discovery search for a movie
             if content_type.lower() == "movie":
                 return cache.handler(
-                    "discover movie cache",
-                    function=tmdb.Discover().movie,
+                    "discover movies by filter",
                     page_key=str(kwargs),
+                    function=tmdb.Discover().movie,
                     cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
-                    **kwargs,
+                    kwargs=kwargs,
                 )
 
             # Perform a discovery search for a TV show
             if content_type.lower() == "tv":
                 return cache.handler(
-                    "discover tv cache",
-                    function=tmdb.Discover().tv,
+                    "discover tv by filter",
                     page_key=str(kwargs),
+                    function=tmdb.Discover().tv,
                     cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
-                    **kwargs,
+                    kwargs=kwargs,
                 )
 
             # Content Type was invalid
@@ -314,21 +308,21 @@ class ContentDiscovery:
             # Obtain a movie by ID
             if content_type.lower() == "movie":
                 return cache.handler(
-                    "movie by id cache",
-                    function=tmdb.Movies(tmdb_id).info,
+                    "get movie by tmdb id",
                     page_key=tmdb_id,
+                    function=tmdb.Movies(tmdb_id).info,
                     cache_duration=GET_BY_TMDB_ID_CACHE_TIMEOUT,
-                    append_to_response=extras,
+                    kwargs={"append_to_response": extras},
                 )
 
             # Obtain a TV show by ID
             if content_type.lower() == "tv":
                 return cache.handler(
-                    "tv by id cache",
-                    function=tmdb.TV(tmdb_id).info,
+                    "get tv by tmdb id",
                     page_key=tmdb_id,
+                    function=tmdb.TV(tmdb_id).info,
                     cache_duration=GET_BY_TMDB_ID_CACHE_TIMEOUT,
-                    append_to_response=extras,
+                    kwargs={"append_to_response": extras},
                 )
 
             # Content Type was invalid
@@ -376,16 +370,16 @@ class ContentDiscovery:
             # Obtain a movie's external IDs
             if content_type.lower() == "movie":
                 return cache.handler(
-                    "movie external id cache",
-                    function=tmdb.Movies(tmdb_id).external_ids,
+                    "get movie external ids",
                     page_key=tmdb_id,
+                    function=tmdb.Movies(tmdb_id).external_ids,
                     cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
                 )
 
             # Obtain a TV show's external IDs
             if content_type.lower() == "tv":
                 return cache.handler(
-                    "tv external id cache",
+                    "get tv external ids",
                     function=tmdb.TV(tmdb_id).external_ids,
                     page_key=tmdb_id,
                     cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
@@ -417,7 +411,7 @@ class ContentDiscovery:
             # Obtain a movie's genres
             if content_type.lower() == "movie":
                 return cache.handler(
-                    "movie genres cache",
+                    "get all movie genres",
                     function=tmdb.Genres().movie_list,
                     cache_duration=GET_GENRES_CACHE_TIMEOUT,
                 )
@@ -425,7 +419,7 @@ class ContentDiscovery:
             # Obtain a TV show's genres
             if content_type.lower() == "tv":
                 return cache.handler(
-                    "movie genres cache",
+                    "get all tv genres",
                     function=tmdb.Genres().tv_list,
                     cache_duration=GET_GENRES_CACHE_TIMEOUT,
                 )
@@ -541,6 +535,7 @@ class ContentDiscovery:
     def determine_id_validity(self, tmdb_response):
         # Needed because TVDB IDs are required for Sonarr
         external_id_multi_fetch = {}
+        external_id_multi_fetch_results = None
 
         # Create a list of all needed IDs
         for result in tmdb_response["results"]:
@@ -560,7 +555,7 @@ class ContentDiscovery:
                     "function": tmdb.TV(result["id"]).external_ids,
                     "kwargs": {},
                     "args": [],
-                    "card": result,
+                    "card": result,  # Store the card in here to make it slightly easier to find later
                 }
 
             # TMDB Movie card
@@ -568,18 +563,24 @@ class ContentDiscovery:
                 result["conreq_valid_id"] = True
 
         # Grab external IDs if needed
-        external_id_cache_results = cache.handler(
-            "tv external id cache",
-            function=external_id_multi_fetch,
-            cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
-        )
+        if external_id_multi_fetch:
+            external_id_multi_fetch_results = cache.handler(
+                "get tv external ids",
+                function=external_id_multi_fetch,
+                cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
+            )
 
-        # Set the tvdb_id, and if it exists then this TMDB card has a valid ID
-        if external_id_cache_results is not None:
-            for cache_key, external_id_results in external_id_cache_results.items():
+        # Check if a TMDB TV show has a TVDB ID
+        if external_id_multi_fetch_results:
+            for (
+                cache_key,
+                external_id_results,
+            ) in external_id_multi_fetch_results.items():
                 key = obtain_key_from_cache_key(cache_key)
                 try:
-                    if external_id_results["tvdb_id"] is not None:
+                    # Does an ID exist?
+                    if external_id_results["tvdb_id"]:
+                        # Set the ID validity
                         external_id_multi_fetch[key]["card"]["conreq_valid_id"] = True
                         external_id_multi_fetch[key]["card"][
                             "tvdb_id"
@@ -637,7 +638,7 @@ class ContentDiscovery:
     def __popular_movies(self, page_number, page_multiplier):
         # Obtain disovery results through the movie.popular function. Store results in cache.
         return self.__multi_page_fetch(
-            "popular movie cache",
+            "discover popular movies",
             tmdb.Movies().popular,
             page_number,
             "movie",
@@ -647,7 +648,7 @@ class ContentDiscovery:
     def __top_movies(self, page_number, page_multiplier):
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
         return self.__multi_page_fetch(
-            "top movie cache",
+            "discover top movies",
             tmdb.Movies().top_rated,
             page_number,
             "movie",
@@ -657,13 +658,13 @@ class ContentDiscovery:
     def __popular_tv(self, page_number, page_multiplier):
         # Obtain disovery results through the tv.popular function. Store results in cache.
         return self.__multi_page_fetch(
-            "popular tv cache", tmdb.TV().popular, page_number, "tv", page_multiplier
+            "discover popular tv", tmdb.TV().popular, page_number, "tv", page_multiplier
         )
 
     def __top_tv(self, page_number, page_multiplier):
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
         return self.__multi_page_fetch(
-            "top tv cache", tmdb.TV().top_rated, page_number, "tv", page_multiplier
+            "discover top tv", tmdb.TV().top_rated, page_number, "tv", page_multiplier
         )
 
     def __recommended(self, tmdb_id, content_type, page_number):
@@ -678,22 +679,26 @@ class ContentDiscovery:
         try:
             if content_type.lower() == "movie":
                 return cache.handler(
-                    "movie recommendations cache",
-                    function=tmdb.Movies(tmdb_id).recommendations,
+                    "discover recommended movies",
                     page_key=str(tmdb_id) + "page" + str(page_number),
+                    function=tmdb.Movies(tmdb_id).recommendations,
                     cache_duration=RECOMMENDED_CACHE_TIMEOUT,
-                    page=page_number,
-                    language=LANGUAGE,
+                    kwargs={
+                        "language": LANGUAGE,
+                        "page": page_number,
+                    },
                 )
 
             if content_type.lower() == "tv":
                 return cache.handler(
-                    "tv recommendations cache",
-                    function=tmdb.TV(tmdb_id).recommendations,
+                    "discover recommended tv",
                     page_key=str(tmdb_id) + "page" + str(page_number),
+                    function=tmdb.TV(tmdb_id).recommendations,
                     cache_duration=RECOMMENDED_CACHE_TIMEOUT,
-                    page=page_number,
-                    language=LANGUAGE,
+                    kwargs={
+                        "language": LANGUAGE,
+                        "page": page_number,
+                    },
                 )
 
             # Content Type was invalid
@@ -724,22 +729,26 @@ class ContentDiscovery:
         try:
             if content_type.lower() == "movie":
                 return cache.handler(
-                    "movie similar cache",
-                    function=tmdb.Movies(tmdb_id).similar_movies,
+                    "discover similar movies",
                     page_key=str(tmdb_id) + "page" + str(page_number),
+                    function=tmdb.Movies(tmdb_id).similar_movies,
                     cache_duration=SIMILAR_CACHE_TIMEOUT,
-                    page=page_number,
-                    language=LANGUAGE,
+                    kwargs={
+                        "language": LANGUAGE,
+                        "page": page_number,
+                    },
                 )
 
             if content_type.lower() == "tv":
                 return cache.handler(
-                    "tv similar cache",
-                    function=tmdb.TV(tmdb_id).similar,
+                    "discover similar tv",
                     page_key=str(tmdb_id) + "page" + str(page_number),
+                    function=tmdb.TV(tmdb_id).similar,
                     cache_duration=SIMILAR_CACHE_TIMEOUT,
-                    page=page_number,
-                    language=LANGUAGE,
+                    kwargs={
+                        "language": LANGUAGE,
+                        "page": page_number,
+                    },
                 )
 
             # Content Type was invalid
@@ -761,6 +770,7 @@ class ContentDiscovery:
     def __multi_page_fetch(
         self, cache_name, function, page_number, content_type, page_multiplier
     ):
+        """Cache handler wrapper to obtain multiple pages at once (via threads)."""
         # Obtain multiple pages of TMDB queries
         total_pages = page_number * page_multiplier
         thread_list = []
@@ -769,12 +779,13 @@ class ContentDiscovery:
                 target=cache.handler,
                 args=[
                     cache_name,
-                    function,
-                    total_pages - subtractor,
-                    False,
-                    POPULAR_AND_TOP_CACHE_TIMEOUT,
                 ],
-                kwargs={"page": total_pages - subtractor, "language": LANGUAGE},
+                kwargs={
+                    "function": function,
+                    "page_key": total_pages - subtractor,
+                    "cache_duration": POPULAR_AND_TOP_CACHE_TIMEOUT,
+                    "kwargs": {"page": total_pages - subtractor, "language": LANGUAGE},
+                },
             )
             thread.start()
             thread_list.append(thread)
@@ -805,11 +816,13 @@ class ContentDiscovery:
                 for keyword in keywords:
                     # Perform a search
                     keyword_search = cache.handler(
-                        "keyword to id cache",
-                        function=tmdb.Search().keyword,
+                        "keyword to id",
                         page_key=keyword,
+                        function=tmdb.Search().keyword,
                         cache_duration=KEYWORDS_TO_IDS_CACHE_TIMEOUT,
-                        query=keyword,
+                        kwargs={
+                            "query": keyword,
+                        },
                     )["results"]
 
                     for search_result in keyword_search:
@@ -822,11 +835,13 @@ class ContentDiscovery:
             elif len(keywords) >= 1 and isinstance(keywords, str):
                 # Perform a search
                 keyword_search = cache.handler(
-                    "keyword to id cache",
-                    function=tmdb.Search().keyword,
+                    "keyword to id",
                     page_key=keywords,
+                    function=tmdb.Search().keyword,
                     cache_duration=KEYWORDS_TO_IDS_CACHE_TIMEOUT,
-                    query=keywords,
+                    kwargs={
+                        "query": keyword,
+                    },
                 )["results"]
 
                 for search_result in keyword_search:
@@ -865,6 +880,16 @@ class ContentDiscovery:
                 self.__logger,
             )
             return None
+
+    def __determine_id_validity(self, card):
+        """Threaded executable for determine_id_validity()"""
+        try:
+            external_id_results = self.get_external_ids(card["id"], "tv")
+            if external_id_results["tvdb_id"] is not None:
+                card["conreq_valid_id"] = True
+                card["tvdb_id"] = external_id_results["tvdb_id"]
+        except:
+            pass
 
     def __merge_results(self, *args):
         # Merge multiple API results into one

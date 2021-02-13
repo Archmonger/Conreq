@@ -102,14 +102,12 @@ def set_many_availability(results):
     content_manager = ContentManager()
     # Fetch Sonarr and Radarr libraries
     radarr_library = cache.handler(
-        "radarr library cache",
+        "radarr library",
         function=content_manager.get_all_radarr_content,
-        cache_duration=70,
     )
     sonarr_library = cache.handler(
-        "sonarr library cache",
+        "sonarr library",
         function=content_manager.get_all_sonarr_content,
-        cache_duration=70,
     )
 
     # Generate the availability if possible, or get the external ID if a TVDB ID is needed

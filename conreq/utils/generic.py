@@ -19,12 +19,12 @@ class ReturnThread(Thread):
         if self._target is not None:
             self._return = self._target(*self._args, **self._kwargs)
 
-    def join(self, *args, **kwargs):
+    def join(self, timeout=None):
         """
         Join normally like the parent class, but added a return value which
         the parent class join method does not have.
         """
-        super().join(*args, **kwargs)
+        super().join(timeout)
         return self._return
 
 

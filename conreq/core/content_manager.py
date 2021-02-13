@@ -54,7 +54,7 @@ class ContentManager:
             if kwargs.__contains__("tmdb_id"):
                 # Get Radarr's collection
                 results = cache.handler(
-                    "radarr library cache",
+                    "radarr library",
                     function=self.get_all_radarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                     force_update_cache=force_update_cache,
@@ -80,7 +80,7 @@ class ContentManager:
             if kwargs.__contains__("tvdb_id"):
                 # Get Sonarr's collection
                 results = cache.handler(
-                    "sonarr library cache",
+                    "sonarr library",
                     function=self.get_all_sonarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                     force_update_cache=force_update_cache,
@@ -465,7 +465,7 @@ class ContentManager:
         try:
             if self.conreq_config.radarr_enabled:
                 cache.handler(
-                    "radarr library cache",
+                    "radarr library",
                     function=self.get_all_radarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                     force_update_cache=True,
@@ -480,7 +480,7 @@ class ContentManager:
         try:
             if self.conreq_config.sonarr_enabled:
                 cache.handler(
-                    "sonarr library cache",
+                    "sonarr library",
                     function=self.get_all_sonarr_content,
                     cache_duration=GET_CONTENT_CACHE_TIMEOUT,
                     force_update_cache=True,

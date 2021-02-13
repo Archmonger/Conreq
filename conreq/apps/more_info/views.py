@@ -78,7 +78,6 @@ def more_info(request):
         searcher = Search()
         # Fallback for TVDB
         content = searcher.television(tvdb_id)[0]
-        thread_list = []
 
         # Preprocess results
         preprocess_arr_result(content)
