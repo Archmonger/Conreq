@@ -28,7 +28,7 @@ DB_ENGINE = "MYSQL"                       # default: SQLITE3
 MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
-DEBUG = False                             # default: true (NEVER enable this in production)
+DEBUG = False                             # default: true (NEVER enable in production. Disables ALL security features.)
 ROTATE_SECRET_KEY = True                  # default: false (will sign out users when conreq restarts)
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (false will disable X-Frame-Options)
 USE_SSL = True                            # default: false
