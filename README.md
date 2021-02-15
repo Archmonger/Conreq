@@ -11,7 +11,7 @@ Want to join the community or have a question? Join us on [Discord](https://disc
 
 Are you a developer and want to contribute? Check out our [Building Guide](https://github.com/Archmonger/Conreq/wiki/Building-Guide) and [Programmers Guide](https://github.com/Archmonger/Conreq/wiki/Programmers-Guide)!
 
-## Installation (Deployment Environment)
+## Installation (Production Environment)
 
 Install through **[Unraid Community Applications](https://squidly271.github.io/forumpost0.html)**, **[Docker](https://github.com/Roxedus/docker-conreq)**, or **[Dockerhub](https://registry.hub.docker.com/r/roxedus/conreq)**.
 
