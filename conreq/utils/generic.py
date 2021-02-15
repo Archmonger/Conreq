@@ -1,3 +1,4 @@
+"""Generic functions to be used anywhere. All functions only have stdlib dependencies."""
 import os
 from re import sub as substitution
 

@@ -1,3 +1,4 @@
+"""Helpers for User Requests"""
 from conreq.apps.base.tasks import background_task
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
@@ -16,6 +17,7 @@ __logger = log.get_logger(__name__)
 
 
 def radarr_request_background_task(tmdb_id, content_manager, radarr_params, username):
+    """Function that can be run in the background to request something on Radarr"""
     # Check if the movie is already within Radarr's collection
     movie = content_manager.get(tmdb_id=tmdb_id)
 
@@ -40,6 +42,7 @@ def radarr_request_background_task(tmdb_id, content_manager, radarr_params, user
 def sonarr_request_background_task(
     tvdb_id, request_parameters, content_manager, sonarr_params, username
 ):
+    """Function that can be run in the background to request something on Sonarr"""
     # Check if the show is already within Sonarr's collection
     show = content_manager.get(tvdb_id=tvdb_id)
 
@@ -70,6 +73,7 @@ def sonarr_request_background_task(
 def sonarr_request(
     tvdb_id, tmdb_id, request, request_parameters, content_manager, content_discovery
 ):
+    """Request on Sonarr and save request history item to DB"""
     sonarr_params = obtain_sonarr_parameters(
         content_discovery, content_manager, tmdb_id, tvdb_id
     )
@@ -101,6 +105,7 @@ def sonarr_request(
 
 
 def radarr_request(tmdb_id, request, content_manager, content_discovery):
+    """Request on Radarr and save request history item to DB"""
     radarr_params = obtain_radarr_parameters(
         content_discovery, content_manager, tmdb_id
     )
@@ -182,6 +187,7 @@ def __generate_request_card(entry, content_discovery, content_manager):
 
 
 def generate_requests_cards(user_requests):
+    """Takes in a DB query containing requests, and pops out a list of their current request status"""
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
     all_cards = []
@@ -195,7 +201,6 @@ def generate_requests_cards(user_requests):
         )
 
     all_cards = threaded_execution_unique_args(function_list)
-    # Set the availability
     content_discovery.determine_id_validity({"results": all_cards})
     set_many_availability(all_cards)
 

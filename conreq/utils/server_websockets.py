@@ -1,3 +1,4 @@
+"""Anything used to construct a websocket endpoint"""
 from channels.auth import AnonymousUser, login
 from channels.db import database_sync_to_async as convert_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer

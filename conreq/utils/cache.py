@@ -1,4 +1,4 @@
-"""Conreq Caching: Simplified caching module."""
+"""Django caching wrapper and cache related capabilities."""
 from conreq.utils import log
 from conreq.utils.generic import clean_string, get_debug_from_env
 from conreq.utils.multiprocessing import ReturnThread

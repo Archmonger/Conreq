@@ -1,3 +1,4 @@
+"""Functions commonly used to construct views."""
 from calendar import month_name
 from io import StringIO
 from secrets import token_hex
@@ -462,7 +463,7 @@ def initialize_conreq(conreq_config, form):
 
 def add_unique_to_db(model, **kwargs):
     """Adds a row to the database only if all parameters are unique."""
-    if not len(model.objects.filter(**kwargs)):
+    if not model.objects.filter(**kwargs):
         new_request = model(**kwargs)
         new_request.clean_fields()
         new_request.save()

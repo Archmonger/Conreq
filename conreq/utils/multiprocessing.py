@@ -1,3 +1,4 @@
+"""Any function that assists in multithreading or multiprocessing"""
 from threading import Thread
 
 
