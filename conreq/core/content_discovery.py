@@ -22,6 +22,7 @@ DISCOVER_BY_FILTER_CACHE_TIMEOUT = 3 * 24 * 60 * 60
 GET_BY_TMDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 GET_BY_TVDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 GET_GENRES_CACHE_TIMEOUT = 30 * 24 * 60 * 60
+IS_ANIME_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 RECOMMENDED_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 SIMILAR_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 COLLECTION_CACHE_TIMEOUT = 14 * 24 * 60 * 60
@@ -458,82 +459,31 @@ class ContentDiscovery:
             id: An Integer or String containing the TMDB ID.
             content_type: String containing "movie" or "tv".
         """
-        # TODO: Add caching
         try:
             # TV: Obtain the keywords for a specific ID
             if content_type.lower() == "tv":
-                api_results = tmdb.TV(tmdb_id).keywords()
-
-                # Check if the content contains Keyword: Anime
-                if is_key_value_in_list("name", "anime", api_results["results"]):
-                    log.handler(
-                        str(tmdb_id) + " is anime.",
-                        log.INFO,
-                        self.__logger,
-                    )
-                    return True
-
-                # Check if fallback method is enabled
-                if ANIME_CHECK_FALLBACK:
-                    tv_info = tmdb.TV(tmdb_id).info()
-                    # Check if genere is Animation and Country is Japan
-                    if (
-                        is_key_value_in_list("name", "Animation", tv_info["genres"])
-                        and "JP" in tv_info["origin_country"]
-                    ):
-                        log.handler(
-                            str(tmdb_id) + " is anime, based on fallback detection.",
-                            log.INFO,
-                            self.__logger,
-                        )
-                        return True
-
-            # Movies: Obtain the keywords for a specific ID
-            elif content_type.lower() == "movie":
-                api_results = tmdb.Movies(tmdb_id).keywords()
-
-                # Check if the content contains Keyword: Anime
-                if is_key_value_in_list("name", "anime", api_results["keywords"]):
-                    log.handler(
-                        str(tmdb_id) + " is anime.",
-                        log.INFO,
-                        self.__logger,
-                    )
-                    return True
-
-                # Check if fallback method is enabled
-                if ANIME_CHECK_FALLBACK:
-                    movie_info = tmdb.Movies(tmdb_id).info()
-
-                    # Check if genere is Animation and Country is Japan
-                    if is_key_value_in_list(
-                        "name", "Animation", movie_info["genres"]
-                    ) and is_key_value_in_list(
-                        "iso_3166_1", "JP", movie_info["production_countries"]
-                    ):
-                        log.handler(
-                            str(tmdb_id) + " is anime, based on fallback detection.",
-                            log.INFO,
-                            self.__logger,
-                        )
-                        return True
-
-            # Content Type was invalid
-            else:
-                log.handler(
-                    "Invalid content_type " + str(content_type) + " in is_anime().",
-                    log.WARNING,
-                    self.__logger,
+                return cache.handler(
+                    "is tv anime",
+                    function=self.__is_tv_anime,
+                    cache_duration=IS_ANIME_CACHE_TIMEOUT,
+                    args=[tmdb_id],
                 )
 
+            # Movies: Obtain the keywords for a specific ID
+            if content_type.lower() == "movie":
+                return cache.handler(
+                    "is movie anime",
+                    function=self.__is_movie_anime,
+                    cache_duration=IS_ANIME_CACHE_TIMEOUT,
+                    args=[tmdb_id],
+                )
+
+            # Content Type was invalid
             log.handler(
-                str(tmdb_id) + " is not anime.",
-                log.INFO,
+                "Invalid content_type " + str(content_type) + " in is_anime().",
+                log.WARNING,
                 self.__logger,
             )
-
-            # None of our methods detected this content as Anime
-            return False
 
         except:
             log.handler(
@@ -875,6 +825,76 @@ class ContentDiscovery:
                 self.__logger,
             )
 
+    def __is_tv_anime(self, tmdb_id):
+        api_results = tmdb.TV(tmdb_id).keywords()
+
+        # Check if the content contains Keyword: Anime
+        if is_key_value_in_list("name", "anime", api_results["results"]):
+            log.handler(
+                str(tmdb_id) + " is anime.",
+                log.INFO,
+                self.__logger,
+            )
+            return True
+
+        # Check if fallback method is enabled
+        if ANIME_CHECK_FALLBACK:
+            tv_info = tmdb.TV(tmdb_id).info()
+            # Check if genere is Animation and Country is Japan
+            if (
+                is_key_value_in_list("name", "Animation", tv_info["genres"])
+                and "JP" in tv_info["origin_country"]
+            ):
+                log.handler(
+                    str(tmdb_id) + " is anime, based on fallback detection.",
+                    log.INFO,
+                    self.__logger,
+                )
+                return True
+
+        log.handler(
+            str(tmdb_id) + " is not anime.",
+            log.INFO,
+            self.__logger,
+        )
+        return False
+
+    def __is_movie_anime(self, tmdb_id):
+        api_results = tmdb.Movies(tmdb_id).keywords()
+
+        # Check if the content contains Keyword: Anime
+        if is_key_value_in_list("name", "anime", api_results["keywords"]):
+            log.handler(
+                str(tmdb_id) + " is anime.",
+                log.INFO,
+                self.__logger,
+            )
+            return True
+
+        # Check if fallback method is enabled
+        if ANIME_CHECK_FALLBACK:
+            movie_info = tmdb.Movies(tmdb_id).info()
+
+            # Check if genere is Animation and Country is Japan
+            if is_key_value_in_list(
+                "name", "Animation", movie_info["genres"]
+            ) and is_key_value_in_list(
+                "iso_3166_1", "JP", movie_info["production_countries"]
+            ):
+                log.handler(
+                    str(tmdb_id) + " is anime, based on fallback detection.",
+                    log.INFO,
+                    self.__logger,
+                )
+                return True
+
+        log.handler(
+            str(tmdb_id) + " is not anime.",
+            log.INFO,
+            self.__logger,
+        )
+        return False
+
     def __determine_id_validity(self, card):
         """Threaded executable for determine_id_validity()"""
         try:
@@ -972,6 +992,7 @@ class ContentDiscovery:
 
             query["results"] = clean_results
             return query
+
         except:
             log.handler(
                 "Failed to remove duplicate results!",
