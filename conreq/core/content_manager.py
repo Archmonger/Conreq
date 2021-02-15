@@ -5,6 +5,8 @@ from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
 from PyArr import RadarrAPI, SonarrAPI
 
+__logger = log.get_logger(__name__)
+
 # Days, Hours, Minutes, Seconds
 # Library is refreshed every minute as a background task
 # This value is just a fail-safe.
@@ -25,9 +27,6 @@ class ContentManager:
         self.__radarr = RadarrAPI(
             self.conreq_config.radarr_url, self.conreq_config.radarr_api_key
         )
-
-        # Creating a logger (for log files)
-        self.__logger = log.get_logger(__name__)
 
     def get(self, obtain_season_info=False, force_update_cache=False, **kwargs):
         """Gets content information and computes the availability of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
@@ -68,7 +67,7 @@ class ContentManager:
                     + str(kwargs["tmdb_id"])
                     + " not found within Radarr.",
                     log.INFO,
-                    self.__logger,
+                    __logger,
                 )
 
             # Search for the TVDB ID within Sonarr.
@@ -100,7 +99,7 @@ class ContentManager:
                     + str(kwargs["tvdb_id"])
                     + " not found within Sonarr.",
                     log.INFO,
-                    self.__logger,
+                    __logger,
                 )
 
             # Invalid parameter
@@ -108,21 +107,21 @@ class ContentManager:
                 log.handler(
                     "A valid ID was not provided in ContentManager.get()!",
                     log.WARNING,
-                    self.__logger,
+                    __logger,
                 )
 
         except KeyError:
             log.handler(
                 "Content not ready yet!",
                 log.WARNING,
-                self.__logger,
+                __logger,
             )
 
         except:
             log.handler(
                 "Failed to get content!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def add(self, **kwargs):
@@ -178,14 +177,14 @@ class ContentManager:
             log.handler(
                 "A valid ID was not provided in ContentManager.add()!",
                 log.WARNING,
-                self.__logger,
+                __logger,
             )
 
         except:
             log.handler(
                 "Failed to add content!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def request(self, **kwargs):
@@ -339,14 +338,14 @@ class ContentManager:
             log.handler(
                 "A valid ID was not provided in ContentManager.request()!",
                 log.WARNING,
-                self.__logger,
+                __logger,
             )
 
         except:
             log.handler(
                 "Failed to request content!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def delete(self, **kwargs):
@@ -389,14 +388,14 @@ class ContentManager:
             log.handler(
                 "A valid ID was not provided in ContentManager.delete()!",
                 log.WARNING,
-                self.__logger,
+                __logger,
             )
 
         except:
             log.handler(
                 "Failed to delete content!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def redownload(self, **kwargs):
@@ -443,7 +442,7 @@ class ContentManager:
             log.handler(
                 "Failed to get sonarr root dirs!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def radarr_root_dirs(self):
@@ -455,7 +454,7 @@ class ContentManager:
             log.handler(
                 "Failed to get radarr root dirs!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def sonarr_quality_profiles(self):
@@ -467,7 +466,7 @@ class ContentManager:
             log.handler(
                 "Failed to get sonarr quality profiles!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def radarr_quality_profiles(self):
@@ -479,7 +478,7 @@ class ContentManager:
             log.handler(
                 "Failed to get radarr quality profiles!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def refresh_content(self):
@@ -496,7 +495,7 @@ class ContentManager:
             log.handler(
                 "Failed to refresh radarr!",
                 log.WARNING,
-                self.__logger,
+                __logger,
             )
 
         try:
@@ -511,7 +510,7 @@ class ContentManager:
             log.handler(
                 "Failed to refresh sonarr!",
                 log.WARNING,
-                self.__logger,
+                __logger,
             )
 
     def get_radarr_library(self):
@@ -535,14 +534,14 @@ class ContentManager:
                 log.handler(
                     "Radarr URL or API key is unset!",
                     log.WARNING,
-                    self.__logger,
+                    __logger,
                 )
 
         except:
             log.handler(
                 "Could not get movies!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def get_sonarr_library(self):
@@ -567,14 +566,14 @@ class ContentManager:
                 log.handler(
                     "Sonarr URL or API key is unset!",
                     log.WARNING,
-                    self.__logger,
+                    __logger,
                 )
 
         except:
             log.handler(
                 "Could not get series!",
                 log.ERROR,
-                self.__logger,
+                __logger,
             )
 
     def __season_episode_availability(self, series):
@@ -678,7 +677,7 @@ class ContentManager:
         log.handler(
             "Could not determine availability!\n" + str(content),
             log.INFO,
-            self.__logger,
+            __logger,
         )
         content["availability"] = "Unknown"
         return content
