@@ -197,7 +197,7 @@ var copy_to_clipboard = async function () {
     await sleep(100);
   }
 
-  var invite_link_element = document.getElementById("invite_link");
+  let invite_link_element = document.getElementById("invite_link");
   if (typeof invite_link_element === "undefined") {
     conreq_no_response_toast_message();
     return;
