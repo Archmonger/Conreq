@@ -235,7 +235,8 @@ class Search:
             except:
                 result["conreqSimilarityRank"] = 1
 
-    def __generate_original_rank(self, result, rank):
+    @staticmethod
+    def __generate_original_rank(result, rank):
         """Sets the original rank based on the position Sonarr/Radarr"""
         result["arrOriginalRank"] = rank
 
@@ -252,6 +253,7 @@ class Search:
             log.handler("Failed to round!", log.ERROR, self.__logger)
             return number
 
-    def __set_content_type(self, result, content_type):
+    @staticmethod
+    def __set_content_type(result, content_type):
         """Sets content type on a card"""
         result["contentType"] = content_type
