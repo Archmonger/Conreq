@@ -133,19 +133,18 @@ def handler(
             __logger,
         )
 
+        # If the function was actually a dict of functions, then retrieve values using multi-execution.
+        if isinstance(function, dict):
+            return __multi_execution(cache_name, function, cache_duration)
+
         # Get the cached value
         cache_key = generate_cache_key(cache_name, args, kwargs, page_key)
-
+        cached_results = cache.get(cache_key)
         log.handler(
             cache_name + " - Generated cache key " + cache_key,
             log.DEBUG,
             __logger,
         )
-        cached_results = cache.get(cache_key)
-
-        # If the function was actually a dict of functions, then retrieve values using multi-execution.
-        if isinstance(function, dict):
-            return __multi_execution(cache_name, function, cache_duration)
 
         # No function was provided, just return a bare cache value
         if function is None:
@@ -160,17 +159,17 @@ def handler(
         # was in cache, or cache was expired, run function()
         if cached_results is None or force_update_cache:
             function_results = function(*args, **kwargs)
+            cache.set(cache_key, function_results, cache_duration)
             log.handler(
                 cache_name + " - " + function.__name__ + "()",
                 log.INFO,
                 __logger,
             )
-            cache.set(cache_key, function_results, cache_duration)
             return function_results
 
         if cached_results is None:
             log.handler(
-                cache_name + " - No cached results found!",
+                cache_name + " - Cache key " + cache_key + " was empty!",
                 log.INFO,
                 __logger,
             )
@@ -192,5 +191,3 @@ def handler(
                 log.ERROR,
                 __logger,
             )
-
-        return None
