@@ -14,13 +14,7 @@ SEARCH_CACHE_TIMEOUT = 60 * 60
 
 
 class Search:
-    """Searches Sonarr and Radarr for a given query
-    >>> Args:
-        sonarr_url: String containing the Sonarr URL.
-        sonarr_api_key: String containing the Sonarr API key.
-        radarr_url: String containing the Radarr URL.
-        radarr_api_key: String containing the Radarr API key.
-    """
+    """Searches Sonarr and Radarr for a given query"""
 
     def __init__(self):
         # Database values
@@ -158,41 +152,26 @@ class Search:
             return []
 
     def __television(self, **kwargs):
-        # Perform a search
+        """Perform a search within Sonarr and adds Sonarr's ranking value"""
         results = self.__sonarr.lookupSeries(kwargs["query"])
 
-        # Set content type
-        thread_list = []
         for result in results:
-            thread = Thread(target=self.__set_content_type, args=[result, "tv"])
-            thread.start()
-            thread_list.append(thread)
-
-        # Wait for computation to complete
-        for thread in thread_list:
-            thread.join()
+            self.__set_content_type(result, "tv")
 
         return self.__set_original_rank(results)
 
     def __movie(self, **kwargs):
-        # Perform a search
+        """Perform a search within Radarr and adds Radarr's ranking value"""
         results = self.__radarr.lookupMovie(kwargs["query"])
 
-        # Set content type
-        thread_list = []
         for result in results:
-            thread = Thread(target=self.__set_content_type, args=[result, "movie"])
-            thread.start()
-            thread_list.append(thread)
-
-        # Wait for computation to complete
-        for thread in thread_list:
-            thread.join()
+            self.__set_content_type(result, "movie")
 
         return self.__set_original_rank(results)
 
     def __set_conreq_rank(self, query, results):
-        # Determine string similarity and combined with a weight of the original rank
+        """Determine Conreq's ranking value in order to sort combined movie and TV results.
+        Uses string similarity and combined with a weight of the original rank."""
         clean_query = clean_string(query)
         thread_list = []
         for result in results:
@@ -210,58 +189,58 @@ class Search:
         return sorted(results, key=lambda i: i["conreqSimilarityRank"])
 
     def __set_original_rank(self, results):
-        # Determine what search ranking was provided by Sonarr/Radarr
+        """Sets the search ranking was provided by Sonarr/Radarr"""
         try:
-            thread_list = []
             for index, result in enumerate(results, start=1):
-                thread = Thread(
-                    target=self.__generate_original_rank, args=[result, index]
-                )
-                thread.start()
-                thread_list.append(thread)
-
-            # Wait for computation to complete
-            for thread in thread_list:
-                thread.join()
+                self.__generate_original_rank(result, index)
 
             # Sort them by the similarity metric
             return results
+
         except:
             log.handler("Failed to rank results", log.ERROR, self.__logger)
             return results
 
     def __generate_conreq_rank(self, result, clean_query):
-        # Determines string similarity and combined with a weight of the original rank
-        clean_title = clean_string(result["title"])
+        """Determines string similarity and combined with a weight of the original rank"""
+        try:
+            clean_title = clean_string(result["title"])
 
-        # Multiplier if whole substring was found within the search result
-        if clean_title.find(clean_query) != -1:
-            query_substring_multiplier = 0.1
-        else:
-            query_substring_multiplier = 1
+            # Multiplier if whole substring was found within the search result
+            if clean_title.find(clean_query) != -1:
+                query_substring_multiplier = 0.1
+            else:
+                query_substring_multiplier = 1
 
-        # Generate similarity rank
-        result["conreqSimilarityRank"] = (
-            # Round the values to look pretty
-            self.__round(
-                # String similarity between the query and result
-                (
-                    self.__damerau.distance(clean_query, clean_title)
-                    # Use sonarr/radarr's original rank as a weight/bias
-                    * (result["arrOriginalRank"] / 10)
+            # Generate similarity rank
+            result["conreqSimilarityRank"] = (
+                # Round the values to look pretty
+                self.__round(
+                    # String similarity between the query and result
+                    (
+                        self.__damerau.distance(clean_query, clean_title)
+                        # Use sonarr/radarr's original rank as a weight/bias
+                        * (result["arrOriginalRank"] / 10)
+                    )
+                    # Bias towards full substring matches
+                    * query_substring_multiplier
                 )
-                # Bias towards full substring matches
-                * query_substring_multiplier
+                + 1
             )
-            + 1
-        )
+
+        except:
+            log.handler("Failed to generate conreq rank!", log.ERROR, self.__logger)
+            try:
+                result["conreqSimilarityRank"] = result["arrOriginalRank"]
+            except:
+                result["conreqSimilarityRank"] = 1
 
     def __generate_original_rank(self, result, rank):
-        # Sets the original rank based on the position Sonarr/Radarr
+        """Sets the original rank based on the position Sonarr/Radarr"""
         result["arrOriginalRank"] = rank
 
     def __round(self, number, significant_figures=5):
-        # Round a number using the concept of significant figures
+        """Round a number using the concept of significant figures"""
         try:
             # Rounding would've returned an error if the number is 0
             if number == 0:
@@ -274,5 +253,5 @@ class Search:
             return number
 
     def __set_content_type(self, result, content_type):
-        # Sets content type as "tv" or "movie"
+        """Sets content type on a card"""
         result["contentType"] = content_type
