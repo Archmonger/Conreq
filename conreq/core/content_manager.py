@@ -155,7 +155,7 @@ class ContentManager:
                 )
 
             # Add a show, season, or episode with a specific TVDB ID to Sonarr.
-            elif kwargs.__contains__("tvdb_id"):
+            if kwargs.__contains__("tvdb_id"):
                 # Add the show to Sonarr's collection
                 series_id = self.__sonarr.addSeries(
                     kwargs["tvdb_id"],
@@ -175,12 +175,11 @@ class ContentManager:
                 return self.__sonarr.updSeries(new_series)
 
             # Invalid parameter
-            else:
-                log.handler(
-                    "A valid ID was not provided in ContentManager.add()!",
-                    log.WARNING,
-                    self.__logger,
-                )
+            log.handler(
+                "A valid ID was not provided in ContentManager.add()!",
+                log.WARNING,
+                self.__logger,
+            )
 
         except:
             log.handler(
@@ -242,7 +241,7 @@ class ContentManager:
                 return response
 
             # Search for a show with a specific Sonarr ID.
-            elif kwargs.__contains__("sonarr_id"):
+            if kwargs.__contains__("sonarr_id"):
                 response = {
                     "season_update_results": None,
                     "episode_update_results": None,
@@ -337,12 +336,11 @@ class ContentManager:
                 return response
 
             # Invalid parameter
-            else:
-                log.handler(
-                    "A valid ID was not provided in ContentManager.request()!",
-                    log.WARNING,
-                    self.__logger,
-                )
+            log.handler(
+                "A valid ID was not provided in ContentManager.request()!",
+                log.WARNING,
+                self.__logger,
+            )
 
         except:
             log.handler(
@@ -372,12 +370,12 @@ class ContentManager:
                 return self.__radarr.delMovie(kwargs["radarr_id"], delFiles=True)
 
             # Remove a show with a specific Sonarr ID.
-            elif kwargs.__contains__("sonarr_id"):
+            if kwargs.__contains__("sonarr_id"):
                 # Remove the whole show
                 return self.__sonarr.delSeries(kwargs["sonarr_id"], delFiles=True)
 
             # Remove episodes with Sonarr episode IDs.
-            elif kwargs.__contains__("episode_file_ids"):
+            if kwargs.__contains__("episode_file_ids"):
                 response = []
                 # Remove all episode files in the list
                 for episode_id in kwargs["episode_file_ids"]:
@@ -388,12 +386,11 @@ class ContentManager:
                 return response
 
             # Invalid parameter
-            else:
-                log.handler(
-                    "A valid ID was not provided in ContentManager.delete()!",
-                    log.WARNING,
-                    self.__logger,
-                )
+            log.handler(
+                "A valid ID was not provided in ContentManager.delete()!",
+                log.WARNING,
+                self.__logger,
+            )
 
         except:
             log.handler(
