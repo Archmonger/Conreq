@@ -151,9 +151,9 @@ let add_event_listeners = function () {
     get_url(generate_invite_url, function (result) {
       let invite_link =
         sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
-      copy_to_clipboard(invite_link);
-      invite_copied_toast_message();
-    });
+      create_invite_link_elem(invite_link);
+    }).fail(conreq_no_response_toast_message);
+    copy_to_clipboard();
   });
 };
 

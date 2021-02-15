@@ -167,6 +167,11 @@ var conreq_no_response_toast_message = function () {
   });
 };
 
+// Asychronous sleeping
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // Gets the current window location from the hash
 var get_window_location = function () {
   // Read the URL hash to determine what page we are on
@@ -185,16 +190,51 @@ var get_window_parameters = function () {
 };
 
 // Copies the text of an element to the clipboard
-var copy_to_clipboard = function (str) {
+var copy_to_clipboard = async function () {
+  let max_retries = 10;
+
+  // Wait for the element to exist
+  for (let try_num = 0; try_num <= max_retries; try_num++) {
+    if (document.getElementById("invite_link") != null) {
+      break;
+    } else if (try_num >= max_retries) {
+      // The element failed to load in time, notify the user.
+      conreq_no_response_toast_message();
+      return;
+    }
+    await sleep(100);
+  }
+  let invite_link_element = document.getElementById("invite_link");
+
+  // Copy to clipboard using the Navigator API
+  if (typeof navigator.clipboard != "undefined") {
+    window.navigator.clipboard
+      .writeText(invite_link_element.textContent)
+      .then(invite_copied_toast_message, conreq_no_response_toast_message);
+  }
+
+  // Fallback to legacy copy to clipboard method
+  else {
+    invite_link_element.select();
+    document.execCommand("copy")
+      ? invite_copied_toast_message()
+      : conreq_no_response_toast_message();
+  }
+
+  // Remove page element created by create_invite_link_elem()
+  document.body.removeChild(invite_link_element);
+};
+
+// Creates a page element that copy_to_clipboard can copy from
+var create_invite_link_elem = function (invite_link) {
   const el = document.createElement("textarea");
-  el.value = str;
-  el.setAttribute("readonly", "");
+  el.value = invite_link;
+  el.textContent = invite_link;
+  el.readOnly = true;
   el.style.position = "absolute";
   el.style.left = "-99999px";
+  el.id = "invite_link";
   document.body.appendChild(el);
-  el.select();
-  document.execCommand("copy");
-  document.body.removeChild(el);
 };
 
 // Post to a URL
