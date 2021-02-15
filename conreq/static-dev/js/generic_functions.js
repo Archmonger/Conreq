@@ -210,7 +210,7 @@ var copy_to_clipboard = async function () {
   }
 
   if (typeof navigator.clipboard != "undefined") {
-    //New ClipBoard API is supported
+    // New ClipBoard API is supported
     window.navigator.clipboard.writeText(invite_link_element.textContent).then(
       function () {
         invite_copied_toast_message();
@@ -229,14 +229,8 @@ var copy_to_clipboard = async function () {
   document.body.removeChild(invite_link_element);
 };
 
-var hide_invite_link = function (...result) {
-  var sign_up_url = result[1];
-  let invite_link =
-    sign_up_url + "?invite_code=" + encodeURI(result[0].invite_code);
-  if (invite_link.includes("undefined")) {
-    conreq_no_response_toast_message();
-    return;
-  }
+// Creates a page element that copy_to_clipboard can copy from
+var create_invite_link_elem = function (invite_link) {
   const el = document.createElement("textarea");
   el.value = invite_link;
   el.textContent = invite_link;
@@ -247,6 +241,7 @@ var hide_invite_link = function (...result) {
   document.body.appendChild(el);
 };
 
+// Asychronous sleeping
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

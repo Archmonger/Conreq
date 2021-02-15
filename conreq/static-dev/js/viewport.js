@@ -49,8 +49,8 @@ let cull_old_posters = function () {
       // Output to console that posters have been deleted
       console.log(
         "Hiding the content of " +
-        num_of_posters_to_delete +
-        " posters because a new page has loaded."
+          num_of_posters_to_delete +
+          " posters because a new page has loaded."
       );
     }
   }
@@ -148,7 +148,11 @@ let add_event_listeners = function () {
     let btn = $(this);
     let generate_invite_url = btn.data("generate-invite-url");
     let sign_up_url = window.location.origin + btn.data("sign-up-url");
-    get_url(generate_invite_url, hide_invite_link, sign_up_url);
+    get_url(generate_invite_url, function (result) {
+      let invite_link =
+        sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
+      create_invite_link_elem(invite_link);
+    }).fail(conreq_no_response_toast_message);
     copy_to_clipboard();
   });
 };
