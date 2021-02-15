@@ -12,14 +12,7 @@ ARR_LIBRARY_CACHE_TIMEOUT = 5 * 60
 
 
 class ContentManager:
-    """Adds and removes content from Sonarr and Radarr, and can return the request state.
-
-    Args:
-        sonarr_url: String containing the Sonarr URL.
-        sonarr_api_key: String containing the Sonarr API key.
-        radarr_url: String containing the Radarr URL.
-        radarr_api_key: String containing the Radarr API key.
-    """
+    """Adds and removes content from Sonarr and Radarr, and can return the request state."""
 
     def __init__(self):
         # Database values
@@ -41,8 +34,9 @@ class ContentManager:
 
         Args:
             obtain_season_info: Boolean. If True, return season/episode information.
+            force_update_cache: Boolean. If True, arr library cache is force updated before returning results.
 
-        Kwargs:
+            # Pick One ID
             tmdb_id: A string containing the TMDB ID.
             tvdb_id: A string containing the TVDB ID.
 
@@ -140,7 +134,7 @@ class ContentManager:
         Will not work for content that already exists.
         This does NOT mark content as monitored or perform a search.
 
-        Kwargs:
+        Args:
             quality_profile_id: An integer containing the quality profile ID (required).
             root_dir: A string containing the root directory (required).
             series_type: String containing Standard/Anime/Daily (required if adding TV).
@@ -203,10 +197,12 @@ class ContentManager:
     def request(self, **kwargs):
         """Monitors and searches for an existing movie, series, season(s), or episode(s) using Sonarr or Radarr.
 
-        Kwargs:
+        Args:
             # Pick One ID
             radarr_id: An integer containing the Radarr ID.
             sonarr_id: An integer containing the Sonarr ID.
+
+            # Only used if using sonarr_id
             seasons: A list of integers containing the specific season numbers values (optional).
             episode_ids: A list of integers containing the specific "episodeId" values (optional).
 
@@ -420,6 +416,7 @@ class ContentManager:
             radarr_id: An integer containing the Radarr ID.
             sonarr_id: An integer containing the Sonarr ID.
 
+            # Only used if using sonarr_id
             episode_file_ids: A list of integers containing the specific "episodeFileId" values (optional).
             seasons: A list of integers containing the specific season numbers values (optional).
             episode_ids: A list of integers containing the specific "episodeId" values (optional).
@@ -448,19 +445,47 @@ class ContentManager:
 
     def sonarr_root_dirs(self):
         """Returns the root dirs available within Sonarr"""
-        return self.__sonarr.getRoot()
+        try:
+            return self.__sonarr.getRoot()
+        except:
+            log.handler(
+                "Failed to get sonarr root dirs!",
+                log.ERROR,
+                self.__logger,
+            )
 
     def radarr_root_dirs(self):
         """Returns the root dirs available within Radarr"""
-        return self.__radarr.getRoot()
+        try:
+            return self.__radarr.getRoot()
+        except:
+            log.handler(
+                "Failed to get radarr root dirs!",
+                log.ERROR,
+                self.__logger,
+            )
 
     def sonarr_quality_profiles(self):
         """Returns the quality profiles available within Sonarr"""
-        return self.__sonarr.getQualityProfiles()
+        try:
+            return self.__sonarr.getQualityProfiles()
+        except:
+            log.handler(
+                "Failed to get sonarr quality profiles!",
+                log.ERROR,
+                self.__logger,
+            )
 
     def radarr_quality_profiles(self):
         """Returns the quality profiles available within Radarr"""
-        return self.__radarr.getQualityProfiles()
+        try:
+            return self.__radarr.getQualityProfiles()
+        except:
+            log.handler(
+                "Failed to get radarr quality profiles!",
+                log.ERROR,
+                self.__logger,
+            )
 
     def refresh_content(self):
         """Refreshes Sonarr and Radarr's content"""
