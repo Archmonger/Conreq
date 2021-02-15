@@ -276,22 +276,3 @@ class Search:
     def __set_content_type(self, result, content_type):
         # Sets content type as "tv" or "movie"
         result["contentType"] = content_type
-
-
-# Test driver code
-# if __name__ == "__main__":
-#     search = Search(
-#         "x",
-#         "x",
-#         "x",
-#         "x",
-#     )
-
-# print("\n#### Find Movies Test ####")
-# pprint(search.movie("Finding Nemo")[:5])
-# print("\n#### Find TV Test ####")
-# pprint(search.television("Toradora")[:5])
-# print("\n#### Find All Test ####")
-# pprint(search.all("The Black")[:5])
-# print("\n#### Find All Test (Cached) ####")
-# pprint(search.all("The Black")[:5])
