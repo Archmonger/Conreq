@@ -1,10 +1,7 @@
 """Conreq Caching: Simplified caching module."""
 from conreq.utils import log
-from conreq.utils.generic import (
-    ReturnThread,
-    clean_string,
-    get_debug_from_env,
-)
+from conreq.utils.generic import clean_string, get_debug_from_env
+from conreq.utils.multiprocessing import ReturnThread
 from django.core.cache import cache
 
 if get_debug_from_env():

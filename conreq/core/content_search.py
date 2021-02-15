@@ -5,7 +5,8 @@ from threading import Thread
 
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
-from conreq.utils.generic import ReturnThread, clean_string
+from conreq.utils.generic import clean_string
+from conreq.utils.multiprocessing import ReturnThread
 from PyArr import RadarrAPI, SonarrAPI
 from similarity.damerau import Damerau
 

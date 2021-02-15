@@ -9,7 +9,8 @@ from conreq.utils.apps import (
     obtain_sonarr_parameters,
     set_many_availability,
 )
-from conreq.utils.generic import is_key_value_in_list, threaded_execution_unique_args
+from conreq.utils.generic import is_key_value_in_list
+from conreq.utils.multiprocessing import threaded_execution_unique_args
 
 __logger = log.get_logger(__name__)
 
