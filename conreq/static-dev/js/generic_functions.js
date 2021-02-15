@@ -185,17 +185,54 @@ var get_window_parameters = function () {
 };
 
 // Copies the text of an element to the clipboard
-var copy_to_clipboard = function (str) {
+var copy_to_clipboard = async function () {
+  var max_retries = 15;
+  for (let try_num = 0; try_num <= max_retries; try_num++) {
+    if (document.getElementById("invite_link") != null) {
+      break;
+    }
+    else if (try_num >= max_retries) {
+      return;
+    }
+    await sleep(100);
+  }
+
+  var invite_link_element = document.getElementById("invite_link");
+
+  if (typeof (navigator.clipboard) != "undefined") {
+    //New ClipBoard API is supported
+    console.log("New Clipboard Method Supported");
+    window.navigator.clipboard.writeText(invite_link_element.textContent);
+    document.body.removeChild(invite_link_element);
+  }
+  else {
+    //Fallback to old clipboard method
+    console.log("New Clipboard Method Not Supported");
+
+    invite_link_element.select();
+    document.execCommand('copy');
+    document.body.removeChild(invite_link_element);
+  }
+  invite_copied_toast_message();
+};
+
+var hide_invite_link = function (result) {
+  var extra_args = arguments[1];
+  var sign_up_url = extra_args[2];
+  let invite_link = sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
   const el = document.createElement("textarea");
-  el.value = str;
-  el.setAttribute("readonly", "");
+  el.value = invite_link;
+  el.textContent = invite_link;
+  el.readOnly = true;
   el.style.position = "absolute";
   el.style.left = "-99999px";
+  el.id = "invite_link";
   document.body.appendChild(el);
-  el.select();
-  document.execCommand("copy");
-  document.body.removeChild(el);
-};
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 // Post to a URL
 var post_url = function (url, callback) {
@@ -228,7 +265,7 @@ var post_json = function (url, data, callback) {
 };
 
 // Gets a URL
-var get_url = function (location, success = function () {}) {
+var get_url = function (location, success = function () { }) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
     return success(response);
@@ -238,11 +275,12 @@ var get_url = function (location, success = function () {}) {
 
 // Gets a URL and retries if it fails
 let get_retry_counter = 0;
-var get_url_retry = async function (location, success = function () {}) {
+var get_url_retry = async function (location, success = function () { }) {
+  var extra_args = arguments;
   http_request.abort();
   http_request = $.get(location, function (response = null) {
     get_retry_counter = 0;
-    return success(response);
+    return success(response, extra_args);
   }).fail(function () {
     get_retry_counter++;
     if (get_retry_counter <= 200) {
