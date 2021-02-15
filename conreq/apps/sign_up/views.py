@@ -12,8 +12,6 @@ from django.template import loader
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 
-# Create your views here.
-
 
 @performance_metrics()
 def invite(request):

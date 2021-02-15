@@ -58,15 +58,20 @@
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Content Type </div>
 
-                    <a href="#{% url 'discover:tv' %}">
+                    {% if content_type == "movie" %}
+                    <a href="#{% url 'discover:movies' %}">
                         <div class="quick-info-btn no-highlighting">
-                            {% if content_type == "tv" %}
-                            Television
-                            {% elif content_type == "movie" %}
                             Movie
-                            {% endif %}
                         </div>
                     </a>
+                    {% elif content_type == "tv" %}
+                    <a href="#{% url 'discover:tv' %}">
+                        <div class="quick-info-btn no-highlighting">
+                            Television
+                        </div>
+                    </a>
+                    {% endif %}
+
                 </div>
 
                 {% if content.genres %}

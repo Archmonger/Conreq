@@ -5,7 +5,7 @@
 {% project_version as VERSION %}
 
 {% include "primary/loading_animation_container.html" %}
-<div class="viewport server settings">
+<div class="viewport server settings" data-url="{% url 'server_settings:update_settings' %}">
 
     <div class="settings-group">
         <div class="settings-group-title line-clamp-1 bold">Basic Configuration</div>

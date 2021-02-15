@@ -192,30 +192,47 @@ var copy_to_clipboard = async function () {
       break;
     }
     else if (try_num >= max_retries) {
+      nreq_no_response_toast_message();
       return;
     }
     await sleep(100);
   }
 
   var invite_link_element = document.getElementById("invite_link");
+  if (typeof (invite_link_element) === 'undefined') {
+    onreq_no_response_toast_message();
+    return;
+  }
+
+  if (invite_link_element.textContent.includes("undefined")) {
+    document.body.removeChild(invite_link_element);
+    onreq_no_response_toast_message();
+    return;
+  }
 
   if (typeof (navigator.clipboard) != "undefined") {
     //New ClipBoard API is supported
-    window.navigator.clipboard.writeText(invite_link_element.textContent);
-    document.body.removeChild(invite_link_element);
+    window.navigator.clipboard.writeText(invite_link_element.textContent).then(function () {
+      invite_copied_toast_message();
+    }, function () {
+      onreq_no_response_toast_message();
+    });
   }
   else {
     //Fallback to old clipboard method
     invite_link_element.select();
-    document.execCommand('copy');
-    document.body.removeChild(invite_link_element);
+    document.execCommand('copy') ? invite_copied_toast_message() : onreq_no_response_toast_message();
   }
-  invite_copied_toast_message();
+  document.body.removeChild(invite_link_element);
 };
 
 var hide_invite_link = function (...result) {
-  var sign_up_url = result[1][2];
-  let invite_link = sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
+  var sign_up_url = result[1]
+  let invite_link = sign_up_url + "?invite_code=" + encodeURI(result[0].invite_code);
+  if (invite_link.includes("undefined")) {
+    onreq_no_response_toast_message();
+    return;
+  }
   const el = document.createElement("textarea");
   el.value = invite_link;
   el.textContent = invite_link;
@@ -261,27 +278,29 @@ var post_json = function (url, data, callback) {
 };
 
 // Gets a URL
-var get_url = function (location, success = function () { }) {
+var get_url = async function (location, success = function () { }, ...args) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
-    return success(response);
+    return success(response, args);
   });
   return http_request;
 };
 
 // Gets a URL and retries if it fails
-let get_retry_counter = 0;
-var get_url_retry = async function (location, success = function () { }, ...args) {
+let get_url_retries = 0;
+var get_viewport = function (location, success = function () { }) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
-    get_retry_counter = 0;
-    return success(response, args);
+    get_url_retries = 0;
+    return success(response);
   }).fail(function () {
-    get_retry_counter++;
-    if (get_retry_counter <= 200) {
+    get_url_retries++;
+    if (get_url_retries <= 5 && this.url == get_window_location()) {
       setTimeout(function () {
-        get_url_retry(location, success);
-      }, 200 * Math.min(get_retry_counter, 50));
+        get_viewport(location, success);
+      }, 200 * (get_url_retries * 5));
+    } else {
+      conreq_no_response_toast_message();
     }
   });
   return http_request;
@@ -360,4 +379,28 @@ var timer_seconds = function () {
 
   // get seconds
   return Math.round(time_diff);
+};
+
+// Change a server setting
+var change_server_setting = function (setting_name = null, value = null) {
+  let json_payload = {
+    setting_name: setting_name,
+    value: value,
+  };
+  post_json(
+    $(".viewport.server.settings").data("url"),
+    json_payload,
+    function (json_response) {
+      if (json_response.command_name == "new conreq api key") {
+        $("#conreq-api-key").text(json_response.value);
+      }
+      if (json_response.success) {
+        settings_save_success_toast_message();
+      } else {
+        settings_save_failed_toast_message(json_response.error_message);
+      }
+    }
+  ).fail(function () {
+    settings_save_failed_toast_message("Internal server error.");
+  });
 };

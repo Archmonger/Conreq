@@ -1,24 +1,18 @@
-# from django.shortcuts import render
 from threading import Thread
 
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_search import Search
-from conreq.utils.apps import (
-    convert_card_to_tmdb,
-    generate_context,
-    set_many_availability,
-)
+from conreq.utils.app_views import generate_context, set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
+from .helpers import convert_card_to_tmdb
 
-# Create your views here.
 
-
-@cache_page(60 * 60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def search(request):

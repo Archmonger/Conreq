@@ -31,7 +31,7 @@ X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 
 
 # Application Settings
-DJVERSION_VERSION = "0.17.1"
+DJVERSION_VERSION = "0.17.6"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
 SILKY_ANALYZE_QUERIES = True
@@ -50,11 +50,6 @@ COMPRESS_FILTERS = {
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
 HUEY_STORAGE = os.path.join(DATA_DIR, "background_tasks.sqlite3")
-if os.path.exists(HUEY_STORAGE):
-    try:
-        os.remove(HUEY_STORAGE)
-    except:
-        pass
 HUEY = {
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_STORAGE,

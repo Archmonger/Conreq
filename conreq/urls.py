@@ -36,12 +36,12 @@ urlpatterns = [
     path(BASE_URL + "sign_up/", include("conreq.apps.sign_up.urls")),
     path(BASE_URL + "request/", include("conreq.apps.user_requests.urls")),
     # Viewport Locations
-    path("discover/", include("conreq.apps.discover.urls")),
-    path("more_info/", include("conreq.apps.more_info.urls")),
-    path("report_issue/", include("conreq.apps.issue_reporting.urls")),
-    path("search/", include("conreq.apps.search.urls")),
-    path("manage_users/", include("conreq.apps.manage_users.urls")),
-    path("server_settings/", include("conreq.apps.server_settings.urls")),
+    path(BASE_URL + "discover/", include("conreq.apps.discover.urls")),
+    path(BASE_URL + "more_info/", include("conreq.apps.more_info.urls")),
+    path(BASE_URL + "report_issue/", include("conreq.apps.issue_reporting.urls")),
+    path(BASE_URL + "search/", include("conreq.apps.search.urls")),
+    path(BASE_URL + "manage_users/", include("conreq.apps.manage_users.urls")),
+    path(BASE_URL + "server_settings/", include("conreq.apps.server_settings.urls")),
 ]
 
 

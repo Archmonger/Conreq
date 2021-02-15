@@ -5,19 +5,16 @@ from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
 from PyArr import RadarrAPI, SonarrAPI
 
+_logger = log.get_logger(__name__)
+
 # Days, Hours, Minutes, Seconds
-GET_CONTENT_CACHE_TIMEOUT = 60
+# Library is refreshed every minute as a background task
+# This value is just a fail-safe.
+ARR_LIBRARY_CACHE_TIMEOUT = 5 * 60
 
 
 class ContentManager:
-    """Adds and removes content from Sonarr and Radarr, and can return the request state.
-
-    Args:
-        sonarr_url: String containing the Sonarr URL.
-        sonarr_api_key: String containing the Sonarr API key.
-        radarr_url: String containing the Radarr URL.
-        radarr_api_key: String containing the Radarr API key.
-    """
+    """Adds and removes content from Sonarr and Radarr, and can return the request state."""
 
     def __init__(self):
         # Database values
@@ -31,16 +28,14 @@ class ContentManager:
             self.conreq_config.radarr_url, self.conreq_config.radarr_api_key
         )
 
-        # Creating a logger (for log files)
-        self.__logger = log.get_logger(__name__)
-
     def get(self, obtain_season_info=False, force_update_cache=False, **kwargs):
         """Gets content information and computes the availability of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
 
         Args:
             obtain_season_info: Boolean. If True, return season/episode information.
+            force_update_cache: Boolean. If True, arr library cache is force updated before returning results.
 
-        Kwargs:
+            # Pick One ID
             tmdb_id: A string containing the TMDB ID.
             tvdb_id: A string containing the TVDB ID.
 
@@ -54,9 +49,9 @@ class ContentManager:
             if kwargs.__contains__("tmdb_id"):
                 # Get Radarr's collection
                 results = cache.handler(
-                    "radarr library cache",
-                    function=self.get_all_radarr_content,
-                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    "radarr library",
+                    function=self.get_radarr_library,
+                    cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=force_update_cache,
                 )
 
@@ -66,23 +61,22 @@ class ContentManager:
                 ):
                     return results[str(kwargs["tmdb_id"])]
 
-                # Return None if couldn't find the movie
+                # Couldn't find the movie
                 log.handler(
                     "Movie with TMDB ID "
                     + str(kwargs["tmdb_id"])
                     + " not found within Radarr.",
                     log.INFO,
-                    self.__logger,
+                    _logger,
                 )
-                return None
 
             # Search for the TVDB ID within Sonarr.
-            if kwargs.__contains__("tvdb_id"):
+            elif kwargs.__contains__("tvdb_id"):
                 # Get Sonarr's collection
                 results = cache.handler(
-                    "sonarr library cache",
-                    function=self.get_all_sonarr_content,
-                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    "sonarr library",
+                    function=self.get_sonarr_library,
+                    cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=force_update_cache,
                 )
 
@@ -94,51 +88,48 @@ class ContentManager:
 
                     # Obtain season information if needed
                     if obtain_season_info:
-                        # Set the season and episode status codes
-                        self.__season_info_and_status(series)
+                        # Set the season and episode availability
+                        self.__season_episode_availability(series)
 
                     return series
 
-                # Return None if couldn't find the series
+                # Couldn't find the series
                 log.handler(
                     "Series with TVDB ID "
                     + str(kwargs["tvdb_id"])
                     + " not found within Sonarr.",
                     log.INFO,
-                    self.__logger,
+                    _logger,
                 )
-                return None
 
             # Invalid parameter
-            log.handler(
-                "Invalid parameter for getting content!",
-                log.WARNING,
-                self.__logger,
-            )
-            return None
+            else:
+                log.handler(
+                    "A valid ID was not provided in ContentManager.get()!",
+                    log.WARNING,
+                    _logger,
+                )
 
         except KeyError:
             log.handler(
                 "Content not ready yet!",
                 log.WARNING,
-                self.__logger,
+                _logger,
             )
-            return None
 
         except:
             log.handler(
                 "Failed to get content!",
                 log.ERROR,
-                self.__logger,
+                _logger,
             )
-            return None
 
     def add(self, **kwargs):
         """Adds a new movie or series using Sonarr or Radarr.
         Will not work for content that already exists.
         This does NOT mark content as monitored or perform a search.
 
-        Kwargs:
+        Args:
             quality_profile_id: An integer containing the quality profile ID (required).
             root_dir: A string containing the root directory (required).
             series_type: String containing Standard/Anime/Daily (required if adding TV).
@@ -184,27 +175,27 @@ class ContentManager:
 
             # Invalid parameter
             log.handler(
-                "Invalid parameter for adding content!",
+                "A valid ID was not provided in ContentManager.add()!",
                 log.WARNING,
-                self.__logger,
+                _logger,
             )
-            return None
 
         except:
             log.handler(
                 "Failed to add content!",
                 log.ERROR,
-                self.__logger,
+                _logger,
             )
-            return None
 
     def request(self, **kwargs):
         """Monitors and searches for an existing movie, series, season(s), or episode(s) using Sonarr or Radarr.
 
-        Kwargs:
+        Args:
             # Pick One ID
             radarr_id: An integer containing the Radarr ID.
             sonarr_id: An integer containing the Sonarr ID.
+
+            # Only used if using sonarr_id
             seasons: A list of integers containing the specific season numbers values (optional).
             episode_ids: A list of integers containing the specific "episodeId" values (optional).
 
@@ -345,18 +336,17 @@ class ContentManager:
 
             # Invalid parameter
             log.handler(
-                "Invalid parameter for requesting content!",
+                "A valid ID was not provided in ContentManager.request()!",
                 log.WARNING,
-                self.__logger,
+                _logger,
             )
-            return None
+
         except:
             log.handler(
                 "Failed to request content!",
                 log.ERROR,
-                self.__logger,
+                _logger,
             )
-            return None
 
     def delete(self, **kwargs):
         """Deletes an existing movie, series, or episode(s) using Sonarr or Radarr.
@@ -396,19 +386,17 @@ class ContentManager:
 
             # Invalid parameter
             log.handler(
-                "Invalid parameter for deleting content!",
+                "A valid ID was not provided in ContentManager.delete()!",
                 log.WARNING,
-                self.__logger,
+                _logger,
             )
-            return None
 
         except:
             log.handler(
                 "Failed to delete content!",
                 log.ERROR,
-                self.__logger,
+                _logger,
             )
-            return None
 
     def redownload(self, **kwargs):
         """Deletes, requests, and adds an existing movie, series, or episode(s) using Sonarr or Radarr.
@@ -418,6 +406,7 @@ class ContentManager:
             radarr_id: An integer containing the Radarr ID.
             sonarr_id: An integer containing the Sonarr ID.
 
+            # Only used if using sonarr_id
             episode_file_ids: A list of integers containing the specific "episodeFileId" values (optional).
             seasons: A list of integers containing the specific season numbers values (optional).
             episode_ids: A list of integers containing the specific "episodeId" values (optional).
@@ -446,53 +435,86 @@ class ContentManager:
 
     def sonarr_root_dirs(self):
         """Returns the root dirs available within Sonarr"""
-        return self.__sonarr.getRoot()
+        try:
+            return self.__sonarr.getRoot()
+
+        except:
+            log.handler(
+                "Failed to get sonarr root dirs!",
+                log.ERROR,
+                _logger,
+            )
 
     def radarr_root_dirs(self):
         """Returns the root dirs available within Radarr"""
-        return self.__radarr.getRoot()
+        try:
+            return self.__radarr.getRoot()
+
+        except:
+            log.handler(
+                "Failed to get radarr root dirs!",
+                log.ERROR,
+                _logger,
+            )
 
     def sonarr_quality_profiles(self):
         """Returns the quality profiles available within Sonarr"""
-        return self.__sonarr.getQualityProfiles()
+        try:
+            return self.__sonarr.getQualityProfiles()
+
+        except:
+            log.handler(
+                "Failed to get sonarr quality profiles!",
+                log.ERROR,
+                _logger,
+            )
 
     def radarr_quality_profiles(self):
         """Returns the quality profiles available within Radarr"""
-        return self.__radarr.getQualityProfiles()
+        try:
+            return self.__radarr.getQualityProfiles()
+
+        except:
+            log.handler(
+                "Failed to get radarr quality profiles!",
+                log.ERROR,
+                _logger,
+            )
 
     def refresh_content(self):
         """Refreshes Sonarr and Radarr's content"""
         try:
             if self.conreq_config.radarr_enabled:
                 cache.handler(
-                    "radarr library cache",
-                    function=self.get_all_radarr_content,
-                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    "radarr library",
+                    function=self.get_radarr_library,
+                    cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
         except:
             log.handler(
                 "Failed to refresh radarr!",
                 log.WARNING,
-                self.__logger,
+                _logger,
             )
 
         try:
             if self.conreq_config.sonarr_enabled:
                 cache.handler(
-                    "sonarr library cache",
-                    function=self.get_all_sonarr_content,
-                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    "sonarr library",
+                    function=self.get_sonarr_library,
+                    cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
         except:
             log.handler(
                 "Failed to refresh sonarr!",
                 log.WARNING,
-                self.__logger,
+                _logger,
             )
 
-    def get_all_radarr_content(self):
+    def get_radarr_library(self):
+        """Fetches everything within Radarr's library"""
         try:
             if self.conreq_config.radarr_enabled:
                 if self.conreq_config.radarr_url and self.conreq_config.radarr_api_key:
@@ -503,7 +525,7 @@ class ContentManager:
                     results_with_ids = {}
                     for movie in results:
                         if movie.__contains__("tmdbId"):
-                            self.__check_status(movie)
+                            self.__check_availability(movie)
                             results_with_ids[str(movie["tmdbId"])] = movie
 
                     # Return all movies
@@ -512,17 +534,18 @@ class ContentManager:
                 log.handler(
                     "Radarr URL or API key is unset!",
                     log.WARNING,
-                    self.__logger,
+                    _logger,
                 )
 
         except:
             log.handler(
                 "Could not get movies!",
                 log.ERROR,
-                self.__logger,
+                _logger,
             )
 
-    def get_all_sonarr_content(self):
+    def get_sonarr_library(self):
+        """Fetches everything within Sonarr's library"""
         try:
             if self.conreq_config.sonarr_enabled:
                 if self.conreq_config.sonarr_url and self.conreq_config.sonarr_api_key:
@@ -533,7 +556,7 @@ class ContentManager:
                     results_with_ids = {}
                     for series in results:
                         if series.__contains__("tvdbId"):
-                            self.__check_status(series)
+                            self.__check_availability(series)
 
                             results_with_ids[str(series["tvdbId"])] = series
 
@@ -543,41 +566,42 @@ class ContentManager:
                 log.handler(
                     "Sonarr URL or API key is unset!",
                     log.WARNING,
-                    self.__logger,
+                    _logger,
                 )
 
         except:
             log.handler(
                 "Could not get series!",
                 log.ERROR,
-                self.__logger,
+                _logger,
             )
 
-    def __season_info_and_status(self, series):
+    def __season_episode_availability(self, series):
+        """Multithreadable part of season_episode_availability()"""
         # Obtain the episodes
         episodes = self.__sonarr.getEpisodesBySeriesId(series["id"])
         for season in series["seasons"]:
             # Set the season availability
-            self.__check_status(season["statistics"])
+            self.__check_availability(season["statistics"])
 
             # Set the episode availability
             season["episodes"] = []
             for episode in episodes:
                 if episode["seasonNumber"] == season["seasonNumber"]:
-                    self.__check_status(episode)
+                    self.__check_availability(episode)
                     season["episodes"].append(episode)
 
-    def __check_status(self, content):
-
-        ########################
-        ### 0: "Downloading" ###
-        ########################
-        # Use getQueue() to get the "downloading" status code
+    def __check_availability(self, content):
+        """Multithreadable part of check_availability()"""
+        #####################
+        ### "Downloading" ###
+        #####################
+        # Use getQueue() to check if it's "downloading"
         # queue_data = self.__sonarr.getQueue()["status"]
 
-        ########################
-        ### 1: "Unavailable" ###
-        ########################
+        #####################
+        ### "Unavailable" ###
+        #####################
         # Check if an individual movie or episode does not exist (Sonarr and Radarr)
         try:
             if not content["hasFile"]:
@@ -594,9 +618,9 @@ class ContentManager:
         except:
             pass
 
-        ####################
-        ### 2: "Partial" ###
-        ####################
+        #################
+        ### "Partial" ###
+        #################
         # Check if season or series is partially downloaded (Sonarr)
         try:
             # Series
@@ -618,9 +642,9 @@ class ContentManager:
         except:
             pass
 
-        ######################
-        ### 3: "Available" ###
-        ######################
+        ###################
+        ### "Available" ###
+        ###################
         # Check if a season is fully downloaded (Sonarr)
         try:
             # Series
@@ -653,67 +677,7 @@ class ContentManager:
         log.handler(
             "Could not determine availability!\n" + str(content),
             log.INFO,
-            self.__logger,
+            _logger,
         )
         content["availability"] = "Unknown"
         return content
-
-
-# if __name__ == "__main__":
-#     content_manager = ContentManager(
-#         "https://x",
-#         "x",
-#         "https://x",
-#         "x",
-#     )
-# print("\n#### Get Movies Test ####")
-# pprint(content_manager.get(tmdb_id="tt0114709"))
-# pprint(content_manager.get(tmdb_id="tt2245084"))
-
-# print("\n#### Get TV Test ####")
-# pprint(content_manager.get(tvdb_id=373345))
-# pprint(content_manager.get(tvdb_id=305074))
-
-# print("\n#### Sonarr Quality Profiles Test ####")
-# pprint(content_manager.sonarr_quality_profiles())
-# print("\n#### Radarr Quality Profiles Test ####")
-# pprint(content_manager.radarr_quality_profiles())
-
-# print("\n#### Sonarr Root Dirs Test ####")
-# pprint(content_manager.sonarr_root_dirs())
-# print("\n#### Radarr Root Dirs Test ####")
-# pprint(content_manager.radarr_root_dirs())
-
-# print("\n#### Add Movie Test ####")
-# radarr_root = content_manager.radarr_root_dirs()[0]["path"]
-# pprint(
-#     content_manager.add(
-#         tmdb_id="tt1979376", quality_profile_id=1, root_dir=radarr_root
-#     )
-# )
-
-# print("\n#### Add Anime Test ####")
-# sonarr_root = content_manager.sonarr_root_dirs()[0]["path"]
-# pprint(
-#     content_manager.add(
-#         tvdb_id="83277",
-#         series_type="Anime",
-#         quality_profile_id=1,
-#         root_dir=sonarr_root,
-#     )
-# )
-
-# print("\n#### Request TV Test ####")
-# pprint(content_manager.request(sonarr_id=30, episode_ids=[4635]))
-# pprint(content_manager.request(sonarr_id=30))
-# pprint(content_manager.request(sonarr_id=30, seasons=[1]))
-
-# print("\n#### Request Movies Test ####")
-# pprint(content_manager.request(radarr_id=4))
-
-# print("\n#### Redownload Movies Test")
-# pprint(content_manager.redownload(radarr_id=4))
-
-# print("\n#### Delete Test ####")
-# pprint(content_manager.delete(episode_file_ids=["210"]))
-# pprint(content_manager.delete(radarr_id=3))

@@ -1,6 +1,6 @@
 from conreq.apps.base.forms import InitializationForm
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.utils.apps import generate_context, initialize_conreq
+from conreq.utils.app_views import generate_context
 from conreq.utils.generic import get_base_url
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth import authenticate, get_user_model, login
@@ -9,9 +9,9 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
 
-BASE_URL = get_base_url()
+from .helpers import initialize_conreq
 
-# Create your views here.
+BASE_URL = get_base_url()
 
 
 @performance_metrics()

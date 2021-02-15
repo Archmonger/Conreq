@@ -7,11 +7,11 @@
 
 Conreq, a **Con**tent **Req**uesting platform.
 
-Want to join the community or have a question? Join us on [Discord](https://discord.gg/gQhGZzEjmX) or discuss with us on [GitHub Discussions](https://github.com/Archmonger/Conreq/discussions)!
+Want to join the community or have a question? Join us on [Discord](https://discord.gg/gQhGZzEjmX), discuss on [GitHub Discussions](https://github.com/Archmonger/Conreq/discussions), or see our planned features and roadmap on [GitHub Projects](https://github.com/Archmonger/Conreq/projects)!
 
-Are you a developer and want to contrinbute? Check out our [Building Guide](https://github.com/Archmonger/Conreq/wiki/Building-Guide) and [Programmers Guide](https://github.com/Archmonger/Conreq/wiki/Programmers-Guide)!
+Are you a developer and want to contribute? Check out our [Building Guide](https://github.com/Archmonger/Conreq/wiki/Building-Guide) and [Programmers Guide](https://github.com/Archmonger/Conreq/wiki/Programmers-Guide)!
 
-## Installation (Deployment Environment)
+## Installation (Production Environment)
 
 Install through **[Unraid Community Applications](https://squidly271.github.io/forumpost0.html)**, **[Docker](https://github.com/Roxedus/docker-conreq)**, or **[Dockerhub](https://registry.hub.docker.com/r/roxedus/conreq)**.
 
@@ -28,7 +28,7 @@ DB_ENGINE = "MYSQL"                       # default: SQLITE3
 MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
-DEBUG = False                             # default: true (NEVER enable this in production)
+DEBUG = False                             # default: true (NEVER enable in production. Disables ALL security features.)
 ROTATE_SECRET_KEY = True                  # default: false (will sign out users when conreq restarts)
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (false will disable X-Frame-Options)
 USE_SSL = True                            # default: false

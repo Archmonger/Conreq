@@ -167,7 +167,7 @@ var create_collection_carousel = function () {
 
         content_preview_modal_click_event();
 
-        $(".more-info-recommendations").collapse("show");
+        $(".more-info-collection").collapse("show");
       }
     });
   }
