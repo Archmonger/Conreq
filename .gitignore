@@ -122,3 +122,6 @@ GitHub.sublime-settings
 .vscode/extensions.json
 .history
 %SystemDrive%
+
+# Mac file system
+.DS_Store
