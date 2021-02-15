@@ -15,12 +15,5 @@
     <div class="empty-viewport">
         No requests were found! Try requesting something first!
     </div>
-
-    {% elif 7 > all_cards|length %}
-    {% for x in "1234567" %}
-    <div class="masonry-item poster-container too-few-results">
-        Tab feeling empty? Request more content to fill it up!
-    </div>
-    {% endfor %}
     {% endif %}
 </div>

@@ -83,8 +83,3 @@
 .viewport .poster-container:hover > a > .content-type-icon {
   opacity: 1;
 }
-
-.masonry-item.poster-container.too-few-results {
-  height: var(--poster-height);
-  padding: 15px;
-}
