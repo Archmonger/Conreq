@@ -3,35 +3,32 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.content_search import Search
 from conreq.utils import log
-from conreq.utils.apps import (
+from conreq.utils.app_views import (
     generate_context,
     obtain_sonarr_parameters,
-    preprocess_arr_result,
-    preprocess_tmdb_result,
     set_many_availability,
     set_single_availability,
 )
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
+from .helpers import preprocess_arr_result, preprocess_tmdb_result
+
+_logger = log.get_logger(__name__)
+
 # Globals
-MAX_SERIES_FETCH_RETRIES = 5
-
-__logger = log.get_logger(__name__)
-
-# Create your views here.
+MAX_SERIES_FETCH_RETRIES = 10
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def more_info(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/more_info.html")
-    thread_list = []
 
     # Get the ID from the URL
     tmdb_id = request.GET.get("tmdb_id", None)
@@ -81,7 +78,6 @@ def more_info(request):
         searcher = Search()
         # Fallback for TVDB
         content = searcher.television(tvdb_id)[0]
-        thread_list = []
 
         # Preprocess results
         preprocess_arr_result(content)
@@ -101,7 +97,7 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def series_modal(request):
@@ -154,17 +150,26 @@ def series_modal(request):
             log.handler(
                 "Sonarr did not have the series information! Conreq is waiting...",
                 log.INFO,
-                __logger,
+                _logger,
             )
 
-    context = generate_context(
-        {"seasons": series["seasons"], "tvdb_id": tvdb_id, "report_modal": report_modal}
-    )
-    template = loader.get_template("modal/series_selection.html")
-    return HttpResponse(template.render(context, request))
+    # Series successfully obtained from Sonarr
+    if series:
+        context = generate_context(
+            {
+                "seasons": series["seasons"],
+                "tvdb_id": tvdb_id,
+                "report_modal": report_modal,
+            }
+        )
+        template = loader.get_template("modal/series_selection.html")
+        return HttpResponse(template.render(context, request))
+
+    # Sonarr couldn't process this request
+    return HttpResponseNotFound()
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def content_preview_modal(request):
@@ -196,7 +201,7 @@ def content_preview_modal(request):
         return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def recommended(request):
@@ -220,7 +225,7 @@ def recommended(request):
         return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def collection(request):

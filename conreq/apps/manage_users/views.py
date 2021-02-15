@@ -1,13 +1,10 @@
-from conreq.utils.apps import generate_context
+from conreq.utils.app_views import generate_context
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
-
-
-# Create your views here.
 
 
 @cache_page(1)

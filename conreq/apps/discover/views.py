@@ -1,6 +1,5 @@
-# from django.shortcuts import render
 from conreq.core.content_discovery import ContentDiscovery
-from conreq.utils.apps import generate_context, set_many_availability
+from conreq.utils.app_views import generate_context, set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -8,10 +7,7 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 
 
-# Create your views here.
-
-
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def discover_all(request):
@@ -36,7 +32,7 @@ def discover_all(request):
     return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def discover_tv(request):
@@ -61,7 +57,7 @@ def discover_tv(request):
     return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def discover_movies(request):

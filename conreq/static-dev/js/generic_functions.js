@@ -199,7 +199,13 @@ var copy_to_clipboard = async function () {
   }
 
   var invite_link_element = document.getElementById("invite_link");
-  if (typeof (invite_link_element) === 'undefined' && invite_link_element.textContent.includes("undefined")) {
+  if (typeof (invite_link_element) === 'undefined') {
+    onreq_no_response_toast_message();
+    return;
+  }
+
+  if (invite_link_element.textContent.includes("undefined")) {
+    document.body.removeChild(invite_link_element);
     onreq_no_response_toast_message();
     return;
   }
@@ -211,15 +217,13 @@ var copy_to_clipboard = async function () {
     }, function () {
       onreq_no_response_toast_message();
     });
-    document.body.removeChild(invite_link_element);
   }
   else {
     //Fallback to old clipboard method
     invite_link_element.select();
     document.execCommand('copy') ? invite_copied_toast_message() : onreq_no_response_toast_message();
-    document.body.removeChild(invite_link_element);
   }
-
+  document.body.removeChild(invite_link_element);
 };
 
 var hide_invite_link = function (...result) {
@@ -290,11 +294,13 @@ var get_viewport = function (location, success = function () { }) {
     get_url_retries = 0;
     return success(response);
   }).fail(function () {
-    get_retry_counter++;
-    if (get_retry_counter <= 200) {
+    get_url_retries++;
+    if (get_url_retries <= 5 && this.url == get_window_location()) {
       setTimeout(function () {
-        get_url_retry(location, success);
-      }, 200 * Math.min(get_retry_counter, 50));
+        get_viewport(location, success);
+      }, 200 * (get_url_retries * 5));
+    } else {
+      conreq_no_response_toast_message();
     }
   });
   return http_request;
@@ -373,4 +379,28 @@ var timer_seconds = function () {
 
   // get seconds
   return Math.round(time_diff);
+};
+
+// Change a server setting
+var change_server_setting = function (setting_name = null, value = null) {
+  let json_payload = {
+    setting_name: setting_name,
+    value: value,
+  };
+  post_json(
+    $(".viewport.server.settings").data("url"),
+    json_payload,
+    function (json_response) {
+      if (json_response.command_name == "new conreq api key") {
+        $("#conreq-api-key").text(json_response.value);
+      }
+      if (json_response.success) {
+        settings_save_success_toast_message();
+      } else {
+        settings_save_failed_toast_message(json_response.error_message);
+      }
+    }
+  ).fail(function () {
+    settings_save_failed_toast_message("Internal server error.");
+  });
 };

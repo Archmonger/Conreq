@@ -1,3 +1,4 @@
+"""Capabilities used while in DEBUG, that turn off in production environments."""
 from functools import wraps
 
 from conreq.utils.generic import get_debug_from_env

@@ -4,7 +4,7 @@ from conreq.apps.issue_reporting.models import ReportedIssue
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.apps import add_unique_to_db, generate_context
+from conreq.utils.app_views import add_unique_to_db, generate_context
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
@@ -12,7 +12,7 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 # (Issue name, Resolution)
 ISSUE_LIST = [
@@ -35,8 +35,6 @@ ISSUE_LIST = [
     ("Other.", ["NOTIFY ADMIN"]),
 ]
 
-# Create your views here.
-
 
 @login_required
 @performance_metrics()
@@ -46,7 +44,7 @@ def report_issue(request):
         log.handler(
             "Issue report received: " + str(request_parameters),
             log.INFO,
-            __logger,
+            _logger,
         )
 
         # Get the parameters from the response
@@ -83,7 +81,7 @@ def report_issue(request):
     return HttpResponseForbidden()
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def report_issue_modal(request):
@@ -162,7 +160,7 @@ def all_issues(request):
                 + entry["content_id"]
                 + " no longer exists!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
     context = generate_context({"all_cards": all_cards})
@@ -234,7 +232,7 @@ def my_issues(request):
                 + entry["content_id"]
                 + " no longer exists!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
     context = generate_context({"all_cards": all_cards})

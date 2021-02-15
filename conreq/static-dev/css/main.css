@@ -141,9 +141,8 @@ a:hover {
   box-shadow: var(--box-shadow);
 }
 
-.masonry-item.poster-container.too-few-results {
-  height: var(--poster-container-height);
-  padding: 15px;
+.empty-viewport > div {
+  line-height: 2;
 }
 
 .bold {

@@ -8,9 +8,9 @@ from . import validators
 
 class InitializationForm(UserCreationForm):
     sonarr_url = forms.CharField(max_length=255, required=False)
-    sonarr_api_key = forms.CharField(max_length=50, required=False)
+    sonarr_api_key = forms.CharField(max_length=255, required=False)
     radarr_url = forms.CharField(max_length=255, required=False)
-    radarr_api_key = forms.CharField(max_length=50, required=False)
+    radarr_api_key = forms.CharField(max_length=255, required=False)
 
     class Meta:
         model = User

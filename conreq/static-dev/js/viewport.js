@@ -148,7 +148,7 @@ let add_event_listeners = function () {
     let btn = $(this);
     let generate_invite_url = btn.data("generate-invite-url");
     let sign_up_url = window.location.origin + btn.data("sign-up-url");
-    get_url_retry(generate_invite_url, hide_invite_link, sign_up_url);
+    get_url(generate_invite_url, hide_invite_link, sign_up_url);
     copy_to_clipboard();
   });
 };
@@ -266,7 +266,7 @@ var generate_viewport = function () {
 
   // Asynchronously fetch new viewport content
   viewport_loaded = false;
-  get_url_retry(window_location, function (viewport_html) {
+  get_viewport(window_location, function (viewport_html) {
     // Save that the page was successfully loaded
     viewport_loaded = true;
 
