@@ -198,6 +198,7 @@ var copy_to_clipboard = async function () {
     if (document.getElementById("invite_link") != null) {
       break;
     } else if (try_num >= max_retries) {
+      // The element failed to load in time, notify the user.
       conreq_no_response_toast_message();
       return;
     }
