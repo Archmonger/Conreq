@@ -2,16 +2,14 @@ from threading import Thread
 
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_search import Search
-from conreq.utils.apps import (
-    convert_card_to_tmdb,
-    generate_context,
-    set_many_availability,
-)
+from conreq.utils.apps import generate_context, set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
+
+from .helpers import convert_card_to_tmdb
 
 
 @cache_page(15)

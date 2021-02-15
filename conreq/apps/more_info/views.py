@@ -6,8 +6,6 @@ from conreq.utils import log
 from conreq.utils.apps import (
     generate_context,
     obtain_sonarr_parameters,
-    preprocess_arr_result,
-    preprocess_tmdb_result,
     set_many_availability,
     set_single_availability,
 )
@@ -16,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.views.decorators.cache import cache_page
+
+from .helpers import preprocess_arr_result, preprocess_tmdb_result
 
 _logger = log.get_logger(__name__)
 
