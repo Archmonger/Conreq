@@ -192,30 +192,43 @@ var copy_to_clipboard = async function () {
       break;
     }
     else if (try_num >= max_retries) {
+      nreq_no_response_toast_message();
       return;
     }
     await sleep(100);
   }
 
   var invite_link_element = document.getElementById("invite_link");
+  if (typeof (invite_link_element) === 'undefined' && invite_link_element.textContent.includes("undefined")) {
+    onreq_no_response_toast_message();
+    return;
+  }
 
   if (typeof (navigator.clipboard) != "undefined") {
     //New ClipBoard API is supported
-    window.navigator.clipboard.writeText(invite_link_element.textContent);
+    window.navigator.clipboard.writeText(invite_link_element.textContent).then(function () {
+      invite_copied_toast_message();
+    }, function () {
+      onreq_no_response_toast_message();
+    });
     document.body.removeChild(invite_link_element);
   }
   else {
     //Fallback to old clipboard method
     invite_link_element.select();
-    document.execCommand('copy');
+    document.execCommand('copy') ? invite_copied_toast_message() : onreq_no_response_toast_message();
     document.body.removeChild(invite_link_element);
   }
-  invite_copied_toast_message();
+
 };
 
 var hide_invite_link = function (...result) {
-  var sign_up_url = result[1][2];
-  let invite_link = sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
+  var sign_up_url = result[1]
+  let invite_link = sign_up_url + "?invite_code=" + encodeURI(result[0].invite_code);
+  if (invite_link.includes("undefined")) {
+    onreq_no_response_toast_message();
+    return;
+  }
   const el = document.createElement("textarea");
   el.value = invite_link;
   el.textContent = invite_link;
@@ -261,21 +274,21 @@ var post_json = function (url, data, callback) {
 };
 
 // Gets a URL
-var get_url = function (location, success = function () { }) {
+var get_url = async function (location, success = function () { }, ...args) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
-    return success(response);
+    return success(response, args);
   });
   return http_request;
 };
 
 // Gets a URL and retries if it fails
-let get_retry_counter = 0;
-var get_url_retry = async function (location, success = function () { }, ...args) {
+let get_url_retries = 0;
+var get_viewport = function (location, success = function () { }) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
-    get_retry_counter = 0;
-    return success(response, args);
+    get_url_retries = 0;
+    return success(response);
   }).fail(function () {
     get_retry_counter++;
     if (get_retry_counter <= 200) {
