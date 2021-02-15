@@ -33,7 +33,8 @@ SHUFFLED_PAGE_CACHE_TIMEOUT = 1 * 24 * 60 * 60
 
 class ContentDiscovery:
     """Discovers top, trending, and recommended content using TMDB as the backend.
-    >>> Args:
+
+    Args:
         tmdb_api_key: String containing the TMDB API key.
     """
 
@@ -553,6 +554,7 @@ class ContentDiscovery:
 
     # Private Class Methods
     def __all(self, page_number, page_multiplier):
+        """Cacheable part of all()"""
         # Merge popular_movies, popular_tv, top_movies, and top_tv results together
         function_list = [
             self.__popular_movies,
@@ -566,6 +568,7 @@ class ContentDiscovery:
         return self.__shuffle_results(self.__merge_results(*results))
 
     def __tv(self, page_number, page_multiplier):
+        """Cacheable part of tv()"""
         # Merge popular_tv and top_tv results together
         function_list = [self.__popular_tv, self.__top_tv]
         results = threaded_execution(function_list, [page_number, page_multiplier])
@@ -574,6 +577,7 @@ class ContentDiscovery:
         return self.__shuffle_results(self.__merge_results(*results))
 
     def __movies(self, page_number, page_multiplier):
+        """Cacheable part of movies()"""
         # Merge popular_movies and top_movies results together
         function_list = [self.__popular_movies, self.__top_movies]
         results = threaded_execution(function_list, [page_number, page_multiplier])
@@ -582,6 +586,7 @@ class ContentDiscovery:
         return self.__shuffle_results(self.__merge_results(*results))
 
     def __popular(self, page_number, page_multiplier):
+        """Cacheable part of popular()"""
         # Merge popular_movies and popular_tv results together
         function_list = [self.__popular_movies, self.__popular_tv]
         results = threaded_execution(function_list, [page_number, page_multiplier])
@@ -590,6 +595,7 @@ class ContentDiscovery:
         return self.__shuffle_results(self.__merge_results(*results))
 
     def __top(self, page_number, page_multiplier):
+        """Cacheable part of top()"""
         # Merge top_movies and top_tv results together
         function_list = [self.__top_movies, self.__top_tv]
         results = threaded_execution(function_list, [page_number, page_multiplier])
@@ -598,6 +604,7 @@ class ContentDiscovery:
         return self.__shuffle_results(self.__merge_results(*results))
 
     def __popular_movies(self, page_number, page_multiplier):
+        """Cacheable part of popular_movies()"""
         # Obtain disovery results through the movie.popular function. Store results in cache.
         return self.__multi_page_fetch(
             "discover popular movies",
@@ -607,6 +614,7 @@ class ContentDiscovery:
         )
 
     def __top_movies(self, page_number, page_multiplier):
+        """Cacheable part of top_movies()"""
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
         return self.__multi_page_fetch(
             "discover top movies",
@@ -616,12 +624,14 @@ class ContentDiscovery:
         )
 
     def __popular_tv(self, page_number, page_multiplier):
+        """Cacheable part of popular_tv()"""
         # Obtain disovery results through the tv.popular function. Store results in cache.
         return self.__multi_page_fetch(
             "discover popular tv", tmdb.TV().popular, page_number, page_multiplier
         )
 
     def __top_tv(self, page_number, page_multiplier):
+        """Cacheable part of top_tv()"""
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
         return self.__multi_page_fetch(
             "discover top tv", tmdb.TV().top_rated, page_number, page_multiplier
@@ -826,6 +836,7 @@ class ContentDiscovery:
             )
 
     def __is_tv_anime(self, tmdb_id):
+        """Cacheable part of is_tv_anime()"""
         api_results = tmdb.TV(tmdb_id).keywords()
 
         # Check if the content contains Keyword: Anime
@@ -860,6 +871,7 @@ class ContentDiscovery:
         return False
 
     def __is_movie_anime(self, tmdb_id):
+        """Cacheable part of is_movie_anime()"""
         api_results = tmdb.Movies(tmdb_id).keywords()
 
         # Check if the content contains Keyword: Anime
@@ -1002,6 +1014,7 @@ class ContentDiscovery:
 
     @staticmethod
     def __shuffled_page_numbers():
+        """Cacheable part of shuffled_page_numbers()"""
         temp_list = [*range(1, MAX_SHUFFLED_PAGES + 1)]
         shuffle(temp_list)
         return dict(enumerate(temp_list, start=1))
