@@ -208,11 +208,9 @@ class ContentDiscovery:
                 log.WARNING,
                 self.__logger,
             )
-            return {}
 
         except:
             log.handler("Failed to discover!", log.ERROR, self.__logger)
-            return {}
 
     def similar_and_recommended(self, tmdb_id, content_type):
         """Merges the results of similar and recommended.
@@ -288,7 +286,15 @@ class ContentDiscovery:
         Args:
             collection_id: An Integer or String containing the TMDB Collection ID.
         """
-        return tmdb.Collections(collection_id).info()
+        try:
+            return tmdb.Collections(collection_id).info()
+
+        except:
+            log.handler(
+                "Failed to obtain collection with ID " + str(collection_id) + "!",
+                log.ERROR,
+                self.__logger,
+            )
 
     def get_by_tmdb_id(self, tmdb_id, content_type, obtain_extras=True):
         """Obtains a movie or series given a TMDB ID.
@@ -331,7 +337,6 @@ class ContentDiscovery:
                 log.WARNING,
                 self.__logger,
             )
-            return {}
 
         except:
             log.handler(
@@ -339,7 +344,6 @@ class ContentDiscovery:
                 log.ERROR,
                 self.__logger,
             )
-            return {}
 
     def get_by_tvdb_id(self, tvdb_id):
         """Converts TVDB ID to TMDB ID.
@@ -357,7 +361,6 @@ class ContentDiscovery:
                 log.ERROR,
                 self.__logger,
             )
-            return None
 
     def get_external_ids(self, tmdb_id, content_type):
         """Gets all external IDs given a TMDB ID.
@@ -391,7 +394,6 @@ class ContentDiscovery:
                 log.WARNING,
                 self.__logger,
             )
-            return {}
 
         except:
             log.handler(
@@ -399,7 +401,6 @@ class ContentDiscovery:
                 log.ERROR,
                 self.__logger,
             )
-            return {}
 
     def get_genres(self, content_type):
         """Gets all available TMDB genres and genre IDs.
@@ -430,7 +431,6 @@ class ContentDiscovery:
                 log.WARNING,
                 self.__logger,
             )
-            return {}
 
         except:
             log.handler(
@@ -438,7 +438,6 @@ class ContentDiscovery:
                 log.ERROR,
                 self.__logger,
             )
-            return {}
 
     def is_anime(self, tmdb_id, content_type):
         """Checks if a TMDB ID can be considered Anime.
@@ -641,7 +640,6 @@ class ContentDiscovery:
             "discover popular movies",
             tmdb.Movies().popular,
             page_number,
-            "movie",
             page_multiplier,
         )
 
@@ -651,20 +649,19 @@ class ContentDiscovery:
             "discover top movies",
             tmdb.Movies().top_rated,
             page_number,
-            "movie",
             page_multiplier,
         )
 
     def __popular_tv(self, page_number, page_multiplier):
         # Obtain disovery results through the tv.popular function. Store results in cache.
         return self.__multi_page_fetch(
-            "discover popular tv", tmdb.TV().popular, page_number, "tv", page_multiplier
+            "discover popular tv", tmdb.TV().popular, page_number, page_multiplier
         )
 
     def __top_tv(self, page_number, page_multiplier):
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
         return self.__multi_page_fetch(
-            "discover top tv", tmdb.TV().top_rated, page_number, "tv", page_multiplier
+            "discover top tv", tmdb.TV().top_rated, page_number, page_multiplier
         )
 
     def __recommended(self, tmdb_id, content_type, page_number):
@@ -675,7 +672,6 @@ class ContentDiscovery:
             content_type: String containing "movie" or "tv".
             page_number: An Integer that is the page number to return.
         """
-        # Performs a recommended search
         try:
             if content_type.lower() == "movie":
                 return cache.handler(
@@ -707,7 +703,6 @@ class ContentDiscovery:
                 log.WARNING,
                 self.__logger,
             )
-            return {}
 
         except:
             log.handler(
@@ -715,7 +710,6 @@ class ContentDiscovery:
                 log.ERROR,
                 self.__logger,
             )
-            return {}
 
     def __similar(self, tmdb_id, content_type, page_number):
         """Obtains similar content given a TMDB ID.
@@ -725,7 +719,6 @@ class ContentDiscovery:
             content_type: String containing "movie" or "tv".
             page_number: An Integer that is the page number to return.
         """
-        # Searches for similar content based on id
         try:
             if content_type.lower() == "movie":
                 return cache.handler(
@@ -757,7 +750,6 @@ class ContentDiscovery:
                 log.WARNING,
                 self.__logger,
             )
-            return {}
 
         except:
             log.handler(
@@ -765,13 +757,9 @@ class ContentDiscovery:
                 log.ERROR,
                 self.__logger,
             )
-            return {}
 
-    def __multi_page_fetch(
-        self, cache_name, function, page_number, content_type, page_multiplier
-    ):
-        """Cache handler wrapper to obtain multiple pages at once (via threads)."""
-        # Obtain multiple pages of TMDB queries
+    def __multi_page_fetch(self, cache_name, function, page_number, page_multiplier):
+        """Obtains multiple pages of results at once via threads."""
         total_pages = page_number * page_multiplier
         thread_list = []
         for subtractor in range(0, page_multiplier):
@@ -796,18 +784,13 @@ class ContentDiscovery:
         for thread in thread_list:
             merged_results = self.__merge_results(merged_results, thread.join())
 
-        # Set to valid ID to True, since tmdb is a valid source for Radarr.
-        if content_type == "movie":
-            for result in merged_results["results"]:
-                result["conreq_valid_id"] = True
-
         # Determine if TV has a TVDB ID (required for Sonarr)
         self.determine_id_validity(merged_results)
 
         return merged_results
 
     def __keywords_to_ids(self, keywords):
-        # Turn a keyword string or a list of keywords into a TMDB keyword ID number
+        """Turn a keyword string or a list of keywords into a TMDB keyword ID number"""
         try:
             keyword_ids = []
 
@@ -850,7 +833,7 @@ class ContentDiscovery:
                         # Return the keyword ID number
                         keyword_ids.append(search_result["id"])
 
-            # User put in values in an improper format
+            # User put in args in an improper format
             else:
                 log.handler(
                     "Keyword(s) "
@@ -871,7 +854,6 @@ class ContentDiscovery:
                 log.INFO,
                 self.__logger,
             )
-            return None
 
         except:
             log.handler(
@@ -879,7 +861,6 @@ class ContentDiscovery:
                 log.ERROR,
                 self.__logger,
             )
-            return None
 
     def __determine_id_validity(self, card):
         """Threaded executable for determine_id_validity()"""
@@ -892,7 +873,7 @@ class ContentDiscovery:
             pass
 
     def __merge_results(self, *args):
-        # Merge multiple API results into one
+        """Merge multiple API results into one"""
         try:
             first_run = True
             merged_results = {}
@@ -929,7 +910,7 @@ class ContentDiscovery:
             return {}
 
     def __shuffle_results(self, query):
-        # Shuffle API results
+        """Shuffle API results"""
         try:
             shuffle(query["results"])
             return query
@@ -943,7 +924,7 @@ class ContentDiscovery:
             return {}
 
     def __remove_duplicate_results(self, query):
-        # Removes duplicates from a dict
+        """Removes duplicates from a dict"""
         try:
             results = query["results"].copy()
 
@@ -984,7 +965,6 @@ class ContentDiscovery:
                 log.ERROR,
                 self.__logger,
             )
-            return {}
 
     @staticmethod
     def __shuffled_page_numbers():
