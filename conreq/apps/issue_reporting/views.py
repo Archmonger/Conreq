@@ -81,7 +81,7 @@ def report_issue(request):
     return HttpResponseForbidden()
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def report_issue_modal(request):

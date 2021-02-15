@@ -23,7 +23,7 @@ MAX_SERIES_FETCH_RETRIES = 10
 __logger = log.get_logger(__name__)
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def more_info(request):
@@ -97,7 +97,7 @@ def more_info(request):
     return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def series_modal(request):
@@ -169,7 +169,7 @@ def series_modal(request):
     return HttpResponseNotFound()
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def content_preview_modal(request):
@@ -201,7 +201,7 @@ def content_preview_modal(request):
         return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def recommended(request):
@@ -225,7 +225,7 @@ def recommended(request):
         return HttpResponse(template.render(context, request))
 
 
-@cache_page(60)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def collection(request):

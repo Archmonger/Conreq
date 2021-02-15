@@ -14,7 +14,7 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 
 
-@cache_page(30)
+@cache_page(15)
 @login_required
 @performance_metrics()
 def search(request):
