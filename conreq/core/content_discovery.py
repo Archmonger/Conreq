@@ -23,6 +23,7 @@ GET_BY_TMDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 GET_GENRES_CACHE_TIMEOUT = 30 * 24 * 60 * 60
 RECOMMENDED_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 SIMILAR_CACHE_TIMEOUT = 14 * 24 * 60 * 60
+COLLECTION_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 POPULAR_AND_TOP_CACHE_TIMEOUT = 3 * 24 * 60 * 60
 KEYWORDS_TO_IDS_CACHE_TIMEOUT = 30 * 24 * 60 * 60
 SHUFFLED_PAGE_CACHE_TIMEOUT = 1 * 24 * 60 * 60
@@ -287,7 +288,12 @@ class ContentDiscovery:
             collection_id: An Integer or String containing the TMDB Collection ID.
         """
         try:
-            return tmdb.Collections(collection_id).info()
+            return cache.handler(
+                "get collection by id",
+                page_key=collection_id,
+                function=tmdb.Collections(collection_id).info,
+                cache_duration=COLLECTION_CACHE_TIMEOUT,
+            )
 
         except:
             log.handler(
