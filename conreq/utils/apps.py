@@ -99,15 +99,12 @@ def __set_many_availability(card, radarr_library, sonarr_library):
 
 def set_many_availability(results):
     """Sets the availabily on list of cards."""
-    content_manager = ContentManager()
     # Fetch Sonarr and Radarr libraries
     radarr_library = cache.handler(
         "radarr library",
-        function=content_manager.get_all_radarr_content,
     )
     sonarr_library = cache.handler(
         "sonarr library",
-        function=content_manager.get_all_sonarr_content,
     )
 
     # Generate the availability if possible, or get the external ID if a TVDB ID is needed
