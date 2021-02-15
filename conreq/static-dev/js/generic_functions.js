@@ -207,14 +207,9 @@ var copy_to_clipboard = async function () {
 
   // Copy to clipboard using the Navigator API
   if (typeof navigator.clipboard != "undefined") {
-    window.navigator.clipboard.writeText(invite_link_element.textContent).then(
-      function () {
-        invite_copied_toast_message();
-      },
-      function () {
-        conreq_no_response_toast_message();
-      }
-    );
+    window.navigator.clipboard
+      .writeText(invite_link_element.textContent)
+      .then(invite_copied_toast_message, conreq_no_response_toast_message);
   }
 
   // Fallback to legacy copy to clipboard method
