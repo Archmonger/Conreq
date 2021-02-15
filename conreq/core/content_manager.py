@@ -6,7 +6,9 @@ from conreq.utils import cache, log
 from PyArr import RadarrAPI, SonarrAPI
 
 # Days, Hours, Minutes, Seconds
-GET_CONTENT_CACHE_TIMEOUT = 60
+# Library is refreshed every minute as a background task
+# This value is just a fail-safe.
+ARR_LIBRARY_CACHE_TIMEOUT = 5 * 60
 
 
 class ContentManager:
@@ -55,8 +57,8 @@ class ContentManager:
                 # Get Radarr's collection
                 results = cache.handler(
                     "radarr library",
-                    function=self.get_all_radarr_content,
-                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    function=self.get_radarr_library,
+                    cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=force_update_cache,
                 )
 
@@ -81,8 +83,8 @@ class ContentManager:
                 # Get Sonarr's collection
                 results = cache.handler(
                     "sonarr library",
-                    function=self.get_all_sonarr_content,
-                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    function=self.get_sonarr_library,
+                    cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=force_update_cache,
                 )
 
@@ -94,8 +96,8 @@ class ContentManager:
 
                     # Obtain season information if needed
                     if obtain_season_info:
-                        # Set the season and episode status codes
-                        self.__season_info_and_status(series)
+                        # Set the season and episode availability
+                        self.__season_episode_availability(series)
 
                     return series
 
@@ -466,8 +468,8 @@ class ContentManager:
             if self.conreq_config.radarr_enabled:
                 cache.handler(
                     "radarr library",
-                    function=self.get_all_radarr_content,
-                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    function=self.get_radarr_library,
+                    cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
         except:
@@ -481,8 +483,8 @@ class ContentManager:
             if self.conreq_config.sonarr_enabled:
                 cache.handler(
                     "sonarr library",
-                    function=self.get_all_sonarr_content,
-                    cache_duration=GET_CONTENT_CACHE_TIMEOUT,
+                    function=self.get_sonarr_library,
+                    cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
         except:
@@ -492,7 +494,8 @@ class ContentManager:
                 self.__logger,
             )
 
-    def get_all_radarr_content(self):
+    def get_radarr_library(self):
+        """Fetches everything within Radarr's library"""
         try:
             if self.conreq_config.radarr_enabled:
                 if self.conreq_config.radarr_url and self.conreq_config.radarr_api_key:
@@ -503,7 +506,7 @@ class ContentManager:
                     results_with_ids = {}
                     for movie in results:
                         if movie.__contains__("tmdbId"):
-                            self.__check_status(movie)
+                            self.__check_availability(movie)
                             results_with_ids[str(movie["tmdbId"])] = movie
 
                     # Return all movies
@@ -522,7 +525,8 @@ class ContentManager:
                 self.__logger,
             )
 
-    def get_all_sonarr_content(self):
+    def get_sonarr_library(self):
+        """Fetches everything within Sonarr's library"""
         try:
             if self.conreq_config.sonarr_enabled:
                 if self.conreq_config.sonarr_url and self.conreq_config.sonarr_api_key:
@@ -533,7 +537,7 @@ class ContentManager:
                     results_with_ids = {}
                     for series in results:
                         if series.__contains__("tvdbId"):
-                            self.__check_status(series)
+                            self.__check_availability(series)
 
                             results_with_ids[str(series["tvdbId"])] = series
 
@@ -553,31 +557,31 @@ class ContentManager:
                 self.__logger,
             )
 
-    def __season_info_and_status(self, series):
+    def __season_episode_availability(self, series):
         # Obtain the episodes
         episodes = self.__sonarr.getEpisodesBySeriesId(series["id"])
         for season in series["seasons"]:
             # Set the season availability
-            self.__check_status(season["statistics"])
+            self.__check_availability(season["statistics"])
 
             # Set the episode availability
             season["episodes"] = []
             for episode in episodes:
                 if episode["seasonNumber"] == season["seasonNumber"]:
-                    self.__check_status(episode)
+                    self.__check_availability(episode)
                     season["episodes"].append(episode)
 
-    def __check_status(self, content):
+    def __check_availability(self, content):
 
-        ########################
-        ### 0: "Downloading" ###
-        ########################
-        # Use getQueue() to get the "downloading" status code
+        #####################
+        ### "Downloading" ###
+        #####################
+        # Use getQueue() to check if it's "downloading"
         # queue_data = self.__sonarr.getQueue()["status"]
 
-        ########################
-        ### 1: "Unavailable" ###
-        ########################
+        #####################
+        ### "Unavailable" ###
+        #####################
         # Check if an individual movie or episode does not exist (Sonarr and Radarr)
         try:
             if not content["hasFile"]:
@@ -594,9 +598,9 @@ class ContentManager:
         except:
             pass
 
-        ####################
-        ### 2: "Partial" ###
-        ####################
+        #################
+        ### "Partial" ###
+        #################
         # Check if season or series is partially downloaded (Sonarr)
         try:
             # Series
@@ -618,9 +622,9 @@ class ContentManager:
         except:
             pass
 
-        ######################
-        ### 3: "Available" ###
-        ######################
+        ###################
+        ### "Available" ###
+        ###################
         # Check if a season is fully downloaded (Sonarr)
         try:
             # Series
@@ -659,13 +663,6 @@ class ContentManager:
         return content
 
 
-# if __name__ == "__main__":
-#     content_manager = ContentManager(
-#         "https://x",
-#         "x",
-#         "https://x",
-#         "x",
-#     )
 # print("\n#### Get Movies Test ####")
 # pprint(content_manager.get(tmdb_id="tt0114709"))
 # pprint(content_manager.get(tmdb_id="tt2245084"))
