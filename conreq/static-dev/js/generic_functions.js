@@ -190,47 +190,51 @@ var copy_to_clipboard = async function () {
   for (let try_num = 0; try_num <= max_retries; try_num++) {
     if (document.getElementById("invite_link") != null) {
       break;
-    }
-    else if (try_num >= max_retries) {
-      nreq_no_response_toast_message();
+    } else if (try_num >= max_retries) {
+      conreq_no_response_toast_message();
       return;
     }
     await sleep(100);
   }
 
   var invite_link_element = document.getElementById("invite_link");
-  if (typeof (invite_link_element) === 'undefined') {
-    onreq_no_response_toast_message();
+  if (typeof invite_link_element === "undefined") {
+    conreq_no_response_toast_message();
     return;
   }
 
   if (invite_link_element.textContent.includes("undefined")) {
     document.body.removeChild(invite_link_element);
-    onreq_no_response_toast_message();
+    conreq_no_response_toast_message();
     return;
   }
 
-  if (typeof (navigator.clipboard) != "undefined") {
+  if (typeof navigator.clipboard != "undefined") {
     //New ClipBoard API is supported
-    window.navigator.clipboard.writeText(invite_link_element.textContent).then(function () {
-      invite_copied_toast_message();
-    }, function () {
-      onreq_no_response_toast_message();
-    });
-  }
-  else {
+    window.navigator.clipboard.writeText(invite_link_element.textContent).then(
+      function () {
+        invite_copied_toast_message();
+      },
+      function () {
+        conreq_no_response_toast_message();
+      }
+    );
+  } else {
     //Fallback to old clipboard method
     invite_link_element.select();
-    document.execCommand('copy') ? invite_copied_toast_message() : onreq_no_response_toast_message();
+    document.execCommand("copy")
+      ? invite_copied_toast_message()
+      : conreq_no_response_toast_message();
   }
   document.body.removeChild(invite_link_element);
 };
 
 var hide_invite_link = function (...result) {
-  var sign_up_url = result[1]
-  let invite_link = sign_up_url + "?invite_code=" + encodeURI(result[0].invite_code);
+  var sign_up_url = result[1];
+  let invite_link =
+    sign_up_url + "?invite_code=" + encodeURI(result[0].invite_code);
   if (invite_link.includes("undefined")) {
-    onreq_no_response_toast_message();
+    conreq_no_response_toast_message();
     return;
   }
   const el = document.createElement("textarea");
@@ -241,10 +245,10 @@ var hide_invite_link = function (...result) {
   el.style.left = "-99999px";
   el.id = "invite_link";
   document.body.appendChild(el);
-}
+};
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // Post to a URL
@@ -278,7 +282,7 @@ var post_json = function (url, data, callback) {
 };
 
 // Gets a URL
-var get_url = async function (location, success = function () { }, ...args) {
+var get_url = async function (location, success = function () {}, ...args) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
     return success(response, args);
@@ -288,7 +292,7 @@ var get_url = async function (location, success = function () { }, ...args) {
 
 // Gets a URL and retries if it fails
 let get_url_retries = 0;
-var get_viewport = function (location, success = function () { }) {
+var get_viewport = function (location, success = function () {}) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
     get_url_retries = 0;
