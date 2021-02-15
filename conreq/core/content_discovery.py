@@ -20,6 +20,7 @@ MAX_SHUFFLED_PAGES = 30
 EXTERNAL_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 DISCOVER_BY_FILTER_CACHE_TIMEOUT = 3 * 24 * 60 * 60
 GET_BY_TMDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
+GET_BY_TVDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 GET_GENRES_CACHE_TIMEOUT = 30 * 24 * 60 * 60
 RECOMMENDED_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 SIMILAR_CACHE_TIMEOUT = 14 * 24 * 60 * 60
@@ -352,14 +353,19 @@ class ContentDiscovery:
             )
 
     def get_by_tvdb_id(self, tvdb_id):
-        """Converts TVDB ID to TMDB ID.
+        """Converts get a TMDB show by a TVDB ID.
 
         Args:
-            id: An Integer or String containing the TMDB ID.
+            id: An Integer or String containing the TVDB ID.
         """
-        # TODO: Add caching
         try:
-            return tmdb.Find(tvdb_id).info(external_source="tvdb_id")
+            return cache.handler(
+                "get tv by tvdb id",
+                page_key=tvdb_id,
+                function=tmdb.Find(tvdb_id).info,
+                cache_duration=GET_BY_TVDB_ID_CACHE_TIMEOUT,
+                kwargs={"external_source": "tvdb_id"},
+            )
 
         except:
             log.handler(
@@ -538,7 +544,8 @@ class ContentDiscovery:
             return False
 
     def determine_id_validity(self, tmdb_response):
-        # Needed because TVDB IDs are required for Sonarr
+        """Determine if a movie has a TMDB ID, and if TV has a TVDBID.
+        Required because TVDB IDs are required for Sonarr"""
         external_id_multi_fetch = {}
         external_id_multi_fetch_results = None
 
