@@ -167,6 +167,11 @@ var conreq_no_response_toast_message = function () {
   });
 };
 
+// Asychronous sleeping
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // Gets the current window location from the hash
 var get_window_location = function () {
   // Read the URL hash to determine what page we are on
@@ -186,7 +191,9 @@ var get_window_parameters = function () {
 
 // Copies the text of an element to the clipboard
 var copy_to_clipboard = async function () {
-  let max_retries = 15;
+  let max_retries = 10;
+
+  // Wait for the element to exist
   for (let try_num = 0; try_num <= max_retries; try_num++) {
     if (document.getElementById("invite_link") != null) {
       break;
@@ -196,21 +203,10 @@ var copy_to_clipboard = async function () {
     }
     await sleep(100);
   }
-
   let invite_link_element = document.getElementById("invite_link");
-  if (typeof invite_link_element === "undefined") {
-    conreq_no_response_toast_message();
-    return;
-  }
 
-  if (invite_link_element.textContent.includes("undefined")) {
-    document.body.removeChild(invite_link_element);
-    conreq_no_response_toast_message();
-    return;
-  }
-
+  // Copy to clipboard using the Navigator API
   if (typeof navigator.clipboard != "undefined") {
-    // New ClipBoard API is supported
     window.navigator.clipboard.writeText(invite_link_element.textContent).then(
       function () {
         invite_copied_toast_message();
@@ -219,13 +215,17 @@ var copy_to_clipboard = async function () {
         conreq_no_response_toast_message();
       }
     );
-  } else {
-    //Fallback to old clipboard method
+  }
+
+  // Fallback to legacy copy to clipboard method
+  else {
     invite_link_element.select();
     document.execCommand("copy")
       ? invite_copied_toast_message()
       : conreq_no_response_toast_message();
   }
+
+  // Remove page element created by create_invite_link_elem()
   document.body.removeChild(invite_link_element);
 };
 
@@ -240,11 +240,6 @@ var create_invite_link_elem = function (invite_link) {
   el.id = "invite_link";
   document.body.appendChild(el);
 };
-
-// Asychronous sleeping
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 // Post to a URL
 var post_url = function (url, callback) {
