@@ -201,14 +201,11 @@ var copy_to_clipboard = async function () {
 
   if (typeof (navigator.clipboard) != "undefined") {
     //New ClipBoard API is supported
-    console.log("New Clipboard Method Supported");
     window.navigator.clipboard.writeText(invite_link_element.textContent);
     document.body.removeChild(invite_link_element);
   }
   else {
     //Fallback to old clipboard method
-    console.log("New Clipboard Method Not Supported");
-
     invite_link_element.select();
     document.execCommand('copy');
     document.body.removeChild(invite_link_element);
@@ -216,9 +213,8 @@ var copy_to_clipboard = async function () {
   invite_copied_toast_message();
 };
 
-var hide_invite_link = function (result) {
-  var extra_args = arguments[1];
-  var sign_up_url = extra_args[2];
+var hide_invite_link = function (...result) {
+  var sign_up_url = result[1][2];
   let invite_link = sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
   const el = document.createElement("textarea");
   el.value = invite_link;
@@ -275,12 +271,11 @@ var get_url = function (location, success = function () { }) {
 
 // Gets a URL and retries if it fails
 let get_retry_counter = 0;
-var get_url_retry = async function (location, success = function () { }) {
-  var extra_args = arguments;
+var get_url_retry = async function (location, success = function () { }, ...args) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
     get_retry_counter = 0;
-    return success(response, extra_args);
+    return success(response, args);
   }).fail(function () {
     get_retry_counter++;
     if (get_retry_counter <= 200) {
