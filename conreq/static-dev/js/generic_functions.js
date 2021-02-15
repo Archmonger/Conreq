@@ -186,7 +186,7 @@ var get_window_parameters = function () {
 
 // Copies the text of an element to the clipboard
 var copy_to_clipboard = async function () {
-  var max_retries = 15;
+  let max_retries = 15;
   for (let try_num = 0; try_num <= max_retries; try_num++) {
     if (document.getElementById("invite_link") != null) {
       break;
