@@ -2,7 +2,7 @@ from threading import Thread
 
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_search import Search
-from conreq.utils.apps import generate_context, set_many_availability
+from conreq.utils.app_views import generate_context, set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse

@@ -4,7 +4,7 @@ from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.apps import generate_context
+from conreq.utils.app_views import generate_context
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse

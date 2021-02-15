@@ -3,7 +3,7 @@ from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.content_search import Search
 from conreq.utils import log
-from conreq.utils.apps import (
+from conreq.utils.app_views import (
     generate_context,
     obtain_sonarr_parameters,
     set_many_availability,

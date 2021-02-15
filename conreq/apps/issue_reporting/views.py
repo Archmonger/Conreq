@@ -4,7 +4,7 @@ from conreq.apps.issue_reporting.models import ReportedIssue
 from conreq.core.content_discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.apps import add_unique_to_db, generate_context
+from conreq.utils.app_views import add_unique_to_db, generate_context
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
