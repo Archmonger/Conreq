@@ -62,7 +62,7 @@ class ContentManager:
                 ):
                     return results[str(kwargs["tmdb_id"])]
 
-                # Return None if couldn't find the movie
+                # Couldn't find the movie
                 log.handler(
                     "Movie with TMDB ID "
                     + str(kwargs["tmdb_id"])
@@ -70,10 +70,9 @@ class ContentManager:
                     log.INFO,
                     self.__logger,
                 )
-                return None
 
             # Search for the TVDB ID within Sonarr.
-            if kwargs.__contains__("tvdb_id"):
+            elif kwargs.__contains__("tvdb_id"):
                 # Get Sonarr's collection
                 results = cache.handler(
                     "sonarr library",
@@ -95,7 +94,7 @@ class ContentManager:
 
                     return series
 
-                # Return None if couldn't find the series
+                # Couldn't find the series
                 log.handler(
                     "Series with TVDB ID "
                     + str(kwargs["tvdb_id"])
@@ -103,15 +102,14 @@ class ContentManager:
                     log.INFO,
                     self.__logger,
                 )
-                return None
 
             # Invalid parameter
-            log.handler(
-                "Invalid parameter for getting content!",
-                log.WARNING,
-                self.__logger,
-            )
-            return None
+            else:
+                log.handler(
+                    "A valid ID was not provided in ContentManager.get()!",
+                    log.WARNING,
+                    self.__logger,
+                )
 
         except KeyError:
             log.handler(
@@ -119,7 +117,6 @@ class ContentManager:
                 log.WARNING,
                 self.__logger,
             )
-            return None
 
         except:
             log.handler(
@@ -127,7 +124,6 @@ class ContentManager:
                 log.ERROR,
                 self.__logger,
             )
-            return None
 
     def add(self, **kwargs):
         """Adds a new movie or series using Sonarr or Radarr.
@@ -159,7 +155,7 @@ class ContentManager:
                 )
 
             # Add a show, season, or episode with a specific TVDB ID to Sonarr.
-            if kwargs.__contains__("tvdb_id"):
+            elif kwargs.__contains__("tvdb_id"):
                 # Add the show to Sonarr's collection
                 series_id = self.__sonarr.addSeries(
                     kwargs["tvdb_id"],
@@ -179,12 +175,12 @@ class ContentManager:
                 return self.__sonarr.updSeries(new_series)
 
             # Invalid parameter
-            log.handler(
-                "Invalid parameter for adding content!",
-                log.WARNING,
-                self.__logger,
-            )
-            return None
+            else:
+                log.handler(
+                    "A valid ID was not provided in ContentManager.add()!",
+                    log.WARNING,
+                    self.__logger,
+                )
 
         except:
             log.handler(
@@ -192,7 +188,6 @@ class ContentManager:
                 log.ERROR,
                 self.__logger,
             )
-            return None
 
     def request(self, **kwargs):
         """Monitors and searches for an existing movie, series, season(s), or episode(s) using Sonarr or Radarr.
@@ -247,7 +242,7 @@ class ContentManager:
                 return response
 
             # Search for a show with a specific Sonarr ID.
-            if kwargs.__contains__("sonarr_id"):
+            elif kwargs.__contains__("sonarr_id"):
                 response = {
                     "season_update_results": None,
                     "episode_update_results": None,
@@ -342,19 +337,19 @@ class ContentManager:
                 return response
 
             # Invalid parameter
-            log.handler(
-                "Invalid parameter for requesting content!",
-                log.WARNING,
-                self.__logger,
-            )
-            return None
+            else:
+                log.handler(
+                    "A valid ID was not provided in ContentManager.request()!",
+                    log.WARNING,
+                    self.__logger,
+                )
+
         except:
             log.handler(
                 "Failed to request content!",
                 log.ERROR,
                 self.__logger,
             )
-            return None
 
     def delete(self, **kwargs):
         """Deletes an existing movie, series, or episode(s) using Sonarr or Radarr.
@@ -377,12 +372,12 @@ class ContentManager:
                 return self.__radarr.delMovie(kwargs["radarr_id"], delFiles=True)
 
             # Remove a show with a specific Sonarr ID.
-            if kwargs.__contains__("sonarr_id"):
+            elif kwargs.__contains__("sonarr_id"):
                 # Remove the whole show
                 return self.__sonarr.delSeries(kwargs["sonarr_id"], delFiles=True)
 
             # Remove episodes with Sonarr episode IDs.
-            if kwargs.__contains__("episode_file_ids"):
+            elif kwargs.__contains__("episode_file_ids"):
                 response = []
                 # Remove all episode files in the list
                 for episode_id in kwargs["episode_file_ids"]:
@@ -393,12 +388,12 @@ class ContentManager:
                 return response
 
             # Invalid parameter
-            log.handler(
-                "Invalid parameter for deleting content!",
-                log.WARNING,
-                self.__logger,
-            )
-            return None
+            else:
+                log.handler(
+                    "A valid ID was not provided in ContentManager.delete()!",
+                    log.WARNING,
+                    self.__logger,
+                )
 
         except:
             log.handler(
@@ -406,7 +401,6 @@ class ContentManager:
                 log.ERROR,
                 self.__logger,
             )
-            return None
 
     def redownload(self, **kwargs):
         """Deletes, requests, and adds an existing movie, series, or episode(s) using Sonarr or Radarr.
@@ -447,6 +441,7 @@ class ContentManager:
         """Returns the root dirs available within Sonarr"""
         try:
             return self.__sonarr.getRoot()
+
         except:
             log.handler(
                 "Failed to get sonarr root dirs!",
@@ -458,6 +453,7 @@ class ContentManager:
         """Returns the root dirs available within Radarr"""
         try:
             return self.__radarr.getRoot()
+
         except:
             log.handler(
                 "Failed to get radarr root dirs!",
@@ -469,6 +465,7 @@ class ContentManager:
         """Returns the quality profiles available within Sonarr"""
         try:
             return self.__sonarr.getQualityProfiles()
+
         except:
             log.handler(
                 "Failed to get sonarr quality profiles!",
@@ -480,6 +477,7 @@ class ContentManager:
         """Returns the quality profiles available within Radarr"""
         try:
             return self.__radarr.getQualityProfiles()
+
         except:
             log.handler(
                 "Failed to get radarr quality profiles!",
