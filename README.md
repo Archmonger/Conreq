@@ -42,7 +42,7 @@ SSL_KEY = "/path/to/key.pem"              # default: none
 | :---------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: |
 |                                                Login Screen                                                 |                                                Discover Tab                                                 |
 
-| ![More Info Tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_3.png?raw=true) | ![Content Preview Modal](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_5.png?raw=true) |
+| ![More Info Tab](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_3.png?raw=true) | ![Content Preview Modal](https://github.com/Archmonger/Conreq/blob/main/resources/screenshots/conreq_4.png?raw=true) |
 | :----------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 |                                                More Info Tab                                                 |                                                Content Preview Modal                                                 |
 
