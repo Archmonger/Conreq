@@ -61,8 +61,6 @@ def threaded_execution_unique_args(functions):
             }, ...
         ]
     """
-
-    # Begin a thread for each function
     thread_list = []
     for executable in functions:
         thread = ReturnThread(
@@ -84,24 +82,6 @@ def threaded_execution_unique_args(functions):
         results.insert(index, result)
 
     return results
-
-
-def generate_cache_key(cache_name, cache_args, cache_kwargs, key):
-    """Generates a key to be used with django caching"""
-    return clean_string(
-        cache_name
-        + "_args"
-        + str(cache_args)
-        + "_kwargs"
-        + str(cache_kwargs)
-        + "_key"
-        + str(key)
-    )
-
-
-def obtain_key_from_cache_key(cache_key):
-    """Parses the cache key and returns any values after the string '_key'"""
-    return cache_key[cache_key.find("_key") + len("_key") :]
 
 
 def is_key_value_in_list(key, value, search_list, return_item=False):

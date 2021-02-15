@@ -6,7 +6,6 @@ from conreq.utils import cache, log
 from conreq.utils.generic import (
     ReturnThread,
     is_key_value_in_list,
-    obtain_key_from_cache_key,
     threaded_execution,
 )
 
@@ -539,7 +538,7 @@ class ContentDiscovery:
                 cache_key,
                 external_id_results,
             ) in external_id_multi_fetch_results.items():
-                key = obtain_key_from_cache_key(cache_key)
+                key = cache.obtain_key_from_cache_key(cache_key)
                 try:
                     # Does an ID exist?
                     if external_id_results["tvdb_id"]:

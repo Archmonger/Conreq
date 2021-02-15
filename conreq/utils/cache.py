@@ -2,8 +2,7 @@
 from conreq.utils import log
 from conreq.utils.generic import (
     ReturnThread,
-    generate_cache_key,
-    obtain_key_from_cache_key,
+    clean_string,
     get_debug_from_env,
 )
 from django.core.cache import cache
@@ -17,6 +16,24 @@ DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
 
 # Creating a logger (for log files)
 __logger = log.get_logger(__name__)
+
+
+def generate_cache_key(cache_name, cache_args, cache_kwargs, key):
+    """Generates a key to be used with django caching"""
+    return clean_string(
+        cache_name
+        + "_args"
+        + str(cache_args)
+        + "_kwargs"
+        + str(cache_kwargs)
+        + "_key"
+        + str(key)
+    )
+
+
+def obtain_key_from_cache_key(cache_key):
+    """Parses the cache key and returns any values after the string '_key'"""
+    return cache_key[cache_key.find("_key") + len("_key") :]
 
 
 def __multi_execution(
