@@ -10,7 +10,7 @@ from conreq.utils.multiprocessing import ReturnThread
 from PyArr import RadarrAPI, SonarrAPI
 from similarity.damerau import Damerau
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 # Days, Hours, Minutes, Seconds
 SEARCH_CACHE_TIMEOUT = 60 * 60
@@ -66,7 +66,7 @@ class Search:
             log.handler(
                 "Searching for all failed!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             return []
 
@@ -83,7 +83,7 @@ class Search:
                     log.handler(
                         "Searching for " + query + " (TV)",
                         log.INFO,
-                        __logger,
+                        _logger,
                     )
 
                     return cache.handler(
@@ -99,7 +99,7 @@ class Search:
                 log.handler(
                     "Sonarr URL or API key is unset!",
                     log.WARNING,
-                    __logger,
+                    _logger,
                 )
             return []
 
@@ -107,7 +107,7 @@ class Search:
             log.handler(
                 "Searching for TV failed!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             return []
 
@@ -123,7 +123,7 @@ class Search:
                     log.handler(
                         "Searching for " + query + " (MOVIE)",
                         log.INFO,
-                        __logger,
+                        _logger,
                     )
 
                     return cache.handler(
@@ -139,7 +139,7 @@ class Search:
                 log.handler(
                     "Radarr URL or API key is unset!",
                     log.WARNING,
-                    __logger,
+                    _logger,
                 )
             return []
 
@@ -147,7 +147,7 @@ class Search:
             log.handler(
                 "Searching for movie failed!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             return []
 
@@ -198,7 +198,7 @@ class Search:
             return results
 
         except:
-            log.handler("Failed to rank results", log.ERROR, __logger)
+            log.handler("Failed to rank results", log.ERROR, _logger)
             return results
 
     def __generate_conreq_rank(self, result, clean_query):
@@ -229,7 +229,7 @@ class Search:
             )
 
         except:
-            log.handler("Failed to generate conreq rank!", log.ERROR, __logger)
+            log.handler("Failed to generate conreq rank!", log.ERROR, _logger)
             try:
                 result["conreqSimilarityRank"] = result["arrOriginalRank"]
             except:
@@ -250,7 +250,7 @@ class Search:
             # Round a non-zero number
             return round(number, -int(floor(log10(number))) + (significant_figures - 1))
         except:
-            log.handler("Failed to round!", log.ERROR, __logger)
+            log.handler("Failed to round!", log.ERROR, _logger)
             return number
 
     @staticmethod

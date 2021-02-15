@@ -17,10 +17,10 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
+_logger = log.get_logger(__name__)
+
 # Globals
 MAX_SERIES_FETCH_RETRIES = 10
-
-__logger = log.get_logger(__name__)
 
 
 @cache_page(15)
@@ -150,7 +150,7 @@ def series_modal(request):
             log.handler(
                 "Sonarr did not have the series information! Conreq is waiting...",
                 log.INFO,
-                __logger,
+                _logger,
             )
 
     # Series successfully obtained from Sonarr

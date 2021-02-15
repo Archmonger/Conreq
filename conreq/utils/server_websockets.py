@@ -4,7 +4,7 @@ from channels.db import database_sync_to_async as convert_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from conreq.utils import log
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
@@ -27,7 +27,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             log.handler(
                 "Websocket login failure on initial connection!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             await self.__forbidden()
 
@@ -37,7 +37,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
         log.handler(
             content,
             log.INFO,
-            __logger,
+            _logger,
         )
         # Reject users that aren't logged in
         if (

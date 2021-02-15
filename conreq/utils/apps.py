@@ -11,7 +11,7 @@ from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
 from markdown import Markdown
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
 TMDB_POSTER_300_URL = "https://image.tmdb.org/t/p/w300"
@@ -158,7 +158,7 @@ def set_single_availability(card):
             log.handler(
                 "Card did not contain contentType, title, or name!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
             return card
 
@@ -166,7 +166,7 @@ def set_single_availability(card):
         log.handler(
             "Could not determine the availability of card!\n" + str(card),
             log.ERROR,
-            __logger,
+            _logger,
         )
         return card
 

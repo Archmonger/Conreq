@@ -5,7 +5,7 @@ from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
 from PyArr import RadarrAPI, SonarrAPI
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 # Days, Hours, Minutes, Seconds
 # Library is refreshed every minute as a background task
@@ -67,7 +67,7 @@ class ContentManager:
                     + str(kwargs["tmdb_id"])
                     + " not found within Radarr.",
                     log.INFO,
-                    __logger,
+                    _logger,
                 )
 
             # Search for the TVDB ID within Sonarr.
@@ -99,7 +99,7 @@ class ContentManager:
                     + str(kwargs["tvdb_id"])
                     + " not found within Sonarr.",
                     log.INFO,
-                    __logger,
+                    _logger,
                 )
 
             # Invalid parameter
@@ -107,21 +107,21 @@ class ContentManager:
                 log.handler(
                     "A valid ID was not provided in ContentManager.get()!",
                     log.WARNING,
-                    __logger,
+                    _logger,
                 )
 
         except KeyError:
             log.handler(
                 "Content not ready yet!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to get content!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def add(self, **kwargs):
@@ -177,14 +177,14 @@ class ContentManager:
             log.handler(
                 "A valid ID was not provided in ContentManager.add()!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to add content!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def request(self, **kwargs):
@@ -338,14 +338,14 @@ class ContentManager:
             log.handler(
                 "A valid ID was not provided in ContentManager.request()!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to request content!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def delete(self, **kwargs):
@@ -388,14 +388,14 @@ class ContentManager:
             log.handler(
                 "A valid ID was not provided in ContentManager.delete()!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to delete content!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def redownload(self, **kwargs):
@@ -442,7 +442,7 @@ class ContentManager:
             log.handler(
                 "Failed to get sonarr root dirs!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def radarr_root_dirs(self):
@@ -454,7 +454,7 @@ class ContentManager:
             log.handler(
                 "Failed to get radarr root dirs!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def sonarr_quality_profiles(self):
@@ -466,7 +466,7 @@ class ContentManager:
             log.handler(
                 "Failed to get sonarr quality profiles!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def radarr_quality_profiles(self):
@@ -478,7 +478,7 @@ class ContentManager:
             log.handler(
                 "Failed to get radarr quality profiles!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def refresh_content(self):
@@ -495,7 +495,7 @@ class ContentManager:
             log.handler(
                 "Failed to refresh radarr!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         try:
@@ -510,7 +510,7 @@ class ContentManager:
             log.handler(
                 "Failed to refresh sonarr!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
     def get_radarr_library(self):
@@ -534,14 +534,14 @@ class ContentManager:
                 log.handler(
                     "Radarr URL or API key is unset!",
                     log.WARNING,
-                    __logger,
+                    _logger,
                 )
 
         except:
             log.handler(
                 "Could not get movies!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def get_sonarr_library(self):
@@ -566,14 +566,14 @@ class ContentManager:
                 log.handler(
                     "Sonarr URL or API key is unset!",
                     log.WARNING,
-                    __logger,
+                    _logger,
                 )
 
         except:
             log.handler(
                 "Could not get series!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def __season_episode_availability(self, series):
@@ -677,7 +677,7 @@ class ContentManager:
         log.handler(
             "Could not determine availability!\n" + str(content),
             log.INFO,
-            __logger,
+            _logger,
         )
         content["availability"] = "Unknown"
         return content

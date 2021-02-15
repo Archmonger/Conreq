@@ -13,7 +13,7 @@ from conreq.utils.apps import (
 from conreq.utils.generic import is_key_value_in_list
 from conreq.utils.multiprocessing import threaded_execution_unique_args
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 
 def radarr_request_background_task(tmdb_id, content_manager, radarr_params, username):
@@ -35,7 +35,7 @@ def radarr_request_background_task(tmdb_id, content_manager, radarr_params, user
     log.handler(
         username + " requested movie " + movie["title"],
         log.INFO,
-        __logger,
+        _logger,
     )
 
 
@@ -66,7 +66,7 @@ def sonarr_request_background_task(
     log.handler(
         username + " requested TV series " + show["title"],
         log.INFO,
-        __logger,
+        _logger,
     )
 
 
@@ -180,7 +180,7 @@ def __generate_request_card(entry, content_discovery, content_manager):
             + entry["content_id"]
             + " no longer exists!",
             log.WARNING,
-            __logger,
+            _logger,
         )
 
     return card

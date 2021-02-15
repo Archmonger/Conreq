@@ -12,7 +12,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 
 @cache_page(1)
@@ -55,9 +55,7 @@ def server_settings(request):
                     {"id": profile["id"], "label": profile["name"]}
                 )
         except:
-            log.handler(
-                "Failed to obtain Sonarr Quality Profiles!", log.ERROR, __logger
-            )
+            log.handler("Failed to obtain Sonarr Quality Profiles!", log.ERROR, _logger)
 
         # Sonarr Folder Paths
         try:
@@ -71,7 +69,7 @@ def server_settings(request):
                 # List of all dropdown entries
                 sonarr_folders.append({"id": path["id"], "label": path["path"]})
         except:
-            log.handler("Failed to obtain Sonarr Folder Paths!", log.ERROR, __logger)
+            log.handler("Failed to obtain Sonarr Folder Paths!", log.ERROR, _logger)
 
     if conreq_config.radarr_enabled:
         # Radarr Quality Profiles
@@ -88,9 +86,7 @@ def server_settings(request):
                     {"id": profile["id"], "label": profile["name"]}
                 )
         except:
-            log.handler(
-                "Failed to obtain Radarr Quality Profiles!", log.ERROR, __logger
-            )
+            log.handler("Failed to obtain Radarr Quality Profiles!", log.ERROR, _logger)
 
         # Radarr Folder Paths
         try:
@@ -104,7 +100,7 @@ def server_settings(request):
                 # List of all dropdown entries
                 radarr_folders.append({"id": path["id"], "label": path["path"]})
         except:
-            log.handler("Failed to obtain Radarr Folder Paths!", log.ERROR, __logger)
+            log.handler("Failed to obtain Radarr Folder Paths!", log.ERROR, _logger)
 
     context = {
         "os_platform": platform(),
@@ -228,7 +224,7 @@ def update_settings(request):
                     + message["setting_name"]
                     + '" is currently not handled!',
                     log.WARNING,
-                    __logger,
+                    _logger,
                 )
                 response["success"] = False
                 response["error_message"] = "Unhandled server setting!"
@@ -250,7 +246,7 @@ def update_settings(request):
                 log.handler(
                     message,
                     log.INFO,
-                    __logger,
+                    _logger,
                 )
                 return JsonResponse(response)
 
@@ -261,7 +257,7 @@ def update_settings(request):
             log.handler(
                 "Unknown error has occurred within server websocket!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             return JsonResponse(response)
 

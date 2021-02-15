@@ -14,9 +14,10 @@ from django.views.decorators.vary import vary_on_cookie
 
 from .helpers import generate_requests_cards, radarr_request, sonarr_request
 
+_logger = log.get_logger(__name__)
+
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
-__logger = log.get_logger(__name__)
 
 
 @login_required
@@ -28,7 +29,7 @@ def request_content(request):
         log.handler(
             "Request received: " + str(request_parameters),
             log.INFO,
-            __logger,
+            _logger,
         )
 
         content_manager = ContentManager()

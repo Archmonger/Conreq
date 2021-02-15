@@ -12,7 +12,7 @@ if get_debug_from_env():
 DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
 
 # Creating a logger (for log files)
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 
 def generate_cache_key(cache_name, cache_args, cache_kwargs, key):
@@ -55,7 +55,7 @@ def __multi_execution(
         log.handler(
             cache_name + " - Multi-execution generated cache key " + cache_key,
             log.DEBUG,
-            __logger,
+            _logger,
         )
         requested_keys.append(cache_key)
 
@@ -67,7 +67,7 @@ def __multi_execution(
         + str(len(cached_results))
         + " available keys.",
         log.INFO,
-        __logger,
+        _logger,
     )
 
     # If nothing was in cache, or cache was expired, run function()
@@ -95,7 +95,7 @@ def __multi_execution(
             + str(len(missing_keys))
             + " missing keys.",
             log.INFO,
-            __logger,
+            _logger,
         )
         cache.set_many(missing_keys, cache_duration)
 
@@ -107,7 +107,7 @@ def __multi_execution(
         log.handler(
             cache_name + " - Multi-execution generated no results!",
             log.WARNING,
-            __logger,
+            _logger,
         )
 
     return cached_results
@@ -144,7 +144,7 @@ def handler(
         log.handler(
             cache_name + " - Accessed.",
             log.DEBUG,
-            __logger,
+            _logger,
         )
 
         # If the function was actually a dict of functions, then retrieve values using multi-execution.
@@ -157,7 +157,7 @@ def handler(
         log.handler(
             cache_name + " - Generated cache key " + cache_key,
             log.DEBUG,
-            __logger,
+            _logger,
         )
 
         # No function was provided, just return a bare cache value
@@ -165,7 +165,7 @@ def handler(
             log.handler(
                 cache_name + " - Requested raw cache values.",
                 log.DEBUG,
-                __logger,
+                _logger,
             )
             return cached_results
 
@@ -177,7 +177,7 @@ def handler(
             log.handler(
                 cache_name + " - " + function.__name__ + "()",
                 log.INFO,
-                __logger,
+                _logger,
             )
             return function_results
 
@@ -185,7 +185,7 @@ def handler(
             log.handler(
                 cache_name + " - Cache key " + cache_key + " was empty!",
                 log.INFO,
-                __logger,
+                _logger,
             )
 
         # If a value was in cache and not expired, return that value
@@ -197,11 +197,11 @@ def handler(
             log.handler(
                 "Function list failed to execute!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
         else:
             log.handler(
                 "Function " + function.__name__ + " failed to execute!",
                 log.ERROR,
-                __logger,
+                _logger,
             )

@@ -6,7 +6,7 @@ from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
 from conreq.utils.multiprocessing import ReturnThread, threaded_execution
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 # Globals
 ANIME_CHECK_FALLBACK = True
@@ -205,11 +205,11 @@ class ContentDiscovery:
             log.handler(
                 "Invalid content_type " + str(content_type) + " in discover().",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
-            log.handler("Failed to discover!", log.ERROR, __logger)
+            log.handler("Failed to discover!", log.ERROR, _logger)
 
     def similar_and_recommended(self, tmdb_id, content_type):
         """Merges the results of similar and recommended.
@@ -275,7 +275,7 @@ class ContentDiscovery:
             log.handler(
                 "Failed to obtain merged Similar and Recommended!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             return {}
 
@@ -297,7 +297,7 @@ class ContentDiscovery:
             log.handler(
                 "Failed to obtain collection with ID " + str(collection_id) + "!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def get_by_tmdb_id(self, tmdb_id, content_type, obtain_extras=True):
@@ -339,14 +339,14 @@ class ContentDiscovery:
             log.handler(
                 "Invalid content_type " + str(content_type) + " in get_by_id().",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to obtain content by ID!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def get_by_tvdb_id(self, tvdb_id):
@@ -368,7 +368,7 @@ class ContentDiscovery:
             log.handler(
                 "Failed to obtain content with TVDB ID " + str(tvdb_id) + "!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def get_external_ids(self, tmdb_id, content_type):
@@ -401,14 +401,14 @@ class ContentDiscovery:
             log.handler(
                 "Invalid content_type " + str(content_type) + " in get_external_ids().",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to obtain external ID!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def get_genres(self, content_type):
@@ -438,14 +438,14 @@ class ContentDiscovery:
             log.handler(
                 "Invalid content_type " + str(content_type) + " in get_genres().",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to obtain genres!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def is_anime(self, tmdb_id, content_type):
@@ -478,14 +478,14 @@ class ContentDiscovery:
             log.handler(
                 "Invalid content_type " + str(content_type) + " in is_anime().",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to check if content is anime!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             return False
 
@@ -669,14 +669,14 @@ class ContentDiscovery:
             log.handler(
                 "Invalid content_type " + str(content_type) + " in recommend().",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to obtain recommendations!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def __similar(self, tmdb_id, content_type, page_number):
@@ -716,14 +716,14 @@ class ContentDiscovery:
             log.handler(
                 "Invalid content_type " + str(content_type) + " in similar().",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to obtain similar content!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def __multi_page_fetch(self, cache_name, function, page_number, page_multiplier):
@@ -808,7 +808,7 @@ class ContentDiscovery:
                     + str(keywords)
                     + " were provided in an improper format",
                     log.WARNING,
-                    __logger,
+                    _logger,
                 )
                 return None
 
@@ -820,14 +820,14 @@ class ContentDiscovery:
             log.handler(
                 "Keyword(s) " + str(keywords) + " not found!",
                 log.INFO,
-                __logger,
+                _logger,
             )
 
         except:
             log.handler(
                 "Failed to obtain keyword!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     def __is_tv_anime(self, tmdb_id):
@@ -839,7 +839,7 @@ class ContentDiscovery:
             log.handler(
                 str(tmdb_id) + " is anime.",
                 log.INFO,
-                __logger,
+                _logger,
             )
             return True
 
@@ -854,14 +854,14 @@ class ContentDiscovery:
                 log.handler(
                     str(tmdb_id) + " is anime, based on fallback detection.",
                     log.INFO,
-                    __logger,
+                    _logger,
                 )
                 return True
 
         log.handler(
             str(tmdb_id) + " is not anime.",
             log.INFO,
-            __logger,
+            _logger,
         )
         return False
 
@@ -874,7 +874,7 @@ class ContentDiscovery:
             log.handler(
                 str(tmdb_id) + " is anime.",
                 log.INFO,
-                __logger,
+                _logger,
             )
             return True
 
@@ -891,14 +891,14 @@ class ContentDiscovery:
                 log.handler(
                     str(tmdb_id) + " is anime, based on fallback detection.",
                     log.INFO,
-                    __logger,
+                    _logger,
                 )
                 return True
 
         log.handler(
             str(tmdb_id) + " is not anime.",
             log.INFO,
-            __logger,
+            _logger,
         )
         return False
 
@@ -945,7 +945,7 @@ class ContentDiscovery:
             log.handler(
                 "Failed to merge results!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             return {}
 
@@ -959,7 +959,7 @@ class ContentDiscovery:
             log.handler(
                 "Failed to shuffle results!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
             return {}
 
@@ -994,7 +994,7 @@ class ContentDiscovery:
                         "While removing duplicates, entry found that did not contain name or title!"
                         + str(entry),
                         log.WARNING,
-                        __logger,
+                        _logger,
                     )
 
             query["results"] = clean_results
@@ -1004,7 +1004,7 @@ class ContentDiscovery:
             log.handler(
                 "Failed to remove duplicate results!",
                 log.ERROR,
-                __logger,
+                _logger,
             )
 
     @staticmethod

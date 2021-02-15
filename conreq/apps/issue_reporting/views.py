@@ -12,7 +12,7 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
-__logger = log.get_logger(__name__)
+_logger = log.get_logger(__name__)
 
 # (Issue name, Resolution)
 ISSUE_LIST = [
@@ -44,7 +44,7 @@ def report_issue(request):
         log.handler(
             "Issue report received: " + str(request_parameters),
             log.INFO,
-            __logger,
+            _logger,
         )
 
         # Get the parameters from the response
@@ -160,7 +160,7 @@ def all_issues(request):
                 + entry["content_id"]
                 + " no longer exists!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
     context = generate_context({"all_cards": all_cards})
@@ -232,7 +232,7 @@ def my_issues(request):
                 + entry["content_id"]
                 + " no longer exists!",
                 log.WARNING,
-                __logger,
+                _logger,
             )
 
     context = generate_context({"all_cards": all_cards})
