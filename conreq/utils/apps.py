@@ -164,7 +164,7 @@ def set_single_availability(card):
 
     except:
         log.handler(
-            "Could not determine the availability of card!\n" + card,
+            "Could not determine the availability of card!\n" + str(card),
             log.ERROR,
             __logger,
         )
