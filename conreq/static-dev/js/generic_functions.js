@@ -282,10 +282,10 @@ var post_json = function (url, data, callback) {
 };
 
 // Gets a URL
-var get_url = function (location, success = function () {}, ...args) {
+var get_url = function (location, success = function () {}) {
   http_request.abort();
   http_request = $.get(location, function (response = null) {
-    return success(response, args);
+    return success(response);
   });
   return http_request;
 };
