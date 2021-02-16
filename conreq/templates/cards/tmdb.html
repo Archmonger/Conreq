@@ -1,11 +1,9 @@
 {% load static %}
-<div class="masonry-item poster-container no-highlighting {% if card.name %}tv{% elif card.title %}movie{% endif %}">
-    <i class="fas fa-angle-down content-preview-modal-btn clickable"
-        data-content-type="{% if card.name %}tv{% elif card.title %}movie{% endif %}" data-tmdb-id="{{card.id}}"
-        data-modal-url="{% url 'more_info:content_preview_modal' %}"></i>
+<div class="masonry-item poster-container no-highlighting {{card.content_type}}">
+    <i class="fas fa-angle-down content-preview-modal-btn clickable" data-content-type="{{card.content_type}}"
+        data-tmdb-id="{{card.id}}" data-modal-url="{% url 'more_info:content_preview_modal' %}"></i>
     <div class="description-tint"></div>
-    <a
-        href="#{% url 'more_info:main' %}?tmdb_id={{card.id}}&content_type={% if card.name %}tv{% elif card.title %}movie{% endif %}">
+    <a href="#{% url 'more_info:main' %}?tmdb_id={{card.id}}&content_type={{card.content_type}}">
 
         {% if card.requested_by and user.is_staff %}
         <div class="requested-by line-clamp-1">
@@ -14,9 +12,9 @@
         {% endif %}
 
         <div class="content-type-icon {% if not card.poster_path %}opacity-1{% endif %}">
-            {% if card.name %}
+            {% if card.content_type == "tv" %}
             <i class="fas fa-tv"></i>
-            {% elif card.title %}
+            {% elif card.content_type == "movie" %}
             <i class="fas fa-video"></i>
             {% endif %}
         </div>
