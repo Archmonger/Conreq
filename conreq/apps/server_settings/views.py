@@ -15,7 +15,6 @@ from django.views.decorators.cache import cache_page
 _logger = log.get_logger(__name__)
 
 
-@cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 @performance_metrics()
