@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.template import loader
-from django.views.decorators.cache import cache_page
 
 _logger = log.get_logger(__name__)
 
