@@ -182,23 +182,29 @@ class ContentDiscovery:
                 kwargs.__delitem__("keyword")
 
             # Perform a discovery search for a movie
-            if content_type.lower() == "movie":
-                return cache.handler(
-                    "discover movies by filter",
-                    page_key=str(kwargs),
-                    function=tmdb.Discover().movie,
-                    cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
-                    kwargs=kwargs,
+            if content_type == "movie":
+                return self.__set_content_attributes(
+                    content_type,
+                    cache.handler(
+                        "discover movies by filter",
+                        page_key=str(kwargs),
+                        function=tmdb.Discover().movie,
+                        cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
+                        kwargs=kwargs,
+                    ),
                 )
 
             # Perform a discovery search for a TV show
-            if content_type.lower() == "tv":
-                return cache.handler(
-                    "discover tv by filter",
-                    page_key=str(kwargs),
-                    function=tmdb.Discover().tv,
-                    cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
-                    kwargs=kwargs,
+            if content_type == "tv":
+                return self.__set_content_attributes(
+                    content_type,
+                    cache.handler(
+                        "discover tv by filter",
+                        page_key=str(kwargs),
+                        function=tmdb.Discover().tv,
+                        cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
+                        kwargs=kwargs,
+                    ),
                 )
 
             # Content Type was invalid
@@ -280,17 +286,20 @@ class ContentDiscovery:
             return {}
 
     def collections(self, collection_id):
-        """Obtains items in the collection of a given TMDB Collection ID.
+        """Obtains items in the movie collection of a given TMDB Collection ID.
 
         Args:
             collection_id: An Integer or String containing the TMDB Collection ID.
         """
         try:
-            return cache.handler(
-                "get collection by id",
-                page_key=collection_id,
-                function=tmdb.Collections(collection_id).info,
-                cache_duration=COLLECTION_CACHE_TIMEOUT,
+            return self.__set_content_attributes(
+                "movie",
+                cache.handler(
+                    "get collection by id",
+                    page_key=collection_id,
+                    function=tmdb.Collections(collection_id).info,
+                    cache_duration=COLLECTION_CACHE_TIMEOUT,
+                ),
             )
 
         except:
@@ -316,23 +325,29 @@ class ContentDiscovery:
                 extras = None
 
             # Obtain a movie by ID
-            if content_type.lower() == "movie":
-                return cache.handler(
-                    "get movie by tmdb id",
-                    page_key=tmdb_id,
-                    function=tmdb.Movies(tmdb_id).info,
-                    cache_duration=GET_BY_TMDB_ID_CACHE_TIMEOUT,
-                    kwargs={"append_to_response": extras},
+            if content_type == "movie":
+                return self.__set_content_attributes(
+                    content_type,
+                    cache.handler(
+                        "get movie by tmdb id",
+                        page_key=tmdb_id,
+                        function=tmdb.Movies(tmdb_id).info,
+                        cache_duration=GET_BY_TMDB_ID_CACHE_TIMEOUT,
+                        kwargs={"append_to_response": extras},
+                    ),
                 )
 
             # Obtain a TV show by ID
-            if content_type.lower() == "tv":
-                return cache.handler(
-                    "get tv by tmdb id",
-                    page_key=tmdb_id,
-                    function=tmdb.TV(tmdb_id).info,
-                    cache_duration=GET_BY_TMDB_ID_CACHE_TIMEOUT,
-                    kwargs={"append_to_response": extras},
+            if content_type == "tv":
+                return self.__set_content_attributes(
+                    content_type,
+                    cache.handler(
+                        "get tv by tmdb id",
+                        page_key=tmdb_id,
+                        function=tmdb.TV(tmdb_id).info,
+                        cache_duration=GET_BY_TMDB_ID_CACHE_TIMEOUT,
+                        kwargs={"append_to_response": extras},
+                    ),
                 )
 
             # Content Type was invalid
@@ -356,12 +371,15 @@ class ContentDiscovery:
             id: An Integer or String containing the TVDB ID.
         """
         try:
-            return cache.handler(
-                "get tv by tvdb id",
-                page_key=tvdb_id,
-                function=tmdb.Find(tvdb_id).info,
-                cache_duration=GET_BY_TVDB_ID_CACHE_TIMEOUT,
-                kwargs={"external_source": "tvdb_id"},
+            return self.__set_content_attributes(
+                "tv",
+                cache.handler(
+                    "get tv by tvdb id",
+                    page_key=tvdb_id,
+                    function=tmdb.Find(tvdb_id).info,
+                    cache_duration=GET_BY_TVDB_ID_CACHE_TIMEOUT,
+                    kwargs={"external_source": "tvdb_id"},
+                ),
             )
 
         except:
@@ -380,7 +398,7 @@ class ContentDiscovery:
         """
         try:
             # Obtain a movie's external IDs
-            if content_type.lower() == "movie":
+            if content_type == "movie":
                 return cache.handler(
                     "get movie external ids",
                     page_key=tmdb_id,
@@ -389,7 +407,7 @@ class ContentDiscovery:
                 )
 
             # Obtain a TV show's external IDs
-            if content_type.lower() == "tv":
+            if content_type == "tv":
                 return cache.handler(
                     "get tv external ids",
                     function=tmdb.TV(tmdb_id).external_ids,
@@ -419,7 +437,7 @@ class ContentDiscovery:
         """
         try:
             # Obtain a movie's genres
-            if content_type.lower() == "movie":
+            if content_type == "movie":
                 return cache.handler(
                     "get all movie genres",
                     function=tmdb.Genres().movie_list,
@@ -427,7 +445,7 @@ class ContentDiscovery:
                 )
 
             # Obtain a TV show's genres
-            if content_type.lower() == "tv":
+            if content_type == "tv":
                 return cache.handler(
                     "get all tv genres",
                     function=tmdb.Genres().tv_list,
@@ -454,10 +472,13 @@ class ContentDiscovery:
         Args:
             id: An Integer or String containing the TMDB ID.
             content_type: String containing "movie" or "tv".
+
+        Returns:
+            True/False
         """
         try:
             # TV: Obtain the keywords for a specific ID
-            if content_type.lower() == "tv":
+            if content_type == "tv":
                 return cache.handler(
                     "is tv anime",
                     function=self.__is_tv_anime,
@@ -466,7 +487,7 @@ class ContentDiscovery:
                 )
 
             # Movies: Obtain the keywords for a specific ID
-            if content_type.lower() == "movie":
+            if content_type == "movie":
                 return cache.handler(
                     "is movie anime",
                     function=self.__is_movie_anime,
@@ -490,7 +511,7 @@ class ContentDiscovery:
             return False
 
     def determine_id_validity(self, tmdb_response):
-        """Determine if a movie has a TMDB ID, and if TV has a TVDBID.
+        """Determine if a movie has a TMDB ID, and if TV has a TVDB ID.
         Required because TVDB IDs are required for Sonarr"""
         external_id_multi_fetch = {}
         external_id_multi_fetch_results = None
@@ -601,35 +622,47 @@ class ContentDiscovery:
     def __popular_movies(self, page_number, page_multiplier):
         """Cacheable part of popular_movies()"""
         # Obtain disovery results through the movie.popular function. Store results in cache.
-        return self.__multi_page_fetch(
-            "discover popular movies",
-            tmdb.Movies().popular,
-            page_number,
-            page_multiplier,
+        return self.__set_content_attributes(
+            "movie",
+            self.__multi_page_fetch(
+                "discover popular movies",
+                tmdb.Movies().popular,
+                page_number,
+                page_multiplier,
+            ),
         )
 
     def __top_movies(self, page_number, page_multiplier):
         """Cacheable part of top_movies()"""
         # Obtain disovery results through the movie.top_rated function. Store results in cache.
-        return self.__multi_page_fetch(
-            "discover top movies",
-            tmdb.Movies().top_rated,
-            page_number,
-            page_multiplier,
+        return self.__set_content_attributes(
+            "movie",
+            self.__multi_page_fetch(
+                "discover top movies",
+                tmdb.Movies().top_rated,
+                page_number,
+                page_multiplier,
+            ),
         )
 
     def __popular_tv(self, page_number, page_multiplier):
         """Cacheable part of popular_tv()"""
         # Obtain disovery results through the tv.popular function. Store results in cache.
-        return self.__multi_page_fetch(
-            "discover popular tv", tmdb.TV().popular, page_number, page_multiplier
+        return self.__set_content_attributes(
+            "tv",
+            self.__multi_page_fetch(
+                "discover popular tv", tmdb.TV().popular, page_number, page_multiplier
+            ),
         )
 
     def __top_tv(self, page_number, page_multiplier):
         """Cacheable part of top_tv()"""
         # Obtain disovery results through the tv.top_rated function. Store results in cache.
-        return self.__multi_page_fetch(
-            "discover top tv", tmdb.TV().top_rated, page_number, page_multiplier
+        return self.__set_content_attributes(
+            "tv",
+            self.__multi_page_fetch(
+                "discover top tv", tmdb.TV().top_rated, page_number, page_multiplier
+            ),
         )
 
     def __recommended(self, tmdb_id, content_type, page_number):
@@ -641,28 +674,34 @@ class ContentDiscovery:
             page_number: An Integer that is the page number to return.
         """
         try:
-            if content_type.lower() == "movie":
-                return cache.handler(
-                    "discover recommended movies",
-                    page_key=str(tmdb_id) + "page" + str(page_number),
-                    function=tmdb.Movies(tmdb_id).recommendations,
-                    cache_duration=RECOMMENDED_CACHE_TIMEOUT,
-                    kwargs={
-                        "language": LANGUAGE,
-                        "page": page_number,
-                    },
+            if content_type == "movie":
+                return self.__set_content_attributes(
+                    content_type,
+                    cache.handler(
+                        "discover recommended movies",
+                        page_key=str(tmdb_id) + "page" + str(page_number),
+                        function=tmdb.Movies(tmdb_id).recommendations,
+                        cache_duration=RECOMMENDED_CACHE_TIMEOUT,
+                        kwargs={
+                            "language": LANGUAGE,
+                            "page": page_number,
+                        },
+                    ),
                 )
 
-            if content_type.lower() == "tv":
-                return cache.handler(
-                    "discover recommended tv",
-                    page_key=str(tmdb_id) + "page" + str(page_number),
-                    function=tmdb.TV(tmdb_id).recommendations,
-                    cache_duration=RECOMMENDED_CACHE_TIMEOUT,
-                    kwargs={
-                        "language": LANGUAGE,
-                        "page": page_number,
-                    },
+            if content_type == "tv":
+                return self.__set_content_attributes(
+                    content_type,
+                    cache.handler(
+                        "discover recommended tv",
+                        page_key=str(tmdb_id) + "page" + str(page_number),
+                        function=tmdb.TV(tmdb_id).recommendations,
+                        cache_duration=RECOMMENDED_CACHE_TIMEOUT,
+                        kwargs={
+                            "language": LANGUAGE,
+                            "page": page_number,
+                        },
+                    ),
                 )
 
             # Content Type was invalid
@@ -688,28 +727,34 @@ class ContentDiscovery:
             page_number: An Integer that is the page number to return.
         """
         try:
-            if content_type.lower() == "movie":
-                return cache.handler(
-                    "discover similar movies",
-                    page_key=str(tmdb_id) + "page" + str(page_number),
-                    function=tmdb.Movies(tmdb_id).similar_movies,
-                    cache_duration=SIMILAR_CACHE_TIMEOUT,
-                    kwargs={
-                        "language": LANGUAGE,
-                        "page": page_number,
-                    },
+            if content_type == "movie":
+                return self.__set_content_attributes(
+                    content_type,
+                    cache.handler(
+                        "discover similar movies",
+                        page_key=str(tmdb_id) + "page" + str(page_number),
+                        function=tmdb.Movies(tmdb_id).similar_movies,
+                        cache_duration=SIMILAR_CACHE_TIMEOUT,
+                        kwargs={
+                            "language": LANGUAGE,
+                            "page": page_number,
+                        },
+                    ),
                 )
 
-            if content_type.lower() == "tv":
-                return cache.handler(
-                    "discover similar tv",
-                    page_key=str(tmdb_id) + "page" + str(page_number),
-                    function=tmdb.TV(tmdb_id).similar,
-                    cache_duration=SIMILAR_CACHE_TIMEOUT,
-                    kwargs={
-                        "language": LANGUAGE,
-                        "page": page_number,
-                    },
+            if content_type == "tv":
+                return self.__set_content_attributes(
+                    content_type,
+                    cache.handler(
+                        "discover similar tv",
+                        page_key=str(tmdb_id) + "page" + str(page_number),
+                        function=tmdb.TV(tmdb_id).similar,
+                        cache_duration=SIMILAR_CACHE_TIMEOUT,
+                        kwargs={
+                            "language": LANGUAGE,
+                            "page": page_number,
+                        },
+                    ),
                 )
 
             # Content Type was invalid
@@ -911,6 +956,28 @@ class ContentDiscovery:
                 card["tvdb_id"] = external_id_results["tvdb_id"]
         except:
             pass
+
+    @staticmethod
+    def __set_content_attributes(content_type, results):
+        """Sets the content type as tv/movie and content source as "tmdb" on a list of results"""
+        try:
+            # Set a list of results
+            if results.__contains__("results"):
+                for result in results["results"]:
+                    result["content_type"] = content_type
+                    result["content_source"] = "tmdb"
+            # # Set a single media item
+            else:
+                results["content_type"] = content_type
+                results["content_source"] = "tmdb"
+        except:
+            log.handler(
+                "Failed to set content attributes!",
+                log.ERROR,
+                _logger,
+            )
+
+        return results
 
     def __merge_results(self, *args):
         """Merge multiple API results into one"""

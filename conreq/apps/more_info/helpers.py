@@ -194,8 +194,3 @@ def preprocess_tmdb_result(tmdb_result):
         and tmdb_result["poster_path"].find(TMDB_POSTER_300_URL) == -1
     ):
         tmdb_result["poster_path"] = TMDB_POSTER_300_URL + tmdb_result["poster_path"]
-    # Content Type
-    if tmdb_result.__contains__("name"):
-        tmdb_result["content_type"] = "tv"
-    elif tmdb_result.__contains__("title"):
-        tmdb_result["content_type"] = "movie"
