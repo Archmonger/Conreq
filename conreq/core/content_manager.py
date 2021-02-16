@@ -526,6 +526,7 @@ class ContentManager:
                     for movie in results:
                         if movie.__contains__("tmdbId"):
                             self.__check_availability(movie)
+                            self.__set_content_attributes("movie", "radarr", movie)
                             results_with_ids[str(movie["tmdbId"])] = movie
 
                     # Return all movies
@@ -557,7 +558,7 @@ class ContentManager:
                     for series in results:
                         if series.__contains__("tvdbId"):
                             self.__check_availability(series)
-
+                            self.__set_content_attributes("tv", "sonarr", series)
                             results_with_ids[str(series["tvdbId"])] = series
 
                     # Return all movies
@@ -590,6 +591,26 @@ class ContentManager:
                 if episode["seasonNumber"] == season["seasonNumber"]:
                     self.__check_availability(episode)
                     season["episodes"].append(episode)
+
+    @staticmethod
+    def __set_content_attributes(content_type, content_source, results):
+        """Sets the content type as tv/movie and content source as sonarr/radarr on a list of results"""
+        try:
+            # Set a list of results
+            if isinstance(results, list):
+                for result in results:
+                    result["content_type"] = content_type
+                    result["content_source"] = content_source
+            # # Set a single media item
+            else:
+                results["content_type"] = content_type
+                results["content_source"] = content_source
+        except:
+            log.handler(
+                "Failed to set content attributes!",
+                log.ERROR,
+                _logger,
+            )
 
     def __check_availability(self, content):
         """Multithreadable part of check_availability()"""
