@@ -224,7 +224,8 @@
         </div>
         <div class="settings-input-group">
             <div class="settings-item-group toggler">
-                <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Enable Sonarr">
+                <div class="settings-item admin pretty p-switch p-fill refresh-viewport-needed"
+                    data-setting-name="Enable Sonarr">
                     <input type="checkbox" {% if server_settings.sonarr_enabled %} checked {% endif %} />
                     <div class="state">
                         <label>Enable Sonarr</label>
@@ -341,7 +342,8 @@
         </div>
         <div class="settings-input-group">
             <div class="settings-item-group toggler">
-                <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Enable Radarr">
+                <div class="settings-item admin pretty p-switch p-fill refresh-viewport-needed"
+                    data-setting-name="Enable Radarr">
                     <input type="checkbox" {% if server_settings.radarr_enabled %} checked {% endif %} />
                     <div class="state">
                         <label>Enable Radarr</label>

@@ -372,7 +372,11 @@ var timer_seconds = function () {
 };
 
 // Change a server setting
-var change_server_setting = function (setting_name = null, value = null) {
+var change_server_setting = function (
+  setting_name = null,
+  value = null,
+  refresh_viewport_needed = false
+) {
   let json_payload = {
     setting_name: setting_name,
     value: value,
@@ -385,6 +389,9 @@ var change_server_setting = function (setting_name = null, value = null) {
         $("#conreq-api-key").text(json_response.value);
       }
       if (json_response.success) {
+        if (refresh_viewport_needed) {
+          generate_viewport(false);
+        }
         settings_save_success_toast_message();
       } else {
         settings_save_failed_toast_message(json_response.error_message);

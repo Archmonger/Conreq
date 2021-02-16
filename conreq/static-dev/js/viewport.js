@@ -3,7 +3,7 @@ let infinite_scroller_created = false;
 let previous_admin_settings = new Map();
 let viewport_container_class = ".viewport-container";
 let viewport_class = ".viewport";
-let reload_needed = false;
+let page_reload_needed = false;
 
 // Create the lazyloader
 let callback_error = function (element) {
@@ -60,16 +60,16 @@ let cull_old_posters = function () {
 let update_active_tab = function () {
   $(".nav-tab").each(function () {
     nav_tab = $(this);
+    // Remove any old active tabs
+    if (nav_tab.hasClass("active")) {
+      nav_tab.removeClass("active");
+    }
     // Set the active tab
     if (
       nav_tab.attr("href") == window.location.hash &&
       !nav_tab.hasClass("active")
     ) {
       nav_tab.addClass("active");
-    }
-    // Remove any old active tabs
-    else if (nav_tab.hasClass("active")) {
-      nav_tab.removeClass("active");
     }
   });
 };
@@ -114,7 +114,11 @@ let add_event_listeners = function () {
   $(".toggler .settings-item.admin").change(function () {
     let setting_name = $(this).data("setting-name");
     let current_value = $(this).children("input").is(":checked");
-    change_server_setting(setting_name, current_value);
+    change_server_setting(
+      setting_name,
+      current_value,
+      $(this).hasClass("refresh-viewport-needed")
+    );
   });
   $(".text-input-container.dropdown .dropdown-item").click(function () {
     let setting_name = $(this).parent().data("setting-name");
@@ -128,7 +132,7 @@ let add_event_listeners = function () {
     change_server_setting(setting_name);
   });
   $(".reload-needed").click(function () {
-    reload_needed = true;
+    page_reload_needed = true;
   });
 
   // User Management events
@@ -247,9 +251,9 @@ let refresh_viewport = function () {
 };
 
 // Fetch the new viewport and update the current tab
-var generate_viewport = function () {
+var generate_viewport = function (clear_scroll_pos = true) {
   // Check if the whole webpage needs to be reloaded
-  if (reload_needed) {
+  if (page_reload_needed) {
     location.reload();
   }
 
@@ -268,6 +272,9 @@ var generate_viewport = function () {
   // Change the current tab
   update_active_tab();
 
+  // Save the previous scroll position, if needed
+  let previous_scroll_pos = $(viewport_container_class).scrollTop();
+
   // Asynchronously fetch new viewport content
   viewport_loaded = false;
   get_viewport(window_location, function (viewport_html) {
@@ -282,15 +289,19 @@ var generate_viewport = function () {
     refresh_viewport();
     add_event_listeners();
 
-    // Reset scroll position
-    $(viewport_container_class).scrollTop(0);
-
     // Display the new content
     $(".viewport-container>.loading-animation-container").hide();
     $(".viewport-container>*:not(.loading-animation-container)").show();
     setTimeout(function () {
       $(".viewport-container>.viewport").css("opacity", "1");
     }, 10);
+
+    // Set scroll position
+    if (clear_scroll_pos) {
+      $(viewport_container_class).scrollTop(0);
+    } else {
+      $(viewport_container_class).scrollTop(previous_scroll_pos);
+    }
   });
 
   // If the page is taking too long to load, show a loading animation
@@ -299,6 +310,16 @@ var generate_viewport = function () {
       // Hide the viewport and display the loading animation
       $(".viewport-container>*:not(.loading-animation-container)").hide();
       $(".viewport-container>.loading-animation-container").show();
+      setTimeout(function () {
+        $(".viewport-container>.viewport").css("opacity", "1");
+      }, 10);
+
+      // Set scroll position
+      if (clear_scroll_pos) {
+        $(viewport_container_class).scrollTop(0);
+      } else {
+        $(viewport_container_class).scrollTop(previous_scroll_pos);
+      }
     }
   }, 600);
 };
