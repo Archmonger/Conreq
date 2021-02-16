@@ -251,7 +251,7 @@ let refresh_viewport = function () {
 };
 
 // Fetch the new viewport and update the current tab
-var generate_viewport = function (clear_scroll_pos = true) {
+var generate_viewport = function (reset_scroll_pos = true) {
   // Check if the whole webpage needs to be reloaded
   if (page_reload_needed) {
     location.reload();
@@ -292,12 +292,9 @@ var generate_viewport = function (clear_scroll_pos = true) {
     // Display the new content
     $(".viewport-container>.loading-animation-container").hide();
     $(".viewport-container>*:not(.loading-animation-container)").show();
-    setTimeout(function () {
-      $(".viewport-container>.viewport").css("opacity", "1");
-    }, 10);
 
     // Set scroll position
-    if (clear_scroll_pos) {
+    if (reset_scroll_pos) {
       $(viewport_container_class).scrollTop(0);
     } else {
       $(viewport_container_class).scrollTop(previous_scroll_pos);
@@ -311,7 +308,7 @@ var generate_viewport = function (clear_scroll_pos = true) {
       $(".viewport-container>.loading-animation-container").show();
       $(".viewport-container>*:not(.loading-animation-container)").hide();
     }
-  }, 600);
+  }, 1000);
 };
 
 // Perform actions whenever the HTML on the page changes
