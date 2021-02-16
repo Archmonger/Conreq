@@ -156,7 +156,7 @@ class Search:
         results = self.__sonarr.lookupSeries(kwargs["query"])
 
         for result in results:
-            self.__set_content_type(result, "tv")
+            self.__set_content_attributes("tv", "sonarr", result)
 
         return self.__set_original_rank(results)
 
@@ -165,7 +165,7 @@ class Search:
         results = self.__radarr.lookupMovie(kwargs["query"])
 
         for result in results:
-            self.__set_content_type(result, "movie")
+            self.__set_content_attributes("movie", "radarr", result)
 
         return self.__set_original_rank(results)
 
@@ -254,6 +254,7 @@ class Search:
             return number
 
     @staticmethod
-    def __set_content_type(result, content_type):
+    def __set_content_attributes(content_type, content_source, result):
         """Sets content type on a card"""
-        result["contentType"] = content_type
+        result["content_type"] = content_type
+        result["content_source"] = content_source

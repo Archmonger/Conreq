@@ -131,7 +131,7 @@ def set_single_availability(card):
         # Something unexpected was passed in
         else:
             log.handler(
-                "Card did not contain contentType, title, or name!",
+                "Card did not contain content_type, title, or name!",
                 log.WARNING,
                 _logger,
             )

@@ -139,8 +139,6 @@ def __generate_request_card(entry, content_discovery, content_manager):
             content_type=entry["content_type"],
             obtain_extras=False,
         )
-        if card is not None:
-            card["tmdbCard"] = True
 
     # Fetch TVDB entry
     elif entry["source"] == "tvdb":
@@ -149,7 +147,6 @@ def __generate_request_card(entry, content_discovery, content_manager):
         # Conversion found
         if conversion.__contains__("tv_results") and conversion["tv_results"]:
             card = conversion["tv_results"][0]
-            card["tmdbCard"] = True
 
             # Convert all requests to use this new ID
             old_requests = UserRequest.objects.filter(
@@ -163,7 +160,7 @@ def __generate_request_card(entry, content_discovery, content_manager):
 
             # Determine if the card has a known poster image
             if isinstance(card, dict):
-                card["contentType"] = entry["content_type"]
+                card["content_type"] = entry["content_type"]
                 if card.__contains__("images"):
                     remote_poster = is_key_value_in_list(
                         "coverType", "poster", card["images"], return_item=True

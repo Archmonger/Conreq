@@ -1,17 +1,17 @@
 {% load static %}
 
-{% if card.tmdbCard %}
+{% if card.content_source == "tmdb" %}
 {% include "cards/tmdb.html" %}
 
 {% else %}
-<div class="masonry-item poster-container no-highlighting {{card.contentType}}">
+<div class="masonry-item poster-container no-highlighting {{card.content_type}}">
     {% if card.tmdbId %}
-    <i class="fas fa-angle-down content-preview-modal-btn clickable" data-content-type=" {{card.contentType}}"
+    <i class="fas fa-angle-down content-preview-modal-btn clickable" data-content-type="{{card.content_type}}"
         data-tmdb-id="{{card.tmdbId}}" data-modal-url="{% url 'more_info:content_preview_modal' %}"></i>
     {% endif %}
     <div class="description-tint"></div>
     <a
-        href="#{% url 'more_info:main' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.contentType}}">
+        href="#{% url 'more_info:main' %}?{% if card.tmdbId %}tmdb_id={{card.tmdbId}}{% elif card.tvdbId %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.content_type}}">
 
         {% if card.requested_by and user.is_staff %}
         <div class="requested-by">
@@ -20,7 +20,7 @@
         {% endif %}
 
         <div class="content-type-icon {% if not card.remotePoster %}opacity-1{% endif %}">
-            {% if card.contentType == "tv" %}
+            {% if card.content_type == "tv" %}
             <i class="fas fa-tv"></i>
             {% else %}
             <i class="fas fa-video"></i>

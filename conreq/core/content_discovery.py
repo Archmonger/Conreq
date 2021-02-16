@@ -365,23 +365,21 @@ class ContentDiscovery:
             )
 
     def get_by_tvdb_id(self, tvdb_id):
-        """Converts get a TMDB show by a TVDB ID.
+        """Get a show or list of shows on TMDB through a TVDB ID.
 
         Args:
             id: An Integer or String containing the TVDB ID.
         """
         try:
-            return self.__set_content_attributes(
-                "tv",
-                cache.handler(
-                    "get tv by tvdb id",
-                    page_key=tvdb_id,
-                    function=tmdb.Find(tvdb_id).info,
-                    cache_duration=GET_BY_TVDB_ID_CACHE_TIMEOUT,
-                    kwargs={"external_source": "tvdb_id"},
-                ),
+            results = cache.handler(
+                "get tv by tvdb id",
+                page_key=tvdb_id,
+                function=tmdb.Find(tvdb_id).info,
+                cache_duration=GET_BY_TVDB_ID_CACHE_TIMEOUT,
+                kwargs={"external_source": "tvdb_id"},
             )
-
+            self.__set_content_attributes("tv", results["tv_results"])
+            return results
         except:
             log.handler(
                 "Failed to obtain content with TVDB ID " + str(tvdb_id) + "!",
@@ -962,8 +960,13 @@ class ContentDiscovery:
         """Sets the content type as tv/movie and content source as "tmdb" on a list of results"""
         try:
             # Set a list of results
-            if results.__contains__("results"):
+            if isinstance(results, dict) and results.__contains__("results"):
                 for result in results["results"]:
+                    result["content_type"] = content_type
+                    result["content_source"] = "tmdb"
+            # Special case for get_content_by_tvdb_id
+            elif isinstance(results, list):
+                for result in results:
                     result["content_type"] = content_type
                     result["content_source"] = "tmdb"
             # # Set a single media item

@@ -127,7 +127,6 @@ def all_issues(request):
                 obtain_extras=False,
             )
             if card is not None:
-                card["tmdbCard"] = True
                 all_cards.append({**card, **entry})
 
         # Fetch TVDB entry
@@ -137,7 +136,6 @@ def all_issues(request):
             # Conversion found
             if conversion.__contains__("tv_results") and conversion["tv_results"]:
                 card = conversion["tv_results"][0]
-                card["tmdbCard"] = True
                 all_cards.append({**card, **entry})
 
                 # Convert all requests to use this new ID
@@ -199,7 +197,6 @@ def my_issues(request):
                 obtain_extras=False,
             )
             if card is not None:
-                card["tmdbCard"] = True
                 all_cards.append({**card, **entry})
 
         # Fetch TVDB entry
@@ -209,7 +206,6 @@ def my_issues(request):
             # Conversion found
             if conversion.__contains__("tv_results") and conversion["tv_results"]:
                 card = conversion["tv_results"][0]
-                card["tmdbCard"] = True
                 all_cards.append({**card, **entry})
 
                 # Convert all requests to use this new ID

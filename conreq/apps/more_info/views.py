@@ -89,7 +89,7 @@ def more_info(request):
         context = generate_context(
             {
                 "content": content,
-                "content_type": content["contentType"],
+                "content_type": content["content_type"],
             }
         )
 

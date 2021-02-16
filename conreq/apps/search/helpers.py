@@ -14,6 +14,5 @@ def convert_card_to_tmdb(index, all_results):
             tmdb_query = content_discovery.get_by_tvdb_id(all_results[index]["tvdbId"])
             tmdb_result = tmdb_query["tv_results"][0]
             all_results[index] = tmdb_result
-            all_results[index]["tmdbCard"] = True
         except:
             pass
