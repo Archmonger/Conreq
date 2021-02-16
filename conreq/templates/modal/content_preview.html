@@ -12,17 +12,16 @@
     <div class="grid-modal-right">
         <div class="modal-header mini">
             <div class="modal-header-btn-container">
-                {% if content.name %}
+                {% if content.content_type == "tv" %}
                 <i class="fas fa-exclamation-circle report-selection-modal-btn" data-tmdb-id="{{content.id}}"
                     data-content-type="tv" data-modal-url="{% url 'more_info:series_modal' %}"></i>
-                {% elif content.title %}
+                {% elif content.content_type == "movie" %}
                 <i class="fas fa-exclamation-circle report-modal-btn" data-tmdb-id="{{content.id}}"
                     data-content-type="movie" data-modal-url="{% url 'issue_reporting:report_issue_modal' %}"></i>
                 {% endif %}
             </div>
             <div class="modal-header-btn-container">
-                <a
-                    href="#{% url 'more_info:main' %}?tmdb_id={{content.id}}&content_type={% if content.name %}tv{% elif content.title %}movie{% endif %}">
+                <a href="#{% url 'more_info:main' %}?tmdb_id={{content.id}}&content_type={{content.content_type}}">
                     <i class="fas fa-expand"></i>
                 </a>
             </div>
@@ -50,9 +49,9 @@
                 <div class="modal-info-block">
                     <div class="modal-info bold"> Content Type: </div>
                     <div class="modal-info">
-                        {% if content.name %}
+                        {% if content.content_type == "tv" %}
                         Television
-                        {% elif content.title %}
+                        {% elif content.content_type == "movie" %}
                         Movie
                         {% endif %}
                     </div>
