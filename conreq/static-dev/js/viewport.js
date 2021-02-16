@@ -308,18 +308,8 @@ var generate_viewport = function (clear_scroll_pos = true) {
   setTimeout(function () {
     if (!viewport_loaded) {
       // Hide the viewport and display the loading animation
-      $(".viewport-container>*:not(.loading-animation-container)").hide();
       $(".viewport-container>.loading-animation-container").show();
-      setTimeout(function () {
-        $(".viewport-container>.viewport").css("opacity", "1");
-      }, 10);
-
-      // Set scroll position
-      if (clear_scroll_pos) {
-        $(viewport_container_class).scrollTop(0);
-      } else {
-        $(viewport_container_class).scrollTop(previous_scroll_pos);
-      }
+      $(".viewport-container>*:not(.loading-animation-container)").hide();
     }
   }, 600);
 };
