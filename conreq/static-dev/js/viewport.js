@@ -237,7 +237,7 @@ let refresh_viewport = function () {
 
       // Only load new page if X seconds have elapsed (rate limit)
       masonry_grid.on("scrollThreshold.infiniteScroll", function () {
-        if (timer_seconds() >= 2) {
+        if (timer_seconds() >= 1) {
           masonry_grid.infiniteScroll("loadNextPage");
         }
       });
