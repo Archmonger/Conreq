@@ -11,13 +11,13 @@ import os
 
 from django.conf.urls import url
 
-# from django.core.asgi import get_asgi_application
+from django.core.asgi import get_asgi_application
 
 # Fetch Django ASGI application early to ensure AppRegistry is populated
 # before importing consumers and AuthMiddlewareStack that may import ORM
 # models.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conreq.settings")
-# django_asgi_app = get_asgi_application()
+django_asgi_app = get_asgi_application()
 
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
@@ -28,7 +28,7 @@ from conreq.core.server_websockets import CommandConsumer
 
 application = ProtocolTypeRouter(
     {
-        # Cannot use asgi app due to concurrency problems
+        # Cannot use asgi app due to concurrency problems, currently using wsgi to serve http
         # See https://github.com/django/channels/issues/1587
         # "http": django_asgi_app,
         "websocket": AllowedHostsOriginValidator(
