@@ -23,7 +23,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 
-from conreq.utils.server_websockets import CommandConsumer
+from conreq.core.server_websockets import CommandConsumer
 
 
 application = ProtocolTypeRouter(
