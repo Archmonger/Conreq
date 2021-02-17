@@ -964,6 +964,11 @@ class ContentDiscovery:
                 for result in results["results"]:
                     result["content_type"] = content_type
                     result["content_source"] = "tmdb"
+            # Special case for "Collections"
+            elif isinstance(results, dict) and results.__contains__("parts"):
+                for result in results["parts"]:
+                    result["content_type"] = content_type
+                    result["content_source"] = "tmdb"
             # Special case for get_content_by_tvdb_id
             elif isinstance(results, list):
                 for result in results:
