@@ -10,7 +10,7 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
-from .helpers import ISSUE_LIST, fetch_issue_cards
+from .helpers import ISSUE_LIST, generate_issue_cards
 
 _logger = log.get_logger(__name__)
 
@@ -83,7 +83,7 @@ def report_issue_modal(request):
 @performance_metrics()
 def all_issues(request):
     reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
-    all_cards = fetch_issue_cards(reported_issues)
+    all_cards = generate_issue_cards(reported_issues)
     context = generate_context({"all_cards": all_cards})
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))
@@ -97,7 +97,7 @@ def my_issues(request):
     reported_issues = (
         ReportedIssue.objects.filter(reported_by=request.user).order_by("id").reverse()
     )
-    all_cards = fetch_issue_cards(reported_issues)
+    all_cards = generate_issue_cards(reported_issues)
     context = generate_context({"all_cards": all_cards})
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))

@@ -27,7 +27,7 @@ ISSUE_LIST = [
 ]
 
 
-def fetch_issue_cards(reported_issues):
+def generate_issue_cards(reported_issues):
     """Retruns a list of cards"""
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
