@@ -1,8 +1,6 @@
 import json
 
 from conreq.apps.issue_reporting.models import ReportedIssue
-from conreq.core.content_discovery import ContentDiscovery
-from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.app_views import add_unique_to_db, generate_context
 from conreq.utils.testing import performance_metrics
@@ -12,28 +10,9 @@ from django.template import loader
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
-_logger = log.get_logger(__name__)
+from .helpers import ISSUE_LIST, fetch_issue_cards
 
-# (Issue name, Resolution)
-ISSUE_LIST = [
-    ("Video does not match what was expected.", ["RENAME CONTENT", "REDOWNLOAD VIDEO"]),
-    ("Video does not load.", ["REDOWNLOAD VIDEO"]),
-    (
-        "Video does not exist or is missing.",
-        ["CHANGE ROOT FOLDER", "RENAME CONTENT", "REDOWNLOAD VIDEO"],
-    ),
-    ("Video is in the wrong category/folder.", ["CHANGE ROOT FOLDER"]),
-    ("Wrong video length.", ["REDOWNLOAD VIDEO"]),
-    ("Wrong audio language.", ["REDOWNLOAD VIDEO"]),
-    ("Wrong subtitle language.", ["REDOWNLOAD SUBTITLES"]),
-    ("Low quality video.", ["UPGRADE VIDEO"]),
-    ("Bad or corrupt video.", ["REDOWNLOAD VIDEO"]),
-    ("Bad or corrupt audio.", ["REDOWNLOAD VIDEO"]),
-    ("Bad subtitles.", ["REDOWNLOAD SUBTITLES"]),
-    ("Missing subtitles.", ["REDOWNLOAD SUBTITLES"]),
-    ("Cannot request.", ["NOTIFY ADMIN"]),
-    ("Other.", ["NOTIFY ADMIN"]),
-]
+_logger = log.get_logger(__name__)
 
 
 @login_required
@@ -103,64 +82,8 @@ def report_issue_modal(request):
 @user_passes_test(lambda u: u.is_staff)
 @performance_metrics()
 def all_issues(request):
-    # Get the parameters from the URL
-    content_discovery = ContentDiscovery()
-    content_manager = ContentManager()
     reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
-
-    all_cards = []
-    for entry in reported_issues.values(
-        "reported_by__username",
-        "content_id",
-        "source",
-        "resolved",
-        "content_type",
-        "issues",
-        "seasons",
-        "episodes",
-    ):
-        # Fetch TMDB entry
-        if entry["source"] == "tmdb":
-            card = content_discovery.get_by_tmdb_id(
-                tmdb_id=entry["content_id"],
-                content_type=entry["content_type"],
-                obtain_extras=False,
-            )
-            if card is not None:
-                all_cards.append({**card, **entry})
-
-        # Fetch TVDB entry
-        if entry["source"] == "tvdb":
-            # Attempt to convert card to TMDB
-            conversion = content_discovery.get_by_tvdb_id(tvdb_id=entry["content_id"])
-            # Conversion found
-            if conversion.__contains__("tv_results") and conversion["tv_results"]:
-                card = conversion["tv_results"][0]
-                all_cards.append({**card, **entry})
-
-                # Convert all requests to use this new ID
-                old_requests = ReportedIssue.objects.filter(
-                    content_id=entry["content_id"], source="tvdb"
-                )
-                old_requests.update(content_id=card["id"], source="tmdb")
-
-            # Fallback to checking sonarr's database
-            else:
-                card = content_manager.get(tvdb_id=entry["content_id"])
-                all_cards.append({**card, **entry})
-
-        if card is None:
-            log.handler(
-                entry["content_type"]
-                + " from "
-                + entry["source"]
-                + " with ID "
-                + entry["content_id"]
-                + " no longer exists!",
-                log.WARNING,
-                _logger,
-            )
-
+    all_cards = fetch_issue_cards(reported_issues)
     context = generate_context({"all_cards": all_cards})
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))
@@ -171,66 +94,10 @@ def all_issues(request):
 @login_required
 @performance_metrics()
 def my_issues(request):
-    # Get the parameters from the URL
-    content_discovery = ContentDiscovery()
-    content_manager = ContentManager()
     reported_issues = (
         ReportedIssue.objects.filter(reported_by=request.user).order_by("id").reverse()
     )
-
-    all_cards = []
-    for entry in reported_issues.values(
-        "reported_by__username",
-        "content_id",
-        "source",
-        "resolved",
-        "content_type",
-        "issues",
-        "seasons",
-        "episodes",
-    ):
-        # Fetch TMDB entry
-        if entry["source"] == "tmdb":
-            card = content_discovery.get_by_tmdb_id(
-                tmdb_id=entry["content_id"],
-                content_type=entry["content_type"],
-                obtain_extras=False,
-            )
-            if card is not None:
-                all_cards.append({**card, **entry})
-
-        # Fetch TVDB entry
-        if entry["source"] == "tvdb":
-            # Attempt to convert card to TMDB
-            conversion = content_discovery.get_by_tvdb_id(tvdb_id=entry["content_id"])
-            # Conversion found
-            if conversion.__contains__("tv_results") and conversion["tv_results"]:
-                card = conversion["tv_results"][0]
-                all_cards.append({**card, **entry})
-
-                # Convert all requests to use this new ID
-                old_requests = ReportedIssue.objects.filter(
-                    content_id=entry["content_id"], source="tvdb"
-                )
-                old_requests.update(content_id=card["id"], source="tmdb")
-
-            # Fallback to checking sonarr's database
-            else:
-                card = content_manager.get(tvdb_id=entry["content_id"])
-                all_cards.append({**card, **entry})
-
-        if card is None:
-            log.handler(
-                entry["content_type"]
-                + " from "
-                + entry["source"]
-                + " with ID "
-                + entry["content_id"]
-                + " no longer exists!",
-                log.WARNING,
-                _logger,
-            )
-
+    all_cards = fetch_issue_cards(reported_issues)
     context = generate_context({"all_cards": all_cards})
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))
