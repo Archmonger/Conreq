@@ -7,7 +7,7 @@ We use [MkDocs](https://www.mkdocs.org/#overview) to create our documentation. F
 ---
 
 1. Install `Python 3.8` or greater.
-2. Switch your Conreq branch to `Conreq:docs`.
+2. Fork and pull `Conreq:docs` from GitHub.
 3. Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.
 4. Type `pip install -r requirements.txt` to install MkDocs.
 
@@ -17,7 +17,7 @@ We use [MkDocs](https://www.mkdocs.org/#overview) to create our documentation. F
 
 ---
 
-MkDocs contains a free tool to allow you to preview your documentation changes live! In order to use it...
+MkDocs contains a tool to allow you to preview your documentation changes live! In order to use it...
 
 1. Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.
 2. Type `cd source` to enter the documentation's source code directory.
