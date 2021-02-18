@@ -13,7 +13,7 @@
             {% for card in recommended.results %}
             {% if card.poster_path and card.conreq_valid_id %}
             <div class="poster-container-wrapper">
-                {% include "cards/tmdb.html" %}
+                {% include "cards/poster.html" %}
             </div>
             {% endif %}
             {% endfor %}

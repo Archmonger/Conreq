@@ -2,13 +2,13 @@
 {% include "primary/loading_animation_container.html" %}
 <div class="viewport requests viewport-masonry">
     {% if all_cards %}
+
     {% for card in all_cards %}
-
     {% if card %}
-    {% include "cards/sonarr_radarr.html" %}
+    {% include "cards/poster.html" %}
     {% endif %}
-
     {% endfor %}
+
     {% endif %}
 
     {% if not all_cards %}
