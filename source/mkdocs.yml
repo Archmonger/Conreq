@@ -13,3 +13,29 @@ nav:
 
 theme:
   name: material
+  palette:
+    primary: teal
+    accent: teal
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      fallback_to_build_date: true
+
+repo_url: https://github.com/Archmonger/Conreq
+repo_name: Archmonger/Conreq
+edit_uri: edit/docs/source/docs
