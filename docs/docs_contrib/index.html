@@ -341,15 +341,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-a-new-docs-page" class="md-nav__link">
-    Adding a New Docs Page
+  <a href="#addingediting-a-docs-page" class="md-nav__link">
+    Adding/Editing a Docs Page
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#saving-your-changes" class="md-nav__link">
-    Saving Your Changes
+  <a href="#contributing-your-changes" class="md-nav__link">
+    Contributing Your Changes
   </a>
   
 </li>
@@ -405,15 +405,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-a-new-docs-page" class="md-nav__link">
-    Adding a New Docs Page
+  <a href="#addingediting-a-docs-page" class="md-nav__link">
+    Adding/Editing a Docs Page
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#saving-your-changes" class="md-nav__link">
-    Saving Your Changes
+  <a href="#contributing-your-changes" class="md-nav__link">
+    Contributing Your Changes
   </a>
   
 </li>
@@ -438,34 +438,39 @@
 <h3 id="setting-up-the-docs-environment">Setting up the Docs Environment</h3>
 <hr />
 <ol>
-<li>Install Python 3.8+</li>
-<li>Switch your Conreq branch to <code>Conreq:docs</code></li>
-<li>Type <code>pip install -r requirements.txt</code> to install MkDocs via Python.</li>
+<li>Install <code>Python 3.8</code> or greater.</li>
+<li>Switch your Conreq branch to <code>Conreq:docs</code>.</li>
+<li>Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.</li>
+<li>Type <code>pip install -r requirements.txt</code> to install MkDocs.</li>
 </ol>
 <hr />
 <h3 id="starting-the-preview-webserver">Starting the Preview Webserver</h3>
 <hr />
 <p>MkDocs contains a free tool to allow you to preview your documentation changes live! In order to use it...</p>
 <ol>
-<li>Type <code>mkdocs serve</code> to start the preview webserver</li>
+<li>Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.</li>
+<li>Type <code>cd source</code> to enter the documentation's source code directory.</li>
+<li>Type <code>mkdocs serve</code> to start the preview webserver.</li>
 <li>Navigate to <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a> to see the documentation and changes live!</li>
 </ol>
 <hr />
-<h3 id="adding-a-new-docs-page">Adding a New Docs Page</h3>
+<h3 id="addingediting-a-docs-page">Adding/Editing a Docs Page</h3>
 <hr />
 <ol>
-<li>Create a new markdown file within <code>docs/</code></li>
+<li>Create a new markdown file within <code>source/docs/</code>, or edit an existing markdown file.</li>
 <li>Fill in this file with any markdown text you want!</li>
-<li>Add this file to the navigation bar within <code>mkdocs.yml</code></li>
+<li><em>If you made a new file:</em> Add this file to the navigation bar within <code>mkdocs.yml</code>.</li>
 </ol>
 <hr />
-<h3 id="saving-your-changes">Saving Your Changes</h3>
+<h3 id="contributing-your-changes">Contributing Your Changes</h3>
 <hr />
 <p>At this point you've successfully created a new docs page, and determine you want to contribute these changes. In order to do so...</p>
 <ol>
-<li>Type <code>mkdocs build</code> to turn the preview into something we can use</li>
-<li>Commit your changes to GitHub</li>
-<li>Submit a Pull Request to Conreq's repository</li>
+<li>Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.</li>
+<li>Type <code>cd source</code> to enter the documentation's source code directory.</li>
+<li>Type <code>mkdocs build -d ..\docs</code> to turn the preview into something we can use.</li>
+<li>Commit your changes to your GitHub branch.</li>
+<li>Submit a GitHub pull request to <code>Archmonger/Conreq:docs</code>.</li>
 </ol>
                 
               
