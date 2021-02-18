@@ -66,6 +66,16 @@ def generate_issue_cards(reported_issues):
                     content_id=entry["content_id"], source="tvdb"
                 )
                 old_requests.update(content_id=card["id"], source="tmdb")
+                log.handler(
+                    entry["content_type"]
+                    + " from "
+                    + entry["source"]
+                    + " with ID "
+                    + entry["content_id"]
+                    + " has been converted to TMDB",
+                    log.INFO,
+                    _logger,
+                )
 
             # Fallback to checking sonarr's database
             else:

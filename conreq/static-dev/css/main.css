@@ -97,8 +97,13 @@ body {
   line-height: 1;
 }
 
+a {
+  color: unset;
+  transition: 0.3s ease color;
+}
+
 a:hover {
-  color: initial;
+  color: #fff;
   text-decoration: initial;
 }
 
