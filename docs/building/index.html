@@ -512,15 +512,14 @@
                 <p>There are two environments to build Conreq for: Development and Production.</p>
 <p>If you intend to edit Conreq's code, then proceed with the Development instructions.</p>
 <hr />
-<h3 id="creating-a-development-environment">Creating a Development Environment<a class="headerlink" href="#creating-a-development-environment" title="Permanent link">&para;</a></h3>
-<hr />
-<h4 id="software">Software<a class="headerlink" href="#software" title="Permanent link">&para;</a></h4>
+<h2 id="creating-a-development-environment">Creating a Development Environment<a class="headerlink" href="#creating-a-development-environment" title="Permanent link">&para;</a></h2>
+<h3 id="software">Software<a class="headerlink" href="#software" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Install <a href="https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab">Python 3.8</a> (Easiest if this is the only version of python on your computer)</li>
 <li>Install <a href="https://code.visualstudio.com/">Visual Studio Code</a> (Optional: Any editor would work)</li>
 <li><em>If using Windows:</em> Install <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">Visual Studio C++</a> (Within this installer, navigate to <em>C++ Build Tools</em>. Select <em>MSVC</em> and <em>Windows 10 SDK</em>)</li>
 </ul>
-<h4 id="setting-up-the-environment">Setting Up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permanent link">&para;</a></h4>
+<h3 id="setting-up-the-environment">Setting Up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Pull the repository from GitHub.</li>
 <li>Open a terminal (ex. Command Prompt or PowerShell) as administrator at the root of the repository.</li>
@@ -534,8 +533,7 @@
 <li>Type <code>python manage.py runserver</code> to run the development webserver.</li>
 </ol>
 <hr />
-<h3 id="creating-a-production-environment">Creating a Production Environment<a class="headerlink" href="#creating-a-production-environment" title="Permanent link">&para;</a></h3>
-<hr />
+<h2 id="creating-a-production-environment">Creating a Production Environment<a class="headerlink" href="#creating-a-production-environment" title="Permanent link">&para;</a></h2>
 <p>Follow all instructions laid out within <a href="https://github.com/Archmonger/Conreq/wiki/Building-Guide#creating-a-development-environment">Creating a Development Environment</a>, but do not execute <code>python manage.py runserver</code>. Instead, do the following:</p>
 <ol>
 <li>Set your environment variable of <code>DEBUG</code> to <code>false</code>. The method of doing this will vary based on operating system.</li>
@@ -548,16 +546,15 @@
 <li><code>daphne -e ssl:8000:privateKey=key.pem:certKey=cert.pem conreq.asgi:application</code> - Binds the webserver to the <code>0.0.0.0</code> on port <code>8000</code> with SSL enabled. <strong><em>Note: Do not use <code>-p</code> or <code>-b</code> in this mode. Using <code>-e</code> always binds to <code>0.0.0.0</code>.</em></strong></li>
 </ol>
 <hr />
-<h3 id="visual-studio-code-configuration-optional">Visual Studio Code Configuration (optional)<a class="headerlink" href="#visual-studio-code-configuration-optional" title="Permanent link">&para;</a></h3>
-<hr />
-<h4 id="visual-studio-code-extensions">Visual Studio Code Extensions<a class="headerlink" href="#visual-studio-code-extensions" title="Permanent link">&para;</a></h4>
+<h2 id="visual-studio-code-configuration-optional">Visual Studio Code Configuration (optional)<a class="headerlink" href="#visual-studio-code-configuration-optional" title="Permanent link">&para;</a></h2>
+<h3 id="visual-studio-code-extensions">Visual Studio Code Extensions<a class="headerlink" href="#visual-studio-code-extensions" title="Permanent link">&para;</a></h3>
 <ul>
 <li>GitHub</li>
 <li>GitLens</li>
 <li>Python</li>
 <li>MagicPython</li>
 </ul>
-<h4 id="visual-studio-code-settings">Visual Studio Code Settings<a class="headerlink" href="#visual-studio-code-settings" title="Permanent link">&para;</a></h4>
+<h3 id="visual-studio-code-settings">Visual Studio Code Settings<a class="headerlink" href="#visual-studio-code-settings" title="Permanent link">&para;</a></h3>
 <ol>
 <li>If your terminal does not show venv (ex. <code>(venv) ...</code>), type <code>./venv/Scripts/activate</code>.</li>
 <li>Type <code>pip install -r requirements_dev.txt</code> to install VS Code editor packages within the virtual environment.</li>

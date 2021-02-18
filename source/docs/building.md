@@ -4,17 +4,15 @@ If you intend to edit Conreq's code, then proceed with the Development instructi
 
 ---
 
-### Creating a Development Environment
+## Creating a Development Environment
 
----
-
-#### Software
+### Software
 
 - Install [Python 3.8](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
 - Install [Visual Studio Code](https://code.visualstudio.com/) (Optional: Any editor would work)
 - _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
 
-#### Setting Up the Environment
+### Setting Up the Environment
 
 1. Pull the repository from GitHub.
 2. Open a terminal (ex. Command Prompt or PowerShell) as administrator at the root of the repository.
@@ -29,9 +27,7 @@ If you intend to edit Conreq's code, then proceed with the Development instructi
 
 ---
 
-### Creating a Production Environment
-
----
+## Creating a Production Environment
 
 Follow all instructions laid out within [Creating a Development Environment](https://github.com/Archmonger/Conreq/wiki/Building-Guide#creating-a-development-environment), but do not execute `python manage.py runserver`. Instead, do the following:
 
@@ -46,18 +42,16 @@ Follow all instructions laid out within [Creating a Development Environment](htt
 
 ---
 
-### Visual Studio Code Configuration (optional)
+## Visual Studio Code Configuration (optional)
 
----
-
-#### Visual Studio Code Extensions
+### Visual Studio Code Extensions
 
 - GitHub
 - GitLens
 - Python
 - MagicPython
 
-#### Visual Studio Code Settings
+### Visual Studio Code Settings
 
 1. If your terminal does not show venv (ex. `(venv) ...`), type `./venv/Scripts/activate`.
 2. Type `pip install -r requirements_dev.txt` to install VS Code editor packages within the virtual environment.

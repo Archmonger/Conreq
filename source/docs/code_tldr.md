@@ -2,9 +2,7 @@ This guide is intended to help developers gain an understanding of how the code 
 
 ---
 
-### Repository Structure
-
----
+## Repository Structure
 
 `manage.py` - Django development tool _(runs the development web server, initialize the databases, [and more.](https://docs.djangoproject.com/en/3.1/ref/django-admin/)_<br/>
 `resources/` - Branding, legal documents, and other miscellaneous files<br/>
@@ -24,9 +22,7 @@ This guide is intended to help developers gain an understanding of how the code 
 
 ---
 
-### Fundamental Django Design
-
----
+## Fundamental Django Design
 
 Almost all of the Conreq back-end "logic" will trace back to a `views.py` file. Within this file we import all sorts helper functions to help us render a specific URL address. Most of these helper functions are located within `conreq/utils/` and `conreq/core/`.
 
@@ -41,9 +37,7 @@ Here's a high level example of what occurs when the browser visits a URL.
 
 ---
 
-### Conreq Viewport Rendering
-
----
+## Conreq Viewport Rendering
 
 Currently, the viewport (current tab you're on) is dynamically rendered through detecting when the URL hash (ex `#/settings/server/`) changes. Detection of these changes occurs in `conreq/static-dev/js/viewport.js`
 
@@ -53,9 +47,7 @@ _Note: All injected HTML is passed through `DOMPurify`, so therefore cannot cont
 
 ---
 
-### Conreq Modal Rendering
-
----
+## Conreq Modal Rendering
 
 Modals (pop up boxes) that appear on the page are rendered in a similar way to the viewport, but renders occur on click events rather than URL-change events. These events exist within `conreq/static-dev/js/modal.js` and are configured when ever the viewport has been refreshed.
 
@@ -67,9 +59,7 @@ _Note: All injected HTML is passed through `DOMPurify`, so therefore cannot cont
 
 ---
 
-### Django Websockets
-
----
+## Django Websockets
 
 Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as a way of the server and client communication via _chat messages_. When the page first loads, a connection to a _chat room_ is formed, and _chat bubbles_ are communicated back and forth between the server and client browser.
 

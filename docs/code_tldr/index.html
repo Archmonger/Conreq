@@ -485,8 +485,7 @@
                 
                 <p>This guide is intended to help developers gain an understanding of how the code in Conreq works together to make a functional application.</p>
 <hr />
-<h3 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h3>
-<hr />
+<h2 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h2>
 <p><code>manage.py</code> - Django development tool <em>(runs the development web server, initialize the databases, <a href="https://docs.djangoproject.com/en/3.1/ref/django-admin/">and more.</a></em><br/>
 <code>resources/</code> - Branding, legal documents, and other miscellaneous files<br/></p>
 <p><code>conreq/</code> - Main Django application<br/>
@@ -501,8 +500,7 @@
 <code>conreq/templates/</code> - HTML templates used by sub-application's <code>views.py</code> to generate web pages<br/>
 <code>conreq/utils/</code> - Generic functions that can be used by their respective category<br/></p>
 <hr />
-<h3 id="fundamental-django-design">Fundamental Django Design<a class="headerlink" href="#fundamental-django-design" title="Permanent link">&para;</a></h3>
-<hr />
+<h2 id="fundamental-django-design">Fundamental Django Design<a class="headerlink" href="#fundamental-django-design" title="Permanent link">&para;</a></h2>
 <p>Almost all of the Conreq back-end "logic" will trace back to a <code>views.py</code> file. Within this file we import all sorts helper functions to help us render a specific URL address. Most of these helper functions are located within <code>conreq/utils/</code> and <code>conreq/core/</code>.</p>
 <p>Here's a high level example of what occurs when the browser visits a URL.</p>
 <ol>
@@ -514,21 +512,18 @@
 <li>The Django webserver automatically determines how to forward this rendered content to the browser based on what was returned by the view (ex. a <code>HttpResponse</code> or <code>JsonResponse</code>)</li>
 </ol>
 <hr />
-<h3 id="conreq-viewport-rendering">Conreq Viewport Rendering<a class="headerlink" href="#conreq-viewport-rendering" title="Permanent link">&para;</a></h3>
-<hr />
+<h2 id="conreq-viewport-rendering">Conreq Viewport Rendering<a class="headerlink" href="#conreq-viewport-rendering" title="Permanent link">&para;</a></h2>
 <p>Currently, the viewport (current tab you're on) is dynamically rendered through detecting when the URL hash (ex <code>#/settings/server/</code>) changes. Detection of these changes occurs in <code>conreq/static-dev/js/viewport.js</code></p>
 <p>When a change is detected, the browser will fetch whatever HTML would have been at <code>/settings/server/</code> and will inject that into the viewport. Additionally, setting up any click events, and showing page transitions entirely occurs within the previously mentioned <code>viewport.js</code>.</p>
 <p><em>Note: All injected HTML is passed through <code>DOMPurify</code>, so therefore cannot contain potentially insecure elements such as iframes or JavaScript.</em></p>
 <hr />
-<h3 id="conreq-modal-rendering">Conreq Modal Rendering<a class="headerlink" href="#conreq-modal-rendering" title="Permanent link">&para;</a></h3>
-<hr />
+<h2 id="conreq-modal-rendering">Conreq Modal Rendering<a class="headerlink" href="#conreq-modal-rendering" title="Permanent link">&para;</a></h2>
 <p>Modals (pop up boxes) that appear on the page are rendered in a similar way to the viewport, but renders occur on click events rather than URL-change events. These events exist within <code>conreq/static-dev/js/modal.js</code> and are configured when ever the viewport has been refreshed.</p>
 <p>All modals are injected into the single <code>#modal-container</code> that exists on the page from first-load. Buttons that can create a modal will contain a <code>data-modal-url</code> value, which contains the URL endpoint to the modal. The client browser will fetch the rendered HTML in order to inject it into the page.</p>
 <p>Additionally, setting up any click events for the new modal occurs within the previously mentioned <code>modal.js</code>.</p>
 <p><em>Note: All injected HTML is passed through <code>DOMPurify</code>, so therefore cannot contain potentially insecure elements such as iframes or JavaScript.</em></p>
 <hr />
-<h3 id="django-websockets">Django Websockets<a class="headerlink" href="#django-websockets" title="Permanent link">&para;</a></h3>
-<hr />
+<h2 id="django-websockets">Django Websockets<a class="headerlink" href="#django-websockets" title="Permanent link">&para;</a></h2>
 <p>Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as a way of the server and client communication via <em>chat messages</em>. When the page first loads, a connection to a <em>chat room</em> is formed, and <em>chat bubbles</em> are communicated back and forth between the server and client browser.</p>
 <p>On the server side, the URL location of where <em>private chat rooms (direct messages)</em> are created is determined within <code>conreq/asgi.py</code>. In this file, the URL is directly linked to a <code>consumer</code>. Django does support creating <em>chat groups</em> with multiple clients in it, however, Conreq currently does not utilize this feature.</p>
 <p>At the most fundamental level, a <code>consumer</code> is a Python class with a <em>send</em> and <em>receive</em> function. All of Conreq's consumers can be found in <code>conreq/core/server_websockets.py</code>.</p>

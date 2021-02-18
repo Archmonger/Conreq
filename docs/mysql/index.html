@@ -61,6 +61,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#instructions" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -311,9 +316,43 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          MySQL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         MySQL
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#instructions" class="md-nav__link">
+    Instructions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-config-file" class="md-nav__link">
+    Example Config File
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -423,32 +462,28 @@
                 
                   <h1>MySQL</h1>
                 
-                <ol>
+                <h2 id="instructions">Instructions<a class="headerlink" href="#instructions" title="Permanent link">&para;</a></h2>
+<ol>
 <li>
 <p>Set up a MySQL database (ex. a MySQL Docker)</p>
 </li>
 <li>
-<p>Create a file within your Conreq data directory create a MySQL configuration file (ex. <code>mysql.cnf</code>). At minimum you must include the following:</p>
+<p>Create a file within your Conreq data directory create a MySQL configuration file (ex. <code>mysql.cnf</code>).</p>
 </li>
 <li>
-<p>If you have to customize other parameters, such as the port, take a look at <a href="https://dev.mysql.com/doc/refman/8.0/en/option-files.html">MySQL's configuration file documentation</a>.</p>
+<p>Set your <code>DB_ENGINE</code> variable to <code>MYSQL</code> and your <code>MYSQL_CONFIG_FILE</code> variable to the path to your cnf file (ex. <code>/config/mysql.cnf</code>). <em>If using Unraid/Docker, add this as a Docker variable. Otherwise, search "How to set environment variables in ... Windows 10"</em></p>
 </li>
 </ol>
+<hr />
+<h2 id="example-config-file">Example Config File<a class="headerlink" href="#example-config-file" title="Permanent link">&para;</a></h2>
+<p>Take a look at <a href="https://dev.mysql.com/doc/refman/8.0/en/option-files.html">MySQL's cnf docs</a> for all parameters. At minimum you must include the following:</p>
 <div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">client</span><span class="p">]</span>
-<span class="n">database</span> <span class="o">=</span> <span class="n">conreq</span>
-<span class="n">user</span> <span class="o">=</span> <span class="n">db_username</span>
+<span class="k">database</span> <span class="o">=</span> <span class="n">conreq</span>
+<span class="k">user</span> <span class="o">=</span> <span class="n">db_username</span>
 <span class="n">password</span> <span class="o">=</span> <span class="n">db_password</span>
-<span class="n">host</span> <span class="o">=</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">86.200</span>
-<span class="n">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="nb">set</span> <span class="o">=</span> <span class="n">utf8</span>
+<span class="k">host</span> <span class="o">=</span> <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">86</span><span class="p">.</span><span class="mi">200</span>
+<span class="k">default</span><span class="o">-</span><span class="nb">character</span><span class="o">-</span><span class="k">set</span> <span class="o">=</span> <span class="n">utf8</span>
 </code></pre></div>
-<ol>
-<li>
-<p>Within your Conreq environment settings, set your <code>DB_ENGINE</code> variable to <code>MYSQL</code>, and your <code>MYSQL_CONFIG_FILE</code> variable to the path where your configuration file is stored (ex. <code>/config/mysql.cnf</code>)</p>
-</li>
-<li>
-<p>If using Unraid/Docker, add this as a Docker Variable. If you are self hosting Conreq on your own operating system, consider searching searching "How to set environment variables in <em>... Windows 10</em>"</p>
-</li>
-</ol>
                 
                   
                     

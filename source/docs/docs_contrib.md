@@ -2,9 +2,7 @@ We use [MkDocs](https://www.mkdocs.org/#overview) to create our documentation. F
 
 ---
 
-### Setting up the Docs Environment
-
----
+## Setting up the Docs Environment
 
 1. Install `Python 3.8` or greater.
 2. Fork and pull `Conreq:docs` from GitHub.
@@ -13,9 +11,7 @@ We use [MkDocs](https://www.mkdocs.org/#overview) to create our documentation. F
 
 ---
 
-### Starting the Preview Webserver
-
----
+## Starting the Preview Webserver
 
 MkDocs contains a tool to allow you to preview your documentation changes live! In order to use it...
 
@@ -26,9 +22,7 @@ MkDocs contains a tool to allow you to preview your documentation changes live! 
 
 ---
 
-### Adding/Editing a Docs Page
-
----
+## Adding/Editing a Docs Page
 
 1. Create a new markdown file within `source/docs/`, or edit an existing markdown file.
 2. Fill in this file with any markdown text you want!
@@ -36,9 +30,7 @@ MkDocs contains a tool to allow you to preview your documentation changes live! 
 
 ---
 
-### Contributing Your Changes
-
----
+## Contributing Your Changes
 
 At this point you've successfully created a new docs page, and determine you want to contribute these changes. In order to do so...
 
