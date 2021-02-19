@@ -73,7 +73,9 @@ def manage_issue(request):
 
         # Delete a request
         if request_parameters.get("action", None) == "delete":
-            issue = ReportedIssue.objects.filter(id=request_parameters["request_id"])
+            issue = ReportedIssue.objects.select_related("reported_by").get(
+                id=request_parameters["request_id"]
+            )
 
             # Check if report belongs to the user, or if the user is admin
             if request.user.is_staff or issue.reported_by == request.user:
