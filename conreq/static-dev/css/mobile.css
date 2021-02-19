@@ -31,6 +31,19 @@
 	.viewport .poster-container .fa-angle-down {
 		display: none;
 	}
+	/* More Info Buttons */
+	.more-info-grid .report-modal-btn,
+	.more-info-grid .report-selection-modal-btn,
+	.more-info-grid .series-modal-btn,
+	.more-info-grid .request-btn {
+		font-size: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.more-info-grid .standard-btn .fas {
+		font-size: 22px;
+	}
 }
 
 @media only screen and (max-width: 880px) {
@@ -154,10 +167,6 @@
 		right: 20px;
 		z-index: 97;
 		border-radius: 50%;
-		font-size: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 45px;
 		height: 45px;
 	}
@@ -167,18 +176,11 @@
 		top: 15px;
 		right: 15px;
 		z-index: 97;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 0;
 		padding: 0;
 		width: 40px;
 	}
 	.more-info-grid .standard-btn.available {
 		display: none;
-	}
-	.more-info-grid .standard-btn .fas {
-		font-size: 22px;
 	}
 	.tns-controls {
 		display: none;
