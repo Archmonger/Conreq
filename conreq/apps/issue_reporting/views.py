@@ -78,7 +78,7 @@ def manage_issue(request):
             )
 
             # Check if report belongs to the user, or if the user is admin
-            if request.user.is_staff or issue.reported_by == request.user:
+            if issue and request.user.is_staff or issue.reported_by == request.user:
                 issue.delete()
                 return JsonResponse({"success": True})
 
@@ -88,8 +88,9 @@ def manage_issue(request):
             and request.user.is_staff
         ):
             issue = ReportedIssue.objects.filter(id=request_parameters["request_id"])
-            issue.update(resolved=request_parameters["resolved"])
-            return JsonResponse({"success": True})
+            if issue:
+                issue.update(resolved=request_parameters["resolved"])
+                return JsonResponse({"success": True})
 
     return HttpResponseForbidden()
 
