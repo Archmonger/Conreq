@@ -432,8 +432,6 @@
 </li>
 <li>
 <p>Set up a Nginx reverse proxy. <em>If you need help with this, join the <a href="https://discord.com/invite/TrNtY7N">Organizr Discord</a>.</em> After setting one up, in your Conreq block you'll need to add the following:</p>
-</li>
-</ol>
 <div class="highlight"><pre><span></span><code><span class="c1"># Sets Conreq to be accessible by all Organizr users. Google &quot;Organizr ServerAuth&quot; for more details.</span>
 <span class="k">auth_request</span> <span class="s">/auth-4</span><span class="p">;</span>
 
@@ -449,6 +447,8 @@
 <span class="k">auth_request_set</span> <span class="nv">$auth_group</span> <span class="nv">$upstream_http_x_organizr_group</span><span class="p">;</span>
 <span class="k">proxy_set_header</span> <span class="s">X-WEBAUTH-GROUP</span> <span class="nv">$auth_group</span><span class="p">;</span>
 </code></pre></div>
+</li>
+</ol>
                 
                   
                     

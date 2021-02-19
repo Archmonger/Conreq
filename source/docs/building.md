@@ -8,9 +8,9 @@ If you intend to edit Conreq's code, then proceed with the Development instructi
 
 ### Software
 
-- Install [Python 3.8](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
-- Install [Visual Studio Code](https://code.visualstudio.com/) (Optional: Any editor would work)
-- _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
+-   Install [Python 3.8](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
+-   Install [Visual Studio Code](https://code.visualstudio.com/) (Optional: Any editor would work)
+-   _If using Windows:_ Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
 
 ### Setting Up the Environment
 
@@ -35,10 +35,10 @@ Follow all instructions laid out within [Creating a Development Environment](htt
 2. Type `python manage.py collectstatic` to move static files (CSS/JS/images) to their production directory.
 3. Type `python manage.py compress` to merge and compress static files.
 4. Type `daphne conreq.asgi:application` to run the production webserver on `localhost:8000`. Here's some common execution parameters:
-   - `daphne conreq.asgi:application --access-log logs\access.log` - Adds an access log file.
-   - `daphne -b 0.0.0.0 conreq.asgi:application` - Binds the webserver to the `0.0.0.0` instead of localhost.
-   - `daphne -p 8001 conreq.asgi:application` - Binds the webserver to port `8001` instead of `8000`.
-   - `daphne -e ssl:8000:privateKey=key.pem:certKey=cert.pem conreq.asgi:application` - Binds the webserver to the `0.0.0.0` on port `8000` with SSL enabled. **_Note: Do not use `-p` or `-b` in this mode. Using `-e` always binds to `0.0.0.0`._**
+    - `daphne conreq.asgi:application --access-log logs\access.log` - Adds an access log file.
+    - `daphne -b 0.0.0.0 conreq.asgi:application` - Binds the webserver to the `0.0.0.0` instead of localhost.
+    - `daphne -p 8001 conreq.asgi:application` - Binds the webserver to port `8001` instead of `8000`.
+    - `daphne -e ssl:8000:privateKey=key.pem:certKey=cert.pem conreq.asgi:application` - Binds the webserver to the `0.0.0.0` on port `8000` with SSL enabled. **_Note: Do not use `-p` or `-b` in this mode. Using `-e` always binds to `0.0.0.0`._**
 
 ---
 
@@ -46,18 +46,18 @@ Follow all instructions laid out within [Creating a Development Environment](htt
 
 ### Visual Studio Code Extensions
 
-- GitHub
-- GitLens
-- Python
-- MagicPython
+-   GitHub
+-   GitLens
+-   Python
+-   MagicPython
 
 ### Visual Studio Code Settings
 
 1. If your terminal does not show venv (ex. `(venv) ...`), type `./venv/Scripts/activate`.
 2. Type `pip install -r requirements_dev.txt` to install VS Code editor packages within the virtual environment.
 3. Enable Python Formatting
-   - Settings -> Editor: Format On Save -> `ON`
-   - Settings -> Python Formatting Provider -> `Black`
+    - Settings -> Editor: Format On Save -> `ON`
+    - Settings -> Python Formatting Provider -> `Black`
 4. Enabling Python Linting
-   - Ctrl+Shift+P -> Python: Select Linter -> `pylint`
-   - Settings -> Linting: Pylint Args -> Add Item -> `--disable=line-too-long,bare-except,bad-continuation`
+    - Ctrl+Shift+P -> Python: Select Linter -> `pylint`
+    - Settings -> Linting: Pylint Args -> Add Item -> `--disable=line-too-long,bare-except,bad-continuation`

@@ -539,11 +539,13 @@
 <li>Set your environment variable of <code>DEBUG</code> to <code>false</code>. The method of doing this will vary based on operating system.</li>
 <li>Type <code>python manage.py collectstatic</code> to move static files (CSS/JS/images) to their production directory.</li>
 <li>Type <code>python manage.py compress</code> to merge and compress static files.</li>
-<li>Type <code>daphne conreq.asgi:application</code> to run the production webserver on <code>localhost:8000</code>. Here's some common execution parameters:</li>
+<li>Type <code>daphne conreq.asgi:application</code> to run the production webserver on <code>localhost:8000</code>. Here's some common execution parameters:<ul>
 <li><code>daphne conreq.asgi:application --access-log logs\access.log</code> - Adds an access log file.</li>
 <li><code>daphne -b 0.0.0.0 conreq.asgi:application</code> - Binds the webserver to the <code>0.0.0.0</code> instead of localhost.</li>
 <li><code>daphne -p 8001 conreq.asgi:application</code> - Binds the webserver to port <code>8001</code> instead of <code>8000</code>.</li>
 <li><code>daphne -e ssl:8000:privateKey=key.pem:certKey=cert.pem conreq.asgi:application</code> - Binds the webserver to the <code>0.0.0.0</code> on port <code>8000</code> with SSL enabled. <strong><em>Note: Do not use <code>-p</code> or <code>-b</code> in this mode. Using <code>-e</code> always binds to <code>0.0.0.0</code>.</em></strong></li>
+</ul>
+</li>
 </ol>
 <hr />
 <h2 id="visual-studio-code-configuration-optional">Visual Studio Code Configuration (optional)<a class="headerlink" href="#visual-studio-code-configuration-optional" title="Permanent link">&para;</a></h2>
@@ -558,12 +560,16 @@
 <ol>
 <li>If your terminal does not show venv (ex. <code>(venv) ...</code>), type <code>./venv/Scripts/activate</code>.</li>
 <li>Type <code>pip install -r requirements_dev.txt</code> to install VS Code editor packages within the virtual environment.</li>
-<li>Enable Python Formatting</li>
+<li>Enable Python Formatting<ul>
 <li>Settings -&gt; Editor: Format On Save -&gt; <code>ON</code></li>
 <li>Settings -&gt; Python Formatting Provider -&gt; <code>Black</code></li>
-<li>Enabling Python Linting</li>
+</ul>
+</li>
+<li>Enabling Python Linting<ul>
 <li>Ctrl+Shift+P -&gt; Python: Select Linter -&gt; <code>pylint</code></li>
 <li>Settings -&gt; Linting: Pylint Args -&gt; Add Item -&gt; <code>--disable=line-too-long,bare-except,bad-continuation</code></li>
+</ul>
+</li>
 </ol>
                 
                   
