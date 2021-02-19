@@ -14,6 +14,8 @@
 
 @media only screen and (max-width: 1150px) {
 	:root {
+		/* Sidebar */
+		--sidebar-width: 200px;
 		/* Videos */
 		--video-height: calc(var(--video-width) * 0.5625);
 		--video-width: 30vw;

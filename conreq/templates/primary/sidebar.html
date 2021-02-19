@@ -4,57 +4,57 @@
     <div id="navpages" class="navpages">
         <div id="all-tab-groups" class="all-tab-groups">
 
-            <a class="nav-tab group discover nav-link" data-toggle="collapse" data-target="#discover-tabs"
+            <a class="nav-tab line-clamp-1 group discover nav-link" data-toggle="collapse" data-target="#discover-tabs"
                 aria-expanded="true" aria-controls="discover-tabs">
                 Discover <i id="discover-fa" class="fas fa-angle-up"></i>
             </a>
             <div class="collapse show" id="discover-tabs">
-                <a href="#{% url 'discover:all' %}" class="nav-tab suboption discover">
+                <a href="#{% url 'discover:all' %}" class="nav-tab line-clamp-1 suboption discover">
                     Combined
                     <!-- <i class="fas fa-filter"></i> -->
                 </a>
-                <a href="#{% url 'discover:tv' %}" class="nav-tab suboption">
+                <a href="#{% url 'discover:tv' %}" class="nav-tab line-clamp-1 suboption">
                     TV Shows
                     <!-- <i class="fas fa-filter"></i> -->
                 </a>
-                <a href="#{% url 'discover:movies' %}" class="nav-tab suboption">
+                <a href="#{% url 'discover:movies' %}" class="nav-tab line-clamp-1 suboption">
                     Movies
                     <!-- <i class="fas fa-filter"></i> -->
                 </a>
             </div>
 
-            <a class="nav-tab group user nav-link" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true"
-                aria-controls="user-tabs">
+            <a class="nav-tab line-clamp-1 group user nav-link" data-toggle="collapse" data-target="#user-tabs"
+                aria-expanded="true" aria-controls="user-tabs">
                 User Options <i id="user-fa" class="fas fa-angle-up"></i>
             </a>
             <div class="collapse show" id="user-tabs">
-                <a href="#{% url 'user_requests:my_requests' %}" class="nav-tab suboption user">
+                <a href="#{% url 'user_requests:my_requests' %}" class="nav-tab line-clamp-1 suboption user">
                     My Requests
                 </a>
-                <a href="#{% url 'issue_reporting:my_issues' %}" class="nav-tab suboption user">
+                <a href="#{% url 'issue_reporting:my_issues' %}" class="nav-tab line-clamp-1 suboption user">
                     My Issues
                 </a>
-                <a href="{% url 'sign_out' %}" class="nav-tab suboption user">
+                <a href="{% url 'sign_out' %}" class="nav-tab line-clamp-1 suboption user">
                     Sign Out
                 </a>
             </div>
 
             {% if user.is_staff %}
-            <a class="nav-tab group admin nav-link" data-toggle="collapse" data-target="#admin-tabs"
+            <a class="nav-tab line-clamp-1 group admin nav-link" data-toggle="collapse" data-target="#admin-tabs"
                 aria-expanded="true" aria-controls="admin-tabs">
                 Admin <i id="admin-fa" class="fas fa-angle-up"></i>
             </a>
             <div class="collapse show" id="admin-tabs">
-                <a href="#{% url 'user_requests:all_requests' %}" class="nav-tab suboption admin">
+                <a href="#{% url 'user_requests:all_requests' %}" class="nav-tab line-clamp-1 suboption admin">
                     All Requests
                 </a>
-                <a href="#{% url 'issue_reporting:all_issues' %}" class="nav-tab suboption admin">
+                <a href="#{% url 'issue_reporting:all_issues' %}" class="nav-tab line-clamp-1 suboption admin">
                     All Issues
                 </a>
-                <a href="#{% url 'manage_users:main' %}" class="nav-tab suboption admin">
+                <a href="#{% url 'manage_users:main' %}" class="nav-tab line-clamp-1 suboption admin">
                     Manage Users
                 </a>
-                <a href="#{% url 'server_settings:main' %}" class="nav-tab suboption admin">
+                <a href="#{% url 'server_settings:main' %}" class="nav-tab line-clamp-1 suboption admin">
                     Server Settings
                 </a>
             </div>
