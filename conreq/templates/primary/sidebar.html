@@ -6,47 +6,57 @@
 
             <a class="nav-tab group discover nav-link" data-toggle="collapse" data-target="#discover-tabs"
                 aria-expanded="true" aria-controls="discover-tabs">
-                {{discover}} <i id="discover-fa" class="fas fa-angle-up"></i></a>
+                Discover <i id="discover-fa" class="fas fa-angle-up"></i>
+            </a>
             <div class="collapse show" id="discover-tabs">
                 <a href="#{% url 'discover:all' %}" class="nav-tab suboption discover">
-                    {{combined}}
+                    Combined
                     <!-- <i class="fas fa-filter"></i> -->
                 </a>
                 <a href="#{% url 'discover:tv' %}" class="nav-tab suboption">
-                    {{tv_shows}}
+                    TV Shows
                     <!-- <i class="fas fa-filter"></i> -->
                 </a>
                 <a href="#{% url 'discover:movies' %}" class="nav-tab suboption">
-                    {{movies}}
+                    Movies
                     <!-- <i class="fas fa-filter"></i> -->
                 </a>
             </div>
 
             <a class="nav-tab group user nav-link" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true"
                 aria-controls="user-tabs">
-                {{user_options}} <i id="user-fa" class="fas fa-angle-up"></i></a>
+                User Options <i id="user-fa" class="fas fa-angle-up"></i>
+            </a>
             <div class="collapse show" id="user-tabs">
                 <a href="#{% url 'user_requests:my_requests' %}" class="nav-tab suboption user">
-                    {{my_requests}}</a>
+                    My Requests
+                </a>
                 <a href="#{% url 'issue_reporting:my_issues' %}" class="nav-tab suboption user">
-                    {{my_issues}}</a>
+                    My Issues
+                </a>
                 <a href="{% url 'sign_out' %}" class="nav-tab suboption user">
-                    {{sign_out}}</a>
+                    Sign Out
+                </a>
             </div>
 
             {% if user.is_staff %}
             <a class="nav-tab group admin nav-link" data-toggle="collapse" data-target="#admin-tabs"
                 aria-expanded="true" aria-controls="admin-tabs">
-                {{admin}} <i id="admin-fa" class="fas fa-angle-up"></i></a>
+                Admin <i id="admin-fa" class="fas fa-angle-up"></i>
+            </a>
             <div class="collapse show" id="admin-tabs">
                 <a href="#{% url 'user_requests:all_requests' %}" class="nav-tab suboption admin">
-                    {{all_requests}}</a>
+                    All Requests
+                </a>
                 <a href="#{% url 'issue_reporting:all_issues' %}" class="nav-tab suboption admin">
-                    {{all_issues}}</a>
+                    All Issues
+                </a>
                 <a href="#{% url 'manage_users:main' %}" class="nav-tab suboption admin">
-                    {{manage_users}}</a>
+                    Manage Users
+                </a>
                 <a href="#{% url 'server_settings:main' %}" class="nav-tab suboption admin">
-                    {{server_settings}}</a>
+                    Server Settings
+                </a>
             </div>
             {% endif %}
 

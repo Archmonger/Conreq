@@ -1,3 +1,5 @@
+{% load solo_tags %}
+{% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% load static compress %}
 {% load static %}
 <!DOCTYPE html>
@@ -17,13 +19,25 @@
             {% include "primary/loading_animation_container.html" %}
         </div>
 
+        <!-- Local JS -->
         {% compress js %}
+        <script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
+        <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
+        <script src="{% static 'js/click_events.js' %}" crossorigin="anonymous"></script>
         <script src="{% static 'js/sidebar.js' %}" crossorigin="anonymous"></script>
         <script src="{% static 'js/navbar.js' %}" crossorigin="anonymous"></script>
         <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>
         <script src="{% static 'js/more_info.js' %}" crossorigin="anonymous"></script>
         <script src="{% static 'js/viewport.js' %}" crossorigin="anonymous"></script>
         {% endcompress %}
+
+        <!-- User defined CSS and JS -->
+        {% if server_settings.conreq_custom_css %}
+        <link rel="stylesheet" href="{{ server_settings.conreq_custom_css }}" crossorigin="anonymous">
+        {% endif %}
+        {% if server_settings.conreq_custom_js %}
+        <script src="{{ server_settings.conreq_custom_js }}" crossorigin="anonymous"></script>
+        {% endif %}
     </div>
 </body>
 

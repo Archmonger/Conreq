@@ -60,6 +60,38 @@ def report_issue(request):
     return HttpResponseForbidden()
 
 
+@login_required
+@performance_metrics()
+def manage_issue(request):
+    if request.method == "POST":
+        request_parameters = json.loads(request.body.decode("utf-8"))
+        log.handler(
+            "Manage issue command received: " + str(request_parameters),
+            log.INFO,
+            _logger,
+        )
+
+        # Delete a request
+        if request_parameters.get("action", None) == "delete":
+            issue = ReportedIssue.objects.filter(id=request_parameters["request_id"])
+
+            # Check if report belongs to the user, or if the user is admin
+            if request.user.is_staff or issue.reported_by == request.user:
+                issue.delete()
+                return JsonResponse({"success": True})
+
+        # Change the resolved status of a request
+        elif (
+            request_parameters.get("action", None) == "resolve"
+            and request.user.is_staff
+        ):
+            issue = ReportedIssue.objects.filter(id=request_parameters["request_id"])
+            issue.update(resolved=request_parameters["resolved"])
+            return JsonResponse({"success": True})
+
+    return HttpResponseForbidden()
+
+
 @cache_page(15)
 @login_required
 @performance_metrics()
@@ -77,7 +109,6 @@ def report_issue_modal(request):
     return HttpResponse(template.render(context, request))
 
 
-@cache_page(1)
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 @performance_metrics()
@@ -89,7 +120,6 @@ def all_issues(request):
     return HttpResponse(template.render(context, request))
 
 
-@cache_page(1)
 @vary_on_cookie
 @login_required
 @performance_metrics()

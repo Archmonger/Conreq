@@ -33,6 +33,7 @@ def generate_issue_cards(reported_issues):
     content_manager = ContentManager()
     all_cards = []
     for entry in reported_issues.values(
+        "id",
         "reported_by__username",
         "content_id",
         "source",

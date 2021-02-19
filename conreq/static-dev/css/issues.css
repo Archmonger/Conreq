@@ -1,29 +1,48 @@
 .issue-container {
-  padding: 15px;
-  border-radius: 8px;
-  background: #252525;
-  color: rgba(255, 255, 255, 0.75);
-  font-weight: 300;
-  line-height: 18px;
-  height: auto;
-  overflow: hidden;
-  width: 300px;
+	padding: 15px;
+	border-radius: 8px;
+	background: #252525;
+	color: rgba(255, 255, 255, 0.75);
+	font-weight: 300;
+	line-height: 18px;
+	height: auto;
+	overflow: hidden;
+	width: 300px;
 }
 
 .issue-container .content-type-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.issue-container .issue-manage-icons {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+
+.issue-container .issue-manage-icons .fas {
+	transition: 0.3s color ease;
+	margin-left: 10px;
+}
+
+.issue-container .issue-manage-icons .fas:hover {
+	color: #fff;
 }
 
 .issue-container .title {
-  font-weight: 700;
+	font-weight: 700;
 }
 
 .issue-container .category:not(:last-child) {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
-.issue-container .first.category {
-  padding-right: 25px;
+.issue-container .category.content-name {
+	padding-right: 25px;
+}
+
+.issue-container .category.content-name a {
+	display: block;
 }

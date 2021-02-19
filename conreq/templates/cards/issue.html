@@ -8,7 +8,17 @@
         {% endif %}
     </div>
 
-    <div class="first category">
+    <div class="issue-manage-icons" data-request-id="{{card.id}}" data-resolved="{{card.resolved}}"
+        data-url="{% url 'issue_reporting:manage_issue' %}">
+        {% if card.resolved and user.is_staff %}
+        <i class="fas fa-times approve clickable"></i>
+        {% elif user.is_staff %}
+        <i class="fas fa-check approve clickable"></i>
+        {% endif %}
+        <i class="fas fa-trash delete clickable"></i>
+    </div>
+
+    <div class="category content-name">
         <a
             href="#{% url 'more_info:main' %}?{% if card.source == 'tmdb' %}tmdb_id={{card.content_id}}{% elif card.source == 'tvdb' %}tvdb_id={{card.content_id}}{% endif %}&content_type={{card.content_type}}">
             <div class="title">Content Name</div>

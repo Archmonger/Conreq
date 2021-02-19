@@ -1,6 +1,4 @@
 {% load static compress %}
-{% load solo_tags %}
-{% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% load static %}
 <meta charset="UTF-8">
 <title>{{ server_settings.conreq_app_name }}</title>
@@ -80,11 +78,27 @@
     integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
     crossorigin="anonymous"></script>
 
+{% compress js %}
+<!-- Image popups (jQuery Magnific Popup) -->
+<script src="{% static 'js/libraries/magnific_popup_1.1.0.min.js' %}" crossorigin="anonymous"></script>
+
+<!-- Notification Popups (izi Toast) -->
+<script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
+
+<!-- XSS Protection (DOM Purify) -->
+<script src="{% static 'js/libraries/dom_purify_2.2.min.js' %}" crossorigin="anonymous"></script>
+
+<!-- Automatic Timezones (Awesome Django Timezones) -->
+<script src="{% static 'js/awesome_django_timezones.js' %}"></script>
+{% endcompress %}
+
 {% compress css %}
 <!-- Image popups (jQuery Magnific Popup) -->
 <link rel="stylesheet" href="{% static 'css/libraries/magnific_popup_1.1.0.css' %}" crossorigin="anonymous">
+
 <!-- Notification Popups (izi Toast) -->
 <link rel="stylesheet" href="{% static 'css/libraries/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous">
+
 <!-- Local CSS -->
 <link rel="stylesheet" href="{% static 'css/main.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/modal.css' %}" crossorigin="anonymous">
@@ -95,32 +109,11 @@
 <link rel="stylesheet" href="{% static 'css/mobile.css' %}" crossorigin="anonymous">
 {% endcompress %}
 
-{% compress js %}
-<!-- Image popups (jQuery Magnific Popup) -->
-<script src="{% static 'js/libraries/magnific_popup_1.1.0.min.js' %}" crossorigin="anonymous"></script>
-<!-- Notification Popups (izi Toast) -->
-<script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
-<!-- XSS Protection (DOM Purify) -->
-<script src="{% static 'js/libraries/dom_purify_2.2.min.js' %}" crossorigin="anonymous"></script>
-<!-- Automatic Timezones (Awesome Django Timezones) -->
-<script src="{% static 'js/awesome_django_timezones.js' %}"></script>
-<!-- Local JS -->
-<script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
-<script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
-{% endcompress %}
-
-<!-- User toggleable CSS and JS -->
+<!-- User toggleable CSS -->
 {% if server_settings.conreq_simple_posters %}
 {% include "compressed/simple_posters_css.html" %}
 {% endif %}
+
 {% if server_settings.conreq_dark_theme %}
 {% include "compressed/dark_css.html" %}
-{% endif %}
-
-<!-- User defined CSS and JS -->
-{% if server_settings.conreq_custom_css %}
-<link rel="stylesheet" href="{{ server_settings.conreq_custom_css }}" crossorigin="anonymous">
-{% endif %}
-{% if server_settings.conreq_custom_js %}
-<script src="{{ server_settings.conreq_custom_js }}" crossorigin="anonymous"></script>
 {% endif %}
