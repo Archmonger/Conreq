@@ -224,7 +224,7 @@
                 {% endif %}
 
                 <!-- "Report" button -->
-                {% if content_type == "movie" %}
+                {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="standard-btn report-modal-btn box-shadow no-highlighting"
                     data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
                     data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
@@ -232,7 +232,7 @@
                     <i class="fas fa-exclamation-circle"></i>
                     ISSUE
                 </div>
-                {% elif content_type == "tv"%}
+                {% elif content_type == "tv" and server_settings.sonarr_enabled %}
                 <div class="standard-btn report-selection-modal-btn box-shadow no-highlighting"
                     data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
                     data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
