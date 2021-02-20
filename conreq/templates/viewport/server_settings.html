@@ -147,12 +147,16 @@
             </div>
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">Anime Quality Profile</div>
-                <div class="text-input-container dropdown no-highlighting
-                {% if sonarr_quality_profiles %} clickable {% endif %}">
+                <div
+                    class="text-input-container dropdown no-highlighting
+                {% if sonarr_quality_profiles %} clickable {% endif %} {% if not current_sonarr_anime_quality_profile and server_settings.sonarr_enabled %}error{% endif %}">
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="settings-item-text line-clamp-1 ">
                             {{ current_sonarr_anime_quality_profile }}
+                            {% if not current_sonarr_anime_quality_profile and server_settings.sonarr_enabled %}
+                            REQUIRED
+                            {% endif %}
                         </div>
                     </div>
                     {% if sonarr_quality_profiles %}
@@ -166,12 +170,16 @@
             </div>
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">TV Quality Profile</div>
-                <div class="text-input-container dropdown no-highlighting
-                {% if sonarr_quality_profiles %} clickable {% endif %}">
+                <div
+                    class="text-input-container dropdown no-highlighting
+                {% if sonarr_quality_profiles %} clickable {% endif %} {% if not current_sonarr_tv_quality_profile and server_settings.sonarr_enabled %}error{% endif %}">
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="settings-item-text line-clamp-1 ">
                             {{ current_sonarr_tv_quality_profile }}
+                            {% if not current_sonarr_tv_quality_profile and server_settings.sonarr_enabled %}
+                            REQUIRED
+                            {% endif %}
                         </div>
                     </div>
                     {% if sonarr_quality_profiles %}
@@ -183,14 +191,19 @@
                     {% endif %}
                 </div>
             </div>
+
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">Anime Folder Path</div>
-                <div class="text-input-container dropdown no-highlighting
-                {% if sonarr_folders %} clickable {% endif %}">
+                <div
+                    class="text-input-container dropdown no-highlighting
+                {% if sonarr_folders %} clickable {% endif %} {% if not current_sonarr_anime_folder and server_settings.sonarr_enabled %}error{% endif %}">
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <div class="settings-item-text line-clamp-1 ">
+                        <div class="settings-item-text line-clamp-1 error">
                             {{ current_sonarr_anime_folder }}
+                            {% if not current_sonarr_anime_folder and server_settings.sonarr_enabled %}
+                            REQUIRED
+                            {% endif %}
                         </div>
                     </div>
                     {% if sonarr_folders %}
@@ -202,14 +215,19 @@
                     {% endif %}
                 </div>
             </div>
+
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">TV Folder Path</div>
-                <div class="text-input-container dropdown no-highlighting
-                {% if sonarr_folders %} clickable {% endif %}">
+                <div
+                    class="text-input-container dropdown no-highlighting
+                {% if sonarr_folders %} clickable {% endif %} {% if not current_sonarr_tv_folder and server_settings.sonarr_enabled %}error{% endif %}">
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="settings-item-text line-clamp-1 ">
                             {{ current_sonarr_tv_folder }}
+                            {% if not current_sonarr_tv_folder and server_settings.sonarr_enabled %}
+                            REQUIRED
+                            {% endif %}
                         </div>
                     </div>
                     {% if sonarr_folders %}
@@ -221,11 +239,13 @@
                     {% endif %}
                 </div>
             </div>
+
         </div>
+
+
         <div class="settings-input-group">
             <div class="settings-item-group toggler">
-                <div class="settings-item admin pretty p-switch p-fill refresh-viewport-needed"
-                    data-setting-name="Enable Sonarr">
+                <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Enable Sonarr">
                     <input type="checkbox" {% if server_settings.sonarr_enabled %} checked {% endif %} />
                     <div class="state">
                         <label>Enable Sonarr</label>
@@ -265,12 +285,16 @@
             </div>
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">Anime Quality Profile</div>
-                <div class="text-input-container dropdown no-highlighting
-                {% if radarr_quality_profiles %} clickable {% endif %}">
+                <div
+                    class="text-input-container dropdown no-highlighting
+                {% if radarr_quality_profiles %} clickable {% endif %} {% if not current_radarr_anime_quality_profile and server_settings.radarr_enabled %}error{% endif %}">
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="settings-item-text line-clamp-1 ">
                             {{ current_radarr_anime_quality_profile }}
+                            {% if not current_radarr_anime_quality_profile and server_settings.radarr_enabled %}
+                            REQUIRED
+                            {% endif %}
                         </div>
                     </div>
                     {% if radarr_quality_profiles %}
@@ -284,12 +308,16 @@
             </div>
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">Movie Quality Profile</div>
-                <div class="text-input-container dropdown no-highlighting
-                {% if radarr_quality_profiles %} clickable {% endif %}">
+                <div
+                    class="text-input-container dropdown no-highlighting
+                {% if radarr_quality_profiles %} clickable {% endif %} {% if not current_radarr_movies_quality_profile and server_settings.radarr_enabled %}error{% endif %}">
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="settings-item-text line-clamp-1 ">
                             {{ current_radarr_movies_quality_profile }}
+                            {% if not current_radarr_movies_quality_profile and server_settings.radarr_enabled %}
+                            REQUIRED
+                            {% endif %}
                         </div>
                     </div>
                     {% if radarr_quality_profiles %}
@@ -303,12 +331,16 @@
             </div>
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">Anime Folder Path</div>
-                <div class="text-input-container dropdown no-highlighting
-                {% if radarr_folders %} clickable {% endif %}">
+                <div
+                    class="text-input-container dropdown no-highlighting
+                {% if radarr_folders %} clickable {% endif %} {% if not current_radarr_anime_folder and server_settings.radarr_enabled %}error{% endif %}">
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="settings-item-text line-clamp-1 ">
                             {{ current_radarr_anime_folder }}
+                            {% if not current_radarr_anime_folder and server_settings.radarr_enabled %}
+                            REQUIRED
+                            {% endif %}
                         </div>
                     </div>
                     {% if radarr_folders %}
@@ -320,14 +352,19 @@
                     {% endif %}
                 </div>
             </div>
+
             <div class="settings-item-group">
                 <div class="settings-item-title line-clamp-1">Movie Folder Path</div>
-                <div class="text-input-container dropdown no-highlighting
-                {% if radarr_folders %} clickable {% endif %}">
+                <div
+                    class="text-input-container dropdown no-highlighting
+                {% if radarr_folders %} clickable {% endif %} {% if not current_radarr_movies_folder and server_settings.radarr_enabled %}error{% endif %}">
                     <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="settings-item-text line-clamp-1 ">
                             {{ current_radarr_movies_folder }}
+                            {% if not current_radarr_movies_folder and server_settings.radarr_enabled %}
+                            REQUIRED
+                            {% endif %}
                         </div>
                     </div>
                     {% if radarr_folders %}
@@ -342,8 +379,7 @@
         </div>
         <div class="settings-input-group">
             <div class="settings-item-group toggler">
-                <div class="settings-item admin pretty p-switch p-fill refresh-viewport-needed"
-                    data-setting-name="Enable Radarr">
+                <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Enable Radarr">
                     <input type="checkbox" {% if server_settings.radarr_enabled %} checked {% endif %} />
                     <div class="state">
                         <label>Enable Radarr</label>

@@ -116,11 +116,7 @@ let add_event_listeners = function () {
 	$(".toggler .settings-item.admin").change(function () {
 		let setting_name = $(this).data("setting-name");
 		let current_value = $(this).children("input").is(":checked");
-		change_server_setting(
-			setting_name,
-			current_value,
-			$(this).hasClass("refresh-viewport-needed")
-		);
+		change_server_setting(setting_name, current_value);
 	});
 	$(".text-input-container.dropdown .dropdown-item").click(function () {
 		let setting_name = $(this).parent().data("setting-name");
