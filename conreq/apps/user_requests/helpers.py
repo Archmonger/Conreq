@@ -139,6 +139,7 @@ def __generate_request_card(entry, content_discovery, content_manager):
             content_type=entry["content_type"],
             obtain_extras=False,
         )
+        card["requested_by"] = entry.get("requested_by__username")
 
     # Fetch TVDB entry
     elif entry["source"] == "tvdb":
@@ -147,6 +148,7 @@ def __generate_request_card(entry, content_discovery, content_manager):
         # Conversion found
         if conversion.__contains__("tv_results") and conversion["tv_results"]:
             card = conversion["tv_results"][0]
+            card["requested_by"] = entry.get("requested_by__username")
 
             # Convert all requests to use this new ID
             old_requests = UserRequest.objects.filter(
@@ -157,6 +159,7 @@ def __generate_request_card(entry, content_discovery, content_manager):
         # Fallback to checking sonarr's database
         else:
             card = content_manager.get(tvdb_id=entry["content_id"])
+            card["requested_by"] = entry.get("requested_by__username")
 
             # Determine if the card has a known poster image
             if isinstance(card, dict):
@@ -189,7 +192,7 @@ def generate_requests_cards(user_requests):
     content_manager = ContentManager()
     all_cards = []
     function_list = []
-    for request in user_requests.values():
+    for request in user_requests:
         function_list.append(
             {
                 "function": __generate_request_card,

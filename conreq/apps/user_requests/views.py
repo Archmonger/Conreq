@@ -78,7 +78,10 @@ def request_content(request):
 @performance_metrics()
 def my_requests(request):
     user_requests = (
-        UserRequest.objects.filter(requested_by=request.user).order_by("id").reverse()
+        UserRequest.objects.filter(requested_by=request.user)
+        .order_by("id")
+        .reverse()
+        .values()
     )
     all_cards = generate_requests_cards(user_requests)
     context = generate_context({"all_cards": all_cards})
@@ -90,7 +93,17 @@ def my_requests(request):
 @login_required
 @performance_metrics()
 def all_requests(request):
-    user_requests = UserRequest.objects.all().order_by("id").reverse()
+    user_requests = (
+        UserRequest.objects.all()
+        .order_by("id")
+        .reverse()
+        .values(
+            "content_id",
+            "source",
+            "content_type",
+            "requested_by__username",
+        )
+    )
     all_cards = generate_requests_cards(user_requests)
     context = generate_context({"all_cards": all_cards})
     template = loader.get_template("viewport/requests.html")
