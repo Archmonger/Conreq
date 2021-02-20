@@ -21,6 +21,7 @@ Here's a list of all available environment variables:
 # General Settings
 TZ = "America/Los_Angeles"                # default: UTC (timezone for log files, in "TZ Database" format)
 BASE_URL = "requests"                     # default: none
+ARR_REFRESH_INTERNAL = "*/15"             # default: */1 (cron minutes for arr library refresh)
 
 # Data Storage
 DATA_DIR = "/example/directory"           # default: /config (defaults to "data" outside of docker)
