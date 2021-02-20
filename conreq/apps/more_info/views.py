@@ -9,6 +9,7 @@ from conreq.utils.app_views import (
     set_many_availability,
     set_single_availability,
 )
+from conreq.utils.generic import str_to_bool
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
@@ -103,7 +104,7 @@ def more_info(request):
 def series_modal(request):
     content_discovery = ContentDiscovery()
     content_manager = ContentManager()
-    report_modal = request.GET.get("report_modal", False)
+    report_modal = str_to_bool(request.GET.get("report_modal", "false"))
 
     # Get the ID from the URL
     tmdb_id = request.GET.get("tmdb_id", None)
