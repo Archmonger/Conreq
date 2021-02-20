@@ -32,15 +32,19 @@ def get_base_url():
     return base_url
 
 
+def str_to_bool(string, default_value=True):
+    if isinstance(string, str):
+        if string.lower() == "true":
+            return True
+        if string.lower() == "false":
+            return False
+    return default_value
+
+
 def get_bool_from_env(name, default_value):
     """Obtains a boolean from an environment variable"""
     env_var = os.environ.get(name)
-    if isinstance(env_var, str):
-        if env_var.lower() == "true":
-            return True
-        if env_var.lower() == "false":
-            return False
-    return default_value
+    return str_to_bool(env_var, default_value)
 
 
 def get_debug_from_env():
