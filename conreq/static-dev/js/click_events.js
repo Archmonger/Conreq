@@ -24,6 +24,9 @@ var request_btn_click_event = function () {
 			if (params.content_type == "movie") {
 				post_json($(this).data("request-url"), params, function () {
 					requested_toast_message();
+					if ($(window).width() < 1000) {
+						$(".request-btn").hide();
+					}
 					$(".request-btn").text("REQUESTED");
 					$("#modal-container").modal("hide");
 					ongoing_request = null;
