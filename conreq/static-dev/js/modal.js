@@ -18,17 +18,16 @@ var generate_modal = function (modal_url) {
 		$("#modal-container").modal("show");
 
 		// Add click events
-		request_click_event();
-		series_modal_click_event();
-		modal_select_all_click_event();
-		modal_expand_click_event();
+		request_btn_click_event();
+		create_content_modal_click_event();
+		modal_select_all_btn_click_event();
+		modal_expand_btn_click_event();
 		row_title_click_event();
 		row_checkbox_click_event();
 		row_suboption_title_click_event();
 		row_suboption_checkbox_click_event();
-		report_modal_click_event();
-		report_click_event();
-		report_selection_modal_click_event();
+		create_report_modal_click_event();
+		report_btn_click_event();
 	}).fail(function () {
 		// Server couldn't fetch the modal
 		conreq_no_response_toast_message();

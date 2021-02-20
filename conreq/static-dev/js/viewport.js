@@ -77,13 +77,11 @@ let update_active_tab = function () {
 // Adds viewport related event listeners
 let add_event_listeners = function () {
 	// More Info page events
-	request_click_event();
-	series_modal_click_event();
-	report_modal_click_event();
-	report_selection_modal_click_event();
-	content_preview_modal_click_event();
-	issue_approve_click_event();
-	issue_delete_click_event();
+	request_btn_click_event();
+	create_content_modal_click_event();
+	create_report_modal_click_event();
+	issue_approve_btn_click_event();
+	issue_delete_btn_click_event();
 
 	// Server Settings menu events
 	$(
@@ -231,7 +229,7 @@ let refresh_viewport = function () {
 
 			masonry_grid.on("append.infiniteScroll", function () {
 				cull_old_posters();
-				content_preview_modal_click_event();
+				create_content_modal_click_event();
 				timer_start();
 			});
 

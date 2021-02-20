@@ -1,7 +1,7 @@
 let ongoing_request = null;
 let report_selection = null;
 
-var request_click_event = function () {
+var request_btn_click_event = function () {
 	$(".request-btn").each(function () {
 		$(this).unbind("click");
 		$(this).click(function () {
@@ -76,50 +76,25 @@ var request_click_event = function () {
 	});
 };
 
-var series_modal_click_event = function () {
-	$(".series-modal-btn").each(function () {
+var create_content_modal_click_event = function () {
+	$(
+		".series-modal-btn, .content-preview-modal-btn, .report-selection-modal-btn"
+	).each(function () {
 		$(this).unbind("click");
 		$(this).click(function () {
 			let params = {
 				tmdb_id: $(this).data("tmdb-id"),
 				tvdb_id: $(this).data("tvdb-id"),
 				content_type: $(this).data("content-type"),
+				report_modal: $(this).hasClass("report-selection-modal-btn"),
 			};
+			console.log($(this).hasClass("report-selection-modal-btn"));
 			generate_modal($(this).data("modal-url") + "?" + $.param(params));
 		});
 	});
 };
 
-var content_preview_modal_click_event = function () {
-	$(".content-preview-modal-btn").each(function () {
-		$(this).unbind("click");
-		$(this).click(function () {
-			let params = {
-				tmdb_id: $(this).data("tmdb-id"),
-				tvdb_id: $(this).data("tvdb-id"),
-				content_type: $(this).data("content-type"),
-			};
-			generate_modal($(this).data("modal-url") + "?" + $.param(params));
-		});
-	});
-};
-
-var report_selection_modal_click_event = function () {
-	$(".report-selection-modal-btn").each(function () {
-		$(this).unbind("click");
-		$(this).click(function () {
-			let params = {
-				tmdb_id: $(this).data("tmdb-id"),
-				tvdb_id: $(this).data("tvdb-id"),
-				content_type: $(this).data("content-type"),
-				report_modal: true,
-			};
-			generate_modal($(this).data("modal-url") + "?" + $.param(params));
-		});
-	});
-};
-
-var report_modal_click_event = function () {
+var create_report_modal_click_event = function () {
 	$(".report-modal-btn").each(function () {
 		$(this).unbind("click");
 		$(this).click(function () {
@@ -171,7 +146,7 @@ var report_modal_click_event = function () {
 	});
 };
 
-var report_click_event = function () {
+var report_btn_click_event = function () {
 	$(".report-btn").each(function () {
 		$(this).unbind("click");
 		$(this).click(function () {
@@ -218,7 +193,7 @@ var report_click_event = function () {
 	});
 };
 
-var modal_select_all_click_event = function () {
+var modal_select_all_btn_click_event = function () {
 	$(".modal .select-all-btn").click(function () {
 		let modal_text = this.innerHTML;
 		if (modal_text == "SELECT ALL") {
@@ -319,13 +294,13 @@ var row_suboption_checkbox_click_event = function () {
 	});
 };
 
-var modal_expand_click_event = function () {
+var modal_expand_btn_click_event = function () {
 	$(".modal .fa-expand").click(function () {
 		$("#modal-container").modal("hide");
 	});
 };
 
-var issue_approve_click_event = function () {
+var issue_approve_btn_click_event = function () {
 	$(".issue-manage-icons .fas.approve").click(function () {
 		let params = {
 			action: "resolve",
@@ -340,7 +315,7 @@ var issue_approve_click_event = function () {
 	});
 };
 
-var issue_delete_click_event = function () {
+var issue_delete_btn_click_event = function () {
 	$(".issue-manage-icons .fas.delete").click(function () {
 		let params = {
 			action: "delete",
