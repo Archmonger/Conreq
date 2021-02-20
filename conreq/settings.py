@@ -366,7 +366,13 @@ USE_TZ = True
 # Static Files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "conreq", "static-dev")]
+STATICFILES_USER_PROVIDED = os.path.join(DATA_DIR, "static")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "conreq", "static-dev"),
+    STATICFILES_USER_PROVIDED,
+]
+if not os.path.exists(STATICFILES_USER_PROVIDED):
+    os.makedirs(STATICFILES_USER_PROVIDED)
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",

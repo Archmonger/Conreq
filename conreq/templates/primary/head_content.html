@@ -117,3 +117,7 @@
 {% if server_settings.conreq_dark_theme %}
 {% include "compressed/dark_css.html" %}
 {% endif %}
+
+{% if server_settings.conreq_custom_css %}
+<link rel="stylesheet" href="{{ server_settings.conreq_custom_css }}" crossorigin="anonymous">
+{% endif %}
