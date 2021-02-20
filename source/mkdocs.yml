@@ -1,40 +1,41 @@
 site_name: Conreq Documentation
 
 nav:
-  - Home: index.md
-  - Configuration:
-      - Organizr Authentication: organizr.md
-      - MySQL: mysql.md
-  - Development:
-      - Our Code Explained: code_tldr.md
-      - Building Conreq: building.md
-      - Making Extensions: extensions.md
-      - Updating the Docs: docs_contrib.md
+    - Home: index.md
+    - Configuration:
+          - Custom CSS/JS: static_files.md
+          - Organizr Authentication: organizr.md
+          - MySQL: mysql.md
+    - Development:
+          - Our Code Explained: code_tldr.md
+          - Building Conreq: building.md
+          - Making Extensions: extensions.md
+          - Updating the Docs: docs_contrib.md
 
 theme:
-  name: material
-  palette:
-    primary: teal
-    accent: teal
-  features:
-    - navigation.instant
-    - navigation.tabs
-    - navigation.sections
-    - toc.integrate
+    name: material
+    palette:
+        primary: teal
+        accent: teal
+    features:
+        - navigation.instant
+        - navigation.tabs
+        - navigation.sections
+        - toc.integrate
 
-  icon:
-    repo: fontawesome/brands/github
+    icon:
+        repo: fontawesome/brands/github
 
 markdown_extensions:
-  - toc:
-      permalink: true
-  - pymdownx.highlight
-  - pymdownx.superfences
+    - toc:
+          permalink: true
+    - pymdownx.highlight
+    - pymdownx.superfences
 
 plugins:
-  - search
-  - git-revision-date-localized:
-      fallback_to_build_date: true
+    - search
+    - git-revision-date-localized:
+          fallback_to_build_date: true
 
 repo_url: https://github.com/Archmonger/Conreq
 repo_name: Archmonger/Conreq

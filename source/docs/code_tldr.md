@@ -61,9 +61,9 @@ _Note: All injected HTML is passed through `DOMPurify`, so therefore cannot cont
 
 ## Django Websockets
 
-Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as a way of the server and client communication via _chat messages_. When the page first loads, a connection to a _chat room_ is formed, and _chat bubbles_ are communicated back and forth between the server and client browser.
+Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as communicating via _chat messages_. When the page first loads, a connection to a _private chat room (direct messages)_ is formed, and _chat bubbles_ (`json` messages) are communicated back and forth between the server and client browser.
 
-On the server side, the URL location of where _private chat rooms (direct messages)_ are created is determined within `conreq/asgi.py`. In this file, the URL is directly linked to a `consumer`. Django does support creating _chat groups_ with multiple clients in it, however, Conreq currently does not utilize this feature.
+On the server side, the URL location of where _private chat rooms_ are created is determined within `conreq/asgi.py`. In this file, the URL is directly linked to a `consumer`. Django does support creating _chat groups_ with multiple clients in it, however, Conreq currently does not utilize this feature.
 
 At the most fundamental level, a `consumer` is a Python class with a _send_ and _receive_ function. All of Conreq's consumers can be found in `conreq/core/server_websockets.py`.
 

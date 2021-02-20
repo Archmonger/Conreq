@@ -178,7 +178,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../organizr/" class="md-tabs__link">
+      <a href="../static_files/" class="md-tabs__link">
         Configuration
       </a>
     </li>
@@ -290,6 +290,18 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../static_files/" class="md-nav__link">
+        Custom CSS/JS
+      </a>
+    </li>
+  
+
           
             
   
@@ -524,8 +536,8 @@
 <p><em>Note: All injected HTML is passed through <code>DOMPurify</code>, so therefore cannot contain potentially insecure elements such as iframes or JavaScript.</em></p>
 <hr />
 <h2 id="django-websockets">Django Websockets<a class="headerlink" href="#django-websockets" title="Permanent link">&para;</a></h2>
-<p>Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as a way of the server and client communication via <em>chat messages</em>. When the page first loads, a connection to a <em>chat room</em> is formed, and <em>chat bubbles</em> are communicated back and forth between the server and client browser.</p>
-<p>On the server side, the URL location of where <em>private chat rooms (direct messages)</em> are created is determined within <code>conreq/asgi.py</code>. In this file, the URL is directly linked to a <code>consumer</code>. Django does support creating <em>chat groups</em> with multiple clients in it, however, Conreq currently does not utilize this feature.</p>
+<p>Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as communicating via <em>chat messages</em>. When the page first loads, a connection to a <em>private chat room (direct messages)</em> is formed, and <em>chat bubbles</em> (<code>json</code> messages) are communicated back and forth between the server and client browser.</p>
+<p>On the server side, the URL location of where <em>private chat rooms</em> are created is determined within <code>conreq/asgi.py</code>. In this file, the URL is directly linked to a <code>consumer</code>. Django does support creating <em>chat groups</em> with multiple clients in it, however, Conreq currently does not utilize this feature.</p>
 <p>At the most fundamental level, a <code>consumer</code> is a Python class with a <em>send</em> and <em>receive</em> function. All of Conreq's consumers can be found in <code>conreq/core/server_websockets.py</code>.</p>
 <p>In Django, the receive and response format is most commonly JSON. This is determined based on your consumer's base class (ex. <code>JsonWebsocketConsumer</code>). These classes have built-in functions for sending and receiving JSON messages (ex. <code>send_json</code> and <code>recieve_json</code>). Overriding these functions will be where most of your Websocket logic will be written.</p>
 <p>When a JSON message is sent from server to the client browser, it will be received by the JavaScript file <code>conreq/static-dev/client_websockets.js</code> using ES6 standard JavaScript Websockets. This file is also the one that initiates a new Websocket communication session when the page first loads.</p>

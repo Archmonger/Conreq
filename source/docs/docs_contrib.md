@@ -2,7 +2,7 @@ We use [MkDocs](https://www.mkdocs.org/#overview) to create our documentation. F
 
 ---
 
-## Setting up the Docs Environment
+## Setting Up the Environment
 
 1. Install `Python 3.8` or greater.
 2. Fork and pull `Conreq:docs` from GitHub.

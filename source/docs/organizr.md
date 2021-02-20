@@ -1,8 +1,16 @@
-1. Set your `X_FRAME_OPTIONS` variable to false. If using Unraid/Docker, add this as a Docker Variable. If you are self hosting Conreq on your own operating system, consider searching searching "How to set environment variables in _... Windows 10_"
+1. Set your `X_FRAME_OPTIONS` variable to false.
+
+    _If using Unraid/Docker, set this using a Docker Variable._
+
+    _If you are using your own operating system, consider searching "How to set environment variables in ... [Windows 10]"_
 
 2. Go to `Server Settings` within Conreq and enable `Organizr User Authentication`
 
-3. Set up a Nginx reverse proxy. _If you need help with this, join the [Organizr Discord](https://discord.com/invite/TrNtY7N)._ After setting one up, in your Conreq block you'll need to add the following:
+3. Set up a Nginx reverse proxy.
+
+    _If you need help with this, join the [Organizr Discord](https://discord.com/invite/TrNtY7N)._
+
+4. In your Conreq block, add the following...
 
     ```nginx
     # Sets Conreq to be accessible by all Organizr users. Google "Organizr ServerAuth" for more details.
