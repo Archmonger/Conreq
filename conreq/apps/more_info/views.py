@@ -9,7 +9,7 @@ from conreq.utils.app_views import (
     set_many_availability,
     set_single_availability,
 )
-from conreq.utils.generic import str_to_bool
+from conreq.utils.generic import is_key_value_in_list, str_to_bool
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
@@ -221,7 +221,18 @@ def recommended(request):
         else:
             set_many_availability(tmdb_recommended["results"])
 
-        context = generate_context({"recommended": tmdb_recommended})
+        # Detect situation where all results don't have TVDB IDs
+        results_contain_valid_id = False
+        if is_key_value_in_list("conreq_valid_id", True, tmdb_recommended["results"]):
+            results_contain_valid_id = True
+
+        context = generate_context(
+            {
+                "recommended": tmdb_recommended,
+                "results_contain_valid_id": results_contain_valid_id,
+            }
+        )
+
         template = loader.get_template("viewport/more_info_recommended.html")
         return HttpResponse(template.render(context, request))
 
