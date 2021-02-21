@@ -1,4 +1,4 @@
-let http_request = $.ajax({});
+var http_request = $.ajax({});
 let start_time, end_time;
 
 // Asychronous sleeping

@@ -30,7 +30,9 @@ var generate_modal = function (modal_url) {
 		report_btn_click_event();
 	}).fail(function () {
 		// Server couldn't fetch the modal
-		conreq_no_response_toast_message();
+		if (http_request.statusText != "abort") {
+			conreq_no_response_toast_message();
+		}
 		$("#modal-container").modal("hide");
 	});
 
