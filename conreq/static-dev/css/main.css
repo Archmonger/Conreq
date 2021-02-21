@@ -434,6 +434,7 @@ button:focus {
 	transition: 0.3s;
 	white-space: nowrap;
 	overflow: hidden;
+	position: relative;
 }
 
 .nav-tab.group {
@@ -464,18 +465,23 @@ button:focus {
 	color: rgba(0, 0, 0, 0.5);
 }
 
-.nav-tab.suboption {
+.nav-tab.suboption > a {
 	padding: var(--navpages-btn-padding-suboption);
 }
 
 .nav-tab.suboption .fas {
-	float: right;
 	color: rgba(255, 255, 255, 0.6);
-	transition: color 0.3s ease;
+	transition: color 0.3s ease, opacity 0.3s ease;
+	opacity: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: var(--navpages-btn-padding-suboption);
 }
 
-.nav-tab.suboption:not(.active) .fas {
-	display: none;
+.nav-tab.suboption.active .fas,
+.nav-tab.suboption:hover .fas {
+	opacity: 1;
 }
 
 .nav-tab.suboption .fas:hover {

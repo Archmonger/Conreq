@@ -1,62 +1,87 @@
-{% load static compress %}
 {% load static %}
 <div id="sidebar" class="sidebar no-highlighting collapsed" data-aos="fade-right" data-aos-duration="1000">
     <div id="navpages" class="navpages">
         <div id="all-tab-groups" class="all-tab-groups">
 
+            <!-- Discover Tab Group -->
             <a class="nav-tab line-clamp-1 group discover nav-link" data-toggle="collapse" data-target="#discover-tabs"
                 aria-expanded="true" aria-controls="discover-tabs">
                 Discover <i id="discover-fa" class="fas fa-angle-up"></i>
             </a>
             <div class="collapse show" id="discover-tabs">
-                <a href="#{% url 'discover:all' %}" class="nav-tab line-clamp-1 suboption discover">
-                    Combined
-                    <!-- <i class="fas fa-filter"></i> -->
-                </a>
-                <a href="#{% url 'discover:tv' %}" class="nav-tab line-clamp-1 suboption">
-                    TV Shows
-                    <!-- <i class="fas fa-filter"></i> -->
-                </a>
-                <a href="#{% url 'discover:movies' %}" class="nav-tab line-clamp-1 suboption">
-                    Movies
-                    <!-- <i class="fas fa-filter"></i> -->
-                </a>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'discover:all' %}" class="line-clamp-1">
+                        Combined
+                    </a>
+                    <i class="fas fa-filter filter-modal-btn clickable"
+                        data-modal-url="{% url 'discover:filter_modal' %}"></i>
+                </div>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'discover:tv' %}" class="line-clamp-1">
+                        TV Shows
+                    </a>
+                    <i class="fas fa-filter filter-modal-btn clickable"
+                        data-modal-url="{% url 'discover:filter_modal' %}" data-content-type="tv"></i>
+                </div>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'discover:movies' %}" class="line-clamp-1">
+                        Movies
+                    </a>
+                    <i class="fas fa-filter filter-modal-btn clickable"
+                        data-modal-url="{% url 'discover:filter_modal' %}" data-content-type="movie"></i>
+                </div>
             </div>
 
+            <!-- User Tab Group -->
             <a class="nav-tab line-clamp-1 group user nav-link" data-toggle="collapse" data-target="#user-tabs"
                 aria-expanded="true" aria-controls="user-tabs">
                 User Options <i id="user-fa" class="fas fa-angle-up"></i>
             </a>
             <div class="collapse show" id="user-tabs">
-                <a href="#{% url 'user_requests:my_requests' %}" class="nav-tab line-clamp-1 suboption user">
-                    My Requests
-                </a>
-                <a href="#{% url 'issue_reporting:my_issues' %}" class="nav-tab line-clamp-1 suboption user">
-                    My Issues
-                </a>
-                <a href="{% url 'sign_out' %}" class="nav-tab line-clamp-1 suboption user">
-                    Sign Out
-                </a>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'user_requests:my_requests' %}" class="line-clamp-1">
+                        My Requests
+                    </a>
+                </div>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'issue_reporting:my_issues' %}" class="line-clamp-1">
+                        My Issues
+                    </a>
+                </div>
+                <div class="nav-tab suboption discover">
+                    <a href="{% url 'sign_out' %}" class="line-clamp-1">
+                        Sign Out
+                    </a>
+                </div>
             </div>
 
+            <!-- Admin Tab Group -->
             {% if user.is_staff %}
             <a class="nav-tab line-clamp-1 group admin nav-link" data-toggle="collapse" data-target="#admin-tabs"
                 aria-expanded="true" aria-controls="admin-tabs">
                 Admin <i id="admin-fa" class="fas fa-angle-up"></i>
             </a>
             <div class="collapse show" id="admin-tabs">
-                <a href="#{% url 'user_requests:all_requests' %}" class="nav-tab line-clamp-1 suboption admin">
-                    All Requests
-                </a>
-                <a href="#{% url 'issue_reporting:all_issues' %}" class="nav-tab line-clamp-1 suboption admin">
-                    All Issues
-                </a>
-                <a href="#{% url 'manage_users:main' %}" class="nav-tab line-clamp-1 suboption admin">
-                    Manage Users
-                </a>
-                <a href="#{% url 'server_settings:main' %}" class="nav-tab line-clamp-1 suboption admin">
-                    Server Settings
-                </a>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'user_requests:all_requests' %}" class="line-clamp-1">
+                        All Requests
+                    </a>
+                </div>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'issue_reporting:all_issues' %}" class="line-clamp-1">
+                        All Issues
+                    </a>
+                </div>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'manage_users:main' %}" class="line-clamp-1">
+                        Manage Users
+                    </a>
+                </div>
+                <div class="nav-tab suboption discover">
+                    <a href="#{% url 'server_settings:main' %}" class="line-clamp-1">
+                        Server Settings
+                    </a>
+                </div>
             </div>
             {% endif %}
 

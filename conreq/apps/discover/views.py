@@ -80,3 +80,12 @@ def discover_movies(request):
     )
 
     return HttpResponse(template.render(context, request))
+
+
+@cache_page(15)
+@login_required
+@performance_metrics()
+def filter_modal(request):
+    template = loader.get_template("modal/discover_filter.html")
+    context = {}
+    return HttpResponse(template.render(context, request))

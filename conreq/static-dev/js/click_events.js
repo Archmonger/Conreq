@@ -149,6 +149,15 @@ var create_report_modal_click_event = function () {
 	});
 };
 
+var create_filter_modal_click_event = function () {
+	$(".filter-modal-btn").each(function () {
+		$(this).unbind("click");
+		$(this).click(function () {
+			generate_modal($(this).data("modal-url"));
+		});
+	});
+};
+
 var report_btn_click_event = function () {
 	$(".report-btn").each(function () {
 		$(this).unbind("click");

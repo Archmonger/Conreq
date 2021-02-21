@@ -66,7 +66,7 @@ let update_active_tab = function () {
 		}
 		// Set the active tab
 		if (
-			nav_tab.attr("href") == window.location.hash &&
+			nav_tab.children("a").attr("href") == window.location.hash &&
 			!nav_tab.hasClass("active")
 		) {
 			nav_tab.addClass("active");

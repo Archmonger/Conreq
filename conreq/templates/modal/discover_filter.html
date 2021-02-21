@@ -1,0 +1,20 @@
+{% include "primary/loading_animation.html" %}
+<div id="modal-content" class="modal-content">
+    <div class="modal-header">
+        <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
+            <i class="fas fa-window-close"></i>
+        </div>
+        <div class="title">SELECT FILTERS</div>
+    </div>
+    <div class="modal-body">
+
+    </div>
+    <div class="modal-footer">
+        <div class="standard-btn filter-btn no-highlighting"
+            data-request-url="{% url 'user_requests:request_content' %}" data-content-type="tv"
+            data-tvdb-id="{{tvdb_id}}">
+            <i class="fas fa-filter"></i>
+            FILTER
+        </div>
+    </div>
+</div>
