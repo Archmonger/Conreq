@@ -255,6 +255,13 @@ let get_viewport = function (location, success = function () {}) {
 	}).fail(function () {
 		if (http_request.statusText != "abort") {
 			conreq_no_response_toast_message();
+			$(".viewport-container>*").hide();
+			$(".viewport>*").hide();
+			$(".viewport")
+				.css("text-align", "center")
+				.css("height", "auto")
+				.text("Could not connect to the server!");
+			$(".viewport").show();
 		}
 	});
 	return http_request;
