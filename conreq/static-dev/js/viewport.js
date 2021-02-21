@@ -248,6 +248,18 @@ let refresh_viewport = function () {
 	lazyloader.update();
 };
 
+// Gets the viewport from a URL
+let get_viewport = function (location, success = function () {}) {
+	http_request = get_url(location, function (response = null) {
+		return success(response);
+	}).fail(function () {
+		if (http_request.statusText != "abort") {
+			conreq_no_response_toast_message();
+		}
+	});
+	return http_request;
+};
+
 // Fetch the new viewport and update the current tab
 var generate_viewport = function (reset_scroll_pos = true) {
 	// Check if the whole webpage needs to be reloaded
