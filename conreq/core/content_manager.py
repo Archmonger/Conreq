@@ -10,7 +10,7 @@ _logger = log.get_logger(__name__)
 # Days, Hours, Minutes, Seconds
 # Library is refreshed every minute as a background task
 # This value is just a fail-safe.
-ARR_LIBRARY_CACHE_TIMEOUT = 5 * 60
+ARR_LIBRARY_CACHE_TIMEOUT = 24 * 60 * 60
 
 
 class ContentManager:
