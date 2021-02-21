@@ -91,7 +91,6 @@ var create_content_modal_click_event = function () {
 				content_type: $(this).data("content-type"),
 				report_modal: $(this).hasClass("report-selection-modal-btn"),
 			};
-			console.log($(this).hasClass("report-selection-modal-btn"));
 			generate_modal($(this).data("modal-url") + "?" + $.param(params));
 		});
 	});
