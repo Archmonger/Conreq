@@ -29,11 +29,7 @@ SHUFFLED_PAGE_CACHE_TIMEOUT = 1 * 24 * 60 * 60
 
 
 class ContentDiscovery:
-    """Discovers top, trending, and recommended content using TMDB as the backend.
-
-    Args:
-        tmdb_api_key: String containing the TMDB API key.
-    """
+    """Discovers top, trending, and recommended content using TMDB as the backend."""
 
     def __init__(self):
         # TMDB API key is safe to hard-code. It can only access publicly available data.
@@ -41,11 +37,7 @@ class ContentDiscovery:
 
     # Public class methods
     def all(self, page_number, page_multiplier=1):
-        """Get top and popular content from TMDB.
-
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
+        """Get top and popular TV/Movies from TMDB."""
         # Shuffle the order of the first N many pages for randomized discovery
         if page_number <= MAX_SHUFFLED_PAGES:
             page = cache.handler(
@@ -65,11 +57,7 @@ class ContentDiscovery:
         )
 
     def tv(self, page_number, page_multiplier=1):
-        """Get top and popular TV from TMDB.
-
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
+        """Get top and popular TV from TMDB."""
         # Shuffle the order of the first N many pages for randomized discovery
         if page_number <= MAX_SHUFFLED_PAGES:
             page = cache.handler(
@@ -89,11 +77,7 @@ class ContentDiscovery:
         )
 
     def movies(self, page_number, page_multiplier=1):
-        """Get top and popular TV from TMDB.
-
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
+        """Get top and popular TV from TMDB."""
         # Shuffle the order of the first N many pages for randomized discovery
         if page_number <= MAX_SHUFFLED_PAGES:
             page = cache.handler(
@@ -113,52 +97,64 @@ class ContentDiscovery:
         )
 
     def popular(self, page_number, page_multiplier=1):
-        """Get popular content from TMDB.
+        """Get popular content from TMDB."""
+        # Merge popular_movies and popular_tv results together
+        function_list = [self.popular_movies, self.popular_tv]
+        results = threaded_execution(function_list, [page_number, page_multiplier])
 
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
-        return self.__popular(page_number, page_multiplier)
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__merge_results(*results))
 
     def top(self, page_number, page_multiplier=1):
-        """Get top content from TMDB.
+        """Get top content from TMDB."""
+        # Merge top_movies and top_tv results together
+        function_list = [self.top_movies, self.top_tv]
+        results = threaded_execution(function_list, [page_number, page_multiplier])
 
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
-        return self.__top(page_number, page_multiplier)
+        # Shuffle the results on each page
+        return self.__shuffle_results(self.__merge_results(*results))
 
     def popular_movies(self, page_number, page_multiplier=1):
-        """Get popular movies from TMDB.
-
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
-        return self.__popular_movies(page_number, page_multiplier)
+        """Get popular movies from TMDB."""
+        return self.__set_content_attributes(
+            "movie",
+            self.__multi_page_fetch(
+                "discover popular movies",
+                tmdb.Movies().popular,
+                page_number,
+                page_multiplier,
+            ),
+        )
 
     def top_movies(self, page_number, page_multiplier=1):
-        """Get top movies from TMDB.
-
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
-        return self.__top_movies(page_number, page_multiplier)
+        """Get top movies from TMDB."""
+        return self.__set_content_attributes(
+            "movie",
+            self.__multi_page_fetch(
+                "discover top movies",
+                tmdb.Movies().top_rated,
+                page_number,
+                page_multiplier,
+            ),
+        )
 
     def popular_tv(self, page_number, page_multiplier=1):
-        """Get popular TV from TMDB.
-
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
-        return self.__popular_tv(page_number, page_multiplier)
+        """Get popular TV from TMDB."""
+        return self.__set_content_attributes(
+            "tv",
+            self.__multi_page_fetch(
+                "discover popular tv", tmdb.TV().popular, page_number, page_multiplier
+            ),
+        )
 
     def top_tv(self, page_number, page_multiplier=1):
-        """Get top TV from TMDB.
-
-        Args:
-            page_number: An Integer that is the page number to return.
-        """
-        return self.__top_tv(page_number, page_multiplier)
+        """Get top TV from TMDB."""
+        return self.__set_content_attributes(
+            "tv",
+            self.__multi_page_fetch(
+                "discover top tv", tmdb.TV().top_rated, page_number, page_multiplier
+            ),
+        )
 
     def discover_by_filter(self, content_type, **kwargs):
         """Filter by keywords or any other TMDB filter capable arguements.
@@ -215,6 +211,7 @@ class ContentDiscovery:
 
         except:
             log.handler("Failed to discover!", log.ERROR, _logger)
+        return None
 
     def similar_and_recommended(self, tmdb_id, content_type):
         """Merges the results of similar and recommended.
@@ -344,6 +341,7 @@ class ContentDiscovery:
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def get_by_tvdb_id(self, tvdb_id):
         """Get a show or list of shows on TMDB through a TVDB ID.
@@ -367,8 +365,10 @@ class ContentDiscovery:
                 log.ERROR,
                 _logger,
             )
+        return None
 
-    def get_external_ids(self, tmdb_id, content_type):
+    @staticmethod
+    def get_external_ids(tmdb_id, content_type):
         """Gets all external IDs given a TMDB ID.
 
         Args:
@@ -407,8 +407,10 @@ class ContentDiscovery:
                 log.ERROR,
                 _logger,
             )
+        return None
 
-    def get_genres(self, content_type):
+    @staticmethod
+    def get_genres(content_type):
         """Gets all available TMDB genres and genre IDs.
 
         Args:
@@ -444,6 +446,7 @@ class ContentDiscovery:
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def is_anime(self, tmdb_id, content_type):
         """Checks if a TMDB ID can be considered Anime.
@@ -488,8 +491,10 @@ class ContentDiscovery:
                 _logger,
             )
             return False
+        return None
 
-    def determine_id_validity(self, tmdb_response):
+    @staticmethod
+    def determine_id_validity(tmdb_response):
         """Determine if a movie has a TMDB ID, and if TV has a TVDB ID.
         Required because TVDB IDs are required for Sonarr"""
         external_id_multi_fetch = {}
@@ -552,10 +557,10 @@ class ContentDiscovery:
         """Cacheable part of all()"""
         # Merge popular_movies, popular_tv, top_movies, and top_tv results together
         function_list = [
-            self.__popular_movies,
-            self.__popular_tv,
-            self.__top_movies,
-            self.__top_tv,
+            self.popular_movies,
+            self.popular_tv,
+            self.top_movies,
+            self.top_tv,
         ]
         results = threaded_execution(function_list, [page_number, page_multiplier])
 
@@ -565,7 +570,7 @@ class ContentDiscovery:
     def __tv(self, page_number, page_multiplier):
         """Cacheable part of tv()"""
         # Merge popular_tv and top_tv results together
-        function_list = [self.__popular_tv, self.__top_tv]
+        function_list = [self.popular_tv, self.top_tv]
         results = threaded_execution(function_list, [page_number, page_multiplier])
 
         # Shuffle the results on each page
@@ -574,75 +579,11 @@ class ContentDiscovery:
     def __movies(self, page_number, page_multiplier):
         """Cacheable part of movies()"""
         # Merge popular_movies and top_movies results together
-        function_list = [self.__popular_movies, self.__top_movies]
+        function_list = [self.popular_movies, self.top_movies]
         results = threaded_execution(function_list, [page_number, page_multiplier])
 
         # Shuffle the results on each page
         return self.__shuffle_results(self.__merge_results(*results))
-
-    def __popular(self, page_number, page_multiplier):
-        """Cacheable part of popular()"""
-        # Merge popular_movies and popular_tv results together
-        function_list = [self.__popular_movies, self.__popular_tv]
-        results = threaded_execution(function_list, [page_number, page_multiplier])
-
-        # Shuffle the results on each page
-        return self.__shuffle_results(self.__merge_results(*results))
-
-    def __top(self, page_number, page_multiplier):
-        """Cacheable part of top()"""
-        # Merge top_movies and top_tv results together
-        function_list = [self.__top_movies, self.__top_tv]
-        results = threaded_execution(function_list, [page_number, page_multiplier])
-
-        # Shuffle the results on each page
-        return self.__shuffle_results(self.__merge_results(*results))
-
-    def __popular_movies(self, page_number, page_multiplier):
-        """Cacheable part of popular_movies()"""
-        # Obtain disovery results through the movie.popular function. Store results in cache.
-        return self.__set_content_attributes(
-            "movie",
-            self.__multi_page_fetch(
-                "discover popular movies",
-                tmdb.Movies().popular,
-                page_number,
-                page_multiplier,
-            ),
-        )
-
-    def __top_movies(self, page_number, page_multiplier):
-        """Cacheable part of top_movies()"""
-        # Obtain disovery results through the movie.top_rated function. Store results in cache.
-        return self.__set_content_attributes(
-            "movie",
-            self.__multi_page_fetch(
-                "discover top movies",
-                tmdb.Movies().top_rated,
-                page_number,
-                page_multiplier,
-            ),
-        )
-
-    def __popular_tv(self, page_number, page_multiplier):
-        """Cacheable part of popular_tv()"""
-        # Obtain disovery results through the tv.popular function. Store results in cache.
-        return self.__set_content_attributes(
-            "tv",
-            self.__multi_page_fetch(
-                "discover popular tv", tmdb.TV().popular, page_number, page_multiplier
-            ),
-        )
-
-    def __top_tv(self, page_number, page_multiplier):
-        """Cacheable part of top_tv()"""
-        # Obtain disovery results through the tv.top_rated function. Store results in cache.
-        return self.__set_content_attributes(
-            "tv",
-            self.__multi_page_fetch(
-                "discover top tv", tmdb.TV().top_rated, page_number, page_multiplier
-            ),
-        )
 
     def __recommended(self, tmdb_id, content_type, page_number):
         """Obtains recommendations given a TMDB ID.
@@ -696,6 +637,7 @@ class ContentDiscovery:
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def __similar(self, tmdb_id, content_type, page_number):
         """Obtains similar content given a TMDB ID.
@@ -749,6 +691,7 @@ class ContentDiscovery:
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def __multi_page_fetch(self, cache_name, function, page_number, page_multiplier):
         """Obtains multiple pages of results at once via threads."""
@@ -781,7 +724,8 @@ class ContentDiscovery:
 
         return merged_results
 
-    def __keywords_to_ids(self, keywords):
+    @staticmethod
+    def __keywords_to_ids(keywords):
         """Turn a keyword string or a list of keywords into a TMDB keyword ID number"""
         try:
             keyword_ids = []
@@ -853,8 +797,10 @@ class ContentDiscovery:
                 log.ERROR,
                 _logger,
             )
+        return None
 
-    def __is_tv_anime(self, tmdb_id):
+    @staticmethod
+    def __is_tv_anime(tmdb_id):
         """Cacheable part of is_tv_anime()"""
         api_results = tmdb.TV(tmdb_id).keywords()
 
@@ -889,7 +835,8 @@ class ContentDiscovery:
         )
         return False
 
-    def __is_movie_anime(self, tmdb_id):
+    @staticmethod
+    def __is_movie_anime(tmdb_id):
         """Cacheable part of is_movie_anime()"""
         api_results = tmdb.Movies(tmdb_id).keywords()
 
@@ -925,16 +872,6 @@ class ContentDiscovery:
             _logger,
         )
         return False
-
-    def __determine_id_validity(self, card):
-        """Threaded executable for determine_id_validity()"""
-        try:
-            external_id_results = self.get_external_ids(card["id"], "tv")
-            if external_id_results["tvdb_id"] is not None:
-                card["conreq_valid_id"] = True
-                card["tvdb_id"] = external_id_results["tvdb_id"]
-        except:
-            pass
 
     @staticmethod
     def __set_content_attributes(content_type, results):
@@ -1005,7 +942,8 @@ class ContentDiscovery:
             )
             return {}
 
-    def __shuffle_results(self, query):
+    @staticmethod
+    def __shuffle_results(query):
         """Shuffle API results"""
         try:
             shuffle(query["results"])
@@ -1019,7 +957,8 @@ class ContentDiscovery:
             )
             return {}
 
-    def __remove_duplicate_results(self, query):
+    @staticmethod
+    def __remove_duplicate_results(query):
         """Removes duplicates from a dict"""
         try:
             results = query["results"].copy()
