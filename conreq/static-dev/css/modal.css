@@ -267,10 +267,7 @@
 	margin: 8px;
 	transition: background 0.3s ease;
 }
+
 .modal-body .simple-filter-btn:hover {
 	background: #009688;
-}
-
-.modal-body .simple-filter-btn:last-child {
-	margin-right: 0;
 }

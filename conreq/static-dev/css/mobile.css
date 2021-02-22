@@ -114,6 +114,9 @@
 	.sidebar.collapsed {
 		display: none;
 	}
+	.nav-tab.suboption .fas {
+		opacity: 1;
+	}
 	.viewport-container,
 	.viewport-loader {
 		z-index: 4;
@@ -248,5 +251,16 @@
 						(var(--viewport-total-padding) * 2)
 				) / 2
 		);
+	}
+}
+
+/* Modals */
+@media only screen and (max-width: 991px) {
+	.modal-body.filter {
+		flex-wrap: wrap;
+	}
+	.modal-body .simple-filter-btn {
+		padding: 15px 25px;
+		width: 100%;
 	}
 }
