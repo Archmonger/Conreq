@@ -261,11 +261,10 @@
 .modal-body .simple-filter-btn {
 	font-size: 22px;
 	font-weight: 600;
-	padding: 30px;
+	padding: 22px 30px;
 	background: #00695c;
 	border-radius: 4px;
-	margin-right: 8px;
-	margin-left: 8px;
+	margin: 8px;
 	transition: background 0.3s ease;
 }
 .modal-body .simple-filter-btn:hover {
