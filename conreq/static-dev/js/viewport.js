@@ -215,9 +215,15 @@ let refresh_viewport = function () {
 
 	// Configure infinite scrolling
 	if ($(".infinite-scroll").length) {
+		let elements_path = null;
+		if (get_window_location().includes("?")) {
+			elements_path = get_window_location() + "&page={{#}}";
+		} else {
+			elements_path = get_window_location() + "?page={{#}}";
+		}
 		setTimeout(function () {
 			masonry_grid.infiniteScroll({
-				path: get_window_location() + "?page={{#}}",
+				path: elements_path,
 				append: ".masonry-item",
 				outlayer: masonry_grid.data("masonry"),
 				prefill: true,

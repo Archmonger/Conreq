@@ -17,7 +17,7 @@ MAX_RECOMMENDED_PAGES = 7
 MAX_SHUFFLED_PAGES = 30
 # Days, Hours, Minutes, Seconds
 EXTERNAL_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
-DISCOVER_BY_FILTER_CACHE_TIMEOUT = 3 * 24 * 60 * 60
+DISCOVER_CACHE_TIMEOUT = 3 * 24 * 60 * 60
 GET_BY_TMDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 GET_BY_TVDB_ID_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 GET_GENRES_CACHE_TIMEOUT = 30 * 24 * 60 * 60
@@ -25,7 +25,6 @@ IS_ANIME_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 RECOMMENDED_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 SIMILAR_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 COLLECTION_CACHE_TIMEOUT = 14 * 24 * 60 * 60
-POPULAR_AND_TOP_CACHE_TIMEOUT = 3 * 24 * 60 * 60
 KEYWORDS_TO_IDS_CACHE_TIMEOUT = 30 * 24 * 60 * 60
 SHUFFLED_PAGE_CACHE_TIMEOUT = 1 * 24 * 60 * 60
 
@@ -218,11 +217,17 @@ class Base:
                 except:
                     pass
 
-    def _multi_page_fetch(self, cache_name, function, page_number, page_multiplier):
+    def _multi_page_fetch(
+        self, cache_name, function, page_number, page_multiplier, **kwargs
+    ):
         """Obtains multiple pages of results at once via threads."""
         total_pages = page_number * page_multiplier
         thread_list = []
         for subtractor in reversed(range(0, page_multiplier)):
+            thread_kwargs = {
+                **{"page": total_pages - subtractor, "language": LANGUAGE},
+                **kwargs,
+            }
             thread = ReturnThread(
                 target=cache.handler,
                 args=[
@@ -231,8 +236,8 @@ class Base:
                 kwargs={
                     "function": function,
                     "page_key": total_pages - subtractor,
-                    "cache_duration": POPULAR_AND_TOP_CACHE_TIMEOUT,
-                    "kwargs": {"page": total_pages - subtractor, "language": LANGUAGE},
+                    "cache_duration": DISCOVER_CACHE_TIMEOUT,
+                    "kwargs": thread_kwargs,
                 },
             )
             thread.start()

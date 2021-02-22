@@ -1,11 +1,13 @@
 """Conreq Content Discovery: Searches TMDB for content."""
+from datetime import datetime
+
 import tmdbsimple as tmdb
 from conreq.utils import cache, log
 from conreq.utils.multiprocessing import ReturnThread, threaded_execution
 
 from .tmdb_base import (
     COLLECTION_CACHE_TIMEOUT,
-    DISCOVER_BY_FILTER_CACHE_TIMEOUT,
+    DISCOVER_CACHE_TIMEOUT,
     GET_BY_TMDB_ID_CACHE_TIMEOUT,
     GET_BY_TVDB_ID_CACHE_TIMEOUT,
     LANGUAGE,
@@ -128,13 +130,17 @@ class ContentDiscovery(Base):
 
     def upcoming_movies(self, page_number, page_multiplier=1):
         """Get upcoming movies from TMDB."""
+        today = datetime.today().strftime("%Y-%m-%d")
         return self._set_content_attributes(
             "movie",
             self._multi_page_fetch(
                 "discover upcoming movies",
-                tmdb.Movies().upcoming,
+                tmdb.Discover().movie,
                 page_number,
                 page_multiplier,
+                sort_by="release_date.asc",
+                primary_release_date_gte=today,
+                release_date_gte=today,
             ),
         )
 
@@ -220,7 +226,7 @@ class ContentDiscovery(Base):
                         "discover movies by filter",
                         page_key=str(kwargs),
                         function=tmdb.Discover().movie,
-                        cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
+                        cache_duration=DISCOVER_CACHE_TIMEOUT,
                         kwargs=kwargs,
                     ),
                 )
@@ -233,7 +239,7 @@ class ContentDiscovery(Base):
                         "discover tv by filter",
                         page_key=str(kwargs),
                         function=tmdb.Discover().tv,
-                        cache_duration=DISCOVER_BY_FILTER_CACHE_TIMEOUT,
+                        cache_duration=DISCOVER_CACHE_TIMEOUT,
                         kwargs=kwargs,
                     ),
                 )
