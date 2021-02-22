@@ -15,6 +15,12 @@
 	bottom: 3px;
 	transform: translate(-50%, 0%);
 	line-height: 1.15;
+	opacity: 0;
+	transition: color 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+}
+
+.viewport .poster-container:hover .fa-angle-down {
+	opacity: 1;
 }
 
 .viewport .poster-container .fa-angle-down:hover {
@@ -64,8 +70,6 @@
 }
 
 .viewport .poster-container .poster:hover {
-	-webkit-filter: none;
-	filter: none;
 	transform: none;
 }
 
