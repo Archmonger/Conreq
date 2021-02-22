@@ -1,5 +1,5 @@
 from conreq.apps.user_requests.models import UserRequest
-from conreq.core.content_discovery import ContentDiscovery
+from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.core.content_search import Search
 from conreq.utils import log

@@ -2,7 +2,7 @@
 from threading import Thread
 
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core.content_discovery import ContentDiscovery
+from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list

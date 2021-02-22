@@ -1,5 +1,5 @@
 from conreq.apps.issue_reporting.models import ReportedIssue
-from conreq.core.content_discovery import ContentDiscovery
+from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 
