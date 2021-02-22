@@ -526,8 +526,8 @@ button:focus {
 }
 
 .viewport .poster:hover {
-	-webkit-filter: brightness(113%);
-	filter: brightness(113%);
+	-webkit-filter: contrast(1.1) saturate(1.2);
+	filter: contrast(1.1) saturate(1.2);
 	transform: scale(1.08);
 }
 
