@@ -95,6 +95,14 @@ def discover_movies(request):
         ]
     elif simple_filter == "top":
         tmdb_results = content_discovery.top_movies(page, page_multiplier=2)["results"]
+    elif simple_filter == "upcoming":
+        tmdb_results = content_discovery.upcoming_movies(page, page_multiplier=2)[
+            "results"
+        ]
+    elif simple_filter == "theaters":
+        tmdb_results = content_discovery.now_playing_movies(page, page_multiplier=2)[
+            "results"
+        ]
     else:
         tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
 

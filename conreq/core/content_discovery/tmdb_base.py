@@ -222,7 +222,7 @@ class Base:
         """Obtains multiple pages of results at once via threads."""
         total_pages = page_number * page_multiplier
         thread_list = []
-        for subtractor in range(0, page_multiplier):
+        for subtractor in reversed(range(0, page_multiplier)):
             thread = ReturnThread(
                 target=cache.handler,
                 args=[

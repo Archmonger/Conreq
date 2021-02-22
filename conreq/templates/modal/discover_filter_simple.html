@@ -31,6 +31,12 @@
         <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=popular">
             MOST POPULAR
         </a>
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=upcoming">
+            COMING SOON
+        </a>
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=theaters">
+            IN THEATERS
+        </a>
 
         <!-- Combined Filters -->
         {% else %}

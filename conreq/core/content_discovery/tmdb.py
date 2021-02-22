@@ -126,6 +126,30 @@ class ContentDiscovery(Base):
             ),
         )
 
+    def upcoming_movies(self, page_number, page_multiplier=1):
+        """Get upcoming movies from TMDB."""
+        return self._set_content_attributes(
+            "movie",
+            self._multi_page_fetch(
+                "discover upcoming movies",
+                tmdb.Movies().upcoming,
+                page_number,
+                page_multiplier,
+            ),
+        )
+
+    def now_playing_movies(self, page_number, page_multiplier=1):
+        """Get now playing movies from TMDB."""
+        return self._set_content_attributes(
+            "movie",
+            self._multi_page_fetch(
+                "discover now playing movies",
+                tmdb.Movies().now_playing,
+                page_number,
+                page_multiplier,
+            ),
+        )
+
     def popular_tv(self, page_number, page_multiplier=1):
         """Get popular TV from TMDB."""
         return self._set_content_attributes(
