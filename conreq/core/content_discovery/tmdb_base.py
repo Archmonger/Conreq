@@ -12,7 +12,7 @@ _logger = log.get_logger(__name__)
 
 # Globals
 ANIME_CHECK_FALLBACK = True
-LANGUAGE = "en"
+LANGUAGE = "en-US"
 MAX_RECOMMENDED_PAGES = 7
 MAX_SHUFFLED_PAGES = 30
 # Days, Hours, Minutes, Seconds
