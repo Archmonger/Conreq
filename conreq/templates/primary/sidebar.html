@@ -14,21 +14,23 @@
                         Combined
                     </a>
                     <i class="fas fa-filter filter-modal-btn clickable"
-                        data-modal-url="{% url 'discover:filter_modal' %}"></i>
+                        data-modal-url="{% url 'discover:simple_filter_modal' %}"></i>
                 </div>
                 <div class="nav-tab suboption discover">
                     <a href="#{% url 'discover:tv' %}" class="line-clamp-1">
                         TV Shows
                     </a>
                     <i class="fas fa-filter filter-modal-btn clickable"
-                        data-modal-url="{% url 'discover:filter_modal' %}" data-content-type="tv"></i>
+                        data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=tv"
+                        data-content-type="tv"></i>
                 </div>
                 <div class="nav-tab suboption discover">
                     <a href="#{% url 'discover:movies' %}" class="line-clamp-1">
                         Movies
                     </a>
                     <i class="fas fa-filter filter-modal-btn clickable"
-                        data-modal-url="{% url 'discover:filter_modal' %}" data-content-type="movie"></i>
+                        data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=movie"
+                        data-content-type="movie"></i>
                 </div>
             </div>
 

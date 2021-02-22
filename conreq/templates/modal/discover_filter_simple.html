@@ -1,0 +1,47 @@
+{% include "primary/loading_animation.html" %}
+<div id="modal-content" class="modal-content">
+    <div class="modal-header">
+        <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
+            <i class="fas fa-window-close"></i>
+        </div>
+        <div class="title">SELECT CATEGORY</div>
+    </div>
+    <div class="modal-body filter">
+
+        <!-- TV Filters -->
+        {% if content_type == "tv" %}
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=top">
+            TOP RATED
+        </a>
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=popular">
+            MOST POPULAR
+        </a>
+
+        <!-- Movie Filters -->
+        {% elif content_type == "movie" %}
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=top">
+            TOP RATED
+        </a>
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=popular">
+            MOST POPULAR
+        </a>
+
+        <!-- Combined Filters -->
+        {% else %}
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:all' %}?filter=top">
+            TOP RATED
+        </a>
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:all' %}?filter=popular">
+            MOST POPULAR
+        </a>
+        {% endif %}
+
+    </div>
+    <div class="modal-footer">
+        <div class="standard-btn filter-btn no-highlighting"
+            data-request-url="{% url 'user_requests:request_content' %}" data-content-type="tv"
+            data-tvdb-id="{{tvdb_id}}">
+            ADVANCED
+        </div>
+    </div>
+</div>

@@ -339,3 +339,9 @@ var issue_delete_btn_click_event = function () {
 		});
 	});
 };
+
+var simple_filter_btn_click_event = function () {
+	$(".simple-filter-btn").click(function () {
+		$("#modal-container").modal("hide");
+	});
+};
