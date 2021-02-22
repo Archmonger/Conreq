@@ -16,6 +16,12 @@
         <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=popular">
             MOST POPULAR
         </a>
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=airing">
+            CURRENTLY AIRING
+        </a>
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=today">
+            AIRED TODAY
+        </a>
 
         <!-- Movie Filters -->
         {% elif content_type == "movie" %}

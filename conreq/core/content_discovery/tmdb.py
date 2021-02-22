@@ -144,6 +144,30 @@ class ContentDiscovery(Base):
             ),
         )
 
+    def on_the_air_tv(self, page_number, page_multiplier=1):
+        """Get airing TV from TMDB."""
+        return self._set_content_attributes(
+            "tv",
+            self._multi_page_fetch(
+                "discover on the air tv",
+                tmdb.TV().on_the_air,
+                page_number,
+                page_multiplier,
+            ),
+        )
+
+    def airing_today_tv(self, page_number, page_multiplier=1):
+        """Get today's aired shows TV from TMDB."""
+        return self._set_content_attributes(
+            "tv",
+            self._multi_page_fetch(
+                "discover airing today tv",
+                tmdb.TV().airing_today,
+                page_number,
+                page_multiplier,
+            ),
+        )
+
     def discover_by_filter(self, content_type, **kwargs):
         """Filter by keywords or any other TMDB filter capable arguements.
         (see tmdbsimple discover.movie and discover.tv)

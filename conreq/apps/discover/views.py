@@ -54,6 +54,14 @@ def discover_tv(request):
         tmdb_results = content_discovery.popular_tv(page, page_multiplier=2)["results"]
     elif simple_filter == "top":
         tmdb_results = content_discovery.top_tv(page, page_multiplier=2)["results"]
+    elif simple_filter == "airing":
+        tmdb_results = content_discovery.on_the_air_tv(page, page_multiplier=2)[
+            "results"
+        ]
+    elif simple_filter == "today":
+        tmdb_results = content_discovery.airing_today_tv(page, page_multiplier=2)[
+            "results"
+        ]
     else:
         tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
 
