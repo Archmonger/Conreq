@@ -138,7 +138,7 @@ class ContentDiscovery(Base):
                 tmdb.Discover().movie,
                 page_number,
                 page_multiplier,
-                sort_by="release_date.asc",
+                sort_by="popularity.desc",
                 primary_release_date_gte=today,
                 release_date_gte=today,
             ),
