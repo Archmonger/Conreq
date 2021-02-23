@@ -262,7 +262,7 @@ MIDDLEWARE = [
 
 
 # Enabling apps/middleware based on flags
-if X_FRAME_OPTIONS.lower() != "false":
+if X_FRAME_OPTIONS.lower() != "false" and not DEBUG:
     # Block embedding conreq
     MIDDLEWARE.append("django.middleware.clickjacking.XFrameOptionsMiddleware")
 if IPAPI_SUCCESS:
