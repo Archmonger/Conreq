@@ -32,7 +32,7 @@ let cull_old_posters = function () {
 		let deletable_num_of_rows = Math.max(
 			0,
 			Math.floor(
-				(scroll_position - viewport_container_height * 3) / card_height
+				(scroll_position - viewport_container_height * 6) / card_height
 			)
 		);
 		let num_of_posters_to_delete = deletable_num_of_rows * cards_per_row;
