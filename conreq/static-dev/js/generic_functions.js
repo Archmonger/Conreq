@@ -61,8 +61,8 @@ var copy_to_clipboard = async function () {
 		copy_to_clipboard_fallback();
 	}
 
-	// Remove page element created by create_invite_link_elem()
-	document.body.removeChild(invite_link_element);
+	// Remove any page elements created by create_invite_link_elem()
+	$(".invite_link").remove();
 };
 
 // Creates a page element that copy_to_clipboard can copy from
@@ -74,6 +74,7 @@ var create_invite_link_elem = function (invite_link) {
 	el.style.position = "absolute";
 	el.style.left = "-99999px";
 	el.id = "invite_link";
+	el.className = "invite_link";
 	document.body.appendChild(el);
 };
 
