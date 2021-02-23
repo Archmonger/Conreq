@@ -23,12 +23,18 @@ var get_window_parameters = function () {
 	return "";
 };
 
+// Successful copy event
+let copy_to_clipboard_success = function () {
+	invite_copied_toast_message();
+	$(".invite_link").remove();
+};
+
 // Legacy: Copies the text of an element to the clipboard
 let copy_to_clipboard_fallback = function () {
 	let invite_link_element = document.getElementById("invite_link");
 	invite_link_element.select();
 	document.execCommand("copy")
-		? invite_copied_toast_message()
+		? copy_to_clipboard_success()
 		: conreq_no_response_toast_message();
 };
 
@@ -53,16 +59,13 @@ var copy_to_clipboard = async function () {
 	if (typeof navigator.clipboard != "undefined") {
 		window.navigator.clipboard
 			.writeText(invite_link_element.textContent)
-			.then(invite_copied_toast_message, copy_to_clipboard_fallback);
+			.then(copy_to_clipboard_success, copy_to_clipboard_fallback);
 	}
 
 	// Fallback to legacy copy to clipboard method
 	else {
 		copy_to_clipboard_fallback();
 	}
-
-	// Remove any page elements created by create_invite_link_elem()
-	$(".invite_link").remove();
 };
 
 // Creates a page element that copy_to_clipboard can copy from
