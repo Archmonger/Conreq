@@ -21,8 +21,8 @@
 
         <div class="poster-fix">
             {% if card.poster_path %}
-            <img src="{% static 'images/transparent.png' %}"
-                data-src="https://image.tmdb.org/t/p/w200{{card.poster_path}}" class="poster lazy" draggable="false" />
+            <img src="{% static 'images/transparent.png' %}" data-src="{{card.poster_path}}" class="poster lazy"
+                draggable="false" />
 
             {% elif card.remotePoster %}
             <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy"

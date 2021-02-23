@@ -46,6 +46,8 @@ def more_info(request):
 
         # Pre-process data attributes within tmdb_result
         preprocess_tmdb_result(content)
+        for card in content["credits"]["cast"]:
+            preprocess_tmdb_result(card)
 
         # Get collection information
         if (
@@ -226,6 +228,9 @@ def recommended(request):
         if is_key_value_in_list("conreq_valid_id", True, tmdb_recommended["results"]):
             results_contain_valid_id = True
 
+        for card in tmdb_recommended["results"]:
+            preprocess_tmdb_result(card)
+
         context = generate_context(
             {
                 "recommended": tmdb_recommended,
@@ -253,6 +258,8 @@ def collection(request):
 
         else:
             set_many_availability(tmdb_collection["parts"])
+            for card in tmdb_collection["parts"]:
+                preprocess_tmdb_result(card)
 
         context = generate_context({"collection": tmdb_collection})
         template = loader.get_template("viewport/more_info_collection.html")
