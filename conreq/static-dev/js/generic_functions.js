@@ -23,6 +23,15 @@ var get_window_parameters = function () {
 	return "";
 };
 
+// Legacy: Copies the text of an element to the clipboard
+let copy_to_clipboard_fallback = function () {
+	let invite_link_element = document.getElementById("invite_link");
+	invite_link_element.select();
+	document.execCommand("copy")
+		? invite_copied_toast_message()
+		: conreq_no_response_toast_message();
+};
+
 // Copies the text of an element to the clipboard
 var copy_to_clipboard = async function () {
 	let max_retries = 10;
@@ -36,7 +45,7 @@ var copy_to_clipboard = async function () {
 			conreq_no_response_toast_message();
 			return;
 		}
-		await sleep(100);
+		await sleep(250);
 	}
 	let invite_link_element = document.getElementById("invite_link");
 
@@ -44,18 +53,12 @@ var copy_to_clipboard = async function () {
 	if (typeof navigator.clipboard != "undefined") {
 		window.navigator.clipboard
 			.writeText(invite_link_element.textContent)
-			.then(
-				invite_copied_toast_message,
-				conreq_no_response_toast_message
-			);
+			.then(invite_copied_toast_message, copy_to_clipboard_fallback);
 	}
 
 	// Fallback to legacy copy to clipboard method
 	else {
-		invite_link_element.select();
-		document.execCommand("copy")
-			? invite_copied_toast_message()
-			: conreq_no_response_toast_message();
+		copy_to_clipboard_fallback();
 	}
 
 	// Remove page element created by create_invite_link_elem()
