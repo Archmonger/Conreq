@@ -109,6 +109,14 @@
                 </div>
                 {% endif %}
 
+                {% if content.next_air_date_formatted %}
+                <div class="quick-info-block">
+                    <div class="quick-info bold"> Next Airing </div>
+                    <div class="quick-info"> {{content.next_air_date_formatted}} </div>
+                </div>
+                {% endif %}
+
+
                 {% if content.release_date_formatted %}
                 <div class="quick-info-block">
                     <div class="quick-info bold"> Release Date </div>

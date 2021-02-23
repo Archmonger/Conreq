@@ -178,6 +178,18 @@ def preprocess_tmdb_result(tmdb_result):
         year, month, day = tmdb_result["first_air_date"].split(sep="-")
         month = month_name[int(month)]
         tmdb_result["first_air_date_formatted"] = f"{month} {day}, {year}"
+    # Next Air Date
+    if (
+        tmdb_result.__contains__("next_episode_to_air")
+        and isinstance(tmdb_result["next_episode_to_air"], dict)
+        and tmdb_result["next_episode_to_air"]
+        and tmdb_result["next_episode_to_air"].__contains__("air_date")
+        and isinstance(tmdb_result["next_episode_to_air"]["air_date"], str)
+        and tmdb_result["next_episode_to_air"]["air_date"]
+    ):
+        year, month, day = tmdb_result["next_episode_to_air"]["air_date"].split(sep="-")
+        month = month_name[int(month)]
+        tmdb_result["next_air_date_formatted"] = f"{month} {day}, {year}"
     # Release Date
     if (
         tmdb_result.__contains__("release_date")
