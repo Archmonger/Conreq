@@ -5,10 +5,12 @@ import tmdbsimple as tmdb
 from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
 from conreq.utils.multiprocessing import ReturnThread
+from tzlocal import get_localzone
 
 # TMDB API key is safe to hard-code. It can only access publicly available data.
 tmdb.API_KEY = "112fd4c96274603f68620c78067d5422"
 _logger = log.get_logger(__name__)
+_timezone = get_localzone().zone
 
 # Globals
 ANIME_CHECK_FALLBACK = True

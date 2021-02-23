@@ -17,6 +17,7 @@ from .tmdb_base import (
     SHUFFLED_PAGE_CACHE_TIMEOUT,
     SIMILAR_CACHE_TIMEOUT,
     Base,
+    _timezone,
 )
 
 _logger = log.get_logger(__name__)
@@ -141,6 +142,7 @@ class ContentDiscovery(Base):
                 sort_by="popularity.desc",
                 primary_release_date_gte=today,
                 release_date_gte=today,
+                timezone=_timezone,
             ),
         )
 
@@ -199,6 +201,7 @@ class ContentDiscovery(Base):
                 sort_by="popularity.desc",
                 air_date_gte=today,
                 air_date_lte=today,
+                timezone=_timezone,
             ),
         )
 

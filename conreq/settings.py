@@ -16,6 +16,7 @@ import secrets
 
 import requests
 from django.core.management.utils import get_random_secret_key
+from tzlocal import get_localzone
 
 from conreq.utils.generic import get_bool_from_env, get_debug_from_env
 
@@ -357,7 +358,7 @@ LOGIN_URL = "sign_in"
 
 # Internationalization
 LANGUAGE_CODE = "en-US"
-TIME_ZONE = "UTC"
+TIME_ZONE = get_localzone().zone
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
