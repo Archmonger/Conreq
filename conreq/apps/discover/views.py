@@ -1,4 +1,3 @@
-from conreq.apps.more_info.helpers import preprocess_tmdb_result
 from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.utils.app_views import generate_context, set_many_availability
 from conreq.utils.testing import performance_metrics
@@ -29,10 +28,6 @@ def discover_all(request):
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
-
-    # Preprocess the results
-    for card in tmdb_results:
-        preprocess_tmdb_result(card)
 
     context = generate_context(
         {
@@ -72,10 +67,6 @@ def discover_tv(request):
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
-
-    # Preprocess the results
-    for card in tmdb_results:
-        preprocess_tmdb_result(card)
 
     context = generate_context(
         {
@@ -117,10 +108,6 @@ def discover_movies(request):
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
-
-    # Preprocess the results
-    for card in tmdb_results:
-        preprocess_tmdb_result(card)
 
     context = generate_context(
         {

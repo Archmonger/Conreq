@@ -6,7 +6,7 @@ from conreq.utils.generic import is_key_value_in_list
 from markdown import Markdown
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
-TMDB_POSTER_URL = "https://image.tmdb.org/t/p/w300"
+TMDB_POSTER_300_URL = "https://image.tmdb.org/t/p/w300"
 
 # Helper to remove markdown from string
 def __unmark_element(element, stream=None):
@@ -212,14 +212,6 @@ def preprocess_tmdb_result(tmdb_result):
         tmdb_result.__contains__("poster_path")
         and isinstance(tmdb_result["poster_path"], str)
         and len(tmdb_result["poster_path"]) != 0
-        and tmdb_result["poster_path"].find(TMDB_POSTER_URL) == -1
+        and tmdb_result["poster_path"].find(TMDB_POSTER_300_URL) == -1
     ):
-        tmdb_result["poster_path"] = TMDB_POSTER_URL + tmdb_result["poster_path"]
-    # Cast Poster
-    if (
-        tmdb_result.__contains__("profile_path")
-        and isinstance(tmdb_result["profile_path"], str)
-        and len(tmdb_result["profile_path"]) != 0
-        and tmdb_result["profile_path"].find(TMDB_POSTER_URL) == -1
-    ):
-        tmdb_result["profile_path"] = TMDB_POSTER_URL + tmdb_result["profile_path"]
+        tmdb_result["poster_path"] = TMDB_POSTER_300_URL + tmdb_result["poster_path"]
