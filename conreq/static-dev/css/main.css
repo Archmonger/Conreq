@@ -647,6 +647,7 @@ button:focus {
 	top: 0;
 	right: 0px;
 	margin: 7px 6px;
+	pointer-events: auto;
 }
 
 /* Lazy loaded images */
