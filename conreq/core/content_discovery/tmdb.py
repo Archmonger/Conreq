@@ -188,13 +188,17 @@ class ContentDiscovery(Base):
 
     def airing_today_tv(self, page_number, page_multiplier=1):
         """Get today's aired shows TV from TMDB."""
+        today = datetime.today().strftime("%Y-%m-%d")
         return self._set_content_attributes(
             "tv",
             self._multi_page_fetch(
                 "discover airing today tv",
-                tmdb.TV().airing_today,
+                tmdb.Discover().tv,
                 page_number,
                 page_multiplier,
+                sort_by="popularity.desc",
+                air_date_gte=today,
+                air_date_lte=today,
             ),
         )
 
