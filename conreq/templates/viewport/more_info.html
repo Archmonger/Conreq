@@ -95,9 +95,16 @@
                 </div>
                 {% endif %}
 
+                {% if content.first_air_date_formatted %}
+                <div class="quick-info-block">
+                    <div class="quick-info bold"> First Aired </div>
+                    <div class="quick-info"> {{content.first_air_date_formatted}} </div>
+                </div>
+                {% endif %}
+
                 {% if content.last_air_date_formatted %}
                 <div class="quick-info-block">
-                    <div class="quick-info bold"> Last Episode Air Date </div>
+                    <div class="quick-info bold"> Last Aired </div>
                     <div class="quick-info"> {{content.last_air_date_formatted}} </div>
                 </div>
                 {% endif %}

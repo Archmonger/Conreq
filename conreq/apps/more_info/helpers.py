@@ -169,6 +169,15 @@ def preprocess_tmdb_result(tmdb_result):
         year, month, day = tmdb_result["last_air_date"].split(sep="-")
         month = month_name[int(month)]
         tmdb_result["last_air_date_formatted"] = f"{month} {day}, {year}"
+    # First Air Date
+    if (
+        tmdb_result.__contains__("first_air_date")
+        and isinstance(tmdb_result["first_air_date"], str)
+        and len(tmdb_result["first_air_date"]) != 0
+    ):
+        year, month, day = tmdb_result["first_air_date"].split(sep="-")
+        month = month_name[int(month)]
+        tmdb_result["first_air_date_formatted"] = f"{month} {day}, {year}"
     # Release Date
     if (
         tmdb_result.__contains__("release_date")
