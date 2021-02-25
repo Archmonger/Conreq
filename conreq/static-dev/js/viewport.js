@@ -18,12 +18,11 @@ var lazyloader = new LazyLoad({
 let cull_old_posters = function () {
 	let viewport_container = $(viewport_container_class);
 	let viewport = $(viewport_class);
-
-	// Logic to delete excess masonry items
 	if (document.querySelector(".viewport-masonry")) {
-		// Calculate the current state of the viewport
-		let is_touch_device = "ontouchstart" in document.documentElement;
+		// Logic to delete excess masonry items
 		let masonry_items = $(".viewport-masonry > .masonry-item");
+
+		// Calculate the current state of the viewport
 		let scroll_position = viewport_container.scrollTop();
 		let card_width = $(".masonry-item").outerWidth() + 10;
 		let card_height = $(".masonry-item").outerHeight() + 10;
@@ -37,43 +36,19 @@ let cull_old_posters = function () {
 			)
 		);
 		let num_of_posters_to_delete = deletable_num_of_rows * cards_per_row;
-		let before_deletion_height = viewport.height();
 
 		// If there are posters to delete, do it.
 		if (num_of_posters_to_delete > 0 && masonry_grid != null) {
-			// For touchscreen devices
-			if (is_touch_device) {
-				// Delete the contents of old cards, but keep the card itself
-				masonry_items
-					.slice(0, num_of_posters_to_delete)
-					.empty()
-					.css("padding", "10")
-					.text("Hidden to save memory.");
-			}
-
-			// For non-touchscreen devices (prevents glitchiness due to touch scrolling using sticky positioning)
-			else {
-				// Make sure we have the latest scroll position
-				scroll_position = viewport_container.scrollTop();
-
-				// Delete the old elements
-				masonry_grid
-					.masonry(
-						"remove",
-						masonry_items.slice(0, num_of_posters_to_delete)
-					)
-					.masonry("layout");
-
-				// Scroll to the previous position
-				viewport_container.scrollTop(
-					scroll_position -
-						(before_deletion_height - viewport.height())
-				);
-			}
+			// Delete the contents of old elements
+			masonry_items
+				.slice(0, num_of_posters_to_delete)
+				.empty()
+				.css("padding", "10")
+				.text("Hidden to save memory.");
 
 			// Output to console that posters have been deleted
-			console.info(
-				"Culling " +
+			console.log(
+				"Hiding the content of " +
 					num_of_posters_to_delete +
 					" posters because a new page has loaded."
 			);
