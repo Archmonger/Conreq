@@ -4,10 +4,10 @@
         <div id="all-tab-groups" class="all-tab-groups">
 
             <!-- Discover Tab Group -->
-            <a class="nav-tab line-clamp-1 group discover nav-link" data-toggle="collapse" data-target="#discover-tabs"
-                aria-expanded="true" aria-controls="discover-tabs">
+            <div class="nav-tab line-clamp-1 group discover nav-link clickable" data-toggle="collapse"
+                data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">
                 Discover <i id="discover-fa" class="fas fa-angle-up"></i>
-            </a>
+            </div>
             <div class="collapse show" id="discover-tabs">
                 <div class="nav-tab suboption discover">
                     <a href="#{% url 'discover:all' %}" class="line-clamp-1">
@@ -35,10 +35,10 @@
             </div>
 
             <!-- User Tab Group -->
-            <a class="nav-tab line-clamp-1 group user nav-link" data-toggle="collapse" data-target="#user-tabs"
-                aria-expanded="true" aria-controls="user-tabs">
+            <div class="nav-tab line-clamp-1 group user nav-link clickable" data-toggle="collapse"
+                data-target="#user-tabs" aria-expanded="true" aria-controls="user-tabs">
                 User Options <i id="user-fa" class="fas fa-angle-up"></i>
-            </a>
+            </div>
             <div class="collapse show" id="user-tabs">
                 <div class="nav-tab suboption discover">
                     <a href="#{% url 'user_requests:my_requests' %}" class="line-clamp-1">
@@ -59,10 +59,10 @@
 
             <!-- Admin Tab Group -->
             {% if user.is_staff %}
-            <a class="nav-tab line-clamp-1 group admin nav-link" data-toggle="collapse" data-target="#admin-tabs"
-                aria-expanded="true" aria-controls="admin-tabs">
+            <div class="nav-tab line-clamp-1 group admin nav-link clickable" data-toggle="collapse"
+                data-target="#admin-tabs" aria-expanded="true" aria-controls="admin-tabs">
                 Admin <i id="admin-fa" class="fas fa-angle-up"></i>
-            </a>
+            </div>
             <div class="collapse show" id="admin-tabs">
                 <div class="nav-tab suboption discover">
                     <a href="#{% url 'user_requests:all_requests' %}" class="line-clamp-1">
