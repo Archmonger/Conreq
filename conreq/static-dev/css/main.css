@@ -95,6 +95,9 @@ body {
 	box-sizing: content-box;
 	position: relative;
 	line-height: 1;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
 }
 
 a {
@@ -112,10 +115,9 @@ a:hover {
 }
 
 .viewport-container {
-	z-index: 1;
 	left: var(--viewport-left);
 	top: var(--navbar-height);
-	position: fixed;
+	position: relative;
 	height: calc(100% - var(--navbar-height));
 	overflow-x: hidden;
 	overflow-y: auto;
