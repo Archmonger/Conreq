@@ -1,0 +1,40 @@
+.viewport-container {
+	position: relative;
+	height: calc(100% - var(--navbar-height));
+	overflow-x: hidden;
+	overflow-y: auto;
+	overflow-y: overlay;
+	width: calc(100vw - var(--viewport-left));
+	padding: var(--viewport-padding);
+	padding-bottom: 0;
+	display: inline-block;
+}
+
+.viewport {
+	padding-bottom: var(--viewport-padding);
+	min-height: -webkit-fit-content;
+	min-height: -moz-fit-content;
+	min-height: fit-content;
+	margin: auto;
+	transition: opacity 1.5s ease;
+}
+
+.empty-viewport {
+	text-align: center;
+	min-width: -webkit-fit-content;
+	min-width: -moz-fit-content;
+	min-width: fit-content;
+	width: 30%;
+	max-width: 100%;
+	margin: auto;
+	margin-top: 10px;
+	padding: 40px;
+	border-radius: 6px;
+	box-shadow: var(--box-shadow);
+}
+
+.viewport-container > .loading-animation-container {
+	display: flex;
+	height: 100%;
+	width: 100%;
+}

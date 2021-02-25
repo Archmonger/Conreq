@@ -1,0 +1,115 @@
+.navbar {
+	background: var(--navbar-bg);
+	height: var(--navbar-height);
+	box-shadow: var(--box-shadow);
+	padding-left: var(--navbar-side-padding);
+	padding-right: var(--navbar-side-padding);
+}
+
+.navbar-brand {
+	height: calc(var(--navbar-height) * 0.58);
+	padding: 0px;
+	-webkit-filter: var(--logo-drop-shadow);
+	filter: var(--logo-drop-shadow);
+	-o-object-fit: contain;
+	object-fit: contain;
+	transition: opacity 0.3s ease;
+}
+
+.searchbar {
+	position: fixed;
+	top: 0px;
+	height: calc(var(--navbar-height) * 0.7);
+	margin-top: calc(var(--navbar-height) * 0.15);
+	margin-bottom: calc(var(--navbar-height) * 0.15);
+	width: var(--searchbar-width);
+	background: var(--searchbar-bg);
+	left: calc(50% - (var(--searchbar-width) / 2));
+	border-radius: 4px;
+	transition: background 0.4s ease, color 0.4s ease;
+	color: var(--searchbar-font-color);
+	overflow: hidden;
+}
+
+.searchbar:focus-within {
+	background: #fff;
+	color: #252525;
+}
+
+.searchbar input {
+	box-sizing: border-box;
+	height: 100%;
+	max-width: 100%;
+	background: none;
+	width: calc(100% - 40px);
+	color: inherit;
+	border: none;
+	font-size: var(--primary-font-size);
+	padding-left: 15px;
+	outline: none !important;
+}
+
+.searchbar .fa-search {
+	top: 0px;
+	right: 0px;
+	margin-right: 15px;
+	margin-top: calc((var(--navbar-height) * 0.4) / 2);
+	margin-bottom: calc((var(--navbar-height) * 0.3) / 2);
+	height: calc(var(--navbar-height) * 0.3);
+	width: calc(var(--navbar-height) * 0.3);
+	color: inherit;
+	margin: 0 auto;
+}
+
+.username-container {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	padding-right: var(--navbar-side-padding);
+	font-family: var(--global-font);
+	font-weight: 300;
+	font-size: var(--primary-font-size);
+	margin-top: calc((var(--navbar-height) - 20px) / 2);
+	margin-bottom: calc((var(--navbar-height) - 20px) / 2);
+	color: var(--navbar-font-color);
+	transition: color 0.3s ease;
+}
+
+.username-container > div:not(.dropdown-menu) {
+	display: flex;
+}
+
+.username-container:hover {
+	color: #fff;
+}
+
+.username-container .username {
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	line-height: 20px;
+	display: inline;
+	margin-right: 1px;
+	max-width: 200px;
+}
+
+.username-container .fa-caret-down {
+	color: inherit;
+	font-size: inherit;
+	display: inline;
+	padding-left: 5px;
+	align-self: center;
+}
+
+.navbar .username.first-letter {
+	display: none;
+}
+
+button {
+	transition: background 0.3s ease;
+}
+
+button:focus {
+	outline: none;
+	background: rgb(255 255 255 / 0.04);
+}
