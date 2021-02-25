@@ -10,7 +10,9 @@
         <input type="text" id="content-search" placeholder="Search..." autocomplete="off" autocorrect="off"
             autocapitalize="off" spellcheck="false" data-search-url="{% url 'search:main' %}" />
         <i class="fas fa-search clickable"></i>
+        <label for="content-search">Search for content</label>
     </div>
+
     <div class="username-container dropdown">
         <div class="no-highlighting clickable" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if user.is_authenticated %}

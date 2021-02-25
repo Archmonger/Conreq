@@ -5,7 +5,7 @@
         <div class="poster-fix">
             <img src="{% static 'images/transparent.png' %}"
                 data-src="{% if card.profile_path %}https://image.tmdb.org/t/p/w300{{card.profile_path}}{% endif %}"
-                class="poster lazy" draggable="false" />
+                class="poster lazy" draggable="false" alt="{% firstof card.name 'Unknown' %}" />
         </div>
     </a>
 

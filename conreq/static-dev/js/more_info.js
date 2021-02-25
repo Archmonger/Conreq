@@ -35,7 +35,7 @@ var create_review_carousel = function () {
 };
 
 var videos_carousel = null;
-let youtube_card_template = `<iframe class="youtube-player" type="text/html" src="https://www.youtube.com/embed/{{video.key}}?modestbranding=1" frameborder="0" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen = "webkitallowfullscreen"></iframe>`;
+let youtube_card_template = `<iframe title="YouTube Video" class="youtube-player" type="text/html" src="https://www.youtube.com/embed/{{video.key}}?modestbranding=1" frameborder="0" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen = "webkitallowfullscreen"></iframe>`;
 var create_video_carousel = function () {
 	// Create the youtube iframes from the given template
 	$(".youtube-player-loader").each(function () {

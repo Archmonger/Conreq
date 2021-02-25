@@ -9,7 +9,7 @@
             <div class="more-info-poster-container">
                 <img src="{% static 'images/transparent.png' %}"
                     data-src="{% firstof content.poster_path content.remotePoster %}" class="more-info-poster lazy"
-                    draggable="false">
+                    draggable="false" alt="{% firstof content.title content.name 'Unknown' %}">
 
                 {% if content.belongs_to_collection %}
                 <div class="more-info-collection-btn no-highlighting">VIEW COLLECTION </div>
@@ -357,6 +357,6 @@
 <div class="movie-backdrop-container" data-aos="fade-down" data-aos-delay="550" data-aos-duration="1500">
     <div class="backdrop-tint"></div>
     <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.backdrop_path content.backdropPath %}"
-        class="more-info-backdrop lazy">
+        class="more-info-backdrop lazy" alt="">
     <div class="backdrop-placeholder-gradient"></div>
 </div>

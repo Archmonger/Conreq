@@ -22,14 +22,16 @@
         <div class="poster-fix">
             {% if card.poster_path %}
             <img src="{% static 'images/transparent.png' %}"
-                data-src="https://image.tmdb.org/t/p/w300{{card.poster_path}}" class="poster lazy" draggable="false" />
+                data-src="https://image.tmdb.org/t/p/w300{{card.poster_path}}" class="poster lazy" draggable="false"
+                alt="{% firstof card.name card.title 'Unknown' %}" />
 
             {% elif card.remotePoster %}
             <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy"
-                draggable="false" />
+                draggable="false" alt="{% firstof card.name card.title 'Unknown' %}" />
 
             {% else %}
-            <img src="{% static 'images/transparent.png' %}" class="poster" draggable="false" />
+            <img src="{% static 'images/transparent.png' %}" class="poster" draggable="false"
+                alt="{% firstof card.name card.title 'Unknown' %}" />
             {% endif %}
         </div>
     </a>
