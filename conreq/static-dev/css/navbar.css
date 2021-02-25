@@ -4,6 +4,7 @@
 	box-shadow: var(--box-shadow);
 	padding-left: var(--navbar-side-padding);
 	padding-right: var(--navbar-side-padding);
+	z-index: 3;
 }
 
 .navbar-brand {
