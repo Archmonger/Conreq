@@ -55,8 +55,8 @@
 	transform: rotate(180deg);
 }
 
-.nav-tab.group.collapsed:last-of-type[aria-expanded="false"] {
-	border-bottom: var(--navpages-btn-border);
+.nav-tab.group.collapsed.admin {
+	border-bottom: var(--navpages-btn-border) !important;
 }
 
 .nav-tab.group:first-of-type {
