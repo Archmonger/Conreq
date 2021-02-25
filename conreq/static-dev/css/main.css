@@ -121,11 +121,14 @@ a:hover {
 	height: calc(100% - var(--navbar-height));
 	overflow-x: hidden;
 	overflow-y: auto;
+	overflow-y: overlay;
 	width: calc(100vw - var(--viewport-left));
 	padding: var(--viewport-padding);
+	padding-bottom: 0;
 }
 
 .viewport {
+	padding-bottom: var(--viewport-padding);
 	min-height: -webkit-fit-content;
 	min-height: -moz-fit-content;
 	min-height: fit-content;
@@ -465,6 +468,10 @@ button:focus {
 .nav-tab.group .fas {
 	float: right;
 	color: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: var(--navpages-btn-padding-suboption);
 }
 
 .nav-tab.suboption > a {
