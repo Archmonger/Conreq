@@ -115,8 +115,6 @@ a:hover {
 }
 
 .viewport-container {
-	left: var(--viewport-left);
-	top: var(--navbar-height);
 	position: relative;
 	height: calc(100% - var(--navbar-height));
 	overflow-x: hidden;
@@ -125,6 +123,7 @@ a:hover {
 	width: calc(100vw - var(--viewport-left));
 	padding: var(--viewport-padding);
 	padding-bottom: 0;
+	display: inline-block;
 }
 
 .viewport {
@@ -404,8 +403,7 @@ button:focus {
 	z-index: 2;
 	height: calc(100% - var(--navbar-height));
 	width: var(--sidebar-width);
-	position: fixed;
-	top: var(--sidebar-top);
+	position: relative;
 	left: 0;
 	background-color: var(--sidebar-bg);
 	overflow-x: hidden;
@@ -414,6 +412,7 @@ button:focus {
 	box-shadow: var(--box-shadow);
 	overflow-y: auto;
 	overflow-y: overlay;
+	display: inline-block;
 }
 
 .sidebar .navpages {
