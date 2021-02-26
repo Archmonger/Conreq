@@ -19,6 +19,7 @@ from .tmdb_base import (
     Base,
     _timezone,
 )
+from .tmdb_preset_filters import tv_filters
 
 _logger = log.get_logger(__name__)
 
@@ -176,44 +177,26 @@ class ContentDiscovery(Base):
             ),
         )
 
-    def on_the_air_tv(self, page_number, page_multiplier=1):
-        """Get airing TV from TMDB."""
+    def discover_tv_by_preset_filter(self, filter_name, page_number, page_multiplier=1):
         return self._set_content_attributes(
             "tv",
             self._multi_page_fetch(
-                "discover on the air tv",
-                tmdb.TV().on_the_air,
-                page_number,
-                page_multiplier,
-            ),
-        )
-
-    def airing_today_tv(self, page_number, page_multiplier=1):
-        """Get today's aired shows TV from TMDB."""
-        today = datetime.today().strftime("%Y-%m-%d")
-        return self._set_content_attributes(
-            "tv",
-            self._multi_page_fetch(
-                "discover airing today tv",
+                "discover filter " + filter_name + " tv",
                 tmdb.Discover().tv,
                 page_number,
                 page_multiplier,
-                sort_by="popularity.desc",
-                air_date_gte=today,
-                air_date_lte=today,
                 timezone=_timezone,
+                **tv_filters(filter_name),
             ),
         )
 
-    def discover_by_filter(self, content_type, **kwargs):
+    def discover_by_custom_filter(self, content_type, **kwargs):
         """Filter by keywords or any other TMDB filter capable arguements.
         (see tmdbsimple discover.movie and discover.tv)
 
         Args:
             content_type: String containing "movie" or "tv".
-            # Additional kwargs #
-            keyword: A single String or a List of strings.
-            _______: Any other values supported by tmdbsimple discover.movie or discover.tv.
+            kwargs: Any other values supported by tmdbsimple discover.movie or discover.tv.
         """
         try:
             if kwargs.__contains__("keyword"):

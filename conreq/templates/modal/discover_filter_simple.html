@@ -10,18 +10,18 @@
 
         <!-- TV Filters -->
         {% if content_type == "tv" %}
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=top">
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=top-rated">
             TOP RATED
         </a>
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=popular">
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=most-popular">
             MOST POPULAR
         </a>
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=airing">
-            CURRENTLY ONGOING
+        {% for filter_name in tv_filters %}
+        <a class="simple-filter-btn clickable no-highlighting"
+            href="#{% url 'discover:tv' %}?filter={{filter_name|slugify}}">
+            {{filter_name|upper}}
         </a>
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:tv' %}?filter=today">
-            AIRING TODAY
-        </a>
+        {% endfor %}
 
         <!-- Movie Filters -->
         {% elif content_type == "movie" %}
