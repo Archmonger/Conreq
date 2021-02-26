@@ -61,10 +61,6 @@ HUEY = {
         "workers": 5,
     },
 }
-try:
-    IPAPI_SUCCESS = requests.get("https://ipapi.co").status_code == 200
-except:
-    IPAPI_SUCCESS = False
 
 
 # Logging
@@ -245,7 +241,6 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
-    "awesome_django_timezones",  # Automatically change timezones
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -265,11 +260,6 @@ MIDDLEWARE = [
 if X_FRAME_OPTIONS.lower() != "false" and not DEBUG:
     # Block embedding conreq
     MIDDLEWARE.append("django.middleware.clickjacking.XFrameOptionsMiddleware")
-if IPAPI_SUCCESS:
-    # Automatically change timezones
-    MIDDLEWARE.append("awesome_django_timezones.middleware.TimezonesMiddleware")
-if not IPAPI_SUCCESS:
-    print('Connection to "ipapi.co" has failed. Timezone detection may be impacted.')
 if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
