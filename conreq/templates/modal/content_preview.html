@@ -12,21 +12,22 @@
         <div class="modal-header mini">
             <div class="modal-header-btn-container">
                 {% if content.content_type == "tv" and server_settings.sonarr_enabled %}
-                <i title="Report Issue" class="fas fa-exclamation-circle report-selection-modal-btn"
+                <i title="Report Issue" class="fas fa-exclamation-circle clickable report-selection-modal-btn"
                     data-tmdb-id="{{content.id}}" data-content-type="tv"
                     data-modal-url="{% url 'more_info:series_modal' %}"></i>
                 {% elif content.content_type == "movie" and server_settings.radarr_enabled %}
-                <i title="Report Issue" class="fas fa-exclamation-circle report-modal-btn" data-tmdb-id="{{content.id}}"
-                    data-content-type="movie" data-modal-url="{% url 'issue_reporting:report_issue_modal' %}"></i>
+                <i title="Report Issue" class="fas fa-exclamation-circle clickable report-modal-btn"
+                    data-tmdb-id="{{content.id}}" data-content-type="movie"
+                    data-modal-url="{% url 'issue_reporting:report_issue_modal' %}"></i>
                 {% endif %}
             </div>
             <div class="modal-header-btn-container">
                 <a href="#{% url 'more_info:main' %}?tmdb_id={{content.id}}&content_type={{content.content_type}}">
-                    <i title="Fullscreen" class="fas fa-expand"></i>
+                    <i title="Fullscreen" class="fas fa-expand clickable"></i>
                 </a>
             </div>
             <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
-                <i title="Close" class="fas fa-window-close"></i>
+                <i title="Close" class="fas fa-window-close clickable"></i>
             </div>
         </div>
 
@@ -94,13 +95,13 @@
         <div class="modal-footer">
             <!-- "Request" buttons -->
             {% if content.name and server_settings.sonarr_enabled and content.availability != available %}
-            <div class="standard-btn series-modal-btn no-highlighting" data-content-type="tv"
+            <div class="standard-btn series-modal-btn no-highlighting clickable" data-content-type="tv"
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
                 <i class="fas fa-plus"></i>
                 REQUEST
             </div>
             {% elif content.title and server_settings.radarr_enabled and content.availability != available %}
-            <div class="standard-btn request-btn no-highlighting"
+            <div class="standard-btn request-btn no-highlighting clickable"
                 data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
                 data-tmdb-id="{{content.id}}">
                 <i class="fas fa-plus"></i>

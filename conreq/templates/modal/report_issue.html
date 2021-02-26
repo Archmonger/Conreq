@@ -2,7 +2,7 @@
 <div id="modal-content" class="modal-content">
     <div class="modal-header">
         <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
-            <i title="Close" class="fas fa-window-close"></i>
+            <i title="Close" class="fas fa-window-close clickable"></i>
         </div>
         <div class="title">SELECT ISSUES</div>
     </div>
@@ -29,8 +29,9 @@
     </div>
 
     <div class="modal-footer">
-        <div class="standard-btn report-btn no-highlighting" data-report-url="{% url 'issue_reporting:report_issue' %}"
-            data-content-type="{{content_type}}" data-tvdb-id="{{tvdb_id}}" data-tmdb-id="{{tmdb_id}}">
+        <div class="standard-btn report-btn no-highlighting clickable"
+            data-report-url="{% url 'issue_reporting:report_issue' %}" data-content-type="{{content_type}}"
+            data-tvdb-id="{{tvdb_id}}" data-tmdb-id="{{tmdb_id}}">
             REPORT ISSUE
         </div>
     </div>

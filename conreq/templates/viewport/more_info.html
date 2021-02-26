@@ -12,7 +12,7 @@
                     draggable="false" alt="{% firstof content.title content.name 'Unknown' %}">
 
                 {% if content.belongs_to_collection %}
-                <div class="more-info-collection-btn no-highlighting">VIEW COLLECTION </div>
+                <div class="more-info-collection-btn no-highlighting clickable">VIEW COLLECTION </div>
                 {% endif %}
 
             </div>
@@ -222,14 +222,14 @@
                 <!-- "Request" buttons -->
                 {% elif content.availability != available %}
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
-                <div class="standard-btn request-btn box-shadow no-highlighting"
+                <div class="standard-btn request-btn box-shadow no-highlighting clickable"
                     data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
                     data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}">
                     <i class="fas fa-plus"></i>
                     REQUEST
                 </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
-                <div class="standard-btn series-modal-btn box-shadow no-highlighting" data-content-type="tv"
+                <div class="standard-btn series-modal-btn box-shadow no-highlighting clickable" data-content-type="tv"
                     data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
                     data-tvdb-id="{{content.tvdbId}}" data-modal-url="{% url 'more_info:series_modal' %}">
                     <i class="fas fa-plus"></i>
@@ -240,7 +240,7 @@
 
                 <!-- "Report" button -->
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
-                <div class="standard-btn report-modal-btn box-shadow no-highlighting"
+                <div class="standard-btn report-modal-btn box-shadow no-highlighting clickable"
                     data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
                     data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
                     data-modal-url="{% url 'issue_reporting:report_issue_modal' %}">
@@ -248,7 +248,7 @@
                     ISSUE
                 </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
-                <div class="standard-btn report-selection-modal-btn box-shadow no-highlighting"
+                <div class="standard-btn report-selection-modal-btn box-shadow no-highlighting clickable"
                     data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
                     data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
                     data-modal-url="{% url 'more_info:series_modal' %}">

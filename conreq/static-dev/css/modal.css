@@ -38,7 +38,6 @@
 	color: var(--modal-top-btn-color);
 	font-size: 20px;
 	transition: color 0.3s ease;
-	cursor: pointer;
 }
 
 .modal-header-btn-container {
@@ -85,7 +84,6 @@
 .row-container .fa-angle-down {
 	grid-column: 3;
 	color: rgba(255, 255, 255, 0.7);
-	cursor: pointer;
 	height: auto;
 	width: 100%;
 	text-align: center;

@@ -2,7 +2,7 @@
 <div id="modal-content" class="modal-content">
     <div class="modal-header">
         <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
-            <i title="Close" class="fas fa-window-close"></i>
+            <i title="Close" class="fas fa-window-close clickable"></i>
         </div>
         <div class="title">SELECT FILTERS</div>
     </div>
@@ -10,7 +10,7 @@
 
     </div>
     <div class="modal-footer">
-        <div class="standard-btn filter-btn no-highlighting"
+        <div class="standard-btn filter-btn no-highlighting clickable"
             data-request-url="{% url 'user_requests:request_content' %}" data-content-type="tv"
             data-tvdb-id="{{tvdb_id}}">
             <i class="fas fa-filter"></i>

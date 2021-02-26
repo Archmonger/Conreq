@@ -114,7 +114,6 @@
 .standard-btn.series-modal-btn.available:hover,
 .standard-btn:hover:not(.available) {
 	background: #2ba180;
-	cursor: pointer;
 }
 
 .standard-btn.report-selection-modal-btn,
@@ -306,6 +305,10 @@
 	opacity: 0.4;
 }
 
+.tns-controls [aria-controls]:not([aria-disabled="true"]) {
+	cursor: pointer;
+}
+
 .tns-inner {
 	/* Fix for when there's too few items in the carousel */
 	margin: 0px 10px 0px 20px !important;
@@ -469,7 +472,6 @@
 	font-weight: 700;
 	box-shadow: var(--box-shadow);
 	transition: background 0.3s ease;
-	cursor: pointer;
 }
 
 .more-info-collection-btn:hover {
