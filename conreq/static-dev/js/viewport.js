@@ -60,16 +60,18 @@ let cull_old_posters = function () {
 let update_active_tab = function () {
 	$(".nav-tab").each(function () {
 		nav_tab = $(this);
-		// Remove any old active tabs
-		if (nav_tab.hasClass("active")) {
-			nav_tab.removeClass("active");
-		}
 		// Set the active tab
 		if (
-			nav_tab.children("a").attr("href") == window.location.hash &&
-			!nav_tab.hasClass("active")
+			nav_tab.children("a").attr("href") ==
+			"#" + get_window_location_no_params()
 		) {
-			nav_tab.addClass("active");
+			if (!nav_tab.hasClass("active")) {
+				nav_tab.addClass("active");
+			}
+		}
+		// Remove any old active tabs
+		else if (nav_tab.hasClass("active")) {
+			nav_tab.removeClass("active");
 		}
 	});
 };

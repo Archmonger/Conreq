@@ -12,8 +12,18 @@ var get_window_location = function () {
 	return window.location.hash.split(/#(.+)/)[1];
 };
 
+// Gets the current window location from the hash without parameters
+var get_window_location_no_params = function () {
+	let window_location = get_window_location();
+	// Read the URL hash to determine what page we are on
+	if (window_location.includes("?")) {
+		return window_location.split(/\?(.+)/)[0];
+	}
+	return window_location;
+};
+
 // Gets the current window location from the hash
-var get_window_parameters = function () {
+var get_window_params = function () {
 	// Read the URL hash to determine what page we are on
 	let window_hash = window.location.hash;
 
