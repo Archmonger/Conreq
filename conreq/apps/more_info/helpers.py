@@ -1,4 +1,5 @@
 """Helpers for More Info"""
+import re
 from calendar import month_name
 from io import StringIO
 
@@ -7,6 +8,12 @@ from markdown import Markdown
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
 TMDB_POSTER_URL = "https://image.tmdb.org/t/p/w500"
+
+
+# Helper to remove html from string
+def __strip_html(html):
+    return re.sub("<[^<]+?>", "", html)
+
 
 # Helper to remove markdown from string
 def __unmark_element(element, stream=None):
@@ -117,7 +124,7 @@ def preprocess_tmdb_result(tmdb_result):
             tmdb_result["reviews"]["results"] = None
         else:
             for review in tmdb_result["reviews"]["results"]:
-                review["content"] = __md.convert(review["content"])
+                review["content"] = __strip_html(__md.convert(review["content"]))
                 if len(review["content"]) > 400:
                     review["content"] = review["content"][:400] + "..."
     # Keywords (Tags)
