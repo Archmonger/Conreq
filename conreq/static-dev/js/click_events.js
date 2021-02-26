@@ -23,11 +23,14 @@ var request_btn_click_event = function () {
 			// Request a movie
 			if (params.content_type == "movie") {
 				post_json($(this).data("request-url"), params, function () {
+					let request_btn = $(".request-btn");
 					requested_toast_message();
 					if ($(window).width() < 1000) {
 						$(".request-btn").hide();
 					}
-					$(".request-btn").text("REQUESTED");
+					request_btn.text("REQUESTED");
+					request_btn.unbind("click");
+					request_btn.removeClass("clickable");
 					$("#modal-container").modal("hide");
 					ongoing_request = null;
 				}).fail(function () {
