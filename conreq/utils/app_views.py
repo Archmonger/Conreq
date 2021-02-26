@@ -10,38 +10,6 @@ from conreq.utils.generic import is_key_value_in_list
 _logger = log.get_logger(__name__)
 
 
-STATIC_CONTEXT_VARS = {
-    "username": "username",
-    "password": "password",
-    "sign_in": "Sign In",
-    "available": "Available",
-    "partial": "Partial",
-    "downloading": "Downloading",
-    "discover": "Discover",
-    "combined": "Combined",
-    "tv_shows": "TV Shows",
-    "movies": "Movies",
-    "user_options": "User Options",
-    "my_requests": "My Requests",
-    "my_issues": "My Issues",
-    "sign_out": "Sign Out",
-    "admin": "Admin",
-    "manage_users": "Manage Users",
-    "email_users": "Email Users",
-    "all_requests": "All Requests",
-    "all_issues": "All Issues",
-    "settings": "Settings",
-    "server_settings": "Server Settings",
-    "youtube": "YouTube",
-}
-
-
-def generate_context(dict1):
-    """Creates a context dictionary with common context variables."""
-    res = {**dict1, **STATIC_CONTEXT_VARS}
-    return res
-
-
 def __set_many_availability(card, radarr_library, sonarr_library):
     """Threaded portion of set_many_availability."""
     # Sonarr card

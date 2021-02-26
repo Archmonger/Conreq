@@ -4,7 +4,6 @@ from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.app_views import generate_context
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
@@ -84,7 +83,7 @@ def my_requests(request):
         .values()
     )
     all_cards = generate_requests_cards(user_requests)
-    context = generate_context({"all_cards": all_cards})
+    context = {"all_cards": all_cards}
     template = loader.get_template("viewport/requests.html")
     return HttpResponse(template.render(context, request))
 
@@ -105,6 +104,6 @@ def all_requests(request):
         )
     )
     all_cards = generate_requests_cards(user_requests)
-    context = generate_context({"all_cards": all_cards})
+    context = {"all_cards": all_cards}
     template = loader.get_template("viewport/requests.html")
     return HttpResponse(template.render(context, request))

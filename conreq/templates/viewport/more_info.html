@@ -319,7 +319,7 @@
                 </div>
                 <div class="videos-outer-container carousel-outer-container">
                     <div class="videos-inner-container carousel-inner-container">
-                        {% for video in content.videos.results %} {% if video.site == youtube %}
+                        {% for video in content.videos.results %} {% if video.site == "YouTube" %}
                         <div class="videoContainer-wrapper">
                             <div class="youtube-player-loader" data-video-key="{{video.key}}"></div>
                         </div>

@@ -1,6 +1,6 @@
 from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.core.content_discovery.tmdb_preset_filters import movie_filters, tv_filters
-from conreq.utils.app_views import generate_context, set_many_availability
+from conreq.utils.app_views import set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -30,11 +30,9 @@ def discover_all(request):
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = generate_context(
-        {
-            "all_cards": tmdb_results,
-        }
-    )
+    context = {
+        "all_cards": tmdb_results,
+    }
 
     return HttpResponse(template.render(context, request))
 
@@ -62,7 +60,7 @@ def discover_tv(request):
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = generate_context({"all_cards": tmdb_results})
+    context = {"all_cards": tmdb_results}
     template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 
@@ -94,7 +92,7 @@ def discover_movies(request):
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = generate_context({"all_cards": tmdb_results})
+    context = {"all_cards": tmdb_results}
     template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 

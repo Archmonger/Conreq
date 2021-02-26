@@ -2,7 +2,7 @@ import json
 
 from conreq.apps.issue_reporting.models import ReportedIssue
 from conreq.utils import log
-from conreq.utils.app_views import add_unique_to_db, generate_context
+from conreq.utils.app_views import add_unique_to_db
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
@@ -100,14 +100,12 @@ def manage_issue(request):
 @performance_metrics()
 def report_issue_modal(request):
     # Get the parameters from the URL
-    context = generate_context(
-        {
-            "issues": ISSUE_LIST,
-            "tmdb_id": request.GET.get("tmdb_id", None),
-            "tvdb_id": request.GET.get("tvdb_id", None),
-            "content_type": request.GET.get("content_type", None),
-        }
-    )
+    context = {
+        "issues": ISSUE_LIST,
+        "tmdb_id": request.GET.get("tmdb_id", None),
+        "tvdb_id": request.GET.get("tvdb_id", None),
+        "content_type": request.GET.get("content_type", None),
+    }
     template = loader.get_template("modal/report_issue.html")
     return HttpResponse(template.render(context, request))
 
@@ -118,7 +116,7 @@ def report_issue_modal(request):
 def all_issues(request):
     reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
     all_cards = generate_issue_cards(reported_issues)
-    context = generate_context({"all_cards": all_cards})
+    context = {"all_cards": all_cards}
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))
 
@@ -131,6 +129,6 @@ def my_issues(request):
         ReportedIssue.objects.filter(reported_by=request.user).order_by("id").reverse()
     )
     all_cards = generate_issue_cards(reported_issues)
-    context = generate_context({"all_cards": all_cards})
+    context = {"all_cards": all_cards}
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))

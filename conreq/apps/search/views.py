@@ -2,7 +2,7 @@ from threading import Thread
 
 from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.core.content_search import Search
-from conreq.utils.app_views import generate_context, set_many_availability
+from conreq.utils.app_views import set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -47,9 +47,7 @@ def search(request):
     content_discovery.determine_id_validity({"results": arr_results})
     set_many_availability(arr_results)
 
-    context = generate_context(
-        {
-            "all_cards": arr_results,
-        }
-    )
+    context = {
+        "all_cards": arr_results,
+    }
     return HttpResponse(template.render(context, request))

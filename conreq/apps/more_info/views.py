@@ -4,7 +4,6 @@ from conreq.core.content_manager import ContentManager
 from conreq.core.content_search import Search
 from conreq.utils import log
 from conreq.utils.app_views import (
-    generate_context,
     obtain_sonarr_parameters,
     set_many_availability,
     set_single_availability,
@@ -66,14 +65,12 @@ def more_info(request):
             requested = True
 
         # Generate context for page rendering
-        context = generate_context(
-            {
-                "content": content,
-                "collection_id": tmdb_collection_id,
-                "content_type": content["content_type"],
-                "requested": requested,
-            }
-        )
+        context = {
+            "content": content,
+            "collection_id": tmdb_collection_id,
+            "content_type": content["content_type"],
+            "requested": requested,
+        }
 
     elif tvdb_id:
         searcher = Search()
@@ -87,12 +84,10 @@ def more_info(request):
         set_single_availability(content)
 
         # Generate context for page rendering
-        context = generate_context(
-            {
-                "content": content,
-                "content_type": content["content_type"],
-            }
-        )
+        context = {
+            "content": content,
+            "content_type": content["content_type"],
+        }
 
     # Render the page
     return HttpResponse(template.render(context, request))
@@ -156,13 +151,11 @@ def series_modal(request):
 
     # Series successfully obtained from Sonarr
     if series:
-        context = generate_context(
-            {
-                "seasons": series["seasons"],
-                "tvdb_id": tvdb_id,
-                "report_modal": report_modal,
-            }
-        )
+        context = {
+            "seasons": series["seasons"],
+            "tvdb_id": tvdb_id,
+            "report_modal": report_modal,
+        }
         template = loader.get_template("modal/series_selection.html")
         return HttpResponse(template.render(context, request))
 
@@ -197,7 +190,7 @@ def content_preview_modal(request):
         ):
             requested = True
 
-        context = generate_context({"content": content, "requested": requested})
+        context = {"content": content, "requested": requested}
         template = loader.get_template("modal/content_preview.html")
         return HttpResponse(template.render(context, request))
 
@@ -226,12 +219,10 @@ def recommended(request):
         if is_key_value_in_list("conreq_valid_id", True, tmdb_recommended["results"]):
             results_contain_valid_id = True
 
-        context = generate_context(
-            {
-                "recommended": tmdb_recommended,
-                "results_contain_valid_id": results_contain_valid_id,
-            }
-        )
+        context = {
+            "recommended": tmdb_recommended,
+            "results_contain_valid_id": results_contain_valid_id,
+        }
 
         template = loader.get_template("viewport/more_info_recommended.html")
         return HttpResponse(template.render(context, request))
@@ -254,6 +245,6 @@ def collection(request):
         else:
             set_many_availability(tmdb_collection["parts"])
 
-        context = generate_context({"collection": tmdb_collection})
+        context = {"collection": tmdb_collection}
         template = loader.get_template("viewport/more_info_collection.html")
         return HttpResponse(template.render(context, request))
