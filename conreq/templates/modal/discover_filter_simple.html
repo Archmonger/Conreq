@@ -25,18 +25,18 @@
 
         <!-- Movie Filters -->
         {% elif content_type == "movie" %}
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=top">
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=top-rated">
             TOP RATED
         </a>
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=popular">
+        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=most-popular">
             MOST POPULAR
         </a>
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=upcoming">
-            COMING SOON
+        {% for filter_name in movie_filters %}
+        <a class="simple-filter-btn clickable no-highlighting"
+            href="#{% url 'discover:movies' %}?filter={{filter_name|slugify}}">
+            {{filter_name|upper}}
         </a>
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:movies' %}?filter=theaters">
-            IN THEATERS
-        </a>
+        {% endfor %}
 
         <!-- Combined Filters -->
         {% else %}

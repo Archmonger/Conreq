@@ -1,6 +1,4 @@
 """Conreq Content Discovery: Searches TMDB for content."""
-from datetime import datetime
-
 import tmdbsimple as tmdb
 from conreq.utils import cache, log
 from conreq.utils.multiprocessing import ReturnThread, threaded_execution
@@ -19,7 +17,7 @@ from .tmdb_base import (
     Base,
     _timezone,
 )
-from .tmdb_preset_filters import tv_filters
+from .tmdb_preset_filters import movie_filters, tv_filters
 
 _logger = log.get_logger(__name__)
 
@@ -130,35 +128,6 @@ class ContentDiscovery(Base):
             ),
         )
 
-    def upcoming_movies(self, page_number, page_multiplier=1):
-        """Get upcoming movies from TMDB."""
-        today = datetime.today().strftime("%Y-%m-%d")
-        return self._set_content_attributes(
-            "movie",
-            self._multi_page_fetch(
-                "discover upcoming movies",
-                tmdb.Discover().movie,
-                page_number,
-                page_multiplier,
-                sort_by="popularity.desc",
-                primary_release_date_gte=today,
-                release_date_gte=today,
-                timezone=_timezone,
-            ),
-        )
-
-    def now_playing_movies(self, page_number, page_multiplier=1):
-        """Get now playing movies from TMDB."""
-        return self._set_content_attributes(
-            "movie",
-            self._multi_page_fetch(
-                "discover now playing movies",
-                tmdb.Movies().now_playing,
-                page_number,
-                page_multiplier,
-            ),
-        )
-
     def popular_tv(self, page_number, page_multiplier=1):
         """Get popular TV from TMDB."""
         return self._set_content_attributes(
@@ -174,6 +143,21 @@ class ContentDiscovery(Base):
             "tv",
             self._multi_page_fetch(
                 "discover top tv", tmdb.TV().top_rated, page_number, page_multiplier
+            ),
+        )
+
+    def discover_movie_by_preset_filter(
+        self, filter_name, page_number, page_multiplier=1
+    ):
+        return self._set_content_attributes(
+            "movie",
+            self._multi_page_fetch(
+                "discover filter " + filter_name + " movie",
+                tmdb.Discover().movie,
+                page_number,
+                page_multiplier,
+                timezone=_timezone,
+                **movie_filters(filter_name),
             ),
         )
 

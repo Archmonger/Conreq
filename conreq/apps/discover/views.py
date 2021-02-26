@@ -1,5 +1,5 @@
 from conreq.core.content_discovery.tmdb import ContentDiscovery
-from conreq.core.content_discovery.tmdb_preset_filters import tv_filters
+from conreq.core.content_discovery.tmdb_preset_filters import movie_filters, tv_filters
 from conreq.utils.app_views import generate_context, set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
@@ -72,39 +72,30 @@ def discover_tv(request):
 @performance_metrics()
 def discover_movies(request):
     content_discovery = ContentDiscovery()
-    template = loader.get_template("viewport/discover.html")
-    simple_filter = request.GET.get("filter")
+    preset_filter = request.GET.get("filter", "").replace("-", " ")
 
     # Get the page number from the URL
     page = int(request.GET.get("page", 1))
 
     # Get content
-    if simple_filter == "popular":
+    if preset_filter == "most popular":
         tmdb_results = content_discovery.popular_movies(page, page_multiplier=2)[
             "results"
         ]
-    elif simple_filter == "top":
+    elif preset_filter == "top rated":
         tmdb_results = content_discovery.top_movies(page, page_multiplier=2)["results"]
-    elif simple_filter == "upcoming":
-        tmdb_results = content_discovery.upcoming_movies(page, page_multiplier=2)[
-            "results"
-        ]
-    elif simple_filter == "theaters":
-        tmdb_results = content_discovery.now_playing_movies(page, page_multiplier=2)[
-            "results"
-        ]
+    elif preset_filter:
+        tmdb_results = content_discovery.discover_movie_by_preset_filter(
+            preset_filter, page, page_multiplier=2
+        )["results"]
     else:
         tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = generate_context(
-        {
-            "all_cards": tmdb_results,
-        }
-    )
-
+    context = generate_context({"all_cards": tmdb_results})
+    template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 
 
@@ -114,5 +105,9 @@ def discover_movies(request):
 def simple_filter_modal(request):
     template = loader.get_template("modal/discover_filter_simple.html")
     content_type = request.GET.get("content_type")
-    context = {"content_type": content_type, "tv_filters": tv_filters().keys()}
+    context = {
+        "content_type": content_type,
+        "tv_filters": tv_filters().keys(),
+        "movie_filters": movie_filters().keys(),
+    }
     return HttpResponse(template.render(context, request))
