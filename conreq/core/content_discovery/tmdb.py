@@ -106,44 +106,26 @@ class ContentDiscovery(Base):
 
     def popular_movies(self, page_number, page_multiplier=1):
         """Get popular movies from TMDB."""
-        return self._set_content_attributes(
-            "movie",
-            self._multi_page_fetch(
-                "discover popular movies",
-                tmdb.Movies().popular,
-                page_number,
-                page_multiplier,
-            ),
+        return self.discover_movie_by_preset_filter(
+            "most popular", page_number, page_multiplier
         )
 
     def top_movies(self, page_number, page_multiplier=1):
         """Get top movies from TMDB."""
-        return self._set_content_attributes(
-            "movie",
-            self._multi_page_fetch(
-                "discover top movies",
-                tmdb.Movies().top_rated,
-                page_number,
-                page_multiplier,
-            ),
+        return self.discover_movie_by_preset_filter(
+            "top rated", page_number, page_multiplier
         )
 
     def popular_tv(self, page_number, page_multiplier=1):
         """Get popular TV from TMDB."""
-        return self._set_content_attributes(
-            "tv",
-            self._multi_page_fetch(
-                "discover popular tv", tmdb.TV().popular, page_number, page_multiplier
-            ),
+        return self.discover_tv_by_preset_filter(
+            "most popular", page_number, page_multiplier
         )
 
     def top_tv(self, page_number, page_multiplier=1):
         """Get top TV from TMDB."""
-        return self._set_content_attributes(
-            "tv",
-            self._multi_page_fetch(
-                "discover top tv", tmdb.TV().top_rated, page_number, page_multiplier
-            ),
+        return self.discover_tv_by_preset_filter(
+            "top rated", page_number, page_multiplier
         )
 
     def discover_movie_by_preset_filter(

@@ -1,7 +1,25 @@
 from datetime import datetime, timedelta
 
 
+def combined_filters(filter_name=None):
+    """These filters are automatically merged into TV and Movies."""
+    preset_filters = {
+        "top rated": {
+            "sort_by": "vote_average.desc",
+            "vote_count_gte": 300,
+        },
+        "most popular": {
+            "sort_by": "popularity.desc",
+        },
+    }
+
+    if filter_name:
+        return preset_filters[filter_name]
+    return preset_filters
+
+
 def tv_filters(filter_name=None):
+    """Predefined categories shown for the TV filter modal."""
     today = datetime.today()
     preset_filters = {
         "currently ongoing": {
@@ -14,6 +32,7 @@ def tv_filters(filter_name=None):
             "air_date_gte": today.strftime(r"%Y-%m-%d"),
             "air_date_lte": today.strftime(r"%Y-%m-%d"),
         },
+        **combined_filters(),
     }
 
     if filter_name:
@@ -22,6 +41,7 @@ def tv_filters(filter_name=None):
 
 
 def movie_filters(filter_name=None):
+    """Predefined categories shown in the movie filter modal."""
     today = datetime.today()
     preset_filters = {
         "coming soon": {
@@ -41,6 +61,7 @@ def movie_filters(filter_name=None):
             ),
             "release_date_gte": (today - timedelta(days=150)).strftime(r"%Y-%m-%d"),
         },
+        **combined_filters(),
     }
 
     if filter_name:

@@ -46,11 +46,7 @@ def discover_tv(request):
     page = int(request.GET.get("page", 1))
 
     # Get content
-    if preset_filter == "most popular":
-        tmdb_results = content_discovery.popular_tv(page, page_multiplier=2)["results"]
-    elif preset_filter == "top rated":
-        tmdb_results = content_discovery.top_tv(page, page_multiplier=2)["results"]
-    elif preset_filter:
+    if preset_filter:
         tmdb_results = content_discovery.discover_tv_by_preset_filter(
             preset_filter, page, page_multiplier=2
         )["results"]
@@ -76,13 +72,7 @@ def discover_movies(request):
     page = int(request.GET.get("page", 1))
 
     # Get content
-    if preset_filter == "most popular":
-        tmdb_results = content_discovery.popular_movies(page, page_multiplier=2)[
-            "results"
-        ]
-    elif preset_filter == "top rated":
-        tmdb_results = content_discovery.top_movies(page, page_multiplier=2)["results"]
-    elif preset_filter:
+    if preset_filter:
         tmdb_results = content_discovery.discover_movie_by_preset_filter(
             preset_filter, page, page_multiplier=2
         )["results"]
