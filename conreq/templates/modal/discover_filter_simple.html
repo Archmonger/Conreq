@@ -7,36 +7,37 @@
         <div class="title">SELECT FILTER</div>
     </div>
     <div class="modal-body filter">
+        <div class="simple-filter-container">
+            <!-- TV Filters -->
+            {% if content_type == "tv" %}
+            {% for filter_name in tv_filters %}
+            <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
+                href="#{% url 'discover:tv' %}?filter={{filter_name|slugify}}">
+                {{filter_name|upper}}
+            </a>
+            {% endfor %}
 
-        <!-- TV Filters -->
-        {% if content_type == "tv" %}
-        {% for filter_name in tv_filters %}
-        <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
-            href="#{% url 'discover:tv' %}?filter={{filter_name|slugify}}">
-            {{filter_name|upper}}
-        </a>
-        {% endfor %}
+            <!-- Movie Filters -->
+            {% elif content_type == "movie" %}
+            {% for filter_name in movie_filters %}
+            <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
+                href="#{% url 'discover:movies' %}?filter={{filter_name|slugify}}">
+                {{filter_name|upper}}
+            </a>
+            {% endfor %}
 
-        <!-- Movie Filters -->
-        {% elif content_type == "movie" %}
-        {% for filter_name in movie_filters %}
-        <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
-            href="#{% url 'discover:movies' %}?filter={{filter_name|slugify}}">
-            {{filter_name|upper}}
-        </a>
-        {% endfor %}
-
-        <!-- Combined Filters -->
-        {% else %}
-        <a class="simple-filter-btn clickable no-highlighting line-clamp-1" href="#{% url 'discover:all' %}?filter=top">
-            TOP RATED
-        </a>
-        <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
-            href="#{% url 'discover:all' %}?filter=popular">
-            MOST POPULAR
-        </a>
-        {% endif %}
-
+            <!-- Combined Filters -->
+            {% else %}
+            <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
+                href="#{% url 'discover:all' %}?filter=top">
+                TOP RATED
+            </a>
+            <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
+                href="#{% url 'discover:all' %}?filter=popular">
+                MOST POPULAR
+            </a>
+            {% endif %}
+        </div>
     </div>
     <div class="modal-footer">
         <div class="standard-btn filter-btn no-highlighting clickable"
