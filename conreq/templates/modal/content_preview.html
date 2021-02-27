@@ -94,13 +94,13 @@
 
         <div class="modal-footer">
             <!-- "Request" buttons -->
-            {% if content.name and server_settings.sonarr_enabled and content.availability != available %}
+            {% if content.name and server_settings.sonarr_enabled and content.availability != "Available" %}
             <div class="standard-btn series-modal-btn no-highlighting clickable" data-content-type="tv"
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
                 <i class="fas fa-plus"></i>
                 REQUEST
             </div>
-            {% elif content.title and server_settings.radarr_enabled and content.availability != available %}
+            {% elif content.title and server_settings.radarr_enabled and content.availability != "Available" %}
             <div class="standard-btn request-btn no-highlighting clickable"
                 data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
                 data-tmdb-id="{{content.id}}">
@@ -110,11 +110,11 @@
             {% endif %}
 
             <!-- "Available" and "View Episodes" buttons -->
-            {% if content.name and content.availability == available %}
+            {% if content.name and content.availability == "Available" %}
             <div class="standard-btn series-modal-btn no-highlighting available clickable" data-content-type="tv"
                 data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
                 VIEW EPISODES </div>
-            {% elif content.title and content.availability == available %}
+            {% elif content.title and content.availability == "Available" %}
             <div class="standard-btn no-highlighting available"> AVAILABLE </div>
             {% endif %}
 

@@ -48,9 +48,9 @@
     <div
         class="poster-description-container {% if not card.poster_path and not card.remotePoster %}opacity-1{% endif %}">
         <div class="poster-title">{% firstof card.name card.title "Unknown" %}</div>
-        {% if card.availability == available %}
+        {% if card.availability == "Available" %}
         <div class="availablity-dot green" title="Available"></div>
-        {% elif card.availability == partial %}
+        {% elif card.availability == "Partial" %}
         <div class="availablity-dot yellow" title="Partially Available"></div>
         {% else %}
         <div class="availablity-dot red" title="Not Downloaded"></div>

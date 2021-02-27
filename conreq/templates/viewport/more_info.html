@@ -29,9 +29,9 @@
                     <div class="quick-info bold"> Availabity </div>
 
                     <div class="quick-info">
-                        {% if content.availability == available %} Available
+                        {% if content.availability == "Available" %} Available
                         <div class="inline-availablity-dot green"> </div>
-                        {% elif content.availability == partial %} Partial
+                        {% elif content.availability == "Partial" %} Partial
                         <div class="inline-availablity-dot yellow"> </div>
                         {% else %} Not Downloaded
                         <div class="inline-availablity-dot red"> </div>
@@ -207,7 +207,7 @@
                 </div>
 
                 <!-- "Available" and "View Episodes" buttons -->
-                {% if content.availability == available %}
+                {% if content.availability == "Available" %}
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="standard-btn box-shadow no-highlighting available"> AVAILABLE </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
@@ -220,7 +220,7 @@
                 {% endif %}
 
                 <!-- "Request" buttons -->
-                {% elif content.availability != available %}
+                {% elif content.availability != "Available" %}
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="standard-btn request-btn box-shadow no-highlighting clickable"
                     data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
