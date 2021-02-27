@@ -29,7 +29,8 @@
 	display: block;
 	transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
 	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
-	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
+	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
+		-webkit-filter 0.3s ease;
 	z-index: 6;
 	position: relative;
 }
@@ -42,6 +43,7 @@
 
 .viewport .poster-container:hover {
 	transform: scale(1.05);
+	z-index: 2;
 }
 
 .poster-description-container {
