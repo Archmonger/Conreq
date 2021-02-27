@@ -28,14 +28,12 @@
 
             <!-- Combined Filters -->
             {% else %}
+            {% for filter_name in combined_filters %}
             <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
-                href="#{% url 'discover:all' %}?filter=top">
-                TOP RATED
+                href="#{% url 'discover:all' %}?filter={{filter_name|slugify}}">
+                {{filter_name|upper}}
             </a>
-            <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
-                href="#{% url 'discover:all' %}?filter=popular">
-                MOST POPULAR
-            </a>
+            {% endfor %}
             {% endif %}
         </div>
     </div>

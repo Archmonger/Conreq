@@ -128,6 +128,19 @@ class ContentDiscovery(Base):
             "top rated", page_number, page_multiplier
         )
 
+    def discover_by_preset_filter(self, filter_name, page_number, page_multiplier=1):
+        # Merge top_movies and top_tv results together
+        function_list = [
+            self.discover_movie_by_preset_filter,
+            self.discover_tv_by_preset_filter,
+        ]
+        results = threaded_execution(
+            function_list, [filter_name, page_number, page_multiplier]
+        )
+
+        # Shuffle the results on each page
+        return self._shuffle_results(self._merge_results(*results))
+
     def discover_movie_by_preset_filter(
         self, filter_name, page_number, page_multiplier=1
     ):

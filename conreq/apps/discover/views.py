@@ -1,5 +1,9 @@
 from conreq.core.content_discovery.tmdb import ContentDiscovery
-from conreq.core.content_discovery.tmdb_preset_filters import movie_filters, tv_filters
+from conreq.core.content_discovery.tmdb_preset_filters import (
+    combined_filters,
+    movie_filters,
+    tv_filters,
+)
 from conreq.utils.app_views import set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
@@ -14,16 +18,16 @@ from django.views.decorators.cache import cache_page
 def discover_all(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")
-    simple_filter = request.GET.get("filter")
+    preset_filter = request.GET.get("filter", "").replace("-", " ")
 
     # Get the page number from the URL
     page = int(request.GET.get("page", 1))
 
     # Get content
-    if simple_filter == "popular":
-        tmdb_results = content_discovery.popular(page)["results"]
-    elif simple_filter == "top":
-        tmdb_results = content_discovery.top(page)["results"]
+    if preset_filter:
+        tmdb_results = content_discovery.discover_by_preset_filter(
+            preset_filter, page, page_multiplier=2
+        )["results"]
     else:
         tmdb_results = content_discovery.all(page)["results"]
 
@@ -97,5 +101,6 @@ def simple_filter_modal(request):
         "content_type": content_type,
         "tv_filters": tv_filters().keys(),
         "movie_filters": movie_filters().keys(),
+        "combined_filters": combined_filters().keys(),
     }
     return HttpResponse(template.render(context, request))
