@@ -28,11 +28,17 @@
                 <div class="row-title {% if season.statistics.availability != 'Available' %}clickable{% endif %}">
 
                     {% if season.statistics.availability == "Available" %}
-                    <div class="modal-dot green"></div>
+                    <div class="modal-dot-container" title="Fully Available">
+                        <div class="modal-dot green"></div>
+                    </div>
                     {% elif season.statistics.availability == "Partial" %}
-                    <div class="modal-dot yellow"></div>
+                    <div class="modal-dot-container" title="Partially Available">
+                        <div class="modal-dot yellow"></div>
+                    </div>
                     {% else %}
-                    <div class="modal-dot red"></div>
+                    <div class="modal-dot-container" title="Unavailable">
+                        <div class="modal-dot red"></div>
+                    </div>
                     {% endif %}
 
                     <div class="line-clamp-1">
@@ -73,9 +79,17 @@
 
                 <div class="suboption-title-container {% if episode.availability != 'Available' %}clickable{% endif %}">
                     {% if episode.availability == "Available" %}
-                    <div class="modal-dot green"></div>
+                    <div class="modal-dot-container" title="Available">
+                        <div class="modal-dot green"></div>
+                    </div>
+                    {% elif episode.monitored %}
+                    <div class="modal-dot-container" title="Monitored but Not Downloaded">
+                        <div class="modal-dot yellow"></div>
+                    </div>
                     {% else %}
-                    <div class="modal-dot red"></div>
+                    <div class="modal-dot-container" title="Not Requested">
+                        <div class="modal-dot red"></div>
+                    </div>
                     {% endif %}
                     <div class="episode-number bold">
                         {% firstof episode.episodeNumber "Unknown" %}

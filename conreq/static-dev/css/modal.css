@@ -104,6 +104,7 @@
 	line-height: 24px;
 	display: flex;
 	align-items: center;
+	height: 24px;
 }
 
 .row-container .row-collapse-icon-container {
@@ -129,9 +130,12 @@
 	line-height: 20px;
 	display: flex;
 	align-items: center;
+	height: 20px;
 }
 
-.suboption-row-container .suboption-title-container > *:not(.modal-dot) {
+.suboption-row-container
+	.suboption-title-container
+	> *:not(.modal-dot-container) {
 	display: inline-block;
 	margin-right: 5px;
 }
@@ -154,8 +158,15 @@
 	width: 5px;
 	height: 5px;
 	border-radius: 50%;
-	margin-left: 5px;
-	margin-right: 10px;
+}
+
+.modal-dot-container {
+	padding-left: 5px;
+	padding-right: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
 }
 
 /* Content Preview Modal */
