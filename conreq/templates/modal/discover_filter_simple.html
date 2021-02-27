@@ -11,7 +11,7 @@
         <!-- TV Filters -->
         {% if content_type == "tv" %}
         {% for filter_name in tv_filters %}
-        <a class="simple-filter-btn clickable no-highlighting"
+        <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
             href="#{% url 'discover:tv' %}?filter={{filter_name|slugify}}">
             {{filter_name|upper}}
         </a>
@@ -20,7 +20,7 @@
         <!-- Movie Filters -->
         {% elif content_type == "movie" %}
         {% for filter_name in movie_filters %}
-        <a class="simple-filter-btn clickable no-highlighting"
+        <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
             href="#{% url 'discover:movies' %}?filter={{filter_name|slugify}}">
             {{filter_name|upper}}
         </a>
@@ -28,10 +28,11 @@
 
         <!-- Combined Filters -->
         {% else %}
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:all' %}?filter=top">
+        <a class="simple-filter-btn clickable no-highlighting line-clamp-1" href="#{% url 'discover:all' %}?filter=top">
             TOP RATED
         </a>
-        <a class="simple-filter-btn clickable no-highlighting" href="#{% url 'discover:all' %}?filter=popular">
+        <a class="simple-filter-btn clickable no-highlighting line-clamp-1"
+            href="#{% url 'discover:all' %}?filter=popular">
             MOST POPULAR
         </a>
         {% endif %}

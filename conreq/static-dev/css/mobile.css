@@ -259,6 +259,7 @@
 /* Modals */
 @media only screen and (max-width: 991px) {
 	.modal-body.filter {
+		display: flex;
 		flex-wrap: wrap;
 	}
 	.modal-body .simple-filter-btn {

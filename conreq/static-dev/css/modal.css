@@ -251,18 +251,17 @@
 /* Filter Modal */
 .modal-body.filter {
 	padding: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 }
 
 .modal-body .simple-filter-btn {
 	font-size: 22px;
 	font-weight: 600;
-	padding: 22px 30px;
+	padding: 15px 30px;
 	background: #00695c;
 	border-radius: 4px;
-	margin: 8px;
+	margin: 6px;
 	transition: background 0.3s ease;
 }
 
