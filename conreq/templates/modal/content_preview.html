@@ -37,9 +37,9 @@
                 <div class="modal-info-block">
                     <div class="modal-info bold"> Availability: </div>
                     <div class="modal-info">
-                        {% if content.availability == available %} Available
+                        {% if content.availability == "Available" %} Available
                         <div class="inline-availablity-dot green"> </div>
-                        {% elif content.availability == partial %} Partial
+                        {% elif content.availability == "Partial" %} Partial
                         <div class="inline-availablity-dot yellow"> </div>
                         {% else %} Not Downloaded
                         <div class="inline-availablity-dot red"> </div>
