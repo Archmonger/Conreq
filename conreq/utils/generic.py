@@ -28,7 +28,7 @@ def get_base_url():
     base_url = os.environ.get("BASE_URL", "")
     if isinstance(base_url, str) and base_url:
         base_url = base_url.replace("/", "")
-        base_url = base_url + "/"
+        base_url = "/" + base_url
     return base_url
 
 

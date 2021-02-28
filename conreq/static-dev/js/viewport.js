@@ -289,7 +289,7 @@ var generate_viewport = function (reset_scroll_pos = true) {
 	if (window_location == "" || window_location == null) {
 		if (window.history.replaceState) {
 			// Replace the current page in the browser history to add a hash
-			window.history.replaceState({}, null, "#/discover/");
+			window.history.replaceState({}, null, $(".nav-tab a").attr("href"));
 			window_location = window.location.hash.split("#")[1];
 		}
 	}

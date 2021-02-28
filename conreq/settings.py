@@ -14,11 +14,10 @@ import json
 import os
 import secrets
 
-import requests
 from django.core.management.utils import get_random_secret_key
 from tzlocal import get_localzone
 
-from conreq.utils.generic import get_bool_from_env, get_debug_from_env
+from conreq.utils.generic import get_base_url, get_bool_from_env, get_debug_from_env
 
 # Environment and Project Variables
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,6 +28,7 @@ ROTATE_SECRET_KEY = get_bool_from_env("ROTATE_SECRET_KEY", False)
 USE_SSL = get_bool_from_env("USE_SSL", False)
 DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
 X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
+BASE_URL = get_base_url()
 
 
 # Application Settings
@@ -356,7 +356,7 @@ USE_TZ = True
 
 # Static Files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = "/static/"
+STATIC_URL = BASE_URL + "/static/"
 STATICFILES_USER_PROVIDED = os.path.join(DATA_DIR, "static")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "conreq", "static-dev"),
