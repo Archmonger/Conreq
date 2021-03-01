@@ -56,7 +56,7 @@ def combined_filters(filter_name=None):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        "child friendly": {
+        "family friendly": {
             "sort_by": "popularity.desc",
             "with_original_language": "en",
             "with_genres": 10751,
