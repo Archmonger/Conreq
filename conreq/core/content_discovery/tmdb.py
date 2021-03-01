@@ -107,7 +107,7 @@ class ContentDiscovery(Base):
     def popular_movies(self, page_number, page_multiplier=1):
         """Get popular movies from TMDB."""
         return self.discover_movie_by_preset_filter(
-            "most popular", page_number, page_multiplier
+            "popular", page_number, page_multiplier
         )
 
     def top_movies(self, page_number, page_multiplier=1):
@@ -119,7 +119,7 @@ class ContentDiscovery(Base):
     def popular_tv(self, page_number, page_multiplier=1):
         """Get popular TV from TMDB."""
         return self.discover_tv_by_preset_filter(
-            "most popular", page_number, page_multiplier
+            "popular", page_number, page_multiplier
         )
 
     def top_tv(self, page_number, page_multiplier=1):

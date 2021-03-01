@@ -11,18 +11,18 @@ def combined_filters(filter_name=None):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        "most popular": {
+        "popular": {
             "sort_by": "popularity.desc",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        "english top rated": {
+        "top rated, english only": {
             "sort_by": "vote_average.desc",
             "vote_count.gte": 300,
             "without_keywords": "10103,161155",
             "with_original_language": "en",
         },
-        "english most popular": {
+        "popular, english only": {
             "sort_by": "popularity.desc",
             "without_keywords": "10103,161155",
             "with_original_language": "en",
@@ -45,10 +45,22 @@ def combined_filters(filter_name=None):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
+        "coming soon": {
+            "sort_by": "popularity.desc",
+            "first_air_date.gte": today.strftime(r"%Y-%m-%d"),
+            "first_air_date.lte": (today + timedelta(days=365)).strftime(r"%Y-%m-%d"),
+            "primary_release_date.gte": today.strftime(r"%Y-%m-%d"),
+            "primary_release_date.lte": (today + timedelta(days=365)).strftime(
+                r"%Y-%m-%d"
+            ),
+            "without_keywords": "10103,161155",
+            "with_original_language": "en|ja",
+        },
         "child friendly": {
             "sort_by": "popularity.desc",
-            "with_keywords": 10103,
             "with_original_language": "en",
+            "with_genres": 10751,
+            "without_genres": "27,53,99,18",
         },
         "anime": {
             "sort_by": "popularity.desc",
@@ -131,15 +143,6 @@ def movie_filters(filter_name=None):
     """Predefined categories shown in the movie filter modal."""
     today = datetime.today()
     preset_filters = {
-        "coming soon": {
-            "sort_by": "popularity.desc",
-            "primary_release_date.gte": today.strftime(r"%Y-%m-%d"),
-            "primary_release_date.lte": (today + timedelta(days=365)).strftime(
-                r"%Y-%m-%d"
-            ),
-            "without_keywords": "10103,161155",
-            "with_original_language": "en|ja",
-        },
         "in theaters": {
             "sort_by": "popularity.desc",
             "with_release_type": "2|3",
