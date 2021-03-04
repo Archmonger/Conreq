@@ -12,11 +12,6 @@ $("#content-search").keyup(async function (e) {
 	}
 });
 
-// Magnifying Glass Click Event
-$(".searchbar .fas.fa-search").click(async function () {
-	perform_search();
-});
-
 // Performs a search
 let perform_search = async function () {
 	let parameters = searchbar_input.val();
@@ -27,5 +22,5 @@ let perform_search = async function () {
 		encodeURI(parameters);
 };
 
-// Slide in animations for navbar, sidebar, and viewport
-AOS.init();
+// Magnifying Glass Click Event
+search_magnifying_glass_click_event();

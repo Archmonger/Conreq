@@ -162,12 +162,7 @@ var create_collection_carousel = async function () {
 					edgePadding: 20,
 				});
 
-				$(".more-info-collection-btn").click(async function () {
-					$(".more-info-collection")[0].scrollIntoView({
-						behavior: "smooth",
-					});
-				});
-
+				collection_btn_click_event();
 				create_content_modal_click_event();
 
 				$(".more-info-collection").collapse("show");

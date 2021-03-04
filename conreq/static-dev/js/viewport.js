@@ -77,7 +77,7 @@ let update_active_tab = async function () {
 };
 
 // Adds viewport related event listeners
-let add_event_listeners = async function () {
+let add_viewport_event_listeners = async function () {
 	// More Info page events
 	request_btn_click_event();
 	create_content_modal_click_event();
@@ -118,47 +118,13 @@ let add_event_listeners = async function () {
 		let current_value = $(this).children("input").is(":checked");
 		change_server_setting(setting_name, current_value);
 	});
-	$(".text-input-container.dropdown .dropdown-item").click(async function () {
-		let setting_name = $(this).parent().data("setting-name");
-		let dropdown_id = $(this).data("id");
-		change_server_setting(setting_name, dropdown_id);
-		let new_text = $(this).text();
-		$(this).parent().parent().find(".settings-item-text").text(new_text);
-	});
-	$(".refresh-conreq-api").click(async function () {
-		let setting_name = $(this).data("setting-name");
-		change_server_setting(setting_name);
-	});
-	$(".reload-needed").click(async function () {
-		page_reload_needed = true;
-	});
+	server_settings_dropdown_click_event();
+	refresh_api_key_click_event();
+	reload_needed_click_event();
 
 	// User Management events
-	$(".action-btn.delete").click(async function () {
-		let btn = $(this);
-		let delete_query =
-			btn.data("delete-url") +
-			"?username=" +
-			encodeURI(btn.data("username"));
-		post_url(delete_query, function (result) {
-			if (result.success) {
-				btn.parent().parent().remove();
-			}
-		}).fail(async function () {
-			conreq_no_response_toast_message();
-		});
-	});
-	$(".standard-btn.invite-user").click(async function () {
-		let btn = $(this);
-		let generate_invite_url = btn.data("generate-invite-url");
-		let sign_up_url = window.location.origin + btn.data("sign-up-url");
-		get_url(generate_invite_url, function (result) {
-			let invite_link =
-				sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
-			create_invite_link_elem(invite_link);
-		}).fail(conreq_no_response_toast_message);
-		copy_to_clipboard();
-	});
+	user_delete_btn_click_event();
+	user_invite_btn_click_event();
 };
 
 // Destroys old viewport JS instances
@@ -317,7 +283,7 @@ var generate_viewport = async function (reset_scroll_pos = true) {
 			viewport_html
 		);
 		await refresh_viewport();
-		add_event_listeners();
+		add_viewport_event_listeners();
 
 		// Display the new content
 		$(".viewport-container>.loading-animation-container").hide();
@@ -362,6 +328,9 @@ let page_mutation_observer = async function () {
 	// Begin observing the modal
 	observer.observe(target, config);
 };
+
+// Slide in animations for navbar, sidebar, and viewport
+AOS.init();
 
 // Obtain the initial page
 page_mutation_observer();
