@@ -1,10 +1,10 @@
 let ongoing_request = null;
 let report_selection = null;
 
-var request_btn_click_event = function () {
-	$(".request-btn").each(function () {
+var request_btn_click_event = async function () {
+	$(".request-btn").each(async function () {
 		$(this).unbind("click");
-		$(this).click(function () {
+		$(this).click(async function () {
 			let params = {
 				tmdb_id: $(this).data("tmdb-id"),
 				tvdb_id: $(this).data("tvdb-id"),
@@ -33,7 +33,7 @@ var request_btn_click_event = function () {
 					request_btn.removeClass("clickable");
 					$("#modal-container").modal("hide");
 					ongoing_request = null;
-				}).fail(function () {
+				}).fail(async function () {
 					conreq_no_response_toast_message();
 					ongoing_request = null;
 				});
@@ -49,7 +49,7 @@ var request_btn_click_event = function () {
 						$(".series-modal-btn").text("REQUESTED");
 						$("#modal-container").modal("hide");
 						ongoing_request = null;
-					}).fail(function () {
+					}).fail(async function () {
 						conreq_no_response_toast_message();
 						ongoing_request = null;
 					});
@@ -67,7 +67,7 @@ var request_btn_click_event = function () {
 						$(".series-modal-btn").text("REQUESTED");
 						$("#modal-container").modal("hide");
 						ongoing_request = null;
-					}).fail(function () {
+					}).fail(async function () {
 						conreq_no_response_toast_message();
 						ongoing_request = null;
 					});
@@ -82,12 +82,12 @@ var request_btn_click_event = function () {
 	});
 };
 
-var create_content_modal_click_event = function () {
+var create_content_modal_click_event = async function () {
 	$(
 		".series-modal-btn, .content-preview-modal-btn, .report-selection-modal-btn"
-	).each(function () {
+	).each(async function () {
 		$(this).unbind("click");
-		$(this).click(function () {
+		$(this).click(async function () {
 			let params = {
 				tmdb_id: $(this).data("tmdb-id"),
 				tvdb_id: $(this).data("tvdb-id"),
@@ -99,10 +99,10 @@ var create_content_modal_click_event = function () {
 	});
 };
 
-var create_report_modal_click_event = function () {
-	$(".report-modal-btn").each(function () {
+var create_report_modal_click_event = async function () {
+	$(".report-modal-btn").each(async function () {
 		$(this).unbind("click");
-		$(this).click(function () {
+		$(this).click(async function () {
 			let params = {
 				tmdb_id: $(this).data("tmdb-id"),
 				tvdb_id: $(this).data("tvdb-id"),
@@ -151,25 +151,25 @@ var create_report_modal_click_event = function () {
 	});
 };
 
-var create_filter_modal_click_event = function () {
-	$(".filter-modal-btn").each(function () {
+var create_filter_modal_click_event = async function () {
+	$(".filter-modal-btn").each(async function () {
 		$(this).unbind("click");
-		$(this).click(function () {
+		$(this).click(async function () {
 			generate_modal($(this).data("modal-url"));
 		});
 	});
 };
 
-var report_btn_click_event = function () {
-	$(".report-btn").each(function () {
+var report_btn_click_event = async function () {
+	$(".report-btn").each(async function () {
 		$(this).unbind("click");
-		$(this).click(function () {
+		$(this).click(async function () {
 			let params = {
 				tmdb_id: $(this).data("tmdb-id"),
 				tvdb_id: $(this).data("tvdb-id"),
 				content_type: $(this).data("content-type"),
 				issue_ids: $(".checkbox:checked")
-					.map(function () {
+					.map(async function () {
 						return $(this).data("issue-id");
 					})
 					.get(),
@@ -199,7 +199,7 @@ var report_btn_click_event = function () {
 				$(".request-btn").text("REQUESTED");
 				$("#modal-container").modal("hide");
 				ongoing_request = null;
-			}).fail(function () {
+			}).fail(async function () {
 				conreq_no_response_toast_message();
 				ongoing_request = null;
 			});
@@ -207,8 +207,8 @@ var report_btn_click_event = function () {
 	});
 };
 
-var modal_select_all_btn_click_event = function () {
-	$(".modal .select-all-btn").click(function () {
+var modal_select_all_btn_click_event = async function () {
+	$(".modal .select-all-btn").click(async function () {
 		let modal_text = this.innerHTML;
 		if (modal_text == "SELECT ALL") {
 			this.innerHTML = "UNSELECT ALL";
@@ -220,8 +220,8 @@ var modal_select_all_btn_click_event = function () {
 	});
 };
 
-var row_title_click_event = function () {
-	$(".modal .row-title-container").click(function () {
+var row_title_click_event = async function () {
+	$(".modal .row-title-container").click(async function () {
 		// Checkmark the season
 		let season_block = $(this.parentElement);
 		let season_checkbox = season_block.find("input");
@@ -236,8 +236,8 @@ var row_title_click_event = function () {
 	});
 };
 
-var row_checkbox_click_event = function () {
-	$(".modal .checkbox").click(function () {
+var row_checkbox_click_event = async function () {
+	$(".modal .checkbox").click(async function () {
 		// Checkmark all related episodes
 		let season_checkbox = $(this);
 		let episode_container = $(
@@ -248,8 +248,8 @@ var row_checkbox_click_event = function () {
 	});
 };
 
-var row_suboption_title_click_event = function () {
-	$(".modal .suboption-title-container").click(function () {
+var row_suboption_title_click_event = async function () {
+	$(".modal .suboption-title-container").click(async function () {
 		// Checkmark the individual episode
 		let episode_block = $(this.parentElement);
 		let episode_checkbox = episode_block.find("input");
@@ -279,8 +279,8 @@ var row_suboption_title_click_event = function () {
 	});
 };
 
-var row_suboption_checkbox_click_event = function () {
-	$(".modal .suboption-checkbox").click(function () {
+var row_suboption_checkbox_click_event = async function () {
+	$(".modal .suboption-checkbox").click(async function () {
 		// Uncheck the season box
 		let episode_checkbox = $(this);
 		let season_container = $(episode_checkbox.data("season-container"));
@@ -308,14 +308,14 @@ var row_suboption_checkbox_click_event = function () {
 	});
 };
 
-var modal_expand_btn_click_event = function () {
-	$(".modal .fa-expand").click(function () {
+var modal_expand_btn_click_event = async function () {
+	$(".modal .fa-expand").click(async function () {
 		$("#modal-container").modal("hide");
 	});
 };
 
-var issue_approve_btn_click_event = function () {
-	$(".issue-manage-icons .fas.approve").click(function () {
+var issue_approve_btn_click_event = async function () {
+	$(".issue-manage-icons .fas.approve").click(async function () {
 		let params = {
 			action: "resolve",
 			request_id: $(this.parentElement).data("request-id"),
@@ -323,28 +323,28 @@ var issue_approve_btn_click_event = function () {
 		};
 		post_json($(this.parentElement).data("url"), params, function () {
 			generate_viewport(false);
-		}).fail(function () {
+		}).fail(async function () {
 			conreq_no_response_toast_message();
 		});
 	});
 };
 
-var issue_delete_btn_click_event = function () {
-	$(".issue-manage-icons .fas.delete").click(function () {
+var issue_delete_btn_click_event = async function () {
+	$(".issue-manage-icons .fas.delete").click(async function () {
 		let params = {
 			action: "delete",
 			request_id: $(this.parentElement).data("request-id"),
 		};
 		post_json($(this.parentElement).data("url"), params, function () {
 			generate_viewport(false);
-		}).fail(function () {
+		}).fail(async function () {
 			conreq_no_response_toast_message();
 		});
 	});
 };
 
-var simple_filter_btn_click_event = function () {
-	$(".simple-filter-btn").click(function () {
+var simple_filter_btn_click_event = async function () {
+	$(".simple-filter-btn").click(async function () {
 		$("#modal-container").modal("hide");
 	});
 };

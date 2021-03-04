@@ -1,7 +1,7 @@
 new SimpleBar($("#sidebar")[0]);
 
-$(".nav-tab.suboption, .navbar-toggler").each(function () {
-	$(this).click(function () {
+$(".nav-tab.suboption, .navbar-toggler").each(async function () {
+	$(this).click(async function () {
 		if (window.matchMedia("(max-width: 800px)").matches) {
 			if ($("#sidebar").hasClass("collapsed")) {
 				$("#sidebar").removeClass("collapsed");

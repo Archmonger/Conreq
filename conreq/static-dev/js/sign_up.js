@@ -1,2 +1,2 @@
 document.querySelector("form").action =
-  document.querySelector("form").action + window.location.search;
+	document.querySelector("form").action + window.location.search;

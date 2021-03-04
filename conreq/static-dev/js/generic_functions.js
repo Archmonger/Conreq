@@ -2,9 +2,9 @@ var http_request = $.ajax({});
 let start_time, end_time;
 
 // Asychronous sleeping
-function sleep(ms) {
+var sleep = function (ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
-}
+};
 
 // Gets the current window location from the hash
 var get_window_location = function () {
@@ -34,13 +34,13 @@ var get_window_params = function () {
 };
 
 // Successful copy event
-let copy_to_clipboard_success = function () {
+let copy_to_clipboard_success = async function () {
 	invite_copied_toast_message();
 	$(".invite_link").remove();
 };
 
 // Legacy: Copies the text of an element to the clipboard
-let copy_to_clipboard_fallback = function () {
+let copy_to_clipboard_fallback = async function () {
 	let invite_link_element = document.getElementById("invite_link");
 	invite_link_element.select();
 	document.execCommand("copy")
@@ -230,7 +230,7 @@ var change_server_setting = function (setting_name = null, value = null) {
 				settings_save_failed_toast_message(json_response.error_message);
 			}
 		}
-	).fail(function () {
+	).fail(async function () {
 		settings_save_failed_toast_message("Internal server error.");
 	});
 };

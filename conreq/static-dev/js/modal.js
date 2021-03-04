@@ -2,10 +2,10 @@ let modal_dialog = $("#modal-dialog");
 let modal_loaded = false;
 
 // Fetches a modal via AJAX
-var generate_modal = function (modal_url) {
+var generate_modal = async function (modal_url) {
 	// Fetch the series modal
 	modal_loaded = false;
-	get_url(modal_url, function (modal_html) {
+	get_url(modal_url, async function (modal_html) {
 		// Save that the modal was successfully loaded
 		modal_loaded = true;
 
@@ -29,7 +29,7 @@ var generate_modal = function (modal_url) {
 		create_report_modal_click_event();
 		report_btn_click_event();
 		simple_filter_btn_click_event();
-	}).fail(function () {
+	}).fail(async function () {
 		// Server couldn't fetch the modal
 		if (http_request.statusText != "abort") {
 			conreq_no_response_toast_message();
@@ -38,7 +38,7 @@ var generate_modal = function (modal_url) {
 	});
 
 	// If the modal is taking too long to load, show a loading animation
-	setTimeout(function () {
+	setTimeout(async function () {
 		if (!modal_loaded) {
 			// Show the loading icon
 			$("#modal-content").hide();

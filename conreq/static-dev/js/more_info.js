@@ -1,4 +1,4 @@
-var create_all_carousels = function () {
+var create_all_carousels = async function () {
 	create_review_carousel();
 	create_video_carousel();
 	create_recommended_carousel();
@@ -8,7 +8,7 @@ var create_all_carousels = function () {
 };
 
 var review_carousel = null;
-var create_review_carousel = function () {
+var create_review_carousel = async function () {
 	if ($(".more-info-reviews").length) {
 		review_carousel = tns({
 			container: ".more-info-reviews",
@@ -36,7 +36,7 @@ var create_review_carousel = function () {
 
 var videos_carousel = null;
 let youtube_card_template = `<iframe title="YouTube Video" class="youtube-player" type="text/html" src="https://www.youtube.com/embed/{{video.key}}?modestbranding=1" frameborder="0" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen = "webkitallowfullscreen"></iframe>`;
-var create_video_carousel = function () {
+var create_video_carousel = async function () {
 	// Create the youtube iframes from the given template
 	$(".youtube-player-loader").each(function () {
 		$(this).replaceWith(
@@ -66,7 +66,7 @@ var create_video_carousel = function () {
 };
 
 var recommended_carousel = null;
-var create_recommended_carousel = function () {
+var create_recommended_carousel = async function () {
 	let loader = $("#recommended_loader");
 	if (loader.length) {
 		$.get(loader.data("url"), function (fetched_html) {
@@ -97,7 +97,7 @@ var create_recommended_carousel = function () {
 };
 
 var images_carousel = null;
-var create_image_carousel = function () {
+var create_image_carousel = async function () {
 	if ($(".artwork-inner-container").length) {
 		images_carousel = tns({
 			container: ".artwork-inner-container",
@@ -114,7 +114,7 @@ var create_image_carousel = function () {
 			edgePadding: 20,
 		});
 
-		$(document).ready(function () {
+		$(document).ready(async function () {
 			$(".artwork-container").magnificPopup({
 				delegate: "a",
 				type: "image",
@@ -140,7 +140,7 @@ var create_image_carousel = function () {
 };
 
 var collection_carousel = null;
-var create_collection_carousel = function () {
+var create_collection_carousel = async function () {
 	let loader = $("#collection_loader");
 	if (loader.length) {
 		$.get(loader.data("url"), function (fetched_html) {
@@ -162,7 +162,7 @@ var create_collection_carousel = function () {
 					edgePadding: 20,
 				});
 
-				$(".more-info-collection-btn").click(function () {
+				$(".more-info-collection-btn").click(async function () {
 					$(".more-info-collection")[0].scrollIntoView({
 						behavior: "smooth",
 					});
@@ -177,7 +177,7 @@ var create_collection_carousel = function () {
 };
 
 var cast_carousel = null;
-var create_cast_carousel = function () {
+var create_cast_carousel = async function () {
 	if ($(".cast-inner-container").length) {
 		cast_carousel = tns({
 			container: ".cast-inner-container",

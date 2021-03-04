@@ -1,5 +1,5 @@
 // Requested toast message
-var requested_toast_message = function () {
+var requested_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-check-circle",
 		title: "Requested!",
@@ -13,7 +13,7 @@ var requested_toast_message = function () {
 };
 
 // Reported toast message
-var reported_toast_message = function () {
+var reported_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-check-circle",
 		title: "Reported!",
@@ -27,7 +27,7 @@ var reported_toast_message = function () {
 };
 
 // No selection toast message
-var no_selection_toast_message = function () {
+var no_selection_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-exclamation-triangle",
 		title: "Rejected!",
@@ -41,7 +41,7 @@ var no_selection_toast_message = function () {
 };
 
 // Login failed toast message
-var login_failed_toast_message = function () {
+var login_failed_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-exclamation-triangle",
 		title: "Error!",
@@ -55,7 +55,7 @@ var login_failed_toast_message = function () {
 };
 
 // Server disconnected toast message
-var disconnected_toast_message = function () {
+var disconnected_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-exclamation-triangle",
 		title: "Disconnected!",
@@ -69,7 +69,7 @@ var disconnected_toast_message = function () {
 };
 
 // Server reconnected toast message
-var reconnected_toast_message = function () {
+var reconnected_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-check-circle",
 		title: "Reconnected!",
@@ -82,7 +82,7 @@ var reconnected_toast_message = function () {
 };
 
 // Saving settings failed
-var settings_save_failed_toast_message = function (error_message) {
+var settings_save_failed_toast_message = async function (error_message) {
 	iziToast.show({
 		icon: "fas fa-exclamation-triangle",
 		title: "Error!",
@@ -96,7 +96,7 @@ var settings_save_failed_toast_message = function (error_message) {
 };
 
 // Saving settings succeeded
-var settings_save_success_toast_message = function () {
+var settings_save_success_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-check-circle",
 		title: "Saved!",
@@ -109,7 +109,7 @@ var settings_save_success_toast_message = function () {
 };
 
 // Password confirm failed
-var passwords_dont_match_toast_message = function () {
+var passwords_dont_match_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-exclamation-triangle",
 		title: "Error!",
@@ -123,7 +123,7 @@ var passwords_dont_match_toast_message = function () {
 };
 
 // Failed to perform conreq first time setup
-var conreq_submission_failed_toast_message = function () {
+var conreq_submission_failed_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-exclamation-triangle",
 		title: "Error!",
@@ -137,7 +137,7 @@ var conreq_submission_failed_toast_message = function () {
 };
 
 // Invite link has been copied to cliboard
-var invite_copied_toast_message = function () {
+var invite_copied_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-check-circle",
 		title: "Valid for 7 days.",
@@ -151,7 +151,7 @@ var invite_copied_toast_message = function () {
 };
 
 // Failed to fetch something
-var conreq_no_response_toast_message = function () {
+var conreq_no_response_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-exclamation-triangle",
 		title: "Error!",
