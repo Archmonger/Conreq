@@ -113,7 +113,7 @@ class ContentDiscovery(Base):
     def top_movies(self, page_number, page_multiplier=1):
         """Get top movies from TMDB."""
         return self.discover_movie_by_preset_filter(
-            "top rated", page_number, page_multiplier
+            "top-rated", page_number, page_multiplier
         )
 
     def popular_tv(self, page_number, page_multiplier=1):
@@ -125,7 +125,7 @@ class ContentDiscovery(Base):
     def top_tv(self, page_number, page_multiplier=1):
         """Get top TV from TMDB."""
         return self.discover_tv_by_preset_filter(
-            "top rated", page_number, page_multiplier
+            "top-rated", page_number, page_multiplier
         )
 
     def discover_by_preset_filter(self, filter_name, page_number, page_multiplier=1):
@@ -152,7 +152,7 @@ class ContentDiscovery(Base):
                 page_number,
                 page_multiplier,
                 timezone=_timezone,
-                **movie_filters(filter_name),
+                **movie_filters(filter_name, slug=True),
             ),
         )
 
@@ -165,7 +165,7 @@ class ContentDiscovery(Base):
                 page_number,
                 page_multiplier,
                 timezone=_timezone,
-                **tv_filters(filter_name),
+                **tv_filters(filter_name, slug=True),
             ),
         )
 

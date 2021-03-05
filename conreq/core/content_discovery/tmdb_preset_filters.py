@@ -1,7 +1,23 @@
 from datetime import datetime, timedelta
 
+from django.utils.text import slugify
 
-def combined_filters(filter_name=None):
+
+def preprocess_filters(preset_filters, slug):
+    """Do any preprocessing needed on the filters"""
+    processed_filters = {}
+
+    if slug:
+        # Slugify all filter names
+        for item in preset_filters:
+            processed_filters[slugify(item)] = preset_filters[item]
+
+    if processed_filters:
+        return processed_filters
+    return preset_filters
+
+
+def combined_filters(filter_name=None, slug=False):
     """These filters are automatically merged into TV and Movies."""
     today = datetime.today()
     preset_filters = {
@@ -106,12 +122,14 @@ def combined_filters(filter_name=None):
         },
     }
 
+    preset_filters = preprocess_filters(preset_filters, slug)
+
     if filter_name:
         return preset_filters[filter_name]
     return preset_filters
 
 
-def tv_filters(filter_name=None):
+def tv_filters(filter_name=None, slug=False):
     """Predefined categories shown for the TV filter modal."""
     today = datetime.today()
     preset_filters = {
@@ -134,12 +152,14 @@ def tv_filters(filter_name=None):
         **combined_filters(),
     }
 
+    preset_filters = preprocess_filters(preset_filters, slug)
+
     if filter_name:
         return preset_filters[filter_name]
     return preset_filters
 
 
-def movie_filters(filter_name=None):
+def movie_filters(filter_name=None, slug=False):
     """Predefined categories shown in the movie filter modal."""
     today = datetime.today()
     preset_filters = {
@@ -154,6 +174,8 @@ def movie_filters(filter_name=None):
         },
         **combined_filters(),
     }
+
+    preset_filters = preprocess_filters(preset_filters, slug)
 
     if filter_name:
         return preset_filters[filter_name]

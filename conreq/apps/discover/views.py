@@ -18,7 +18,7 @@ from django.views.decorators.cache import cache_page
 def discover_all(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")
-    preset_filter = request.GET.get("filter", "").replace("-", " ")
+    preset_filter = request.GET.get("filter", "")
 
     # Get the page number from the URL
     page = int(request.GET.get("page", 1))
@@ -46,7 +46,7 @@ def discover_all(request):
 @performance_metrics()
 def discover_tv(request):
     content_discovery = ContentDiscovery()
-    preset_filter = request.GET.get("filter", "").replace("-", " ")
+    preset_filter = request.GET.get("filter", "")
     page = int(request.GET.get("page", 1))
 
     # Get content
@@ -70,7 +70,7 @@ def discover_tv(request):
 @performance_metrics()
 def discover_movies(request):
     content_discovery = ContentDiscovery()
-    preset_filter = request.GET.get("filter", "").replace("-", " ")
+    preset_filter = request.GET.get("filter", "")
 
     # Get the page number from the URL
     page = int(request.GET.get("page", 1))
