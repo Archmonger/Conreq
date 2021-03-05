@@ -21,28 +21,6 @@ def combined_filters(filter_name=None, slug=False):
     """These filters are automatically merged into TV and Movies."""
     today = datetime.today()
     preset_filters = {
-        "top rated": {
-            "sort_by": "vote_average.desc",
-            "vote_count.gte": 300,
-            "without_keywords": "10103,161155",
-            "with_original_language": "en|ja",
-        },
-        "popular": {
-            "sort_by": "popularity.desc",
-            "without_keywords": "10103,161155",
-            "with_original_language": "en|ja",
-        },
-        "top rated, english only": {
-            "sort_by": "vote_average.desc",
-            "vote_count.gte": 300,
-            "without_keywords": "10103,161155",
-            "with_original_language": "en",
-        },
-        "popular, english only": {
-            "sort_by": "popularity.desc",
-            "without_keywords": "10103,161155",
-            "with_original_language": "en",
-        },
         "new and loved": {
             "sort_by": "vote_average.desc",
             "vote_count.gte": 50,
@@ -72,18 +50,48 @@ def combined_filters(filter_name=None, slug=False):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        "family friendly": {
-            "sort_by": "popularity.desc",
-            "with_original_language": "en",
-            "with_genres": 10751,
-            "without_genres": "27,53,99,18",
+        "top rated": {
+            "sort_by": "vote_average.desc",
+            "vote_count.gte": 300,
+            "without_keywords": "10103,161155",
+            "with_original_language": "en|ja",
         },
-        "anime": {
+        "popular": {
+            "sort_by": "popularity.desc",
+            "without_keywords": "10103,161155",
+            "with_original_language": "en|ja",
+        },
+        "top rated, english only": {
+            "sort_by": "vote_average.desc",
+            "vote_count.gte": 300,
+            "without_keywords": "10103,161155",
+            "with_original_language": "en",
+        },
+        "popular, english only": {
+            "sort_by": "popularity.desc",
+            "without_keywords": "10103,161155",
+            "with_original_language": "en",
+        },
+        "top rated anime": {
+            "sort_by": "vote_average.desc",
+            "vote_count.gte": 50,
+            "with_genres": 16,
+            "with_keywords": 210024,
+            "without_keywords": "10103,161155",
+            "with_original_language": "ja",
+        },
+        "popular anime": {
             "sort_by": "popularity.desc",
             "with_genres": 16,
             "with_keywords": 210024,
             "without_keywords": "10103,161155",
             "with_original_language": "ja",
+        },
+        "family friendly": {
+            "sort_by": "popularity.desc",
+            "with_original_language": "en",
+            "with_genres": 10751,
+            "without_genres": "27,53,99,18",
         },
         "action and adventure": {
             "sort_by": "popularity.desc",
