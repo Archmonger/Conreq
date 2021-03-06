@@ -245,7 +245,7 @@ let get_viewport = async function (location, success = function () {}) {
 };
 
 // Fetch the new viewport and update the current tab
-var generate_viewport = async function (reset_scroll_pos = true) {
+var generate_viewport = async function (fresh_reload = true) {
 	// Check if the whole webpage needs to be reloaded
 	if (page_reload_needed) {
 		location.reload();
@@ -265,9 +265,6 @@ var generate_viewport = async function (reset_scroll_pos = true) {
 
 	// Change the current tab
 	update_active_tab();
-
-	// Save the previous scroll position, if needed
-	let previous_scroll_pos = $(viewport_container_class).scrollTop();
 
 	// Asynchronously fetch new viewport content
 	viewport_loaded = false;
@@ -290,16 +287,14 @@ var generate_viewport = async function (reset_scroll_pos = true) {
 		$(".viewport-container>*:not(.loading-animation-container)").show();
 
 		// Set scroll position
-		if (reset_scroll_pos) {
+		if (fresh_reload) {
 			$(viewport_container_class).scrollTop(0);
-		} else {
-			$(viewport_container_class).scrollTop(previous_scroll_pos);
 		}
 	});
 
 	// If the page is taking too long to load, show a loading animation
 	setTimeout(async function () {
-		if (!viewport_loaded) {
+		if (!viewport_loaded && fresh_reload) {
 			// Hide the viewport and display the loading animation
 			$(".viewport-container>.loading-animation-container").show();
 			$(".viewport-container>*:not(.loading-animation-container)").hide();
