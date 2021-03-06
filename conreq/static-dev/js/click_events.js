@@ -353,6 +353,13 @@ var issue_delete_btn_click_event = async function () {
 
 var simple_filter_btn_click_event = async function () {
 	$(".simple-filter-btn").click(async function () {
+		let extras = "";
+		if ($("input.anime-only:checked").length) {
+			extras = "&type=anime";
+		} else if ($("input.no-anime:checked").length) {
+			extras = "&type=no-anime";
+		}
+		window.location = $(this).data("href") + extras;
 		$("#modal-container").modal("hide");
 	});
 };

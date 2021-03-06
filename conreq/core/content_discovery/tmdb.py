@@ -128,22 +128,25 @@ class ContentDiscovery(Base):
             "top-rated", page_number, page_multiplier
         )
 
-    def discover_by_preset_filter(self, filter_name, page_number, page_multiplier=1):
-        # Merge top_movies and top_tv results together
+    def discover_by_preset_filter(
+        self, filter_name, page_number, page_multiplier=1, add_values=()
+    ):
+        """Obtains TV/Movie results based on a predefined filter name."""
         function_list = [
             self.discover_movie_by_preset_filter,
             self.discover_tv_by_preset_filter,
         ]
         results = threaded_execution(
-            function_list, [filter_name, page_number, page_multiplier]
+            function_list, [filter_name, page_number, page_multiplier, add_values]
         )
 
         # Shuffle the results on each page
         return self._shuffle_results(self._merge_results(*results))
 
     def discover_movie_by_preset_filter(
-        self, filter_name, page_number, page_multiplier=1
+        self, filter_name, page_number, page_multiplier=1, add_values=()
     ):
+        """Obtains movie results based on a predefined filter name."""
         return self._set_content_attributes(
             "movie",
             self._multi_page_fetch(
@@ -152,11 +155,14 @@ class ContentDiscovery(Base):
                 page_number,
                 page_multiplier,
                 timezone=_timezone,
-                **movie_filters(filter_name, slug=True),
+                **movie_filters(filter_name, slug=True, add_values=add_values),
             ),
         )
 
-    def discover_tv_by_preset_filter(self, filter_name, page_number, page_multiplier=1):
+    def discover_tv_by_preset_filter(
+        self, filter_name, page_number, page_multiplier=1, add_values=()
+    ):
+        """Obtains TV results based on a predefined filter name."""
         return self._set_content_attributes(
             "tv",
             self._multi_page_fetch(
@@ -165,7 +171,7 @@ class ContentDiscovery(Base):
                 page_number,
                 page_multiplier,
                 timezone=_timezone,
-                **tv_filters(filter_name, slug=True),
+                **tv_filters(filter_name, slug=True, add_values=add_values),
             ),
         )
 

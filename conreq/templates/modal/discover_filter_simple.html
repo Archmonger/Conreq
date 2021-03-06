@@ -7,12 +7,38 @@
         <div class="title">SELECT FILTER</div>
     </div>
     <div class="modal-body filter">
+
+        <!-- Filtering toggles -->
+        <div class="simple-filter-toggle-container">
+            <div class="pretty p-default p-round p-fill p-smooth">
+                <input type="radio" class="include-anime" name="anime-toggle" checked>
+                <div class="state">
+                    <label>Include Anime</label>
+                </div>
+            </div>
+
+            <div class="pretty p-default p-round p-fill p-smooth">
+                <input type="radio" class="anime-only" name="anime-toggle">
+                <div class="state">
+                    <label>Anime Only</label>
+                </div>
+            </div>
+
+            <div class="pretty p-default p-round p-fill p-smooth">
+                <input type="radio" class="no-anime" name="anime-toggle">
+                <div class="state">
+                    <label>No Anime</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtering options -->
         <div class="simple-filter-container">
             <!-- TV Filters -->
             {% if content_type == "tv" %}
             {% for filter_name in tv_filters %}
             <a class="simple-filter-btn clickable no-highlighting"
-                href="#{% url 'discover:tv' %}?filter={{filter_name|slugify}}">
+                data-href="#{% url 'discover:tv' %}?filter={{filter_name|slugify}}">
                 {{filter_name|upper}}
             </a>
             {% endfor %}
@@ -21,7 +47,7 @@
             {% elif content_type == "movie" %}
             {% for filter_name in movie_filters %}
             <a class="simple-filter-btn clickable no-highlighting"
-                href="#{% url 'discover:movies' %}?filter={{filter_name|slugify}}">
+                data-href="#{% url 'discover:movies' %}?filter={{filter_name|slugify}}">
                 {{filter_name|upper}}
             </a>
             {% endfor %}
@@ -30,7 +56,7 @@
             {% else %}
             {% for filter_name in combined_filters %}
             <a class="simple-filter-btn clickable no-highlighting"
-                href="#{% url 'discover:all' %}?filter={{filter_name|slugify}}">
+                data-href="#{% url 'discover:all' %}?filter={{filter_name|slugify}}">
                 {{filter_name|upper}}
             </a>
             {% endfor %}

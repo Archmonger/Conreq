@@ -11,6 +11,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
+from .helpers import preset_filter_extras
+
 
 @cache_page(15)
 @login_required
@@ -25,8 +27,9 @@ def discover_all(request):
 
     # Get content
     if preset_filter:
+        add_values = preset_filter_extras(request)
         tmdb_results = content_discovery.discover_by_preset_filter(
-            preset_filter, page, page_multiplier=2
+            preset_filter, page, page_multiplier=2, add_values=add_values
         )["results"]
     else:
         tmdb_results = content_discovery.all(page)["results"]
@@ -51,8 +54,9 @@ def discover_tv(request):
 
     # Get content
     if preset_filter:
+        add_values = preset_filter_extras(request)
         tmdb_results = content_discovery.discover_tv_by_preset_filter(
-            preset_filter, page, page_multiplier=2
+            preset_filter, page, page_multiplier=2, add_values=add_values
         )["results"]
     else:
         tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
@@ -77,8 +81,9 @@ def discover_movies(request):
 
     # Get content
     if preset_filter:
+        add_values = preset_filter_extras(request)
         tmdb_results = content_discovery.discover_movie_by_preset_filter(
-            preset_filter, page, page_multiplier=2
+            preset_filter, page, page_multiplier=2, add_values=add_values
         )["results"]
     else:
         tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]

@@ -2,28 +2,54 @@ from datetime import datetime, timedelta
 
 from django.utils.text import slugify
 
+no_anime_values = {
+    "overwrite:with_original_language": "en",
+    "without_keywords": "210024",
+}
+anime_only_values = {
+    "overwrite:with_original_language": "ja",
+    "with_keywords": "210024",
+}
 
-def preprocess_filters(preset_filters, slug):
+
+def add_filter_values(new_values, current_filter):
+    """Combines values from one filter dict into another."""
+    for key, value in new_values.items():
+        if key.startswith("overwrite:"):
+            current_filter[key.replace("overwrite:", "")] = value
+
+        elif current_filter.__contains__(key):
+            current_filter[key] = current_filter[key] + "," + value
+
+        else:
+            current_filter[key] = value
+
+
+def preprocess_filters(preset_filters, slug, add_values):
     """Do any preprocessing needed on the filters"""
     processed_filters = {}
 
-    if slug:
+    for key in preset_filters:
+        # Add any filter values needed
+        if add_values:
+            add_filter_values(add_values, preset_filters[key])
+
         # Slugify all filter names
-        for item in preset_filters:
-            processed_filters[slugify(item)] = preset_filters[item]
+        if slug:
+            processed_filters[slugify(key)] = preset_filters[key]
 
     if processed_filters:
         return processed_filters
     return preset_filters
 
 
-def combined_filters(filter_name=None, slug=False):
+def combined_filters(filter_name=None, slug=False, add_values=()):
     """These filters are automatically merged into TV and Movies."""
     today = datetime.today()
     preset_filters = {
         "new and loved": {
             "sort_by": "vote_average.desc",
-            "vote_count.gte": 50,
+            "vote_count.gte": "50",
             "first_air_date.gte": (today - timedelta(days=365)).strftime(r"%Y-%m-%d"),
             "first_air_date.lte": today.strftime(r"%Y-%m-%d"),
             "primary_release_date.gte": (today - timedelta(days=365)).strftime(
@@ -35,7 +61,7 @@ def combined_filters(filter_name=None, slug=False):
         },
         "all time favorites": {
             "sort_by": "vote_average.desc",
-            "vote_count.gte": 1500,
+            "vote_count.gte": "300",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
@@ -52,7 +78,7 @@ def combined_filters(filter_name=None, slug=False):
         },
         "top rated": {
             "sort_by": "vote_average.desc",
-            "vote_count.gte": 300,
+            "vote_count.gte": "50",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
@@ -61,83 +87,57 @@ def combined_filters(filter_name=None, slug=False):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        "top rated, english only": {
-            "sort_by": "vote_average.desc",
-            "vote_count.gte": 300,
-            "without_keywords": "10103,161155",
-            "with_original_language": "en",
-        },
-        "popular, english only": {
-            "sort_by": "popularity.desc",
-            "without_keywords": "10103,161155",
-            "with_original_language": "en",
-        },
-        "top rated anime": {
-            "sort_by": "vote_average.desc",
-            "vote_count.gte": 50,
-            "with_genres": 16,
-            "with_keywords": 210024,
-            "without_keywords": "10103,161155",
-            "with_original_language": "ja",
-        },
-        "popular anime": {
-            "sort_by": "popularity.desc",
-            "with_genres": 16,
-            "with_keywords": 210024,
-            "without_keywords": "10103,161155",
-            "with_original_language": "ja",
-        },
         "family friendly": {
             "sort_by": "popularity.desc",
-            "with_original_language": "en",
-            "with_genres": 10751,
+            "with_genres": "10751",
             "without_genres": "27,53,99,18",
+            "with_original_language": "en|ja",
         },
         "action and adventure": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": 50,
-            "with_genres": 10759,
+            "vote_count.gte": "50",
+            "with_genres": "10759",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "drama": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": 50,
-            "with_genres": 18,
+            "vote_count.gte": "50",
+            "with_genres": "18",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "mystery": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": 50,
-            "with_genres": 9648,
+            "vote_count.gte": "50",
+            "with_genres": "9648",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "comedy": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": 50,
-            "with_genres": 35,
+            "vote_count.gte": "50",
+            "with_genres": "35",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "documentary": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": 50,
-            "with_genres": 99,
+            "vote_count.gte": "50",
+            "with_genres": "99",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
     }
 
-    preset_filters = preprocess_filters(preset_filters, slug)
+    preset_filters = preprocess_filters(preset_filters, slug, add_values)
 
     if filter_name:
         return preset_filters[filter_name]
     return preset_filters
 
 
-def tv_filters(filter_name=None, slug=False):
+def tv_filters(filter_name=None, slug=False, add_values=()):
     """Predefined categories shown for the TV filter modal."""
     today = datetime.today()
     preset_filters = {
@@ -157,17 +157,21 @@ def tv_filters(filter_name=None, slug=False):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        **combined_filters(),
     }
 
-    preset_filters = preprocess_filters(preset_filters, slug)
+    preset_filters = preprocess_filters(preset_filters, slug, add_values)
+
+    preset_filters = {
+        **preset_filters,
+        **combined_filters(slug=slug, add_values=add_values),
+    }
 
     if filter_name:
         return preset_filters[filter_name]
     return preset_filters
 
 
-def movie_filters(filter_name=None, slug=False):
+def movie_filters(filter_name=None, slug=False, add_values=()):
     """Predefined categories shown in the movie filter modal."""
     today = datetime.today()
     preset_filters = {
@@ -180,10 +184,14 @@ def movie_filters(filter_name=None, slug=False):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        **combined_filters(),
     }
 
-    preset_filters = preprocess_filters(preset_filters, slug)
+    preset_filters = preprocess_filters(preset_filters, slug, add_values)
+
+    preset_filters = {
+        **preset_filters,
+        **combined_filters(slug=slug, add_values=add_values),
+    }
 
     if filter_name:
         return preset_filters[filter_name]
