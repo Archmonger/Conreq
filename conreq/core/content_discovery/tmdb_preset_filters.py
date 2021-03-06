@@ -49,7 +49,7 @@ def combined_filters(filter_name=None, slug=False, add_values=()):
     preset_filters = {
         "new and loved": {
             "sort_by": "vote_average.desc",
-            "vote_count.gte": "50",
+            "vote_count.gte": "25",
             "first_air_date.gte": (today - timedelta(days=365)).strftime(r"%Y-%m-%d"),
             "first_air_date.lte": today.strftime(r"%Y-%m-%d"),
             "primary_release_date.gte": (today - timedelta(days=365)).strftime(
@@ -95,56 +95,48 @@ def combined_filters(filter_name=None, slug=False, add_values=()):
         },
         "action and adventure": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": "50",
             "with_genres": "10759|28|12",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "sci-fi and fantasy": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": "50",
             "with_genres": "10765|878|14",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "drama": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": "50",
             "with_genres": "18",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "mystery": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": "50",
             "with_genres": "9648",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "crime": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": "50",
             "with_genres": "80",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "comedy": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": "50",
             "with_genres": "35",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "western": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": "50",
             "with_genres": "37",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
         "documentary": {
             "sort_by": "popularity.desc",
-            "vote_count.gte": "50",
             "with_genres": "99",
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
