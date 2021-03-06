@@ -262,6 +262,13 @@
 		display: flex;
 		flex-wrap: wrap;
 	}
+	.modal-body.filter .simple-filter-toggle-container {
+		flex-direction: column;
+		margin: 0 6px;
+	}
+	.modal-body.filter .simple-filter-toggle-container > *:not(:last-child) {
+		margin-bottom: 10px;
+	}
 	.modal-body .simple-filter-btn {
 		padding: 15px 25px;
 		width: 100%;
