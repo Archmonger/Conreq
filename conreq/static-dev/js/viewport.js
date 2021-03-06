@@ -247,7 +247,7 @@ let get_viewport = async function (location, success = function () {}) {
 // Fetch the new viewport and update the current tab
 var generate_viewport = async function (fresh_reload = true) {
 	// Check if the whole webpage needs to be reloaded
-	if (page_reload_needed) {
+	if (page_reload_needed && fresh_reload) {
 		location.reload();
 	}
 
