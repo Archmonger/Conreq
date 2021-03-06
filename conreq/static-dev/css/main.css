@@ -67,12 +67,6 @@
 				(var(--modal-height) - var(--modal-poster-height))
 		)
 		auto;
-	/* Full Screen View */
-	--grid-object-bg: #fff;
-	--movie-indicator: #b66707;
-	--grid-object-spacing: 20px;
-	--grid-object-padding: 20px;
-	--grid-object-font-color: rgba(0, 0, 0, 0.75);
 }
 
 /* Generic rules */

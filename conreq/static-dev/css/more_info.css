@@ -1,6 +1,9 @@
-/* Right Side */
-
 :root {
+	--grid-object-bg: #fff;
+	--movie-indicator: #b66707;
+	--grid-object-spacing: 20px;
+	--grid-object-padding: 20px;
+	--grid-object-font-color: rgb(0, 0, 0);
 	--left-column-width: 250px;
 	--grid-gutter: 25px;
 	--right-column-width: calc(
@@ -15,7 +18,10 @@
 	--artwork-width: calc(var(--artwork-height) * 1.77);
 	--video-height: 300px;
 	--video-width: calc(var(--video-height) * 1.77);
+	--backdrop-height: 400px;
 }
+
+/* Right Side */
 
 .right-group {
 	grid-column: 3;
@@ -24,8 +30,9 @@
 
 .more-info-main-info {
 	width: 100%;
-	height: 125px;
-	display: inline;
+	display: inline-block;
+	padding-left: var(--grid-object-padding);
+	margin-top: 115px;
 }
 
 .inline-availablity-dot {
@@ -39,7 +46,6 @@
 }
 
 .main-title {
-	margin-top: 115px;
 	margin-bottom: 10px;
 	font-family: var(--global-font);
 	font-weight: 700;
@@ -132,9 +138,7 @@
 	box-sizing: border-box;
 	margin-top: var(--grid-object-spacing);
 	width: 100%;
-	background: var(--grid-object-bg);
 	border-radius: 4px;
-	box-shadow: var(--box-shadow);
 	font-family: "Roboto", sans-serif;
 	font-weight: 400;
 	color: var(--grid-object-font-color);
@@ -208,11 +212,6 @@
 
 .more-info-overview .tns-nav {
 	text-align: center;
-	margin-bottom: var(--grid-object-padding);
-}
-
-.more-info-overview .tns-outer {
-	margin-top: -10px;
 }
 
 .tns-nav > [aria-controls] {
@@ -352,7 +351,7 @@
 	height: var(--video-height);
 	min-height: var(--video-height);
 	max-height: var(--video-height);
-	border-radius: 20px;
+	border-radius: 10px;
 	overflow: hidden;
 }
 
@@ -377,7 +376,7 @@
 
 .movie-backdrop-container img {
 	width: 100%;
-	height: 400px;
+	height: var(--backdrop-height);
 	-o-object-fit: cover;
 	object-fit: cover;
 	position: absolute;
@@ -386,7 +385,7 @@
 
 .movie-backdrop-container .backdrop-placeholder-gradient {
 	width: 100%;
-	height: 400px;
+	height: var(--backdrop-height);
 	position: absolute;
 	background: var(--placeholder-gradient);
 	z-index: -1;
@@ -396,7 +395,7 @@
 .movie-backdrop-container > .backdrop-tint {
 	background: linear-gradient(360deg, black, transparent);
 	width: 100%;
-	height: 400px;
+	height: var(--backdrop-height);
 	opacity: 0.85;
 	position: absolute;
 	z-index: 1;
@@ -413,9 +412,7 @@
 	box-sizing: border-box;
 	margin-top: var(--grid-object-spacing);
 	width: 100%;
-	background: var(--grid-object-bg);
 	border-radius: 4px;
-	box-shadow: var(--box-shadow);
 	font-family: "Roboto", sans-serif;
 	font-weight: 400;
 	color: var(--grid-object-font-color);
@@ -480,15 +477,13 @@
 
 .more-info-quick-info {
 	box-sizing: border-box;
-	margin-top: var(--grid-object-spacing);
+	margin-top: 40px;
+	margin-left: 3px;
 	width: 100%;
-	background: var(--grid-object-bg);
 	border-radius: 4px;
-	box-shadow: var(--box-shadow);
 	font-family: "Roboto", sans-serif;
 	font-weight: 400;
 	color: var(--grid-object-font-color);
-	padding: var(--grid-object-padding);
 	font-size: 15px;
 }
 
