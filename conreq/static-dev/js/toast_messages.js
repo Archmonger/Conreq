@@ -92,6 +92,7 @@ var settings_save_failed_toast_message = async function (error_message) {
 		messageColor: "#9a5c0f",
 		iconColor: "#c57615",
 		progressBarColor: "var(--accent-color)",
+		timeout: 15000,
 	});
 };
 
