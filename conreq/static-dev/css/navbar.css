@@ -15,7 +15,7 @@
 	margin-bottom: var(--viewport-padding);
 	width: var(--searchbar-width);
 	background: var(--searchbar-bg);
-	border-radius: 4px;
+	border-radius: 15px;
 	transition: background 0.4s ease, color 0.4s ease;
 	color: var(--searchbar-font-color);
 	overflow: hidden;

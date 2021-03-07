@@ -106,8 +106,9 @@
 		left: 0px;
 		position: relative;
 		height: calc(var(--navbar-height) * 0.8);
-		margin-top: calc(var(--navbar-height) * 0.1);
-		margin-bottom: calc(var(--navbar-height) * 0.1);
+		margin: 0;
+		margin-left: 25px;
+		width: 100%;
 	}
 	.viewport-container .searchbar {
 		display: none !important;
@@ -167,6 +168,9 @@
 		padding-bottom: 20px;
 	}
 	/* More Info */
+	.tns-ovh {
+		overflow: visible;
+	}
 	.more-info-grid {
 		display: flex;
 		flex-direction: column;
