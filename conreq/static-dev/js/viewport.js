@@ -4,6 +4,8 @@ let previous_admin_settings = new Map();
 let viewport_container_class = ".viewport-container";
 let viewport_class = ".viewport";
 let page_reload_needed = false;
+let viewport_http_request = $.ajax({});
+let viewport_http_request_aborted = false;
 
 // Create the lazyloader
 let callback_error = async function (element) {
@@ -231,18 +233,23 @@ let refresh_viewport = async function () {
 
 // Gets the viewport from a URL
 let get_viewport = async function (location, success = function () {}) {
-	http_request = get_url(location, function (response = null) {
+	// Abandon an old http request if the user clicks something else
+	if (viewport_http_request.status == undefined) {
+		viewport_http_request_aborted = true;
+		viewport_http_request.abort();
+	}
+	// Load the viewport html
+	viewport_http_request = $.get(location, function (response = null) {
 		return success(response);
 	}).fail(async function () {
-		if (http_request.statusText != "abort") {
+		if (viewport_http_request_aborted) {
+			viewport_http_request_aborted = false;
 			conreq_no_response_toast_message();
-			$(".viewport-container>*").hide();
-			$(".viewport>*").hide();
-			$(".viewport")
-				.css("text-align", "center")
-				.css("height", "auto")
-				.text("Could not connect to the server!");
-			$(".viewport").show();
+			$(".viewport-container>*").remove();
+			$(".viewport-container").append(
+				"<p>Could not connect to the server!</p>"
+			);
+			$(".viewport-container>p").css("text-align", "center");
 		}
 	});
 	return http_request;
