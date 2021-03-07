@@ -23,8 +23,12 @@
 	text-overflow: ellipsis;
 }
 
+.all-tab-groups .suboption.active,
+.all-tab-groups a:hover {
+	color: #000;
+}
+
 .all-tab-groups .suboption.active {
-	color: #ffffff;
 	border-left: 5px solid var(--accent-color);
 }
 
@@ -43,6 +47,7 @@
 	text-overflow: inherit;
 	padding: var(--navpages-btn-padding-group);
 	background: rgba(0, 0, 0, 0.05);
+	font-weight: 400;
 }
 
 .nav-tab.group.collapsed .fa-angle-up {
