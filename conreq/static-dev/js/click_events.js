@@ -90,6 +90,13 @@ var collection_btn_click_event = async function () {
 	});
 };
 
+var quick_info_btn_click_event = async function () {
+	$(".quick-info-read-more-btn").click(async function () {
+		$(".more-info-quick-info.collapse").collapse("toggle");
+		$(this).remove();
+	});
+};
+
 var create_content_modal_click_event = async function () {
 	$(
 		".series-modal-btn, .content-preview-modal-btn, .report-selection-modal-btn"

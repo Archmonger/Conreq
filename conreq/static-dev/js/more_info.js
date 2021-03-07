@@ -9,9 +9,9 @@ var create_all_carousels = async function () {
 
 var review_carousel = null;
 var create_review_carousel = async function () {
-	if ($(".more-info-reviews").length) {
+	if ($(".reviews-inner-container").length) {
 		review_carousel = tns({
-			container: ".more-info-reviews",
+			container: ".reviews-inner-container",
 			items: 1,
 			speed: 300,
 			swipeAngle: 60,

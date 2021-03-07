@@ -131,8 +131,8 @@ def preprocess_tmdb_result(tmdb_result):
                 review["content"] = __strip_urls(
                     __strip_html(__md.convert(review["content"]))
                 )
-                if len(review["content"]) > 400:
-                    review["content"] = review["content"][:400] + "..."
+                if len(review["content"]) > 1000:
+                    review["content"] = review["content"][:1000] + "..."
     # Keywords (Tags)
     if (
         tmdb_result.__contains__("keywords")

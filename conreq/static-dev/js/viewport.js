@@ -84,6 +84,7 @@ let add_viewport_event_listeners = async function () {
 	create_report_modal_click_event();
 	issue_approve_btn_click_event();
 	issue_delete_btn_click_event();
+	quick_info_btn_click_event();
 
 	// Server Settings menu events
 	$(
