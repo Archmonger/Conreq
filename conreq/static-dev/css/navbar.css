@@ -22,6 +22,10 @@
 	display: flex !important;
 }
 
+.viewport-container .searchbar {
+	box-shadow: var(--poster-box-shadow);
+}
+
 .searchbar:focus-within {
 	background: #fff;
 	color: #252525;
