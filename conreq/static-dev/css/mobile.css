@@ -71,7 +71,8 @@
 		--sidebar-width: 100%;
 		--sidebar-top: 0;
 		/* Navbar */
-		--searchbar-width: 70%;
+		--searchbar-width: 80%;
+		--navbar-height: 45px;
 		/* Viewport */
 		--viewport-left: 0;
 		--viewport-padding: 15px;
@@ -101,13 +102,15 @@
 		flex-wrap: nowrap;
 		justify-content: space-between;
 	}
-	.navbar-brand-container {
-		display: none;
-	}
 	.searchbar {
 		left: 0px;
 		position: relative;
-		margin: auto 0;
+		height: calc(var(--navbar-height) * 0.8);
+		margin-top: calc(var(--navbar-height) * 0.1);
+		margin-bottom: calc(var(--navbar-height) * 0.1);
+	}
+	.viewport-container .searchbar {
+		display: none !important;
 	}
 	.username-container {
 		margin: calc((var(--navbar-height) - 35px) / 2) 0;

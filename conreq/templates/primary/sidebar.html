@@ -1,12 +1,22 @@
 {% load static %}
 <nav id="sidebar" class="sidebar no-highlighting collapsed" data-aos="fade-right" data-aos-duration="1000">
+    <div class="sidebar-user">
+        <div class=sidebar-profile-pic>
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="username">
+            <div class="line-clamp-1">{{user.get_username}}</div>
+        </div>
+    </div>
+
     <div id="navpages" class="navpages">
         <div id="all-tab-groups" class="all-tab-groups">
 
             <!-- Discover Tab Group -->
             <div class="nav-tab line-clamp-1 group discover nav-link clickable" data-toggle="collapse"
                 data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">
-                Discover <i id="discover-fa" class="fas fa-angle-up"></i>
+                <i class="fas fa-plus-circle"></i> Discover
+                <i class="fas fa-angle-up"></i>
             </div>
             <div class="collapse show" id="discover-tabs">
                 <div class="nav-tab suboption discover">
@@ -37,7 +47,8 @@
             <!-- User Tab Group -->
             <div class="nav-tab line-clamp-1 group user nav-link clickable" data-toggle="collapse"
                 data-target="#user-tabs" aria-expanded="true" aria-controls="user-tabs">
-                User Options <i id="user-fa" class="fas fa-angle-up"></i>
+                <i class="fas fa-user-cog"></i> User
+                <i id="user-fa" class="fas fa-angle-up"></i>
             </div>
             <div class="collapse show" id="user-tabs">
                 <div class="nav-tab suboption discover">
@@ -61,7 +72,8 @@
             {% if user.is_staff %}
             <div class="nav-tab line-clamp-1 group admin nav-link clickable" data-toggle="collapse"
                 data-target="#admin-tabs" aria-expanded="true" aria-controls="admin-tabs">
-                Admin <i id="admin-fa" class="fas fa-angle-up"></i>
+                <i class="fas fa-toolbox"></i> Admin
+                <i id="admin-fa" class="fas fa-angle-up"></i>
             </div>
             <div class="collapse show" id="admin-tabs">
                 <div class="nav-tab suboption discover">

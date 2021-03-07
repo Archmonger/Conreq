@@ -126,6 +126,9 @@ let add_viewport_event_listeners = async function () {
 	// User Management events
 	user_delete_btn_click_event();
 	user_invite_btn_click_event();
+
+	// Searchbar
+	search_click_event();
 };
 
 // Destroys old viewport JS instances

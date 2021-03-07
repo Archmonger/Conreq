@@ -23,10 +23,9 @@
 	text-overflow: ellipsis;
 }
 
-.all-tab-groups .suboption:hover,
 .all-tab-groups .suboption.active {
 	color: #ffffff;
-	background-color: var(--accent-color);
+	border-left: 5px solid var(--accent-color);
 }
 
 .all-tab-groups .nav-tab {
@@ -43,37 +42,24 @@
 .nav-tab.group {
 	text-overflow: inherit;
 	padding: var(--navpages-btn-padding-group);
-	border-bottom: var(--navpages-btn-border);
-	border-top: var(--navpages-btn-border);
-}
-
-.nav-tab.group.collapsed {
-	border-bottom-color: transparent;
+	background: rgba(0, 0, 0, 0.05);
 }
 
 .nav-tab.group.collapsed .fa-angle-up {
 	transform: rotate(180deg);
 }
 
-.nav-tab.group.collapsed.admin {
-	border-bottom: var(--navpages-btn-border) !important;
-}
-
-.nav-tab.group:first-of-type {
-	border-top: none;
-}
-
-.nav-tab.group .fas {
+.nav-tab.group .fa-angle-up {
 	float: right;
 	color: rgba(0, 0, 0, 0.5);
 	position: absolute;
 	right: 0;
 	top: 0;
-	margin: var(--navpages-btn-padding-suboption);
+	margin: var(--navpages-btn-padding-group);
 }
 
 .nav-tab.suboption > a {
-	padding: var(--navpages-btn-padding-suboption);
+	padding: var(--navpages-btn-padding-group);
 }
 
 .nav-tab.suboption .fas {
@@ -93,4 +79,16 @@
 
 .nav-tab.suboption .fas:hover {
 	color: #fff;
+}
+
+.sidebar-user {
+	color: #fff;
+	padding: var(--navpages-btn-padding-group);
+	background: var(--accent-color);
+}
+.sidebar-user .username,
+.sidebar-user .sidebar-profile-pic {
+	display: inline-flex;
+	margin-right: 15px;
+	font-weight: 700;
 }

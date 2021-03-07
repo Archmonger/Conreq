@@ -21,13 +21,13 @@
 	--navpages-font-color: #323232;
 	/* Navbar */
 	--navbar-bg: #3f3f3f;
-	--navbar-height: 55px;
+	--navbar-height: 0px;
 	--navbar-font-color: rgba(255, 255, 255, 0.5);
 	--navbar-side-padding: 20px;
 	--logo-drop-shadow: drop-shadow(3px 3px 5px #2222224f);
 	--searchbar-font-color: rgba(255, 255, 255, 0.3);
 	--searchbar-bg: #252525;
-	--searchbar-width: 35%;
+	--searchbar-width: 45%;
 	/* Viewport */
 	--viewport-padding: 30px;
 	--viewport-total-padding: calc(var(--viewport-padding) * 2);

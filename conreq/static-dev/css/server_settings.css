@@ -58,7 +58,7 @@
 	margin-left: auto;
 }
 
-input[type="text"]:not(#content-search) {
+input[type="text"]:not(.content-search) {
 	width: 100%;
 }
 

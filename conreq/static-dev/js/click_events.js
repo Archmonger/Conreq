@@ -371,7 +371,14 @@ var simple_filter_btn_click_event = async function () {
 	});
 };
 
-var search_magnifying_glass_click_event = async function () {
+var search_click_event = async function () {
+	$(".content-search").unbind("keyup");
+	$(".content-search").on("keyup", async function (e) {
+		if (e.keyCode == 13) {
+			perform_search();
+		}
+	});
+	$(".searchbar .fas.fa-search").unbind("click");
 	$(".searchbar .fas.fa-search").click(async function () {
 		perform_search();
 	});

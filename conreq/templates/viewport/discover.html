@@ -1,7 +1,13 @@
 {% load static %}
 {% include "primary/loading_animation_container.html" %}
-<div class="viewport discover viewport-masonry infinite-scroll">
 
+<div class="searchbar form-inline box-shadow">
+    <input type="text" class="content-search" placeholder="Search..." autocomplete="off" autocorrect="off"
+        autocapitalize="off" spellcheck="false" data-search-url="{% url 'search:main' %}" />
+    <i class="fas fa-search clickable"></i>
+</div>
+
+<div class="viewport discover viewport-masonry infinite-scroll">
     {% if not all_cards %}
     <div class="empty-viewport">
         No results were found!

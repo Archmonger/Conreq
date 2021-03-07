@@ -234,3 +234,14 @@ var change_server_setting = function (setting_name = null, value = null) {
 		settings_save_failed_toast_message("Internal server error.");
 	});
 };
+
+// Performs a content search
+let perform_search = async function () {
+	let searchbar_input = $(".content-search");
+	let parameters = searchbar_input.val();
+	window.location =
+		"#" +
+		searchbar_input.data("search-url") +
+		"?query=" +
+		encodeURI(parameters);
+};
