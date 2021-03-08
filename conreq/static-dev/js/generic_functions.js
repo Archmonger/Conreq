@@ -236,8 +236,8 @@ var change_server_setting = function (setting_name = null, value = null) {
 };
 
 // Performs a content search
-let perform_search = async function () {
-	let searchbar_input = $(".content-search");
+let perform_search = async function (searchbar) {
+	let searchbar_input = $(searchbar);
 	let parameters = searchbar_input.val();
 	window.location =
 		"#" +

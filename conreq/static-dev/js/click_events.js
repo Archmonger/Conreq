@@ -375,12 +375,12 @@ var search_click_event = async function () {
 	$(".content-search").unbind("keyup");
 	$(".content-search").on("keyup", async function (e) {
 		if (e.keyCode == 13) {
-			perform_search();
+			perform_search(this);
 		}
 	});
 	$(".searchbar .fas.fa-search").unbind("click");
 	$(".searchbar .fas.fa-search").click(async function () {
-		perform_search();
+		perform_search(this);
 	});
 };
 
