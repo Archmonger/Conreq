@@ -1,14 +1,12 @@
 {% load static %}
 {% load solo_tags %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
-{% include "primary/loading_animation_container.html" %}
-<div class="viewport search viewport-masonry">
-    {% if all_cards %}
-    {% for card in all_cards %}
-    {% include "cards/poster.html" %}
-    {% endfor %}
 
-    {% else %}
+{% include "primary/loading_animation_container.html" %}
+{% include "primary/searchbar.html" %}
+
+<div class="viewport search viewport-masonry">
+    {% if not all_cards %}
     <div class="empty-viewport">
         {% if not server_settings.sonarr_enabled or not server_settings.radarr_enabled %}
 
@@ -20,8 +18,12 @@
         {% endif %}
 
         {% else %}
-        No search results were found!
+        No search results were found for "{{search_query}}"!
         {% endif %}
     </div>
     {% endif %}
+
+    {% for card in all_cards %}
+    {% include "cards/poster.html" %}
+    {% endfor %}
 </div>

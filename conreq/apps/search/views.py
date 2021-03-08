@@ -47,7 +47,5 @@ def search(request):
     content_discovery.determine_id_validity({"results": arr_results})
     set_many_availability(arr_results)
 
-    context = {
-        "all_cards": arr_results,
-    }
+    context = {"all_cards": arr_results, "search_query": query}
     return HttpResponse(template.render(context, request))

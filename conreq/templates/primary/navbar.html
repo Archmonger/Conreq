@@ -3,9 +3,5 @@
     <button class="navbar-toggler" type="button" aria-label="Toggle sidebar">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="searchbar form-inline">
-        <input type="text" class="content-search" placeholder="Search..." autocomplete="off" autocorrect="off"
-            autocapitalize="off" spellcheck="false" data-search-url="{% url 'search:main' %}" />
-        <i class="fas fa-search clickable"></i>
-    </div>
+    {% include "primary/searchbar.html" %}
 </div>
