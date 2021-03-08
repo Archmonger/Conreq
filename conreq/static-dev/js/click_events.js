@@ -380,7 +380,7 @@ var search_click_event = async function () {
 	});
 	$(".searchbar .fas.fa-search").unbind("click");
 	$(".searchbar .fas.fa-search").click(async function () {
-		perform_search(this);
+		perform_search($(this).parent().children("input")[0]);
 	});
 };
 
