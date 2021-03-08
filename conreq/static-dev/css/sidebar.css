@@ -91,9 +91,26 @@
 	padding: var(--navpages-btn-padding-group);
 	background: var(--accent-color);
 }
-.sidebar-user .username,
+
 .sidebar-user .sidebar-profile-pic {
 	display: inline-flex;
 	margin-right: 15px;
+	background: #072f12;
+	padding: 10px;
+	border-radius: 50%;
+	height: 35px;
+	width: 35px;
+	justify-content: center;
+	align-items: center;
+}
+
+.sidebar-user .username {
+	display: inline-flex;
+	width: calc(100% - 50px);
 	font-weight: 700;
+}
+
+.sidebar-user .username > div {
+	display: block !important;
+	width: 100%;
 }
