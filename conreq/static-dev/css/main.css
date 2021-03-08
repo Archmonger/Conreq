@@ -1,32 +1,22 @@
 :root {
 	/* Globals */
 	--body-bg: #f5f5f5;
+	--large-card-bg: #fff;
 	--global-font: "Roboto", sans-serif;
 	--primary-font-size: 14px;
 	--secondary-font-size: 12px;
 	--box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
 		0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 	--accent-color: #258a6d;
-	--green-dot: #39b54a;
-	--red-dot: #ff0000;
-	--yellow-dot: #ffff00;
-	--placeholder-gradient: var(--poster-bg-color);
+	--placeholder-bg: var(--poster-bg-color);
 	/* Sidebar */
 	--sidebar-bg: #fdfdfd;
-	--sidebar-top: var(--navbar-height);
 	--sidebar-width: 240px;
 	--navpages-btn-padding-group: 15px 20px;
-	--navpages-btn-padding-suboption: 15.5px 20px 15.5px 40px;
-	--navpages-btn-border: 1px solid rgba(0, 0, 0, 0.1);
-	--navpages-font-color: #323232;
+	--navpages-btn-padding-suboption: 15px 20px;
 	/* Navbar */
 	--navbar-bg: #3f3f3f;
 	--navbar-height: 0px;
-	--navbar-font-color: rgba(255, 255, 255, 0.5);
-	--navbar-side-padding: 20px;
-	--logo-drop-shadow: drop-shadow(3px 3px 5px #2222224f);
-	--searchbar-font-color: rgba(255, 255, 255, 0.3);
-	--searchbar-bg: #252525;
 	--searchbar-width: 45%;
 	/* Viewport */
 	--viewport-padding: 30px;
@@ -41,10 +31,6 @@
 		var(--poster-container-height) - var(--poster-height)
 	);
 	--poster-padding: 10px;
-	--poster-description-padding: 10px;
-	--poster-title-font-size: 16px;
-	--poster-title-top-padding: 7px;
-	--poster-title-bottom-padding: 5px;
 	--poster-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24),
 		0 0 2px rgba(0, 0, 0, 0.12);
 	/* Poster Indicators */
@@ -52,21 +38,6 @@
 	--tv-indicator-hr: 2px solid var(--tv-color);
 	--movie-color: #b66707;
 	--movie-indicator-hr: 2px solid var(--movie-color);
-	/* Modal */
-	--modal-top-btn-color: rgba(255, 255, 255, 0.7);
-	--modal-width: 780px;
-	--modal-height: 380px;
-	--modal-poster-width: 220px;
-	--modal-poster-height: calc(var(--modal-poster-width) * 1.5);
-	--modal-template-rows: calc(
-			(var(--modal-height) - var(--modal-poster-height)) / 2 + 20px
-		)
-		40px 90px auto;
-	--modal-template-columns: calc(
-			var(--modal-poster-width) +
-				(var(--modal-height) - var(--modal-poster-height))
-		)
-		auto;
 }
 
 /* Generic rules */
@@ -117,15 +88,15 @@ a:hover {
 }
 
 .red {
-	background-color: var(--red-dot);
+	background-color: #ff0000;
 }
 
 .green {
-	background-color: var(--green-dot);
+	background-color: #39b54a;
 }
 
 .yellow {
-	background-color: var(--yellow-dot);
+	background-color: #ffff00;
 }
 
 .inline-block {

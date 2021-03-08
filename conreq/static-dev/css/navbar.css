@@ -2,8 +2,8 @@
 	background: var(--navbar-bg);
 	height: var(--navbar-height);
 	box-shadow: var(--box-shadow);
-	padding-left: var(--navbar-side-padding);
-	padding-right: var(--navbar-side-padding);
+	padding-left: 20px;
+	padding-right: 20px;
 	z-index: 3;
 	display: none;
 }
@@ -14,10 +14,10 @@
 	margin: auto;
 	margin-bottom: var(--viewport-padding);
 	width: var(--searchbar-width);
-	background: var(--searchbar-bg);
+	background: #252525;
 	border-radius: 15px;
 	transition: background 0.4s ease, color 0.4s ease;
-	color: var(--searchbar-font-color);
+	color: rgba(255, 255, 255, 0.3);
 	overflow: hidden;
 	display: flex !important;
 }
@@ -61,13 +61,13 @@
 	position: absolute;
 	top: 0px;
 	right: 0px;
-	padding-right: var(--navbar-side-padding);
+	padding-right: 20px;
 	font-family: var(--global-font);
 	font-weight: 300;
 	font-size: var(--primary-font-size);
 	margin-top: calc((var(--navbar-height) - 20px) / 2);
 	margin-bottom: calc((var(--navbar-height) - 20px) / 2);
-	color: var(--navbar-font-color);
+	color: rgba(255, 255, 255, 0.5);
 	transition: color 0.3s ease;
 }
 

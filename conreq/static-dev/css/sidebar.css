@@ -12,6 +12,7 @@
 	overflow-y: auto;
 	overflow-y: overlay;
 	display: inline-block;
+	color: #323232;
 }
 
 .sidebar .navpages {
@@ -35,7 +36,6 @@
 .all-tab-groups .nav-tab {
 	text-decoration: none;
 	font-size: var(--primary-font-size);
-	color: var(--navpages-font-color);
 	display: block;
 	transition: 0.3s;
 	white-space: nowrap;
@@ -64,7 +64,7 @@
 }
 
 .nav-tab.suboption > a {
-	padding: var(--navpages-btn-padding-group);
+	padding: var(--navpages-btn-padding-suboption);
 }
 
 .nav-tab.suboption .fas {

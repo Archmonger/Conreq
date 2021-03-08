@@ -1,15 +1,9 @@
 :root {
-	--grid-object-bg: #fff;
 	--movie-indicator: #b66707;
-	--grid-object-spacing: 20px;
-	--grid-object-padding: 20px;
-	--grid-object-font-color: rgb(0, 0, 0);
+	--more-info-section-spacing: 20px;
+	--more-info-section-padding: 20px;
 	--left-column-width: 250px;
-	--grid-gutter: 25px;
-	--right-column-width: calc(
-		100vw - var(--sidebar-width) - var(--left-column-width) -
-			var(--grid-gutter) - (var(--viewport-padding) * 2)
-	);
+	--right-column-width: auto;
 	--cast-poster-card-height: calc(
 		var(--poster-height) + var(--cast-poster-card-details-height)
 	);
@@ -23,15 +17,10 @@
 
 /* Right Side */
 
-.right-group {
-	grid-column: 3;
-	grid-row: 1;
-}
-
 .more-info-main-info {
 	width: 100%;
 	display: inline-block;
-	padding-left: var(--grid-object-padding);
+	padding-left: var(--more-info-section-padding);
 	margin-top: 115px;
 }
 
@@ -159,13 +148,12 @@
 
 .more-info-overview {
 	box-sizing: border-box;
-	margin-top: var(--grid-object-spacing);
+	margin-top: var(--more-info-section-spacing);
 	width: 100%;
 	border-radius: 4px;
 	font-family: "Roboto", sans-serif;
 	font-weight: 400;
-	color: var(--grid-object-font-color);
-	padding-top: var(--grid-object-padding);
+	padding-top: var(--more-info-section-padding);
 	font-size: 15px;
 }
 
@@ -174,8 +162,8 @@
 	grid-column: 1;
 	font-size: 16px;
 	line-height: 22px;
-	padding-left: var(--grid-object-padding);
-	padding-right: var(--grid-object-padding);
+	padding-left: var(--more-info-section-padding);
+	padding-right: var(--more-info-section-padding);
 }
 
 .tns-inner > .more-info-reviews {
@@ -185,7 +173,6 @@
 .more-info-reviews .bold.head {
 	grid-row: 1;
 	grid-column: 1;
-	color: var(--grid-object-font-color);
 	text-align: left;
 }
 
@@ -269,9 +256,9 @@
 
 .grid-block.contains-carousel .more-info-head {
 	margin-bottom: 0;
-	padding-top: var(--grid-object-padding);
-	padding-left: var(--grid-object-padding);
-	padding-right: var(--grid-object-padding);
+	padding-top: var(--more-info-section-padding);
+	padding-left: var(--more-info-section-padding);
+	padding-right: var(--more-info-section-padding);
 	display: inline-block;
 	width: 100%;
 }
@@ -281,8 +268,8 @@
 }
 
 .tns-carousel {
-	padding-bottom: var(--grid-object-padding);
-	padding-top: calc(var(--grid-object-padding) / 2);
+	padding-bottom: var(--more-info-section-padding);
+	padding-top: calc(var(--more-info-section-padding) / 2);
 	display: flex;
 }
 
@@ -296,8 +283,8 @@
 
 .carousel-controls {
 	position: absolute;
-	right: calc(var(--grid-object-padding) / 2);
-	top: calc(var(--grid-object-padding) * 0.85);
+	right: calc(var(--more-info-section-padding) / 2);
+	top: calc(var(--more-info-section-padding) * 0.85);
 	display: flex;
 }
 
@@ -346,7 +333,7 @@
 }
 
 .artwork-container {
-	background: var(--placeholder-gradient);
+	background: var(--placeholder-bg);
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
@@ -404,7 +391,7 @@
 	width: 100%;
 	height: var(--backdrop-height);
 	position: absolute;
-	background: var(--placeholder-gradient);
+	background: var(--placeholder-bg);
 	z-index: -1;
 	opacity: 0.55;
 }
@@ -418,32 +405,26 @@
 	z-index: 1;
 }
 
-.more-info-grid {
+.more-info-topbar {
 	display: grid;
-	grid-template-columns: var(--left-column-width) var(--grid-gutter) var(
-			--right-column-width
-		);
+	grid-template-columns: var(--left-column-width) var(--right-column-width);
+	-moz-column-gap: 25px;
+	column-gap: 25px;
 }
 
 .grid-block.contains-carousel {
 	box-sizing: border-box;
-	margin-top: var(--grid-object-spacing);
+	margin-top: var(--more-info-section-spacing);
 	width: 100%;
 	border-radius: 4px;
 	font-family: "Roboto", sans-serif;
 	font-weight: 400;
-	color: var(--grid-object-font-color);
 	padding: 0;
 	font-size: 15px;
 	position: relative;
 }
 
 /* Left Side */
-
-.left-group {
-	grid-column: 1;
-	grid-row: 1;
-}
 
 #movie-request-status {
 	display: inline;
@@ -464,7 +445,7 @@
 	box-shadow: var(--box-shadow);
 	border-radius: 5px;
 	overflow: hidden;
-	background: var(--placeholder-gradient);
+	background: var(--placeholder-bg);
 }
 
 .more-info-poster-container img {
@@ -500,7 +481,6 @@
 	border-radius: 4px;
 	font-family: "Roboto", sans-serif;
 	font-weight: 400;
-	color: var(--grid-object-font-color);
 	font-size: 15px;
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);

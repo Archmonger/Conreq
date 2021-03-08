@@ -1,10 +1,7 @@
 :root {
-	--navpages-font-color: rgb(255 255 255 / 0.75);
-	--grid-object-bg: linear-gradient(90deg, #2a2a2a, hsl(0deg 0% 22%));
-	--grid-object-font-color: rgb(255 255 255 / 0.75);
+	--large-card-bg: linear-gradient(90deg, #2a2a2a, hsl(0deg 0% 22%));
 	--poster-bg-color: #191919;
 	--navbar-bg: transparent;
-	--searchbar-bg: rgb(0 0 0 / 0.45);
 }
 
 html {
@@ -21,8 +18,13 @@ body {
 	);
 }
 
+.searchbar {
+	background: rgb(0 0 0 / 0.45);
+}
+
 .sidebar {
 	background: transparent;
+	color: rgb(255 255 255 / 0.75);
 }
 
 .all-tab-groups .suboption.active,
@@ -63,7 +65,7 @@ body {
 
 /* Manage Users */
 .table-wrapper {
-	background: var(--grid-object-bg);
+	background: var(--large-card-bg);
 }
 
 table.table-striped tbody tr:nth-of-type(odd) {

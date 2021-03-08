@@ -29,6 +29,13 @@
 	display: block;
 	transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
 	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
+	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
+	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
+		-webkit-filter 0.3s ease;
+	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
+		-webkit-filter 0.3s ease;
+	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
+		-webkit-filter 0.3s ease;
 	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
 		-webkit-filter 0.3s ease;
 	z-index: 6;
@@ -59,11 +66,10 @@
 	font-weight: 300;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-size: var(--poster-title-font-size);
-	line-height: calc(var(--poster-title-font-size) + 2);
+	font-size: 16px;
+	line-height: calc(16px + 2);
 	color: #ffffff;
-	padding: var(--poster-title-top-padding) var(--poster-description-padding)
-		var(--poster-title-bottom-padding) var(--poster-description-padding);
+	padding: 7px var(--poster-padding) 5px var(--poster-padding);
 	text-align: left;
 	display: block;
 	width: calc(var(--poster-width) - 20px);
@@ -75,7 +81,7 @@
 	font-size: var(--secondary-font-size);
 	text-align: center;
 	color: rgba(255, 255, 255, 0.4);
-	padding: 0px var(--poster-description-padding);
+	padding: 0px var(--poster-padding);
 }
 
 .description-tint {
