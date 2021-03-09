@@ -67,19 +67,14 @@
 	padding: var(--navpages-btn-padding-suboption);
 }
 
-.nav-tab.suboption .fas {
+.nav-tab.suboption .fa-filter {
 	color: rgba(255, 255, 255, 0.6);
 	transition: color 0.3s ease, opacity 0.3s ease;
-	opacity: 0;
+	opacity: 1;
 	position: absolute;
 	right: 0;
 	top: 0;
 	margin: var(--navpages-btn-padding-suboption);
-}
-
-.nav-tab.suboption.active .fas,
-.nav-tab.suboption:hover .fas {
-	opacity: 1;
 }
 
 .nav-tab.suboption .fas:hover {
