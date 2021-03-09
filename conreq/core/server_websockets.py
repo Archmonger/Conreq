@@ -26,7 +26,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             # User could not be logged in
             log.handler(
                 "Websocket login failure on initial connection!",
-                log.ERROR,
+                log.WARNING,
                 _logger,
             )
             await self.__forbidden()
