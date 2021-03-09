@@ -13,7 +13,7 @@
 	--sidebar-bg: #fdfdfd;
 	--sidebar-width: 240px;
 	--navpages-btn-padding-group: 15px 20px;
-	--navpages-btn-padding-suboption: 15px 20px;
+	--navpages-btn-padding-suboption: 15px 20px 15px 35px;
 	/* Navbar */
 	--navbar-bg: #3f3f3f;
 	--navbar-height: 0px;
