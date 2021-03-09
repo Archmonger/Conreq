@@ -239,9 +239,14 @@ var change_server_setting = function (setting_name = null, value = null) {
 let perform_search = async function (searchbar) {
 	let searchbar_input = $(searchbar);
 	let parameters = searchbar_input.val();
-	window.location =
+	let content_type = searchbar_input.data("content-type");
+	let new_location =
 		"#" +
 		searchbar_input.data("search-url") +
 		"?query=" +
 		encodeURI(parameters);
+	if (content_type) {
+		new_location += "&content_type=" + content_type;
+	}
+	window.location = new_location;
 };

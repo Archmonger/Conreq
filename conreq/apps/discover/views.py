@@ -64,7 +64,7 @@ def discover_tv(request):
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = {"all_cards": tmdb_results}
+    context = {"all_cards": tmdb_results, "content_type": "tv"}
     template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 
@@ -91,7 +91,7 @@ def discover_movies(request):
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = {"all_cards": tmdb_results}
+    context = {"all_cards": tmdb_results, "content_type": "movie"}
     template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 
