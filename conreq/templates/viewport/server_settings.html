@@ -6,6 +6,7 @@
 
 {% csrf_token %}
 {% include "primary/loading_animation_container.html" %}
+<input id="page-name" type="hidden" value="Server Settings">
 
 <div class="viewport server settings" data-url="{% url 'server_settings:update_settings' %}">
 

@@ -78,6 +78,11 @@ let update_active_tab = async function () {
 	});
 };
 
+// Updates the page name
+let update_page_title = async function () {
+	document.title = $("#page-name").val() + " - " + $("#app-name").val();
+};
+
 // Adds viewport related event listeners
 let add_viewport_event_listeners = async function () {
 	// More Info page events
@@ -292,6 +297,7 @@ var generate_viewport = async function (fresh_reload = true) {
 		);
 		await refresh_viewport();
 		add_viewport_event_listeners();
+		update_page_title();
 
 		// Display the new content
 		$(".viewport-container>.loading-animation-container").hide();

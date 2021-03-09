@@ -116,7 +116,7 @@ def report_issue_modal(request):
 def all_issues(request):
     reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
     all_cards = generate_issue_cards(reported_issues)
-    context = {"all_cards": all_cards}
+    context = {"all_cards": all_cards, "page_name": "All Issues"}
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))
 
@@ -129,6 +129,6 @@ def my_issues(request):
         ReportedIssue.objects.filter(reported_by=request.user).order_by("id").reverse()
     )
     all_cards = generate_issue_cards(reported_issues)
-    context = {"all_cards": all_cards}
+    context = {"all_cards": all_cards, "page_name": "My Issues"}
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))

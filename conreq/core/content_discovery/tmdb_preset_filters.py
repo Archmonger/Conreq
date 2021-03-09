@@ -99,7 +99,7 @@ def combined_filters(filter_name=None, slug=False, add_values=()):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        "sci-fi and fantasy": {
+        "science fiction and fantasy": {
             "sort_by": "popularity.desc",
             "with_genres": "10765|878|14",
             "without_keywords": "10103,161155",

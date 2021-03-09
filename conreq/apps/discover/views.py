@@ -21,6 +21,7 @@ def discover_all(request):
     content_discovery = ContentDiscovery()
     template = loader.get_template("viewport/discover.html")
     preset_filter = request.GET.get("filter", "")
+    page_name = preset_filter.replace("-", " ").title()
 
     # Get the page number from the URL
     page = int(request.GET.get("page", 1))
@@ -33,13 +34,12 @@ def discover_all(request):
         )["results"]
     else:
         tmdb_results = content_discovery.all(page)["results"]
+        page_name = "Combined"
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = {
-        "all_cards": tmdb_results,
-    }
+    context = {"all_cards": tmdb_results, "page_name": page_name}
 
     return HttpResponse(template.render(context, request))
 
@@ -51,6 +51,7 @@ def discover_tv(request):
     content_discovery = ContentDiscovery()
     preset_filter = request.GET.get("filter", "")
     page = int(request.GET.get("page", 1))
+    page_name = preset_filter.replace("-", " ").title()
 
     # Get content
     if preset_filter:
@@ -60,11 +61,12 @@ def discover_tv(request):
         )["results"]
     else:
         tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
+        page_name = "TV Shows"
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = {"all_cards": tmdb_results, "content_type": "tv"}
+    context = {"all_cards": tmdb_results, "content_type": "tv", "page_name": page_name}
     template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 
@@ -75,6 +77,7 @@ def discover_tv(request):
 def discover_movies(request):
     content_discovery = ContentDiscovery()
     preset_filter = request.GET.get("filter", "")
+    page_name = preset_filter.replace("-", " ").title()
 
     # Get the page number from the URL
     page = int(request.GET.get("page", 1))
@@ -87,11 +90,16 @@ def discover_movies(request):
         )["results"]
     else:
         tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
+        page_name = "Movies"
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = {"all_cards": tmdb_results, "content_type": "movie"}
+    context = {
+        "all_cards": tmdb_results,
+        "content_type": "movie",
+        "page_name": page_name,
+    }
     template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 

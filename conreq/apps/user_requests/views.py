@@ -83,7 +83,7 @@ def my_requests(request):
         .values()
     )
     all_cards = generate_requests_cards(user_requests)
-    context = {"all_cards": all_cards}
+    context = {"all_cards": all_cards, "page_name": "My Requests"}
     template = loader.get_template("viewport/requests.html")
     return HttpResponse(template.render(context, request))
 
@@ -104,6 +104,6 @@ def all_requests(request):
         )
     )
     all_cards = generate_requests_cards(user_requests)
-    context = {"all_cards": all_cards}
+    context = {"all_cards": all_cards, "page_name": "All Requests"}
     template = loader.get_template("viewport/requests.html")
     return HttpResponse(template.render(context, request))

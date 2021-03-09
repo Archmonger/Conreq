@@ -4,6 +4,7 @@
 
 {% csrf_token %}
 {% include "primary/loading_animation_container.html" %}
+<input id="page-name" type="hidden" value="{% firstof content.title content.name 'Unknown' %}">
 
 <div class="viewport more-info">
     <div class="more-info-topbar">
