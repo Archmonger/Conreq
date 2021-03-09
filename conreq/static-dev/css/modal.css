@@ -137,6 +137,7 @@
 	.suboption-title-container
 	> *:not(.modal-dot-container) {
 	display: inline-block;
+	display: -webkit-inline-box;
 	margin-right: 5px;
 }
 

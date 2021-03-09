@@ -133,7 +133,7 @@ a:hover {
 }
 
 .line-clamp-1 {
-	display: -webkit-box !important;
+	display: block;
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	text-overflow: ellipsis;
