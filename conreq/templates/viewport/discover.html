@@ -1,7 +1,9 @@
 {% load static %}
 
+{% csrf_token %}
 {% include "primary/loading_animation_container.html" %}
 {% include "primary/searchbar.html" %}
+
 <div class="viewport discover viewport-masonry infinite-scroll">
     {% if not all_cards %}
     <div class="empty-viewport">
