@@ -3,6 +3,7 @@ var create_all_carousels = async function () {
 	create_video_carousel();
 	create_recommended_carousel();
 	create_image_carousel();
+	create_poster_popup();
 	create_collection_carousel();
 	create_cast_carousel();
 };
@@ -118,21 +119,31 @@ var create_image_carousel = async function () {
 			$(".artwork-container").magnificPopup({
 				delegate: "a",
 				type: "image",
-				closeOnContentClick: true,
-				closeBtnInside: true,
-				fixedContentPos: true,
-				mainClass: "mfp-no-margins mfp-with-zoom", // class to remove default margin from left and right side
-				image: {
-					verticalFit: true,
-				},
-				zoom: {
-					enabled: false,
-					duration: 300, // don't foget to change the duration also in CSS
-				},
+				mainClass: "mfp-no-margins", // class to remove default margin from left and right side
 				gallery: {
 					enabled: true,
 					navigateByImgClick: true,
-					preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
+					preload: [1, 1], // Will preload 1 before and 1 after the current image
+				},
+			});
+		});
+	}
+};
+
+var create_poster_popup = async function () {
+	if (
+		$(".more-info-poster").length &&
+		$(".more-info-poster").data("contains-img")
+	) {
+		$(document).ready(function () {
+			$(".more-info-poster-container").magnificPopup({
+				delegate: "img",
+				type: "image",
+				closeOnContentClick: true,
+				callbacks: {
+					elementParse: function (item) {
+						item.src = item.el.attr("src");
+					},
 				},
 			});
 		});
