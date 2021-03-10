@@ -13,9 +13,11 @@
         <div id="all-tab-groups" class="all-tab-groups">
 
             <!-- Discover Tab Group -->
-            <div class="nav-tab line-clamp-1 group discover nav-link clickable" data-toggle="collapse"
-                data-target="#discover-tabs" aria-expanded="true" aria-controls="discover-tabs">
-                <i class="fas fa-compass"></i> Discover
+            <div class="nav-tab group discover clickable" data-toggle="collapse" data-target="#discover-tabs"
+                aria-expanded="true" aria-controls="discover-tabs">
+                <div class="group-name line-clamp-1"><i class="fas fa-compass"></i>
+                    Discover
+                </div>
                 <i class="fas fa-angle-up" title="Collapse Group"></i>
             </div>
             <div class="collapse show" id="discover-tabs">
@@ -45,9 +47,11 @@
             </div>
 
             <!-- User Tab Group -->
-            <div class="nav-tab line-clamp-1 group user nav-link clickable" data-toggle="collapse"
-                data-target="#user-tabs" aria-expanded="true" aria-controls="user-tabs">
-                <i class="fas fa-user-cog"></i> User
+            <div class="nav-tab group user clickable" data-toggle="collapse" data-target="#user-tabs"
+                aria-expanded="true" aria-controls="user-tabs">
+                <div class="group-name line-clamp-1"><i class="fas fa-user-cog"></i>
+                    User
+                </div>
                 <i id="user-fa" class="fas fa-angle-up" title="Collapse Group"></i>
             </div>
             <div class="collapse show" id="user-tabs">
@@ -70,9 +74,11 @@
 
             <!-- Admin Tab Group -->
             {% if user.is_staff %}
-            <div class="nav-tab line-clamp-1 group admin nav-link clickable" data-toggle="collapse"
-                data-target="#admin-tabs" aria-expanded="true" aria-controls="admin-tabs">
-                <i class="fas fa-toolbox"></i> Admin
+            <div class="nav-tab group admin clickable" data-toggle="collapse" data-target="#admin-tabs"
+                aria-expanded="true" aria-controls="admin-tabs">
+                <div class="group-name line-clamp-1"><i class="fas fa-toolbox"></i>
+                    Admin
+                </div>
                 <i id="admin-fa" class="fas fa-angle-up" title="Collapse Group"></i>
             </div>
             <div class="collapse show" id="admin-tabs">
