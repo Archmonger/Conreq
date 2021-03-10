@@ -47,7 +47,7 @@
 		font-size: 22px;
 	}
 	.more-info-quick-info {
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(4, auto);
 	}
 }
 
@@ -61,7 +61,7 @@
 		display: none;
 	}
 	.more-info-quick-info {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(3, auto);
 	}
 }
 
@@ -229,9 +229,9 @@
 	.grid-block.contains-carousel .more-info-head {
 		padding-bottom: 15px;
 	}
-	.more-info-quick-info {
+	.more-info-quick-info-container {
 		margin-left: 0;
-		padding: 0;
+		margin-right: 0;
 	}
 	/*  Settings Menu    */
 	.settings-input-group {
@@ -273,7 +273,7 @@
 	}
 	/* More Info */
 	.more-info-quick-info {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(2, auto);
 	}
 }
 
@@ -289,7 +289,7 @@
 	}
 	/* More Info */
 	.more-info-quick-info {
-		grid-template-columns: repeat(1, 1fr);
+		grid-template-columns: repeat(1, auto);
 	}
 }
 
