@@ -6,6 +6,7 @@ let viewport_class = ".viewport";
 let page_reload_needed = false;
 let viewport_http_request = $.ajax({});
 let viewport_http_request_aborted = false;
+let base_url = $("#base-url").val() + "/";
 
 // Create the lazyloader
 let callback_error = async function (element) {
@@ -65,7 +66,7 @@ let update_active_tab = async function () {
 		// Set the active tab
 		if (
 			nav_tab.children("a").attr("href") ==
-			"#" + get_window_location_no_params()
+			"#" + add_base_url(get_window_location_no_params())
 		) {
 			if (!nav_tab.hasClass("active")) {
 				nav_tab.addClass("active");
@@ -81,6 +82,39 @@ let update_active_tab = async function () {
 // Updates the page name
 let update_page_title = async function () {
 	document.title = $("#page-name").val() + " - " + $("#app-name").val();
+};
+
+// Sets and returns the window location with the base url removed
+let remove_base_url = function (
+	window_location = null,
+	set_window_location = true
+) {
+	// Get the current location
+	if (!window_location) {
+		window_location = get_window_location();
+	}
+	// Remove the base URL
+	if (window_location && window_location.startsWith(base_url)) {
+		window_location = window_location.slice(base_url.length);
+	}
+	// Replace the current page in the browser history
+	if (set_window_location && window.history.replaceState) {
+		window.history.replaceState({}, null, "#" + window_location);
+	}
+	return window_location;
+};
+
+// Returns the window location with the base url added
+let add_base_url = function (window_location = null) {
+	// Get the current location
+	if (!window_location) {
+		window_location = get_window_location();
+	}
+	// Append the base URL
+	if (window_location && !window_location.startsWith(base_url)) {
+		window_location = base_url + window_location;
+	}
+	return window_location;
 };
 
 // Adds viewport related event listeners
@@ -270,8 +304,8 @@ var generate_viewport = async function (fresh_reload = true) {
 	// Read the URL hash to determine what page we are on
 	let window_location = get_window_location();
 
-	// If there is no hash, add one
-	if (window_location == "" || window_location == null) {
+	// If there is no window location, default to the first tab
+	if (!window_location) {
 		if (window.history.replaceState) {
 			// Replace the current page in the browser history to add a hash
 			window.history.replaceState({}, null, $(".nav-tab a").attr("href"));
@@ -279,12 +313,15 @@ var generate_viewport = async function (fresh_reload = true) {
 		}
 	}
 
+	// Make the URL pretty by removing the base URL
+	remove_base_url();
+
 	// Change the current tab
 	update_active_tab();
 
 	// Asynchronously fetch new viewport content
 	viewport_loaded = false;
-	get_viewport(window_location, async function (viewport_html) {
+	get_viewport(add_base_url(window_location), async function (viewport_html) {
 		// Save that the page was successfully loaded
 		viewport_loaded = true;
 
