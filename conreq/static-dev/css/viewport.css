@@ -1,5 +1,5 @@
 .viewport-container {
-	position: relative;
+	position: absolute;
 	height: calc(100% - var(--navbar-height));
 	overflow-x: hidden;
 	overflow-y: auto;

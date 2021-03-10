@@ -4,16 +4,16 @@
 {% include "primary/loading_animation_container.html" %}
 <input id="page-name" type="hidden" value="{{page_name}}">
 
-<div class="viewport requests viewport-masonry">
-    {% if all_cards %}
-    {% for card in all_cards %}
-    {% include "cards/issue.html" %}
-    {% endfor %}
-    {% endif %}
-
+<div class="viewport requests {% if all_cards %}viewport-masonry{% endif %}">
     {% if not all_cards %}
     <div class="empty-viewport">
         No issues were found! Try reporting something first!
     </div>
+    {% endif %}
+
+    {% if all_cards %}
+    {% for card in all_cards %}
+    {% include "cards/issue.html" %}
+    {% endfor %}
     {% endif %}
 </div>

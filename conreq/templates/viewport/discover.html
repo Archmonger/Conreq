@@ -5,7 +5,7 @@
 {% include "primary/searchbar.html" %}
 <input id="page-name" type="hidden" value="{% if filter_name %}{{ filter_name }} {% endif %}{{ page_name }}">
 
-<div class="viewport discover viewport-masonry infinite-scroll">
+<div class="viewport discover {% if all_cards %}viewport-masonry infinite-scroll{% endif %}">
     {% if not all_cards %}
     <div class="empty-viewport">
         No results were found!
