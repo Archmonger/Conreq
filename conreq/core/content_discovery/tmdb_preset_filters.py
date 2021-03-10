@@ -59,7 +59,7 @@ def combined_filters(filter_name=None, slug=False, add_values=()):
             "without_keywords": "10103,161155",
             "with_original_language": "en|ja",
         },
-        "all time favorites": {
+        "all time favorite": {
             "sort_by": "vote_average.desc",
             "vote_count.gte": "300",
             "without_keywords": "10103,161155",

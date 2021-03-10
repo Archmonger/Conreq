@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
+from titlecase import titlecase
 
 from .helpers import preset_filter_extras
 
@@ -19,11 +20,8 @@ from .helpers import preset_filter_extras
 @performance_metrics()
 def discover_all(request):
     content_discovery = ContentDiscovery()
-    template = loader.get_template("viewport/discover.html")
     preset_filter = request.GET.get("filter", "")
-    page_name = preset_filter.replace("-", " ").title()
-
-    # Get the page number from the URL
+    filter_name = titlecase(preset_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))
 
     # Get content
@@ -34,13 +32,16 @@ def discover_all(request):
         )["results"]
     else:
         tmdb_results = content_discovery.all(page)["results"]
-        page_name = "Combined"
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = {"all_cards": tmdb_results, "page_name": page_name}
-
+    context = {
+        "all_cards": tmdb_results,
+        "page_name": "TV & Movies",
+        "filter_name": filter_name,
+    }
+    template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 
 
@@ -50,8 +51,8 @@ def discover_all(request):
 def discover_tv(request):
     content_discovery = ContentDiscovery()
     preset_filter = request.GET.get("filter", "")
+    filter_name = titlecase(preset_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))
-    page_name = preset_filter.replace("-", " ").title()
 
     # Get content
     if preset_filter:
@@ -61,12 +62,16 @@ def discover_tv(request):
         )["results"]
     else:
         tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
-        page_name = "TV Shows"
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
 
-    context = {"all_cards": tmdb_results, "content_type": "tv", "page_name": page_name}
+    context = {
+        "all_cards": tmdb_results,
+        "content_type": "tv",
+        "page_name": "Television",
+        "filter_name": filter_name,
+    }
     template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
 
@@ -77,9 +82,7 @@ def discover_tv(request):
 def discover_movies(request):
     content_discovery = ContentDiscovery()
     preset_filter = request.GET.get("filter", "")
-    page_name = preset_filter.replace("-", " ").title()
-
-    # Get the page number from the URL
+    filter_name = titlecase(preset_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))
 
     # Get content
@@ -90,7 +93,6 @@ def discover_movies(request):
         )["results"]
     else:
         tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
-        page_name = "Movies"
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
@@ -98,7 +100,8 @@ def discover_movies(request):
     context = {
         "all_cards": tmdb_results,
         "content_type": "movie",
-        "page_name": page_name,
+        "page_name": "Movies",
+        "filter_name": filter_name,
     }
     template = loader.get_template("viewport/discover.html")
     return HttpResponse(template.render(context, request))
@@ -108,7 +111,6 @@ def discover_movies(request):
 @login_required
 @performance_metrics()
 def simple_filter_modal(request):
-    template = loader.get_template("modal/discover_filter_simple.html")
     content_type = request.GET.get("content_type")
     context = {
         "content_type": content_type,
@@ -116,4 +118,5 @@ def simple_filter_modal(request):
         "movie_filters": movie_filters().keys(),
         "combined_filters": combined_filters().keys(),
     }
+    template = loader.get_template("modal/discover_filter_simple.html")
     return HttpResponse(template.render(context, request))
