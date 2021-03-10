@@ -281,8 +281,7 @@ let get_viewport = async function (location, success = function () {}) {
 	viewport_http_request = $.get(location, function (response = null) {
 		return success(response);
 	}).fail(async function () {
-		if (viewport_http_request_aborted) {
-			viewport_http_request_aborted = false;
+		if (!viewport_http_request_aborted) {
 			conreq_no_response_toast_message();
 			$(".viewport-container>*").remove();
 			$(".viewport-container").append(
@@ -290,6 +289,7 @@ let get_viewport = async function (location, success = function () {}) {
 			);
 			$(".viewport-container>p").css("text-align", "center");
 		}
+		viewport_http_request_aborted = false;
 	});
 	return http_request;
 };
