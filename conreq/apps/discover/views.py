@@ -9,6 +9,7 @@ from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
+from django.urls import reverse
 from django.views.decorators.cache import cache_page
 from titlecase import titlecase
 
@@ -112,11 +113,19 @@ def discover_movies(request):
 @performance_metrics()
 def simple_filter_modal(request):
     content_type = request.GET.get("content_type")
+    if content_type == "tv":
+        filters = tv_filters().keys()
+        filter_url = reverse("discover:tv")
+    elif content_type == "movie":
+        filters = movie_filters().keys()
+        filter_url = reverse("discover:movies")
+    elif not content_type:
+        filters = combined_filters().keys()
+        filter_url = reverse("discover:all")
     context = {
         "content_type": content_type,
-        "tv_filters": tv_filters().keys(),
-        "movie_filters": movie_filters().keys(),
-        "combined_filters": combined_filters().keys(),
+        "filters": filters,
+        "filter_url": filter_url,
     }
     template = loader.get_template("modal/discover_filter_simple.html")
     return HttpResponse(template.render(context, request))
