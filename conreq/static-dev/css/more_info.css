@@ -188,10 +188,22 @@
 .giant-quote {
 	display: inline;
 	font-size: 20px;
+	font-family: "Times New Roman", serif;
+}
+
+.giant-quote:first-of-type {
+	margin-right: 3px;
+}
+
+.giant-quote:last-of-type {
+	margin-left: 3px;
 }
 
 .review-quote {
-	display: inline;
+	display: block;
+	max-height: 250px;
+	overflow-y: auto;
+	padding-right: 15px;
 }
 
 .review {
