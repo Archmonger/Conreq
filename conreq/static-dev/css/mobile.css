@@ -252,6 +252,13 @@
 		font-size: 20px;
 		padding: 5px;
 	}
+	/* Manage Users */
+	.table-wrapper {
+		padding: 0;
+	}
+	.table-title {
+		margin: 0;
+	}
 }
 
 @media only screen and (max-width: 600px) {

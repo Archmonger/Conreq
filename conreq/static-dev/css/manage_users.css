@@ -1,8 +1,10 @@
+.table {
+	table-layout: fixed;
+}
 .table-wrapper {
 	background: #fff;
 	padding: 20px 25px;
 	border-radius: 3px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 	box-shadow: var(--box-shadow);
 }
 .table-title {
@@ -102,8 +104,7 @@ table.table td .action-btn:hover {
 table.table td i {
 	font-size: 19px;
 }
-table.table td.max-width {
-	max-width: 200px;
+table.table td {
 	overflow-y: auto;
 }
 table.table .avatar {
