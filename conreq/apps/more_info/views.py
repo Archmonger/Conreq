@@ -224,7 +224,7 @@ def recommended(request):
             "results_contain_valid_id": results_contain_valid_id,
         }
 
-        template = loader.get_template("viewport/more_info_recommended.html")
+        template = loader.get_template("viewport/components/more_info_recommended.html")
         return HttpResponse(template.render(context, request))
 
 
@@ -246,5 +246,5 @@ def collection(request):
             set_many_availability(tmdb_collection["parts"])
 
         context = {"collection": tmdb_collection}
-        template = loader.get_template("viewport/more_info_collection.html")
+        template = loader.get_template("viewport/components/more_info_collection.html")
         return HttpResponse(template.render(context, request))
