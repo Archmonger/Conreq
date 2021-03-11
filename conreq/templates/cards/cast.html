@@ -1,12 +1,10 @@
 {% load static %}
 <div class="poster-container cast no-highlighting">
     <div class="description-tint"></div>
-    <div> 
-        <div class="poster-fix">
-            <img src="{% static 'images/transparent.png' %}"
-                data-src="{% if card.profile_path %}https://image.tmdb.org/t/p/w300{{card.profile_path}}{% endif %}"
-                class="poster lazy" draggable="false" alt="{% firstof card.name 'Unknown' %}" />
-        </div>
+    <div class="poster-fix">
+        <img src="{% static 'images/transparent.png' %}"
+            data-src="{% if card.profile_path %}https://image.tmdb.org/t/p/w300{{card.profile_path}}{% endif %}"
+            class="poster lazy" draggable="false" alt="{% firstof card.name 'Unknown' %}" />
     </div>
 
     <div class="poster-description-container {% if not card.profile_path %}opacity-1{% endif %}">
