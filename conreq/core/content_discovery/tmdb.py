@@ -5,7 +5,6 @@ from conreq.utils.multiprocessing import ReturnThread, threaded_execution
 
 from .tmdb_base import (
     COLLECTION_CACHE_TIMEOUT,
-    DISCOVER_CACHE_TIMEOUT,
     GET_BY_TMDB_ID_CACHE_TIMEOUT,
     GET_BY_TVDB_ID_CACHE_TIMEOUT,
     LANGUAGE,
@@ -106,47 +105,54 @@ class ContentDiscovery(Base):
 
     def popular_movies(self, page_number, page_multiplier=1):
         """Get popular movies from TMDB."""
-        return self.discover_movie_by_preset_filter(
-            "popular", page_number, page_multiplier
+        return self.discover_movie_by_filter(
+            "popular",
+            page_number,
+            page_multiplier,
         )
 
     def top_movies(self, page_number, page_multiplier=1):
         """Get top movies from TMDB."""
-        return self.discover_movie_by_preset_filter(
-            "top-rated", page_number, page_multiplier
+        return self.discover_movie_by_filter(
+            "top-rated",
+            page_number,
+            page_multiplier,
         )
 
     def popular_tv(self, page_number, page_multiplier=1):
         """Get popular TV from TMDB."""
-        return self.discover_tv_by_preset_filter(
-            "popular", page_number, page_multiplier
-        )
+        return self.discover_tv_by_filter("popular", page_number, page_multiplier)
 
     def top_tv(self, page_number, page_multiplier=1):
         """Get top TV from TMDB."""
-        return self.discover_tv_by_preset_filter(
-            "top-rated", page_number, page_multiplier
-        )
+        return self.discover_tv_by_filter("top-rated", page_number, page_multiplier)
 
-    def discover_by_preset_filter(
-        self, filter_name, page_number, page_multiplier=1, add_values=()
+    def discover_by_filter(
+        self, filter_name, page_number, page_multiplier=1, add_values=(), **kwargs
     ):
         """Obtains TV/Movie results based on a predefined filter name."""
         function_list = [
-            self.discover_movie_by_preset_filter,
-            self.discover_tv_by_preset_filter,
+            self.discover_movie_by_filter,
+            self.discover_tv_by_filter,
         ]
         results = threaded_execution(
-            function_list, [filter_name, page_number, page_multiplier, add_values]
+            function_list,
+            [filter_name, page_number, page_multiplier, add_values],
+            **kwargs,
         )
 
         # Shuffle the results on each page
         return self._shuffle_results(self._merge_results(*results))
 
-    def discover_movie_by_preset_filter(
-        self, filter_name, page_number, page_multiplier=1, add_values=()
+    def discover_movie_by_filter(
+        self, filter_name, page_number, page_multiplier=1, add_values=(), **kwargs
     ):
         """Obtains movie results based on a predefined filter name."""
+        if filter_name == "custom":
+            filter_params = kwargs
+        else:
+            filter_params = movie_filters(filter_name, slug=True, add_values=add_values)
+
         return self._set_content_attributes(
             "movie",
             self._multi_page_fetch(
@@ -155,14 +161,19 @@ class ContentDiscovery(Base):
                 page_number,
                 page_multiplier,
                 timezone=_timezone,
-                **movie_filters(filter_name, slug=True, add_values=add_values),
+                **filter_params,
             ),
         )
 
-    def discover_tv_by_preset_filter(
-        self, filter_name, page_number, page_multiplier=1, add_values=()
+    def discover_tv_by_filter(
+        self, filter_name, page_number, page_multiplier=1, add_values=(), **kwargs
     ):
         """Obtains TV results based on a predefined filter name."""
+        if filter_name == "custom":
+            filter_params = kwargs
+        else:
+            filter_params = tv_filters(filter_name, slug=True, add_values=add_values)
+
         return self._set_content_attributes(
             "tv",
             self._multi_page_fetch(
@@ -171,64 +182,9 @@ class ContentDiscovery(Base):
                 page_number,
                 page_multiplier,
                 timezone=_timezone,
-                **tv_filters(filter_name, slug=True, add_values=add_values),
+                **filter_params,
             ),
         )
-
-    def discover_by_custom_filter(self, content_type, **kwargs):
-        """Filter by keywords or any other TMDB filter capable arguements.
-        (see tmdbsimple discover.movie and discover.tv)
-
-        Args:
-            content_type: String containing "movie" or "tv".
-            kwargs: Any other values supported by tmdbsimple discover.movie or discover.tv.
-        """
-        try:
-            if kwargs.__contains__("keyword"):
-                # Convert all keywords to IDs
-                keyword_ids = self._keywords_to_ids(kwargs["keyword"])
-                if keyword_ids is not None:
-                    kwargs["with_keywords"] = keyword_ids
-
-                # Remove keyword strings (invalid parameters)
-                kwargs.__delitem__("keyword")
-
-            # Perform a discovery search for a movie
-            if content_type == "movie":
-                return self._set_content_attributes(
-                    content_type,
-                    cache.handler(
-                        "discover movies by filter",
-                        page_key=str(kwargs),
-                        function=tmdb.Discover().movie,
-                        cache_duration=DISCOVER_CACHE_TIMEOUT,
-                        kwargs=kwargs,
-                    ),
-                )
-
-            # Perform a discovery search for a TV show
-            if content_type == "tv":
-                return self._set_content_attributes(
-                    content_type,
-                    cache.handler(
-                        "discover tv by filter",
-                        page_key=str(kwargs),
-                        function=tmdb.Discover().tv,
-                        cache_duration=DISCOVER_CACHE_TIMEOUT,
-                        kwargs=kwargs,
-                    ),
-                )
-
-            # Content Type was invalid
-            log.handler(
-                "Invalid content_type " + str(content_type) + " in discover().",
-                log.WARNING,
-                _logger,
-            )
-
-        except:
-            log.handler("Failed to discover!", log.ERROR, _logger)
-        return None
 
     def similar_and_recommended(self, tmdb_id, content_type):
         """Merges the results of similar and recommended.

@@ -27,20 +27,13 @@ class ReturnThread(Thread):
         return self._return
 
 
-def threaded_execution(function_list, args_list):
-    """Threaded execution of function calls. All functions utilize the same args.
-    Args:
-        function_list: List containing references to functions
-        args_list: List containing the arguments to be used for these function calls
-    """
+def threaded_execution(function_list, args, **kwargs):
+    """Threaded execution of function calls where all functions utilize the same args/kwargs."""
     thread_list = []
     results = []
 
     for function in function_list:
-        thread = ReturnThread(
-            target=function,
-            args=args_list,
-        )
+        thread = ReturnThread(target=function, args=args, kwargs=kwargs)
         thread.start()
         thread_list.append(thread)
 

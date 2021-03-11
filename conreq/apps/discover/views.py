@@ -21,15 +21,23 @@ from .helpers import preset_filter_extras
 @performance_metrics()
 def discover_all(request):
     content_discovery = ContentDiscovery()
-    preset_filter = request.GET.get("filter", "")
-    filter_name = titlecase(preset_filter.replace("-", " "))
+    discover_filter = request.GET.get("filter", "")
+    filter_name = titlecase(discover_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))
 
     # Get content
-    if preset_filter:
+    filter_params = {}
+    if discover_filter == "custom":
+        filter_params = request.GET.dict()
+        filter_params.pop("filter")
+    if discover_filter:
         add_values = preset_filter_extras(request)
-        tmdb_results = content_discovery.discover_by_preset_filter(
-            preset_filter, page, page_multiplier=2, add_values=add_values
+        tmdb_results = content_discovery.discover_by_filter(
+            filter_name=discover_filter,
+            page_number=page,
+            page_multiplier=2,
+            add_values=add_values,
+            **filter_params
         )["results"]
     else:
         tmdb_results = content_discovery.all(page)["results"]
@@ -51,15 +59,23 @@ def discover_all(request):
 @performance_metrics()
 def discover_tv(request):
     content_discovery = ContentDiscovery()
-    preset_filter = request.GET.get("filter", "")
-    filter_name = titlecase(preset_filter.replace("-", " "))
+    discover_filter = request.GET.get("filter", "")
+    filter_name = titlecase(discover_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))
 
     # Get content
-    if preset_filter:
+    filter_params = {}
+    if discover_filter == "custom":
+        filter_params = request.GET.dict()
+        filter_params.pop("filter")
+    if discover_filter:
         add_values = preset_filter_extras(request)
-        tmdb_results = content_discovery.discover_tv_by_preset_filter(
-            preset_filter, page, page_multiplier=2, add_values=add_values
+        tmdb_results = content_discovery.discover_tv_by_filter(
+            filter_name=discover_filter,
+            page_number=page,
+            page_multiplier=2,
+            add_values=add_values,
+            **filter_params
         )["results"]
     else:
         tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
@@ -82,15 +98,23 @@ def discover_tv(request):
 @performance_metrics()
 def discover_movies(request):
     content_discovery = ContentDiscovery()
-    preset_filter = request.GET.get("filter", "")
-    filter_name = titlecase(preset_filter.replace("-", " "))
+    discover_filter = request.GET.get("filter", "")
+    filter_name = titlecase(discover_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))
 
     # Get content
-    if preset_filter:
+    filter_params = {}
+    if discover_filter == "custom":
+        filter_params = request.GET.dict()
+        filter_params.pop("filter")
+    if discover_filter:
         add_values = preset_filter_extras(request)
-        tmdb_results = content_discovery.discover_movie_by_preset_filter(
-            preset_filter, page, page_multiplier=2, add_values=add_values
+        tmdb_results = content_discovery.discover_movie_by_filter(
+            filter_name=discover_filter,
+            page_number=page,
+            page_multiplier=2,
+            add_values=add_values,
+            **filter_params
         )["results"]
     else:
         tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
