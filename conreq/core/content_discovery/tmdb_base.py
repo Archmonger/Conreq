@@ -27,7 +27,6 @@ IS_ANIME_CACHE_TIMEOUT = 7 * 24 * 60 * 60
 RECOMMENDED_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 SIMILAR_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 COLLECTION_CACHE_TIMEOUT = 14 * 24 * 60 * 60
-KEYWORDS_TO_IDS_CACHE_TIMEOUT = 30 * 24 * 60 * 60
 SHUFFLED_PAGE_CACHE_TIMEOUT = 1 * 24 * 60 * 60
 
 
@@ -45,7 +44,7 @@ class Base:
             True/False
         """
         try:
-            # TV: Obtain the keywords for a specific ID
+            # Determine if a specific ID is anime (True/False)
             if content_type == "tv":
                 return cache.handler(
                     "is tv anime",
@@ -54,7 +53,7 @@ class Base:
                     args=[tmdb_id],
                 )
 
-            # Movies: Obtain the keywords for a specific ID
+            # Determine if a specific ID is anime (True/False)
             if content_type == "movie":
                 return cache.handler(
                     "is movie anime",
