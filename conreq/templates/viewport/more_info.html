@@ -158,7 +158,20 @@
                 <div class="quick-info bold"> Genres </div>
                 <div class="quick-info">
                     {% for genre in content.genres %}
-                    <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %} </div>
+                    {% if content.content_source != "tmdb" %}
+                    <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %}
+                    </div>
+
+                    {% elif content_type == "movie" %}
+                    <a href="#{% url 'discover:movies' %}?filter=custom&with_genres={{genre.id}}">
+                        <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %} </div>
+                    </a>
+
+                    {% elif content_type == "tv" %}
+                    <a href="#{% url 'discover:tv' %}?filter=custom&with_genres={{genre.id}}">
+                        <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %} </div>
+                    </a>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -205,7 +218,19 @@
                 <div class="quick-info bold"> Languages </div>
                 <div class="quick-info">
                     {% for language in content.spoken_languages %}
-                    <div class="quick-info-btn no-highlighting"> {{language.name}} </div>
+                    {% if content_type == "movie" %}
+                    <a href="#{% url 'discover:movies' %}?filter=custom&with_original_language={{language.iso_639_1}}">
+                        <div class="quick-info-btn no-highlighting">
+                            {% firstof language.english_name language.name %}
+                        </div>
+                    </a>
+                    {% elif content_type == "tv" %}
+                    <a href="#{% url 'discover:tv' %}?filter=custom&with_original_language={{language.iso_639_1}}">
+                        <div class="quick-info-btn no-highlighting">
+                            {% firstof language.english_name language.name %}
+                        </div>
+                    </a>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -237,32 +262,59 @@
                 <div class="quick-info bold"> Production Companies </div>
                 <div class="quick-info">
                     {% for company in content.production_companies %}
-                    <div class="quick-info-btn no-highlighting"> {{company.name}} </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %} {% if content.networks %}
-            <div class="quick-info-block">
-                <div class="quick-info bold"> Networks </div>
-                <div class="quick-info">
-                    {% for network in content.networks %}
-                    <div class="quick-info-btn no-highlighting"> {% firstof network.name network %}
-                    </div>
+                    {% if content_type == "tv" %}
+                    <a href="#{% url 'discover:tv' %}?filter=custom&with_companies={{company.id}}">
+                        <div class="quick-info-btn no-highlighting"> {{company.name}} </div>
+                    </a>
+                    {% elif content_type == "movie" %}
+                    <a href="#{% url 'discover:movies' %}?filter=custom&with_companies={{company.id}}">
+                        <div class="quick-info-btn no-highlighting"> {{company.name}} </div>
+                    </a>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
             {% endif %}
 
-            {% if content.keywords.results %}
+            {% if content.networks %}
+            <div class="quick-info-block">
+                <div class="quick-info bold"> Networks </div>
+                <div class="quick-info">
+                    {% for network in content.networks %}
+                    {% if content.content_source != "tmdb" %}
+                    <div class="quick-info-btn no-highlighting">
+                        {% firstof network.name network %}
+                    </div>
+                    {% else %}
+                    <a href="#{% url 'discover:tv' %}?filter=custom&with_networks={{network.id}}">
+                        <div class="quick-info-btn no-highlighting">
+                            {% firstof network.name network %}
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if content.keywords.results or content.keywords.keywords %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Tags </div>
                 <div class="quick-info">
+                    <!-- TV -->
                     {% if content.keywords.results %}
                     {% for keyword in content.keywords.results %}
-                    <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
-                    {% endfor %} {% elif content.keywords.keywords %}
+                    <a href="#{% url 'discover:tv' %}?filter=custom&with_keywords={{keyword.id}}">
+                        <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
+                    </a>
+                    {% endfor %}
+
+                    <!-- Movies -->
+                    {% elif content.keywords.keywords %}
                     {% for keyword in content.keywords.keywords %}
-                    <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
+                    <a href="#{% url 'discover:movies' %}?filter=custom&with_keywords={{keyword.id}}">
+                        <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
+                    </a>
                     {% endfor %}
                     {% endif %}
                 </div>
