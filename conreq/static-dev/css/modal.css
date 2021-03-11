@@ -235,7 +235,7 @@
 
 .mini-info-bar {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	grid-template-columns: repeat(2, auto);
 	grid-template-rows: -webkit-min-content -webkit-min-content -webkit-min-content;
 	grid-template-rows: min-content min-content min-content;
 	background: #252525;
