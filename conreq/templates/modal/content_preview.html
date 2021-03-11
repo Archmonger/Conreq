@@ -4,7 +4,7 @@
 {% include "primary/loading_animation.html" %}
 <div id="modal-content" class="modal-content content-preview">
 
-    <div class="poster-container">
+    <div class="poster-container clickable">
         <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster box-shadow"
             data-contains-img="{% if content.poster_path or content.remotePoster %}true{% endif %}">
     </div>
