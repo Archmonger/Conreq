@@ -453,3 +453,43 @@ var sidebar_collapse_click_event = async function () {
 		});
 	});
 };
+
+var more_info_poster_popup_click_event = async function () {
+	if (
+		$(".more-info-poster").length &&
+		$(".more-info-poster").data("contains-img")
+	) {
+		$(document).ready(function () {
+			$(".more-info-poster-container").magnificPopup({
+				delegate: "img",
+				type: "image",
+				closeOnContentClick: true,
+				callbacks: {
+					elementParse: function (item) {
+						item.src = item.el.attr("src");
+					},
+				},
+			});
+		});
+	}
+};
+
+var modal_poster_popup_click_event = async function () {
+	if (
+		$(".modal-content .poster").length &&
+		$(".modal-content .poster").data("contains-img")
+	) {
+		$(document).ready(function () {
+			$(".modal-content .poster-container").magnificPopup({
+				delegate: "img",
+				type: "image",
+				closeOnContentClick: true,
+				callbacks: {
+					elementParse: function (item) {
+						item.src = item.el.attr("src");
+					},
+				},
+			});
+		});
+	}
+};

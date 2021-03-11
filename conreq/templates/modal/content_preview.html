@@ -5,7 +5,8 @@
 <div id="modal-content" class="modal-content content-preview">
 
     <div class="poster-container">
-        <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster box-shadow">
+        <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster box-shadow"
+            data-contains-img="{% if content.poster_path or content.remotePoster %}true{% endif %}">
     </div>
 
     <div class="grid-modal-right">

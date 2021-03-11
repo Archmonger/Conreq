@@ -29,6 +29,7 @@ var generate_modal = async function (modal_url) {
 		create_report_modal_click_event();
 		report_btn_click_event();
 		simple_filter_btn_click_event();
+		modal_poster_popup_click_event();
 	}).fail(async function () {
 		// Server couldn't fetch the modal
 		if (http_request.statusText != "abort") {

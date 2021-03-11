@@ -3,7 +3,6 @@ var create_all_carousels = async function () {
 	create_video_carousel();
 	create_recommended_carousel();
 	create_image_carousel();
-	create_poster_popup();
 	create_collection_carousel();
 	create_cast_carousel();
 };
@@ -124,26 +123,6 @@ var create_image_carousel = async function () {
 					enabled: true,
 					navigateByImgClick: true,
 					preload: [1, 1], // Will preload 1 before and 1 after the current image
-				},
-			});
-		});
-	}
-};
-
-var create_poster_popup = async function () {
-	if (
-		$(".more-info-poster").length &&
-		$(".more-info-poster").data("contains-img")
-	) {
-		$(document).ready(function () {
-			$(".more-info-poster-container").magnificPopup({
-				delegate: "img",
-				type: "image",
-				closeOnContentClick: true,
-				callbacks: {
-					elementParse: function (item) {
-						item.src = item.el.attr("src");
-					},
 				},
 			});
 		});

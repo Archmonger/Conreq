@@ -230,7 +230,7 @@ a:hover {
 	outline: none !important;
 }
 
-/* Lazy loaded images */
+/* Images */
 
 img.lazy {
 	opacity: 0;
@@ -244,6 +244,10 @@ img.lazy.error {
 
 img.lazy:not([src]) {
 	visibility: hidden;
+}
+
+.mfp-wrap {
+	z-index: 1055;
 }
 
 /* Scrollbar */

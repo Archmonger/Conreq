@@ -126,6 +126,7 @@ let add_viewport_event_listeners = async function () {
 	issue_approve_btn_click_event();
 	issue_delete_btn_click_event();
 	quick_info_btn_click_event();
+	more_info_poster_popup_click_event();
 
 	// Server Settings menu events
 	$(
