@@ -75,6 +75,7 @@
 		/* Viewport */
 		--viewport-left: 0;
 		--viewport-padding: 15px;
+		--primary-font-size: 16px;
 		/* Posters */
 		--poster-width: calc(
 			(

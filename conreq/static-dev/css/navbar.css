@@ -39,7 +39,7 @@
 	width: calc(100% - 40px);
 	color: inherit;
 	border: none;
-	font-size: var(--primary-font-size);
+	font-size: 16px;
 	padding-left: 15px;
 	outline: none !important;
 }
@@ -55,50 +55,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.username-container {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	padding-right: 20px;
-	font-family: var(--global-font);
-	font-weight: 300;
-	font-size: var(--primary-font-size);
-	margin-top: calc((var(--navbar-height) - 20px) / 2);
-	margin-bottom: calc((var(--navbar-height) - 20px) / 2);
-	color: rgba(255, 255, 255, 0.5);
-	transition: color 0.3s ease;
-}
-
-.username-container > div:not(.dropdown-menu) {
-	display: flex;
-}
-
-.username-container:hover {
-	color: #fff;
-}
-
-.username-container .username {
-	color: inherit;
-	font-size: inherit;
-	font-family: inherit;
-	line-height: 20px;
-	display: inline;
-	margin-right: 1px;
-	max-width: 200px;
-}
-
-.username-container .fa-caret-down {
-	color: inherit;
-	font-size: inherit;
-	display: inline;
-	padding-left: 5px;
-	align-self: center;
-}
-
-.navbar .username.first-letter {
-	display: none;
 }
 
 button {
