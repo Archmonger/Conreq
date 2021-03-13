@@ -43,10 +43,13 @@
 	position: relative;
 }
 
+.nav-tab.group {
+	background: rgba(0, 0, 0, 0.05);
+}
+
 .nav-tab.group > .group-name {
 	padding: var(--navpages-btn-padding-group);
 	margin-right: 20px;
-	background: rgba(0, 0, 0, 0.05);
 	font-weight: 400;
 }
 
