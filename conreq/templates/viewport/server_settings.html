@@ -9,7 +9,7 @@
 <input id="page-name" type="hidden" value="Server Settings">
 
 <div class="viewport server settings" data-url="{% url 'server_settings:update_settings' %}">
-
+    <!-- Conreq Server Settings Group -->
     <div class="settings-group">
         <div class="settings-group-title bold">Basic Configuration</div>
         <div class="settings-input-group">
@@ -21,15 +21,6 @@
                         data-setting-name="Conreq Application Name" value="{{ server_settings.conreq_app_name }}" />
                 </div>
             </div>
-            <!-- <div class="settings-item-group">
-                <div class="settings-item-title">Application URL/Web Domain</div>
-                <div class="text-input-container">
-                    <input type="text" class="settings-item small-text-input admin"
-                        placeholder="ex. https://conreq.example.com" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Application URL/Web Domain"
-                        value="{{ server_settings.conreq_app_url }}" />
-                </div>
-            </div> -->
             <div class="settings-item-group">
                 <div class="settings-item-title">API Key</div>
                 <div class="text-input-container">
@@ -41,23 +32,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="settings-item-group">
-                <div class="settings-item-title">Language</div>
-                <div class="text-input-container">
-                    <input type="text" class="settings-item small-text-input admin" placeholder="Dropdown Menu or Modal"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                        data-setting-name="Conreq Language" value="{{ server_settings.conreq_language }}" />
-                </div>
-            </div> -->
-            <!-- <div class="settings-item-group">
-                <div class="settings-item-title">Logo Image</div>
-                <div class="text-input-container">
-                    <input type="text" class="settings-item small-text-input admin"
-                        placeholder="----filename---- ||Upload Btn||" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Logo Image"
-                        value="{{ server_settings.conreq_app_logo.name }}" />
-                </div>
-            </div> -->
             <div class="settings-item-group">
                 <div class="settings-item-title">Custom CSS</div>
                 <div class="text-input-container">
@@ -78,24 +52,6 @@
             </div>
         </div>
         <div class="settings-input-group">
-            <!-- <div class="settings-item-group toggler">
-                <div class="settings-item admin pretty p-switch p-fill"
-                    data-setting-name="Conreq Automatically Resolve Issues">
-                    <input type="checkbox" {% if server_settings.conreq_auto_resolve_issues %} checked {% endif %} />
-                    <div class="state">
-                        <label>Automatically Resolve Issues</label>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="settings-item-group toggler">
-                <div class="settings-item admin pretty p-switch p-fill"
-                    data-setting-name="Conreq Allow Guest Login/Requests">
-                    <input type="checkbox" {% if server_settings.conreq_guest_login %} checked {% endif %} />
-                    <div class="state">
-                        <label>Allow Guest Login/Requests</label>
-                    </div>
-                </div>
-            </div> -->
             <div class="settings-item-group toggler">
                 <div class="settings-item admin pretty p-switch p-fill"
                     data-setting-name="Conreq Simple/Minimal Poster Cards">
@@ -116,17 +72,17 @@
                 </div>
             </div>
             <div class="settings-item-group toggler">
-                <div class="settings-item admin pretty p-switch p-fill"
-                    data-setting-name="Conreq Organizr User Authentication">
+                <div class="settings-item admin pretty p-switch p-fill" data-setting-name="Conreq HTTP Auth">
                     <input {% if server_settings.conreq_http_header_auth %} checked {% endif %} type="checkbox" />
                     <div class="state">
-                        <label>Organizr User Authentication</label>
+                        <label>Organizr User Auth</label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Sonarr Settings Group -->
     <div class="settings-group">
         <div class="settings-group-title bold">Sonarr Configuration</div>
         <div class="settings-input-group">
@@ -265,6 +221,7 @@
         </div>
     </div>
 
+    <!-- Radarr Settings Group -->
     <div class="settings-group">
         <div class="settings-group-title bold">Radarr Configuration</div>
         <div class="settings-input-group">
@@ -391,6 +348,7 @@
         </div>
     </div>
 
+    <!-- About Conreq -->
     <div class="settings-group">
         <div class="settings-group-title bold">About Conreq</div>
         <div class="settings-input-group">

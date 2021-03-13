@@ -136,16 +136,10 @@ def update_settings(request):
             if message["setting_name"] == "Conreq Application Name":
                 conreq_config.conreq_app_name = message["value"]
 
-            elif message["setting_name"] == "Conreq Application URL/Web Domain":
-                conreq_config.conreq_app_url = message["value"]
-
             elif message["setting_name"] == "Conreq API Key":
                 conreq_config.conreq_api_key = secrets.token_hex(16)
                 response["command_name"] = "new conreq api key"
                 response["value"] = conreq_config.conreq_api_key
-
-            elif message["setting_name"] == "Conreq Language":
-                conreq_config.conreq_language = message["value"]
 
             elif message["setting_name"] == "Conreq Custom CSS":
                 conreq_config.conreq_custom_css = message["value"]
@@ -156,16 +150,13 @@ def update_settings(request):
             elif message["setting_name"] == "Conreq Automatically Resolve Issues":
                 conreq_config.conreq_auto_resolve_issues = message["value"]
 
-            elif message["setting_name"] == "Conreq Allow Guest Login/Requests":
-                conreq_config.conreq_guest_login = message["value"]
-
             elif message["setting_name"] == "Conreq Simple/Minimal Poster Cards":
                 conreq_config.conreq_simple_posters = message["value"]
 
             elif message["setting_name"] == "Conreq Dark Theme":
                 conreq_config.conreq_dark_theme = message["value"]
 
-            elif message["setting_name"] == "Conreq Organizr User Authentication":
+            elif message["setting_name"] == "Conreq HTTP Auth":
                 conreq_config.conreq_http_header_auth = message["value"]
 
             # Sonarr Settings
