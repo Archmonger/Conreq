@@ -184,7 +184,7 @@ var report_btn_click_event = async function () {
 				tvdb_id: $(this).data("tvdb-id"),
 				content_type: $(this).data("content-type"),
 				issue_ids: $(".checkbox:checked")
-					.map(async function () {
+					.map(function () {
 						return $(this).data("issue-id");
 					})
 					.get(),
@@ -208,7 +208,7 @@ var report_btn_click_event = async function () {
 				ongoing_request = this;
 			}
 
-			// Request a movie
+			// Send the report to the server
 			post_json($(this).data("report-url"), params, function () {
 				reported_toast_message();
 				$(".request-btn").text("REQUESTED");
