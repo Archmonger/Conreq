@@ -150,6 +150,9 @@ def update_settings(request):
             elif message["setting_name"] == "Conreq Automatically Resolve Issues":
                 conreq_config.conreq_auto_resolve_issues = message["value"]
 
+            elif message["setting_name"] == "Conreq Allow TV Specials":
+                conreq_config.conreq_allow_tv_specials = message["value"]
+
             elif message["setting_name"] == "Conreq Simple/Minimal Poster Cards":
                 conreq_config.conreq_simple_posters = message["value"]
 

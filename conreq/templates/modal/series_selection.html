@@ -1,3 +1,6 @@
+{% load solo_tags %}
+{% get_solo 'server_settings.ConreqConfig' as server_settings %}
+
 {% include "primary/loading_animation.html" %}
 <div id="modal-content" class="modal-content">
     <div class="modal-header">
@@ -8,6 +11,7 @@
     </div>
     <div class="modal-body">
         {% for season in seasons %}
+        {% if season.seasonNumber != 0 or server_settings.conreq_allow_tv_specials %}
         <div id="season-{{season.seasonNumber}}" class="row-container no-highlighting">
 
             <div class="checkbox-container">
@@ -112,6 +116,7 @@
             </div>
             {% endfor %}
         </div>
+        {% endif %}
         {% endfor %}
     </div>
     <div class="modal-footer">
