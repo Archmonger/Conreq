@@ -58,7 +58,7 @@ def generate_issue_cards(reported_issues):
             # Attempt to convert card to TMDB
             conversion = content_discovery.get_by_tvdb_id(tvdb_id=entry["content_id"])
             # Conversion found
-            if conversion.__contains__("tv_results") and conversion["tv_results"]:
+            if conversion and conversion.get("tv_results"):
                 card = conversion["tv_results"][0]
                 all_cards.append({**card, **entry})
 
