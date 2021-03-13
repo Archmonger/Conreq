@@ -119,6 +119,7 @@ let add_base_url = function (window_location = null) {
 
 // Adds viewport related event listeners
 let add_viewport_event_listeners = async function () {
+	$(".viewport-container").trigger("add_events");
 	// More Info page events
 	request_btn_click_event();
 	create_content_modal_click_event();
@@ -175,6 +176,7 @@ let add_viewport_event_listeners = async function () {
 
 // Destroys old viewport JS instances
 let destroy_viewport = async function () {
+	$(".viewport-container").trigger("destroy");
 	if (masonry_grid != null) {
 		if (infinite_scroller_created) {
 			masonry_grid.infiniteScroll("destroy");
@@ -212,7 +214,8 @@ let destroy_viewport = async function () {
 };
 
 // Preforms any actions needed to prepare the viewport
-let refresh_viewport = async function () {
+let prepare_viewport = async function () {
+	$(".viewport-container").trigger("prepare");
 	// Create any carousels that need to be made
 	create_all_carousels();
 
@@ -269,10 +272,14 @@ let refresh_viewport = async function () {
 
 	// Lazy load page elements
 	lazyloader.update();
+
+	// Add event listeners
+	add_viewport_event_listeners();
 };
 
 // Gets the viewport from a URL
 let get_viewport = async function (location, success = function () {}) {
+	$(".viewport-container").trigger("change");
 	// Abandon an old http request if the user clicks something else
 	if (viewport_http_request.status == undefined) {
 		viewport_http_request_aborted = true;
@@ -333,9 +340,9 @@ var generate_viewport = async function (fresh_reload = true) {
 		$(".viewport-container")[0].innerHTML = DOMPurify.sanitize(
 			viewport_html
 		);
-		await refresh_viewport();
-		add_viewport_event_listeners();
+		await prepare_viewport();
 		update_page_title();
+		$(".viewport-container").trigger("loaded");
 
 		// Display the new content
 		$(".viewport-container>.loading-animation-container").hide();
@@ -360,6 +367,7 @@ var generate_viewport = async function (fresh_reload = true) {
 // Perform actions whenever the HTML on the page changes
 let page_mutation_observer = async function () {
 	let observer = new MutationObserver(async function () {
+		$("html").trigger("modified");
 		// Initiate Lazyload on any new images
 		lazyloader.update();
 	});
