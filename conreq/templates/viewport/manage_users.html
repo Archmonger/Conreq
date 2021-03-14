@@ -6,9 +6,9 @@
 
 <div class="viewport manage-users">
     <div class="table-wrapper">
-        <div class="table-title">
+        <div class="table-title-container">
             <div class="row">
-                <h2 class="desktop-only fourth">User Management</h2>
+                <h2 class="table-title">User Management</h2>
                 <div class="standard-btn invite-user clickable"
                     data-generate-invite-url="{% url 'sign_up:generate_invite_code' %}"
                     data-sign-up-url="{% url 'sign_up:invite_code' %}">
@@ -20,23 +20,23 @@
         <table class="table" data-pagination="true" data-search="true" data-search-highlight="true">
             <thead>
                 <tr>
-                    <th data-sortable="true">Username</th>
-                    <th class="fourth" data-sortable="true">Email</th>
-                    <th class="first" data-sortable="true">Joined</th>
-                    <th class="second" data-sortable="true">Last Seen</th>
-                    <th class="third" data-sortable="true" data-searchable="false">Staff</th>
-                    <th data-searchable="false">Action</th>
+                    <th class="username" data-sortable="true">Username</th>
+                    <th class="email" data-sortable="true">Email</th>
+                    <th class="joined" data-sortable="true">Joined</th>
+                    <th class="last-seen" data-sortable="true">Last Seen</th>
+                    <th class="staff" data-sortable="true" data-searchable="false">Staff</th>
+                    <th class="action" data-searchable="false">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for user in users %}
                 <tr>
-                    <td>{{ user.username }}</td>
-                    <td class="fourth">{{ user.email }}</td>
-                    <td class="first">{{ user.date_joined|date:"Y-m-d @ H:i" }}</td>
-                    <td class="second">{{ user.last_login|date:"Y-m-d @ H:i" }}</td>
-                    <td class="third">{{ user.is_staff|yesno:"Yes,No" }}</td>
-                    <td>
+                    <td class="username">{{ user.username }}</td>
+                    <td class="email">{{ user.email }}</td>
+                    <td class="joined">{{ user.date_joined|date:"Y-m-d @ H:i" }}</td>
+                    <td class="last-seen">{{ user.last_login|date:"Y-m-d @ H:i" }}</td>
+                    <td class="staff">{{ user.is_staff|yesno:"Yes,No" }}</td>
+                    <td class="action">
                         <!-- <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
                                 class="fas fa-cog"></i></a> -->
                         {% if not user.is_superuser %}

@@ -84,7 +84,7 @@ table.table-striped.table-hover tbody tr:hover {
 	color: rgb(255 255 255 / 0.75);
 }
 
-.table-title {
+.table-title-container {
 	background: rgb(29 29 29);
 }
 

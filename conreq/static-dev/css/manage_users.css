@@ -8,7 +8,11 @@
 	border-radius: 3px;
 	box-shadow: var(--box-shadow);
 }
-.table-title {
+.table-wrapper .staff,
+.table-wrapper .action {
+	width: 100px;
+}
+.table-title-container {
 	padding-bottom: 15px;
 	background: rgb(76 76 76);
 	color: #fff;
@@ -16,17 +20,17 @@
 	margin: -20px -25px 10px;
 	border-radius: 3px 3px 0 0;
 }
-.table-title h2 {
+.table-title-container h2 {
 	margin: 0;
 	font-size: 24px;
 }
-.table-title .row {
+.table-title-container .row {
 	display: flex;
 	justify-content: space-between;
 	margin: 0;
 	align-items: center;
 }
-.table-title .btn {
+.table-title-container .btn {
 	color: #566787;
 	float: right;
 	font-size: 13px;
@@ -38,17 +42,17 @@
 	outline: none !important;
 	margin-left: 10px;
 }
-.table-title .btn:hover,
-.table-title .btn:focus {
+.table-title-container .btn:hover,
+.table-title-container .btn:focus {
 	color: #566787;
 	background: #f2f2f2;
 }
-.table-title .btn i {
+.table-title-container .btn i {
 	float: left;
 	font-size: 21px;
 	margin-right: 5px;
 }
-.table-title .btn span {
+.table-title-container .btn span {
 	float: left;
 	margin-top: 2px;
 }
@@ -173,7 +177,7 @@ table.table .avatar {
 .bootstrap-table .fixed-table-container .table thead .asc,
 .bootstrap-table .fixed-table-container .table thead .desc {
 	-webkit-filter: brightness(100);
-	        filter: brightness(100);
+	filter: brightness(100);
 }
 .hint-text {
 	float: left;

@@ -1,6 +1,6 @@
 @media only screen and (max-width: 1300px) {
 	/* Tables */
-	.table-wrapper .first {
+	.table-wrapper .joined {
 		display: none;
 	}
 }
@@ -24,7 +24,7 @@
 		--artwork-width: 30vw;
 	}
 	/* Tables */
-	.table-wrapper .second {
+	.table-wrapper .last-seen {
 		display: none;
 	}
 }
@@ -57,7 +57,7 @@
 		--left-column-width: 175px;
 	}
 	/* Tables */
-	.table-wrapper .third {
+	.table-wrapper .staff {
 		display: none;
 	}
 	.more-info-quick-info {
@@ -113,12 +113,6 @@
 	.viewport-container .searchbar {
 		display: none !important;
 	}
-	.username-container {
-		margin: calc((var(--navbar-height) - 35px) / 2) 0;
-		position: relative;
-		padding-right: 0;
-		color: rgba(255, 255, 255, 0.75);
-	}
 	.sidebar {
 		z-index: 99;
 		transition: height 0.4s ease-in;
@@ -143,25 +137,6 @@
 		padding-left: 0;
 		padding-right: 0;
 		background: none;
-	}
-	.navbar .username.full-name {
-		display: none !important;
-	}
-	.navbar .username.first-letter {
-		display: inline-block;
-	}
-	.navbar .username-container {
-		border-radius: 50%;
-		background: var(--accent-color);
-		display: flex;
-		flex-wrap: nowrap;
-		align-items: center;
-		justify-content: center;
-		width: 35px;
-		height: 35px;
-	}
-	.username-container .fa-caret-down {
-		padding-left: 2px;
 	}
 	.navpages-tab.suboption {
 		padding-top: 20px;
@@ -257,8 +232,13 @@
 	.table-wrapper {
 		padding: 0;
 	}
-	.table-title {
+	.table-title-container {
 		margin: 0;
+	}
+	.table-wrapper .fixed-table-pagination,
+	.table-wrapper .fixed-table-toolbar {
+		margin-left: 10px;
+		margin-right: 10px;
 	}
 }
 
@@ -273,7 +253,8 @@
 		);
 	}
 	/* Tables */
-	.table-wrapper .fourth {
+	.table-wrapper .email,
+	.table-wrapper .table-title {
 		display: none !important;
 	}
 	.table-wrapper .row {
