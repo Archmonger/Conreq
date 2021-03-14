@@ -1,11 +1,11 @@
+{% extends "./base_viewport.html" %}
+
+{% block viewport %}
 {% load solo_tags %}
 {% load djversion_tags %}
 {% load static %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% project_version as VERSION %}
-
-{% csrf_token %}
-{% include "primary/loading_animation_container.html" %}
 <input id="page-name" type="hidden" value="Server Settings">
 
 <div class="viewport server settings" data-url="{% url 'server_settings:update_settings' %}">
@@ -372,3 +372,4 @@
     </div>
 
 </div>
+{% endblock %}

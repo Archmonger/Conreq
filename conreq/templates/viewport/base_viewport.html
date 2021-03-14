@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "primary/head_content.html" %}
+</head>
+
+<body>
+    {% csrf_token %}
+    {% include "primary/loading_animation_container.html" %}
+
+    {% block viewport %}
+    {% endblock %}
+</body>
+
+</html>

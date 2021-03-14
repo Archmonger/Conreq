@@ -1,7 +1,7 @@
-{% load static %}
+{% extends "./base_viewport.html" %}
 
-{% csrf_token %}
-{% include "primary/loading_animation_container.html" %}
+{% block viewport %}
+{% load static %}
 <input id="page-name" type="hidden" value="Manage Users">
 
 <div class="viewport manage-users">
@@ -53,3 +53,4 @@
 
     </div>
 </div>
+{% endblock %}

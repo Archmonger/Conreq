@@ -66,4 +66,6 @@ def initialization(request):
         return HttpResponse(template.render({}, request))
 
     # Render the base
-    return login_required(render)(request, "primary/base.html", {"base_url": base_url})
+    return login_required(render)(
+        request, "primary/base_app.html", {"base_url": base_url}
+    )
