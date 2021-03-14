@@ -17,25 +17,25 @@
                 </div>
             </div>
         </div>
-        <table class="table table-striped table-hover">
+        <table class="table" data-pagination="true" data-search="true" data-search-highlight="true">
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th class="desktop-only fourth">Email Address</th>
-                    <th class="desktop-only first">Date Joined</th>
-                    <th class="desktop-only second">Last Seen</th>
-                    <th class="desktop-only third">Staff Member</th>
-                    <th>Action</th>
+                    <th data-sortable="true">Username</th>
+                    <th class="fourth" data-sortable="true">Email</th>
+                    <th class="first" data-sortable="true">Joined</th>
+                    <th class="second" data-sortable="true">Last Seen</th>
+                    <th class="third" data-sortable="true" data-searchable="false">Staff</th>
+                    <th data-searchable="false">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for user in users %}
                 <tr>
                     <td>{{ user.username }}</td>
-                    <td class="desktop-only fourth max-width">{{ user.email }}</td>
-                    <td class="desktop-only first max-width">{{ user.date_joined }}</td>
-                    <td class="desktop-only second">{{ user.last_login }}</td>
-                    <td class="desktop-only third">{{ user.is_staff|yesno:"Yes,No" }}</td>
+                    <td class="fourth">{{ user.email }}</td>
+                    <td class="first">{{ user.date_joined|date:"Y-m-d @ H:i" }}</td>
+                    <td class="second">{{ user.last_login|date:"Y-m-d @ H:i" }}</td>
+                    <td class="third">{{ user.is_staff|yesno:"Yes,No" }}</td>
                     <td>
                         <!-- <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
                                 class="fas fa-cog"></i></a> -->

@@ -1,6 +1,6 @@
 @media only screen and (max-width: 1300px) {
 	/* Tables */
-	.table-wrapper .desktop-only.first {
+	.table-wrapper .first {
 		display: none;
 	}
 }
@@ -24,7 +24,7 @@
 		--artwork-width: 30vw;
 	}
 	/* Tables */
-	.table-wrapper .desktop-only.second {
+	.table-wrapper .second {
 		display: none;
 	}
 }
@@ -57,7 +57,7 @@
 		--left-column-width: 175px;
 	}
 	/* Tables */
-	.table-wrapper .desktop-only.third {
+	.table-wrapper .third {
 		display: none;
 	}
 	.more-info-quick-info {
@@ -273,7 +273,7 @@
 		);
 	}
 	/* Tables */
-	.table-wrapper .desktop-only.fourth {
+	.table-wrapper .fourth {
 		display: none !important;
 	}
 	.table-wrapper .row {

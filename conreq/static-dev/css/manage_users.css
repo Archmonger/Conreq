@@ -1,5 +1,6 @@
 .table {
 	table-layout: fixed;
+	border: none;
 }
 .table-wrapper {
 	background: #fff;
@@ -56,16 +57,12 @@ table.table tr td {
 	border-color: #e9e9e9;
 	padding: 12px 15px;
 	vertical-align: middle;
+	border-left: none;
+	border-right: none;
 }
 table.table tr th {
 	border: none;
 	background: rgba(255, 255, 255, 0.05);
-}
-table.table-striped tbody tr:nth-of-type(odd) {
-	background-color: #fcfcfc;
-}
-table.table-striped.table-hover tbody tr:hover {
-	background: #f5f5f5;
 }
 table.table th i {
 	font-size: 13px;
@@ -132,8 +129,8 @@ table.table .avatar {
 	color: #ff5b5b;
 }
 .pagination {
+	font-weight: 700;
 	float: right;
-	margin: 0 0 5px;
 }
 .pagination li a {
 	border: none;
@@ -148,7 +145,7 @@ table.table .avatar {
 	padding: 0 6px;
 }
 .pagination li a:hover {
-	color: #666;
+	color: #000;
 }
 .pagination li.active a,
 .pagination li.active a.page-link {
@@ -163,6 +160,20 @@ table.table .avatar {
 .pagination li i {
 	font-size: 16px;
 	padding-top: 6px;
+}
+.pagination li:not(.active) a {
+	background: none;
+}
+.pagination li.active a.page-link {
+	background: var(--accent-color);
+}
+.page-link:focus {
+	box-shadow: none;
+}
+.bootstrap-table .fixed-table-container .table thead .asc,
+.bootstrap-table .fixed-table-container .table thead .desc {
+	-webkit-filter: brightness(100);
+	        filter: brightness(100);
 }
 .hint-text {
 	float: left;

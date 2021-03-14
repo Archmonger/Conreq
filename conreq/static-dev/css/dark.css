@@ -92,3 +92,7 @@ table.table-striped.table-hover tbody tr:hover {
 .table th {
 	border-color: rgb(255 255 255 / 0.2) !important;
 }
+
+.pagination li a:hover {
+	color: #fff;
+}
