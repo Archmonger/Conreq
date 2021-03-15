@@ -392,12 +392,14 @@ AOS.init();
 
 // Obtain the initial page
 page_mutation_observer();
-generate_viewport();
+$(document).ready(async function () {
+	generate_viewport();
+});
 
 // Fetch a new page when the URL changes
 if ("onhashchange" in window) {
-	// Window anchor change event supported?
-	window.onhashchange = function () {
+	// Window anchor change event supported
+	window.onhashchange = async function () {
 		generate_viewport();
 	};
 } else {

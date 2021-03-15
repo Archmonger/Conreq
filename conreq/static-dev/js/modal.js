@@ -1,8 +1,8 @@
-let modal_dialog = $("#modal-dialog");
 let modal_loaded = false;
 
 // Fetches a modal via AJAX
 var generate_modal = async function (modal_url) {
+	let modal_dialog = $("#modal-dialog");
 	// Fetch the series modal
 	modal_loaded = false;
 	get_url(modal_url, async function (modal_html) {

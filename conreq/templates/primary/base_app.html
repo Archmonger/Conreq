@@ -16,24 +16,6 @@
     <main class="viewport-container">
         {% include "primary/loading_animation_container.html" %}
     </main>
-
-    <!-- Local JS -->
-    {% compress js %}
-    <script src="{% static 'js/toast_messages.js' %}" crossorigin="anonymous"></script>
-    <script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
-    <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
-    <script src="{% static 'js/events_click.js' %}" crossorigin="anonymous"></script>
-    <script src="{% static 'js/events_generic.js' %}" crossorigin="anonymous"></script>
-    <script src="{% static 'js/sidebar.js' %}" crossorigin="anonymous"></script>
-    <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>
-    <script src="{% static 'js/more_info.js' %}" crossorigin="anonymous"></script>
-    <script src="{% static 'js/viewport.js' %}" crossorigin="anonymous"></script>
-    {% endcompress %}
-
-    <!-- User defined JS -->
-    {% if server_settings.conreq_custom_js %}
-    <script src="{{ server_settings.conreq_custom_js }}" crossorigin="anonymous"></script>
-    {% endif %}
 </body>
 
 </html>
