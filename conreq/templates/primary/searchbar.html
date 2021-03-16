@@ -2,6 +2,6 @@
     <input type="text" class="content-search" value="{{search_query}}"
         placeholder="Search{% if content_type == 'tv' %} for TV{% elif content_type == 'movie'%} for Movies{% endif %}..."
         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-        data-search-url="{% url 'search:main' %}" data-content-type="{{content_type}}" />
+        data-search-url="{% url 'search:main' %}" data-content-type="{% firstof content_type '' %}" />
     <i class="fas fa-search clickable"></i>
 </div>
