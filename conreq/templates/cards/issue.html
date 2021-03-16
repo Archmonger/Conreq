@@ -1,3 +1,4 @@
+{% load viewport_tags %}
 <div class="masonry-item issue-container">
 
     <div class="content-type-icon">
@@ -20,7 +21,7 @@
 
     <div class="category content-name">
         <a
-            href="#{% url 'more_info:main' %}?{% if card.source == 'tmdb' %}tmdb_id={{card.content_id}}{% elif card.source == 'tvdb' %}tvdb_id={{card.content_id}}{% endif %}&content_type={{card.content_type}}">
+            href="{% viewport_url 'more_info:main' %}?{% if card.source == 'tmdb' %}tmdb_id={{card.content_id}}{% elif card.source == 'tvdb' %}tvdb_id={{card.content_id}}{% endif %}&content_type={{card.content_type}}">
             <div class="title">Content Name</div>
             {% firstof card.name card.title %}
         </a>

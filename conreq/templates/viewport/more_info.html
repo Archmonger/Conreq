@@ -2,6 +2,7 @@
 
 {% block viewport %}
 {% load static %}
+{% load viewport_tags %}
 {% load solo_tags %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
 <input id="page-name" type="hidden" value="{% firstof content.title content.name 'Unknown' %}">
@@ -138,13 +139,13 @@
                 <div class="quick-info bold"> Content Type </div>
 
                 {% if content_type == "movie" %}
-                <a href="#{% url 'discover:movies' %}">
+                <a href="{% viewport_url 'discover:movies' %}">
                     <div class="quick-info-btn no-highlighting">
                         Movie
                     </div>
                 </a>
                 {% elif content_type == "tv" %}
-                <a href="#{% url 'discover:tv' %}">
+                <a href="{% viewport_url 'discover:tv' %}">
                     <div class="quick-info-btn no-highlighting">
                         Television
                     </div>
@@ -163,12 +164,12 @@
                     </div>
 
                     {% elif content_type == "movie" %}
-                    <a href="#{% url 'discover:movies' %}?filter=custom&with_genres={{genre.id}}">
+                    <a href="{% viewport_url 'discover:movies' %}?filter=custom&with_genres={{genre.id}}">
                         <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %} </div>
                     </a>
 
                     {% elif content_type == "tv" %}
-                    <a href="#{% url 'discover:tv' %}?filter=custom&with_genres={{genre.id}}">
+                    <a href="{% viewport_url 'discover:tv' %}?filter=custom&with_genres={{genre.id}}">
                         <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %} </div>
                     </a>
                     {% endif %}
@@ -219,13 +220,15 @@
                 <div class="quick-info">
                     {% for language in content.spoken_languages %}
                     {% if content_type == "movie" %}
-                    <a href="#{% url 'discover:movies' %}?filter=custom&with_original_language={{language.iso_639_1}}">
+                    <a
+                        href="{% viewport_url 'discover:movies' %}?filter=custom&with_original_language={{language.iso_639_1}}">
                         <div class="quick-info-btn no-highlighting">
                             {% firstof language.english_name language.name %}
                         </div>
                     </a>
                     {% elif content_type == "tv" %}
-                    <a href="#{% url 'discover:tv' %}?filter=custom&with_original_language={{language.iso_639_1}}">
+                    <a
+                        href="{% viewport_url 'discover:tv' %}?filter=custom&with_original_language={{language.iso_639_1}}">
                         <div class="quick-info-btn no-highlighting">
                             {% firstof language.english_name language.name %}
                         </div>
@@ -263,11 +266,11 @@
                 <div class="quick-info">
                     {% for company in content.production_companies %}
                     {% if content_type == "tv" %}
-                    <a href="#{% url 'discover:tv' %}?filter=custom&with_companies={{company.id}}">
+                    <a href="{% viewport_url 'discover:tv' %}?filter=custom&with_companies={{company.id}}">
                         <div class="quick-info-btn no-highlighting"> {{company.name}} </div>
                     </a>
                     {% elif content_type == "movie" %}
-                    <a href="#{% url 'discover:movies' %}?filter=custom&with_companies={{company.id}}">
+                    <a href="{% viewport_url 'discover:movies' %}?filter=custom&with_companies={{company.id}}">
                         <div class="quick-info-btn no-highlighting"> {{company.name}} </div>
                     </a>
                     {% endif %}
@@ -286,7 +289,7 @@
                         {% firstof network.name network %}
                     </div>
                     {% else %}
-                    <a href="#{% url 'discover:tv' %}?filter=custom&with_networks={{network.id}}">
+                    <a href="{% viewport_url 'discover:tv' %}?filter=custom&with_networks={{network.id}}">
                         <div class="quick-info-btn no-highlighting">
                             {% firstof network.name network %}
                         </div>
@@ -304,7 +307,7 @@
                     <!-- TV -->
                     {% if content.keywords.results %}
                     {% for keyword in content.keywords.results %}
-                    <a href="#{% url 'discover:tv' %}?filter=custom&with_keywords={{keyword.id}}">
+                    <a href="{% viewport_url 'discover:tv' %}?filter=custom&with_keywords={{keyword.id}}">
                         <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
                     </a>
                     {% endfor %}
@@ -312,7 +315,7 @@
                     <!-- Movies -->
                     {% elif content.keywords.keywords %}
                     {% for keyword in content.keywords.keywords %}
-                    <a href="#{% url 'discover:movies' %}?filter=custom&with_keywords={{keyword.id}}">
+                    <a href="{% viewport_url 'discover:movies' %}?filter=custom&with_keywords={{keyword.id}}">
                         <div class="quick-info-btn no-highlighting"> {{keyword.name}} </div>
                     </a>
                     {% endfor %}

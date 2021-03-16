@@ -84,26 +84,6 @@ let update_page_title = async function () {
 	document.title = $("#page-name").val() + " - " + $("#app-name").val();
 };
 
-// Sets and returns the window location with the base url removed
-let remove_base_url = function (
-	window_location = null,
-	set_window_location = true
-) {
-	// Get the current location
-	if (!window_location) {
-		window_location = get_window_location();
-	}
-	// Remove the base URL
-	if (window_location && window_location.startsWith(base_url)) {
-		window_location = window_location.slice(base_url.length);
-	}
-	// Replace the current page in the browser history
-	if (set_window_location && window.history.replaceState) {
-		window.history.replaceState({}, null, "#" + window_location);
-	}
-	return window_location;
-};
-
 // Returns the window location with the base url added
 let add_base_url = function (window_location = null) {
 	// Get the current location
@@ -320,9 +300,6 @@ var generate_viewport = async function (fresh_reload = true) {
 			window_location = window.location.hash.split("#")[1];
 		}
 	}
-
-	// Make the URL pretty by removing the base URL
-	remove_base_url();
 
 	// Change the current tab
 	update_active_tab();
