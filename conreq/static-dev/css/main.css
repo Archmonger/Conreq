@@ -246,6 +246,10 @@ img.lazy:not([src]) {
 	visibility: hidden;
 }
 
+.mfp-bg {
+	z-index: 1054;
+}
+
 .mfp-wrap {
 	z-index: 1055;
 }
