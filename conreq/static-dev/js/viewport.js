@@ -239,15 +239,17 @@ let prepare_viewport = async function (viewport_selector) {
 	create_all_carousels();
 
 	// Create the masonry grid
-	masonry_grid = $(viewport_selector + ">.viewport-masonry").masonry({
-		itemSelector: ".masonry-item",
-		gutter: 10,
-		horizontalOrder: true,
-		fitWidth: true,
-		transitionDuration: "0s",
-		stagger: "0s",
-		isStill: true,
-	});
+	if ($(viewport_selector + ">.viewport-masonry").length) {
+		masonry_grid = $(viewport_selector + ">.viewport-masonry").masonry({
+			itemSelector: ".masonry-item",
+			gutter: 10,
+			horizontalOrder: true,
+			fitWidth: true,
+			transitionDuration: "0s",
+			stagger: "0s",
+			isStill: true,
+		});
+	}
 
 	// Configure infinite scrolling
 	if ($(viewport_selector + ">.infinite-scroll").length) {
