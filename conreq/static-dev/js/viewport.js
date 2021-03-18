@@ -1,7 +1,8 @@
 let masonry_grid = null;
 let infinite_scroller_created = false;
 let previous_admin_settings = new Map();
-let viewport_container_class = ".viewport-container";
+var viewport_container_top_class = ".viewport-container-top";
+var viewport_container_class = ".viewport-container";
 let viewport_class = ".viewport";
 let page_reload_needed = false;
 let viewport_http_request = $.ajax({});
@@ -9,13 +10,37 @@ let viewport_http_request_aborted = false;
 let base_url = $("#base-url").val() + "/";
 
 // Create the lazyloader
-let callback_error = async function (element) {
-	element.src = "/static/images/transparent.png";
-};
 var lazyloader = new LazyLoad({
 	threshold: 0,
-	callback_error: callback_error,
+	callback_error: async function (element) {
+		element.src = "/static/images/transparent.png";
+	},
 });
+
+// Helper to show the active viewport
+let select_active_viewport = async function (viewport_selector) {
+	if (viewport_selector == viewport_container_class) {
+		$(viewport_container_top_class).attr("hidden", "");
+		$(viewport_container_class).removeAttr("hidden");
+	} else {
+		$(viewport_container_class).attr("hidden", "");
+		$(viewport_container_top_class).removeAttr("hidden");
+	}
+};
+
+// Determine if a cached viewport exists
+let cached_viewport_exists = function () {
+	return Boolean($("main[data-url='" + get_window_location() + "']").length);
+};
+
+// Show the cached viewport
+let display_cached_viewport = async function () {
+	$("main:not([data-url='" + get_window_location() + "'])").attr(
+		"hidden",
+		""
+	);
+	$("main[data-url='" + get_window_location() + "']").removeAttr("hidden");
+};
 
 // Removes old posters from the infinite scroller to save memory
 let cull_old_posters = async function () {
@@ -66,7 +91,7 @@ let update_active_tab = async function () {
 		// Set the active tab
 		if (
 			nav_tab.children("a").attr("href") ==
-			"#" + add_base_url(get_window_location_no_params())
+			"#" + get_window_location_no_params()
 		) {
 			if (!nav_tab.hasClass("active")) {
 				nav_tab.addClass("active");
@@ -98,8 +123,8 @@ let add_base_url = function (window_location = null) {
 };
 
 // Adds viewport related event listeners
-let add_viewport_event_listeners = async function () {
-	$(".viewport-container").trigger("add_events");
+let add_viewport_event_listeners = async function (viewport_selector) {
+	$(viewport_selector).trigger("add_events");
 	// More Info page events
 	request_btn_click_event();
 	create_content_modal_click_event();
@@ -155,52 +180,60 @@ let add_viewport_event_listeners = async function () {
 };
 
 // Destroys old viewport JS instances
-let destroy_viewport = async function () {
-	$(".viewport-container").trigger("destroy");
-	if (masonry_grid != null) {
-		if (infinite_scroller_created) {
-			masonry_grid.infiniteScroll("destroy");
-			infinite_scroller_created = false;
+let destroy_viewport = async function (viewport_selector) {
+	$(viewport_selector).trigger("destroy");
+	// TODO: Make this if statement more intelligent by tying it into an on(viewport_selector) trigger
+	if (viewport_selector == viewport_container_class) {
+		if (masonry_grid != null) {
+			if (infinite_scroller_created) {
+				masonry_grid.infiniteScroll("destroy");
+				infinite_scroller_created = false;
+			}
+			masonry_grid.masonry("destroy");
+			masonry_grid = null;
 		}
-		masonry_grid.masonry("destroy");
-		masonry_grid = null;
-	}
-	if (review_carousel != null) {
-		review_carousel.destroy();
-		review_carousel = null;
-	}
-	if (videos_carousel != null) {
-		videos_carousel.destroy();
-		videos_carousel = null;
-	}
-	if (recommended_carousel != null) {
-		recommended_carousel.destroy();
-		recommended_carousel = null;
-	}
-	if (images_carousel != null) {
-		images_carousel.destroy();
-		images_carousel = null;
-	}
-	if (collection_carousel != null) {
-		collection_carousel.destroy();
-		collection_carousel = null;
-	}
-	if (cast_carousel != null) {
-		cast_carousel.destroy();
-		cast_carousel = null;
 	}
 
-	$(".viewport-container>*:not(.loading-animation-container)").remove();
+	// TODO: Make this if statement more intelligent by tying it into an on(viewport_selector) trigger
+	if (viewport_selector == viewport_container_top_class) {
+		if (review_carousel != null) {
+			review_carousel.destroy();
+			review_carousel = null;
+		}
+		if (videos_carousel != null) {
+			videos_carousel.destroy();
+			videos_carousel = null;
+		}
+		if (recommended_carousel != null) {
+			recommended_carousel.destroy();
+			recommended_carousel = null;
+		}
+		if (images_carousel != null) {
+			images_carousel.destroy();
+			images_carousel = null;
+		}
+		if (collection_carousel != null) {
+			collection_carousel.destroy();
+			collection_carousel = null;
+		}
+		if (cast_carousel != null) {
+			cast_carousel.destroy();
+			cast_carousel = null;
+		}
+	}
+
+	$(viewport_selector + ">*:not(.loading-animation-container)").remove();
 };
 
 // Preforms any actions needed to prepare the viewport
-let prepare_viewport = async function () {
-	$(".viewport-container").trigger("prepare");
+let prepare_viewport = async function (viewport_selector) {
+	$(viewport_selector).attr("data-url", get_window_location());
+	$(viewport_selector).trigger("prepare");
 	// Create any carousels that need to be made
 	create_all_carousels();
 
 	// Create the masonry grid
-	masonry_grid = $(".viewport-masonry").masonry({
+	masonry_grid = $(viewport_selector + ">.viewport-masonry").masonry({
 		itemSelector: ".masonry-item",
 		gutter: 10,
 		horizontalOrder: true,
@@ -211,7 +244,7 @@ let prepare_viewport = async function () {
 	});
 
 	// Configure infinite scrolling
-	if ($(".infinite-scroll").length) {
+	if ($(viewport_selector + ">.infinite-scroll").length) {
 		let elements_path = null;
 		if (get_window_location().includes("?")) {
 			elements_path = get_window_location() + "&page={{#}}";
@@ -224,10 +257,10 @@ let prepare_viewport = async function () {
 				append: ".masonry-item",
 				outlayer: masonry_grid.data("masonry"),
 				prefill: true,
-				elementScroll: ".viewport-container",
+				elementScroll: viewport_selector,
 				loadOnScroll: false,
 				history: false,
-				scrollThreshold: $(".viewport-container").height() * 4,
+				scrollThreshold: $(viewport_selector).height() * 4,
 			});
 
 			masonry_grid.on("append.infiniteScroll", async function () {
@@ -254,12 +287,16 @@ let prepare_viewport = async function () {
 	lazyloader.update();
 
 	// Add event listeners
-	add_viewport_event_listeners();
+	add_viewport_event_listeners(viewport_selector);
 };
 
 // Gets the viewport from a URL
-let get_viewport = async function (location, success = function () {}) {
-	$(".viewport-container").trigger("change");
+let get_viewport = async function (
+	location,
+	viewport_selector,
+	success = function () {}
+) {
+	$(viewport_selector).trigger("change");
 	// Abandon an old http request if the user clicks something else
 	if (viewport_http_request.status == undefined) {
 		viewport_http_request_aborted = true;
@@ -271,11 +308,12 @@ let get_viewport = async function (location, success = function () {}) {
 	}).fail(async function () {
 		if (!viewport_http_request_aborted) {
 			conreq_no_response_toast_message();
-			$(".viewport-container>*").remove();
-			$(".viewport-container").append(
+			$(viewport_container_class).hide();
+			$(viewport_container_top_class + ">*").remove();
+			$(viewport_container_top_class).append(
 				"<p>Could not connect to the server!</p>"
 			);
-			$(".viewport-container>p").css("text-align", "center");
+			$(viewport_container_top_class + ">p").css("text-align", "center");
 		}
 		viewport_http_request_aborted = false;
 	});
@@ -284,61 +322,87 @@ let get_viewport = async function (location, success = function () {}) {
 
 // Fetch the new viewport and update the current tab
 var generate_viewport = async function (fresh_reload = true) {
-	// Check if the whole webpage needs to be reloaded
-	if (page_reload_needed && fresh_reload) {
-		location.reload();
-	}
-
-	// Read the URL hash to determine what page we are on
-	let window_location = get_window_location();
-
-	// If there is no window location, default to the first tab
-	if (!window_location) {
-		if (window.history.replaceState) {
-			// Replace the current page in the browser history to add a hash
-			window.history.replaceState({}, null, $(".nav-tab a").attr("href"));
-			window_location = window.location.hash.split("#")[1];
+	if (cached_viewport_exists()) {
+		display_cached_viewport();
+	} else {
+		let viewport_selector = null;
+		if (get_window_location(true).startsWith("display/")) {
+			// Display on the top layer
+			viewport_selector = viewport_container_top_class;
+		} else {
+			// Display on the primary viewport
+			viewport_selector = viewport_container_class;
 		}
-	}
+		// Check if the whole webpage needs to be reloaded
+		if (page_reload_needed) {
+			location.reload();
+		}
 
-	// Change the current tab
-	update_active_tab();
+		// Read the URL hash to determine what page we are on
+		let window_location = get_window_location();
 
-	// Asynchronously fetch new viewport content
-	viewport_loaded = false;
-	get_viewport(add_base_url(window_location), async function (viewport_html) {
-		// Save that the page was successfully loaded
-		viewport_loaded = true;
+		// If there is no window location, default to the first tab
+		if (!window_location) {
+			if (window.history.replaceState) {
+				// Replace the current page in the browser history to add a hash
+				window.history.replaceState(
+					{},
+					null,
+					$(".nav-tab a").attr("href")
+				);
+				window_location = window.location.hash.split("#")[1];
+			}
+		}
 
-		// Destroy old JS elements and event handlers
-		await destroy_viewport();
+		// Change the current tab
+		update_active_tab();
 
-		// Inject and configure the new content
-		$(".viewport-container")[0].innerHTML = DOMPurify.sanitize(
-			viewport_html
+		// Asynchronously fetch new viewport content
+		viewport_loaded = false;
+		get_viewport(
+			add_base_url(window_location),
+			viewport_selector,
+			async function (viewport_html) {
+				// Save that the page was successfully loaded
+				viewport_loaded = true;
+
+				// Destroy old JS elements and event handlers
+				await destroy_viewport(viewport_selector);
+
+				// Inject and configure the new content
+				$(viewport_selector)[0].innerHTML = DOMPurify.sanitize(
+					viewport_html
+				);
+				select_active_viewport(viewport_selector);
+				await prepare_viewport(viewport_selector);
+				update_page_title();
+				$(viewport_selector).trigger("loaded");
+
+				// Display the new content
+				$(viewport_selector + ">.loading-animation-container").hide();
+				$(
+					viewport_selector + ">*:not(.loading-animation-container)"
+				).show();
+
+				// Set scroll position
+				if (fresh_reload) {
+					$(viewport_selector).scrollTop(0);
+				}
+			}
 		);
-		await prepare_viewport();
-		update_page_title();
-		$(".viewport-container").trigger("loaded");
 
-		// Display the new content
-		$(".viewport-container>.loading-animation-container").hide();
-		$(".viewport-container>*:not(.loading-animation-container)").show();
-
-		// Set scroll position
-		if (fresh_reload) {
-			$(viewport_container_class).scrollTop(0);
-		}
-	});
-
-	// If the page is taking too long to load, show a loading animation
-	setTimeout(async function () {
-		if (!viewport_loaded && fresh_reload) {
-			// Hide the viewport and display the loading animation
-			$(".viewport-container>.loading-animation-container").show();
-			$(".viewport-container>*:not(.loading-animation-container)").hide();
-		}
-	}, 1000);
+		// If the page is taking too long to load, show a loading animation
+		setTimeout(async function () {
+			if (!viewport_loaded && fresh_reload) {
+				// Hide the viewport and display the loading animation
+				select_active_viewport(viewport_selector);
+				$(viewport_selector + ">.loading-animation-container").show();
+				$(
+					viewport_selector + ">*:not(.loading-animation-container)"
+				).hide();
+			}
+		}, 1000);
+	}
 };
 
 // Perform actions whenever the HTML on the page changes
@@ -369,21 +433,17 @@ AOS.init();
 
 // Obtain the initial page
 page_mutation_observer();
-$(document).ready(async function () {
-	generate_viewport();
-});
+$(document).ready(generate_viewport);
 
 // Fetch a new page when the URL changes
 if ("onhashchange" in window) {
 	// Window anchor change event supported
-	window.onhashchange = async function () {
-		generate_viewport();
-	};
+	window.onhashchange = generate_viewport;
 } else {
 	// Window anchor change event not supported
-	var storedHash = window.location.hash;
+	let stored_hash = window.location.hash;
 	window.setInterval(async function () {
-		if (window.location.hash != storedHash) {
+		if (window.location.hash != stored_hash) {
 			generate_viewport();
 		}
 	}, 100);

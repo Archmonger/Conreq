@@ -7,9 +7,17 @@ var sleep = function (ms) {
 };
 
 // Gets the current window location from the hash
-var get_window_location = function () {
+var get_window_location = function (raw = false) {
 	// Read the URL hash to determine what page we are on
-	return window.location.hash.split(/#(.+)/)[1];
+	if (raw == true) {
+		return window.location.hash.split(/#(.+)/)[1];
+	} else {
+		let window_location = window.location.hash.split(/#(.+)/)[1];
+		if (window_location.startsWith("display/")) {
+			window_location = window_location.slice("display/".length);
+		}
+		return window_location;
+	}
 };
 
 // Gets the current window location from the hash without parameters

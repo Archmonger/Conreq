@@ -4,7 +4,7 @@
 
     <!-- Poster image and icons floating on it -->
     <a
-        href="{% viewport_url 'more_info:main' %}?{% if card.content_source == 'tmdb' %}tmdb_id={{card.id}}{% elif card.content_source == 'radarr' %}tmdb_id={{card.tmdbId}}{% elif card.content_source == 'sonarr' %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.content_type}}">
+        href="{% viewport_top_url 'more_info:main' %}?{% if card.content_source == 'tmdb' %}tmdb_id={{card.id}}{% elif card.content_source == 'radarr' %}tmdb_id={{card.tmdbId}}{% elif card.content_source == 'sonarr' %}tvdb_id={{card.tvdbId}}{% endif %}&content_type={{card.content_type}}">
 
         {% if card.requested_by and user.is_staff %}
         <div class="requested-by line-clamp-1">

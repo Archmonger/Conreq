@@ -110,7 +110,8 @@
 		margin-left: 25px;
 		width: 100%;
 	}
-	.viewport-container .searchbar {
+	.viewport-container .searchbar,
+	.viewport-container-top .searchbar {
 		display: none !important;
 	}
 	.sidebar {
@@ -127,6 +128,7 @@
 		padding-left: 20px;
 	}
 	.viewport-container,
+	.viewport-container-top,
 	.viewport-loader {
 		z-index: 4;
 		width: 100vw;

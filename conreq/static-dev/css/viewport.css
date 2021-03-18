@@ -1,4 +1,5 @@
-.viewport-container {
+.viewport-container,
+.viewport-container-top {
 	position: absolute;
 	height: calc(100% - var(--navbar-height));
 	overflow-x: hidden;
@@ -34,7 +35,8 @@
 	line-height: 1.5;
 }
 
-.viewport-container > .loading-animation-container {
+.viewport-container > .loading-animation-container,
+.viewport-container-top > .loading-animation-container {
 	display: flex;
 	height: 100%;
 	width: 100%;

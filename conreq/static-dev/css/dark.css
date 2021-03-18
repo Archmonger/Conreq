@@ -41,7 +41,8 @@ body {
 	color: rgb(255 255 255 / 0.75);
 }
 
-.viewport-container {
+.viewport-container,
+.viewport-container-top {
 	color: rgb(255 255 255 / 0.75);
 }
 

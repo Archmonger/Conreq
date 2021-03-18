@@ -22,7 +22,8 @@
 	display: flex !important;
 }
 
-.viewport-container .searchbar {
+.viewport-container .searchbar,
+.viewport-container-top .searchbar {
 	box-shadow: var(--poster-box-shadow);
 }
 
