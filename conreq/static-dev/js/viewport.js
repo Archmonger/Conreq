@@ -42,6 +42,12 @@ let display_cached_viewport = async function () {
 	$("main[data-url='" + get_window_location() + "']").removeAttr("hidden");
 };
 
+// Hide any floaty objects
+let hide_modals_and_popups = async function () {
+	$("#modal-container").modal("hide");
+	$.magnificPopup.close();
+};
+
 // Removes old posters from the infinite scroller to save memory
 let cull_old_posters = async function () {
 	let viewport_container = $(viewport_container_class);
@@ -322,6 +328,8 @@ let get_viewport = async function (
 
 // Fetch the new viewport and update the current tab
 var generate_viewport = async function (fresh_reload = true) {
+	hide_modals_and_popups();
+
 	if (cached_viewport_exists()) {
 		display_cached_viewport();
 	} else {
