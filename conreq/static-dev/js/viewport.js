@@ -17,31 +17,6 @@ var lazyloader = new LazyLoad({
 	},
 });
 
-// Helper to show the active viewport
-let select_active_viewport = async function (viewport_selector) {
-	if (viewport_selector == viewport_container_class) {
-		$(viewport_container_top_class).attr("hidden", "");
-		$(viewport_container_class).removeAttr("hidden");
-	} else {
-		$(viewport_container_class).attr("hidden", "");
-		$(viewport_container_top_class).removeAttr("hidden");
-	}
-};
-
-// Determine if a cached viewport exists
-let cached_viewport_exists = function () {
-	return Boolean($("main[data-url='" + get_window_location() + "']").length);
-};
-
-// Show the cached viewport
-let display_cached_viewport = async function () {
-	$("main:not([data-url='" + get_window_location() + "'])").attr(
-		"hidden",
-		""
-	);
-	$("main[data-url='" + get_window_location() + "']").removeAttr("hidden");
-};
-
 // Hide any floaty objects
 let hide_modals_and_popups = async function () {
 	$("#modal-container").modal("hide");
@@ -113,6 +88,33 @@ let update_active_tab = async function () {
 // Updates the page name
 let update_page_title = async function () {
 	document.title = $("#page-name").val() + " - " + $("#app-name").val();
+};
+
+// Helper to show the active viewport
+let select_active_viewport = async function (viewport_selector) {
+	if (viewport_selector == viewport_container_class) {
+		$(viewport_container_top_class).attr("hidden", "");
+		$(viewport_container_class).removeAttr("hidden");
+	} else {
+		$(viewport_container_class).attr("hidden", "");
+		$(viewport_container_top_class).removeAttr("hidden");
+	}
+};
+
+// Determine if a cached viewport exists
+let cached_viewport_exists = function () {
+	return Boolean($("main[data-url='" + get_window_location() + "']").length);
+};
+
+// Show the cached viewport
+let display_cached_viewport = async function () {
+	update_active_tab();
+	update_page_title();
+	$("main:not([data-url='" + get_window_location() + "'])").attr(
+		"hidden",
+		""
+	);
+	$("main[data-url='" + get_window_location() + "']").removeAttr("hidden");
 };
 
 // Returns the window location with the base url added
