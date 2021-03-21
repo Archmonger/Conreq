@@ -86,8 +86,11 @@ let update_active_tab = async function () {
 };
 
 // Updates the page name
-let update_page_title = async function () {
-	document.title = $("#page-name").val() + " - " + $("#app-name").val();
+let update_page_title = async function (viewport_selector) {
+	document.title =
+		$(viewport_selector + ">.page-name").val() +
+		" - " +
+		$("#app-name").val();
 };
 
 // Helper to show the active viewport
@@ -108,13 +111,14 @@ let cached_viewport_exists = function () {
 
 // Show the cached viewport
 let display_cached_viewport = async function () {
+	let current_viewport = "main[data-url='" + get_window_location() + "']";
 	update_active_tab();
-	update_page_title();
+	update_page_title(current_viewport);
 	$("main:not([data-url='" + get_window_location() + "'])").attr(
 		"hidden",
 		""
 	);
-	$("main[data-url='" + get_window_location() + "']").removeAttr("hidden");
+	$(current_viewport).removeAttr("hidden");
 };
 
 // Returns the window location with the base url added
@@ -387,7 +391,7 @@ var generate_viewport = async function (fresh_reload = true) {
 				);
 				select_active_viewport(viewport_selector);
 				await prepare_viewport(viewport_selector);
-				update_page_title();
+				update_page_title(viewport_selector);
 				$(viewport_selector).trigger("loaded");
 
 				// Display the new content

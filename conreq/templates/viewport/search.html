@@ -4,7 +4,7 @@
 {% csrf_token %}
 {% include "primary/loading_animation_container.html" %}
 {% include "primary/searchbar.html" %}
-<input id="page-name" type="hidden" value="Search {{search_query}}">
+<input class="page-name" type="hidden" value="Search {{search_query}}">
 
 <div class="viewport search {% if all_cards %}viewport-masonry{% endif %}">
     {% if not all_cards %}

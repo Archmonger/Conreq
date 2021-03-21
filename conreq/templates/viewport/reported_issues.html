@@ -1,7 +1,7 @@
 {% load static %}
 {% csrf_token %}
 {% include "primary/loading_animation_container.html" %}
-<input id="page-name" type="hidden" value="{{page_name}}">
+<input class="page-name" type="hidden" value="{{page_name}}">
 
 <div class="viewport requests {% if all_cards %}viewport-masonry{% endif %}">
     {% if not all_cards %}
