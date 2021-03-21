@@ -1,5 +1,6 @@
 {% load static compress %}
 {% load static %}
+{% load pwa %}
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>{{ server_settings.conreq_app_name }}</title>
@@ -8,6 +9,7 @@
 
 <!-- Favicons and App icons -->
 {% include "primary/icons.html" %}
+{% progressive_web_app_meta %}
 
 <!-- Preconnections -->
 <link rel="preconnect" href="https://image.tmdb.org">
