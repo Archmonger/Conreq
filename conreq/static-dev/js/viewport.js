@@ -7,7 +7,7 @@ let viewport_class = ".viewport";
 let page_reload_needed = false;
 let viewport_http_request = $.ajax({});
 let viewport_http_request_aborted = false;
-let base_url = $("#base-url").val() + "/";
+let base_url = "";
 
 // Create the lazyloader
 var lazyloader = new LazyLoad({
@@ -440,12 +440,14 @@ let page_mutation_observer = async function () {
 	observer.observe(target, config);
 };
 
-// Slide in animations for navbar, sidebar, and viewport
-AOS.init();
-
-// Obtain the initial page
-page_mutation_observer();
-$(document).ready(generate_viewport);
+$(document).ready(async function () {
+	base_url = $("#base-url").val() + "/";
+	// Slide in animations for navbar, sidebar, and viewport
+	AOS.init();
+	// Obtain the initial page
+	page_mutation_observer();
+	generate_viewport();
+});
 
 // Fetch a new page when the URL changes
 if ("onhashchange" in window) {
