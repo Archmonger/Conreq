@@ -9,7 +9,6 @@ from url_or_relative_url_field.fields import URLOrRelativeURLField
 class ConreqConfig(SingletonModel):
     # Basic settings
     conreq_api_key = models.CharField(max_length=255, default="", blank=True)
-    conreq_app_name = models.CharField(max_length=100, default="Conreq")
     conreq_custom_css = URLOrRelativeURLField(default="", blank=True)
     conreq_custom_js = URLOrRelativeURLField(default="", blank=True)
     conreq_simple_posters = models.BooleanField(default=True)

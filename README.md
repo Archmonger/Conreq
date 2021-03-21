@@ -21,6 +21,8 @@ Here's a list of all available environment variables:
 # General Settings
 TZ = "America/Los_Angeles"                # default: UTC (Timezone for log files, in "TZ Database" format)
 BASE_URL = "requests"                     # default: none
+APP_NAME = "RequestCentral"               # default: Conreq
+APP_DESCRIPTION = "Get yo stuff!"         # default: Content Requesting
 ARR_REFRESH_INTERNAL = "*/15"             # default: */1 (Cron minutes for Sonarr/Radarr library refresh)
 
 # Data Storage

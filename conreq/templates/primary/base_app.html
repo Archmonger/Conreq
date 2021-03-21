@@ -2,6 +2,7 @@
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% load static compress %}
 {% load static %}
+{% load conreq_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,7 @@
 </head>
 
 <body>
-    <input id="app-name" type="hidden" value="{{ server_settings.conreq_app_name }}">
+    <input id="app-name" type="hidden" value="{% app_name %}">
     <input id="base-url" type="hidden" value="{{ base_url }}">
     {% include "primary/navbar.html" %}
     {% include "primary/sidebar.html" %}

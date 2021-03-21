@@ -68,26 +68,17 @@ PWA_APP_NAME = os.environ.get("APP_NAME", "Conreq")
 PWA_APP_DESCRIPTION = os.environ.get("APP_DESCRIPTION", "Content Requesting")
 PWA_APP_THEME_COLOR = "#3fcfa6"
 PWA_APP_BACKGROUND_COLOR = "#04110d"
-PWA_APP_DISPLAY = "standalone"
-PWA_APP_SCOPE = "/"
-PWA_APP_ORIENTATION = "any"
-PWA_APP_START_URL = "/"
-PWA_APP_STATUS_BAR_COLOR = "default"
 PWA_APP_ICONS = [
-    {"src": "/static/icons/android-chrome-512x512.png", "sizes": "512x512"},
-    {"src": "/static/icons/android-chrome-192x192.png", "sizes": "192x192"},
+    {
+        "src": "/static/icons/maskable.png",
+        "sizes": "512x512",
+        "purpose": "maskable any",
+    },
 ]
 PWA_APP_ICONS_APPLE = [
-    {"src": "/static/images/apple-touch-icon-180x180.png", "sizes": "180x180"}
+    {"src": "/static/icons/apple-touch-icon.png", "sizes": "180x180"}
 ]
-PWA_APP_SPLASH_SCREEN = [
-    # {
-    #     "src": "/static/images/icons/splash-640x1136.png",
-    #     "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
-    # }
-]
-PWA_APP_DIR = "ltr"
-PWA_APP_LANG = "en-US"
+PWA_APP_SPLASH_SCREEN = []
 
 
 # Logging

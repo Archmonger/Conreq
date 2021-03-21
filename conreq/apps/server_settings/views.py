@@ -133,10 +133,7 @@ def update_settings(request):
             conreq_config = ConreqConfig.get_solo()
 
             # Basic Configuration
-            if message["setting_name"] == "Conreq Application Name":
-                conreq_config.conreq_app_name = message["value"]
-
-            elif message["setting_name"] == "Conreq API Key":
+            if message["setting_name"] == "Conreq API Key":
                 conreq_config.conreq_api_key = secrets.token_hex(16)
                 response["command_name"] = "new conreq api key"
                 response["value"] = conreq_config.conreq_api_key
