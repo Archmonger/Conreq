@@ -1,10 +1,9 @@
-{% extends "./base_viewport.html" %}
-
-{% block viewport %}
 {% load static %}
 {% load viewport_tags %}
 {% load solo_tags %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
+{% csrf_token %}
+{% include "primary/loading_animation_container.html" %}
 <input id="page-name" type="hidden" value="{% firstof content.title content.name 'Unknown' %}">
 
 <div class="viewport more-info">
@@ -427,4 +426,3 @@
         class="more-info-backdrop lazy" alt="">
     <div class="backdrop-placeholder-gradient"></div>
 </div>
-{% endblock %}
