@@ -70,9 +70,14 @@ PWA_APP_THEME_COLOR = "#3fcfa6"
 PWA_APP_BACKGROUND_COLOR = "#04110d"
 PWA_APP_ICONS = [
     {
+        "src": "/static/icons/standard.png",
+        "sizes": "512x512",
+        "purpose": "any",
+    },
+    {
         "src": "/static/icons/maskable.png",
         "sizes": "512x512",
-        "purpose": "maskable any",
+        "purpose": "maskable",
     },
 ]
 PWA_APP_ICONS_APPLE = [
