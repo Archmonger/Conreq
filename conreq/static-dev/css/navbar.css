@@ -40,7 +40,8 @@
 	width: calc(100% - 40px);
 	color: inherit;
 	border: none;
-	font-size: 16px;
+	font-size: var(--primary-font-size);
+	font-weight: 500;
 	padding-left: 15px;
 	outline: none !important;
 }
