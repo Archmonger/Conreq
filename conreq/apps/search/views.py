@@ -1,5 +1,3 @@
-from threading import Thread
-
 from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.core.content_search import Search
 from conreq.utils.app_views import set_many_availability
@@ -8,8 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
-
-from .helpers import convert_card_to_tmdb
 
 
 @cache_page(15)
@@ -22,34 +18,24 @@ def search(request):
     # Get the ID from the URL
     query = request.GET.get("query", "")
     content_type = request.GET.get("content_type", None)
-    template = loader.get_template("viewport/search.html")
+    page = int(request.GET.get("page", 1))
 
     # Determine which search method to use (tv/movie/all)
     if content_type == "tv":
-        arr_results = searcher.television(query)
+        tmdb_results = searcher.television(query, page)["results"]
     elif content_type == "movie":
-        arr_results = searcher.movie(query)
+        tmdb_results = searcher.movie(query, page)["results"]
     else:
-        arr_results = searcher.all(query)
-
-    # Attempt to convert cards to TMDB equivalents
-    thread_list = []
-    for index in range(0, len(arr_results)):
-        thread = Thread(target=convert_card_to_tmdb, args=[index, arr_results])
-        thread.start()
-        thread_list.append(thread)
-
-    # Wait for computation to complete
-    for thread in thread_list:
-        thread.join()
+        tmdb_results = searcher.all(query, page)["results"]
 
     # Determine the availability
-    content_discovery.determine_id_validity({"results": arr_results})
-    set_many_availability(arr_results)
+    content_discovery.determine_id_validity({"results": tmdb_results})
+    set_many_availability(tmdb_results)
 
     context = {
-        "all_cards": arr_results,
-        "search_query": query,
+        "all_cards": tmdb_results,
         "content_type": content_type,
+        "search_query": query,
     }
+    template = loader.get_template("viewport/search.html")
     return HttpResponse(template.render(context, request))

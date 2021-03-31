@@ -440,7 +440,10 @@ class Base:
             # Set a list of results
             if isinstance(results, dict) and results.__contains__("results"):
                 for result in results["results"]:
-                    result["content_type"] = content_type
+                    # Use the media type in TMDB Search endpoint if available
+                    result["content_type"] = (
+                        content_type if content_type else result.get("media_type")
+                    )
                     result["content_source"] = "tmdb"
             # Special case for "Collections"
             elif isinstance(results, dict) and results.__contains__("parts"):
@@ -456,6 +459,29 @@ class Base:
             else:
                 results["content_type"] = content_type
                 results["content_source"] = "tmdb"
+        except:
+            log.handler(
+                "Failed to set content attributes!",
+                log.ERROR,
+                _logger,
+            )
+
+        return results
+
+    @staticmethod
+    def _remove_bad_content_types(results):
+        """Removes results that aren't TV or movies"""
+        new_results = None
+        try:
+            # Set a list of results
+            if isinstance(results, dict) and results.__contains__("results"):
+                new_results = results.copy()
+                new_results["results"] = []
+                for result in results["results"]:
+                    content_type = result.get("content_type")
+                    if content_type == "movie" or content_type == "tv":
+                        new_results["results"].append(result)
+                return new_results
         except:
             log.handler(
                 "Failed to set content attributes!",

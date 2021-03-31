@@ -89,7 +89,7 @@ let update_active_tab = async function () {
 let update_page_title = async function (viewport_selector) {
 	document.title =
 		$(viewport_selector + ">.page-name").val() +
-		" - " +
+		" | " +
 		$("#app-name").val();
 };
 
