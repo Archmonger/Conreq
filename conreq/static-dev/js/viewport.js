@@ -337,10 +337,10 @@ let get_viewport = async function (
 };
 
 // Fetch the new viewport and update the current tab
-var generate_viewport = async function (fresh_reload = true) {
+var generate_viewport = async function (standard_viewport_load = true) {
 	hide_modals_and_popups();
 
-	if (cached_viewport_exists()) {
+	if (cached_viewport_exists() && standard_viewport_load == true) {
 		display_cached_viewport();
 	} else {
 		let viewport_selector = null;
@@ -403,7 +403,7 @@ var generate_viewport = async function (fresh_reload = true) {
 				).show();
 
 				// Set scroll position
-				if (fresh_reload) {
+				if (standard_viewport_load) {
 					$(viewport_selector).scrollTop(0);
 				}
 			}
@@ -411,7 +411,7 @@ var generate_viewport = async function (fresh_reload = true) {
 
 		// If the page is taking too long to load, show a loading animation
 		setTimeout(async function () {
-			if (!viewport_loaded && fresh_reload) {
+			if (!viewport_loaded && standard_viewport_load) {
 				// Hide the viewport and display the loading animation
 				select_active_viewport(viewport_selector);
 				$(viewport_selector + ">.loading-animation-container").show();
