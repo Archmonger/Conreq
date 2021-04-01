@@ -1,0 +1,16 @@
+{% load pwa %}
+{
+  "name": {{ PWA_APP_NAME|js }},
+  "short_name": {{ PWA_APP_NAME|js }},
+  "description": {{ PWA_APP_DESCRIPTION|js }},
+  "start_url": {{ PWA_APP_START_URL|js }},
+  "display": {{ PWA_APP_DISPLAY|js }},
+  "scope": {{ PWA_APP_SCOPE|js }},
+  "orientation": {{ PWA_APP_ORIENTATION|js }},
+  "background_color": {{ PWA_APP_BACKGROUND_COLOR|js }},
+  "theme_color": {{ PWA_APP_THEME_COLOR|js }},
+  "status_bar": {{ PWA_APP_STATUS_BAR_COLOR|js }},
+  "icons": {{ PWA_APP_ICONS|js }},
+  "dir": {{ PWA_APP_DIR|js }},
+  "lang": {{ PWA_APP_LANG|js }}
+}

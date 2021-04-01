@@ -70,21 +70,23 @@ PWA_APP_THEME_COLOR = "#3fcfa6"
 PWA_APP_BACKGROUND_COLOR = "#04110d"
 PWA_APP_ICONS = [
     {
-        "src": "/static/icons/standard.png",
+        "src": BASE_URL + "/static/icons/standard.png",
         "sizes": "512x512",
         "purpose": "any",
     },
     {
-        "src": "/static/icons/maskable.png",
+        "src": BASE_URL + "/static/icons/maskable.png",
         "sizes": "512x512",
         "purpose": "maskable",
     },
 ]
 PWA_APP_ICONS_APPLE = [
-    {"src": "/static/icons/apple-touch-icon.png", "sizes": "180x180"}
+    {"src": BASE_URL + "/static/icons/apple-touch-icon.png", "sizes": "180x180"}
 ]
 PWA_APP_SPLASH_SCREEN = []
-
+PWA_APP_START_URL = BASE_URL + "/"
+PWA_APP_SCOPE = PWA_APP_START_URL
+PWA_APP_DEBUG_MODE = DEBUG
 
 # Logging
 LOG_DIR = os.path.join(DATA_DIR, "logs")
@@ -256,6 +258,7 @@ INSTALLED_APPS = [
     "conreq.apps.sign_up",
     "conreq.apps.user_requests",
     "conreq.apps.issue_reporting",
+    "conreq.apps.pwa",
     "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
@@ -264,7 +267,6 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
-    "pwa",  # Automatically configures PWA
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -379,7 +381,7 @@ USE_TZ = True
 
 
 # Static Files (CSS, JavaScript, Images)
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static-deploy")
 STATIC_URL = BASE_URL + "/static/"
 STATICFILES_USER_PROVIDED = os.path.join(DATA_DIR, "static")
 STATICFILES_DIRS = [

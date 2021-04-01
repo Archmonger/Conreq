@@ -8,7 +8,7 @@ __pycache__
 db.sqlite3
 media
 cache
-static
+static-deploy
 data
 settings.json
 
