@@ -1,5 +1,6 @@
 {% load static %}
 {% load solo_tags %}
+{% load conreq_tags %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% csrf_token %}
 {% include "primary/loading_animation_container.html" %}
@@ -8,7 +9,7 @@
     value="Search {{search_query}}{% if content_type %} ({{ content_type}}){% endif %}">
 
 <div class="viewport search {% if all_cards %}viewport-masonry infinite-scroll{% endif %}">
-    {% if not all_cards %}
+    {% if not all_cards|contains_valid_id %}
     <div class="empty-viewport">
         No search results were found for "{{search_query}}"!
     </div>
