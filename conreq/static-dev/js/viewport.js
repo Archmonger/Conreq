@@ -458,7 +458,9 @@ $(document).ready(async function () {
 // Fetch a new page when the URL changes
 if ("onhashchange" in window) {
 	// Window anchor change event supported
-	window.onhashchange = generate_viewport;
+	window.onhashchange = async function () {
+		generate_viewport();
+	};
 } else {
 	// Window anchor change event not supported
 	let stored_hash = window.location.hash;
