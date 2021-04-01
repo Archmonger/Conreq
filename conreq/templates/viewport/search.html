@@ -15,7 +15,7 @@
     {% endif %}
 
     {% for card in all_cards %}
-    {% if card.poster_path and card.conreq_valid_id %}
+    {% if card.conreq_valid_id %}
     {% include "cards/poster.html" %}
     {% endif %}
     {% endfor %}
