@@ -35,8 +35,8 @@
 <script type="text/javascript">
     // Initialize the service worker
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('{{ PWA_BASE_URL|safe }}/serviceworker.js', {
-            scope: '{{ PWA_APP_SCOPE|safe }}'
+        navigator.serviceWorker.register('{{ PWA_BASE_URL|escapejs }}/serviceworker.js', {
+            scope: '{{ PWA_APP_SCOPE|escapejs }}'
         }).then(function (registration) {
             // Registration successful
             {% if PWA_APP_DEBUG_MODE %}

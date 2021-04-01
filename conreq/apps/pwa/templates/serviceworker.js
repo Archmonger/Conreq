@@ -2,8 +2,8 @@
 
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
-	"{{ base_url|safe }}/offline/",
-	"{{ base_url|safe }}/static/css/django-pwa-app.css",
+	"{{ base_url|escapejs }}/offline/",
+	"{{ base_url|escapejs }}/static/css/django-pwa-app.css",
 ];
 
 // Cache on install
@@ -39,7 +39,7 @@ self.addEventListener("fetch", (event) => {
 				return response || fetch(event.request);
 			})
 			.catch(() => {
-				return caches.match("{{ base_url|safe }}/offline/");
+				return caches.match("{{ base_url|escapejs }}/offline/");
 			})
 	);
 });
