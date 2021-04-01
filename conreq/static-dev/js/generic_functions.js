@@ -254,7 +254,7 @@ let perform_search = async function (searchbar) {
 	let parameters = searchbar_input.val();
 	let content_type = searchbar_input.data("content-type");
 	let new_location =
-		searchbar_input.data("search-url") + "?query=" + encodeURI(parameters);
+		searchbar_input.data("search-url") + "?query=" + escape(parameters);
 	if (content_type) {
 		new_location += "&content_type=" + content_type;
 	}
