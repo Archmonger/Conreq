@@ -390,7 +390,7 @@ var user_delete_btn_click_event = async function () {
 		let delete_query =
 			btn.data("delete-url") +
 			"?username=" +
-			encodeURI(btn.data("username"));
+			escape(btn.data("username"));
 		post_url(delete_query, function (result) {
 			if (result.success) {
 				btn.parent().parent().remove();
@@ -408,7 +408,7 @@ var user_invite_btn_click_event = async function () {
 		let sign_up_url = window.location.origin + btn.data("sign-up-url");
 		get_url(generate_invite_url, function (result) {
 			let invite_link =
-				sign_up_url + "?invite_code=" + encodeURI(result.invite_code);
+				sign_up_url + "?invite_code=" + escape(result.invite_code);
 			create_invite_link_elem(invite_link);
 		}).fail(conreq_no_response_toast_message);
 		copy_to_clipboard();
