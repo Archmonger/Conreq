@@ -11,13 +11,13 @@ $(document).ready(async function () {
 	let ws_connect = async function () {
 		// Note: this websocket automatically reconnects upon disconnection
 		let loc = window.location;
-		let ws_start = $("#base-url").val();
+		let ws_start = "";
 		if (loc.protocol == "https:") {
 			ws_start = "wss://";
 		} else {
 			ws_start = "ws://";
 		}
-		let endpoint = ws_start + loc.host;
+		let endpoint = ws_start + loc.host + $("#base-url").val();
 		COMMAND_SOCKET = new WebSocket(endpoint);
 
 		// RECEIVABLE COMMANDS

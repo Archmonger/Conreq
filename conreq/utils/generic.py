@@ -25,7 +25,7 @@ def clean_string(string):
 
 def get_base_url():
     """Obtains the base URL from the environment variables"""
-    base_url = os.environ.get("BASE_URL", "requests")
+    base_url = os.environ.get("BASE_URL", "")
     if isinstance(base_url, str) and base_url:
         base_url = base_url.replace("/", "").replace("\\", "")
         base_url = "/" + base_url
