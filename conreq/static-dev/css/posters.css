@@ -142,6 +142,7 @@
 	line-height: 14px;
 	background: var(--poster-bg-color);
 	font-weight: 700;
+	z-index: 11;
 }
 
 .viewport .poster-container:hover > a:hover > .content-type-icon {
