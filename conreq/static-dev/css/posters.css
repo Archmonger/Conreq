@@ -60,7 +60,6 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-size: 16px;
-	line-height: calc(16px + 2);
 	color: #ffffff;
 	padding: 7px var(--poster-padding) 5px var(--poster-padding);
 	text-align: left;

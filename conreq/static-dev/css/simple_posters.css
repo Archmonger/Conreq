@@ -64,7 +64,11 @@
 	opacity: 1;
 }
 
-.poster-description {
+.poster-container.cast .poster-description {
+	color: inherit;
+}
+
+.poster-container:not(.cast) .poster-description {
 	display: none;
 }
 
