@@ -10,4 +10,10 @@ $(document).ready(async function () {
 			$("table").bootstrapTable("destroy");
 		}
 	});
+
+	$(".viewport-container").on("loaded-cached", async function () {
+		if (masonry_grid != null) {
+			masonry_grid.masonry("layout");
+		}
+	});
 });
