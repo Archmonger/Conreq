@@ -20,9 +20,10 @@ pwned-passwords-django==1.4.1
 awesome-django-timezones==0.3.0
 pymysql==1.0.2
 huey==2.3.1
-django_compressor==2.4
-django_silk==4.1.0
+django-compressor==2.4
+django-silk==4.1.0
 django-url-or-relative-url-field==0.1.2
 jsonfield==3.1.0
 tzlocal==2.1
 titlecase==2.0.0
+django-model-utils==4.1.1
