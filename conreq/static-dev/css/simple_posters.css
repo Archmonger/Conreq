@@ -28,20 +28,19 @@
 	background: #ffffff;
 }
 
-.requested-by {
+.viewport .poster-container > a > .requested-by {
 	top: calc(var(--poster-height) - 55px);
 	left: 5px;
 	right: unset;
-	opacity: 0;
+	opacity: 1;
 }
 
-.viewport .poster-container:hover > a:hover > .requested-by {
-	opacity: 1;
+.viewport .poster-container > a > .requested-by {
 	max-width: calc(100% - 10px);
 }
 
 .viewport .poster-container .poster-description-container {
-	opacity: 0;
+	opacity: 0.85;
 	position: absolute;
 	top: -2px;
 	left: -2px;
@@ -82,10 +81,6 @@
 	top: unset;
 	bottom: 5px;
 	left: 5px;
-}
-
-.viewport .poster-container:hover > a > .content-type-icon {
-	opacity: 1;
 }
 
 .viewport .poster-container .description-tint {

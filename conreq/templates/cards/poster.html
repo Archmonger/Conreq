@@ -12,7 +12,7 @@
         </div>
         {% endif %}
 
-        <div class="content-type-icon {% if not card.poster_path and not card.remotePoster %}opacity-1{% endif %}">
+        <div class="content-type-icon">
             {% if card.content_type == "tv" %}
             <i class="fas fa-tv" title="Television"></i>
             {% elif card.content_type == "movie" %}
@@ -46,8 +46,7 @@
 
     <!-- Poster description -->
     <div class="description-tint"></div>
-    <div
-        class="poster-description-container {% if not card.poster_path and not card.remotePoster %}opacity-1{% endif %}">
+    <div class="poster-description-container">
         <div class="poster-title">{% firstof card.name card.title "Unknown" %}</div>
         {% if card.availability == "Available" %}
         <div class="availablity-dot green" title="Available"></div>
