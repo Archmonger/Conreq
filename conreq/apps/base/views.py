@@ -21,6 +21,7 @@ def initialization(request):
     # Authenticate using Organizr headers
     organizr_username = request.headers.get("X-WEBAUTH-USER")
     if conreq_config.conreq_http_header_auth and organizr_username:
+        # Configure the user parameters
         organizr_email = request.headers.get("X-WEBAUTH-EMAIL")
         organizr_group = int(request.headers.get("X-WEBAUTH-GROUP"))
         user = user_objects.get_or_create(
@@ -33,6 +34,12 @@ def initialization(request):
         if organizr_group == 0 or organizr_group == 1:
             user.is_staff = True
         user.save()
+
+        # Make sure the user is labeled as a HTTP auth user
+        if not user.profile.http_header_auth_user:
+            user.profile.http_header_auth_user = True
+            user.save()
+
         login(request, user)
 
     # Run the first time initialization if needed
