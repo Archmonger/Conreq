@@ -54,6 +54,7 @@
 	height: fit-content;
 	padding-top: 2px;
 	padding-bottom: 25px;
+	text-shadow: 2px 2px 4px #000000;
 }
 
 .availablity-dot {
