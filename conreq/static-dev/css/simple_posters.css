@@ -72,6 +72,10 @@
 	display: none;
 }
 
+.viewport .poster-container .poster {
+	transform: scale(1.08);
+}
+
 .viewport .poster-container .poster:hover {
 	transform: none;
 }
