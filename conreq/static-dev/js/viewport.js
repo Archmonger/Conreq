@@ -419,7 +419,7 @@ var generate_viewport = async function (standard_viewport_load = true) {
 					viewport_selector + ">*:not(.loading-animation-container)"
 				).hide();
 			}
-		}, 1000);
+		}, 500);
 	}
 };
 
