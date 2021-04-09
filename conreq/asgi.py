@@ -26,6 +26,26 @@ from channels.security.websocket import AllowedHostsOriginValidator
 from conreq.core.server_websockets import CommandConsumer
 
 
+class LifespanApp:
+    """
+    Temporary shim for https://github.com/django/channels/issues/1216
+    Needed so that hypercorn doesn't display an error.
+    """
+
+    def __init__(self, scope):
+        self.scope = scope
+
+    async def __call__(self, receive, send):
+        if self.scope["type"] == "lifespan":
+            while True:
+                message = await receive()
+                if message["type"] == "lifespan.startup":
+                    await send({"type": "lifespan.startup.complete"})
+                elif message["type"] == "lifespan.shutdown":
+                    await send({"type": "lifespan.shutdown.complete"})
+                    return
+
+
 application = ProtocolTypeRouter(
     {
         # Cannot use asgi app due to concurrency problems, currently using wsgi to serve http
@@ -34,5 +54,6 @@ application = ProtocolTypeRouter(
         "websocket": AllowedHostsOriginValidator(
             AuthMiddlewareStack(URLRouter([url("", CommandConsumer().as_asgi())]))
         ),
+        "lifespan": LifespanApp,
     }
 )
