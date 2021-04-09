@@ -111,16 +111,16 @@ let cached_viewport_exists = function () {
 
 // Show the cached viewport
 let display_cached_viewport = async function () {
-	let current_viewport = "main[data-url='" + get_window_location() + "']";
-	$(current_viewport).trigger("prepare-cached");
-	update_active_tab();
-	update_page_title(current_viewport);
-	$("main:not([data-url='" + get_window_location() + "'])").attr(
-		"hidden",
-		""
+	let new_viewport = "main[data-url='" + get_window_location() + "']";
+	let old_viewport = $(
+		"main:not([data-url='" + get_window_location() + "'])"
 	);
-	$(current_viewport).removeAttr("hidden");
-	$(current_viewport).trigger("loaded-cached");
+	$(new_viewport).trigger("prepare-cached");
+	update_active_tab();
+	update_page_title(new_viewport);
+	old_viewport.attr("hidden", "");
+	$(new_viewport).removeAttr("hidden");
+	$(new_viewport).trigger("loaded-cached");
 };
 
 // Returns the window location with the base url added

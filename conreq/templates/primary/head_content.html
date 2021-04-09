@@ -86,6 +86,14 @@
     integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
     crossorigin="anonymous"></script>
 
+<!-- Youtube iFrame API -->
+<script>
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    let first_script_tag = document.getElementsByTagName('script')[0];
+    first_script_tag.parentNode.insertBefore(tag, first_script_tag);
+</script>
+
 {% compress js %}
 <!-- Image popups (jQuery Magnific Popup) -->
 <script src="{% static 'js/libraries/magnific_popup_1.1.0.min.js' %}" crossorigin="anonymous"></script>

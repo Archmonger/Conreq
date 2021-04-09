@@ -15,5 +15,10 @@ $(document).ready(async function () {
 		if (masonry_grid != null) {
 			masonry_grid.masonry("layout");
 		}
+		$(youtube_players).each(function () {
+			if (this.stopVideo) {
+				this.stopVideo();
+			}
+		});
 	});
 });

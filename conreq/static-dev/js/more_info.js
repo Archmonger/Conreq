@@ -34,18 +34,29 @@ var create_review_carousel = async function () {
 	}
 };
 
-var videos_carousel = null;
-let youtube_card_template = `<iframe title="YouTube Video" class="youtube-player" type="text/html" src="https://www.youtube.com/embed/{{video.key}}?modestbranding=1" frameborder="0" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen = "webkitallowfullscreen"></iframe>`;
-var create_video_carousel = async function () {
-	// Create the youtube iframes from the given template
-	$(".youtube-player-loader").each(function () {
-		$(this).replaceWith(
-			youtube_card_template.replace(
-				"{{video.key}}",
-				$(this).data("video-key")
-			)
-		);
+var youtube_players = null;
+var create_youtube_players = async function () {
+	youtube_players = [];
+	$(".youtube-player").each(async function () {
+		let player = new YT.Player(this, {
+			height: "", // Set by CSS
+			width: "", // Set by CSS
+			videoId: $(this).data("video-key"),
+			playerVars: {
+				frameborder: "0",
+				enablejsapi: "1",
+				modestbranding: "1",
+			},
+		});
+		youtube_players.push(player);
 	});
+};
+
+var videos_carousel = null;
+var create_video_carousel = async function () {
+	// Create youtube video players
+	create_youtube_players();
+
 	// Set up the carousel
 	if ($(".videos-inner-container").length) {
 		videos_carousel = tns({
