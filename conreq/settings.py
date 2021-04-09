@@ -296,7 +296,6 @@ if DEBUG:
 # URL Routing and Page Rendering
 ROOT_URLCONF = "conreq.urls"
 ASGI_APPLICATION = "conreq.asgi.application"
-WSGI_APPLICATION = "conreq.wsgi.application"
 
 TEMPLATES = [
     {

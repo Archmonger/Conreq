@@ -30,7 +30,7 @@ application = ProtocolTypeRouter(
     {
         # Cannot use asgi app due to concurrency problems, currently using wsgi to serve http
         # See https://github.com/django/channels/issues/1587
-        # "http": django_asgi_app,
+        "http": django_asgi_app,
         "websocket": AllowedHostsOriginValidator(
             AuthMiddlewareStack(URLRouter([url("", CommandConsumer().as_asgi())]))
         ),
