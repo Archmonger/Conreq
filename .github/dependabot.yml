@@ -1,0 +1,9 @@
+version: 1
+update_configs:
+    - package-ecosystem: "pip"
+      directory: "/"
+      schedule:
+          interval: "daily"
+      target-branch: "develop"
+      reviewers:
+          - "Archmonger"
