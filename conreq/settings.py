@@ -24,7 +24,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = get_debug_from_env()
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
-ROTATE_SECRET_KEY = get_bool_from_env("ROTATE_SECRET_KEY", False)
 USE_SSL = get_bool_from_env("USE_SSL", False)
 DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
 X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
@@ -180,8 +179,6 @@ LOGGING = {
 
 
 # Security Settings
-if ROTATE_SECRET_KEY:
-    SECRET_KEY = get_random_secret_key()  # Key used for cryptographic signing
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "no-referrer"
 ALLOWED_HOSTS = ["*"]
@@ -225,11 +222,10 @@ with open(SETTINGS_FILE, "r+") as settings_file:
         settings.__contains__("SECRET_KEY")
         and settings["SECRET_KEY"] is not None
         and settings["SECRET_KEY"] != ""
-        and not ROTATE_SECRET_KEY
     ):
         SECRET_KEY = settings["SECRET_KEY"]
     # New secret key is needed
-    elif not ROTATE_SECRET_KEY:
+    else:
         SECRET_KEY = get_random_secret_key()
         settings["SECRET_KEY"] = SECRET_KEY
         UPDATE_SETTINGS_FILE = True
