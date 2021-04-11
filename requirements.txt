@@ -27,4 +27,5 @@ jsonfield==3.1.0
 tzlocal==2.1
 titlecase==2.0.0
 django-model-utils==4.1.1
-hypercorn[h3]==0.11.2
+hypercorn[h3,uvloop]==0.11.2; platform_system == "Linux"
+hypercorn[h3]==0.11.2; platform_system != "Linux"
