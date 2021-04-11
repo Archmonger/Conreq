@@ -31,7 +31,6 @@ DB_ENGINE = "MYSQL"                       # default: SQLITE3
 MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
-ROTATE_SECRET_KEY = True                  # default: False (Will sign out users when conreq restarts)
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (False disables X-Frame-Options)
 USE_SSL = True                            # default: False
 SSL_CERT = "/path/to/cert.pem"            # default: none
