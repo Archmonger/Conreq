@@ -1,5 +1,5 @@
 wheel
-Twisted[tls,http2]==21.2.0
+Twisted[tls,http2]==20.3.0
 pyarr==0.9.4
 requests==2.25.1
 tmdbsimple==2.8.0
