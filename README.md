@@ -32,9 +32,6 @@ MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (False disables X-Frame-Options)
-USE_SSL = True                            # default: False
-SSL_CERT = "/path/to/cert.pem"            # default: none
-SSL_KEY = "/path/to/key.pem"              # default: none
 DEBUG = False                             # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
 ```
 
