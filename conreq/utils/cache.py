@@ -1,4 +1,5 @@
 """Django caching wrapper and cache related capabilities."""
+from conreq.apps.base.tasks import background_task
 from conreq.utils import log
 from conreq.utils.generic import clean_string, get_debug_from_env
 from conreq.utils.multiprocessing import ReturnThread
@@ -97,7 +98,7 @@ def __multi_execution(
             log.INFO,
             _logger,
         )
-        cache.set_many(missing_keys, cache_duration)
+        background_task(cache.set_many, missing_keys, cache_duration)
 
     # Return all results
     cached_results.update(missing_keys)
@@ -173,7 +174,7 @@ def handler(
         # was in cache, or cache was expired, run function()
         if cached_results is None or force_update_cache:
             function_results = function(*args, **kwargs)
-            cache.set(cache_key, function_results, cache_duration)
+            background_task(cache.set, cache_key, function_results, cache_duration)
             log.handler(
                 cache_name + " - " + function.__name__ + "()",
                 log.INFO,
