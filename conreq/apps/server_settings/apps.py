@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class ServerSettingsConfig(AppConfig):
-    name = 'server_settings'
+    name = "conreq.apps.server_settings"

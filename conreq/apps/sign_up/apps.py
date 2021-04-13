@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class SignUpConfig(AppConfig):
-    name = 'sign_up'
+    name = "conreq.apps.sign_up"

@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class ManageUsersConfig(AppConfig):
-    name = 'manage_users'
+    name = "conreq.apps.manage_users"

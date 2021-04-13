@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class MoreInfoConfig(AppConfig):
-    name = 'more_info'
+    name = "conreq.apps.more_info"
