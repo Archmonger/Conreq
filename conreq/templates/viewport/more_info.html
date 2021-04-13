@@ -8,28 +8,30 @@
 
 <div class="viewport more-info">
     <div class="more-info-topbar">
-        <div class="left-group">
-            <div class="more-info-poster-container">
-                <img src="{% static 'images/transparent.png' %}"
-                    data-src="{% firstof content.poster_path content.remotePoster %}"
-                    class="more-info-poster lazy {% if content.poster_path or content.remotePoster %}clickable{% endif %}"
-                    data-contains-img="{% if content.poster_path or content.remotePoster %}true{% endif %}"
-                    draggable="false" alt="{% firstof content.title content.name 'Unknown' %}">
 
+        <div class="left-group">
+            <!-- Poster Image -->
+            <div class="more-info-poster-container">
+                <img src="{% static 'images/transparent.png' %}" data-src="{{ content.poster_path }}"
+                    class="more-info-poster lazy {% if content.poster_path %}clickable{% endif %}"
+                    data-contains-img="{% if content.poster_path %}true{% endif %}" draggable="false"
+                    alt="{% firstof content.title content.name 'Unknown' %}">
+
+                <!-- Movie View Collection Button -->
                 {% if content.belongs_to_collection %}
                 <div class="more-info-collection-btn no-highlighting clickable">VIEW COLLECTION </div>
                 {% endif %}
-
             </div>
-
         </div>
+
         <div class="right-group">
             <div class="more-info-main-info">
+                <!-- Title and Score -->
                 <div class="main-title">{% firstof content.title content.name "Unknown" %}</div>
                 <div class="main-rating no-highlighting">
                     <div class="inline bold"> SCORE: </div>
                     <div class="inline light rating">
-                        {% firstof content.vote_average content.ratings.value "-" %} / 10 </div>
+                        {% firstof content.vote_average "-" %} / 10 </div>
                 </div>
 
                 <!-- "Available" and "View Episodes" buttons -->
@@ -38,7 +40,7 @@
                 <div class="standard-btn box-shadow no-highlighting available"> AVAILABLE </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
                 <div class="standard-btn series-modal-btn view-episodes box-shadow no-highlighting clickable"
-                    data-content-type="tv" data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
+                    data-content-type="tv" data-tmdb-id="{{content.id}}"
                     data-modal-url="{% url 'more_info:series_modal' %}">
                     <i class="fas fa-plus"></i>
                     VIEW EPISODES
@@ -50,14 +52,13 @@
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="standard-btn request-btn box-shadow no-highlighting clickable"
                     data-request-url="{% url 'user_requests:request_content' %}" data-content-type="movie"
-                    data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}">
+                    data-tmdb-id="{{content.id}}">
                     <i class="fas fa-plus"></i>
                     REQUEST
                 </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
                 <div class="standard-btn series-modal-btn box-shadow no-highlighting clickable" data-content-type="tv"
-                    data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
-                    data-tvdb-id="{{content.tvdbId}}" data-modal-url="{% url 'more_info:series_modal' %}">
+                    data-tmdb-id="{{content.id}}" data-modal-url="{% url 'more_info:series_modal' %}">
                     <i class="fas fa-plus"></i>
                     REQUEST
                 </div>
@@ -67,16 +68,14 @@
                 <!-- "Report" button -->
                 {% if content_type == "movie" and server_settings.radarr_enabled %}
                 <div class="standard-btn report-modal-btn box-shadow no-highlighting clickable"
-                    data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
-                    data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
+                    data-tmdb-id="{{content.id}}" data-content-type="{{content_type}}"
                     data-modal-url="{% url 'issue_reporting:report_issue_modal' %}">
                     <i class="fas fa-exclamation-circle"></i>
                     ISSUE
                 </div>
                 {% elif content_type == "tv" and server_settings.sonarr_enabled %}
                 <div class="standard-btn report-selection-modal-btn box-shadow no-highlighting clickable"
-                    data-tmdb-id="{% if not content.tvdbId %}{{content.id}}{% endif %}"
-                    data-tvdb-id="{{content.tvdbId}}" data-content-type="{{content_type}}"
+                    data-tmdb-id="{{content.id}}" data-content-type="{{content_type}}"
                     data-modal-url="{% url 'more_info:series_modal' %}">
                     <i class="fas fa-exclamation-circle"></i>
                     ISSUE
@@ -95,6 +94,7 @@
         </div>
     </div>
 
+    <!-- Quick Info Section -->
     <div class="more-info-quick-info-container">
         <div class="more-info-quick-info collapse">
             {% if content.original_name and content.original_name != content.name %}
@@ -104,9 +104,9 @@
             </div>
             {% endif %}
 
+            <!-- Availability -->
             <div class="quick-info-block availability">
                 <div class="quick-info bold"> Availabity </div>
-
                 <div class="quick-info">
                     {% if content.availability == "Available" %} Available
                     <div class="inline-availablity-dot green"> </div>
@@ -116,8 +116,9 @@
                     <div class="inline-availablity-dot red"> </div>
                     {% endif %}
                 </div>
-
             </div>
+
+            <!-- Request Status -->
             <div class="quick-info-block">
                 <div class="quick-info bold"> Requested </div>
                 <div class="quick-info">
@@ -127,6 +128,7 @@
                 </div>
             </div>
 
+            <!-- Release Status -->
             {% if content.status %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Release Status </div>
@@ -134,9 +136,9 @@
             </div>
             {% endif %}
 
+            <!-- Content Type -->
             <div class="quick-info-block">
                 <div class="quick-info bold"> Content Type </div>
-
                 {% if content_type == "movie" %}
                 <a href="{% viewport_url 'discover:movies' %}">
                     <div class="quick-info-btn no-highlighting">
@@ -150,26 +152,21 @@
                     </div>
                 </a>
                 {% endif %}
-
             </div>
 
+            <!-- Genres -->
             {% if content.genres %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Genres </div>
                 <div class="quick-info">
                     {% for genre in content.genres %}
-                    {% if content.content_source != "tmdb" %}
-                    <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %}
-                    </div>
-
-                    {% elif content_type == "movie" %}
+                    {% if content_type == "movie" %}
                     <a href="{% viewport_url 'discover:movies' %}?filter=custom&with_genres={{genre.id}}">
-                        <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %} </div>
+                        <div class="quick-info-btn no-highlighting"> {{ genre.name }} </div>
                     </a>
-
                     {% elif content_type == "tv" %}
                     <a href="{% viewport_url 'discover:tv' %}?filter=custom&with_genres={{genre.id}}">
-                        <div class="quick-info-btn no-highlighting"> {% firstof genre.name genre %} </div>
+                        <div class="quick-info-btn no-highlighting"> {{ genre.name }} </div>
                     </a>
                     {% endif %}
                     {% endfor %}
@@ -177,6 +174,7 @@
             </div>
             {% endif %}
 
+            <!-- Movie Year -->
             {% if content.year %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Year </div>
@@ -184,6 +182,7 @@
             </div>
             {% endif %}
 
+            <!-- TV First Air Date -->
             {% if content.first_air_date_formatted %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> First Aired </div>
@@ -191,6 +190,7 @@
             </div>
             {% endif %}
 
+            <!-- TV Last Air Date -->
             {% if content.last_air_date_formatted %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Last Aired </div>
@@ -198,6 +198,7 @@
             </div>
             {% endif %}
 
+            <!-- TV Next Air Date -->
             {% if content.next_air_date_formatted %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Next Airing </div>
@@ -205,7 +206,7 @@
             </div>
             {% endif %}
 
-
+            <!-- Release Date -->
             {% if content.release_date_formatted %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Release Date </div>
@@ -213,6 +214,7 @@
             </div>
             {% endif %}
 
+            <!-- Spoken Languages -->
             {% if content.spoken_languages %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Languages </div>
@@ -238,6 +240,7 @@
             </div>
             {% endif %}
 
+            <!-- Movie Runtime -->
             {% if content.runtime %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Runtime </div>
@@ -245,6 +248,7 @@
             </div>
             {% endif %}
 
+            <!-- Movie Budget -->
             {% if content.budget %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Budget </div>
@@ -252,6 +256,7 @@
             </div>
             {% endif %}
 
+            <!-- Movie Revenue -->
             {% if content.revenue %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Revenue </div>
@@ -259,6 +264,7 @@
             </div>
             {% endif %}
 
+            <!-- Movie Production Companies -->
             {% if content.production_companies %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Production Companies </div>
@@ -278,27 +284,23 @@
             </div>
             {% endif %}
 
+            <!-- TV Networks -->
             {% if content.networks %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Networks </div>
                 <div class="quick-info">
                     {% for network in content.networks %}
-                    {% if content.content_source != "tmdb" %}
-                    <div class="quick-info-btn no-highlighting">
-                        {% firstof network.name network %}
-                    </div>
-                    {% else %}
                     <a href="{% viewport_url 'discover:tv' %}?filter=custom&with_networks={{network.id}}">
                         <div class="quick-info-btn no-highlighting">
-                            {% firstof network.name network %}
+                            {% firstof network.name %}
                         </div>
                     </a>
-                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
             {% endif %}
 
+            <!-- Tags -->
             {% if content.keywords.results or content.keywords.keywords %}
             <div class="quick-info-block">
                 <div class="quick-info bold"> Tags </div>
@@ -324,11 +326,14 @@
             {% endif %}
 
         </div>
+
+        <!-- View More Button -->
         <div class="quick-info-read-more-btn no-highlighting clickable">
             MORE DETAILS <i class="fas fa-caret-down"></i>
         </div>
     </div>
 
+    <!-- Videos and Trailers -->
     {% if content.videos.results %}
     <div class="more-info-videos grid-block contains-carousel">
         <div class="bold more-info-head"> Videos and Trailers
@@ -351,16 +356,19 @@
     </div>
     {% endif %}
 
+    <!-- Collections -->
     {% if collection_id %}
     <div id="collection_loader" data-url="{% url 'more_info:collection' %}?collection_id={{collection_id}}">
     </div>
     {% endif %}
 
-    {% if not content.tvdbId %}
+    <!-- Recommendations -->
     <div id="recommended_loader"
-        data-url="{% url 'more_info:recommended' %}?tmdb_id={{content.id}}&content_type={{content_type}}"></div>
-    {% endif %}
+        data-url="{% url 'more_info:recommended' %}?tmdb_id={{content.id}}&content_type={{content_type}}">
+    </div>
 
+
+    <!-- Cast -->
     {% if content.credits.cast %}
     <div class="more-info-cast grid-block contains-carousel">
         <div class="bold more-info-head"> Cast Members
@@ -383,6 +391,7 @@
     </div>
     {% endif %}
 
+    <!-- Artwork -->
     {% if content.images.backdrops %}
     <div class="more-info-images grid-block contains-carousel">
         <div class="bold more-info-head"> Artwork and Images
@@ -405,6 +414,7 @@
     </div>
     {% endif %}
 
+    <!-- Reviews -->
     {% if content.reviews.results %}
     <div class="more-info-reviews grid-block contains-carousel">
         <div class="bold more-info-head"> Reviews
@@ -420,6 +430,8 @@
     {% endif %}
 
 </div>
+
+<!-- Background Image -->
 <div class="movie-backdrop-container" data-aos="fade-down" data-aos-delay="550" data-aos-duration="1500">
     <div class="backdrop-tint"></div>
     <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.backdrop_path content.backdropPath %}"
