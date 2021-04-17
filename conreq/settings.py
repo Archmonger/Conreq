@@ -256,7 +256,7 @@ INSTALLED_APPS = [
     "conreq.apps.user_requests",
     "conreq.apps.issue_reporting",
     "conreq.apps.pwa",
-    "channels",  # Websocket library
+    # "channels",  # Websocket library (SEE https://github.com/django/channels/issues/1587)
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
