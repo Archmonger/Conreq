@@ -401,6 +401,15 @@ var user_delete_btn_click_event = async function () {
 	});
 };
 
+var manage_user_btn_click_event = async function () {
+	$(".manage-user-btn").click(async function () {
+		let params = {
+			username: escape($(this).data("username")),
+		};
+		generate_modal($(this).data("modal-url") + "?" + $.param(params));
+	});
+};
+
 var user_invite_btn_click_event = async function () {
 	$(".standard-btn.invite-user").click(async function () {
 		let btn = $(this);

@@ -152,13 +152,15 @@
 
 .standard-btn.report-selection-modal-btn,
 .standard-btn.report-btn,
-.standard-btn.report-modal-btn {
+.standard-btn.report-modal-btn,
+.standard-btn.delete-user-btn {
 	background: #a53939;
 }
 
 .standard-btn.report-selection-modal-btn:hover,
 .standard-btn.report-btn:hover,
-.standard-btn.report-modal-btn:hover {
+.standard-btn.report-modal-btn:hover,
+.standard-btn.delete-user-btn:hover {
 	background: #d04141;
 }
 

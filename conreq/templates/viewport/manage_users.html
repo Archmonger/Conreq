@@ -24,24 +24,29 @@
                     <th class="joined" data-sortable="true">Joined</th>
                     <th class="last-seen" data-sortable="true">Last Seen</th>
                     <th class="staff" data-sortable="true" data-searchable="false">Staff</th>
-                    <th class="action" data-searchable="false">Action</th>
+                    <th class="action" data-searchable="false"></th>
                 </tr>
             </thead>
             <tbody>
-                {% for user in users %}
+                {% for account in users %}
                 <tr>
-                    <td class="username">{{ user.username }}</td>
-                    <td class="email">{{ user.email }}</td>
-                    <td class="joined">{{ user.date_joined|date:"Y-m-d @ H:i" }}</td>
-                    <td class="last-seen">{{ user.last_login|date:"Y-m-d @ H:i" }}</td>
-                    <td class="staff">{{ user.is_staff|yesno:"Yes,No" }}</td>
+                    <td class="username">{{ account.username }}</td>
+                    <td class="email">{{ account.email }}</td>
+                    <td class="joined">{{ account.date_joined|date:"Y-m-d @ H:i" }}</td>
+                    <td class="last-seen">{{ account.last_login|date:"Y-m-d @ H:i" }}</td>
+                    <td class="staff">{{ account.is_staff|yesno:"Yes,No" }}</td>
                     <td class="action">
-                        <!-- <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i
-                                class="fas fa-cog"></i></a> -->
-                        {% if not user.is_superuser %}
+                        {% if not account.profile.externally_authenticated %}
+                        <div class="settings manage-user-btn clickable" title="Manage User"
+                            data-modal-url="{% url 'manage_users:manage_modal' %}"
+                            data-username="{{ account.username }}">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        {% else %}
                         <div class="delete action-btn clickable" title="Delete"
-                            data-delete-url="{% url 'manage_users:delete' %}" data-username="{{ user.username }}"><i
-                                class="fas fa-trash"></i></div>
+                            data-delete-url="{% url 'manage_users:delete' %}" data-username="{{ account.username }}">
+                            <i class="fas fa-trash"></i>
+                        </div>
                         {% endif %}
                     </td>
                 </tr>

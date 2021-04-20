@@ -13,7 +13,7 @@
         <div class="settings-group-title bold">Basic Configuration</div>
         <div class="settings-input-group">
             <div class="settings-item-group">
-                <div class="settings-item-title">API Key</div>
+                <div class="text-input-title">API Key</div>
                 <div class="text-input-container">
                     <div class="settings-item text-display-only">
                         <div class="settings-item-text line-clamp-1" id="conreq-api-key">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">Custom CSS</div>
+                <div class="text-input-title">Custom CSS</div>
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. /static/my_styles.css" autocomplete="off" autocorrect="off"
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">Custom JavaScript</div>
+                <div class="text-input-title">Custom JavaScript</div>
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. /static/my_scripts.js" autocomplete="off" autocorrect="off"
@@ -86,7 +86,7 @@
         <div class="settings-group-title bold">Sonarr Configuration</div>
         <div class="settings-input-group">
             <div class="settings-item-group">
-                <div class="settings-item-title">URL</div>
+                <div class="text-input-title">URL</div>
                 <div class="text-input-container">
                     <input type="url" class="settings-item small-text-input admin"
                         placeholder="ex. http://192.168.86.50:8989" autocomplete="off" autocorrect="off"
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">API Key</div>
+                <div class="text-input-title">API Key</div>
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Key" autocomplete="off"
                         autocorrect="off" autocapitalize="off" spellcheck="false" data-setting-name="Sonarr API Key"
@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">Anime Quality Profile</div>
+                <div class="text-input-title">Anime Quality Profile</div>
                 <div
                     class="text-input-container dropdown no-highlighting
                 {% if sonarr_quality_profiles %} clickable {% endif %} {% if not current_sonarr_anime_quality_profile and server_settings.sonarr_enabled %}error{% endif %}">
@@ -126,7 +126,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">TV Quality Profile</div>
+                <div class="text-input-title">TV Quality Profile</div>
                 <div
                     class="text-input-container dropdown no-highlighting
                 {% if sonarr_quality_profiles %} clickable {% endif %} {% if not current_sonarr_tv_quality_profile and server_settings.sonarr_enabled %}error{% endif %}">
@@ -150,7 +150,7 @@
             </div>
 
             <div class="settings-item-group">
-                <div class="settings-item-title">Anime Folder Path</div>
+                <div class="text-input-title">Anime Folder Path</div>
                 <div
                     class="text-input-container dropdown no-highlighting
                 {% if sonarr_folders %} clickable {% endif %} {% if not current_sonarr_anime_folder and server_settings.sonarr_enabled %}error{% endif %}">
@@ -174,7 +174,7 @@
             </div>
 
             <div class="settings-item-group">
-                <div class="settings-item-title">TV Folder Path</div>
+                <div class="text-input-title">TV Folder Path</div>
                 <div
                     class="text-input-container dropdown no-highlighting
                 {% if sonarr_folders %} clickable {% endif %} {% if not current_sonarr_tv_folder and server_settings.sonarr_enabled %}error{% endif %}">
@@ -225,7 +225,7 @@
         <div class="settings-group-title bold">Radarr Configuration</div>
         <div class="settings-input-group">
             <div class="settings-item-group">
-                <div class="settings-item-title">URL</div>
+                <div class="text-input-title">URL</div>
                 <div class="text-input-container">
                     <input type="url" class="settings-item small-text-input admin"
                         placeholder="ex. http://192.168.86.50:7878" autocomplete="off" autocorrect="off"
@@ -234,7 +234,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">API Key</div>
+                <div class="text-input-title">API Key</div>
                 <div class="text-input-container">
                     <input type="text" class="settings-item small-text-input admin" placeholder="Key" autocomplete="off"
                         autocorrect="off" autocapitalize="off" spellcheck="false" data-setting-name="Radarr API Key"
@@ -242,7 +242,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">Anime Quality Profile</div>
+                <div class="text-input-title">Anime Quality Profile</div>
                 <div
                     class="text-input-container dropdown no-highlighting
                 {% if radarr_quality_profiles %} clickable {% endif %} {% if not current_radarr_anime_quality_profile and server_settings.radarr_enabled %}error{% endif %}">
@@ -265,7 +265,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">Movie Quality Profile</div>
+                <div class="text-input-title">Movie Quality Profile</div>
                 <div
                     class="text-input-container dropdown no-highlighting
                 {% if radarr_quality_profiles %} clickable {% endif %} {% if not current_radarr_movies_quality_profile and server_settings.radarr_enabled %}error{% endif %}">
@@ -288,7 +288,7 @@
                 </div>
             </div>
             <div class="settings-item-group">
-                <div class="settings-item-title">Anime Folder Path</div>
+                <div class="text-input-title">Anime Folder Path</div>
                 <div
                     class="text-input-container dropdown no-highlighting
                 {% if radarr_folders %} clickable {% endif %} {% if not current_radarr_anime_folder and server_settings.radarr_enabled %}error{% endif %}">
@@ -312,7 +312,7 @@
             </div>
 
             <div class="settings-item-group">
-                <div class="settings-item-title">Movie Folder Path</div>
+                <div class="text-input-title">Movie Folder Path</div>
                 <div
                     class="text-input-container dropdown no-highlighting
                 {% if radarr_folders %} clickable {% endif %} {% if not current_radarr_movies_folder and server_settings.radarr_enabled %}error{% endif %}">
@@ -352,11 +352,11 @@
         <div class="settings-group-title bold">About Conreq</div>
         <div class="settings-input-group">
             <div class="settings-item-group info">
-                <div class="settings-item-title info">System Information</div>
+                <div class="text-input-title info">System Information</div>
                 <div class="settings-item-details info">{{ os_platform }}</div>
             </div>
             <div class="settings-item-group info">
-                <div class="settings-item-title info">Version</div>
+                <div class="text-input-title info">Version</div>
                 <div class="settings-item-details info">{{ VERSION }}</div>
             </div>
         </div>

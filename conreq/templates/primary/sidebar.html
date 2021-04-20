@@ -14,7 +14,7 @@
         <div id="all-tab-groups" class="all-tab-groups">
 
             <!-- Discover Tab Group -->
-            <div class="nav-tab group discover clickable" data-toggle="collapse" data-target="#discover-tabs"
+            <div class="nav-tab group clickable" data-toggle="collapse" data-target="#discover-tabs"
                 aria-expanded="true" aria-controls="discover-tabs">
                 <div class="group-name line-clamp-1"><i class="fas fa-compass"></i>
                     Discover
@@ -22,14 +22,14 @@
                 <i class="fas fa-angle-up" title="Collapse Group"></i>
             </div>
             <div class="collapse show" id="discover-tabs">
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'discover:all' %}" class="line-clamp-1">
                         TV & Movies
                     </a>
                     <i class="fas fa-filter filter-modal-btn clickable" title="Filter"
                         data-modal-url="{% url 'discover:simple_filter_modal' %}"></i>
                 </div>
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'discover:tv' %}" class="line-clamp-1">
                         Television
                     </a>
@@ -37,7 +37,7 @@
                         data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=tv"
                         data-content-type="tv"></i>
                 </div>
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'discover:movies' %}" class="line-clamp-1">
                         Movies
                     </a>
@@ -48,25 +48,30 @@
             </div>
 
             <!-- User Tab Group -->
-            <div class="nav-tab group user clickable" data-toggle="collapse" data-target="#user-tabs"
-                aria-expanded="true" aria-controls="user-tabs">
+            <div class="nav-tab group clickable" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true"
+                aria-controls="user-tabs">
                 <div class="group-name line-clamp-1"><i class="fas fa-user-cog"></i>
                     User
                 </div>
                 <i id="user-fa" class="fas fa-angle-up" title="Collapse Group"></i>
             </div>
             <div class="collapse show" id="user-tabs">
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'user_requests:my_requests' %}" class="line-clamp-1">
                         My Requests
                     </a>
                 </div>
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'issue_reporting:my_issues' %}" class="line-clamp-1">
                         My Issues
                     </a>
                 </div>
-                <div class="nav-tab suboption discover">
+                {% if not user.profile.externally_authenticated %}
+                <div class="nav-tab suboption">
+                    <div class="line-clamp-1 clickable">Settings</div>
+                </div>
+                {% endif %}
+                <div class="nav-tab suboption">
                     <a href="{% url 'sign_out' %}" class="line-clamp-1">
                         Sign Out
                     </a>
@@ -75,30 +80,30 @@
 
             <!-- Admin Tab Group -->
             {% if user.is_staff %}
-            <div class="nav-tab group admin clickable" data-toggle="collapse" data-target="#admin-tabs"
-                aria-expanded="true" aria-controls="admin-tabs">
+            <div class="nav-tab group clickable" data-toggle="collapse" data-target="#admin-tabs" aria-expanded="true"
+                aria-controls="admin-tabs">
                 <div class="group-name line-clamp-1"><i class="fas fa-toolbox"></i>
                     Admin
                 </div>
                 <i id="admin-fa" class="fas fa-angle-up" title="Collapse Group"></i>
             </div>
             <div class="collapse show" id="admin-tabs">
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'user_requests:all_requests' %}" class="line-clamp-1">
                         All Requests
                     </a>
                 </div>
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'issue_reporting:all_issues' %}" class="line-clamp-1">
                         All Issues
                     </a>
                 </div>
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'manage_users:main' %}" class="line-clamp-1">
                         Manage Users
                     </a>
                 </div>
-                <div class="nav-tab suboption discover">
+                <div class="nav-tab suboption">
                     <a href="{% viewport_url 'server_settings:main' %}" class="line-clamp-1">
                         Server Settings
                     </a>

@@ -25,7 +25,8 @@
 }
 
 .all-tab-groups .suboption.active,
-.all-tab-groups a:hover {
+.nav-tab.suboption > *:hover,
+.nav-tab.suboption .fas:hover {
 	color: #000;
 }
 
@@ -66,27 +67,19 @@
 	margin: var(--navpages-btn-padding-group);
 }
 
-.nav-tab.suboption > a {
-	padding: var(--navpages-btn-padding-suboption);
-}
-
-.nav-tab.suboption > a {
+.nav-tab.suboption > *:not(.fas) {
 	padding: var(--navpages-btn-padding-suboption);
 	margin-right: 20px;
 }
 
-.nav-tab.suboption .fa-filter {
-	color: rgba(255, 255, 255, 0.6);
+.nav-tab.suboption .fas {
+	color: rgba(0, 0, 0, 0.6);
 	transition: color 0.3s ease, opacity 0.3s ease;
 	opacity: 1;
 	position: absolute;
 	right: 0;
 	top: 0;
 	margin: var(--navpages-btn-padding-suboption);
-}
-
-.nav-tab.suboption .fas:hover {
-	color: #fff;
 }
 
 .sidebar-user {

@@ -28,8 +28,13 @@ body {
 }
 
 .all-tab-groups .suboption.active,
-.all-tab-groups a:hover {
+.nav-tab.suboption > *:hover,
+.nav-tab.suboption .fas:hover {
 	color: #fff;
+}
+
+.nav-tab.suboption .fas {
+	color: rgba(255, 255, 255, 0.6);
 }
 
 .description-tint {

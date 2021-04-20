@@ -36,8 +36,8 @@ def initialization(request):
         user.save()
 
         # Make sure the user is labeled as a HTTP auth user
-        if not user.profile.http_header_auth_user:
-            user.profile.http_header_auth_user = True
+        if not user.profile.externally_authenticated:
+            user.profile.externally_authenticated = True
             user.save()
 
         login(request, user)

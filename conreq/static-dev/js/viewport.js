@@ -186,6 +186,7 @@ let add_viewport_event_listeners = async function (viewport_selector) {
 	reload_needed_click_event();
 
 	// User Management events
+	manage_user_btn_click_event();
 	user_delete_btn_click_event();
 	user_invite_btn_click_event();
 

@@ -12,7 +12,7 @@ from django.views.decorators.cache import cache_page
 @performance_metrics()
 def manage_users(request):
     template = loader.get_template("viewport/manage_users.html")
-    users = get_user_model().objects.values()
+    users = get_user_model().objects.all()
     context = {"users": users}
     return HttpResponse(template.render(context, request))
 
@@ -25,11 +25,6 @@ def delete_user(request):
         try:
             username = request.GET.get("username", None)
             user = get_user_model().objects.get(username=username)
-
-            # Don't allow staff members to delete eachother
-            if user.is_staff and not request.user.is_superuser:
-                return JsonResponse({"success": False})
-
             user.delete()
 
         except:
@@ -38,3 +33,19 @@ def delete_user(request):
         return JsonResponse({"success": True})
 
     return HttpResponseForbidden()
+
+
+@login_required
+@performance_metrics()
+def manage_modal(request):
+    template = loader.get_template("modal/manage_user.html")
+    username = request.GET.get("username", None)
+    user = None
+    try:
+        user = get_user_model().objects.get(username=username)
+
+    except:
+        pass
+
+    context = {"account": user}
+    return HttpResponse(template.render(context, request))

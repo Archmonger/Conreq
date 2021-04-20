@@ -52,6 +52,7 @@
 	color: #fff;
 	font-weight: 700;
 	line-height: 1;
+	overflow-wrap: anywhere;
 }
 
 /* Modal Footer */
@@ -287,4 +288,12 @@
 
 .modal-body .simple-filter-btn:hover {
 	background: #009688;
+}
+
+/* Manage User */
+.modal-body.manage-user {
+	padding: 10px 15px 15px 15px;
+}
+.manage-user-input {
+	padding-bottom: 20px;
 }

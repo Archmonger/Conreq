@@ -1,0 +1,66 @@
+{% include "primary/loading_animation.html" %}
+<div id="modal-content" class="modal-content">
+    <div class="modal-header">
+        <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
+            <i title="Close" class="fas fa-window-close clickable"></i>
+        </div>
+        <div class="title">{{account.username|upper}} SETTINGS</div>
+    </div>
+
+    <div class="modal-body manage-user">
+
+        <!-- Username -->
+        <div class="manage-user-input">
+            <div class="text-input-title">Username</div>
+            <div class="text-input-container">
+                <input type="text" class="settings-item small-text-input admin" value="{{account.username}}"
+                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                    value="{{ server_settings.conreq_custom_css }}" />
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="manage-user-input">
+            <div class="text-input-title">Password</div>
+            <div class="text-input-container">
+                <input type="text" class="settings-item small-text-input admin" placeholder="New Password"
+                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                    value="{{ server_settings.conreq_custom_css }}" />
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="manage-user-input">
+            <div class="text-input-title">Email</div>
+            <div class="text-input-container">
+                <input type="text" class="settings-item small-text-input admin" value="{{account.email}}"
+                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                    value="{{ server_settings.conreq_custom_css }}" />
+            </div>
+        </div>
+
+        <!-- Staff status -->
+        {% if user.is_staff %}
+        <div class="pretty p-switch p-fill">
+            <input {% if account.is_staff %} checked {% endif %} type="checkbox" />
+            <div class="state">
+                <label>Staff Member</label>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="modal-footer">
+        {% if user.is_staff %}
+        <div class="standard-btn delete-user-btn no-highlighting clickable"
+            data-url="{% url 'issue_reporting:report_issue' %}">
+            DELETE
+        </div>
+        {% endif %}
+        <div class="standard-btn save-user-btn no-highlighting clickable"
+            data-url="{% url 'issue_reporting:report_issue' %}">
+            SAVE
+        </div>
+    </div>
+</div>
