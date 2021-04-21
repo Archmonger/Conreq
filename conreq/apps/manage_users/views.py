@@ -9,12 +9,15 @@ from django.views.decorators.cache import cache_page
 
 @cache_page(1)
 @login_required
-@user_passes_test(lambda u: u.is_staff)
 @performance_metrics()
 def manage_users(request):
     if request.method == "POST":
-        # Fetch the user from DB
+        # Ensure non-admins aren't trying to edit other accounts
         original_username = request.POST.get("username_original")
+        if not request.user.is_staff and original_username != request.user.username:
+            return HttpResponseForbidden()
+
+        # Fetch the user from DB
         try:
             user = get_user_model().objects.get(username=original_username)
         except:
@@ -38,7 +41,7 @@ def manage_users(request):
                 )
             try:
                 validate_password(password1)
-                user.password = password1
+                user.set_password(password1)
             except Exception as error:
                 return JsonResponse(
                     {
@@ -50,7 +53,10 @@ def manage_users(request):
         # Set other user fields
         user.username = request.POST.get("username")
         user.email = request.POST.get("email")
-        user.is_staff = True if request.POST.get("staff") else False
+
+        # Fields only modifiable by an admin
+        if request.user.is_staff:
+            user.is_staff = bool(request.POST.get("staff"))
 
         # Save the user
         try:
@@ -65,10 +71,14 @@ def manage_users(request):
                 }
             )
 
-    template = loader.get_template("viewport/manage_users.html")
-    users = get_user_model().objects.all()
-    context = {"users": users}
-    return HttpResponse(template.render(context, request))
+    # Render the HTTP page
+    if request.user.is_staff:
+        template = loader.get_template("viewport/manage_users.html")
+        users = get_user_model().objects.all()
+        context = {"users": users}
+        return HttpResponse(template.render(context, request))
+
+    return HttpResponseForbidden()
 
 
 @login_required

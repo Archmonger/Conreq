@@ -407,6 +407,7 @@ var delete_user_btn_click_event = async function () {
 };
 
 var manage_user_btn_click_event = async function () {
+	$(".manage-user-btn").unbind("click");
 	$(".manage-user-btn").click(async function () {
 		let params = {
 			username: escape($(this).data("username")),

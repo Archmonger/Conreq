@@ -21,4 +21,10 @@ $(document).ready(async function () {
 			}
 		});
 	});
+
+	$(".sidebar").on("loaded", async function () {
+		sidebar_collapse_click_event();
+		create_filter_modal_click_event();
+		manage_user_btn_click_event();
+	});
 });

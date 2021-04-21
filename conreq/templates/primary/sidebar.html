@@ -68,7 +68,9 @@
                 </div>
                 {% if not user.profile.externally_authenticated %}
                 <div class="nav-tab suboption">
-                    <div class="line-clamp-1 clickable">Settings</div>
+                    <div class="line-clamp-1 manage-user-btn clickable"
+                        data-modal-url="{% url 'manage_users:manage_modal' %}" data-username="{{user.username}}">
+                        Settings</div>
                 </div>
                 {% endif %}
                 <div class="nav-tab suboption">
