@@ -82,7 +82,7 @@ var reconnected_toast_message = async function () {
 };
 
 // Saving settings failed
-var settings_save_failed_toast_message = async function (error_message) {
+var error_toast_message = async function (error_message) {
 	iziToast.show({
 		icon: "fas fa-exclamation-triangle",
 		title: "Error!",
@@ -97,7 +97,20 @@ var settings_save_failed_toast_message = async function (error_message) {
 };
 
 // Saving settings succeeded
-var settings_save_success_toast_message = async function () {
+var success_toast_message = async function () {
+	iziToast.show({
+		icon: "fas fa-check-circle",
+		title: "Success!",
+		displayMode: "replace",
+		titleColor: "var(--accent-color)",
+		messageColor: "var(--accent-color)",
+		iconColor: "var(--accent-color)",
+		progressBarColor: "var(--accent-color)",
+	});
+};
+
+// Saving settings succeeded
+var save_success_toast_message = async function () {
 	iziToast.show({
 		icon: "fas fa-check-circle",
 		title: "Saved!",

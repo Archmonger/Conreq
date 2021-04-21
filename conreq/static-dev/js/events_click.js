@@ -384,8 +384,8 @@ var search_click_event = async function () {
 	});
 };
 
-var user_delete_btn_click_event = async function () {
-	$(".action-btn.delete").click(async function () {
+var delete_user_btn_click_event = async function () {
+	$(".delete-user-btn").click(async function () {
 		let btn = $(this);
 		let delete_query =
 			btn.data("delete-url") +
@@ -393,7 +393,12 @@ var user_delete_btn_click_event = async function () {
 			escape(btn.data("username"));
 		post_url(delete_query, function (result) {
 			if (result.success) {
-				btn.parent().parent().remove();
+				if (btn.hasClass("action-btn")) {
+					btn.parent().parent().remove();
+				} else {
+					$("#modal-container").modal("hide");
+				}
+				success_toast_message();
 			}
 		}).fail(async function () {
 			conreq_no_response_toast_message();
@@ -410,7 +415,22 @@ var manage_user_btn_click_event = async function () {
 	});
 };
 
-var user_invite_btn_click_event = async function () {
+var save_user_btn_click_event = async function () {
+	$(".save-user-btn").click(async function () {
+		post_modal_form(async function (response) {
+			if (response.success) {
+				$("#modal-container").modal("hide");
+				save_success_toast_message();
+			} else {
+				error_toast_message(response.message);
+			}
+		}).fail(async function () {
+			conreq_no_response_toast_message();
+		});
+	});
+};
+
+var invite_user_btn_click_event = async function () {
 	$(".standard-btn.invite-user").click(async function () {
 		let btn = $(this);
 		let generate_invite_url = btn.data("generate-invite-url");

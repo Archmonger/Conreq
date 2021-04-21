@@ -4,62 +4,67 @@
         <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
             <i title="Close" class="fas fa-window-close clickable"></i>
         </div>
-        <div class="title">{{account.username|upper}} SETTINGS</div>
+        <div class="title">USER SETTINGS</div>
     </div>
 
     <div class="modal-body manage-user">
 
-        <!-- Username -->
-        <div class="manage-user-input">
-            <div class="text-input-title">Username</div>
-            <div class="text-input-container">
-                <input type="text" class="settings-item small-text-input admin" value="{{account.username}}"
-                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                    value="{{ server_settings.conreq_custom_css }}" />
+        <form action="{% url 'manage_users:main' %}">
+            <!-- Username -->
+            <div class="manage-user-input">
+                <div class="text-input-title">Username</div>
+                <div class="text-input-container">
+                    <input type="hidden" value="{{account.username}}" name="username_original" />
+                    <input type="text" class="small-text-input" value="{{account.username}}" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" name="username" />
+                </div>
             </div>
-        </div>
 
-        <!-- Password -->
-        <div class="manage-user-input">
-            <div class="text-input-title">Password</div>
-            <div class="text-input-container">
-                <input type="text" class="settings-item small-text-input admin" placeholder="New Password"
-                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                    value="{{ server_settings.conreq_custom_css }}" />
+            <!-- Password -->
+            <div class="manage-user-input">
+                <div class="text-input-title">Password</div>
+                <div class="text-input-container">
+                    <input type="password" class="small-text-input" placeholder="Password" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" name="password1" />
+                </div>
             </div>
-        </div>
+            <div class="manage-user-input">
+                <div class="text-input-container">
+                    <input type="password" class="small-text-input" placeholder="Confirm Password" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" name="password2" />
+                </div>
+            </div>
 
-        <!-- Email -->
-        <div class="manage-user-input">
-            <div class="text-input-title">Email</div>
-            <div class="text-input-container">
-                <input type="text" class="settings-item small-text-input admin" value="{{account.email}}"
-                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                    value="{{ server_settings.conreq_custom_css }}" />
+            <!-- Email -->
+            <div class="manage-user-input">
+                <div class="text-input-title">Email</div>
+                <div class="text-input-container">
+                    <input type="text" class="small-text-input" value="{{account.email}}" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" name="email" />
+                </div>
             </div>
-        </div>
 
-        <!-- Staff status -->
-        {% if user.is_staff %}
-        <div class="pretty p-switch p-fill">
-            <input {% if account.is_staff %} checked {% endif %} type="checkbox" />
-            <div class="state">
-                <label>Staff Member</label>
+            <!-- Staff status -->
+            {% if user.is_staff and user != account %}
+            <div class="pretty p-switch p-fill">
+                <input {% if account.is_staff %} checked {% endif %} type="checkbox" name="staff" />
+                <div class="state">
+                    <label>Staff Member</label>
+                </div>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
+        </form>
 
     </div>
 
     <div class="modal-footer">
         {% if user.is_staff %}
         <div class="standard-btn delete-user-btn no-highlighting clickable"
-            data-url="{% url 'issue_reporting:report_issue' %}">
+            data-delete-url="{% url 'manage_users:delete' %}" data-username="{{ account.username }}">
             DELETE
         </div>
         {% endif %}
-        <div class="standard-btn save-user-btn no-highlighting clickable"
-            data-url="{% url 'issue_reporting:report_issue' %}">
+        <div class="standard-btn save-user-btn no-highlighting clickable">
             SAVE
         </div>
     </div>

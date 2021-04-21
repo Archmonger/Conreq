@@ -145,6 +145,29 @@ var get_url = function (location, success = function () {}) {
 	return http_request;
 };
 
+// Post a form to a URL
+var post_modal_form = function (callback) {
+	let modal_form = $(".modal-body form");
+	if (modal_form.length) {
+		let url = modal_form.attr("action");
+		http_request.abort();
+		http_request = $.ajax({
+			type: "POST",
+			url: url,
+			headers: {
+				"X-CSRFToken": document.getElementsByName(
+					"csrfmiddlewaretoken"
+				)[0].value,
+			},
+			data: modal_form.serialize(),
+			success: callback,
+		});
+		return http_request;
+	}
+	console.warn("Attempted to submit modal form that doesn't exist!");
+	return false;
+};
+
 // Determine what seasons/episodes were selected
 var modal_checkbox_aggregator = function () {
 	let params = {
@@ -238,13 +261,13 @@ var change_server_setting = function (setting_name = null, value = null) {
 			}
 			if (json_response.success) {
 				generate_viewport(false);
-				settings_save_success_toast_message();
+				save_success_toast_message();
 			} else {
-				settings_save_failed_toast_message(json_response.error_message);
+				error_toast_message(json_response.error_message);
 			}
 		}
 	).fail(async function () {
-		settings_save_failed_toast_message("Internal server error.");
+		error_toast_message("Internal server error.");
 	});
 };
 
