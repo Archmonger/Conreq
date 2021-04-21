@@ -28,7 +28,7 @@ let show_tab = function () {
 let next_tab = function () {
 	// Exit the function if any field in the current tab is invalid
 	if (!validate_tab()) {
-		console.log("tab not valid");
+		console.warn("Tab not valid!");
 		return false;
 	}
 
@@ -75,7 +75,6 @@ let validate_tab = function () {
 
 	// Confirm if passwords match
 	if (input_valid) {
-		console.log("checking password");
 		input_valid = validate_password();
 	}
 

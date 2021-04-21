@@ -23,14 +23,14 @@ $(document).ready(async function () {
 		// RECEIVABLE COMMANDS
 		COMMAND_SOCKET.onmessage = function (response) {
 			// Websocket message received, parse for JSON
-			console.log(response);
+			console.info(response);
 			json_response = JSON.parse(response.data);
 
 			// Check for valid commands
 			if (json_response.command_name == "forbidden") {
 				location.reload();
 			} else {
-				console.log(
+				console.warn(
 					"Unknown command " +
 						json_response.command_name +
 						" received!"
@@ -63,7 +63,7 @@ $(document).ready(async function () {
 			// Automatically reconnect upon disconnection
 			RETRY_COUNTER++;
 			if (RETRY_COUNTER <= MAX_FAST_RETRIES) {
-				console.log(
+				console.info(
 					RETRY_COUNTER,
 					"Websocket is closed. Reconnect will be attempted in 3 second."
 				);
@@ -71,7 +71,7 @@ $(document).ready(async function () {
 					ws_connect();
 				}, 3000);
 			} else {
-				console.log(
+				console.info(
 					"Websocket is closed. Reconnect will be attempted in 30 second."
 				);
 				setTimeout(async function () {
