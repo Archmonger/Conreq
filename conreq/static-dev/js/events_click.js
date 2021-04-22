@@ -393,11 +393,7 @@ var delete_user_btn_click_event = async function () {
 			escape(btn.data("username"));
 		post_url(delete_query, function (result) {
 			if (result.success) {
-				if (btn.hasClass("action-btn")) {
-					btn.parent().parent().remove();
-				} else {
-					$("#modal-container").modal("hide");
-				}
+				$("#modal-container").modal("hide");
 				success_toast_message();
 			}
 		}).fail(async function () {

@@ -36,18 +36,11 @@
                     <td class="last-seen">{{ account.last_login|date:"Y-m-d @ H:i" }}</td>
                     <td class="staff">{{ account.is_staff|yesno:"Yes,No" }}</td>
                     <td class="action">
-                        {% if not account.profile.externally_authenticated %}
-                        <div class="settings manage-user-btn clickable" title="Manage User"
+                        <div class="manage-user-btn clickable" title="Manage User"
                             data-modal-url="{% url 'manage_users:manage_modal' %}"
                             data-username="{{ account.username }}">
                             <i class="fas fa-cog"></i>
                         </div>
-                        {% else %}
-                        <div class="delete action-btn delete-user-btn clickable" title="Delete"
-                            data-delete-url="{% url 'manage_users:delete' %}" data-username="{{ account.username }}">
-                            <i class="fas fa-trash"></i>
-                        </div>
-                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

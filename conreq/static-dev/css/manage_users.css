@@ -87,21 +87,6 @@ table.table td a {
 	display: inline-block;
 	text-decoration: none;
 }
-table.table td .action-btn {
-	transition: -webkit-filter 0.3s ease;
-	transition: filter 0.3s ease;
-	transition: filter 0.3s ease, -webkit-filter 0.3s ease;
-}
-table.table td .action-btn.settings {
-	color: var(--blue);
-}
-table.table td .action-btn.delete {
-	color: var(--red);
-}
-table.table td .action-btn:hover {
-	-webkit-filter: brightness(1.3);
-	filter: brightness(1.3);
-}
 table.table td i {
 	font-size: 19px;
 }

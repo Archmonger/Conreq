@@ -10,6 +10,7 @@
     <div class="modal-body manage-user">
 
         <form action="{% url 'manage_users:main' %}">
+            {% if not account.profile.externally_authenticated %}
             <!-- Username -->
             <div class="manage-user-input">
                 <div class="text-input-title">Username</div>
@@ -43,6 +44,11 @@
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="email" />
                 </div>
             </div>
+            {% else %}
+            <div class="manage-user-input">
+                This user was externally authenticated. Some attributes are unavailable.
+            </div>
+            {% endif %}
 
             <!-- Staff status -->
             {% if user.is_staff and user != account %}
