@@ -5,6 +5,7 @@ var create_all_carousels = async function () {
 	create_image_carousel();
 	create_collection_carousel();
 	create_cast_carousel();
+	create_crew_carousel();
 };
 
 var review_carousel = null;
@@ -178,6 +179,26 @@ var create_cast_carousel = async function () {
 		cast_carousel = tns({
 			container: ".cast-inner-container",
 			controlsContainer: ".cast-carousel-controls",
+			swipeAngle: 60,
+			autoWidth: true,
+			loop: false,
+			items: 3,
+			speed: 300,
+			mouseDrag: true,
+			gutter: 10,
+			nav: false,
+			slideBy: "page",
+			edgePadding: 20,
+		});
+	}
+};
+
+var crew_carousel = null;
+var create_crew_carousel = async function () {
+	if ($(".cast-inner-container").length) {
+		crew_carousel = tns({
+			container: ".crew-inner-container",
+			controlsContainer: ".crew-carousel-controls",
 			swipeAngle: 60,
 			autoWidth: true,
 			loop: false,

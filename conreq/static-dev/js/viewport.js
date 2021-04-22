@@ -235,6 +235,10 @@ let destroy_viewport = async function (viewport_selector) {
 			cast_carousel.destroy();
 			cast_carousel = null;
 		}
+		if (crew_carousel != null) {
+			crew_carousel.destroy();
+			crew_carousel = null;
+		}
 	}
 
 	$(viewport_selector + ">*:not(.loading-animation-container)").remove();
