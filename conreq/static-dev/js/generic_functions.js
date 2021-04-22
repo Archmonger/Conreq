@@ -1,9 +1,26 @@
 var http_request = $.ajax({});
 let start_time, end_time;
+var base_url = "";
+var masonry_grid = null;
+var infinite_scroller_created = false;
+var previous_admin_settings = new Map();
 
 // Asychronous sleeping
 var sleep = function (ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+// Returns the window location with the base url added
+var add_base_url = function (window_location = null) {
+	// Get the current location
+	if (!window_location) {
+		window_location = get_window_location();
+	}
+	// Append the base URL
+	if (window_location && !window_location.startsWith(base_url)) {
+		window_location = base_url + window_location;
+	}
+	return window_location;
 };
 
 // Gets the current window location from the hash
@@ -282,4 +299,52 @@ let perform_search = async function (searchbar) {
 		new_location += "&content_type=" + content_type;
 	}
 	window.location = new_location;
+};
+
+// Removes old posters from the infinite scroller to save memory
+var cull_old_posters = async function () {
+	let viewport_container = $(viewport_container_class);
+	let viewport = $(viewport_class);
+	if (document.querySelector(".viewport-masonry")) {
+		// Logic to delete excess masonry items
+		let masonry_items = $(".viewport-masonry > .masonry-item");
+
+		// Calculate the current state of the viewport
+		let scroll_position = viewport_container.scrollTop();
+		let card_width = $(".masonry-item").outerWidth() + 10;
+		let card_height = $(".masonry-item").outerHeight() + 10;
+		let viewport_width = viewport.width();
+		let viewport_container_height = viewport_container.height();
+		let cards_per_row = (viewport_width + 10) / card_width;
+		let deletable_num_of_rows = Math.max(
+			0,
+			Math.floor(
+				(scroll_position - viewport_container_height * 6) / card_height
+			)
+		);
+		let num_of_posters_to_delete = deletable_num_of_rows * cards_per_row;
+
+		// If there are posters to delete, do it.
+		if (num_of_posters_to_delete > 0 && masonry_grid != null) {
+			// Delete the contents of old elements
+			masonry_items
+				.slice(0, num_of_posters_to_delete)
+				.empty()
+				.css("padding", "10")
+				.text("Hidden to save memory.");
+
+			// Output to console that posters have been deleted
+			console.log(
+				"Hiding the content of " +
+					num_of_posters_to_delete +
+					" posters because a new page has loaded."
+			);
+		}
+	}
+};
+
+// Hide any floaty objects
+var hide_modals_and_popups = async function () {
+	$("#modal-container").modal("hide");
+	$.magnificPopup.close();
 };
