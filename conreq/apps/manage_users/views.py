@@ -51,12 +51,20 @@ def manage_users(request):
                 )
 
         # Set other user fields
-        user.username = request.POST.get("username")
-        user.email = request.POST.get("email")
+        new_username = request.POST.get("username")
+        new_email = request.POST.get("email")
+        if new_username:
+            user.username = new_username
+        if new_email:
+            user.email = new_email
 
         # Fields only modifiable by an admin
         if request.user.is_staff:
-            user.is_staff = bool(request.POST.get("staff"))
+            staff_status = request.POST.get("staff")
+            if staff_status == "on":
+                user.is_staff = True
+            elif staff_status == "off":
+                user.is_staff = False
 
         # Save the user
         try:

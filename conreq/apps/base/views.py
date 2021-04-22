@@ -33,6 +33,8 @@ def initialization(request):
             user.is_superuser = True
         if organizr_group == 0 or organizr_group == 1:
             user.is_staff = True
+        if user.has_usable_password():
+            user.set_unusable_password()
         user.save()
 
         # Make sure the user is labeled as a HTTP auth user

@@ -10,18 +10,26 @@
     <div class="modal-body manage-user">
 
         <form action="{% url 'manage_users:main' %}">
-            {% if not account.profile.externally_authenticated %}
+            <!-- Externally Authenticated User -->
+            {% if account.profile.externally_authenticated %}
+            <div class="manage-user-input">
+                This user was externally authenticated. Some attributes are unavailable.
+            </div>
+            {% endif %}
+
             <!-- Username -->
+            <input type="hidden" value="{{account.username}}" name="username_original" />
             <div class="manage-user-input">
                 <div class="text-input-title">Username</div>
                 <div class="text-input-container">
-                    <input type="hidden" value="{{account.username}}" name="username_original" />
-                    <input type="text" class="small-text-input" placeholder="Username" value="{{account.username}}"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="username" />
+                    <input {% if account.profile.externally_authenticated %} disabled="disabled" {% endif %} type="text"
+                        class="small-text-input" placeholder="Username" value="{{account.username}}" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" name="username" />
                 </div>
             </div>
 
             <!-- Password -->
+            {% if not account.profile.externally_authenticated %}
             <div class="manage-user-input">
                 <div class="text-input-title">Password</div>
                 <div class="text-input-container">
@@ -35,24 +43,22 @@
                         autocorrect="off" autocapitalize="off" spellcheck="false" name="password2" />
                 </div>
             </div>
+            {% endif %}
 
             <!-- Email -->
             <div class="manage-user-input">
                 <div class="text-input-title">Email</div>
                 <div class="text-input-container">
-                    <input type="text" class="small-text-input" placeholder="Email" value="{{account.email}}"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="email" />
+                    <input {% if account.profile.externally_authenticated %} disabled="disabled" {% endif %} type="text"
+                        class="small-text-input" placeholder="Email" value="{{account.email}}" autocomplete="off"
+                        autocorrect="off" autocapitalize="off" spellcheck="false" name="email" />
                 </div>
             </div>
-            {% else %}
-            <div class="manage-user-input">
-                This user was externally authenticated. Some attributes are unavailable.
-            </div>
-            {% endif %}
 
             <!-- Staff status -->
             {% if user.is_staff and user != account %}
             <div class="pretty p-switch p-fill">
+                <input type="hidden" name="staff" value="off" />
                 <input {% if account.is_staff %} checked {% endif %} type="checkbox" name="staff" />
                 <div class="state">
                     <label>Staff Member</label>
