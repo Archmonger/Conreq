@@ -1,0 +1,116 @@
+{% load static %}
+{% load conreq_tags %}
+{% load solo_tags %}
+{% get_solo 'server_settings.ConreqConfig' as server_settings %}
+{% csrf_token %}
+{% include "primary/loading_animation_container.html" %}
+<input class="page-name" type="hidden" value="{% firstof person.name 'Unknown' %}">
+
+<div class="viewport more-info">
+    <div class="more-info-topbar">
+
+        <div class="left-group">
+            <!-- Poster Image -->
+            <div class="more-info-poster-container">
+                <img src="{% static 'images/transparent.png' %}" data-src="{{ person.profile_path }}"
+                    class="more-info-poster lazy {% if person.profile_path %}clickable{% endif %}"
+                    data-contains-img="{% if person.profile_path %}true{% endif %}" draggable="false"
+                    alt="{% firstof person.name 'Unknown' %}">
+            </div>
+        </div>
+
+        <div class="right-group">
+            <div class="more-info-main-info">
+                <!-- Title and Score -->
+                <div class="main-title">{% firstof person.name "Unknown" %}</div>
+                <div class="main-rating no-highlighting">
+                    <div class="inline bold"> POPULARITY: </div>
+                    <div class="inline light rating">
+                        {% firstof person.popularity "-" %} </div>
+                </div>
+
+            </div>
+
+            <!-- Biography -->
+            <div class="more-info-overview">
+                <div class="more-info-summary">
+                    <div class="bold more-info-head"> Biography </div>
+                    {% firstof person.biography "No biography available."%}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Quick Info Section -->
+    <div class="more-info-quick-info-container">
+        <div class="more-info-quick-info">
+
+            <!-- Release Date -->
+            {% if person.release_date_formatted %}
+            <div class="quick-info-block">
+                <div class="quick-info bold"> Release Date </div>
+                <div class="quick-info"> {{person.release_date_formatted}} </div>
+            </div>
+            {% endif %}
+
+            <!-- Department -->
+            {% if person.known_for_department %}
+            <div class="quick-info-block">
+                <div class="quick-info bold"> Department </div>
+                <div class="quick-info"> {{person.known_for_department}} </div>
+            </div>
+            {% endif %}
+
+
+            <!-- Gender -->
+            {% if person.gender %}
+            <div class="quick-info-block">
+                <div class="quick-info bold"> Gender </div>
+                <div class="quick-info">
+                    {% if person.gender == 1 %}
+                    Female
+                    {% elif person.gender == 2 %}
+                    Male
+                    {% else %}
+                    Other
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Birth place -->
+            {% if person.place_of_birth %}
+            <div class="quick-info-block">
+                <div class="quick-info bold"> Birth Place </div>
+                <div class="quick-info"> {{person.place_of_birth}} </div>
+            </div>
+            {% endif %}
+
+            <!-- Birthday -->
+            {% if person.birthday_formatted %}
+            <div class="quick-info-block">
+                <div class="quick-info bold"> Birthday </div>
+                <div class="quick-info"> {{person.birthday_formatted}} </div>
+            </div>
+            {% endif %}
+
+            <!-- Deathday -->
+            {% if person.deathday_formatted %}
+            <div class="quick-info-block">
+                <div class="quick-info bold"> Day of Death </div>
+                <div class="quick-info"> {{person.deathday_formatted}} </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Background Image -->
+<div class="movie-backdrop-container" data-aos="fade-down" data-aos-delay="550" data-aos-duration="1500">
+    <div class="backdrop-tint"></div>
+    <div class="backdrop-placeholder-gradient"></div>
+</div>

@@ -1,7 +1,6 @@
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.content_discovery.tmdb import ContentDiscovery
 from conreq.core.content_manager import ContentManager
-from conreq.core.content_search import Search
 from conreq.utils import log
 from conreq.utils.app_views import (
     obtain_sonarr_parameters,
@@ -15,7 +14,10 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
-from .helpers import preprocess_arr_result, preprocess_tmdb_result
+from .helpers import (
+    preprocess_tmdb_person,
+    preprocess_tmdb_result,
+)
 
 _logger = log.get_logger(__name__)
 
@@ -32,61 +34,64 @@ def more_info(request):
 
     # Get the ID from the URL
     tmdb_id = request.GET.get("tmdb_id", None)
-    tvdb_id = request.GET.get("tvdb_id", None)
+    content_type = request.GET.get("content_type", None)
 
-    if tmdb_id:
-        content_type = request.GET.get("content_type", None)
+    # Get all the basic metadata for a given ID
+    content = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
 
-        # Get all the basic metadata for a given ID
-        content = content_discovery.get_by_tmdb_id(tmdb_id, content_type)
+    # Determine the availability of the current TMDB ID
+    set_single_availability(content)
 
-        # Determine the availability of the current TMDB ID
-        set_single_availability(content)
+    # Pre-process data attributes within tmdb_result
+    preprocess_tmdb_result(content)
 
-        # Pre-process data attributes within tmdb_result
-        preprocess_tmdb_result(content)
+    # Get collection information
+    if (
+        content.__contains__("belongs_to_collection")
+        and content["belongs_to_collection"] is not None
+    ):
+        tmdb_collection_id = content["belongs_to_collection"]["id"]
+    else:
+        tmdb_collection_id = None
 
-        # Get collection information
-        if (
-            content.__contains__("belongs_to_collection")
-            and content["belongs_to_collection"] is not None
-        ):
-            tmdb_collection_id = content["belongs_to_collection"]["id"]
-        else:
-            tmdb_collection_id = None
+    # Check if the user has already requested this
+    requested = False
+    if UserRequest.objects.filter(
+        content_id=content["id"],
+        source="tmdb",
+        content_type=content["content_type"],
+    ):
+        requested = True
 
-        # Check if the user has already requested this
-        requested = False
-        if UserRequest.objects.filter(
-            content_id=content["id"],
-            source="tmdb",
-            content_type=content["content_type"],
-        ):
-            requested = True
+    # Generate context for page rendering
+    context = {
+        "content": content,
+        "collection_id": tmdb_collection_id,
+        "content_type": content["content_type"],
+        "requested": requested,
+    }
 
+    # Render the page
+    return HttpResponse(template.render(context, request))
+
+
+@cache_page(7 * 24 * 60 * 60)
+@login_required
+@performance_metrics()
+def person(request):
+    content_discovery = ContentDiscovery()
+    template = loader.get_template("viewport/person.html")
+
+    # Get the ID from the URL
+    person_id = request.GET.get("id", None)
+
+    # Fetch the person from TMDB
+    if person_id:
+        results = content_discovery.person(person_id)
+        preprocess_tmdb_person(results)
         # Generate context for page rendering
         context = {
-            "content": content,
-            "collection_id": tmdb_collection_id,
-            "content_type": content["content_type"],
-            "requested": requested,
-        }
-
-    elif tvdb_id:
-        searcher = Search()
-        # Fallback for TVDB
-        content = searcher.television(tvdb_id)[0]
-
-        # Preprocess results
-        preprocess_arr_result(content)
-
-        # Determine the availability
-        set_single_availability(content)
-
-        # Generate context for page rendering
-        context = {
-            "content": content,
-            "content_type": content["content_type"],
+            "person": results,
         }
 
     # Render the page

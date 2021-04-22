@@ -3,7 +3,6 @@ import re
 from calendar import month_name
 from io import StringIO
 
-from conreq.utils.generic import is_key_value_in_list
 from markdown import Markdown
 
 TMDB_BACKDROP_URL = "https://image.tmdb.org/t/p/original"
@@ -37,58 +36,6 @@ def __unmark_element(element, stream=None):
 Markdown.output_formats["plain"] = __unmark_element
 __md = Markdown(output_format="plain")
 __md.stripTopLevelTags = False
-
-
-def preprocess_arr_result(arr_result):
-    """Pre-processing to allow for viewing within the More Info screen."""
-    # Prepare data attributes for the HTML
-    # Summary
-    if (
-        arr_result.__contains__("overview")
-        and isinstance(arr_result["overview"], str)
-        and not arr_result["overview"]
-    ):
-        arr_result["overview"] = None
-    # Runtime
-    if arr_result.__contains__("runtime") and isinstance(arr_result["runtime"], int):
-        arr_result["runtime"] = "{:d}h {:d}m".format(*divmod(arr_result["runtime"], 60))
-    # Release Status
-    if arr_result.__contains__("status") and isinstance(arr_result["status"], str):
-        if not arr_result["status"]:
-            arr_result["status"] = None
-        else:
-            arr_result["status"] = arr_result["status"].capitalize()
-    # Genres
-    if (
-        arr_result.__contains__("genres")
-        and isinstance(arr_result["genres"], list)
-        and not arr_result["genres"]
-    ):
-        arr_result["genres"] = None
-    # Networks
-    if (
-        arr_result.__contains__("network")
-        and isinstance(arr_result["network"], list)
-        and arr_result["network"]
-    ):
-        arr_result["networks"] = arr_result["network"]
-    if (
-        arr_result.__contains__("network")
-        and isinstance(arr_result["network"], str)
-        and arr_result["network"]
-    ):
-        arr_result["networks"] = [arr_result["network"]]
-    # Backdrop
-    if (
-        arr_result.__contains__("images")
-        and isinstance(arr_result["images"], list)
-        and arr_result["images"]
-    ):
-        backdrop = is_key_value_in_list(
-            "coverType", "fanart", arr_result["images"], return_item=True
-        )
-        if backdrop is not False:
-            arr_result["backdropPath"] = backdrop["url"]
 
 
 def preprocess_tmdb_result(tmdb_result):
@@ -226,3 +173,34 @@ def preprocess_tmdb_result(tmdb_result):
         and tmdb_result["poster_path"].find(TMDB_POSTER_URL) == -1
     ):
         tmdb_result["poster_path"] = TMDB_POSTER_URL + tmdb_result["poster_path"]
+
+
+def preprocess_tmdb_person(tmdb_result):
+    """Pre-processing to allow for viewing within the More Info screen."""
+    # Prepare data attributes for the HTML
+    # Birthday
+    if (
+        tmdb_result.__contains__("birthday")
+        and isinstance(tmdb_result["birthday"], str)
+        and tmdb_result["birthday"]
+    ):
+        year, month, day = tmdb_result["birthday"].split(sep="-")
+        month = month_name[int(month)]
+        tmdb_result["birthday_formatted"] = f"{month} {day}, {year}"
+    # Deathday
+    if (
+        tmdb_result.__contains__("deathday")
+        and isinstance(tmdb_result["deathday"], str)
+        and tmdb_result["deathday"]
+    ):
+        year, month, day = tmdb_result["deathday"].split(sep="-")
+        month = month_name[int(month)]
+        tmdb_result["deathday_formatted"] = f"{month} {day}, {year}"
+    # Poster
+    if (
+        tmdb_result.__contains__("profile_path")
+        and isinstance(tmdb_result["profile_path"], str)
+        and tmdb_result["profile_path"]
+        and tmdb_result["profile_path"].find(TMDB_POSTER_URL) == -1
+    ):
+        tmdb_result["profile_path"] = TMDB_POSTER_URL + tmdb_result["profile_path"]

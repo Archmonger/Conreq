@@ -10,6 +10,7 @@ from .tmdb_base import (
     LANGUAGE,
     MAX_RECOMMENDED_PAGES,
     MAX_SHUFFLED_PAGES,
+    PERSON_CACHE_TIMEOUT,
     RECOMMENDED_CACHE_TIMEOUT,
     SHUFFLED_PAGE_CACHE_TIMEOUT,
     SIMILAR_CACHE_TIMEOUT,
@@ -259,6 +260,20 @@ class ContentDiscovery(Base):
                 log.ERROR,
                 _logger,
             )
+
+    def person(self, person_id):
+        """Obtain a person given a TMDB person ID.
+
+        Args:
+            id: An Integer or String containing the TMDB ID.
+        """
+        return cache.handler(
+            "person",
+            page_key=person_id,
+            function=tmdb.People(person_id).info,
+            cache_duration=PERSON_CACHE_TIMEOUT,
+            kwargs={"append_to_response": "tv_credits,movie_credits"},
+        )
 
     def get_by_tmdb_id(self, tmdb_id, content_type, obtain_extras=True):
         """Obtains a movie or series given a TMDB ID.
