@@ -261,8 +261,7 @@
 	background: var(--accent-color);
 }
 
-.viewport .person-roles.poster-container .description-tint,
-.viewport .cast.poster-container .description-tint {
+.viewport .cast.poster-container {
 	--poster-details-height: var(--cast-poster-card-details-height);
 }
 

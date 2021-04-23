@@ -13,7 +13,6 @@
 	z-index: 1;
 	background: var(--poster-bg-color);
 	height: auto;
-	height: var(--poster-container-height);
 	transform: scale(1);
 }
 
@@ -29,6 +28,7 @@
 	display: block;
 	transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
 	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
+	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
 	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
 		-webkit-filter 0.3s ease;
 	z-index: 6;
