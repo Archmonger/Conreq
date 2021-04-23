@@ -54,7 +54,9 @@
 	height: fit-content;
 	padding-top: 2px;
 	padding-bottom: 25px;
-	text-shadow: 2px 2px 4px #000000;
+	color: #d8d8d8;
+	text-shadow: -2px -2px 6px #000, 2px -2px 6px #000, -2px 2px 6px #000,
+		2px 2px 6px #000;
 }
 
 .availablity-dot {
@@ -68,6 +70,7 @@
 .poster-container.person-roles .poster-description,
 .poster-container.cast .poster-description {
 	color: inherit;
+	font-weight: 400;
 }
 
 .poster-container:not(.cast, .person-roles) .poster-description {
