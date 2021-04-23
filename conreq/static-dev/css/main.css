@@ -23,7 +23,7 @@
 	--viewport-total-padding: calc(var(--viewport-padding) * 2);
 	--viewport-left: var(--sidebar-width);
 	/* Posters */
-	--poster-bg-color: #3f3f3f;
+	--poster-bg-color: #191919;
 	--poster-width: 150px;
 	--poster-height: calc(var(--poster-width) * 1.5);
 	--poster-container-height: calc(var(--poster-width) * 2.1);
