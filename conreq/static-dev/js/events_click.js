@@ -82,14 +82,6 @@ var request_btn_click_event = async function () {
 	});
 };
 
-var collection_btn_click_event = async function () {
-	$(".more-info-collection-btn").click(async function () {
-		$(".more-info-collection")[0].scrollIntoView({
-			behavior: "smooth",
-		});
-	});
-};
-
 var quick_info_btn_click_event = async function () {
 	$(".quick-info-read-more-btn").click(async function () {
 		$(".more-info-quick-info.collapse").collapse("toggle");
@@ -97,20 +89,27 @@ var quick_info_btn_click_event = async function () {
 	});
 };
 
-var create_content_modal_click_event = async function () {
+var content_modal_click_event = async function () {
 	$(
 		".series-modal-btn, .content-preview-modal-btn, .report-selection-modal-btn"
 	).each(async function () {
-		$(this).unbind("click");
-		$(this).click(async function () {
-			let params = {
-				tmdb_id: $(this).data("tmdb-id"),
-				tvdb_id: $(this).data("tvdb-id"),
-				content_type: $(this).data("content-type"),
-				report_modal: $(this).hasClass("report-selection-modal-btn"),
-			};
-			generate_modal($(this).data("modal-url") + "?" + $.param(params));
-		});
+		let current_btn = $(this);
+		if (!current_btn.hasClass("loaded")) {
+			current_btn.click(async function () {
+				let params = {
+					tmdb_id: $(this).data("tmdb-id"),
+					tvdb_id: $(this).data("tvdb-id"),
+					content_type: $(this).data("content-type"),
+					report_modal: $(this).hasClass(
+						"report-selection-modal-btn"
+					),
+				};
+				generate_modal(
+					$(this).data("modal-url") + "?" + $.param(params)
+				);
+			});
+			current_btn.addClass("loaded");
+		}
 	});
 };
 
@@ -483,7 +482,7 @@ var sidebar_collapse_click_event = async function () {
 var more_info_poster_popup_click_event = async function () {
 	if (
 		$(".more-info-poster").length &&
-		$(".more-info-poster").data("contains-img") == "true"
+		$(".more-info-poster").data("contains-img") == true
 	) {
 		$(document).ready(function () {
 			$(".more-info-poster-container").magnificPopup({
@@ -503,7 +502,7 @@ var more_info_poster_popup_click_event = async function () {
 var modal_poster_popup_click_event = async function () {
 	if (
 		$(".modal-content .poster").length &&
-		$(".modal-content .poster").data("contains-img") == "true"
+		$(".modal-content .poster").data("contains-img") == true
 	) {
 		$(document).ready(function () {
 			$(".modal-content .poster-container").magnificPopup({

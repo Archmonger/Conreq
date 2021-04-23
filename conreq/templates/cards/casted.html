@@ -52,7 +52,8 @@
         {% else %}
         <div class="availablity-dot red" title="Not Downloaded"></div>
         {% endif %}
-        <div class="poster-description opacity-1">{% firstof card.character card.job card.department %}</div>
+        <div class="poster-description">{% firstof card.character card.job card.department "Unknown Role"%}
+        </div>
     </div>
 
 </div>

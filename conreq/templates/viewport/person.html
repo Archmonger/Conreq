@@ -107,19 +107,19 @@
 
     </div>
 
-    <!-- Casted In -->
+    <!-- Casted In (TV) -->
     {% if person.tv_credits.cast %}
-    <div class="more-info-cast carousel">
+    <div class="carousel auto-construct">
         <div class="bold section-title"> Casted In... (TV)
-            <div class="cast-carousel-controls carousel-controls tns-controls">
+            <div class="carousel-controls tns-controls">
                 <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                 </div>
                 <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
                 </div>
             </div>
         </div>
-        <div class="cast-outer-container carousel-outer-container">
-            <div class="cast-inner-container carousel-inner-container">
+        <div class="carousel-outer-container">
+            <div class="carousel-inner-container">
                 {% for card in person.tv_credits.cast %}
                 <div class="poster-container-wrapper">
                     {% include "cards/casted.html" %}
@@ -130,20 +130,66 @@
     </div>
     {% endif %}
 
-    <!-- Production Staff for -->
-    {% if person.tv_credits.crew %}
-    <div class="more-info-crew carousel">
-        <div class="bold section-title"> Production Staff for... (TV)
-            <div class="crew-carousel-controls carousel-controls tns-controls">
+    <!-- Casted In (Movie) -->
+    {% if person.movie_credits.cast %}
+    <div class="carousel auto-construct">
+        <div class="bold section-title"> Casted In... (Movie)
+            <div class="carousel-controls tns-controls">
                 <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                 </div>
                 <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
                 </div>
             </div>
         </div>
-        <div class="crew-outer-container carousel-outer-container">
-            <div class="crew-inner-container carousel-inner-container">
+        <div class="carousel-outer-container">
+            <div class="carousel-inner-container">
+                {% for card in person.movie_credits.cast %}
+                <div class="poster-container-wrapper">
+                    {% include "cards/casted.html" %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Production Staff for (TV) -->
+    {% if person.tv_credits.crew %}
+    <div class="carousel auto-construct">
+        <div class="bold section-title"> Production Staff for... (TV)
+            <div class="carousel-controls tns-controls">
+                <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
+                </div>
+                <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-outer-container">
+            <div class="carousel-inner-container">
                 {% for card in person.tv_credits.crew %}
+                <div class="poster-container-wrapper">
+                    {% include "cards/casted.html" %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Production Staff for (Movie) -->
+    {% if person.movie_credits.crew %}
+    <div class="carousel auto-construct">
+        <div class="bold section-title"> Production Staff for... (Movie)
+            <div class="carousel-controls tns-controls">
+                <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
+                </div>
+                <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-outer-container">
+            <div class="carousel-inner-container">
+                {% for card in person.movie_credits.crew %}
                 <div class="poster-container-wrapper">
                     {% include "cards/casted.html" %}
                 </div>

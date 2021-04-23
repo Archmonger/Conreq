@@ -1,15 +1,15 @@
 {% if collection.parts %}
-<div class="more-info-collection carousel collapse">
+<div class="carousel auto-construct auto-uncollapse collapse">
     <div class="bold section-title contains-carousel"> {{collection.name}}
-        <div class="collection-carousel-controls carousel-controls tns-controls">
+        <div class="carousel-controls tns-controls">
             <div class="collection-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
             </div>
             <div class="collection-next"><i id="discover-fa" class="fas fa-angle-right"></i>
             </div>
         </div>
     </div>
-    <div class="collection-outer-container carousel-outer-container">
-        <div class="collection-inner-container carousel-inner-container">
+    <div class="carousel-outer-container">
+        <div class="carousel-inner-container">
             {% for card in collection.parts %}
             <div class="poster-container-wrapper">
                 {% include "cards/poster.html" %}

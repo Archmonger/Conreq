@@ -334,7 +334,7 @@ var cull_old_posters = async function () {
 				.text("Hidden to save memory.");
 
 			// Output to console that posters have been deleted
-			console.log(
+			console.info(
 				"Hiding the content of " +
 					num_of_posters_to_delete +
 					" posters because a new page has loaded."
@@ -347,4 +347,11 @@ var cull_old_posters = async function () {
 var hide_modals_and_popups = async function () {
 	$("#modal-container").modal("hide");
 	$.magnificPopup.close();
+};
+
+$.fn.replaceWithPush = function (a) {
+	let $a = $(a);
+
+	this.replaceWith($a);
+	return $a;
 };

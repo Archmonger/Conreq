@@ -83,11 +83,11 @@ $(document).ready(async function () {
 					scrollThreshold: $(".viewport-container").height() * 4,
 				});
 
-				create_content_modal_click_event();
+				content_modal_click_event();
 
 				masonry_grid.on("append.infiniteScroll", async function () {
 					cull_old_posters();
-					create_content_modal_click_event();
+					content_modal_click_event();
 					timer_start();
 				});
 
@@ -140,7 +140,7 @@ $(document).ready(async function () {
 
 		// More Info page events
 		request_btn_click_event();
-		create_content_modal_click_event();
+		content_modal_click_event();
 		create_report_modal_click_event();
 		issue_approve_btn_click_event();
 		issue_delete_btn_click_event();
@@ -158,27 +158,46 @@ $(document).ready(async function () {
 			videos_carousel.destroy();
 			videos_carousel = null;
 		}
-		if (recommended_carousel != null) {
-			recommended_carousel.destroy();
-			recommended_carousel = null;
-		}
 		if (images_carousel != null) {
 			images_carousel.destroy();
 			images_carousel = null;
 		}
-		if (collection_carousel != null) {
-			collection_carousel.destroy();
-			collection_carousel = null;
-		}
-		if (cast_carousel != null) {
-			cast_carousel.destroy();
-			cast_carousel = null;
-		}
-		if (crew_carousel != null) {
-			crew_carousel.destroy();
-			crew_carousel = null;
-		}
+		viewport_carousel_destructor();
 	});
+
+	$(".viewport-container, .viewport-container-top").on(
+		"prepare",
+		async function () {
+			let current_viewport = $(this);
+			// Component Loader
+			current_viewport.find(".component-loader").each(async function () {
+				let loader = $(this);
+				$.get(loader.data("url"), function (fetched_html) {
+					current_viewport.trigger("component-loading", [loader]);
+					let new_html = DOMPurify.sanitize(fetched_html);
+					let new_element = loader.replaceWithPush(new_html);
+					current_viewport.trigger("component-loaded", [
+						new_element,
+						loader,
+					]);
+				});
+			});
+		}
+	);
+
+	$(".viewport-container, .viewport-container-top").on(
+		"component-loaded",
+		// Handling any situations related to the component loader
+		async function (event, new_element) {
+			if (new_element.is(".carousel, .auto-construct")) {
+				viewport_carousel_constructor();
+				content_modal_click_event();
+			}
+			if (new_element.hasClass("auto-uncollapse")) {
+				new_element.collapse("show");
+			}
+		}
+	);
 
 	$(".sidebar").on("loaded", async function () {
 		sidebar_collapse_click_event();
