@@ -12,7 +12,8 @@
         <div class="left-group">
             <!-- Poster Image -->
             <div class="more-info-poster-container">
-                <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.poster_path '' %}"
+                <img src="{% static 'images/transparent.png' %}"
+                    data-src="{% if card.poster_path %}https://image.tmdb.org/t/p/w300{{card.poster_path}}{% else %}{% static 'images/poster_placeholder.png' %}{% endif %}"
                     class="more-info-poster lazy {% if content.poster_path %}clickable{% endif %}"
                     data-contains-img="{% if content.poster_path %}true{% endif %}" draggable="false"
                     alt="{% firstof content.title content.name 'Unknown' %}">
