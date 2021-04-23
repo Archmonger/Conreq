@@ -195,7 +195,7 @@ var create_cast_carousel = async function () {
 
 var crew_carousel = null;
 var create_crew_carousel = async function () {
-	if ($(".cast-inner-container").length) {
+	if ($(".crew-inner-container").length) {
 		crew_carousel = tns({
 			container: ".crew-inner-container",
 			controlsContainer: ".crew-carousel-controls",
