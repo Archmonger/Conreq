@@ -11,7 +11,7 @@
     <div class="carousel-outer-container">
         <div class="carousel-inner-container">
             {% for card in recommended.results %}
-            {% if card.poster_path and card.conreq_valid_id %}
+            {% if card.conreq_valid_id %}
             <div class="poster-container-wrapper">
                 {% include "cards/poster.html" %}
             </div>
