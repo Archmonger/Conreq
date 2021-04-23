@@ -93,6 +93,10 @@ def person(request):
         context = {
             "person": results,
         }
+        set_many_availability(results["tv_credits"]["cast"])
+        set_many_availability(results["tv_credits"]["crew"])
+        set_many_availability(results["movie_credits"]["cast"])
+        set_many_availability(results["movie_credits"]["crew"])
 
     # Render the page
     return HttpResponse(template.render(context, request))

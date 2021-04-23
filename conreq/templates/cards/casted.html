@@ -1,0 +1,58 @@
+{% load static %}
+{% load conreq_tags %}
+<div class="masonry-item poster-container no-highlighting person-roles">
+
+    <!-- Poster image and icons floating on it -->
+    <a href="{% viewport_top_url 'more_info:main' %}?tmdb_id={{card.id}}&content_type={{card.content_type}}">
+
+        {% if card.requested_by and user.is_staff %}
+        <div class="requested-by line-clamp-1">
+            {{ card.requested_by }}
+        </div>
+        {% endif %}
+
+        <div class="content-type-icon">
+            {% if card.content_type == "tv" %}
+            <i class="fas fa-tv" title="Television"></i>
+            {% elif card.content_type == "movie" %}
+            <i class="fas fa-video" title="Movie"></i>
+            {% endif %}
+        </div>
+
+        <div class="poster-fix">
+            {% if card.poster_path %}
+            <img src="{% static 'images/transparent.png' %}"
+                data-src="https://image.tmdb.org/t/p/w300{{card.poster_path}}" class="poster lazy" draggable="false"
+                alt="{% firstof card.name card.title 'Unknown' %}" />
+
+            {% elif card.remotePoster %}
+            <img src="{% static 'images/transparent.png' %}" data-src="{{card.remotePoster}}" class="poster lazy"
+                draggable="false" alt="{% firstof card.name card.title 'Unknown' %}" />
+
+            {% else %}
+            <img src="{% static 'images/transparent.png' %}" class="poster" draggable="false"
+                alt="{% firstof card.name card.title 'Unknown' %}" />
+            {% endif %}
+        </div>
+    </a>
+
+    <!-- Preview button -->
+    <i class="fas fa-angle-down content-preview-modal-btn clickable" title="Preview"
+        data-content-type="{{card.content_type}}" data-tmdb-id="{% firstof card.tmdbId card.id %}"
+        data-modal-url="{% url 'more_info:content_preview_modal' %}"></i>
+
+    <!-- Poster description -->
+    <div class="description-tint"></div>
+    <div class="poster-description-container">
+        <div class="poster-title">{% firstof card.name card.title "Unknown" %}</div>
+        {% if card.availability == "Available" %}
+        <div class="availablity-dot green" title="Available"></div>
+        {% elif card.availability == "Partial" %}
+        <div class="availablity-dot yellow" title="Partially Available"></div>
+        {% else %}
+        <div class="availablity-dot red" title="Not Downloaded"></div>
+        {% endif %}
+        <div class="poster-description opacity-1">{% firstof card.character card.job card.department %}</div>
+    </div>
+
+</div>

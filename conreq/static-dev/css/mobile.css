@@ -204,7 +204,7 @@
 	.tns-inner {
 		margin: 0 !important;
 	}
-	.grid-block.contains-carousel .more-info-head {
+	.viewport .carousel .section-title {
 		padding-bottom: 15px;
 	}
 	.more-info-quick-info-container {

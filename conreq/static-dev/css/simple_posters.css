@@ -65,11 +65,12 @@
 	opacity: 1;
 }
 
+.poster-container.person-roles .poster-description,
 .poster-container.cast .poster-description {
 	color: inherit;
 }
 
-.poster-container:not(.cast) .poster-description {
+.poster-container:not(.cast, .person-roles) .poster-description {
 	display: none;
 }
 
@@ -79,10 +80,6 @@
 
 .viewport .poster-container .poster:hover {
 	transform: none;
-}
-
-.viewport .cast.poster-container {
-	height: auto;
 }
 
 .viewport .poster-container > a > .content-type-icon {

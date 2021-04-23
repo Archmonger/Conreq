@@ -483,7 +483,7 @@ var sidebar_collapse_click_event = async function () {
 var more_info_poster_popup_click_event = async function () {
 	if (
 		$(".more-info-poster").length &&
-		$(".more-info-poster").data("contains-img")
+		$(".more-info-poster").data("contains-img") == "true"
 	) {
 		$(document).ready(function () {
 			$(".more-info-poster-container").magnificPopup({
@@ -503,7 +503,7 @@ var more_info_poster_popup_click_event = async function () {
 var modal_poster_popup_click_event = async function () {
 	if (
 		$(".modal-content .poster").length &&
-		$(".modal-content .poster").data("contains-img")
+		$(".modal-content .poster").data("contains-img") == "true"
 	) {
 		$(document).ready(function () {
 			$(".modal-content .poster-container").magnificPopup({

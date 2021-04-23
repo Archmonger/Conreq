@@ -12,7 +12,7 @@
         <div class="left-group">
             <!-- Poster Image -->
             <div class="more-info-poster-container">
-                <img src="{% static 'images/transparent.png' %}" data-src="{{ content.poster_path }}"
+                <img src="{% static 'images/transparent.png' %}" data-src="{% firstof content.poster_path '' %}"
                     class="more-info-poster lazy {% if content.poster_path %}clickable{% endif %}"
                     data-contains-img="{% if content.poster_path %}true{% endif %}" draggable="false"
                     alt="{% firstof content.title content.name 'Unknown' %}">
@@ -86,7 +86,7 @@
 
             <div class="more-info-overview">
                 <div class="more-info-summary">
-                    <div class="bold more-info-head"> Overview </div>
+                    <div class="bold section-title"> Overview </div>
                     {% firstof content.overview "No summary available."%}
                 </div>
             </div>
@@ -335,8 +335,8 @@
 
     <!-- Videos and Trailers -->
     {% if content.videos.results %}
-    <div class="more-info-videos grid-block contains-carousel">
-        <div class="bold more-info-head"> Videos and Trailers
+    <div class="more-info-videos carousel">
+        <div class="bold section-title"> Videos and Trailers
             <div class="videos-carousel-controls carousel-controls tns-controls">
                 <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                 </div>
@@ -369,8 +369,8 @@
 
     <!-- Cast -->
     {% if content.credits.cast %}
-    <div class="more-info-cast grid-block contains-carousel">
-        <div class="bold more-info-head"> Cast Members
+    <div class="more-info-cast carousel">
+        <div class="bold section-title"> Cast Members
             <div class="cast-carousel-controls carousel-controls tns-controls">
                 <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                 </div>
@@ -392,8 +392,8 @@
 
     <!-- Production Staff -->
     {% if content.credits.crew %}
-    <div class="more-info-crew grid-block contains-carousel">
-        <div class="bold more-info-head"> Production Staff
+    <div class="more-info-crew carousel">
+        <div class="bold section-title"> Production Staff
             <div class="crew-carousel-controls carousel-controls tns-controls">
                 <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                 </div>
@@ -415,8 +415,8 @@
 
     <!-- Artwork -->
     {% if content.images.backdrops %}
-    <div class="more-info-images grid-block contains-carousel">
-        <div class="bold more-info-head"> Artwork and Images
+    <div class="more-info-images carousel">
+        <div class="bold section-title"> Artwork and Images
             <div class="artwork-carousel-controls carousel-controls tns-controls">
                 <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                 </div>
@@ -438,8 +438,8 @@
 
     <!-- Reviews -->
     {% if content.reviews.results %}
-    <div class="more-info-reviews grid-block contains-carousel">
-        <div class="bold more-info-head"> Reviews
+    <div class="more-info-reviews carousel">
+        <div class="bold section-title"> Reviews
         </div>
         <div class="reviews-outer-container carousel-outer-container">
             <div class="reviews-inner-container carousel-inner-container">

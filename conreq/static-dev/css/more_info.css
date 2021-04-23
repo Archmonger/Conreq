@@ -31,7 +31,6 @@
 }
 
 .more-info-quick-info {
-	min-height: 95px;
 	box-sizing: border-box;
 	width: 100%;
 	border-radius: 4px;
@@ -262,14 +261,12 @@
 	background: var(--accent-color);
 }
 
-.viewport .cast.poster-container {
-	height: var(--cast-poster-card-height);
-}
-
+.viewport .person-roles.poster-container .description-tint,
 .viewport .cast.poster-container .description-tint {
 	--poster-details-height: var(--cast-poster-card-details-height);
 }
 
+.viewport .person-roles.poster-container .poster-description,
 .viewport .cast.poster-container .poster-description {
 	text-align: left;
 }
@@ -278,23 +275,19 @@
 	width: 100%;
 }
 
-.more-info-head {
+.section-title {
 	margin-bottom: 5px;
 	font-size: 18px;
 	line-height: 22px;
 }
 
-.grid-block.contains-carousel .more-info-head {
+.viewport .carousel .section-title {
 	margin-bottom: 0;
 	padding-top: var(--more-info-section-padding);
 	padding-left: var(--more-info-section-padding);
 	padding-right: var(--more-info-section-padding);
 	display: inline-block;
 	width: 100%;
-}
-
-.more-info-overview.grid-block.contains-carousel .more-info-head {
-	padding-left: 0;
 }
 
 .tns-carousel {
@@ -442,7 +435,7 @@
 	column-gap: 25px;
 }
 
-.grid-block.contains-carousel {
+.viewport .carousel {
 	box-sizing: border-box;
 	margin-top: var(--more-info-section-spacing);
 	width: 100%;

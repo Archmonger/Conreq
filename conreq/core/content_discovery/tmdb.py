@@ -267,12 +267,15 @@ class ContentDiscovery(Base):
         Args:
             id: An Integer or String containing the TMDB ID.
         """
-        return cache.handler(
-            "person",
-            page_key=person_id,
-            function=tmdb.People(person_id).info,
-            cache_duration=PERSON_CACHE_TIMEOUT,
-            kwargs={"append_to_response": "tv_credits,movie_credits"},
+        return self._set_content_attributes(
+            None,
+            cache.handler(
+                "person",
+                page_key=person_id,
+                function=tmdb.People(person_id).info,
+                cache_duration=PERSON_CACHE_TIMEOUT,
+                kwargs={"append_to_response": "tv_credits,movie_credits"},
+            ),
         )
 
     def get_by_tmdb_id(self, tmdb_id, content_type, obtain_extras=True):
