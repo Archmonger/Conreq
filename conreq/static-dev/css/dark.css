@@ -45,6 +45,11 @@ body {
 	color: rgb(255 255 255 / 0.75);
 }
 
+.text-input-container:focus-within {
+	background: #fff;
+	color: #252525;
+}
+
 .viewport-container,
 .viewport-container-top {
 	color: rgb(255 255 255 / 0.75);

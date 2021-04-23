@@ -204,17 +204,27 @@ a:hover {
 	height: 35px;
 }
 
+.text-input-container:focus-within {
+	background: #000;
+	color: #fff;
+}
+
+.modal .text-input-container {
+	background: rgb(255 255 255 / 0.08);
+	color: rgb(255 255 255 / 0.75);
+}
+
+.modal .text-input-container:focus-within {
+	background: #fff;
+	color: #252525;
+}
+
 .text-input-container.error {
 	background: rgb(255 0 0 / 28%);
 }
 
 .text-input-container.dropdown {
 	overflow: visible;
-}
-
-.text-input-container:focus-within {
-	background: #fff;
-	color: #252525;
 }
 
 .text-input-container input {
