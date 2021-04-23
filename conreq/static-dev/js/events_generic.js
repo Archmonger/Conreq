@@ -189,7 +189,7 @@ $(document).ready(async function () {
 		"component-loaded",
 		// Handling any situations related to the component loader
 		async function (event, new_element) {
-			if (new_element.is(".carousel, .auto-construct")) {
+			if (new_element.is(".carousel.auto-construct")) {
 				viewport_carousel_constructor();
 				content_modal_click_event();
 			}
