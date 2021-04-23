@@ -12,8 +12,13 @@
 	transition: transform 0.15s ease-in-out;
 	z-index: 1;
 	background: var(--poster-bg-color);
-	height: auto;
+	height: var(--poster-container-height);
 	transform: scale(1);
+}
+
+.viewport .poster-container.culled {
+	padding: 10px;
+	color: rgba(255, 255, 255, 0.75);
 }
 
 .poster-fix {

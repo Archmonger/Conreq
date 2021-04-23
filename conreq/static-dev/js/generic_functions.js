@@ -313,7 +313,7 @@ var cull_old_posters = async function () {
 			masonry_items
 				.slice(0, num_of_posters_to_delete)
 				.empty()
-				.css("padding", "10")
+				.addClass("culled")
 				.text("Hidden to save memory.");
 
 			// Output to console that posters have been deleted

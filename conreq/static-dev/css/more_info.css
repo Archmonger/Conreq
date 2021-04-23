@@ -263,6 +263,7 @@
 
 .viewport .cast.poster-container {
 	--poster-details-height: var(--cast-poster-card-details-height);
+	--poster-container-height: auto;
 }
 
 .viewport .person-roles.poster-container .poster-description,
