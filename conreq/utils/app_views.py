@@ -12,22 +12,8 @@ _logger = log.get_logger(__name__)
 
 def __set_many_availability(card, radarr_library, sonarr_library):
     """Threaded portion of set_many_availability."""
-    # Sonarr card
-    if card.__contains__("tvdbId"):
-        if sonarr_library is not None and sonarr_library.__contains__(
-            str(card["tvdbId"])
-        ):
-            card["availability"] = sonarr_library[str(card["tvdbId"])]["availability"]
-
-    # Radarr card
-    elif card.__contains__("tmdbId"):
-        if radarr_library is not None and radarr_library.__contains__(
-            str(card["tmdbId"])
-        ):
-            card["availability"] = radarr_library[str(card["tmdbId"])]["availability"]
-
     # TMDB TV card
-    elif card.__contains__("name"):
+    if card.__contains__("name"):
         if (
             sonarr_library is not None
             and card.__contains__("tvdb_id")
@@ -45,10 +31,10 @@ def set_many_availability(results):
     """Sets the availabily on list of cards."""
     # Fetch Sonarr and Radarr libraries
     radarr_library = cache.handler(
-        "radarr library",
+        "radarr library", function=ContentManager().get_radarr_library
     )
     sonarr_library = cache.handler(
-        "sonarr library",
+        "sonarr library", function=ContentManager().get_sonarr_library
     )
 
     # Generate the availability if possible, or get the external ID if a TVDB ID is needed
