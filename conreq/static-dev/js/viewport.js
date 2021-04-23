@@ -134,7 +134,7 @@ var generate_viewport = async function (standard_viewport_load = true) {
 			viewport_selector = viewport_container_class;
 		}
 		// Check if the whole webpage needs to be reloaded
-		if (page_reload_needed) {
+		if (page_reload_needed && standard_viewport_load) {
 			location.reload();
 		}
 
