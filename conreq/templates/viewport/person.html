@@ -12,7 +12,8 @@
         <div class="left-group">
             <!-- Poster Image -->
             <div class="more-info-poster-container">
-                <img src="{% static 'images/transparent.png' %}" data-src="{% firstof person.profile_path '' %}"
+                <img src="{% static 'images/transparent.png' %}"
+                    data-src="{% if card.profile_path %}{{card.profile_path}}{% else %}{% static 'images/person_placeholder.png' %}{% endif %}"
                     class="more-info-poster lazy {% if person.profile_path %}clickable{% endif %}"
                     data-contains-img="{% if person.profile_path %}true{% endif %}" draggable="false"
                     alt="{% firstof person.name 'Unknown' %}">

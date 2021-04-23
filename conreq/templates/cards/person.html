@@ -5,7 +5,7 @@
         <div class="description-tint"></div>
         <div class="poster-fix">
             <img src="{% static 'images/transparent.png' %}"
-                data-src="{% if card.profile_path %}https://image.tmdb.org/t/p/w300{{card.profile_path}}{% endif %}"
+                data-src="{% if card.profile_path %}https://image.tmdb.org/t/p/w300{{card.profile_path}}{% else %}{% static 'images/person_placeholder.png' %}{% endif %}"
                 class="poster lazy" draggable="false" alt="{% firstof card.name 'Unknown' %}" />
         </div>
 
