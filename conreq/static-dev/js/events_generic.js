@@ -148,6 +148,14 @@ $(document).ready(async function () {
 		more_info_poster_popup_click_event();
 	});
 
+	$(".viewport-container-top").on("loaded", async function () {
+		// Uncollapse quick info if the height is small
+		if ($(".more-info-quick-info.collapse").prop("scrollHeight") <= 250) {
+			$(".more-info-quick-info.collapse").collapse("toggle");
+			$(".quick-info-read-more-btn").remove();
+		}
+	});
+
 	$(".viewport-container-top").on("destroy", async function () {
 		// Carousels
 		if (review_carousel != null) {
