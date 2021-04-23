@@ -191,6 +191,7 @@
 	width: 100%;
 	-o-object-fit: contain;
 	object-fit: contain;
+	background: var(--poster-bg-color);
 }
 
 .modal-content.content-preview .grid-modal-right {

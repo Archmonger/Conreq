@@ -1,13 +1,14 @@
 {% load solo_tags %}
 {% load conreq_tags %}
+{% load static %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
 
 {% include "primary/loading_animation.html" %}
 <div id="modal-content" class="modal-content content-preview">
 
-    <div class="poster-container clickable">
-        <img src="{% firstof content.poster_path content.remotePoster %}" alt="" class="poster box-shadow"
-            data-contains-img="{% if content.poster_path or content.remotePoster %}true{% endif %}">
+    <div class="poster-container{% if content.poster_path %} clickable{% endif %}">
+        <img src="{% if content.poster_path %}https://image.tmdb.org/t/p/w300{{content.poster_path}}{% else %}{% static 'images/poster_placeholder.png' %}{% endif %}"
+            alt="" class="poster box-shadow" data-contains-img="{% if content.poster_path %}true{% endif %}">
     </div>
 
     <div class="grid-modal-right">
