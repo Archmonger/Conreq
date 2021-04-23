@@ -78,7 +78,7 @@ $(document).ready(async function () {
 					outlayer: masonry_grid.data("masonry"),
 					prefill: true,
 					elementScroll: ".viewport-container",
-					loadOnScroll: false,
+					loadOnScroll: true,
 					history: false,
 					scrollThreshold: $(".viewport-container").height() * 4,
 				});
@@ -88,18 +88,7 @@ $(document).ready(async function () {
 				masonry_grid.on("append.infiniteScroll", async function () {
 					cull_old_posters();
 					content_modal_click_event();
-					timer_start();
 				});
-
-				// Only load new page if X seconds have elapsed (rate limit)
-				masonry_grid.on(
-					"scrollThreshold.infiniteScroll",
-					async function () {
-						if (timer_seconds() >= 1) {
-							masonry_grid.infiniteScroll("loadNextPage");
-						}
-					}
-				);
 
 				infinite_scroller_created = true;
 			}, 500);

@@ -246,23 +246,6 @@ var modal_checkbox_aggregator = function () {
 	}
 };
 
-// Timer used for rate limiting the infinite scroller
-var timer_start = function () {
-	start_time = new Date();
-};
-timer_start();
-
-// Calculates seconds elapsed from timer_start()
-var timer_seconds = function () {
-	end_time = new Date();
-	let time_diff = end_time - start_time; // in ms
-	// strip the ms
-	time_diff /= 1000;
-
-	// get seconds
-	return Math.round(time_diff);
-};
-
 // Change a server setting
 var change_server_setting = function (setting_name = null, value = null) {
 	let json_payload = {
