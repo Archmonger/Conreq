@@ -88,15 +88,30 @@ def person(request):
     # Fetch the person from TMDB
     if person_id:
         results = content_discovery.person(person_id)
+
+        # Preprocessing before passing into HTML
         preprocess_tmdb_person(results)
-        # Generate context for page rendering
-        context = {
-            "person": results,
-        }
+        content_discovery.determine_id_validity(results["tv_credits"]["cast"])
+        content_discovery.determine_id_validity(results["tv_credits"]["crew"])
+        content_discovery.determine_id_validity(results["movie_credits"]["cast"])
+        content_discovery.determine_id_validity(results["movie_credits"]["crew"])
         set_many_availability(results["tv_credits"]["cast"])
         set_many_availability(results["tv_credits"]["crew"])
         set_many_availability(results["movie_credits"]["cast"])
         set_many_availability(results["movie_credits"]["crew"])
+        tv_cast_contain_valid_id = is_key_value_in_list(
+            "conreq_valid_id", True, results["tv_credits"]["cast"]
+        )
+        tv_crew_contain_valid_id = is_key_value_in_list(
+            "conreq_valid_id", True, results["tv_credits"]["crew"]
+        )
+
+        # Generate context for page rendering
+        context = {
+            "person": results,
+            "tv_cast_contain_valid_id": tv_cast_contain_valid_id,
+            "tv_crew_contain_valid_id": tv_crew_contain_valid_id,
+        }
 
     # Render the page
     return HttpResponse(template.render(context, request))

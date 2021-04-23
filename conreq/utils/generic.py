@@ -5,11 +5,12 @@ from re import sub as substitution
 
 def is_key_value_in_list(key, value, search_list, return_item=False):
     """Iterate through each result and check for the key/value pair"""
-    for item in search_list:
-        if item.__contains__(key) and item[key] == value:
-            if return_item:
-                return item
-            return True
+    if isinstance(search_list, list):
+        for item in search_list:
+            if item.__contains__(key) and item[key] == value:
+                if return_item:
+                    return item
+                return True
 
     # The key value pair could not be found in the list of dictionaries
     return False

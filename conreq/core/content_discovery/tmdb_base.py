@@ -168,17 +168,9 @@ class Base:
         external_id_multi_fetch_results = None
 
         # Create a list of all needed IDs
-        for result in tmdb_response["results"]:
-            # Sonarr card
-            if result.__contains__("tvdbId"):
-                result["conreq_valid_id"] = True
-
-            # Radarr card
-            elif result.__contains__("tmdbId"):
-                result["conreq_valid_id"] = True
-
+        for result in tmdb_response:
             # TMDB TV card
-            elif result.__contains__("name"):
+            if result.__contains__("name"):
                 # Valid ID defaults to false until a TVDB match is determined
                 result["conreq_valid_id"] = False
                 external_id_multi_fetch[str(result["id"])] = {
@@ -219,6 +211,8 @@ class Base:
                 except:
                     pass
 
+        return tmdb_response
+
     def _multi_page_fetch(
         self, cache_name, function, page_number, page_multiplier, **kwargs
     ):
@@ -252,7 +246,7 @@ class Base:
             merged_results = self._merge_results(merged_results, thread.join())
 
         # Determine if TV has a TVDB ID (required for Sonarr)
-        self.determine_id_validity(merged_results)
+        self.determine_id_validity(merged_results["results"])
 
         return merged_results
 

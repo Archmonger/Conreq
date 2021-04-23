@@ -201,7 +201,7 @@ def generate_requests_cards(user_requests):
         )
 
     all_cards = threaded_execution_unique_args(function_list)
-    content_discovery.determine_id_validity({"results": all_cards})
+    content_discovery.determine_id_validity(all_cards)
     set_many_availability(all_cards)
 
     return all_cards

@@ -226,7 +226,7 @@ class ContentDiscovery(Base):
             for thread in thread_list:
                 merged_results = self._merge_results(merged_results, thread.join())
 
-            self.determine_id_validity(merged_results)
+            self.determine_id_validity(merged_results["results"])
             return merged_results
 
         except:

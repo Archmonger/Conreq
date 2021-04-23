@@ -108,7 +108,7 @@
     </div>
 
     <!-- Casted In (TV) -->
-    {% if person.tv_credits.cast %}
+    {% if person.tv_credits.cast and tv_cast_contain_valid_id %}
     <div class="carousel auto-construct">
         <div class="bold section-title"> Casted In... (TV)
             <div class="carousel-controls tns-controls">
@@ -121,9 +121,11 @@
         <div class="carousel-outer-container">
             <div class="carousel-inner-container">
                 {% for card in person.tv_credits.cast %}
+                {% if card.conreq_valid_id %}
                 <div class="poster-container-wrapper">
                     {% include "cards/casted.html" %}
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -154,7 +156,7 @@
     {% endif %}
 
     <!-- Production Staff for (TV) -->
-    {% if person.tv_credits.crew %}
+    {% if person.tv_credits.crew and tv_crew_contain_valid_id %}
     <div class="carousel auto-construct">
         <div class="bold section-title"> Production Staff for... (TV)
             <div class="carousel-controls tns-controls">
@@ -167,9 +169,11 @@
         <div class="carousel-outer-container">
             <div class="carousel-inner-container">
                 {% for card in person.tv_credits.crew %}
+                {% if card.conreq_valid_id %}
                 <div class="poster-container-wrapper">
                     {% include "cards/casted.html" %}
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>

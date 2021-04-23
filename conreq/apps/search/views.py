@@ -29,7 +29,7 @@ def search(request):
         tmdb_results = searcher.all(query, page)["results"]
 
     # Determine the availability
-    content_discovery.determine_id_validity({"results": tmdb_results})
+    content_discovery.determine_id_validity(tmdb_results)
     set_many_availability(tmdb_results)
 
     context = {

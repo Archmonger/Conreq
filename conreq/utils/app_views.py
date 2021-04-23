@@ -39,15 +39,22 @@ def set_many_availability(results):
 
     # Generate the availability if possible, or get the external ID if a TVDB ID is needed
     thread_list = []
-    for card in results:
-        thread = Thread(
-            target=__set_many_availability,
-            args=[card, radarr_library, sonarr_library],
+    if isinstance(results, list):
+        for card in results:
+            thread = Thread(
+                target=__set_many_availability,
+                args=[card, radarr_library, sonarr_library],
+            )
+            thread.start()
+            thread_list.append(thread)
+        for thread in thread_list:
+            thread.join()
+    else:
+        log.handler(
+            "set_many_availability did not recieve a List!",
+            log.WARNING,
+            _logger,
         )
-        thread.start()
-        thread_list.append(thread)
-    for thread in thread_list:
-        thread.join()
 
     return results
 
