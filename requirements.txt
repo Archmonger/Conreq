@@ -11,7 +11,7 @@ django-htmlmin==0.11.0
 django-solo==1.1.5
 pillow==8.2.0
 django-searchable-encrypted-fields==0.1.9
-django-cleanup==5.1.0
+django-cleanup==5.2.0
 daphne==3.0.2
 whitenoise[brotli]==5.2.0
 django-project-version==0.14.9
