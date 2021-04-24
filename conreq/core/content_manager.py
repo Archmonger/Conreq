@@ -3,7 +3,7 @@ from os.path import join as join_path
 
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
-from PyArr import RadarrAPI, SonarrAPI
+from pyarr import RadarrAPIv1, SonarrAPI
 
 _logger = log.get_logger(__name__)
 
@@ -24,7 +24,7 @@ class ContentManager:
         self.__sonarr = SonarrAPI(
             self.conreq_config.sonarr_url, self.conreq_config.sonarr_api_key
         )
-        self.__radarr = RadarrAPI(
+        self.__radarr = RadarrAPIv1(
             self.conreq_config.radarr_url, self.conreq_config.radarr_api_key
         )
 
