@@ -19,6 +19,7 @@ markdown==3.3.4
 pwned-passwords-django==1.4.1
 awesome-django-timezones==0.3.0
 pymysql==1.0.2
+mysqlclient==2.0.3
 huey==2.3.1
 django-compressor==2.4
 django-silk==4.1.0
