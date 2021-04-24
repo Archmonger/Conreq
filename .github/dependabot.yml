@@ -1,5 +1,5 @@
-version: 1
-update_configs:
+version: 2
+updates:
     - package-ecosystem: "pip"
       directory: "/"
       schedule:
