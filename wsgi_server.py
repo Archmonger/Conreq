@@ -3,12 +3,12 @@ from conreq.wsgi import application
 
 webserver = get_webserver()
 
-if webserver == "bjoern":
+if webserver == "BJOERN":
     import bjoern
 
     bjoern.run(application, "0.0.0.0", 8000, reuse_port=True)
 
-elif webserver == "wsgiserver":
+elif webserver == "WSGISERVER":
     import wsgiserver
 
     server = wsgiserver.WSGIServer(application, host="0.0.0.0", port=8000)
