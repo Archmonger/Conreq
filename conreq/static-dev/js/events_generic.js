@@ -63,6 +63,8 @@ $(document).ready(async function () {
 			});
 		}
 
+		content_modal_click_event();
+
 		// Infinite Scroller
 		if ($(".viewport-container>.infinite-scroll").length) {
 			let elements_path = null;
@@ -82,8 +84,6 @@ $(document).ready(async function () {
 					history: false,
 					scrollThreshold: $(".viewport-container").height() * 4,
 				});
-
-				content_modal_click_event();
 
 				masonry_grid.on("append.infiniteScroll", async function () {
 					cull_old_posters();
