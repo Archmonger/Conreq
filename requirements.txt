@@ -11,7 +11,7 @@ django-htmlmin==0.11.0
 django-solo==1.1.5
 pillow==8.2.0
 django-searchable-encrypted-fields==0.1.9
-django-cleanup==5.1.0
+django-cleanup==5.2.0
 daphne==3.0.2
 whitenoise[brotli]==5.2.0
 django-project-version==0.14.9
@@ -20,8 +20,8 @@ pwned-passwords-django==1.4.1
 awesome-django-timezones==0.3.0
 pymysql==1.0.2
 mysqlclient==2.0.3
-huey==2.3.1
-django-compressor==2.4
+huey==2.3.2
+django-compressor==2.4.1
 django-silk==4.1.0
 django-url-or-relative-url-field==0.1.2
 jsonfield==3.1.0
