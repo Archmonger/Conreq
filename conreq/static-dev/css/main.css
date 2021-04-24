@@ -55,7 +55,6 @@ body {
 	background-color: var(--body-bg);
 	margin: 0px;
 	padding: 0px;
-	height: 100%;
 	overflow-y: scroll;
 	box-sizing: content-box;
 	position: relative;
