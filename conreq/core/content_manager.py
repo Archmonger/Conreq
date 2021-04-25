@@ -145,7 +145,7 @@ class ContentManager:
         try:
             # Add a movie with a specific TMDB ID to Radarr.
             if kwargs.__contains__("tmdb_id"):
-                return self.__radarr.addMovie(
+                return self.__radarr.add_movie(
                     kwargs["tmdb_id"],
                     kwargs["quality_profile_id"],
                     join_path(kwargs["root_dir"], ""),
@@ -156,7 +156,7 @@ class ContentManager:
             # Add a show, season, or episode with a specific TVDB ID to Sonarr.
             if kwargs.__contains__("tvdb_id"):
                 # Add the show to Sonarr's collection
-                series_id = self.__sonarr.addSeries(
+                series_id = self.__sonarr.add_series(
                     kwargs["tvdb_id"],
                     kwargs["quality_profile_id"],
                     join_path(kwargs["root_dir"], ""),
@@ -167,11 +167,11 @@ class ContentManager:
                 )["id"]
 
                 # Obtain all information that Sonarr collected about the series
-                new_series = self.__sonarr.getSeries(series_id)
+                new_series = self.__sonarr.get_series(series_id)
 
                 # Set the series type
                 new_series["seriesType"] = kwargs["series_type"].lower().capitalize()
-                return self.__sonarr.updSeries(new_series)
+                return self.__sonarr.upd_series(new_series)
 
             # Invalid parameter
             log.handler(
@@ -220,20 +220,20 @@ class ContentManager:
                 }
 
                 # Get the movie
-                movie = self.__radarr.getMovie(kwargs["radarr_id"])
+                movie = self.__radarr.get_movie(kwargs["radarr_id"])
 
                 # Set the movie as monitored
                 movie["monitored"] = True
 
                 # Save the changes to Radarr
-                response["movie_update_results"] = self.__radarr.updMovie(movie)
+                response["movie_update_results"] = self.__radarr.update_movie(movie)
 
                 movie_id = [
                     kwargs["radarr_id"],
                 ]
 
                 # Search for the movie
-                response["movie_search_results"] = self.__radarr.setCommand(
+                response["movie_search_results"] = self.__radarr.set_command(
                     name="MoviesSearch", movieIds=movie_id
                 )
 
@@ -250,7 +250,7 @@ class ContentManager:
                 }
 
                 # Get the series
-                series = self.__sonarr.getSeries(kwargs["sonarr_id"])
+                series = self.__sonarr.get_series(kwargs["sonarr_id"])
 
                 # Set the series as monitored
                 series["monitored"] = True
@@ -268,10 +268,10 @@ class ContentManager:
                             season["monitored"] = True
 
                 # Save the changes to Sonarr
-                response["season_update_results"] = self.__sonarr.updSeries(series)
+                response["season_update_results"] = self.__sonarr.upd_series(series)
 
                 # Get the episodes
-                episodes = self.__sonarr.getEpisodesBySeriesId(kwargs["sonarr_id"])
+                episodes = self.__sonarr.get_episodes_by_series_id(kwargs["sonarr_id"])
                 modified_episodes = []
                 response["episode_update_results"] = []
 
@@ -295,7 +295,7 @@ class ContentManager:
                 # Save the changes to Sonarr
                 for episode in modified_episodes:
                     response["episode_update_results"].append(
-                        self.__sonarr.updEpisode(episode)
+                        self.__sonarr.upd_episode(episode)
                     )
 
                 # Search for the whole show
@@ -305,7 +305,7 @@ class ContentManager:
                     not kwargs.__contains__("episode_ids")
                     or kwargs["episode_ids"] is None
                 ):
-                    response["show_search_results"] = self.__sonarr.setCommand(
+                    response["show_search_results"] = self.__sonarr.set_command(
                         name="SeriesSearch", seriesId=kwargs["sonarr_id"]
                     )
                     return response
@@ -315,7 +315,7 @@ class ContentManager:
                     response["season_search_results"] = []
                     for season in kwargs["seasons"]:
                         response["season_search_results"].append(
-                            self.__sonarr.setCommand(
+                            self.__sonarr.set_command(
                                 name="SeasonSearch",
                                 seriesId=kwargs["sonarr_id"],
                                 seasonNumber=season,
@@ -327,7 +327,7 @@ class ContentManager:
                     kwargs.__contains__("episode_ids")
                     and kwargs["episode_ids"] is not None
                 ):
-                    response["episode_search_results"] = self.__sonarr.setCommand(
+                    response["episode_search_results"] = self.__sonarr.set_command(
                         name="EpisodeSearch",
                         episodeIds=kwargs["episode_ids"],
                     )
@@ -366,12 +366,12 @@ class ContentManager:
         try:
             # Remove a movie with a specific Radarr ID.
             if kwargs.__contains__("radarr_id"):
-                return self.__radarr.delMovie(kwargs["radarr_id"], delFiles=True)
+                return self.__radarr.del_movie(kwargs["radarr_id"], delFiles=True)
 
             # Remove a show with a specific Sonarr ID.
             if kwargs.__contains__("sonarr_id"):
                 # Remove the whole show
-                return self.__sonarr.delSeries(kwargs["sonarr_id"], delFiles=True)
+                return self.__sonarr.del_series(kwargs["sonarr_id"], delFiles=True)
 
             # Remove episodes with Sonarr episode IDs.
             if kwargs.__contains__("episode_file_ids"):
@@ -436,7 +436,7 @@ class ContentManager:
     def sonarr_root_dirs(self):
         """Returns the root dirs available within Sonarr"""
         try:
-            return self.__sonarr.getRoot()
+            return self.__sonarr.get_root()
 
         except:
             log.handler(
@@ -448,7 +448,7 @@ class ContentManager:
     def radarr_root_dirs(self):
         """Returns the root dirs available within Radarr"""
         try:
-            return self.__radarr.getRoot()
+            return self.__radarr.get_root()
 
         except:
             log.handler(
@@ -460,7 +460,7 @@ class ContentManager:
     def sonarr_quality_profiles(self):
         """Returns the quality profiles available within Sonarr"""
         try:
-            return self.__sonarr.getQualityProfiles()
+            return self.__sonarr.get_quality_profiles()
 
         except:
             log.handler(
@@ -472,7 +472,7 @@ class ContentManager:
     def radarr_quality_profiles(self):
         """Returns the quality profiles available within Radarr"""
         try:
-            return self.__radarr.getQualityProfiles()
+            return self.__radarr.get_quality_profiles()
 
         except:
             log.handler(
@@ -519,7 +519,7 @@ class ContentManager:
             if self.conreq_config.radarr_enabled:
                 if self.conreq_config.radarr_url and self.conreq_config.radarr_api_key:
                     # Get the latest list of Radarr's collection
-                    results = self.__radarr.getMovie()
+                    results = self.__radarr.get_movie()
 
                     # Set up a dictionary of results with IDs as keys
                     results_with_ids = {}
@@ -551,7 +551,7 @@ class ContentManager:
             if self.conreq_config.sonarr_enabled:
                 if self.conreq_config.sonarr_url and self.conreq_config.sonarr_api_key:
                     # Get the latest list of Sonarr's collection
-                    results = self.__sonarr.getSeries()
+                    results = self.__sonarr.get_series()
 
                     # Set up a dictionary of results with IDs as keys
                     results_with_ids = {}
@@ -580,7 +580,7 @@ class ContentManager:
     def __season_episode_availability(self, series):
         """Multithreadable part of season_episode_availability()"""
         # Obtain the episodes
-        episodes = self.__sonarr.getEpisodesBySeriesId(series["id"])
+        episodes = self.__sonarr.get_episodes_by_series_id(series["id"])
         for season in series["seasons"]:
             # Set the season availability
             self.__check_availability(season["statistics"])
