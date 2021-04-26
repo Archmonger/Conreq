@@ -4,7 +4,7 @@
 	width: var(--sidebar-width);
 	position: relative;
 	left: 0;
-	background-color: var(--sidebar-bg);
+	background: var(--sidebar-bg);
 	overflow-x: hidden;
 	font-family: var(--global-font);
 	font-weight: 300;
@@ -12,7 +12,7 @@
 	overflow-y: auto;
 	overflow-y: overlay;
 	display: inline-block;
-	color: #323232;
+	color: rgba(255, 255, 255, 0.75);
 }
 
 .sidebar .navpages {
@@ -45,6 +45,7 @@
 }
 
 .nav-tab.group {
+	color: rgba(255, 255, 255, 0.6);
 	font-weight: 700;
 	border-top: 1px solid rgba(255, 255, 255, 0.15);
 	margin-top: 5px;
@@ -73,7 +74,7 @@
 }
 
 .nav-tab .icon-right {
-	color: rgba(0, 0, 0, 0.6);
+	color: rgba(255, 255, 255, 0.6);
 	transition: color 0.3s ease, opacity 0.3s ease;
 	opacity: 1;
 	position: absolute;

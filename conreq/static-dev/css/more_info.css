@@ -226,7 +226,7 @@
 .review {
 	padding: 15px;
 	border-radius: 8px;
-	background: #252525;
+	background: var(--poster-bg-color);
 	color: rgba(255, 255, 255, 0.75);
 	font-weight: 300;
 	line-height: 18px;

@@ -1,7 +1,13 @@
 :root {
 	/* Globals */
-	--body-bg: #f5f5f5;
-	--large-card-bg: #fff;
+	--body-bg: linear-gradient(
+		145deg,
+		rgba(18, 23, 25, 0.8),
+		rgba(18, 23, 25, 0.25),
+		rgba(18, 23, 25, 0.15),
+		rgba(0, 0, 0, 0)
+	);
+	--large-card-bg: linear-gradient(90deg, #2a2a2a, hsl(0deg 0% 22%));
 	--global-font: "Roboto", sans-serif;
 	--primary-font-size: 14px;
 	--secondary-font-size: 12px;
@@ -10,11 +16,11 @@
 	--accent-color: #258a6d;
 	--placeholder-bg: var(--poster-bg-color);
 	/* Sidebar */
-	--sidebar-bg: #fdfdfd;
+	--sidebar-bg: transparent;
 	--sidebar-width: 240px;
 	--navpages-btn-padding: 15px 20px;
 	/* Navbar */
-	--navbar-bg: #3f3f3f;
+	--navbar-bg: transparent;
 	--navbar-height: 0px;
 	--searchbar-width: 45%;
 	/* Viewport */
@@ -48,10 +54,11 @@ html {
 	overflow: hidden;
 	font-family: var(--global-font);
 	scroll-behavior: smooth;
+	background: #363636;
 }
 
 body {
-	background-color: var(--body-bg);
+	background: var(--body-bg);
 	margin: 0px;
 	padding: 0px;
 	overflow-y: scroll;
@@ -194,17 +201,17 @@ a:hover {
 }
 
 .text-input-container {
-	background: #2525251c;
+	background: rgb(255 255 255 / 0.08);
 	border-radius: 4px;
 	transition: background 0.4s ease, color 0.4s ease;
-	color: rgb(0 0 0);
+	color: rgb(255 255 255 / 0.75);
 	overflow: hidden;
 	height: 35px;
 }
 
 .text-input-container:focus-within {
-	background: #000;
-	color: #fff;
+	background: #fff;
+	color: #252525;
 }
 
 .modal .text-input-container {

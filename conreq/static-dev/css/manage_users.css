@@ -1,9 +1,10 @@
 .table {
 	table-layout: fixed;
 	border: none;
+	color: rgb(255 255 255 / 0.75);
 }
 .table-wrapper {
-	background: #fff;
+	background: var(--large-card-bg);
 	padding: 20px 25px;
 	border-radius: 3px;
 	box-shadow: var(--box-shadow);
@@ -14,7 +15,7 @@
 }
 .table-title-container {
 	padding-bottom: 15px;
-	background: rgb(76 76 76);
+	background: rgb(29 29 29);
 	color: #fff;
 	padding: 16px 30px;
 	margin: -20px -25px 10px;
@@ -93,6 +94,19 @@ table.table td i {
 table.table td {
 	overflow-y: auto;
 }
+.table td,
+.table th {
+	border-color: rgb(255 255 255 / 0.2) !important;
+}
+table.table-striped tbody tr:nth-of-type(odd) {
+	background: transparent;
+}
+table.table-striped.table-hover tbody tr:hover {
+	background: rgb(255 255 255 / 0.05);
+}
+.table-hover tbody tr:hover {
+	color: rgb(255 255 255 / 1);
+}
 table.table .avatar {
 	border-radius: 50%;
 	vertical-align: middle;
@@ -134,7 +148,7 @@ table.table .avatar {
 	padding: 0 6px;
 }
 .pagination li a:hover {
-	color: #000;
+	color: #fff;
 }
 .pagination li.active a,
 .pagination li.active a.page-link {

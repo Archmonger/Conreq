@@ -20,7 +20,7 @@
 	margin: auto;
 	margin-bottom: 30px;
 	width: var(--searchbar-width);
-	background: #252525;
+	background: rgb(0 0 0 / 0.45);
 	border-radius: 15px;
 	transition: background 0.4s ease, color 0.4s ease;
 	color: rgba(255, 255, 255, 0.3);
