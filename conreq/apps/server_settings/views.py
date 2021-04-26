@@ -153,9 +153,6 @@ def update_settings(request):
             elif message["setting_name"] == "Conreq Simple/Minimal Poster Cards":
                 conreq_config.conreq_simple_posters = message["value"]
 
-            elif message["setting_name"] == "Conreq Dark Theme":
-                conreq_config.conreq_dark_theme = message["value"]
-
             elif message["setting_name"] == "Conreq HTTP Auth":
                 conreq_config.conreq_http_header_auth = message["value"]
 

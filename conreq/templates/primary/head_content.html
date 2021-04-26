@@ -124,6 +124,7 @@
 <link rel="stylesheet" href="{% static 'css/manage_users.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/issues.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/mobile.css' %}" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/dark.css' %}" crossorigin="anonymous">
 {% endcompress %}
 
 <!-- Local JS -->
@@ -141,6 +142,11 @@
 <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
 {% endif %}
 
+<!-- Toggable CSS -->
+{% if server_settings.conreq_simple_posters %}
+{% include "compressed/simple_posters_css.html" %}
+{% endif %}
+
 <!-- User defined JS -->
 {% if server_settings.conreq_custom_js %}
 <script src="{{ server_settings.conreq_custom_js }}" crossorigin="anonymous"></script>
@@ -149,9 +155,3 @@
 <!-- User defined CSS -->
 {% if server_settings.conreq_custom_css %}
 <link rel="stylesheet" href="{{ server_settings.conreq_custom_css }}" crossorigin="anonymous"> {% endif %}
-
-<!-- Toggable CSS -->
-{% if server_settings.conreq_simple_posters %}
-{% include "compressed/simple_posters_css.html" %} {% endif %}
-{% if server_settings.conreq_dark_theme %}
-{% include "compressed/dark_css.html" %} {% endif %}

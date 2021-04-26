@@ -13,7 +13,6 @@ class ConreqConfig(SingletonModel):
     conreq_custom_js = URLOrRelativeURLField(default="", blank=True)
     conreq_simple_posters = models.BooleanField(default=True)
     conreq_auto_resolve_issues = models.BooleanField(default=True)
-    conreq_dark_theme = models.BooleanField(default=True)
     conreq_allow_tv_specials = models.BooleanField(default=True)
     conreq_http_header_auth = models.BooleanField(default=False)
     conreq_initialized = models.BooleanField(default=False)
