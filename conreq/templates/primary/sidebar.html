@@ -126,6 +126,35 @@
             </div>
             {% endif %}
 
+            {% if user.is_staff and debug %}
+            <div class="nav-tab group clickable" data-toggle="collapse" data-target="#debug-tabs" aria-expanded="true"
+                aria-controls="admin-tabs">
+                <div class="group-name line-clamp-1">
+                    DEBUG
+                </div>
+                <i id="admin-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
+            </div>
+            <div class="collapse show" id="debug-tabs">
+                <div class="nav-tab suboption">
+                    <a href="{% url 'silk:summary' %}" class="line-clamp-1">
+                        <i class="fas fa-spider icon-left"></i>
+                        Performance
+                    </a>
+                </div>
+                <div class="nav-tab suboption">
+                    <a href="{% url 'admin:index' %}" class="line-clamp-1">
+                        <i class="fas fa-database icon-left"></i>
+                        Database
+                    </a>
+                </div>
+                <div class="nav-tab suboption">
+                    <a href="{% url 'django-admindocs-docroot' %}" class="line-clamp-1">
+                        <i class="fas fa-book icon-left"></i>
+                        Code Outline
+                    </a>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </nav>

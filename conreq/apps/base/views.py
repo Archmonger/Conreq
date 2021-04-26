@@ -1,6 +1,6 @@
 from conreq.apps.base.forms import InitializationForm
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.utils.generic import get_base_url
+from conreq.utils.generic import get_base_url, get_debug_from_env
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import login_required
@@ -11,6 +11,7 @@ from django.template import loader
 from .helpers import initialize_conreq
 
 base_url = get_base_url()
+debug = get_debug_from_env()
 
 
 @performance_metrics()
@@ -76,5 +77,5 @@ def initialization(request):
 
     # Render the base
     return login_required(render)(
-        request, "primary/base_app.html", {"base_url": base_url}
+        request, "primary/base_app.html", {"base_url": base_url, "debug": debug}
     )
