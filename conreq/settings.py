@@ -265,6 +265,7 @@ INSTALLED_APPS = [
     "url_or_relative_url_field",  # Validates relative URLs
 ]
 MIDDLEWARE = [
+    "compression_middleware.middleware.CompressionMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
     "django.contrib.sessions.middleware.SessionMiddleware",
