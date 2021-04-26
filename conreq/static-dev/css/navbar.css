@@ -8,11 +8,17 @@
 	display: none;
 }
 
+.navbar-dark .navbar-brand {
+	margin-left: 20px;
+	color: rgba(255, 255, 255, 0.5);
+	font-weight: 500;
+}
+
 .searchbar {
 	position: relative;
 	height: 40px;
 	margin: auto;
-	margin-bottom: var(--viewport-padding);
+	margin-bottom: 30px;
 	width: var(--searchbar-width);
 	background: #252525;
 	border-radius: 15px;

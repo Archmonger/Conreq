@@ -1,7 +1,11 @@
 {% load static %}
+{% load conreq_tags %}
 <div class="navbar navbar-expand-md navbar-dark" data-aos="fade-down">
     <button class="navbar-toggler" type="button" aria-label="Toggle sidebar">
         <span class="navbar-toggler-icon"></span>
     </button>
-    {% include "primary/searchbar.html" %}
+
+    <div class="navbar-brand">
+        {% app_name %}
+    </div>
 </div>

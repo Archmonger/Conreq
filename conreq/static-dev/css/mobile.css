@@ -100,19 +100,13 @@
 		z-index: 100;
 		display: flex;
 		flex-wrap: nowrap;
-		justify-content: space-between;
+		justify-content: flex-start;
 	}
 	.searchbar {
-		left: 0px;
-		position: relative;
-		height: calc(var(--navbar-height) * 0.8);
-		margin: 0;
-		margin-left: 25px;
-		width: 100%;
-	}
-	.viewport-container .searchbar,
-	.viewport-container-top .searchbar {
-		display: none !important;
+		width: auto;
+		margin-bottom: 15px;
+		margin-left: 10px;
+		margin-right: 10px;
 	}
 	.sidebar {
 		z-index: 99;
