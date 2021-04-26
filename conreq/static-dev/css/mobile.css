@@ -124,7 +124,7 @@
 	.nav-tab.suboption .fas {
 		opacity: 1;
 		margin: 0;
-		padding: var(--navpages-btn-padding-suboption);
+		padding: var(--navpages-btn-padding);
 		padding-left: 20px;
 	}
 	.viewport-container,

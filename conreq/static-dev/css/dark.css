@@ -26,13 +26,7 @@ body {
 	color: rgb(255 255 255 / 0.75);
 }
 
-.all-tab-groups .suboption.active,
-.nav-tab.suboption > *:hover,
-.nav-tab.suboption .fas:hover {
-	color: #fff;
-}
-
-.nav-tab.suboption .fas {
+.nav-tab .icon-right {
 	color: rgba(255, 255, 255, 0.6);
 }
 
@@ -55,12 +49,8 @@ body {
 	color: rgb(255 255 255 / 0.75);
 }
 
-.nav-tab.group .fas {
-	color: rgb(255 255 255 / 0.75);
-}
-
 .nav-tab.group {
-	background: rgba(255, 255, 255, 0.05);
+	color: rgba(255,255,255,0.6);
 }
 
 .review {
