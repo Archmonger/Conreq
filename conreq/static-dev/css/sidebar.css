@@ -24,8 +24,12 @@
 	text-overflow: ellipsis;
 }
 
+.nav-tab:not(.group):hover {
+	background: rgba(255, 255, 255, 0.03);
+}
+
 .all-tab-groups .suboption.active {
-	background: rgba(255, 255, 255, 0.05);
+	background: rgba(255, 255, 255, 0.08);
 	color: #fff;
 }
 
