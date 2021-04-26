@@ -33,6 +33,7 @@ DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 USE_SSL = get_bool_from_env("USE_SSL", False)
 X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
+ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
 
 
@@ -188,7 +189,7 @@ LOGGING = {
 # Security Settings
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "no-referrer"
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [ALLOWED_HOST]
 SECURE_BROWSER_XSS_FILTER = True
 if USE_SSL:
     SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS

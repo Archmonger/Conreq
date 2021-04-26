@@ -32,6 +32,7 @@ MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (False disables X-Frame-Options)
+ALLOWED_HOST = "192.168.0.199"            # default: * (Allows all hosts)
 DEBUG = False                             # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
 ```
 
