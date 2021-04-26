@@ -12,149 +12,146 @@
     </div>
 
     <div id="navpages" class="navpages">
-        <div id="all-tab-groups" class="all-tab-groups">
-
-            <!-- Discover Tab Group -->
-            <div class="nav-tab group clickable" data-toggle="collapse" data-target="#discover-tabs"
-                aria-expanded="true" aria-controls="discover-tabs">
-                <div class="group-name line-clamp-1">
-                    DISCOVER
-                </div>
-                <i class="fas fa-angle-up icon-right" title="Collapse Group"></i>
+        <!-- Discover Tab Group -->
+        <div class="nav-tab group clickable" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true"
+            aria-controls="discover-tabs">
+            <div class="group-name line-clamp-1">
+                DISCOVER
             </div>
-            <div class="collapse show" id="discover-tabs">
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'discover:all' %}" class="line-clamp-1">
-                        <i class="fas fa-compass icon-left"></i>
-                        TV & Movies
-                    </a>
-                    <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
-                        data-modal-url="{% url 'discover:simple_filter_modal' %}"></i>
-                </div>
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'discover:tv' %}" class="line-clamp-1">
-                        <i class="fas fa-tv icon-left"></i>
-                        Television
-                    </a>
-                    <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
-                        data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=tv"
-                        data-content-type="tv"></i>
-                </div>
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'discover:movies' %}" class="line-clamp-1">
-                        <i class="fas fa-video icon-left"></i>
-                        Movies
-                    </a>
-                    <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
-                        data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=movie"
-                        data-content-type="movie"></i>
-                </div>
-            </div>
-
-            <!-- User Tab Group -->
-            <div class="nav-tab group clickable" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true"
-                aria-controls="user-tabs">
-                <div class="group-name line-clamp-1">
-                    USER
-                </div>
-                <i id="user-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
-            </div>
-            <div class="collapse show" id="user-tabs">
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'user_requests:my_requests' %}" class="line-clamp-1">
-                        <i class="fas fa-plus icon-left"></i>
-                        My Requests
-                    </a>
-                </div>
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'issue_reporting:my_issues' %}" class="line-clamp-1">
-                        <i class="fas fa-exclamation-circle icon-left"></i>
-                        My Issues
-                    </a>
-                </div>
-                {% if not user.profile.externally_authenticated %}
-                <div class="nav-tab suboption">
-                    <div class="line-clamp-1 manage-user-btn clickable"
-                        data-modal-url="{% url 'manage_users:manage_modal' %}" data-username="{{user.username}}">
-                        <i class="fas fa-user-cog icon-left"></i>
-                        Settings
-                    </div>
-                </div>
-                {% endif %}
-                <div class="nav-tab suboption">
-                    <a href="{% url 'sign_out' %}" class="line-clamp-1">
-                        <i class="fas fa-sign-out-alt icon-left"></i>
-                        Sign Out
-                    </a>
-                </div>
-            </div>
-
-            <!-- Admin Tab Group -->
-            {% if user.is_staff %}
-            <div class="nav-tab group clickable" data-toggle="collapse" data-target="#admin-tabs" aria-expanded="true"
-                aria-controls="admin-tabs">
-                <div class="group-name line-clamp-1">
-                    ADMIN
-                </div>
-                <i id="admin-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
-            </div>
-            <div class="collapse show" id="admin-tabs">
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'user_requests:all_requests' %}" class="line-clamp-1">
-                        <i class="fas fa-folder-plus icon-left"></i>
-                        All Requests
-                    </a>
-                </div>
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'issue_reporting:all_issues' %}" class="line-clamp-1">
-                        <i class="fas fa-viruses icon-left"></i>
-                        All Issues
-                    </a>
-                </div>
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'manage_users:main' %}" class="line-clamp-1">
-                        <i class="fas fa-users icon-left"></i>
-                        Manage Users
-                    </a>
-                </div>
-                <div class="nav-tab suboption">
-                    <a href="{% viewport_url 'server_settings:main' %}" class="line-clamp-1">
-                        <i class="fas fa-cogs icon-left"></i>
-                        Server Settings
-                    </a>
-                </div>
-            </div>
-            {% endif %}
-
-            {% if user.is_staff and debug %}
-            <div class="nav-tab group clickable" data-toggle="collapse" data-target="#debug-tabs" aria-expanded="true"
-                aria-controls="admin-tabs">
-                <div class="group-name line-clamp-1">
-                    DEBUG
-                </div>
-                <i id="admin-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
-            </div>
-            <div class="collapse show" id="debug-tabs">
-                <div class="nav-tab suboption">
-                    <a href="{% url 'silk:summary' %}" class="line-clamp-1">
-                        <i class="fas fa-spider icon-left"></i>
-                        Performance
-                    </a>
-                </div>
-                <div class="nav-tab suboption">
-                    <a href="{% url 'admin:index' %}" class="line-clamp-1">
-                        <i class="fas fa-database icon-left"></i>
-                        Database
-                    </a>
-                </div>
-                <div class="nav-tab suboption">
-                    <a href="{% url 'django-admindocs-docroot' %}" class="line-clamp-1">
-                        <i class="fas fa-book icon-left"></i>
-                        Code Outline
-                    </a>
-                </div>
-            </div>
-            {% endif %}
+            <i class="fas fa-angle-up icon-right" title="Collapse Group"></i>
         </div>
+        <div class="collapse show" id="discover-tabs">
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'discover:all' %}" class="line-clamp-1">
+                    <i class="fas fa-compass icon-left"></i>
+                    TV & Movies
+                </a>
+                <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
+                    data-modal-url="{% url 'discover:simple_filter_modal' %}"></i>
+            </div>
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'discover:tv' %}" class="line-clamp-1">
+                    <i class="fas fa-tv icon-left"></i>
+                    Television
+                </a>
+                <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
+                    data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=tv"
+                    data-content-type="tv"></i>
+            </div>
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'discover:movies' %}" class="line-clamp-1">
+                    <i class="fas fa-video icon-left"></i>
+                    Movies
+                </a>
+                <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
+                    data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=movie"
+                    data-content-type="movie"></i>
+            </div>
+        </div>
+
+        <!-- User Tab Group -->
+        <div class="nav-tab group clickable" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true"
+            aria-controls="user-tabs">
+            <div class="group-name line-clamp-1">
+                USER
+            </div>
+            <i id="user-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
+        </div>
+        <div class="collapse show" id="user-tabs">
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'user_requests:my_requests' %}" class="line-clamp-1">
+                    <i class="fas fa-plus icon-left"></i>
+                    My Requests
+                </a>
+            </div>
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'issue_reporting:my_issues' %}" class="line-clamp-1">
+                    <i class="fas fa-exclamation-circle icon-left"></i>
+                    My Issues
+                </a>
+            </div>
+            {% if not user.profile.externally_authenticated %}
+            <div class="nav-tab suboption">
+                <div class="line-clamp-1 manage-user-btn clickable"
+                    data-modal-url="{% url 'manage_users:manage_modal' %}" data-username="{{user.username}}">
+                    <i class="fas fa-user-cog icon-left"></i>
+                    Settings
+                </div>
+            </div>
+            {% endif %}
+            <div class="nav-tab suboption">
+                <a href="{% url 'sign_out' %}" class="line-clamp-1">
+                    <i class="fas fa-sign-out-alt icon-left"></i>
+                    Sign Out
+                </a>
+            </div>
+        </div>
+
+        <!-- Admin Tab Group -->
+        {% if user.is_staff %}
+        <div class="nav-tab group clickable" data-toggle="collapse" data-target="#admin-tabs" aria-expanded="true"
+            aria-controls="admin-tabs">
+            <div class="group-name line-clamp-1">
+                ADMIN
+            </div>
+            <i id="admin-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
+        </div>
+        <div class="collapse show" id="admin-tabs">
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'user_requests:all_requests' %}" class="line-clamp-1">
+                    <i class="fas fa-folder-plus icon-left"></i>
+                    All Requests
+                </a>
+            </div>
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'issue_reporting:all_issues' %}" class="line-clamp-1">
+                    <i class="fas fa-viruses icon-left"></i>
+                    All Issues
+                </a>
+            </div>
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'manage_users:main' %}" class="line-clamp-1">
+                    <i class="fas fa-users icon-left"></i>
+                    Manage Users
+                </a>
+            </div>
+            <div class="nav-tab suboption">
+                <a href="{% viewport_url 'server_settings:main' %}" class="line-clamp-1">
+                    <i class="fas fa-cogs icon-left"></i>
+                    Server Settings
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.is_staff and debug %}
+        <div class="nav-tab group clickable" data-toggle="collapse" data-target="#debug-tabs" aria-expanded="true"
+            aria-controls="admin-tabs">
+            <div class="group-name line-clamp-1">
+                DEBUG
+            </div>
+            <i id="admin-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
+        </div>
+        <div class="collapse show" id="debug-tabs">
+            <div class="nav-tab suboption">
+                <a href="{% url 'silk:summary' %}" class="line-clamp-1">
+                    <i class="fas fa-spider icon-left"></i>
+                    Performance
+                </a>
+            </div>
+            <div class="nav-tab suboption">
+                <a href="{% url 'admin:index' %}" class="line-clamp-1">
+                    <i class="fas fa-database icon-left"></i>
+                    Database
+                </a>
+            </div>
+            <div class="nav-tab suboption">
+                <a href="{% url 'django-admindocs-docroot' %}" class="line-clamp-1">
+                    <i class="fas fa-book icon-left"></i>
+                    Code Outline
+                </a>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </nav>
