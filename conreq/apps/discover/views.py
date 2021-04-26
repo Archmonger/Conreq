@@ -35,7 +35,6 @@ def discover_all(request):
         tmdb_results = content_discovery.discover_by_filter(
             filter_name=discover_filter,
             page_number=page,
-            page_multiplier=2,
             add_values=add_values,
             **filter_params
         )["results"]
@@ -73,12 +72,11 @@ def discover_tv(request):
         tmdb_results = content_discovery.discover_tv_by_filter(
             filter_name=discover_filter,
             page_number=page,
-            page_multiplier=2,
             add_values=add_values,
             **filter_params
         )["results"]
     else:
-        tmdb_results = content_discovery.tv(page, page_multiplier=2)["results"]
+        tmdb_results = content_discovery.tv(page)["results"]
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
@@ -112,12 +110,11 @@ def discover_movies(request):
         tmdb_results = content_discovery.discover_movie_by_filter(
             filter_name=discover_filter,
             page_number=page,
-            page_multiplier=2,
             add_values=add_values,
             **filter_params
         )["results"]
     else:
-        tmdb_results = content_discovery.movies(page, page_multiplier=2)["results"]
+        tmdb_results = content_discovery.movies(page)["results"]
 
     # Set the availability for all cards
     set_many_availability(tmdb_results)
