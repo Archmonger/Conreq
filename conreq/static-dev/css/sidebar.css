@@ -44,6 +44,7 @@
 .nav-tab.group {
 	font-weight: 300;
 	color: rgba(0, 0, 0, 0.6);
+	border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .nav-tab.group.collapsed .fa-angle-up {
@@ -86,7 +87,8 @@
 	color: #fff;
 	padding: var(--navpages-btn-padding);
 	background: var(--accent-color);
-	border-radius: 10px;
+	border-radius: 0 0 10px 10px;
+	margin-bottom: 5px;
 }
 
 .sidebar-user .sidebar-profile-pic {
