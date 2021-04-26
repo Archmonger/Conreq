@@ -25,9 +25,13 @@
 	background: rgba(255, 255, 255, 0.03);
 }
 
-.suboption.active:not(.group) {
+.nav-tab.active:not(.group) {
 	background: rgba(255, 255, 255, 0.08);
 	color: #fff;
+}
+
+.nav-tab:not(.group) {
+	margin: 0 5px;
 }
 
 .nav-tab {
