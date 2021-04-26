@@ -330,6 +330,11 @@ var cull_old_posters = async function () {
 var hide_modals_and_popups = async function () {
 	$("#modal-container").modal("hide");
 	$.magnificPopup.close();
+	if (window.matchMedia("(max-width: 800px)").matches) {
+		if (!$("#sidebar").hasClass("collapsed")) {
+			$("#sidebar").addClass("collapsed");
+		}
+	}
 };
 
 $.fn.replaceWithPush = function (a) {
