@@ -1,33 +1,45 @@
-wheel
-Twisted[tls,http2]==21.2.0
-pyarr==1.0.2
-requests==2.25.1
-tmdbsimple==2.8.0
-strsim==0.0.3
+# Webserver Related
 django==3.2 
-diskcache==5.2.1
+Twisted[tls,http2]==21.2.0
 channels==3.0.3
-django-htmlmin==0.11.0
-django-solo==1.1.5
-pillow==8.2.0
-django-searchable-encrypted-fields==0.1.9
-django-cleanup==5.2.0
 daphne==3.0.2
+hypercorn[h3]==0.11.2
 whitenoise[brotli]==5.2.0
-django-project-version==0.14.9
-markdown==3.3.4
-pwned-passwords-django==1.4.1
-awesome-django-timezones==0.3.0
+requests==2.25.1
+pillow==8.2.0
+
+# Database/Storage
 pymysql==1.0.2
 mysqlclient==2.0.3
 huey==2.3.2
-django-compressor==2.4.1
-django-silk==4.1.0
+diskcache==5.2.1
 django-url-or-relative-url-field==0.1.2
+django-searchable-encrypted-fields==0.1.9
 jsonfield==3.1.0
-tzlocal==2.1
-titlecase==2.0.0
 django-model-utils==4.1.1
-hypercorn[h3]==0.11.2
+django-solo==1.1.5
+django-cleanup==5.2.0
+
+# Debug
+django-silk==4.1.0
 docutils==0.17.1
+
+# Optimization
+django-htmlmin==0.11.0
 django-compression-middleware==0.4.1
+django-compressor==2.4.1
+
+# Security
+pwned-passwords-django==1.4.1
+django-project-version==0.14.9
+
+# Timezones
+awesome-django-timezones==0.3.0
+tzlocal==2.1
+
+# Django Apps
+pyarr==1.0.2
+tmdbsimple==2.8.0
+strsim==0.0.3
+markdown==3.3.4
+titlecase==2.0.0
