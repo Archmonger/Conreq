@@ -33,14 +33,6 @@ def get_base_url():
     return base_url
 
 
-webserver = os.environ.get("WEBSERVER", "asgi")
-
-
-def get_webserver():
-    """Obtains the base URL from the environment variables"""
-    return webserver.upper()
-
-
 def str_to_bool(string, default_value=True):
     if isinstance(string, str):
         if string.lower() == "true":
