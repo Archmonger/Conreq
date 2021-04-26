@@ -411,17 +411,17 @@
 
     <!-- Artwork -->
     {% if content.images.backdrops %}
-    <div class="more-info-images carousel">
+    <div class="carousel auto-construct">
         <div class="bold section-title"> Artwork and Images
-            <div class="artwork-carousel-controls carousel-controls tns-controls">
+            <div class="carousel-controls tns-controls">
                 <div class="carousel-previous"><i id="discover-fa" class="fas fa-angle-left"></i>
                 </div>
                 <div class="carousel-next"><i id="discover-fa" class="fas fa-angle-right"></i>
                 </div>
             </div>
         </div>
-        <div class="artwork-outer-container carousel-outer-container">
-            <div class="artwork-inner-container carousel-inner-container">
+        <div class="carousel-outer-container">
+            <div class="carousel-inner-container">
                 {% for image in content.images.backdrops %}
                 <div class="artwork-container-wrapper">
                     {% include "cards/artwork.html" %}

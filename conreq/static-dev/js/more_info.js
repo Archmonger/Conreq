@@ -1,7 +1,6 @@
 var create_all_carousels = async function () {
 	create_review_carousel();
 	create_video_carousel();
-	create_image_carousel();
 	viewport_carousel_constructor();
 };
 
@@ -30,6 +29,21 @@ var viewport_carousel_constructor = async function () {
 				})
 			);
 			current_carousel.addClass("constructed");
+
+			// Popup modal
+			let artwork = current_carousel.find(".artwork-container");
+			if (artwork.length) {
+				artwork.magnificPopup({
+					delegate: "a",
+					type: "image",
+					mainClass: "mfp-no-margins", // class to remove default margin from left and right side
+					gallery: {
+						enabled: true,
+						navigateByImgClick: true,
+						preload: [1, 1], // Will preload 1 before and 1 after the current image
+					},
+				});
+			}
 		}
 	);
 };
@@ -106,39 +120,6 @@ var create_video_carousel = async function () {
 			nav: false,
 			slideBy: "page",
 			edgePadding: 20,
-		});
-	}
-};
-
-var images_carousel = null;
-var create_image_carousel = async function () {
-	if ($(".artwork-inner-container").length) {
-		images_carousel = tns({
-			container: ".artwork-inner-container",
-			controlsContainer: ".artwork-carousel-controls",
-			swipeAngle: 60,
-			loop: false,
-			items: 3,
-			autoWidth: true,
-			speed: 300,
-			mouseDrag: true,
-			gutter: 10,
-			nav: false,
-			slideBy: "page",
-			edgePadding: 20,
-		});
-
-		$(document).ready(async function () {
-			$(".artwork-container").magnificPopup({
-				delegate: "a",
-				type: "image",
-				mainClass: "mfp-no-margins", // class to remove default margin from left and right side
-				gallery: {
-					enabled: true,
-					navigateByImgClick: true,
-					preload: [1, 1], // Will preload 1 before and 1 after the current image
-				},
-			});
 		});
 	}
 };

@@ -155,10 +155,6 @@ $(document).ready(async function () {
 			videos_carousel.destroy();
 			videos_carousel = null;
 		}
-		if (images_carousel != null) {
-			images_carousel.destroy();
-			images_carousel = null;
-		}
 		viewport_carousel_destructor();
 	});
 
