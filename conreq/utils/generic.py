@@ -1,5 +1,6 @@
 """Generic functions to be used anywhere. All functions only have stdlib dependencies."""
 import os
+import pkgutil
 from re import sub as substitution
 
 
@@ -51,3 +52,8 @@ def get_bool_from_env(name, default_value):
 def get_debug_from_env():
     """Shortcut to obtain DEBUG from env variables"""
     return get_bool_from_env("DEBUG", True)
+
+
+def list_modules(path, prefix=""):
+    """Returns all modules in a path"""
+    return [name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)]

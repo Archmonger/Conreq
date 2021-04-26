@@ -17,15 +17,21 @@ import secrets
 from django.core.management.utils import get_random_secret_key
 from tzlocal import get_localzone
 
-from conreq.utils.generic import get_base_url, get_bool_from_env, get_debug_from_env
+from conreq.utils.generic import (
+    get_base_url,
+    get_bool_from_env,
+    get_debug_from_env,
+    list_modules,
+)
 
 # Environment and Project Variables
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
+APPS_DIR = os.path.join(BASE_DIR, "conreq", "apps")
 DEBUG = get_debug_from_env()
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 USE_SSL = get_bool_from_env("USE_SSL", False)
-DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
 X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 BASE_URL = get_base_url()
 
@@ -247,16 +253,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
-    "conreq.apps.base",
-    "conreq.apps.discover",
-    "conreq.apps.more_info",
-    "conreq.apps.search",
-    "conreq.apps.server_settings",
-    "conreq.apps.manage_users",
-    "conreq.apps.sign_up",
-    "conreq.apps.user_requests",
-    "conreq.apps.issue_reporting",
-    "conreq.apps.pwa",
+    *list_modules(APPS_DIR, prefix="conreq.apps."),
     "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
