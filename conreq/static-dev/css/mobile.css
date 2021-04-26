@@ -155,30 +155,14 @@
 	.more-info-poster-container img {
 		height: calc(55vw * 1.5);
 	}
-	.more-info-topbar .series-modal-btn,
-	.more-info-topbar .request-btn {
-		position: fixed;
-		bottom: 20px;
-		right: 20px;
-		z-index: 97;
-		border-radius: 50%;
-		width: 45px;
-		height: 45px;
-	}
-	.more-info-topbar .report-modal-btn,
-	.more-info-topbar .report-selection-modal-btn {
-		position: absolute;
-		top: 15px;
-		right: 15px;
-		z-index: 97;
-		padding: 0;
-		width: 40px;
-	}
 	.more-info-topbar .standard-btn.available {
 		display: none;
 	}
 	.tns-controls {
 		display: none;
+	}
+	.more-info-overview {
+		margin-top: 15px;
 	}
 	.main-title {
 		margin-top: 25px;
@@ -186,9 +170,13 @@
 	}
 	.main-rating {
 		font-size: 16px;
+		display: block;
+		width: -webkit-fit-content;
+		width: -moz-fit-content;
+		width: fit-content;
+		margin-bottom: 10px;
 	}
 	.more-info-main-info {
-		height: 0;
 		margin-top: 0;
 	}
 	.more-info {
