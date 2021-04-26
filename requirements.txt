@@ -29,3 +29,4 @@ tzlocal==2.1
 titlecase==2.0.0
 django-model-utils==4.1.1
 hypercorn[h3]==0.11.2
+docutils==0.17.1

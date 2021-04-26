@@ -51,6 +51,7 @@ if DEBUG:
     # Performance analysis tool
     urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))
     # Ability to edit the DB from admin/
+    urlpatterns.append(path("admin/docs/", include("django.contrib.admindocs.urls")))
     urlpatterns.append(path("admin/", admin.site.urls))
 
 
