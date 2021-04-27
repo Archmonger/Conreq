@@ -93,13 +93,12 @@
                         value="{{ server_settings.sonarr_api_key }}" />
                 </div>
             </div>
+            {% if server_settings.sonarr_enabled %}
+            <div class="component-loader" data-url="{% url 'server_settings:sonarr_settings' %}">
+                Loading...
+            </div>
+            {% endif %}
         </div>
-
-        {% if server_settings.sonarr_enabled %}
-        <div class="component-loader" data-url="{% url 'server_settings:sonarr_settings' %}">
-            Loading...
-        </div>
-        {% endif %}
 
         <div class="settings-input-group">
             <div class="settings-item-group toggler">
@@ -142,13 +141,13 @@
                         value="{{ server_settings.radarr_api_key }}" />
                 </div>
             </div>
-        </div>
 
-        {% if server_settings.radarr_enabled %}
-        <div class="component-loader" data-url="{% url 'server_settings:radarr_settings' %}">
-            Loading...
+            {% if server_settings.radarr_enabled %}
+            <div class="component-loader" data-url="{% url 'server_settings:radarr_settings' %}">
+                Loading...
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
 
         <div class="settings-input-group">
             <div class="settings-item-group toggler">
