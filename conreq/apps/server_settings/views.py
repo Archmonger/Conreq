@@ -19,55 +19,24 @@ _logger = log.get_logger(__name__)
 @performance_metrics()
 def server_settings(request):
     template = loader.get_template("viewport/server_settings.html")
+    context = {"os_platform": platform()}
+    return HttpResponse(template.render(context, request))
+
+
+def radarr_settings(request):
+    template = loader.get_template("viewport/components/server_settings_radarr.html")
 
     # Database values
     conreq_config = ConreqConfig.get_solo()
 
     # Obtain sonarr and radarr information
     content_manger = ContentManager()
-    sonarr_quality_profiles = []
-    current_sonarr_anime_quality_profile = ""
-    current_sonarr_tv_quality_profile = ""
-    sonarr_folders = []
-    current_sonarr_anime_folder = ""
-    current_sonarr_tv_folder = ""
     radarr_quality_profiles = []
     current_radarr_anime_quality_profile = ""
     current_radarr_movies_quality_profile = ""
     radarr_folders = []
     current_radarr_anime_folder = ""
     current_radarr_movies_folder = ""
-
-    if conreq_config.sonarr_enabled:
-        # Sonarr Quality Profiles
-        try:
-            for profile in content_manger.sonarr_quality_profiles():
-                # Current anime profile
-                if conreq_config.sonarr_anime_quality_profile == profile["id"]:
-                    current_sonarr_anime_quality_profile = profile["name"]
-                # Current TV profile
-                if conreq_config.sonarr_tv_quality_profile == profile["id"]:
-                    current_sonarr_tv_quality_profile = profile["name"]
-                # List of all dropdown entries
-                sonarr_quality_profiles.append(
-                    {"id": profile["id"], "label": profile["name"]}
-                )
-        except:
-            log.handler("Failed to obtain Sonarr Quality Profiles!", log.ERROR, _logger)
-
-        # Sonarr Folder Paths
-        try:
-            for path in content_manger.sonarr_root_dirs():
-                # Current anime dirs
-                if conreq_config.sonarr_anime_folder == path["id"]:
-                    current_sonarr_anime_folder = path["path"]
-                # Current TV dirs
-                if conreq_config.sonarr_tv_folder == path["id"]:
-                    current_sonarr_tv_folder = path["path"]
-                # List of all dropdown entries
-                sonarr_folders.append({"id": path["id"], "label": path["path"]})
-        except:
-            log.handler("Failed to obtain Sonarr Folder Paths!", log.ERROR, _logger)
 
     if conreq_config.radarr_enabled:
         # Radarr Quality Profiles
@@ -101,19 +70,70 @@ def server_settings(request):
             log.handler("Failed to obtain Radarr Folder Paths!", log.ERROR, _logger)
 
     context = {
-        "os_platform": platform(),
-        "sonarr_quality_profiles": sonarr_quality_profiles,
-        "current_sonarr_anime_quality_profile": current_sonarr_anime_quality_profile,
-        "current_sonarr_tv_quality_profile": current_sonarr_tv_quality_profile,
-        "sonarr_folders": sonarr_folders,
-        "current_sonarr_anime_folder": current_sonarr_anime_folder,
-        "current_sonarr_tv_folder": current_sonarr_tv_folder,
         "radarr_quality_profiles": radarr_quality_profiles,
         "current_radarr_anime_quality_profile": current_radarr_anime_quality_profile,
         "current_radarr_movies_quality_profile": current_radarr_movies_quality_profile,
         "radarr_folders": radarr_folders,
         "current_radarr_anime_folder": current_radarr_anime_folder,
         "current_radarr_movies_folder": current_radarr_movies_folder,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def sonarr_settings(request):
+    template = loader.get_template("viewport/components/server_settings_sonarr.html")
+
+    # Database values
+    conreq_config = ConreqConfig.get_solo()
+
+    # Obtain sonarr and radarr information
+    content_manger = ContentManager()
+    sonarr_quality_profiles = []
+    current_sonarr_anime_quality_profile = ""
+    current_sonarr_tv_quality_profile = ""
+    sonarr_folders = []
+    current_sonarr_anime_folder = ""
+    current_sonarr_tv_folder = ""
+
+    if conreq_config.sonarr_enabled:
+        # Sonarr Quality Profiles
+        try:
+            for profile in content_manger.sonarr_quality_profiles():
+                # Current anime profile
+                if conreq_config.sonarr_anime_quality_profile == profile["id"]:
+                    current_sonarr_anime_quality_profile = profile["name"]
+                # Current TV profile
+                if conreq_config.sonarr_tv_quality_profile == profile["id"]:
+                    current_sonarr_tv_quality_profile = profile["name"]
+                # List of all dropdown entries
+                sonarr_quality_profiles.append(
+                    {"id": profile["id"], "label": profile["name"]}
+                )
+        except:
+            log.handler("Failed to obtain Sonarr Quality Profiles!", log.ERROR, _logger)
+
+        # Sonarr Folder Paths
+        try:
+            for path in content_manger.sonarr_root_dirs():
+                # Current anime dirs
+                if conreq_config.sonarr_anime_folder == path["id"]:
+                    current_sonarr_anime_folder = path["path"]
+                # Current TV dirs
+                if conreq_config.sonarr_tv_folder == path["id"]:
+                    current_sonarr_tv_folder = path["path"]
+                # List of all dropdown entries
+                sonarr_folders.append({"id": path["id"], "label": path["path"]})
+        except:
+            log.handler("Failed to obtain Sonarr Folder Paths!", log.ERROR, _logger)
+
+    context = {
+        "sonarr_quality_profiles": sonarr_quality_profiles,
+        "current_sonarr_anime_quality_profile": current_sonarr_anime_quality_profile,
+        "current_sonarr_tv_quality_profile": current_sonarr_tv_quality_profile,
+        "sonarr_folders": sonarr_folders,
+        "current_sonarr_anime_folder": current_sonarr_anime_folder,
+        "current_sonarr_tv_folder": current_sonarr_tv_folder,
     }
 
     return HttpResponse(template.render(context, request))
