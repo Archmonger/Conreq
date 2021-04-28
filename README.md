@@ -31,6 +31,7 @@ DB_ENGINE = "MYSQL"                       # default: SQLITE3
 MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
 
 # Security
+SSL_SECURITY = "True"                     # default: False (True enables advanced SSL security features)
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (False disables X-Frame-Options)
 ALLOWED_HOST = "192.168.0.199"            # default: * (Allows all hosts)
 DEBUG = False                             # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
