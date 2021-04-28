@@ -215,33 +215,26 @@ with open(SETTINGS_FILE, "r+") as settings_file:
     # Read the file
     settings = json.load(settings_file)
     # Obtain the DB Encryption Key from the file
-    if (
-        settings.__contains__("DB_ENCRYPTION_KEY")
-        and settings["DB_ENCRYPTION_KEY"] is not None
-        and settings["DB_ENCRYPTION_KEY"] != ""
-    ):
+    if settings.get("DB_ENCRYPTION_KEY"):
         FIELD_ENCRYPTION_KEYS = [settings["DB_ENCRYPTION_KEY"]]
-    # DB Encryption Key wasn't found, a new one is needed
     else:
+        # DB Encryption Key wasn't found, a new one is needed
         FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
         settings["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS[0]
         UPDATE_SETTINGS_FILE = True
     # Obtain the Secret Key from the file
-    if (
-        settings.__contains__("SECRET_KEY")
-        and settings["SECRET_KEY"] is not None
-        and settings["SECRET_KEY"] != ""
-    ):
+    if settings.get("SECRET_KEY"):
         SECRET_KEY = settings["SECRET_KEY"]
-    # New secret key is needed
     else:
+        # New secret key is needed
         SECRET_KEY = get_random_secret_key()
         settings["SECRET_KEY"] = SECRET_KEY
         UPDATE_SETTINGS_FILE = True
 # Save settings.json if needed
 if UPDATE_SETTINGS_FILE:
     with open(SETTINGS_FILE, "w") as settings_file:
-        print("Updating settings.json to ", settings)
+        if DEBUG:
+            print("Updating settings.json to ", settings)
         settings_file.write(json.dumps(settings))
 
 
