@@ -1,3 +1,6 @@
+# Python utils
+wheel
+
 # Webserver Related
 django==3.2 
 Twisted[tls,http2]==21.2.0
