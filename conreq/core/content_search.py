@@ -8,7 +8,7 @@ from conreq.utils import cache, log
 _logger = log.get_logger(__name__)
 
 # Days, Hours, Minutes, Seconds
-SEARCH_CACHE_TIMEOUT = 60 * 60
+SEARCH_CACHE_TIMEOUT = 3 * 60 * 60
 
 
 class Search(Base):
@@ -29,8 +29,16 @@ class Search(Base):
             results = self._remove_bad_content_types(
                 self._set_content_attributes(
                     None,
-                    tmdb.Search().multi(
-                        page=page_number, query=query, language=LANGUAGE
+                    cache.handler(
+                        "search all",
+                        page_key=page_number,
+                        function=tmdb.Search().multi,
+                        cache_duration=SEARCH_CACHE_TIMEOUT,
+                        kwargs={
+                            "page": page_number,
+                            "query": query,
+                            "language": LANGUAGE,
+                        },
                     ),
                 )
             )
@@ -54,7 +62,17 @@ class Search(Base):
         try:
             results = self._set_content_attributes(
                 "tv",
-                tmdb.Search().tv(page=page_number, query=query, language=LANGUAGE),
+                cache.handler(
+                    "search tv",
+                    page_key=page_number,
+                    function=tmdb.Search().tv,
+                    cache_duration=SEARCH_CACHE_TIMEOUT,
+                    kwargs={
+                        "page": page_number,
+                        "query": query,
+                        "language": LANGUAGE,
+                    },
+                ),
             )
             return results
 
@@ -75,7 +93,17 @@ class Search(Base):
         try:
             results = self._set_content_attributes(
                 "movie",
-                tmdb.Search().movie(page=page_number, query=query, language=LANGUAGE),
+                cache.handler(
+                    "search movie",
+                    page_key=page_number,
+                    function=tmdb.Search().movie,
+                    cache_duration=SEARCH_CACHE_TIMEOUT,
+                    kwargs={
+                        "page": page_number,
+                        "query": query,
+                        "language": LANGUAGE,
+                    },
+                ),
             )
             return results
 
