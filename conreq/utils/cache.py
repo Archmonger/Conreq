@@ -126,12 +126,12 @@ def handler(
     """Handles caching for results and data.
 
     Args:
-        cache: Name of the cache to use.
-        page_key: The page name or page number to use as a key value.
-        function: The function to be executed if cached values are expired.
-            If no function is provided, whatever was stored in cache is returned.
-            If a dict was provided, get and save the values to cache using get_many and set_many. See __multi_execution() for more details.
-        force_update_cache: Forces execution of function, regardless if values are expired or not.
+        cache_name: Name prepended to cache get/set calls.
+        page_key: A value to use as a page key.
+        function: The function(s) to be executed (if cached values are expired). Can be a single function or a dict of functions.
+            If no function is provided, whatever was stored in cache is always returned.
+            If a dict was provided, get and save the values to cache using get_many and set_many. See doctstring of __multi_execution() for details on what the dict should look like.
+        force_update_cache: Forces execution of function, regardless if value is expired or not. Does not work with multi execution.
         cache_duration: Duration in seconds that the cached value should be valid for.
         args: A list of arguements to pass into function.
         kwargs: A dictionary of keyworded arguements to pass into function.
@@ -200,9 +200,20 @@ def handler(
                 log.ERROR,
                 _logger,
             )
-        else:
+        elif hasattr(function, "__name__"):
             log.handler(
                 "Function " + function.__name__ + " failed to execute!",
+                log.ERROR,
+                _logger,
+            )
+        else:
+            log.handler(
+                "Cache handle has failed! Function: "
+                + str(function)
+                + " Cache Name: "
+                + str(cache_name)
+                + " Page Key: "
+                + str(page_key),
                 log.ERROR,
                 _logger,
             )
