@@ -140,7 +140,7 @@ $(document).ready(async function () {
 	$(".viewport-container-top").on("loaded", async function () {
 		// Uncollapse quick info if the height is small
 		if ($(".more-info-quick-info.collapse").prop("scrollHeight") <= 250) {
-			$(".more-info-quick-info.collapse").collapse("toggle");
+			$(".more-info-quick-info.collapse").removeClass("collapse");
 			$(".quick-info-read-more-btn").remove();
 		}
 	});
