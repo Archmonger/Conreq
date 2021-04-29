@@ -15,6 +15,7 @@ import os
 import secrets
 import sys
 
+from django.core.cache import cache
 from django.core.management.utils import get_random_secret_key
 from tzlocal import get_localzone
 
@@ -208,7 +209,7 @@ if SSL_SECURITY:
 
 # External "settings.json" file
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
-UPDATE_SETTINGS_FILE = False
+ORIGINAL_SETTINGS = None
 if not os.path.exists(SETTINGS_FILE):
     # Create the file if it doesn't exist
     with open(SETTINGS_FILE, "w") as settings_file:
@@ -216,6 +217,7 @@ if not os.path.exists(SETTINGS_FILE):
 with open(SETTINGS_FILE, "r+") as settings_file:
     # Read the file
     settings = json.load(settings_file)
+    ORIGINAL_SETTINGS = settings.copy()
     # Obtain the DB Encryption Key from the file
     if settings.get("DB_ENCRYPTION_KEY"):
         FIELD_ENCRYPTION_KEYS = [settings["DB_ENCRYPTION_KEY"]]
@@ -223,7 +225,6 @@ with open(SETTINGS_FILE, "r+") as settings_file:
         # DB Encryption Key wasn't found, a new one is needed
         FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
         settings["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS[0]
-        UPDATE_SETTINGS_FILE = True
     # Obtain the Secret Key from the file
     if settings.get("SECRET_KEY"):
         SECRET_KEY = settings["SECRET_KEY"]
@@ -231,9 +232,13 @@ with open(SETTINGS_FILE, "r+") as settings_file:
         # New secret key is needed
         SECRET_KEY = get_random_secret_key()
         settings["SECRET_KEY"] = SECRET_KEY
-        UPDATE_SETTINGS_FILE = True
+    # Clear cache if Conreq has been updated
+    if settings.get("CONREQ_VERSION") != DJVERSION_VERSION:
+        settings["CONREQ_VERSION"] = DJVERSION_VERSION
+        if not DEBUG:
+            cache.clear()
 # Save settings.json if needed
-if UPDATE_SETTINGS_FILE:
+if ORIGINAL_SETTINGS != settings:
     with open(SETTINGS_FILE, "w") as settings_file:
         if DEBUG:
             print("Updating settings.json to ", settings)
