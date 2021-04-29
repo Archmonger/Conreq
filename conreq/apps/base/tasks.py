@@ -1,6 +1,6 @@
 import os
 
-from conreq.core.content_manager import ArrManager
+from conreq.core.arrs.sonarr_radarr import ArrManager
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task, db_task
 

@@ -1,6 +1,6 @@
 from conreq.apps.issue_reporting.models import ReportedIssue
 from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.content_manager import ArrManager
+from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.utils import log
 
 _logger = log.get_logger(__name__)

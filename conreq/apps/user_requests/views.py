@@ -2,7 +2,7 @@ import json
 
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.content_manager import ArrManager
+from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.utils import log
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required

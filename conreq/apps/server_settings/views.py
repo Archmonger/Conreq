@@ -3,7 +3,7 @@ import secrets
 from platform import platform
 
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core.content_manager import ArrManager
+from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.utils import log
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test

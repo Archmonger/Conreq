@@ -2,7 +2,7 @@
 from conreq.apps.base.tasks import background_task
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.content_manager import ArrManager
+from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.utils import log
 from conreq.utils.views import (
     add_unique_to_db,
