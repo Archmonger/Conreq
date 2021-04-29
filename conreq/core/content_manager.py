@@ -578,7 +578,7 @@ class ContentManager:
             )
 
     def __season_episode_availability(self, series):
-        """Multithreadable part of season_episode_availability()"""
+        """Checks the availability of one item. For use within season_episode_availability()"""
         # Obtain the episodes
         episodes = self.__sonarr.get_episodes_by_series_id(series["id"])
         for season in series["seasons"]:
@@ -613,7 +613,7 @@ class ContentManager:
             )
 
     def __check_availability(self, content):
-        """Multithreadable part of check_availability()"""
+        """Checks the availability of one item. For use within check_availability()"""
         #####################
         ### "Downloading" ###
         #####################
