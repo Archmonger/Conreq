@@ -57,7 +57,7 @@ COMPRESS_FILTERS = {
     "css": ["compressor.filters.cssmin.rCSSMinFilter"],
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
-HUEY_STORAGE = os.path.join(DATA_DIR, "background_tasks.sqlite3")
+HUEY_STORAGE = os.path.join(DATA_DIR, "bg_tasks.sqlite3")
 HUEY = {
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_STORAGE,
