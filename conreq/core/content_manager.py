@@ -28,6 +28,10 @@ class ContentManager:
             self.conreq_config.radarr_url, self.conreq_config.radarr_api_key
         )
 
+        # Set values if DB still contains default values
+        self.check_sonarr_defaults()
+        self.check_radarr_defaults()
+
     def get(self, obtain_season_info=False, force_update_cache=False, **kwargs):
         """Gets content information and computes the availability of movies, series, seasons, and episodes within the Sonarr or Radarr collection.
 
@@ -432,6 +436,70 @@ class ContentManager:
 
         # Return merged delete and request response
         return response
+
+    def check_sonarr_defaults(self):
+        """Will configure default root dirs and quality profiles (if unset)"""
+        if self.conreq_config.sonarr_enabled:
+            sonarr_tv_folder = self.conreq_config.sonarr_tv_folder
+            sonarr_anime_folder = self.conreq_config.sonarr_anime_folder
+            sonarr_tv_quality_profile = self.conreq_config.sonarr_tv_quality_profile
+            sonarr_anime_quality_profile = (
+                self.conreq_config.sonarr_anime_quality_profile
+            )
+
+            # Root dirs
+            if not sonarr_tv_folder or not sonarr_anime_folder:
+                default_dir = self.sonarr_root_dirs()[0]["id"]
+            if not sonarr_tv_folder:
+                self.conreq_config.sonarr_tv_folder = default_dir
+            if not sonarr_anime_folder:
+                self.conreq_config.sonarr_anime_folder = default_dir
+
+            # Qualtiy Profiles
+            if not sonarr_tv_quality_profile or not sonarr_anime_quality_profile:
+                default_profile = self.sonarr_quality_profiles()[0]["id"]
+            if not sonarr_tv_quality_profile:
+                self.conreq_config.sonarr_tv_quality_profile = default_profile
+            if not sonarr_anime_quality_profile:
+                self.conreq_config.sonarr_anime_quality_profile = default_profile
+
+            # Save to DB
+            if self.conreq_config.tracker.changed():
+                self.conreq_config.clean_fields()
+                self.conreq_config.save()
+
+    def check_radarr_defaults(self):
+        """Will configure default root dirs and quality profiles (if unset)"""
+        if self.conreq_config.radarr_enabled:
+            radarr_movies_folder = self.conreq_config.radarr_movies_folder
+            radarr_anime_folder = self.conreq_config.radarr_anime_folder
+            radarr_movies_quality_profile = (
+                self.conreq_config.radarr_movies_quality_profile
+            )
+            radarr_anime_quality_profile = (
+                self.conreq_config.radarr_anime_quality_profile
+            )
+
+            # Root dirs
+            if not radarr_movies_folder or not radarr_anime_folder:
+                default_dir = self.radarr_root_dirs()[0]["id"]
+            if not radarr_movies_folder:
+                self.conreq_config.radarr_movies_folder = default_dir
+            if not radarr_anime_folder:
+                self.conreq_config.radarr_anime_folder = default_dir
+
+            # Qualtiy Profiles
+            if not radarr_movies_quality_profile or not radarr_anime_quality_profile:
+                default_profile = self.radarr_quality_profiles()[0]["id"]
+            if not radarr_movies_quality_profile:
+                self.conreq_config.radarr_movies_quality_profile = default_profile
+            if not radarr_anime_quality_profile:
+                self.conreq_config.radarr_anime_quality_profile = default_profile
+
+            # Save to DB
+            if self.conreq_config.tracker.changed():
+                self.conreq_config.clean_fields()
+                self.conreq_config.save()
 
     def sonarr_root_dirs(self):
         """Returns the root dirs available within Sonarr"""
