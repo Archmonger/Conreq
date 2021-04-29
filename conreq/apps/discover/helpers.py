@@ -1,4 +1,4 @@
-from conreq.core.content_discovery.tmdb_preset_filters import (
+from conreq.core.tmdb.preset_filters import (
     anime_only_values,
     no_anime_values,
 )

@@ -3,7 +3,7 @@ import tmdbsimple as tmdb
 from conreq.utils import cache, log
 from conreq.utils.multiprocessing import ReturnThread, threaded_execution
 
-from .tmdb_base import (
+from .base import (
     COLLECTION_CACHE_TIMEOUT,
     GET_BY_TMDB_ID_CACHE_TIMEOUT,
     GET_BY_TVDB_ID_CACHE_TIMEOUT,
@@ -17,7 +17,7 @@ from .tmdb_base import (
     Base,
     _timezone,
 )
-from .tmdb_preset_filters import movie_filters, tv_filters
+from .preset_filters import movie_filters, tv_filters
 
 _logger = log.get_logger(__name__)
 

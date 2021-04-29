@@ -2,7 +2,7 @@
 
 import tmdbsimple as tmdb
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core.content_discovery.tmdb_base import Base, LANGUAGE
+from conreq.core.tmdb.base import Base, LANGUAGE
 from conreq.utils import cache, log
 
 _logger = log.get_logger(__name__)

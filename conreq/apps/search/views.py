@@ -1,5 +1,5 @@
-from conreq.core.content_discovery.tmdb import ContentDiscovery
-from conreq.core.content_search import Search
+from conreq.core.tmdb.discovery import ContentDiscovery
+from conreq.core.tmdb.search import Search
 from conreq.utils.app_views import set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required

@@ -1,5 +1,5 @@
 """Helpers for Search"""
-from conreq.core.content_discovery.tmdb import ContentDiscovery
+from conreq.core.tmdb.discovery import ContentDiscovery
 
 
 def convert_card_to_tmdb(index, all_results):

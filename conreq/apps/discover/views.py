@@ -1,5 +1,5 @@
-from conreq.core.content_discovery.tmdb import ContentDiscovery
-from conreq.core.content_discovery.tmdb_preset_filters import (
+from conreq.core.tmdb.discovery import ContentDiscovery
+from conreq.core.tmdb.preset_filters import (
     combined_filters,
     movie_filters,
     tv_filters,
@@ -36,7 +36,7 @@ def discover_all(request):
             filter_name=discover_filter,
             page_number=page,
             add_values=add_values,
-            **filter_params
+            **filter_params,
         )["results"]
     else:
         tmdb_results = content_discovery.all(page)["results"]
@@ -73,7 +73,7 @@ def discover_tv(request):
             filter_name=discover_filter,
             page_number=page,
             add_values=add_values,
-            **filter_params
+            **filter_params,
         )["results"]
     else:
         tmdb_results = content_discovery.tv(page)["results"]
@@ -111,7 +111,7 @@ def discover_movies(request):
             filter_name=discover_filter,
             page_number=page,
             add_values=add_values,
-            **filter_params
+            **filter_params,
         )["results"]
     else:
         tmdb_results = content_discovery.movies(page)["results"]
