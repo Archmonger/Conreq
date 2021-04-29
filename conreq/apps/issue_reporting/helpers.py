@@ -1,6 +1,6 @@
 from conreq.apps.issue_reporting.models import ReportedIssue
 from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.content_manager import ContentManager
+from conreq.core.content_manager import ArrManager
 from conreq.utils import log
 
 _logger = log.get_logger(__name__)
@@ -30,7 +30,7 @@ ISSUE_LIST = [
 def generate_issue_cards(reported_issues):
     """Retruns a list of cards"""
     content_discovery = TmdbDiscovery()
-    content_manager = ContentManager()
+    content_manager = ArrManager()
     all_cards = []
     for entry in reported_issues.values(
         "id",

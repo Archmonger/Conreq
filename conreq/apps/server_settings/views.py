@@ -3,7 +3,7 @@ import secrets
 from platform import platform
 
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core.content_manager import ContentManager
+from conreq.core.content_manager import ArrManager
 from conreq.utils import log
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -30,7 +30,7 @@ def radarr_settings(request):
     conreq_config = ConreqConfig.get_solo()
 
     # Obtain sonarr and radarr information
-    content_manger = ContentManager()
+    content_manger = ArrManager()
     radarr_quality_profiles = []
     current_radarr_anime_quality_profile = ""
     current_radarr_movies_quality_profile = ""
@@ -88,7 +88,7 @@ def sonarr_settings(request):
     conreq_config = ConreqConfig.get_solo()
 
     # Obtain sonarr and radarr information
-    content_manger = ContentManager()
+    content_manger = ArrManager()
     sonarr_quality_profiles = []
     current_sonarr_anime_quality_profile = ""
     current_sonarr_tv_quality_profile = ""

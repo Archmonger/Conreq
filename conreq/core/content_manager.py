@@ -13,7 +13,7 @@ _logger = log.get_logger(__name__)
 ARR_LIBRARY_CACHE_TIMEOUT = 24 * 60 * 60
 
 
-class ContentManager:
+class ArrManager:
     """Adds and removes content from Sonarr and Radarr, and can return the request state."""
 
     def __init__(self):

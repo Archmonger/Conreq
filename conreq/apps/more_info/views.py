@@ -1,6 +1,6 @@
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.content_manager import ContentManager
+from conreq.core.content_manager import ArrManager
 from conreq.utils import log
 from conreq.utils.views import (
     obtain_sonarr_parameters,
@@ -126,7 +126,7 @@ def person(request):
 @performance_metrics()
 def series_modal(request):
     content_discovery = TmdbDiscovery()
-    content_manager = ContentManager()
+    content_manager = ArrManager()
     report_modal = str_to_bool(request.GET.get("report_modal", "false"))
 
     # Get the ID from the URL

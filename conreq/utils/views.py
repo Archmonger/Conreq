@@ -3,7 +3,7 @@ from threading import Thread
 
 from conreq.apps.server_settings.models import ConreqConfig
 from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.content_manager import ContentManager
+from conreq.core.content_manager import ArrManager
 from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
 
@@ -61,7 +61,7 @@ def set_many_availability(results):
 
 def set_single_availability(card):
     """Sets the availabily on a single card."""
-    content_manager = ContentManager()
+    content_manager = ArrManager()
     content_discovery = TmdbDiscovery()
     try:
         # Compute the availability of a Sonarr card

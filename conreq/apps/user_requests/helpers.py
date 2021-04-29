@@ -2,7 +2,7 @@
 from conreq.apps.base.tasks import background_task
 from conreq.apps.user_requests.models import UserRequest
 from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.content_manager import ContentManager
+from conreq.core.content_manager import ArrManager
 from conreq.utils import log
 from conreq.utils.views import (
     add_unique_to_db,
@@ -189,7 +189,7 @@ def __generate_request_card(entry, content_discovery, content_manager):
 def generate_requests_cards(user_requests):
     """Takes in a DB query containing requests, and pops out a list of their current request status"""
     content_discovery = TmdbDiscovery()
-    content_manager = ContentManager()
+    content_manager = ArrManager()
     all_cards = []
     function_list = []
     for request in user_requests:
