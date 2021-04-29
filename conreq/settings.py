@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import json
 import os
 import secrets
+import sys
 
 from django.core.management.utils import get_random_secret_key
 from tzlocal import get_localzone
@@ -239,6 +240,12 @@ if UPDATE_SETTINGS_FILE:
         settings_file.write(json.dumps(settings))
 
 
+# User Installed Apps
+if not os.path.exists(APPS_DIR):
+    os.makedirs(APPS_DIR)
+sys.path.insert(1, APPS_DIR)
+
+
 # Application Definitions
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -258,6 +265,7 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
+    *list_modules(APPS_DIR),  # User Installed Apps
 ]
 MIDDLEWARE = [
     "compression_middleware.middleware.CompressionMiddleware",
@@ -283,15 +291,6 @@ if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
     MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
-
-
-# Plugins
-APPS_MODULE_FILE = os.path.join(APPS_DIR, "__init__.py")
-if not os.path.exists(APPS_DIR):
-    os.makedirs(APPS_DIR)
-if not os.path.exists(APPS_MODULE_FILE):
-    with open(APPS_MODULE_FILE, "w"):
-        pass
 
 
 # URL Routing and Page Rendering
