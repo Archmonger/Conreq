@@ -2,7 +2,7 @@
 
 import tmdbsimple as tmdb
 from conreq.apps.server_settings.models import ConreqConfig
-from conreq.core.tmdb.base import Base, LANGUAGE
+from conreq.core.tmdb.base import TmdbBase, LANGUAGE
 from conreq.utils import cache, log
 
 _logger = log.get_logger(__name__)
@@ -11,7 +11,7 @@ _logger = log.get_logger(__name__)
 SEARCH_CACHE_TIMEOUT = 3 * 60 * 60
 
 
-class Search(Base):
+class TmdbSearch(TmdbBase):
     """Searches for a given query"""
 
     def __init__(self):

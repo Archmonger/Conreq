@@ -1,5 +1,5 @@
-from conreq.core.tmdb.discovery import ContentDiscovery
-from conreq.core.tmdb.search import Search
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.tmdb.search import TmdbSearch
 from conreq.utils.views import set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
@@ -12,8 +12,8 @@ from django.views.decorators.cache import cache_page
 @login_required
 @performance_metrics()
 def search(request):
-    content_discovery = ContentDiscovery()
-    searcher = Search()
+    content_discovery = TmdbDiscovery()
+    searcher = TmdbSearch()
 
     # Get the ID from the URL
     query = request.GET.get("query", "")

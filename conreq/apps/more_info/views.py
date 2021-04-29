@@ -1,5 +1,5 @@
 from conreq.apps.user_requests.models import UserRequest
-from conreq.core.tmdb.discovery import ContentDiscovery
+from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.views import (
@@ -29,7 +29,7 @@ MAX_SERIES_FETCH_RETRIES = 10
 @login_required
 @performance_metrics()
 def more_info(request):
-    content_discovery = ContentDiscovery()
+    content_discovery = TmdbDiscovery()
     template = loader.get_template("viewport/more_info.html")
 
     # Get the ID from the URL
@@ -79,7 +79,7 @@ def more_info(request):
 @login_required
 @performance_metrics()
 def person(request):
-    content_discovery = ContentDiscovery()
+    content_discovery = TmdbDiscovery()
     template = loader.get_template("viewport/person.html")
 
     # Get the ID from the URL
@@ -125,7 +125,7 @@ def person(request):
 @login_required
 @performance_metrics()
 def series_modal(request):
-    content_discovery = ContentDiscovery()
+    content_discovery = TmdbDiscovery()
     content_manager = ContentManager()
     report_modal = str_to_bool(request.GET.get("report_modal", "false"))
 
@@ -195,7 +195,7 @@ def series_modal(request):
 @login_required
 @performance_metrics()
 def content_preview_modal(request):
-    content_discovery = ContentDiscovery()
+    content_discovery = TmdbDiscovery()
 
     # Get the ID from the URL
     tmdb_id = request.GET.get("tmdb_id", None)
@@ -230,7 +230,7 @@ def recommended(request):
     tmdb_id = request.GET.get("tmdb_id", None)
     content_type = request.GET.get("content_type", None)
     if tmdb_id and content_type:
-        content_discovery = ContentDiscovery()
+        content_discovery = TmdbDiscovery()
 
         tmdb_recommended = content_discovery.similar_and_recommended(
             tmdb_id, content_type
@@ -263,7 +263,7 @@ def collection(request):
     collection_id = request.GET.get("collection_id", None)
 
     if collection_id:
-        content_discovery = ContentDiscovery()
+        content_discovery = TmdbDiscovery()
 
         tmdb_collection = content_discovery.collections(collection_id)
 

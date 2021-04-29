@@ -1,4 +1,4 @@
-from conreq.core.tmdb.discovery import ContentDiscovery
+from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.tmdb.preset_filters import (
     combined_filters,
     movie_filters,
@@ -20,7 +20,7 @@ from .helpers import preset_filter_extras
 @login_required
 @performance_metrics()
 def discover_all(request):
-    content_discovery = ContentDiscovery()
+    content_discovery = TmdbDiscovery()
     discover_filter = request.GET.get("filter", "")
     filter_name = titlecase(discover_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))
@@ -57,7 +57,7 @@ def discover_all(request):
 @login_required
 @performance_metrics()
 def discover_tv(request):
-    content_discovery = ContentDiscovery()
+    content_discovery = TmdbDiscovery()
     discover_filter = request.GET.get("filter", "")
     filter_name = titlecase(discover_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))
@@ -95,7 +95,7 @@ def discover_tv(request):
 @login_required
 @performance_metrics()
 def discover_movies(request):
-    content_discovery = ContentDiscovery()
+    content_discovery = TmdbDiscovery()
     discover_filter = request.GET.get("filter", "")
     filter_name = titlecase(discover_filter.replace("-", " "))
     page = int(request.GET.get("page", 1))

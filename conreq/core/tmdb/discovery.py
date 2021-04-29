@@ -14,7 +14,7 @@ from .base import (
     RECOMMENDED_CACHE_TIMEOUT,
     SHUFFLED_PAGE_CACHE_TIMEOUT,
     SIMILAR_CACHE_TIMEOUT,
-    Base,
+    TmdbBase,
     _timezone,
 )
 from .preset_filters import movie_filters, tv_filters
@@ -22,7 +22,7 @@ from .preset_filters import movie_filters, tv_filters
 _logger = log.get_logger(__name__)
 
 
-class ContentDiscovery(Base):
+class TmdbDiscovery(TmdbBase):
     """Discovers top, trending, and recommended content using TMDB as the backend."""
 
     # Public class methods

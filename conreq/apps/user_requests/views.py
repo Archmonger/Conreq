@@ -1,7 +1,7 @@
 import json
 
 from conreq.apps.user_requests.models import UserRequest
-from conreq.core.tmdb.discovery import ContentDiscovery
+from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
 from conreq.utils.testing import performance_metrics
@@ -32,7 +32,7 @@ def request_content(request):
         )
 
         content_manager = ContentManager()
-        content_discovery = ContentDiscovery()
+        content_discovery = TmdbDiscovery()
 
         # TV show was requested
         if request_parameters["content_type"] == "tv":

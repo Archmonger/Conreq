@@ -31,7 +31,7 @@ PERSON_CACHE_TIMEOUT = 14 * 24 * 60 * 60
 SHUFFLED_PAGE_CACHE_TIMEOUT = 1 * 24 * 60 * 60
 
 
-class Base:
+class TmdbBase:
     """Helper methods for TMDB content discovery."""
 
     def is_anime(self, tmdb_id, content_type):

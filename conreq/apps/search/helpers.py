@@ -1,10 +1,10 @@
 """Helpers for Search"""
-from conreq.core.tmdb.discovery import ContentDiscovery
+from conreq.core.tmdb.discovery import TmdbDiscovery
 
 
 def convert_card_to_tmdb(index, all_results):
     """Attempt to convert Sonarr/Radarr cards to TMDB equivalents."""
-    content_discovery = ContentDiscovery()
+    content_discovery = TmdbDiscovery()
     # NOTE: For some reason, overriding values in all_results requires the list and index value.
     # It will NOT work if attempting to change values by reference (ex. card = newCard).
 
