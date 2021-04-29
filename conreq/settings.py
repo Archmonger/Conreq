@@ -376,7 +376,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static-deploy")
 STATIC_URL = BASE_URL + "/static/"
 STATICFILES_USER_PROVIDED = os.path.join(DATA_DIR, "static")
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "conreq", "static-dev"),
+    os.path.join(BASE_DIR, "conreq", "static"),
     STATICFILES_USER_PROVIDED,
 ]
 if not os.path.exists(STATICFILES_USER_PROVIDED):
