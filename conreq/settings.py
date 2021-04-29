@@ -27,7 +27,8 @@ from conreq.utils.generic import (
 # Environment and Project Variables
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
-APPS_DIR = os.path.join(BASE_DIR, "conreq", "core")
+CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
+APPS_DIR = os.path.join(DATA_DIR, "apps")
 DEBUG = get_debug_from_env()
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
@@ -45,7 +46,7 @@ SILKY_AUTHORISATION = DEBUG
 SILKY_ANALYZE_QUERIES = DEBUG
 SILKY_PYTHON_PROFILER = DEBUG
 SILKY_PYTHON_PROFILER_BINARY = DEBUG
-SILKY_PYTHON_PROFILER_RESULT_PATH = os.path.join(DATA_DIR, "profiling")
+SILKY_PYTHON_PROFILER_RESULT_PATH = os.path.join(DATA_DIR, "debug", "metrics")
 if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
     os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
 HTML_MINIFY = True
@@ -97,7 +98,7 @@ PWA_APP_DEBUG_MODE = DEBUG
 
 
 # Logging
-LOG_DIR = os.path.join(DATA_DIR, "logs")
+LOG_DIR = os.path.join(DATA_DIR, "debug", "logs")
 CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
 ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
 if not os.path.exists(LOG_DIR):
@@ -248,7 +249,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
-    *list_modules(APPS_DIR, prefix="conreq.core."),
+    *list_modules(CORE_DIR, prefix="conreq.core."),
     "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
@@ -282,6 +283,15 @@ if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
     MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
+
+
+# Plugins
+APPS_MODULE_FILE = os.path.join(APPS_DIR, "__init__.py")
+if not os.path.exists(APPS_DIR):
+    os.makedirs(APPS_DIR)
+if not os.path.exists(APPS_MODULE_FILE):
+    with open(APPS_MODULE_FILE, "w"):
+        pass
 
 
 # URL Routing and Page Rendering
