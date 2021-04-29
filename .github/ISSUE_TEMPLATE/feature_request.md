@@ -1,20 +1,14 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "[Feature Request]  --Feature Name Goes Here--"
+title: "[Feature Request] VISIT GITHUB DISCUSSIONS!"
 labels: enhancement
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+Feature requests should be handled through Github Discussions, so other users can vote on ideas they like!
 
-**Describe the feature you'd like**
-A clear and concise description of what you want to happen.
+Any feature requests made through Github Issues will be closed by project moderators.
 
-**Are there any possible alternatives?**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+Visit here to submit a feature request: https://github.com/Archmonger/Conreq/discussions/categories/feature-requests
