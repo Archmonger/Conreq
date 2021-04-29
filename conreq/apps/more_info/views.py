@@ -2,7 +2,7 @@ from conreq.apps.user_requests.models import UserRequest
 from conreq.core.tmdb.discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.app_views import (
+from conreq.utils.views import (
     obtain_sonarr_parameters,
     set_many_availability,
     set_single_availability,

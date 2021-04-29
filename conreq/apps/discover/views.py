@@ -4,7 +4,7 @@ from conreq.core.tmdb.preset_filters import (
     movie_filters,
     tv_filters,
 )
-from conreq.utils.app_views import set_many_availability
+from conreq.utils.views import set_many_availability
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse

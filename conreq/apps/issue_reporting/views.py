@@ -2,7 +2,7 @@ import json
 
 from conreq.apps.issue_reporting.models import ReportedIssue
 from conreq.utils import log
-from conreq.utils.app_views import add_unique_to_db
+from conreq.utils.views import add_unique_to_db
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse

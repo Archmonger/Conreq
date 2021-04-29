@@ -4,7 +4,7 @@ from conreq.apps.user_requests.models import UserRequest
 from conreq.core.tmdb.discovery import ContentDiscovery
 from conreq.core.content_manager import ContentManager
 from conreq.utils import log
-from conreq.utils.app_views import (
+from conreq.utils.views import (
     add_unique_to_db,
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
