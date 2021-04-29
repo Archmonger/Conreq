@@ -1,7 +1,7 @@
 """Conreq Content Manager: Talks with Sonarr/Radarr in order to add/remove content."""
 from os.path import join as join_path
 
-from conreq.apps.server_settings.models import ConreqConfig
+from conreq.core.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
 from pyarr import RadarrAPIv1, SonarrAPI
 

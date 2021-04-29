@@ -27,7 +27,7 @@ from conreq.utils.generic import (
 # Environment and Project Variables
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
-APPS_DIR = os.path.join(BASE_DIR, "conreq", "apps")
+APPS_DIR = os.path.join(BASE_DIR, "conreq", "core")
 DEBUG = get_debug_from_env()
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
@@ -248,7 +248,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
-    *list_modules(APPS_DIR, prefix="conreq.apps."),
+    *list_modules(APPS_DIR, prefix="conreq.core."),
     "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB

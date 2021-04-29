@@ -1,7 +1,7 @@
 """Conreq Searching: Searches for content."""
 
 import tmdbsimple as tmdb
-from conreq.apps.server_settings.models import ConreqConfig
+from conreq.core.server_settings.models import ConreqConfig
 from conreq.core.tmdb.base import TmdbBase, LANGUAGE
 from conreq.utils import cache, log
 

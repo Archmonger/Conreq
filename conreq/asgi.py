@@ -21,7 +21,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 
-from conreq.apps.websockets.consumers import CommandConsumer
+from conreq.core.websockets.consumers import CommandConsumer
 
 
 class LifespanApp:

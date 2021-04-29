@@ -1,7 +1,7 @@
 """Functions commonly used to construct views."""
 from threading import Thread
 
-from conreq.apps.server_settings.models import ConreqConfig
+from conreq.core.server_settings.models import ConreqConfig
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.utils import cache, log

@@ -25,8 +25,8 @@ BASE_URL = get_base_url()
 
 
 urlpatterns = [
-    path("", include("conreq.apps.base.urls")),
-    path("", include("conreq.apps.pwa.urls")),
+    path("", include("conreq.core.base.urls")),
+    path("", include("conreq.core.pwa.urls")),
     path(
         "sign_in/",
         auth_views.LoginView.as_view(
@@ -35,15 +35,15 @@ urlpatterns = [
         name="sign_in",
     ),
     path("sign_out/", auth_views.logout_then_login, name="sign_out"),
-    path("sign_up/", include("conreq.apps.sign_up.urls")),
-    path("request/", include("conreq.apps.user_requests.urls")),
+    path("sign_up/", include("conreq.core.sign_up.urls")),
+    path("request/", include("conreq.core.user_requests.urls")),
     # Viewport Locations
-    path("discover/", include("conreq.apps.discover.urls")),
-    path("more_info/", include("conreq.apps.more_info.urls")),
-    path("report_issue/", include("conreq.apps.issue_reporting.urls")),
-    path("search/", include("conreq.apps.search.urls")),
-    path("manage_users/", include("conreq.apps.manage_users.urls")),
-    path("server_settings/", include("conreq.apps.server_settings.urls")),
+    path("discover/", include("conreq.core.discover.urls")),
+    path("more_info/", include("conreq.core.more_info.urls")),
+    path("report_issue/", include("conreq.core.issue_reporting.urls")),
+    path("search/", include("conreq.core.search.urls")),
+    path("manage_users/", include("conreq.core.manage_users.urls")),
+    path("server_settings/", include("conreq.core.server_settings.urls")),
 ]
 
 # Debug tools
