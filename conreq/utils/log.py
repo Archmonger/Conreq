@@ -27,11 +27,11 @@ def handler(msg, level, logger):
     # Log within a different stream depending on severity
     if level == DEBUG:
         logger.debug(message)
-    if level == INFO:
+    elif level == INFO:
         logger.info(message)
-    if level == WARNING:
+    elif level == WARNING:
         logger.warning(message)
-    if level == ERROR:
+    elif level == ERROR:
         logger.error(message + "\n" + format_exc())
-    if level == CRITICAL:
+    elif level == CRITICAL:
         logger.critical(message + "\n" + format_exc())
