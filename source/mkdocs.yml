@@ -9,7 +9,7 @@ nav:
     - Development:
           - Our Code Explained: code_tldr.md
           - Building Conreq: building.md
-          - Making Extensions: extensions.md
+          - Extending Conreq (Apps): extensions.md
           - Updating the Docs: docs_contrib.md
 
 theme:
