@@ -70,7 +70,6 @@
                     My Issues
                 </a>
             </div>
-            {% if not user.profile.externally_authenticated %}
             <div class="nav-tab suboption">
                 <div class="line-clamp-1 manage-user-btn clickable"
                     data-modal-url="{% url 'manage_users:manage_modal' %}" data-username="{{user.username}}">
@@ -78,7 +77,6 @@
                     Settings
                 </div>
             </div>
-            {% endif %}
             <div class="nav-tab suboption">
                 <a href="{% url 'sign_out' %}" class="line-clamp-1">
                     <i class="fas fa-sign-out-alt icon-left"></i>
