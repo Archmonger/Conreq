@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from conreq.utils.generic import get_base_url, get_debug_from_env
+from conreq.settings import APPS_DIR
+from conreq.utils.generic import get_base_url, get_debug_from_env, list_modules_with
 
 DEBUG = get_debug_from_env()
 BASE_URL = get_base_url()
@@ -45,6 +46,10 @@ urlpatterns = [
     path("manage_users/", include("conreq.core.manage_users.urls")),
     path("server_settings/", include("conreq.core.server_settings.urls")),
 ]
+
+# Add User Installed Apps URLS
+for app_name, module_path in list_modules_with(APPS_DIR, "urls"):
+    urlpatterns.insert(0, path(app_name + "/", include(module_path)))
 
 # Debug tools
 if DEBUG:

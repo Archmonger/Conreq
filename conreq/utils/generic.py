@@ -57,3 +57,15 @@ def get_debug_from_env():
 def list_modules(path, prefix=""):
     """Returns all modules in a path"""
     return [name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)]
+
+
+def list_modules_with(path, submodule_name, prefix=""):
+    """Returns a tuple of all modules containing module name and an importable path to 'example.module.urls'"""
+    modules = list_modules(path)
+    module_files = []
+    for module in modules:
+        module_path = os.path.join(path, module)
+        if submodule_name in list_modules(module_path):
+            urls_path = prefix + module + "." + submodule_name
+            module_files.append((module, urls_path))
+    return module_files
