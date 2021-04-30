@@ -23,6 +23,11 @@ django-model-utils==4.1.1
 django-solo==1.1.5
 django-cleanup==5.2.0
 
+# API
+djangorestframework==3.12.4
+markdown==3.3.4
+django-filter==2.4.0
+
 # Debug
 django-silk==4.1.0
 docutils==0.17.1
@@ -44,5 +49,4 @@ tzlocal==2.1
 pyarr==1.0.2
 tmdbsimple==2.8.0
 strsim==0.0.3
-markdown==3.3.4
 titlecase==2.0.0
