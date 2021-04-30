@@ -13,7 +13,6 @@ pillow==8.2.0
 
 # Database/Storage
 pymysql==1.0.2
-mysqlclient==2.0.3
 huey==2.3.2
 diskcache==5.2.1
 django-url-or-relative-url-field==0.1.2
