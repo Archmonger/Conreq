@@ -21,3 +21,16 @@ def list_user_apps():
         apps_list.append(package_dict)
 
     return apps_list
+
+
+def list_user_apps_with(submodule_name):
+    apps_list = []
+    user_apps = list_modules(APPS_DIR)
+    for user_app in user_apps:
+        app_dir = os.path.join(APPS_DIR, user_app)
+        for package in list_modules(app_dir):
+            sub_app_dir = os.path.join(app_dir, package)
+            modules = list_modules(sub_app_dir)
+            if submodule_name in modules:
+                apps_list.append(user_app + "." + package + "." + submodule_name)
+    return apps_list
