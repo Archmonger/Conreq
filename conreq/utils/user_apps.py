@@ -1,6 +1,9 @@
-from conreq.settings import APPS_DIR
-from .generic import list_modules
 import os
+from importlib import import_module
+
+from conreq.settings import APPS_DIR
+
+from .generic import list_modules
 
 
 def list_user_apps():
@@ -13,11 +16,17 @@ def list_user_apps():
         app_dir = os.path.join(APPS_DIR, user_app)
         for package in list_modules(app_dir):
             sub_app_dir = os.path.join(app_dir, package)
-            package_dict["modules"][package] = []
-            for module in list_modules(sub_app_dir):
-                package_dict["modules"][package].append(
-                    (module, user_app + "." + package + "." + module)
-                )
+            if package == "settings":
+                module = import_module(user_app + "." + package)
+                package_dict["settings"] = [
+                    item for item in dir(module) if not item.startswith("_")
+                ]
+            else:
+                package_dict["modules"][package] = []
+                for module in list_modules(sub_app_dir):
+                    package_dict["modules"][package].append(
+                        (module, user_app + "." + package + "." + module)
+                    )
         apps_list.append(package_dict)
 
     return apps_list
