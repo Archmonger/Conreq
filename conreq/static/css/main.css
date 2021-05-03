@@ -20,7 +20,7 @@
 	--sidebar-width: 240px;
 	--navpages-btn-padding: 15px 20px;
 	/* Navbar */
-	--navbar-bg: transparent;
+	--navbar-bg: rgba(255, 255, 255, 0.04);
 	--navbar-height: 0px;
 	--searchbar-width: 45%;
 	/* Viewport */

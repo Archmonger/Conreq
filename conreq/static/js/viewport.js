@@ -35,10 +35,9 @@ let update_active_tab = async function () {
 
 // Updates the page name
 let update_page_title = async function (viewport_selector) {
-	document.title =
-		$(viewport_selector + ">.page-name").val() +
-		" | " +
-		$("#app-name").val();
+	let page_name = $(viewport_selector + ">.page-name").val();
+	document.title = page_name + " | " + $("#app-name").val();
+	$(".navbar-brand").text(page_name);
 };
 
 // Helper to show the active viewport
