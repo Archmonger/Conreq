@@ -454,6 +454,7 @@ var refresh_api_key_click_event = async function () {
 };
 
 var server_settings_dropdown_click_event = async function () {
+	$(".text-input-container.dropdown .dropdown-item").unbind("click");
 	$(".text-input-container.dropdown .dropdown-item").click(async function () {
 		let setting_name = $(this).parent().data("setting-name");
 		let dropdown_id = $(this).data("id");

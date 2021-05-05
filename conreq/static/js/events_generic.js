@@ -1,5 +1,10 @@
 $(document).ready(async function () {
-	$(".viewport-container").on("prepare", async function () {
+	$(".viewport-container").on("loaded", async function () {
+		// Bootstrap Table
+		if ($("table").length) {
+			$("table").bootstrapTable();
+		}
+
 		// User Management events
 		manage_user_btn_click_event();
 		delete_user_btn_click_event();
@@ -44,11 +49,6 @@ $(document).ready(async function () {
 		server_settings_dropdown_click_event();
 		refresh_api_key_click_event();
 		reload_needed_click_event();
-
-		// Bootstrap Table
-		if ($("table").length) {
-			$("table").bootstrapTable();
-		}
 
 		// Masonry Grid
 		if ($(".viewport-container>.viewport-masonry").length) {
@@ -189,6 +189,7 @@ $(document).ready(async function () {
 			if (new_element.hasClass("auto-uncollapse")) {
 				new_element.collapse("show");
 			}
+			server_settings_dropdown_click_event();
 		}
 	);
 
