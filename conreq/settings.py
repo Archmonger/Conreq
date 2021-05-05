@@ -35,6 +35,7 @@ DEBUG = get_debug_from_env()
 DB_ENGINE = os.environ.get("DB_ENGINE", "")
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 SSL_SECURITY = get_bool_from_env("SSL_SECURITY", False)
+PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
 X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
 ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
@@ -365,17 +366,19 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
-    {
-        "NAME": "pwned_passwords_django.validators.PwnedPasswordsValidator",
-        "OPTIONS": {
-            "error_message": "Cannot use a compromised password. This password was detected %(amount)d time(s) on 'haveibeenpwned.com'.",
-            "help_message": "Your password can't be a compromised password.",
-        },
-    },
 ]
 LOGIN_REDIRECT_URL = "base:index"
 LOGIN_URL = "sign_in"
-
+if PWNED_VALIDATOR:
+    AUTH_PASSWORD_VALIDATORS.append(
+        {
+            "NAME": "pwned_passwords_django.validators.PwnedPasswordsValidator",
+            "OPTIONS": {
+                "error_message": "Cannot use a compromised password. This password was detected %(amount)d time(s) on 'haveibeenpwned.com'.",
+                "help_message": "Your password can't be a compromised password.",
+            },
+        },
+    )
 
 # Internationalization
 LANGUAGE_CODE = "en-US"
