@@ -41,7 +41,6 @@ pwned-passwords-django==1.4.1
 django-project-version==0.14.9
 
 # Timezones
-awesome-django-timezones==0.3.0
 tzlocal==2.1
 
 # Django Apps
