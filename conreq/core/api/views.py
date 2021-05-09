@@ -68,6 +68,43 @@ class RequestTv(APIView):
         return Response({"success": False, "detail": "Could not determine TVDB ID."})
 
 
+class RequestMovie(APIView):
+    request_body = ["seasons"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.msg = {"success": True, "detail": None}
+
+    @swagger_auto_schema(
+        responses={
+            status.HTTP_200_OK: openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    "success": openapi.Schema(
+                        type=openapi.TYPE_BOOLEAN,
+                    ),
+                    "detail": openapi.Schema(
+                        type=openapi.TYPE_STRING,
+                    ),
+                },
+            ),
+        },
+    )
+    def post(self, request, tmdb_id):
+        """Request a Movie by TMDB ID."""
+        content_manager = ArrManager()
+        content_discovery = TmdbDiscovery()
+
+        # Request the show by the TMDB ID
+        radarr_request(
+            tmdb_id,
+            request,
+            content_manager,
+            content_discovery,
+        )
+        return Response(self.msg)
+
+
 @api_view(["GET"])
 def stub(request):
     return Response({})
