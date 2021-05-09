@@ -271,6 +271,8 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
+    "rest_framework",  # OpenAPI Framework
+    "rest_framework_api_key",  # API Key Manager
     *list_modules(APPS_DIR),  # User Installed Apps
 ]
 MIDDLEWARE = [
@@ -297,6 +299,8 @@ if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
     MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
+    # API docs generator
+    INSTALLED_APPS.append("drf_yasg")
 
 
 # URL Routing and Page Rendering

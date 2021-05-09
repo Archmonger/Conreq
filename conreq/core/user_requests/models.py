@@ -8,5 +8,7 @@ class UserRequest(models.Model):
     content_id = models.CharField(max_length=30)
     source = models.CharField(max_length=30)
     content_type = models.CharField(max_length=30)
-    requested_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    requested_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=None, null=True, blank=True
+    )
     date_requested = models.DateTimeField(auto_now_add=True)
