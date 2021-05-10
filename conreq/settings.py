@@ -201,16 +201,17 @@ if SSL_SECURITY:
     SECURE_HSTS_PRELOAD = True  # Allow for HSTS preload
     SECURE_HSTS_SECONDS = 31536000  # Allow for HSTS preload
     SESSION_COOKIE_SECURE = True  # Only send cookie over HTTPS
-    CSRF_USE_SESSIONS = True  # Store CSRF token within session cookie
     CSRF_COOKIE_SECURE = True  # Only send cookie over HTTPS
-    CSRF_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
     LANGUAGE_COOKIE_SECURE = True  # Only send cookie over HTTPS
     LANGUAGE_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
 
 
 # API Settings
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
     "DEFAULT_PERMISSION_CLASSES": [
         "conreq.core.api.permissions.HasAPIKey",
     ],
@@ -282,6 +283,7 @@ INSTALLED_APPS = [
     "url_or_relative_url_field",  # Validates relative URLs
     "rest_framework",  # OpenAPI Framework
     "rest_framework_api_key",  # API Key Manager
+    "rest_framework.authtoken",  # API User Authentication
     *list_modules(APPS_DIR),  # User Installed Apps
 ]
 MIDDLEWARE = [

@@ -30,9 +30,7 @@ urlpatterns = [
     path("", include("conreq.core.pwa.urls")),
     path(
         "sign_in/",
-        auth_views.LoginView.as_view(
-            redirect_authenticated_user=True, template_name="registration/sign_in.html"
-        ),
+        auth_views.LoginView.as_view(template_name="registration/sign_in.html"),
         name="sign_in",
     ),
     path("sign_out/", auth_views.logout_then_login, name="sign_out"),
@@ -70,7 +68,13 @@ if DEBUG:
         openapi.Info(
             title="Conreq API Endpoints",
             default_version="v1",
-            description="Outline for all endpoints available within this Conreq instance. All endpoints require an API key either in HTTP Header (Authorization: Api-Key) or in the URL parameters (apikey).",
+            description="""
+            Outline for all endpoints available within this Conreq instance.
+
+            All endpoints require an API key either in **HTTP Header (Authorization: Api-Key)** or in the **URL Parameter (apikey)**.
+
+            Token Authentication can be included in the **HTTP Header (Authorization: Token)**.
+            """,
             contact=openapi.Contact(email="archiethemonger@gmail.com"),
             license=openapi.License(name="GPL-3.0 License"),
         ),
