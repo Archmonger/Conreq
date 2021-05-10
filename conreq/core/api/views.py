@@ -103,4 +103,5 @@ class RequestMovie(APIView):
 
 @api_view(["GET"])
 def stub(request):
+    """This is a stub for an endpoint that has not yet been developed."""
     return Response({})

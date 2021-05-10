@@ -70,7 +70,7 @@ if DEBUG:
         openapi.Info(
             title="Conreq API Endpoints",
             default_version="v1",
-            description="Outline for all endpoints available within this Conreq instance.",
+            description="Outline for all endpoints available within this Conreq instance. All endpoints require an API key either in HTTP Header (Authorization: Api-Key) or in the URL parameters (apikey).",
             contact=openapi.Contact(email="archiethemonger@gmail.com"),
             license=openapi.License(name="GPL-3.0 License"),
         ),
