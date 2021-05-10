@@ -153,12 +153,7 @@ def update_settings(request):
             conreq_config = ConreqConfig.get_solo()
 
             # Basic Configuration
-            if message["setting_name"] == "Conreq API Key":
-                conreq_config.conreq_api_key = secrets.token_hex(16)
-                response["command_name"] = "new conreq api key"
-                response["value"] = conreq_config.conreq_api_key
-
-            elif message["setting_name"] == "Conreq Custom CSS":
+            if message["setting_name"] == "Conreq Custom CSS":
                 conreq_config.conreq_custom_css = message["value"]
 
             elif message["setting_name"] == "Conreq Custom JS":

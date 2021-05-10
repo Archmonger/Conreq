@@ -10,10 +10,6 @@ def initialize_conreq(conreq_config, form):
     conreq_config.radarr_url = form.cleaned_data.get("radarr_url")
     conreq_config.radarr_api_key = form.cleaned_data.get("radarr_api_key")
 
-    # Generate the Conreq API key
-    if not conreq_config.conreq_api_key:
-        conreq_config.conreq_api_key = token_hex(16)
-
     # Enable Sonarr if URL and API key is configured
     if conreq_config.sonarr_url and conreq_config.sonarr_api_key:
         conreq_config.sonarr_enabled = True
