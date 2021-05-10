@@ -1,17 +1,18 @@
 """Helpers for User Requests"""
-from conreq.core.base.tasks import background_task
-from conreq.core.user_requests.models import UserRequest
-from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.arrs.sonarr_radarr import ArrManager
+from conreq.core.base.tasks import background_task
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
+from conreq.utils.generic import is_key_value_in_list
+from conreq.utils.multiprocessing import threaded_execution_unique_args
 from conreq.utils.views import (
     add_unique_to_db,
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
     set_many_availability,
 )
-from conreq.utils.generic import is_key_value_in_list
-from conreq.utils.multiprocessing import threaded_execution_unique_args
+from django.contrib.auth.models import AnonymousUser
 
 _logger = log.get_logger(__name__)
 
@@ -32,6 +33,7 @@ def radarr_request_background_task(tmdb_id, content_manager, radarr_params, user
     # Request
     content_manager.request(radarr_id=movie["id"])
 
+    username = username if username else "API"
     log.handler(
         username + " requested movie " + movie["title"],
         log.INFO,
@@ -59,10 +61,11 @@ def sonarr_request_background_task(
     # Request
     content_manager.request(
         sonarr_id=show["id"],
-        seasons=request_parameters["seasons"],
-        episode_ids=request_parameters["episode_ids"],
+        seasons=request_parameters.get("seasons"),
+        episode_ids=request_parameters.get("episode_ids"),
     )
 
+    username = username if username else "API"
     log.handler(
         username + " requested TV series " + show["title"],
         log.INFO,
@@ -95,12 +98,14 @@ def sonarr_request(
     else:
         content_id = tvdb_id
         source = "tvdb"
+
+    requested_by = request.user if not isinstance(request.user, AnonymousUser) else None
     add_unique_to_db(
         UserRequest,
         content_id=content_id,
         source=source,
         content_type="tv",
-        requested_by=request.user,
+        requested_by=requested_by,
     )
 
 
@@ -120,12 +125,13 @@ def radarr_request(tmdb_id, request, content_manager, content_discovery):
     )
 
     # Save to DB
+    requested_by = request.user if not isinstance(request.user, AnonymousUser) else None
     add_unique_to_db(
         UserRequest,
         content_id=tmdb_id,
         source="tmdb",
         content_type="movie",
-        requested_by=request.user,
+        requested_by=requested_by,
     )
 
 
