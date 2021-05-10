@@ -208,6 +208,15 @@ if SSL_SECURITY:
     LANGUAGE_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
 
 
+# API Settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "conreq.core.api.permissions.HasAPIKey",
+    ],
+}
+
+
 # External "settings.json" file
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 ORIGINAL_SETTINGS = None

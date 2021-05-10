@@ -13,8 +13,6 @@ from rest_framework.views import APIView
 
 # Create your views here.
 class RequestTv(APIView):
-    request_body = ["seasons"]
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.msg = {"success": True, "detail": None}
@@ -69,8 +67,6 @@ class RequestTv(APIView):
 
 
 class RequestMovie(APIView):
-    request_body = ["seasons"]
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.msg = {"success": True, "detail": None}
