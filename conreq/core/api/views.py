@@ -13,6 +13,8 @@ from rest_framework.views import APIView
 
 # Create your views here.
 class RequestTv(APIView):
+    """Request a TV show by TMDB ID."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.msg = {"success": True, "detail": None}
@@ -67,6 +69,8 @@ class RequestTv(APIView):
 
 
 class RequestMovie(APIView):
+    """Request a movie by TMDB ID."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.msg = {"success": True, "detail": None}
@@ -87,7 +91,7 @@ class RequestMovie(APIView):
         },
     )
     def post(self, request, tmdb_id):
-        """Request a Movie by TMDB ID."""
+        """Request a movie by TMDB ID."""
         content_manager = ArrManager()
         content_discovery = TmdbDiscovery()
 
