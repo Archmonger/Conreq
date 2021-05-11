@@ -112,6 +112,17 @@ class LocalAuthentication(APIView):
     """Sign in to an account."""
 
     @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "username": openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                ),
+                "password": openapi.Schema(
+                    type=openapi.TYPE_STRING,
+                ),
+            },
+        ),
         responses={
             status.HTTP_200_OK: openapi.Schema(
                 type=openapi.TYPE_OBJECT,
