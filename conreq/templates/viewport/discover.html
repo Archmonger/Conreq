@@ -1,5 +1,4 @@
 {% load static %}
-{% csrf_token %}
 {% include "primary/loading_animation_container.html" %}
 {% include "primary/searchbar.html" %}
 <input class="page-name" type="hidden" value="{% if filter_name %}{{ filter_name }} {% endif %}{{ page_name }}">
