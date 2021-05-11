@@ -4,10 +4,10 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from . import views
 
 urlpatterns = [
-    path("tmdb/request", views.stub),  # GET
-    path("tmdb/request/<request_id>", views.stub),  # GET/DELETE
-    path("tmdb/request/tv/<tmdb_id>", views.RequestTv.as_view()),  # POST
-    path("tmdb/request/movie/<tmdb_id>", views.RequestMovie.as_view()),  # POST
+    path("request/tmdb", views.stub),  # GET
+    path("request/tmdb/<request_id>", views.stub),  # GET/DELETE
+    path("request/tmdb/tv/<tmdb_id>", views.RequestTv.as_view()),  # POST
+    path("request/tmdb/movie/<tmdb_id>", views.RequestMovie.as_view()),  # POST
     path("tmdb/discover", views.stub),  # GET
     path("tmdb/discover/tv", views.stub),  # GET
     path("tmdb/discover/tv/filters", views.stub),  # GET
@@ -30,8 +30,8 @@ urlpatterns = [
     path("tmdb/studio/<studio_id>", views.stub),  # GET
     path("tmdb/network/<network_id>", views.stub),  # GET
     path("tmdb/collection/<collection_id>", views.stub),  # GET
-    path("issue", views.stub),  # GET/POST
-    path("issue/<issue_id>", views.stub),  # GET/DELETE
+    path("issue/tmdb", views.stub),  # GET/POST
+    path("issue/tmdb/<issue_id>", views.stub),  # GET/DELETE
     path("user", views.stub),  # GET/PUT
     path("user/me", views.stub),  # GET/PUT
     path("user/<username>", views.stub),  # GET/PUT/DELETE
@@ -39,8 +39,10 @@ urlpatterns = [
     path("user/<username>/requests", views.stub),  # GET
     path("auth/local", views.LocalAuthentication.as_view()),  # POST
     path("auth/local/token", ObtainAuthToken.as_view()),  # POST/DELETE
-    path("status", views.stub),  # GET (PUBLIC)
-    path("settings/system", views.stub),  # GET/POST
-    path("sonarr/library", views.stub),  # GET
-    path("radarr/library", views.stub),  # GET
+    path("system", views.stub),  # GET
+    path("settings", views.stub),  # GET/POST
+    path("settings/sonarr", views.stub),  # GET/POST
+    path("settings/radarr", views.stub),  # GET/POST
+    path("services/sonarr/library", views.stub),  # GET
+    path("services/radarr/library", views.stub),  # GET
 ]
