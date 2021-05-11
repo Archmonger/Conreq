@@ -73,7 +73,7 @@ if DEBUG:
 
             All endpoints require an API key either in **HTTP Header (Authorization: Api-Key)** or in the **URL Parameter (apikey)**.
 
-            Token Authentication can be included in the **HTTP Header (Authorization: Token)**.
+            Token Authentication is performed using **HTTP Header (Authorization: Token)**. Session Authentication can alternatively be performed.
             """,
             contact=openapi.Contact(email="archiethemonger@gmail.com"),
             license=openapi.License(name="GPL-3.0 License"),

@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.authtoken.views import ObtainAuthToken
-from . import views
 
+from . import views
 
 urlpatterns = [
     path("tmdb/request", views.stub),  # GET
@@ -37,7 +37,7 @@ urlpatterns = [
     path("user/<username>", views.stub),  # GET/PUT/DELETE
     path("user/<username>/issues", views.stub),  # GET/POST
     path("user/<username>/requests", views.stub),  # GET
-    path("auth/local", views.stub),  # POST
+    path("auth/local", views.LocalAuthentication.as_view()),  # POST
     path("auth/local/token", ObtainAuthToken.as_view()),  # POST/DELETE
     path("status", views.stub),  # GET (PUBLIC)
     path("settings/system", views.stub),  # GET/POST
