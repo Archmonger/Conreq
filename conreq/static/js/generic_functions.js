@@ -10,27 +10,6 @@ var sleep = function (ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-// Obtain a cookie's value
-var get_cookie = function (name) {
-	let cookieValue = null;
-	if (document.cookie && document.cookie !== "") {
-		const cookies = document.cookie.split(";");
-		for (let i = 0; i < cookies.length; i++) {
-			const cookie = cookies[i].trim();
-			// Does this cookie string begin with the name we want?
-			if (cookie.substring(0, name.length + 1) === name + "=") {
-				cookieValue = decodeURIComponent(
-					cookie.substring(name.length + 1)
-				);
-				break;
-			}
-		}
-	}
-	return cookieValue;
-};
-
-let csrf_token = get_cookie("csrftoken");
-
 // Returns the window location with the base url added
 var add_base_url = function (window_location = null) {
 	// Get the current location
@@ -149,7 +128,8 @@ var post_url = function (url, callback) {
 		type: "POST",
 		url: url,
 		headers: {
-			"X-CSRFToken": csrf_token,
+			"X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0]
+				.value,
 		},
 		success: callback,
 	});
@@ -163,7 +143,8 @@ var post_json = function (url, data, callback) {
 		type: "POST",
 		url: url,
 		headers: {
-			"X-CSRFToken": csrf_token,
+			"X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0]
+				.value,
 		},
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
@@ -191,7 +172,9 @@ var post_modal_form = function (callback) {
 			type: "POST",
 			url: url,
 			headers: {
-				"X-CSRFToken": csrf_token,
+				"X-CSRFToken": document.getElementsByName(
+					"csrfmiddlewaretoken"
+				)[0].value,
 			},
 			data: modal_form.serialize(),
 			success: callback,
@@ -354,7 +337,6 @@ var hide_modals_and_popups = async function () {
 	}
 };
 
-// jQuery replaceWith but returns the new object
 $.fn.replaceWithPush = function (a) {
 	let $a = $(a);
 
