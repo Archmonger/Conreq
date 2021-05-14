@@ -2,7 +2,7 @@
 wheel
 
 # Webserver Related
-django==3.2.2 
+django==3.2.3 
 Twisted[tls,http2]==21.2.0
 channels==3.0.3
 daphne==3.0.2
