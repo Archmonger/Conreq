@@ -219,8 +219,8 @@ class ArrManager:
             # Search for a movie with a specific Radarr ID.
             if kwargs.__contains__("radarr_id"):
                 response = {
-                    "movie_update_results": None,
-                    "movie_search_results": None,
+                    "movie_update_results": [],
+                    "movie_search_results": [],
                 }
 
                 # Get the movie
@@ -246,11 +246,11 @@ class ArrManager:
             # Search for a show with a specific Sonarr ID.
             if kwargs.__contains__("sonarr_id"):
                 response = {
-                    "season_update_results": None,
-                    "episode_update_results": None,
-                    "show_search_results": None,
-                    "season_search_results": None,
-                    "episode_search_results": None,
+                    "season_update_results": [],
+                    "episode_update_results": [],
+                    "show_search_results": [],
+                    "season_search_results": [],
+                    "episode_search_results": [],
                 }
 
                 # Get the series
@@ -450,18 +450,18 @@ class ArrManager:
             # Root dirs
             if not sonarr_tv_folder or not sonarr_anime_folder:
                 default_dir = self.sonarr_root_dirs()[0]["id"]
-            if not sonarr_tv_folder:
-                self.conreq_config.sonarr_tv_folder = default_dir
-            if not sonarr_anime_folder:
-                self.conreq_config.sonarr_anime_folder = default_dir
+                if not sonarr_tv_folder:
+                    self.conreq_config.sonarr_tv_folder = default_dir
+                if not sonarr_anime_folder:
+                    self.conreq_config.sonarr_anime_folder = default_dir
 
             # Qualtiy Profiles
             if not sonarr_tv_quality_profile or not sonarr_anime_quality_profile:
                 default_profile = self.sonarr_quality_profiles()[0]["id"]
-            if not sonarr_tv_quality_profile:
-                self.conreq_config.sonarr_tv_quality_profile = default_profile
-            if not sonarr_anime_quality_profile:
-                self.conreq_config.sonarr_anime_quality_profile = default_profile
+                if not sonarr_tv_quality_profile:
+                    self.conreq_config.sonarr_tv_quality_profile = default_profile
+                if not sonarr_anime_quality_profile:
+                    self.conreq_config.sonarr_anime_quality_profile = default_profile
 
             # Save to DB
             if self.conreq_config.tracker.changed():
@@ -483,18 +483,18 @@ class ArrManager:
             # Root dirs
             if not radarr_movies_folder or not radarr_anime_folder:
                 default_dir = self.radarr_root_dirs()[0]["id"]
-            if not radarr_movies_folder:
-                self.conreq_config.radarr_movies_folder = default_dir
-            if not radarr_anime_folder:
-                self.conreq_config.radarr_anime_folder = default_dir
+                if not radarr_movies_folder:
+                    self.conreq_config.radarr_movies_folder = default_dir
+                if not radarr_anime_folder:
+                    self.conreq_config.radarr_anime_folder = default_dir
 
             # Qualtiy Profiles
             if not radarr_movies_quality_profile or not radarr_anime_quality_profile:
                 default_profile = self.radarr_quality_profiles()[0]["id"]
-            if not radarr_movies_quality_profile:
-                self.conreq_config.radarr_movies_quality_profile = default_profile
-            if not radarr_anime_quality_profile:
-                self.conreq_config.radarr_anime_quality_profile = default_profile
+                if not radarr_movies_quality_profile:
+                    self.conreq_config.radarr_movies_quality_profile = default_profile
+                if not radarr_anime_quality_profile:
+                    self.conreq_config.radarr_anime_quality_profile = default_profile
 
             # Save to DB
             if self.conreq_config.tracker.changed():

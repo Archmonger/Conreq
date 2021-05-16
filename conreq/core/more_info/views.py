@@ -81,6 +81,7 @@ def more_info(request):
 def person(request):
     content_discovery = TmdbDiscovery()
     template = loader.get_template("viewport/person.html")
+    context = {}
 
     # Get the ID from the URL
     person_id = request.GET.get("id", None)

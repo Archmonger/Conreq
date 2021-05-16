@@ -32,6 +32,7 @@ def generate_issue_cards(reported_issues):
     content_discovery = TmdbDiscovery()
     content_manager = ArrManager()
     all_cards = []
+    card = None
     for entry in reported_issues.values(
         "id",
         "reported_by__username",

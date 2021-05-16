@@ -140,7 +140,7 @@ def simple_filter_modal(request):
     elif content_type == "movie":
         filters = movie_filters().keys()
         filter_url = reverse("discover:movies")
-    elif not content_type:
+    else:
         filters = combined_filters().keys()
         filter_url = reverse("discover:all")
     context = {

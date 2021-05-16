@@ -27,6 +27,8 @@ def report_issue(request):
         )
 
         # Get the parameters from the response
+        content_id = None
+        source = None
         if request_parameters.get("tmdb_id", None):
             content_id = request_parameters.get("tmdb_id", None)
             source = "tmdb"

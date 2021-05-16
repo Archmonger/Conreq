@@ -46,7 +46,7 @@ def manage_users(request):
                 return JsonResponse(
                     {
                         "success": False,
-                        "message": " ".join(error),
+                        "message": " ".join(str(error)),
                     }
                 )
 
