@@ -8,7 +8,7 @@ _logger = log.get_logger(__name__)
 
 
 class CommandConsumer(AsyncJsonWebsocketConsumer):
-    """Communicates with the browser to perform actions on-demand."""
+    """Conreq websocket communication."""
 
     # INITIAL CONNECTION
     async def connect(self):

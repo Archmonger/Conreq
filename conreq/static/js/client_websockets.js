@@ -39,7 +39,7 @@ $(document).ready(async function () {
 		};
 
 		// WEBSOCKET EVENT: ON OPEN
-		COMMAND_SOCKET.onopen = function (response) {
+		COMMAND_SOCKET.onopen = function () {
 			RETRY_COUNTER = 0;
 			display_disconnected_toast = true;
 
