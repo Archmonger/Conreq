@@ -170,7 +170,7 @@ class TmdbBase:
         # Create a list of all needed IDs
         for result in tmdb_response:
             # TMDB TV card
-            if result.__contains__("name"):
+            if isinstance(result, dict) and result.__contains__("name"):
                 # Valid ID defaults to false until a TVDB match is determined
                 result["conreq_valid_id"] = False
                 external_id_multi_fetch[str(result["id"])] = {
@@ -181,7 +181,7 @@ class TmdbBase:
                 }
 
             # TMDB Movie card
-            elif result.__contains__("title"):
+            elif isinstance(result, dict) and result.__contains__("title"):
                 result["conreq_valid_id"] = True
 
         # Grab external IDs if needed
