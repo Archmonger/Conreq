@@ -40,7 +40,7 @@ django-compressor==2.4.1
 
 # Security
 pwned-passwords-django==1.4.1
-django-project-version==0.15.0
+django-project-version==0.15.1
 
 # Timezones
 tzlocal==2.1
