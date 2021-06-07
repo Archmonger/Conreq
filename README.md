@@ -20,7 +20,7 @@ Here's a list of all available environment variables:
 ```python
 # General Settings
 TZ = "America/Los_Angeles"                # default: UTC (Timezone for log files, in "TZ Database" format)
-BASE_URL = "requests"                     # default: none
+BASE_URL = "requests"                     # default: None
 APP_NAME = "RequestCentral"               # default: Conreq
 APP_DESCRIPTION = "Get yo stuff!"         # default: Content Requesting
 ARR_REFRESH_INTERNAL = "*/15"             # default: */1 (Cron minutes for Sonarr/Radarr library refresh)
@@ -28,7 +28,7 @@ ARR_REFRESH_INTERNAL = "*/15"             # default: */1 (Cron minutes for Sonar
 # Data Storage
 DATA_DIR = "/example/directory"           # default: /config (Defaults to "data" outside of docker)
 DB_ENGINE = "MYSQL"                       # default: SQLITE3
-MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: none
+MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: None
 
 # Security
 SSL_SECURITY = "True"                     # default: False (True enables advanced SSL security features)
@@ -36,6 +36,13 @@ PWNED_VALIDATOR = "False"                 # default: True (False disables checki
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (False disables X-Frame-Options)
 ALLOWED_HOST = "192.168.0.199"            # default: * (Allows all hosts)
 DEBUG = False                             # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
+
+# Email
+EMAIL_USE_TLS = "False"                   # default: True
+EMAIL_PORT = "465"                        # default: 587
+EMAIL_HOST = "smtp-mail.outlook.com"      # default: smtp.gmail.com
+EMAIL_HOST_USER = "myself@outlook.com"    # default: None
+EMAIL_HOST_PASSWORD = "dogmemes123"       # default: None
 ```
 
 # Screenshots

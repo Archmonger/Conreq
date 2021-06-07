@@ -41,6 +41,16 @@ ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
 
 
+# Email Settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = get_bool_from_env("EMAIL_USE_TLS", True)
+EMAIL_PORT = os.environ.get("EMAIL_PORT", "587")
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 # Application Settings
 DJVERSION_VERSION = "0.18.76"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

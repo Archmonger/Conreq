@@ -57,7 +57,34 @@ if DEBUG:
     # Ability to edit the DB from admin/
     urlpatterns.append(path("admin/docs/", include("django.contrib.admindocs.urls")))
     urlpatterns.append(path("admin/", admin.site.urls))
-
+    urlpatterns.append(
+        path(
+            "password_reset/",
+            auth_views.PasswordResetView.as_view(),
+            name="password_reset_done",
+        )
+    )
+    urlpatterns.append(
+        path(
+            "password_reset/done/",
+            auth_views.PasswordResetDoneView.as_view(),
+            name="password_reset_done",
+        )
+    )
+    urlpatterns.append(
+        path(
+            "reset/<uidb64>/<token>/",
+            auth_views.PasswordResetConfirmView.as_view(),
+            name="password_reset_confirm",
+        )
+    )
+    urlpatterns.append(
+        path(
+            "reset/done/",
+            auth_views.PasswordResetCompleteView.as_view(),
+            name="password_reset_complete",
+        )
+    )
     # Django Rest Framework documentation (Swagger and Redoc)
     from django.urls import re_path
     from drf_yasg import openapi
