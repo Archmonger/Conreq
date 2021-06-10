@@ -127,6 +127,14 @@
 	max-width: 110px;
 }
 
+.viewport .tv.poster-container > a > .content-type-icon {
+	color: #82b6e8;
+}
+
+.viewport .movie.poster-container > a > .content-type-icon {
+	color: #cea576;
+}
+
 .viewport .poster-container > a > .content-type-icon {
 	position: absolute;
 	top: calc(var(--poster-height) - 30px);
