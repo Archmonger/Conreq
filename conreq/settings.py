@@ -256,8 +256,6 @@ with open(SETTINGS_FILE, "r+") as settings_file:
     # Clear cache if Conreq has been updated
     if settings.get("CONREQ_VERSION") != DJVERSION_VERSION:
         settings["CONREQ_VERSION"] = DJVERSION_VERSION
-        if not DEBUG:
-            cache.clear()
 # Save settings.json if needed
 if ORIGINAL_SETTINGS != settings:
     with open(SETTINGS_FILE, "w") as settings_file:
