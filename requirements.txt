@@ -49,4 +49,4 @@ tzlocal==2.1
 pyarr==1.0.2
 tmdbsimple==2.8.0
 strsim==0.0.3
-titlecase==2.1.0
+titlecase==2.0.0
