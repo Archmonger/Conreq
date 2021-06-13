@@ -1,4 +1,9 @@
 $(document).ready(async function () {
+	$(".viewport-container").on("prepare", async function () {
+		issue_approve_btn_click_event();
+		issue_delete_btn_click_event();
+	});
+
 	$(".viewport-container").on("loaded", async function () {
 		// Bootstrap Table
 		if ($("table").length) {
@@ -131,8 +136,6 @@ $(document).ready(async function () {
 		request_btn_click_event();
 		content_modal_click_event();
 		create_report_modal_click_event();
-		issue_approve_btn_click_event();
-		issue_delete_btn_click_event();
 		quick_info_btn_click_event();
 		more_info_poster_popup_click_event();
 	});
