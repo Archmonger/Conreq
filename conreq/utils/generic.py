@@ -54,6 +54,14 @@ def get_debug_from_env():
     return get_bool_from_env("DEBUG", True)
 
 
+def get_database_type():
+    """Determines what type of database the current Conreq instance should be using. Ex) MYSQL, SQLITE, etc."""
+    db_engine = os.environ.get("DB_ENGINE", "")
+    if db_engine.upper() == "MYSQL":
+        return "MYSQL"
+    return "SQLITE3"
+
+
 def list_modules(path, prefix=""):
     """Returns all modules in a path"""
     return [name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)]

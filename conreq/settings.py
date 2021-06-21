@@ -21,6 +21,7 @@ from tzlocal import get_localzone
 from conreq.utils.generic import (
     get_base_url,
     get_bool_from_env,
+    get_database_type,
     get_debug_from_env,
     list_modules,
 )
@@ -31,7 +32,7 @@ DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
 APPS_DIR = os.path.join(DATA_DIR, "apps")
 DEBUG = get_debug_from_env()
-DB_ENGINE = os.environ.get("DB_ENGINE", "")
+DB_ENGINE = get_database_type()
 MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
 SSL_SECURITY = get_bool_from_env("SSL_SECURITY", False)
 PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
@@ -344,9 +345,10 @@ TEMPLATES = [
 
 
 # Databases
-if DB_ENGINE.upper() == "MYSQL" and MYSQL_CONFIG_FILE != "":
+if DB_ENGINE == "MYSQL" and MYSQL_CONFIG_FILE != "":
+    # MySQL
     DATABASES = {
-        "default": {  # MySQL
+        "default": {
             "ENGINE": "django.db.backends.mysql",
             "OPTIONS": {
                 "read_default_file": MYSQL_CONFIG_FILE,
@@ -354,8 +356,9 @@ if DB_ENGINE.upper() == "MYSQL" and MYSQL_CONFIG_FILE != "":
         }
     }
 else:
+    # SQLite
     DATABASES = {
-        "default": {  # SQLite
+        "default": {
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
             "OPTIONS": {
