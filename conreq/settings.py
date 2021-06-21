@@ -15,7 +15,6 @@ import os
 import secrets
 import sys
 
-from django.core.cache import cache
 from django.core.management.utils import get_random_secret_key
 from tzlocal import get_localzone
 
