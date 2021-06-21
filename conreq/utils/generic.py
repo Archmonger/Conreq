@@ -35,10 +35,11 @@ def get_base_url():
 
 
 def str_to_bool(string, default_value=True):
+    """Converts a string into a boolean."""
     if isinstance(string, str):
-        if string.lower() == "true":
+        if string.lower() == "true" or string == "1":
             return True
-        if string.lower() == "false":
+        if string.lower() == "false" or string == "0":
             return False
     return default_value
 
