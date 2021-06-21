@@ -72,10 +72,11 @@ COMPRESS_FILTERS = {
 }
 HUEY_STORAGE = os.path.join(DATA_DIR, "bg_tasks.sqlite3")
 HUEY = {
+    "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
-    "filename": HUEY_STORAGE,
+    "filename": HUEY_STORAGE,  # Sqlite filename
+    "timeout": 30,
     "results": False,  # Do not store return values of tasks.
-    "store_none": False,  # If a task returns None, do not save to results.
     "immediate": False,  # If True, run tasks synchronously.
     "consumer": {
         "workers": 5,
