@@ -39,7 +39,7 @@ django-compression-middleware==0.4.1
 django-compressor==2.4.1
 
 # Security
-pwned-passwords-django==1.4.1
+pwned-passwords-django==1.5
 django-project-version==0.15.1
 
 # Timezones
