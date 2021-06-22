@@ -13,6 +13,7 @@
 
     <div id="navpages" class="navpages">
         <!-- Discover Tab Group -->
+        {% if server_settings.sonarr_enabled or server_settings.radarr_enabled %}
         <div class="nav-tab group clickable" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true"
             aria-controls="discover-tabs">
             <div class="group-name line-clamp-1">
@@ -20,7 +21,9 @@
             </div>
             <i class="fas fa-angle-up icon-right" title="Collapse Group"></i>
         </div>
+        {% endif %}
         <div class="collapse show" id="discover-tabs">
+            {% if server_settings.sonarr_enabled and server_settings.radarr_enabled %}
             <div class="nav-tab suboption">
                 <a href="{% viewport_url 'discover:all' %}" class="line-clamp-1">
                     <i class="fas fa-compass icon-left"></i>
@@ -29,6 +32,8 @@
                 <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
                     data-modal-url="{% url 'discover:simple_filter_modal' %}"></i>
             </div>
+            {% endif %}
+            {% if server_settings.sonarr_enabled %}
             <div class="nav-tab suboption">
                 <a href="{% viewport_url 'discover:tv' %}" class="line-clamp-1">
                     <i class="fas fa-tv icon-left"></i>
@@ -38,6 +43,8 @@
                     data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=tv"
                     data-content-type="tv"></i>
             </div>
+            {% endif %}
+            {% if server_settings.radarr_enabled %}
             <div class="nav-tab suboption">
                 <a href="{% viewport_url 'discover:movies' %}" class="line-clamp-1">
                     <i class="fas fa-video icon-left"></i>
@@ -47,6 +54,7 @@
                     data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=movie"
                     data-content-type="movie"></i>
             </div>
+            {% endif %}
         </div>
 
         <!-- User Tab Group -->
