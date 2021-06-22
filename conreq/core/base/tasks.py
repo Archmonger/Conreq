@@ -1,21 +1,12 @@
-import os
 import sqlite3
 
-from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.settings import HUEY_STORAGE
 from conreq.utils.generic import get_database_type
 from django.db import connection
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task, db_task
 
-ARR_REFRESH_INTERNAL = os.environ.get("ARR_REFRESH_INTERNAL", "*/1")
 DB_ENGINE = get_database_type()
-
-
-@db_periodic_task(crontab(minute=ARR_REFRESH_INTERNAL))
-def refresh_content():
-    """Checks Sonarr/Radarr for new entries every minute."""
-    ArrManager().refresh_content()
 
 
 @db_task()
