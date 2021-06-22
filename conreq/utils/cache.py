@@ -1,8 +1,7 @@
 """Django caching wrapper and cache related capabilities."""
-from conreq.core.base.tasks import background_task
 from conreq.utils import log
 from conreq.utils.generic import clean_string, get_debug_from_env
-from conreq.utils.multiprocessing import ReturnThread
+from conreq.utils.multiprocessing import ReturnThread, background_task
 from django.core.cache import cache
 
 if get_debug_from_env():

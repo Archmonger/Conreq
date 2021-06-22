@@ -4,15 +4,9 @@ from conreq.settings import HUEY_STORAGE
 from conreq.utils.generic import get_database_type
 from django.db import connection
 from huey import crontab
-from huey.contrib.djhuey import db_periodic_task, db_task
+from huey.contrib.djhuey import db_periodic_task
 
 DB_ENGINE = get_database_type()
-
-
-@db_task()
-def background_task(function, *args, **kwargs):
-    """Adds any function to the background task queue."""
-    function(*args, **kwargs)
 
 
 @db_periodic_task(crontab(minute="0", hour="12", day="1/1"))

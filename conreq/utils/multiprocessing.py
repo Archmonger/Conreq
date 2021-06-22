@@ -1,6 +1,8 @@
 """Any function that assists in multithreading or multiprocessing"""
 from threading import Thread
 
+from huey.contrib.djhuey import db_task
+
 
 class ReturnThread(Thread):
     """Wrapper for python threads, however, these return a value."""
@@ -74,3 +76,9 @@ def threaded_execution_unique_args(functions):
         results.insert(index, result)
 
     return results
+
+
+@db_task()
+def background_task(function, *args, **kwargs):
+    """Adds any function to the background task queue."""
+    function(*args, **kwargs)

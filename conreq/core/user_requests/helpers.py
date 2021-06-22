@@ -1,11 +1,10 @@
 """Helpers for User Requests"""
 from conreq.core.arrs.sonarr_radarr import ArrManager
-from conreq.core.base.tasks import background_task
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
 from conreq.utils.generic import is_key_value_in_list
-from conreq.utils.multiprocessing import threaded_execution_unique_args
+from conreq.utils.multiprocessing import background_task, threaded_execution_unique_args
 from conreq.utils.views import (
     add_unique_to_db,
     obtain_radarr_parameters,
