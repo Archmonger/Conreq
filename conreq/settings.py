@@ -139,6 +139,7 @@ LOGGING = {
             "formatter": "main",
             "maxBytes": 1024 * 1024 * 5,  # 5 MB
             "backupCount": 5,
+            "encoding": "utf-8",
             "filename": CONREQ_LOG_FILE,
         },
         "console": {
