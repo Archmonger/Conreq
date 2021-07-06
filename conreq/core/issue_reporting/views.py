@@ -27,14 +27,7 @@ def report_issue(request):
         )
 
         # Get the parameters from the response
-        content_id = None
-        source = None
-        if request_parameters.get("tmdb_id", None):
-            content_id = request_parameters.get("tmdb_id", None)
-            source = "tmdb"
-        elif request_parameters.get("tvdb_id", None):
-            content_id = request_parameters.get("tvdb_id", None)
-            source = "tvdb"
+        content_id = request_parameters.get("tmdb_id", None)
         content_type = request_parameters.get("content_type", None)
         issue_names = [ISSUE_LIST[i][0] for i in request_parameters["issue_ids"]]
         all_resolutions = [ISSUE_LIST[i][1] for i in request_parameters["issue_ids"]]
@@ -50,7 +43,6 @@ def report_issue(request):
             resolutions=resolutions,
             reported_by=request.user,
             content_id=content_id,
-            source=source,
             content_type=content_type,
             seasons=seasons,
             episodes=episodes,
@@ -105,7 +97,6 @@ def report_issue_modal(request):
     context = {
         "issues": ISSUE_LIST,
         "tmdb_id": request.GET.get("tmdb_id", None),
-        "tvdb_id": request.GET.get("tvdb_id", None),
         "content_type": request.GET.get("content_type", None),
     }
     template = loader.get_template("modal/report_issue.html")

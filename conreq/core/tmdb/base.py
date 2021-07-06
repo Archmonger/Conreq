@@ -439,12 +439,10 @@ class TmdbBase:
                     result["content_type"] = (
                         content_type if content_type else result.get("media_type")
                     )
-                    result["content_source"] = "tmdb"
             # Special case for "Collections"
             elif isinstance(results, dict) and results.__contains__("parts"):
                 for result in results["parts"]:
                     result["content_type"] = content_type
-                    result["content_source"] = "tmdb"
             # Special case for "Person" with tv/movies appended
             elif isinstance(results, dict) and (
                 results.__contains__("tv_credits")
@@ -452,25 +450,19 @@ class TmdbBase:
             ):
                 for result in results["tv_credits"]["cast"]:
                     result["content_type"] = "tv"
-                    result["content_source"] = "tmdb"
                 for result in results["tv_credits"]["crew"]:
                     result["content_type"] = "tv"
-                    result["content_source"] = "tmdb"
                 for result in results["movie_credits"]["cast"]:
                     result["content_type"] = "movie"
-                    result["content_source"] = "tmdb"
                 for result in results["movie_credits"]["crew"]:
                     result["content_type"] = "movie"
-                    result["content_source"] = "tmdb"
             # Special case for get_content_by_tvdb_id
             elif isinstance(results, list):
                 for result in results:
                     result["content_type"] = content_type
-                    result["content_source"] = "tmdb"
             # # Set a single media item
             else:
                 results["content_type"] = content_type
-                results["content_source"] = "tmdb"
         except:
             log.handler(
                 "Failed to set content attributes!",

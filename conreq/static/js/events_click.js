@@ -7,7 +7,6 @@ var request_btn_click_event = async function () {
 		$(this).click(async function () {
 			let params = {
 				tmdb_id: $(this).data("tmdb-id"),
-				tvdb_id: $(this).data("tvdb-id"),
 				content_type: $(this).data("content-type"),
 				seasons: null,
 				episode_ids: null,
@@ -98,7 +97,6 @@ var content_modal_click_event = async function () {
 			current_btn.click(async function () {
 				let params = {
 					tmdb_id: $(this).data("tmdb-id"),
-					tvdb_id: $(this).data("tvdb-id"),
 					content_type: $(this).data("content-type"),
 					report_modal: $(this).hasClass(
 						"report-selection-modal-btn"
@@ -119,7 +117,6 @@ var create_report_modal_click_event = async function () {
 		$(this).click(async function () {
 			let params = {
 				tmdb_id: $(this).data("tmdb-id"),
-				tvdb_id: $(this).data("tvdb-id"),
 				content_type: $(this).data("content-type"),
 			};
 
@@ -180,7 +177,6 @@ var report_btn_click_event = async function () {
 		$(this).click(async function () {
 			let params = {
 				tmdb_id: $(this).data("tmdb-id"),
-				tvdb_id: $(this).data("tvdb-id"),
 				content_type: $(this).data("content-type"),
 				issue_ids: $(".checkbox:checked")
 					.map(function () {
@@ -280,9 +276,8 @@ var row_suboption_title_click_event = async function () {
 		else {
 			let all_episodes_container = $(this.parentElement.parentElement);
 			let episode_checkboxes = all_episodes_container.find("input");
-			let checkmarked_episode_checkboxes = episode_checkboxes.filter(
-				"input:checked"
-			);
+			let checkmarked_episode_checkboxes =
+				episode_checkboxes.filter("input:checked");
 			if (
 				episode_checkboxes.length ==
 				checkmarked_episode_checkboxes.length
@@ -309,9 +304,8 @@ var row_suboption_checkbox_click_event = async function () {
 				this.parentElement.parentElement.parentElement.parentElement
 			);
 			let episode_checkboxes = all_episodes_container.find("input");
-			let checkmarked_episode_checkboxes = episode_checkboxes.filter(
-				"input:checked"
-			);
+			let checkmarked_episode_checkboxes =
+				episode_checkboxes.filter("input:checked");
 			if (
 				episode_checkboxes.length ==
 				checkmarked_episode_checkboxes.length

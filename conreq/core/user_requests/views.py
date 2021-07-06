@@ -37,14 +37,8 @@ def request_content(request):
         # TV show was requested
         if request_parameters["content_type"] == "tv":
             # Try to obtain a TVDB ID (from params or fetch it from TMDB)
-            tvdb_id = None
-            tmdb_id = None
-            if request_parameters.__contains__("tvdb_id"):
-                tvdb_id = request_parameters["tvdb_id"]
-            if request_parameters.__contains__("tmdb_id"):
-                tmdb_id = request_parameters["tmdb_id"]
-            if not tvdb_id and tmdb_id:
-                tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
+            tmdb_id = request_parameters["tmdb_id"]
+            tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv").get("tvdb_id")
 
             # Request the show by the TVDB ID
             if tvdb_id:
@@ -98,7 +92,6 @@ def all_requests(request):
         .reverse()
         .values(
             "content_id",
-            "source",
             "content_type",
             "requested_by__username",
         )

@@ -126,13 +126,13 @@
         {% if report_modal %}
         <div class="standard-btn report-modal-btn no-highlighting clickable"
             data-modal-url="{% url 'issue_reporting:report_issue_modal' %}" data-content-type="tv"
-            data-tvdb-id="{{tvdb_id}}">
+            data-tmdb-id="{{tmdb_id}}">
             NEXT STEP
         </div>
         {% else %}
         <div class="standard-btn request-btn no-highlighting clickable"
             data-request-url="{% url 'user_requests:request_content' %}" data-content-type="tv"
-            data-tvdb-id="{{tvdb_id}}">
+            data-tmdb-id="{{tmdb_id}}">
             <i class="fas fa-plus"></i>
             REQUEST
         </div>

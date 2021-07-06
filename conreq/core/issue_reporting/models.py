@@ -13,7 +13,6 @@ class ReportedIssue(models.Model):
     resolved = models.BooleanField(default=False)
 
     content_id = models.CharField(max_length=30)
-    source = models.CharField(max_length=30)
     content_type = models.CharField(max_length=30)
 
     seasons = JSONField(null=True, blank=True)

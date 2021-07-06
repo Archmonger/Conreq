@@ -58,7 +58,6 @@ def more_info(request):
     requested = False
     if UserRequest.objects.filter(
         content_id=content["id"],
-        source="tmdb",
         content_type=content["content_type"],
     ):
         requested = True
@@ -132,14 +131,7 @@ def series_modal(request):
 
     # Get the ID from the URL
     tmdb_id = request.GET.get("tmdb_id", None)
-    tvdb_id = request.GET.get("tvdb_id", None)
-
-    # Determine the TVDB ID
-    if tvdb_id:
-        pass
-
-    elif tmdb_id:
-        tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")["tvdb_id"]
+    tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv").get("tvdb_id")
 
     # Check if the show is already within Sonarr's collection
     requested_show = content_manager.get(tvdb_id=tvdb_id)
@@ -182,7 +174,7 @@ def series_modal(request):
     if series:
         context = {
             "seasons": series["seasons"],
-            "tvdb_id": tvdb_id,
+            "tmdb_id": tmdb_id,
             "report_modal": report_modal,
         }
         template = loader.get_template("modal/series_selection.html")
@@ -214,7 +206,6 @@ def content_preview_modal(request):
         requested = False
         if UserRequest.objects.filter(
             content_id=content["id"],
-            source="tmdb",
             content_type=content["content_type"],
         ):
             requested = True

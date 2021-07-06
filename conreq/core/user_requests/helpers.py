@@ -1,9 +1,7 @@
 """Helpers for User Requests"""
-from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
-from conreq.utils.generic import is_key_value_in_list
 from conreq.utils.multiprocessing import background_task, threaded_execution_unique_args
 from conreq.utils.views import (
     add_unique_to_db,
@@ -91,18 +89,10 @@ def sonarr_request(
     )
 
     # Save to DB
-    if tmdb_id:
-        content_id = tmdb_id
-        source = "tmdb"
-    else:
-        content_id = tvdb_id
-        source = "tvdb"
-
     requested_by = request.user if not isinstance(request.user, AnonymousUser) else None
     add_unique_to_db(
         UserRequest,
-        content_id=content_id,
-        source=source,
+        content_id=tmdb_id,
         content_type="tv",
         requested_by=requested_by,
     )
@@ -128,59 +118,25 @@ def radarr_request(tmdb_id, request, content_manager, content_discovery):
     add_unique_to_db(
         UserRequest,
         content_id=tmdb_id,
-        source="tmdb",
         content_type="movie",
         requested_by=requested_by,
     )
 
 
-def __generate_request_card(entry, content_discovery, content_manager):
+def __generate_request_card(entry, content_discovery):
     """Generates a single request card. This is intended for multi-threaded use."""
     card = None
     # Fetch TMDB entry
-    if entry["source"] == "tmdb":
-        card = content_discovery.get_by_tmdb_id(
-            tmdb_id=entry["content_id"],
-            content_type=entry["content_type"],
-            obtain_extras=False,
-        )
-        card["requested_by"] = entry.get("requested_by__username")
-
-    # Fetch TVDB entry
-    elif entry["source"] == "tvdb":
-        # Attempt to convert card to TMDB
-        conversion = content_discovery.get_by_tvdb_id(tvdb_id=entry["content_id"])
-        # Conversion found
-        if conversion.__contains__("tv_results") and conversion["tv_results"]:
-            card = conversion["tv_results"][0]
-            card["requested_by"] = entry.get("requested_by__username")
-
-            # Convert all requests to use this new ID
-            old_requests = UserRequest.objects.filter(
-                content_id=entry["content_id"], source="tvdb"
-            )
-            old_requests.update(content_id=card["id"], source="tmdb")
-
-        # Fallback to checking sonarr's database
-        else:
-            card = content_manager.get(tvdb_id=entry["content_id"])
-            card["requested_by"] = entry.get("requested_by__username")
-
-            # Determine if the card has a known poster image
-            if isinstance(card, dict):
-                card["content_type"] = entry["content_type"]
-                if card.__contains__("images"):
-                    remote_poster = is_key_value_in_list(
-                        "coverType", "poster", card["images"], return_item=True
-                    )
-                    if remote_poster:
-                        card["remotePoster"] = remote_poster["remoteUrl"]
+    card = content_discovery.get_by_tmdb_id(
+        tmdb_id=entry["content_id"],
+        content_type=entry["content_type"],
+        obtain_extras=False,
+    )
+    card["requested_by"] = entry.get("requested_by__username")
 
     if card is None:
         log.handler(
             entry["content_type"]
-            + " from "
-            + entry["source"]
             + " with ID "
             + entry["content_id"]
             + " no longer exists!",
@@ -194,14 +150,13 @@ def __generate_request_card(entry, content_discovery, content_manager):
 def generate_requests_cards(user_requests):
     """Takes in a DB query containing requests, and pops out a list of their current request status"""
     content_discovery = TmdbDiscovery()
-    content_manager = ArrManager()
     all_cards = []
     function_list = []
     for request in user_requests:
         function_list.append(
             {
                 "function": __generate_request_card,
-                "args": [request, content_discovery, content_manager],
+                "args": [request, content_discovery],
             }
         )
 
