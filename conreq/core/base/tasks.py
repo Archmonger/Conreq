@@ -1,12 +1,13 @@
 import sqlite3
 
-from conreq.settings import HUEY_STORAGE
 from conreq.utils.generic import get_database_type
+from django.conf import settings
 from django.db import connection
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
 DB_ENGINE = get_database_type()
+HUEY_STORAGE = getattr(settings, "HUEY_STORAGE")
 
 
 @db_periodic_task(crontab(minute="0", hour="12", day="1/1"))

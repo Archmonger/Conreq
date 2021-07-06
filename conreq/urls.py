@@ -14,13 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from conreq.settings import APPS_DIR
 from conreq.utils.generic import get_base_url, get_debug_from_env, list_modules_with
 
+APPS_DIR = getattr(settings, "APPS_DIR")
 DEBUG = get_debug_from_env()
 BASE_URL = get_base_url()
 

@@ -1,9 +1,11 @@
 import os
 from importlib import import_module
 
-from conreq.settings import APPS_DIR
+from django.conf import settings
 
 from .generic import list_modules
+
+APPS_DIR = getattr(settings, "APPS_DIR")
 
 
 def list_user_apps():
