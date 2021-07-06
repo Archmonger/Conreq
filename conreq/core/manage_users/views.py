@@ -68,7 +68,9 @@ def manage_users(request):
             user.save()
             return JsonResponse({"success": True})
         except ValidationError as issues:
-            return JsonResponse({"success": False, "message": " ".join(issues)})
+            issue_list = list(dict(issues).values())
+            issue_list = [item for sublist in issue_list for item in sublist]
+            return JsonResponse({"success": False, "message": " ".join(issue_list)})
 
     # Render the HTTP page
     if request.user.is_staff:
