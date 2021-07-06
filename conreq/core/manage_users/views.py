@@ -67,12 +67,8 @@ def manage_users(request):
             user.clean_fields()
             user.save()
             return JsonResponse({"success": True})
-        except:
-            return JsonResponse(
-                {
-                    "success": False,
-                }
-            )
+        except ValidationError as issues:
+            return JsonResponse({"success": False, "message": " ".join(issues)})
 
     # Render the HTTP page
     if request.user.is_staff:
