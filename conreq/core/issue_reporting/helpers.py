@@ -36,6 +36,7 @@ def generate_issue_cards(reported_issues):
         "content_id",
         "resolved",
         "auto_resolved",
+        "auto_resolve_in_progress",
         "content_type",
         "issues",
         "seasons",

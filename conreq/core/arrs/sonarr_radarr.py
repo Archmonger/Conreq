@@ -402,41 +402,6 @@ class ArrManager:
                 _logger,
             )
 
-    def redownload(self, **kwargs):
-        """Deletes, requests, and adds an existing movie, series, or episode(s) using Sonarr or Radarr.
-
-        Kwargs:
-            # Pick One ID
-            radarr_id: An integer containing the Radarr ID.
-            sonarr_id: An integer containing the Sonarr ID.
-
-            # Only used if using sonarr_id
-            episode_file_ids: A list of integers containing the specific "episodeFileId" values (optional).
-            seasons: A list of integers containing the specific season numbers values (optional).
-            episode_ids: A list of integers containing the specific "episodeId" values (optional).
-
-        Returns:
-            1) Dict containing
-                "movie_update_results",
-                "movie_search_results"
-            2) Dict containing
-                "season_update_results",
-                "episode_update_results",
-                "show_search_results",
-                "season_search_results",
-                "episode_search_results"
-            3) JSON response of removing the content.
-            4) None
-        """
-        response = {}
-        # Deletes the requested movie, series, seasons, or episodes
-        response["delete_response"] = self.delete(**kwargs)
-        # Requests the requested movie, series, seasons, or episodes
-        response["request_response"] = self.request(**kwargs)
-
-        # Return merged delete and request response
-        return response
-
     def check_sonarr_defaults(self):
         """Will configure default root dirs and quality profiles (if unset)"""
         if self.conreq_config.sonarr_enabled:

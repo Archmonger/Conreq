@@ -13,6 +13,7 @@ class ReportedIssue(models.Model):
     resolutions = JSONField(blank=True, default=[])
     resolved = models.BooleanField(default=False)
     auto_resolved = models.BooleanField(default=False)
+    auto_resolve_in_progress = models.BooleanField(default=False)
 
     content_id = models.CharField(max_length=30)
     content_type = models.CharField(max_length=30)

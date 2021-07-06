@@ -68,6 +68,15 @@
                     </div>
                 </div>
             </div>
+            <div class="settings-item-group toggler">
+                <div class="settings-item admin pretty p-switch p-fill"
+                    data-setting-name="Conreq Automatically Resolve Issues">
+                    <input type="checkbox" {% if server_settings.conreq_auto_resolve_issues %} checked {% endif %} />
+                    <div class="state">
+                        <label>Automatic Issue Resolution</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

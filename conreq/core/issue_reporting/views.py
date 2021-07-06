@@ -41,18 +41,20 @@ def report_issue(request):
         }
 
         # Add the report to the database
-        unique = add_unique_to_db(ReportedIssue, **params)
+        new_issue = add_unique_to_db(ReportedIssue, **params)
 
         # Auto resolve
-        if unique and params["content_type"] == "tv":
+        if new_issue and params["content_type"] == "tv":
             arr_auto_resolve_tv(
                 params["content_id"],
                 params["seasons"],
                 params["episode_ids"],
                 params["resolutions"],
             )
-        elif unique and params["content_type"] == "movie":
-            arr_auto_resolve_movie(params["content_id"], params["resolutions"])
+        elif new_issue and params["content_type"] == "movie":
+            arr_auto_resolve_movie(
+                params["content_id"], new_issue.pk, params["resolutions"]
+            )
 
         return JsonResponse({"success": True})
 
@@ -89,7 +91,9 @@ def manage_issue(request):
             issue = ReportedIssue.objects.filter(id=request_parameters["request_id"])
             if issue:
                 issue.update(
-                    resolved=request_parameters["resolved"], auto_resolved=False
+                    resolved=request_parameters["resolved"],
+                    auto_resolved=False,
+                    auto_resolve_in_progress=False,
                 )
                 return JsonResponse({"success": True})
 
