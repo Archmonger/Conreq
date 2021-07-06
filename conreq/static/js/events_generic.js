@@ -170,8 +170,7 @@ $(document).ready(async function () {
 				let loader = $(this);
 				$.get(loader.data("url"), function (fetched_html) {
 					current_viewport.trigger("component-loading", [loader]);
-					let new_html = DOMPurify.sanitize(fetched_html);
-					let new_element = loader.replaceWithPush(new_html);
+					let new_element = loader.replaceWithPush(fetched_html);
 					current_viewport.trigger("component-loaded", [
 						new_element,
 						loader,

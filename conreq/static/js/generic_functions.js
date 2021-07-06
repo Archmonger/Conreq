@@ -338,7 +338,7 @@ var hide_modals_and_popups = async function () {
 };
 
 $.fn.replaceWithPush = function (a) {
-	let $a = $(a);
+	let $a = $(DOMPurify.sanitize(a));
 
 	this.replaceWith($a);
 	return $a;
