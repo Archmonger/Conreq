@@ -2,6 +2,7 @@ from conreq.utils.testing import performance_metrics
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
@@ -42,12 +43,8 @@ def manage_users(request):
             try:
                 validate_password(password1)
                 user.set_password(password1)
-            except:
-                return JsonResponse(
-                    {
-                        "success": False,
-                    }
-                )
+            except ValidationError as issues:
+                return JsonResponse({"success": False, "message": " ".join(issues)})
 
         # Set other user fields
         new_username = request.POST.get("username")
