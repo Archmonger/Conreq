@@ -55,6 +55,7 @@
         </div>
     </div>
 
+
     <div class="category">
         <div class="title">Resolved
             {% if card.resolved %}
@@ -63,8 +64,11 @@
             <div class="inline-availablity-dot red"> </div>
             {% endif %}
         </div>
+        {% if card.resolved and card.auto_resolved %}
+        Yes (Auto)
+        {% else %}
         {{ card.resolved|yesno:"Yes,No" }}
-
+        {% endif %}
     </div>
 
 </div>

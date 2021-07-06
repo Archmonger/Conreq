@@ -2,8 +2,8 @@ import json
 
 from conreq.core.issue_reporting.models import ReportedIssue
 from conreq.utils import log
-from conreq.utils.views import add_unique_to_db
 from conreq.utils.testing import performance_metrics
+from conreq.utils.views import add_unique_to_db
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
@@ -11,6 +11,7 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
 from .helpers import ISSUE_LIST, generate_issue_cards
+from .tasks import arr_auto_resolve_movie, arr_auto_resolve_tv
 
 _logger = log.get_logger(__name__)
 
@@ -27,27 +28,31 @@ def report_issue(request):
         )
 
         # Get the parameters from the response
-        content_id = request_parameters.get("tmdb_id", None)
-        content_type = request_parameters.get("content_type", None)
-        issue_names = [ISSUE_LIST[i][0] for i in request_parameters["issue_ids"]]
         all_resolutions = [ISSUE_LIST[i][1] for i in request_parameters["issue_ids"]]
-        resolutions = list(set([j for i in all_resolutions for j in i]))
-        seasons = request_parameters.get("seasons", [])
-        episodes = request_parameters.get("episodes", [])
-        episode_ids = request_parameters.get("episode_ids", [])
+        params = {
+            "reported_by": request.user,
+            "content_id": request_parameters.get("tmdb_id", None),
+            "content_type": request_parameters.get("content_type", None),
+            "issues": [ISSUE_LIST[i][0] for i in request_parameters["issue_ids"]],
+            "resolutions": list(set([j for i in all_resolutions for j in i])),
+            "seasons": request_parameters.get("seasons", []),
+            "episodes": request_parameters.get("episodes", []),
+            "episode_ids": request_parameters.get("episode_ids", []),
+        }
 
         # Add the report to the database
-        add_unique_to_db(
-            ReportedIssue,
-            issues=issue_names,
-            resolutions=resolutions,
-            reported_by=request.user,
-            content_id=content_id,
-            content_type=content_type,
-            seasons=seasons,
-            episodes=episodes,
-            episode_ids=episode_ids,
-        )
+        unique = add_unique_to_db(ReportedIssue, **params)
+
+        # Auto resolve
+        if unique and params["content_type"] == "tv":
+            arr_auto_resolve_tv(
+                params["content_id"],
+                params["seasons"],
+                params["episode_ids"],
+                params["resolutions"],
+            )
+        elif unique and params["content_type"] == "movie":
+            arr_auto_resolve_movie(params["content_id"], params["resolutions"])
 
         return JsonResponse({"success": True})
 
@@ -83,7 +88,9 @@ def manage_issue(request):
         ):
             issue = ReportedIssue.objects.filter(id=request_parameters["request_id"])
             if issue:
-                issue.update(resolved=request_parameters["resolved"])
+                issue.update(
+                    resolved=request_parameters["resolved"], auto_resolved=False
+                )
                 return JsonResponse({"success": True})
 
     return HttpResponseForbidden()

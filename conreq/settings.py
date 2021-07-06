@@ -80,7 +80,7 @@ HUEY = {
     "results": False,  # Do not store return values of tasks.
     "immediate": False,  # If True, run tasks synchronously.
     "consumer": {
-        "workers": 5,
+        "workers": 20,
     },
 }
 

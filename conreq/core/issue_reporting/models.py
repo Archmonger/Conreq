@@ -6,15 +6,16 @@ User = get_user_model()
 
 # Create your models here.
 class ReportedIssue(models.Model):
-    issues = JSONField()
-    resolutions = models.TextField()
     reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
     date_reported = models.DateTimeField(auto_now_add=True)
+
+    issues = JSONField()
+    resolutions = JSONField(blank=True, default=[])
     resolved = models.BooleanField(default=False)
+    auto_resolved = models.BooleanField(default=False)
 
     content_id = models.CharField(max_length=30)
     content_type = models.CharField(max_length=30)
-
-    seasons = JSONField(null=True, blank=True)
-    episodes = JSONField(null=True, blank=True)
-    episode_ids = JSONField(null=True, blank=True)
+    seasons = JSONField(blank=True, default=[])
+    episodes = JSONField(blank=True, default=[])
+    episode_ids = JSONField(blank=True, default=[])
