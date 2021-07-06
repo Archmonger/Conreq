@@ -35,7 +35,9 @@ let update_active_tab = async function () {
 
 // Updates the page name
 let update_page_title = async function (viewport_selector) {
-	let page_name = $(viewport_selector + ">.page-name").val();
+	let page_name = DOMPurify.sanitize(
+		$(viewport_selector + ">.page-name").val()
+	);
 	let app_name = $("#app-name").val();
 	if (page_name) {
 		document.title = page_name + " | " + app_name;
@@ -175,9 +177,8 @@ var generate_viewport = async function (standard_viewport_load = true) {
 				await destroy_viewport(viewport_selector);
 
 				// Inject and configure the new content
-				$(viewport_selector)[0].innerHTML = DOMPurify.sanitize(
-					viewport_html
-				);
+				$(viewport_selector)[0].innerHTML =
+					DOMPurify.sanitize(viewport_html);
 				select_active_viewport(viewport_selector);
 				await prepare_viewport(viewport_selector);
 				update_page_title(viewport_selector);
