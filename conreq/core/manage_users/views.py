@@ -42,11 +42,10 @@ def manage_users(request):
             try:
                 validate_password(password1)
                 user.set_password(password1)
-            except Exception as error:
+            except:
                 return JsonResponse(
                     {
                         "success": False,
-                        "message": " ".join(str(error)),
                     }
                 )
 
@@ -71,11 +70,10 @@ def manage_users(request):
             user.clean_fields()
             user.save()
             return JsonResponse({"success": True})
-        except Exception as error:
+        except:
             return JsonResponse(
                 {
                     "success": False,
-                    "message": str(error),
                 }
             )
 
