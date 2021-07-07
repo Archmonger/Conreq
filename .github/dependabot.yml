@@ -5,5 +5,3 @@ updates:
       schedule:
           interval: "daily"
       target-branch: "develop"
-      reviewers:
-          - "Archmonger"
