@@ -161,10 +161,6 @@ LOGGING = {
         "level": "INFO",
     },
     "loggers": {
-        "daphne": {
-            "level": "INFO",
-            "propagate": True,
-        },
         "django": {
             "level": "INFO",
             "propagate": True,
