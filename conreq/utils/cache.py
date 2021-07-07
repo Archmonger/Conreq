@@ -1,12 +1,8 @@
 """Django caching wrapper and cache related capabilities."""
 from conreq.utils import log
-from conreq.utils.generic import clean_string, get_debug_from_env
+from conreq.utils.generic import clean_string
 from conreq.utils.multiprocessing import ReturnThread, background_task
 from django.core.cache import cache
-
-if get_debug_from_env():
-    print("Conreq is in DEBUG mode. Clearing cache...")
-    cache.clear()
 
 # Globals
 DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
