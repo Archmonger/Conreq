@@ -46,6 +46,7 @@ def report_issue(request):
         # Auto resolve
         if new_issue and params["content_type"] == "tv":
             arr_auto_resolve_tv(
+                new_issue.pk,
                 params["content_id"],
                 params["seasons"],
                 params["episode_ids"],
@@ -53,7 +54,7 @@ def report_issue(request):
             )
         elif new_issue and params["content_type"] == "movie":
             arr_auto_resolve_movie(
-                params["content_id"], new_issue.pk, params["resolutions"]
+                new_issue.pk, params["content_id"], params["resolutions"]
             )
 
         return JsonResponse({"success": True})

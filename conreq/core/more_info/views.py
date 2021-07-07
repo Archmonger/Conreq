@@ -1,23 +1,21 @@
-from conreq.core.user_requests.models import UserRequest
-from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.arrs.helpers import wait_for_series_info
 from conreq.core.arrs.sonarr_radarr import ArrManager
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
+from conreq.utils.generic import is_key_value_in_list, str_to_bool
+from conreq.utils.testing import performance_metrics
 from conreq.utils.views import (
     obtain_sonarr_parameters,
     set_many_availability,
     set_single_availability,
 )
-from conreq.utils.generic import is_key_value_in_list, str_to_bool
-from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
-from .helpers import (
-    preprocess_tmdb_person,
-    preprocess_tmdb_result,
-)
+from .helpers import preprocess_tmdb_person, preprocess_tmdb_result
 
 _logger = log.get_logger(__name__)
 
@@ -152,23 +150,7 @@ def series_modal(request):
         )
 
     # Keep refreshing until we get the series from Sonarr
-    series = content_manager.get(
-        tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
-    )
-    if series is None:
-        series_fetch_retries = 0
-        while series is None:
-            if series_fetch_retries > MAX_SERIES_FETCH_RETRIES:
-                break
-            series_fetch_retries = series_fetch_retries + 1
-            series = content_manager.get(
-                tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
-            )
-            log.handler(
-                "Sonarr did not have the series information! Conreq is waiting...",
-                log.INFO,
-                _logger,
-            )
+    series = wait_for_series_info(tvdb_id, content_manager)
 
     # Series successfully obtained from Sonarr
     if series:

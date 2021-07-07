@@ -217,7 +217,7 @@ class ArrManager:
         """
         try:
             # Search for a movie with a specific Radarr ID.
-            if kwargs.__contains__("radarr_id"):
+            if kwargs.get("radarr_id"):
                 response = {
                     "movie_update_results": [],
                     "movie_search_results": [],
@@ -244,7 +244,7 @@ class ArrManager:
                 return response
 
             # Search for a show with a specific Sonarr ID.
-            if kwargs.__contains__("sonarr_id"):
+            if kwargs.get("sonarr_id"):
                 response = {
                     "season_update_results": [],
                     "episode_update_results": [],
@@ -260,7 +260,7 @@ class ArrManager:
                 series["monitored"] = True
 
                 # Set specific seasons as monitored
-                if kwargs.__contains__("seasons") and kwargs["seasons"] is not None:
+                if kwargs.get("seasons"):
                     for season in series["seasons"]:
                         if season["seasonNumber"] in kwargs["seasons"]:
                             season["monitored"] = True
@@ -280,10 +280,7 @@ class ArrManager:
                 response["episode_update_results"] = []
 
                 # Set specific episodes as monitored
-                if (
-                    kwargs.__contains__("episode_ids")
-                    and kwargs["episode_ids"] is not None
-                ):
+                if kwargs.get("episode_ids"):
                     for episode in episodes:
                         if episode["id"] in kwargs["episode_ids"]:
                             episode["monitored"] = True
@@ -303,19 +300,14 @@ class ArrManager:
                     )
 
                 # Search for the whole show
-                if (
-                    not kwargs.__contains__("seasons") or kwargs["seasons"] is None
-                ) and (
-                    not kwargs.__contains__("episode_ids")
-                    or kwargs["episode_ids"] is None
-                ):
+                if not kwargs.get("seasons") and not kwargs.get("episode_ids"):
                     response["show_search_results"] = self.__sonarr.set_command(
                         name="SeriesSearch", seriesId=kwargs["sonarr_id"]
                     )
                     return response
 
                 # Search for specific seasons
-                if kwargs.__contains__("seasons") and kwargs["seasons"] is not None:
+                if kwargs.get("seasons"):
                     response["season_search_results"] = []
                     for season in kwargs["seasons"]:
                         response["season_search_results"].append(
@@ -327,10 +319,7 @@ class ArrManager:
                         )
 
                 # Search for specific episodes
-                if (
-                    kwargs.__contains__("episode_ids")
-                    and kwargs["episode_ids"] is not None
-                ):
+                if kwargs.get("episode_ids"):
                     response["episode_search_results"] = self.__sonarr.set_command(
                         name="EpisodeSearch",
                         episodeIds=kwargs["episode_ids"],
@@ -359,7 +348,7 @@ class ArrManager:
             # Pick One ID
             radarr_id: An integer string containing the Radarr ID.
             sonarr_id: An integer containing the Sonarr ID.
-            episode_file_ids: A list of integers containing the specific "episodeFileId" values.
+            episode_file_id: Integers containing the specific "episodeFileId" value.
 
         Returns:
             1) JSON response of removing the content.
@@ -369,24 +358,20 @@ class ArrManager:
         # TODO: Need to blacklist deleted content.
         try:
             # Remove a movie with a specific Radarr ID.
-            if kwargs.__contains__("radarr_id"):
+            if kwargs.get("radarr_id"):
                 return self.__radarr.del_movie(kwargs["radarr_id"], delFiles=True)
 
             # Remove a show with a specific Sonarr ID.
-            if kwargs.__contains__("sonarr_id"):
+            if kwargs.get("sonarr_id"):
                 # Remove the whole show
                 return self.__sonarr.del_series(kwargs["sonarr_id"], delFiles=True)
 
             # Remove episodes with Sonarr episode IDs.
-            if kwargs.__contains__("episode_file_ids"):
-                response = []
-                # Remove all episode files in the list
-                for episode_id in kwargs["episode_file_ids"]:
-                    response.append(
-                        self.__sonarr.del_episode_file_by_episode_id(episode_id)
-                    )
-
-                return response
+            if kwargs.get("episode_file_id"):
+                # Remove an episode file
+                return self.__sonarr.del_episode_file_by_episode_id(
+                    kwargs["episode_file_id"]
+                )
 
             # Invalid parameter
             log.handler(

@@ -73,7 +73,7 @@
         {% if card.resolved and card.auto_resolved %}
         Yes (Auto)
         {% elif card.auto_resolve_in_progress and not card.resolved and not card.auto_resolved %}
-        No (Auto - In Progress)
+        No (Auto)
         {% else %}
         {{ card.resolved|yesno:"Yes,No" }}
         {% endif %}
