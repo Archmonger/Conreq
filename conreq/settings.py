@@ -194,7 +194,7 @@ LOGGING = {
             "level": LOG_LEVEL,
             "propagate": True,
         },
-        "huey": {"level": LOG_LEVEL, "propagate": True},
+        "huey": {"level": LOG_LEVEL, "propagate": False},
     },
 }
 
