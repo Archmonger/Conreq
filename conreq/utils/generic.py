@@ -17,6 +17,11 @@ def is_key_value_in_list(key, value, search_list, return_item=False):
     return False
 
 
+def remove_duplicates_from_list(duplicate_list):
+    """Returns a list that contains no duplicate values"""
+    return list(dict.fromkeys(duplicate_list))
+
+
 def clean_string(string):
     """Removes non-alphanumerics from a string"""
     try:
