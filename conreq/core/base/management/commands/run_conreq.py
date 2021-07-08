@@ -26,6 +26,9 @@ class Command(BaseCommand):
             call_command("run_huey", "--quiet")
 
     def handle(self, *args, **options):
+        # Execute tests to ensure Conreq is healthy
+        call_command("test", "--noinput", "--failfast")
+
         if DEBUG:
             print("Conreq is in DEBUG mode. Clearing cache...")
             cache.clear()
