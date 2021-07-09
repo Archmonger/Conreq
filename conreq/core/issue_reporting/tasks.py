@@ -64,15 +64,14 @@ def arr_auto_resolve_tv(issue_id, tmdb_id, seasons, episode_ids, resolutions):
             # Obtain the seasons and episodes
             for season in show.get("seasons", []):
                 for episode in season.get("episodes"):
-                    # User reported an episode, check if the episode has a file
-                    if episode.get("id") in episode_ids and episode.get("hasFile"):
-                        content_manager.delete(
-                            episode_file_id=episode.get("episodeFileId")
-                        )
-
-                    # User reported a season, check if the season has episode files to be deleted
-                    elif season.get("seasonNumber") in seasons and episode.get(
-                        "hasFile"
+                    if (
+                        # User reported an episode, check if the episode has a file
+                        episode.get("id") in episode_ids
+                        and episode.get("hasFile")
+                    ) or (
+                        # User reported a season, check if the season has episode files to be deleted
+                        season.get("seasonNumber") in seasons
+                        and episode.get("hasFile")
                     ):
                         content_manager.delete(
                             episode_file_id=episode.get("episodeFileId")
