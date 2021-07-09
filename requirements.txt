@@ -8,7 +8,7 @@ channels==3.0.3
 hypercorn[h3]==0.11.2
 whitenoise[brotli]==5.2.0
 requests==2.25.1
-pillow==8.3.0
+pillow==8.3.1
 
 # Database/Storage
 pymysql==1.0.2
