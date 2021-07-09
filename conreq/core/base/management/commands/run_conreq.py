@@ -1,5 +1,6 @@
 import os
 from multiprocessing import Process
+import sqlite3
 
 import django
 from conreq.utils.generic import get_debug_from_env
@@ -12,10 +13,20 @@ from hypercorn.run import run as run_hypercorn
 
 HYPERCORN_TOML = os.path.join(getattr(settings, "DATA_DIR"), "hypercorn.toml")
 DEBUG = get_debug_from_env()
+HUEY_STORAGE = getattr(settings, "HUEY_STORAGE")
 
 
 class Command(BaseCommand):
     help = "Runs all commands needed to safely start Conreq."
+
+    @staticmethod
+    def reset_huey_db():
+        with sqlite3.connect(HUEY_STORAGE) as cursor:
+            tables = list(
+                cursor.execute("select name from sqlite_master where type is 'table'")
+            )
+            cursor.executescript(";".join(["delete from %s" % i for i in tables]))
+        print("DEBUG: Removing stale background tasks...")
 
     @staticmethod
     def start_huey():
@@ -30,8 +41,10 @@ class Command(BaseCommand):
         call_command("test", "--noinput", "--failfast")
 
         if DEBUG:
-            print("Conreq is in DEBUG mode. Clearing cache...")
+            print("Conreq is in DEBUG mode.")
+            print("DEBUG: Clearing cache...")
             cache.clear()
+            self.reset_huey_db()
 
         if not DEBUG:
             # Run any preparation steps
