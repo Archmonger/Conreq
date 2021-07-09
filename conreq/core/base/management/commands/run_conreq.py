@@ -19,23 +19,6 @@ HUEY_STORAGE = getattr(settings, "HUEY_STORAGE")
 class Command(BaseCommand):
     help = "Runs all commands needed to safely start Conreq."
 
-    @staticmethod
-    def reset_huey_db():
-        with sqlite3.connect(HUEY_STORAGE) as cursor:
-            tables = list(
-                cursor.execute("select name from sqlite_master where type is 'table'")
-            )
-            cursor.executescript(";".join(["delete from %s" % i for i in tables]))
-        print("DEBUG: Removing stale background tasks...")
-
-    @staticmethod
-    def start_huey():
-        django.setup()
-        if DEBUG:
-            call_command("run_huey")
-        if not DEBUG:
-            call_command("run_huey", "--quiet")
-
     def handle(self, *args, **options):
         # Execute tests to ensure Conreq is healthy
         call_command("test", "--noinput", "--failfast")
@@ -75,3 +58,20 @@ class Command(BaseCommand):
         if DEBUG:
             # Development webserver
             call_command("runserver", "0.0.0.0:8000")
+
+    @staticmethod
+    def reset_huey_db():
+        with sqlite3.connect(HUEY_STORAGE) as cursor:
+            tables = list(
+                cursor.execute("select name from sqlite_master where type is 'table'")
+            )
+            cursor.executescript(";".join(["delete from %s" % i for i in tables]))
+        print("DEBUG: Removing stale background tasks...")
+
+    @staticmethod
+    def start_huey():
+        django.setup()
+        if DEBUG:
+            call_command("run_huey")
+        if not DEBUG:
+            call_command("run_huey", "--quiet")
