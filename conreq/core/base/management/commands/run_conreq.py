@@ -22,6 +22,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Execute tests to ensure Conreq is healthy
         call_command("test", "--noinput", "--failfast")
+        port = options["port"]
 
         if DEBUG:
             print("Conreq is in DEBUG mode.")
@@ -42,7 +43,7 @@ class Command(BaseCommand):
         if not DEBUG:
             # Default webserver configuration
             config = HypercornConfig()
-            config.bind = "0.0.0.0:8000"
+            config.bind = f"0.0.0.0:{port}"
             config.websocket_ping_interval = 20
             config.workers = 6
             config.application_path = "conreq.asgi:application"
@@ -57,10 +58,20 @@ class Command(BaseCommand):
 
         if DEBUG:
             # Development webserver
-            call_command("runserver", "0.0.0.0:8000")
+            call_command("runserver", f"0.0.0.0:{port}")
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "-p",
+            "--port",
+            help="Select the port number for Conreq to run on.",
+            default=8000,
+            type=int,
+        )
 
     @staticmethod
     def reset_huey_db():
+        """Deletes all entries within the Huey background task database."""
         with sqlite3.connect(HUEY_STORAGE) as cursor:
             tables = list(
                 cursor.execute("select name from sqlite_master where type is 'table'")
@@ -70,6 +81,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def start_huey():
+        """Starts the Huey background task manager."""
         django.setup()
         if DEBUG:
             call_command("run_huey")
