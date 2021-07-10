@@ -3,13 +3,14 @@ site_name: Conreq Documentation
 nav:
     - Home: index.md
     - Configuration:
+          - Built-in Webserver: webserver.md
           - Custom CSS/JS: static_files.md
           - Organizr Authentication: organizr.md
           - MySQL: mysql.md
     - Development:
           - Our Code Explained: code_tldr.md
-          - Building Conreq: building.md
-          - Extending Conreq (Apps): extensions.md
+          - Running Conreq (Manually): run_manually.md
+          - Custom Apps: apps.md
           - Updating the Docs: docs_contrib.md
 
 theme:

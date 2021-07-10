@@ -14,7 +14,7 @@
     
     
       
-        <title>Building Conreq - Conreq Documentation</title>
+        <title>Custom Apps - Conreq Documentation</title>
       
     
     
@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#creating-a-development-environment" class="md-skip">
+        <a href="#app-file-structure" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Building Conreq
+              Custom Apps
             
           </span>
         </div>
@@ -179,7 +179,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../static_files/" class="md-tabs__link">
+      <a href="../webserver/" class="md-tabs__link">
         Configuration
       </a>
     </li>
@@ -294,6 +294,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../webserver/" class="md-nav__link">
+        Built-in Webserver
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../static_files/" class="md-nav__link">
         Custom CSS/JS
       </a>
@@ -372,6 +384,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../run_manually/" class="md-nav__link">
+        Running Conreq (Manually)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -382,12 +406,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Building Conreq
+          Custom Apps
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Building Conreq
+        Custom Apps
       </a>
       
         
@@ -403,63 +427,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-a-development-environment" class="md-nav__link">
-    Creating a Development Environment
-  </a>
-  
-    <nav class="md-nav" aria-label="Creating a Development Environment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#software-required" class="md-nav__link">
-    Software Required
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#setting-up-the-environment" class="md-nav__link">
-    Setting Up the Environment
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#creating-a-production-environment" class="md-nav__link">
-    Creating a Production Environment
+  <a href="#app-file-structure" class="md-nav__link">
+    App File Structure
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#optional-visual-studio-code-configuration" class="md-nav__link">
-    Optional: Visual Studio Code Configuration
-  </a>
-  
-    <nav class="md-nav" aria-label="Optional: Visual Studio Code Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vs-code-extensions" class="md-nav__link">
-    VS Code Extensions
+  <a href="#creating-the-base-app" class="md-nav__link">
+    Creating the Base App
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#vs-code-settings" class="md-nav__link">
-    VS Code Settings
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -467,18 +451,6 @@
   
 </nav>
       
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../extensions/" class="md-nav__link">
-        Extending Conreq (Apps)
-      </a>
     </li>
   
 
@@ -513,81 +485,23 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/building.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/apps.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Building Conreq</h1>
+                  <h1>Custom Apps</h1>
                 
-                <p>There are two environments to build Conreq for: Development and Production.</p>
-<p>If you intend to edit Conreq's code, then proceed with the Development instructions.</p>
+                <p>Work in Progress, Conreq extension framework is not yet in place.</p>
 <hr />
-<h2 id="creating-a-development-environment">Creating a Development Environment<a class="headerlink" href="#creating-a-development-environment" title="Permanent link">&para;</a></h2>
-<h3 id="software-required">Software Required<a class="headerlink" href="#software-required" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Install <a href="https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab">Python 3.8</a> (Easiest if this is the only version of python on your computer)</li>
-<li><em>Optional</em><ul>
-<li>Install <a href="https://code.visualstudio.com/">Visual Studio Code</a> (Any editor would work)</li>
-</ul>
-</li>
-<li><em>If using Windows</em><ul>
-<li>Install <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">Visual Studio C++</a> (Within this installer, navigate to <em>C++ Build Tools</em>. Select <em>MSVC</em> and <em>Windows 10 SDK</em>)</li>
-</ul>
-</li>
-</ul>
-<h3 id="setting-up-the-environment">Setting Up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Pull the repository from GitHub.</li>
-<li>Open a terminal (ex. Command Prompt or PowerShell) as administrator at the root of the repository.</li>
-<li><em>If using Windows</em><ul>
-<li>Type <code>set-executionpolicy remotesigned</code> and select Yes to All to allow external Python scripts to run on your computer.</li>
-</ul>
-</li>
-<li>Type <code>python -m venv venv</code> to create a Python virtual environment.</li>
-<li>Type <code>./venv/Scripts/activate</code> to enter the virtual environment.</li>
-<li>Type <code>pip install -r requirements.txt</code> to install all Python dependencies within the virtual environment.</li>
-<li>Create or update the database by typing <code>python manage.py migrate</code>.</li>
-<li>Type <code>python manage.py run_huey</code> to run the background task management system.</li>
-<li>Open a new terminal and type <code>./venv/Scripts/activate</code>.</li>
-<li>Type <code>python manage.py runserver</code> to run the development webserver.</li>
-</ol>
+<h2 id="app-file-structure">App File Structure<a class="headerlink" href="#app-file-structure" title="Permanent link">&para;</a></h2>
+<p>Nothing here but chickens.</p>
 <hr />
-<h2 id="creating-a-production-environment">Creating a Production Environment<a class="headerlink" href="#creating-a-production-environment" title="Permanent link">&para;</a></h2>
-<p>Follow all instructions laid out within <a href="https://github.com/Archmonger/Conreq/wiki/Building-Guide#creating-a-development-environment">Creating a Development Environment</a>, but do not execute <code>python manage.py runserver</code>. Instead, do the following:</p>
-<ol>
-<li>Set your environment variable of <code>DEBUG</code> to <code>false</code>. The method of doing this will <a href="https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html">vary based on operating system</a>.</li>
-<li>Type <code>python manage.py collectstatic</code> to move static files (CSS/JS/images) to their production directory.</li>
-<li>Type <code>python manage.py compress</code> to merge and compress static files.</li>
-<li>Type <code>hypercorn conreq.asgi:application</code> to run the production webserver on <code>localhost:8000</code>.<ul>
-<li>For more configuration parameters, see <a href="https://pgjones.gitlab.io/hypercorn/how_to_guides/configuring.html#configuration-options">Hypercorn's documentation</a>.</li>
-</ul>
-</li>
-</ol>
+<h2 id="creating-the-base-app">Creating the Base App<a class="headerlink" href="#creating-the-base-app" title="Permanent link">&para;</a></h2>
+<p>Nothing here but chickens.</p>
 <hr />
-<h2 id="optional-visual-studio-code-configuration">Optional: Visual Studio Code Configuration<a class="headerlink" href="#optional-visual-studio-code-configuration" title="Permanent link">&para;</a></h2>
-<h3 id="vs-code-extensions">VS Code Extensions<a class="headerlink" href="#vs-code-extensions" title="Permanent link">&para;</a></h3>
-<ul>
-<li>GitHub</li>
-<li>GitLens</li>
-<li>Python</li>
-<li>MagicPython</li>
-</ul>
-<h3 id="vs-code-settings">VS Code Settings<a class="headerlink" href="#vs-code-settings" title="Permanent link">&para;</a></h3>
-<ol>
-<li>If your terminal does not show <code>(venv) ...</code>, type <code>./venv/Scripts/activate</code>.</li>
-<li>Type <code>pip install -r requirements_dev.txt</code> to install VS Code editor packages within the virtual environment.</li>
-<li>Enable Python Formatting<ul>
-<li>Settings -&gt; Editor: Format On Save -&gt; <code>ON</code></li>
-<li>Settings -&gt; Python Formatting Provider -&gt; <code>Black</code></li>
-</ul>
-</li>
-<li>Enabling Python Linting<ul>
-<li>Ctrl+Shift+P -&gt; Python: Select Linter -&gt; <code>pylint</code></li>
-<li>Settings -&gt; Linting: Pylint Args -&gt; Add Item -&gt; <code>--disable=line-too-long,bare-except,bad-continuation</code></li>
-</ul>
-</li>
-</ol>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<p>Nothing here but chickens.</p>
                 
                   
                     
@@ -596,7 +510,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 19, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 9, 2021</span>
     
   </small>
 </div>
@@ -619,7 +533,7 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../code_tldr/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../run_manually/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -628,19 +542,19 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Our Code Explained
+              Running Conreq (Manually)
             </div>
           </div>
         </a>
       
       
-        <a href="../extensions/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../docs_contrib/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Extending Conreq (Apps)
+              Updating the Docs
             </div>
           </div>
           <div class="md-footer__button md-icon">

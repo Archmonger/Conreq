@@ -14,7 +14,7 @@
     
     
       
-        <title>Updating the Docs - Conreq Documentation</title>
+        <title>Built-in Webserver - Conreq Documentation</title>
       
     
     
@@ -62,11 +62,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#setting-up-the-environment" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -93,7 +88,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Updating the Docs
+              Built-in Webserver
             
           </span>
         </div>
@@ -173,13 +168,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../webserver/" class="md-tabs__link">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
         Configuration
       </a>
     </li>
@@ -189,15 +186,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../code_tldr/" class="md-tabs__link md-tabs__link--active">
+      <a href="../code_tldr/" class="md-tabs__link">
         Development
       </a>
     </li>
@@ -271,12 +266,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       <label class="md-nav__link" for="__nav_2">
         Configuration
@@ -292,11 +289,19 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../webserver/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Built-in Webserver
       </a>
+      
     </li>
   
 
@@ -349,14 +354,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       <label class="md-nav__link" for="__nav_3">
         Development
@@ -408,68 +411,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Updating the Docs
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../docs_contrib/" class="md-nav__link">
         Updating the Docs
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#setting-up-the-environment" class="md-nav__link">
-    Setting Up the Environment
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#starting-the-preview-webserver" class="md-nav__link">
-    Starting the Preview Webserver
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#addingediting-a-docs-page" class="md-nav__link">
-    Adding/Editing a Docs Page
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributing-your-changes" class="md-nav__link">
-    Contributing Your Changes
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -492,47 +438,29 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/docs_contrib.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/webserver.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Updating the Docs</h1>
+                  <h1>Built-in Webserver</h1>
                 
-                <p>We use <a href="https://www.mkdocs.org/#overview">MkDocs</a> to create our documentation. For more information beyond what is in this guide, check out the <a href="https://www.mkdocs.org/#getting-started">MkDocs Documentation</a>.</p>
+                <p>We use <a href="https://pypi.org/project/Hypercorn/">Hypercorn</a> as the Conreq production-grade webserver. This webserver can be directly exposed to the internet. For more information beyond what is in this guide, check out the <a href="https://pgjones.gitlab.io/hypercorn/">Hypercorn Documentation</a>.</p>
 <hr />
-<h2 id="setting-up-the-environment">Setting Up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permanent link">&para;</a></h2>
+<p>The Conreq webserver can be modified through a <code>hypercorn.toml</code> file.</p>
 <ol>
-<li>Install <code>Python 3.8</code> or greater.</li>
-<li>Fork and pull <code>Conreq:docs</code> from GitHub.</li>
-<li>Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.</li>
-<li>Type <code>pip install -r requirements.txt</code> to install MkDocs.</li>
-</ol>
-<hr />
-<h2 id="starting-the-preview-webserver">Starting the Preview Webserver<a class="headerlink" href="#starting-the-preview-webserver" title="Permanent link">&para;</a></h2>
-<p>MkDocs contains a tool to allow you to preview your documentation changes live! In order to use it...</p>
-<ol>
-<li>Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.</li>
-<li>Type <code>cd source</code> to enter the documentation's source code directory.</li>
-<li>Type <code>mkdocs serve</code> to start the preview webserver.</li>
-<li>Navigate to <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a> to see the documentation and changes live!</li>
-</ol>
-<hr />
-<h2 id="addingediting-a-docs-page">Adding/Editing a Docs Page<a class="headerlink" href="#addingediting-a-docs-page" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Create a new markdown file within <code>source/docs/</code>, or edit an existing markdown file.</li>
-<li>Fill in this file with any markdown text you want!</li>
-<li><em>If you made a new file:</em> Add this file to the navigation bar within <code>mkdocs.yml</code>.</li>
-</ol>
-<hr />
-<h2 id="contributing-your-changes">Contributing Your Changes<a class="headerlink" href="#contributing-your-changes" title="Permanent link">&para;</a></h2>
-<p>At this point you've successfully created a new docs page, and determine you want to contribute these changes. In order to do so...</p>
-<ol>
-<li>Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.</li>
-<li>Type <code>cd source</code> to enter the documentation's source code directory.</li>
-<li>Type <code>mkdocs build -d ..\docs</code> to turn the preview into something we can use.</li>
-<li>Commit your changes to your GitHub branch.</li>
-<li>Submit a GitHub pull request to <code>Archmonger/Conreq:docs</code>.</li>
+<li>
+<p>Create a <code>hypercorn.toml</code> file within your Conreq data directory (ex. <code>./Conreq/data/hypercorn.toml</code>)</p>
+</li>
+<li>
+<p>Populate this <code>toml</code> file with any property in the <a href="https://pgjones.gitlab.io/hypercorn/how_to_guides/configuring.html#configuration-options">Hypercorn's documentation</a>. For example...</p>
+<div class="highlight"><pre><span></span><code><span class="n">bind</span> <span class="o">=</span> <span class="s">&quot;0.0.0.0:5357&quot;</span>
+<span class="n">h11_max_incomplete_size</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">keep_alive_timeout</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">use_reloader</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="n">workers</span> <span class="o">=</span> <span class="mi">20</span>
+</code></pre></div>
+</li>
 </ol>
                 
                   
@@ -542,7 +470,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 19, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 9, 2021</span>
     
   </small>
 </div>
@@ -565,7 +493,7 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../apps/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href=".." class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -574,11 +502,25 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Custom Apps
+              Home
             </div>
           </div>
         </a>
       
+      
+        <a href="../static_files/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Custom CSS/JS
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
       
     </nav>
   
