@@ -21,7 +21,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Execute tests to ensure Conreq is healthy
-        call_command("test", "--noinput", "--failfast")
+        if not options["skip_checks"]:
+            call_command("test", "--noinput", "--failfast")
         port = options["port"]
 
         if DEBUG:
