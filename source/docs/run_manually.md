@@ -9,10 +9,8 @@ If you intend to edit Conreq's code, then proceed with the Development instructi
 ### Software Required
 
 -   Install [Python 3.8+](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
--   _Optional_
-    -   Install [Visual Studio Code](https://code.visualstudio.com/) (Any editor would work)
--   _If using Windows_
-    -   Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
+-   _If using Windows_: Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
+-   _Optional_: Install [Visual Studio Code](https://code.visualstudio.com/) (Any editor would work)
 
 ### Setting Up the Environment
 
