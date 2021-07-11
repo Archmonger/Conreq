@@ -67,7 +67,7 @@ HUEY = {
     "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_STORAGE,  # Sqlite filename
-    "timeout": 30,
+    "timeout": 3,  # 3 second query timeout
     "results": False,  # Do not store return values of tasks.
     "immediate": False,  # If True, run tasks synchronously.
     "consumer": {
@@ -354,7 +354,7 @@ else:
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
             "OPTIONS": {
-                "timeout": 30,
+                "timeout": 3,  # 3 second query timeout
             },
         }
     }
@@ -363,8 +363,8 @@ CACHES = {
         "BACKEND": "diskcache.DjangoCache",
         "LOCATION": os.path.join(DATA_DIR, "cache"),
         "TIMEOUT": 300,  # Django setting for default timeout of each key.
-        "SHARDS": 8,  # Number of db files to create
-        "DATABASE_TIMEOUT": 0.010,  # 10 milliseconds
+        "SHARDS": 8,  # Number of "sharded" cache dbs to create
+        "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds
         "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte
     }
 }
