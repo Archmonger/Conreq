@@ -49,10 +49,26 @@ def str_to_bool(string, default_value=True):
     return default_value
 
 
-def get_bool_from_env(name, default_value):
+def get_bool_from_env(name, default_value=False):
     """Obtains a boolean from an environment variable"""
     env_var = os.environ.get(name)
     return str_to_bool(env_var, default_value)
+
+
+def get_str_from_env(name, default_value=""):
+    """Obtains a string from an environment variable"""
+    env_var = os.environ.get(name)
+    if env_var:
+        return env_var
+    return default_value
+
+
+def get_int_from_env(name, default_value=0):
+    """Obtains a integer from an environment variable"""
+    env_var = os.environ.get(name)
+    if env_var.isdigit():
+        return int(env_var)
+    return default_value
 
 
 def get_debug_from_env():
