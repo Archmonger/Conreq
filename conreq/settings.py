@@ -156,47 +156,41 @@ LOGGING = {
             "filename": ACCESS_LOG_FILE,
         },
     },
-    "root": {
-        "handlers": ["console", "conreq_logs"],
-        "level": "INFO",
-    },
     "loggers": {
         "django": {
             "level": "INFO",
-            "propagate": True,
         },
         "django.security.*": {
             "level": "INFO",
-            "propagate": True,
         },
         "django.request": {
-            "level": "INFO",
-            "propagate": True,
+            "level": LOG_LEVEL,
         },
         "django.channels.server": {
-            "level": "INFO",
-            "handlers": ["console", "access_logs"],
-            "propagate": False,
+            "level": LOG_LEVEL,
         },
         "django.db.backends.schema": {
             "level": LOG_LEVEL,
-            "propagate": True,
+        },
+        "hypercorn.error": {
+            "level": "WARNING",
         },
         "conreq": {
             "level": LOG_LEVEL,
-            "propagate": True,
         },
         "conreq.*": {
             "level": LOG_LEVEL,
-            "propagate": True,
         },
         "conreq.*.*": {
             "level": LOG_LEVEL,
-            "propagate": True,
         },
-        "huey": {"level": LOG_LEVEL, "propagate": False},
+        "huey": {
+            "level": LOG_LEVEL,
+        },
     },
 }
+for logger in LOGGING["loggers"]:
+    LOGGING["loggers"][logger]["handlers"] = ["console", "conreq_logs"]
 
 
 # Security Settings
