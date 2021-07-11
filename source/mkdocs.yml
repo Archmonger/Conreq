@@ -1,17 +1,17 @@
-site_name: Conreq Documentation
-
 nav:
     - Home: index.md
     - Configuration:
-          - Built-in Webserver: webserver.md
-          - Custom CSS/JS: static_files.md
-          - Organizr Authentication: organizr.md
-          - MySQL: mysql.md
+          - Built-in Webserver: configure/webserver.md
+          - Custom CSS/JS: configure/static_files.md
+          - Organizr Authentication: configure/organizr.md
+          - MySQL Database: configure/mysql.md
     - Development:
-          - Our Code Explained: code_tldr.md
-          - Running Conreq (Manually): run_manually.md
-          - Custom Apps: apps.md
-          - Updating the Docs: docs_contrib.md
+          - Our Code Explained: develop/code_tldr.md
+          - Running Conreq (Manually): develop/run_conreq.md
+          - Creating Custom Apps: develop/creating_apps.md
+    - Contribute:
+          - Updating the Docs: contrib/docs.md
+          - Listing an App: contrib/apps.md
 
 theme:
     name: material
@@ -38,6 +38,10 @@ plugins:
     - git-revision-date-localized:
           fallback_to_build_date: true
 
-repo_url: https://github.com/Archmonger/Conreq
+site_name: Conreq Documentation
+site_author: Archmonger
+site_description: Conreq Web Platform
+repo_url: https://github.com/Archmonger/Conreq/
+site_url: https://archmonger.github.io/Conreq/
 repo_name: Archmonger/Conreq
 edit_uri: edit/docs/source/docs

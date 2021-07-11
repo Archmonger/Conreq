@@ -13,21 +13,21 @@
         <meta name="author" content="Archmonger">
       
       
-        <link rel="canonical" href="https://archmonger.github.io/Conreq/">
+        <link rel="canonical" href="https://archmonger.github.io/Conreq/develop/creating_apps/">
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.10">
     
     
       
-        <title>Conreq Documentation</title>
+        <title>Creating Custom Apps - Conreq Documentation</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.1fe995fd.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1fe995fd.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.f1a3b89f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
         
           
           
@@ -63,7 +63,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="teal">
   
     
-    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-the-conreq-documentation" class="md-skip">
+        <a href="#app-file-structure" class="md-skip">
           Skip to content
         </a>
       
@@ -82,7 +82,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Conreq Documentation" class="md-header__button md-logo" aria-label="Conreq Documentation" data-md-component="logo">
+    <a href="../.." title="Conreq Documentation" class="md-header__button md-logo" aria-label="Conreq Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Creating Custom Apps
             
           </span>
         </div>
@@ -169,12 +169,10 @@
         
   
   
-    
-  
 
 
   <li class="md-tabs__item">
-    <a href="." class="md-tabs__link md-tabs__link--active">
+    <a href="../.." class="md-tabs__link">
       Home
     </a>
   </li>
@@ -189,7 +187,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="configure/webserver/" class="md-tabs__link">
+      <a href="../../configure/webserver/" class="md-tabs__link">
         Configuration
       </a>
     </li>
@@ -199,13 +197,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="develop/code_tldr/" class="md-tabs__link">
+      <a href="../code_tldr/" class="md-tabs__link md-tabs__link--active">
         Development
       </a>
     </li>
@@ -221,7 +221,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="contrib/docs/" class="md-tabs__link">
+      <a href="../../contrib/docs/" class="md-tabs__link">
         Contribute
       </a>
     </li>
@@ -250,7 +250,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Conreq Documentation" class="md-nav__button md-logo" aria-label="Conreq Documentation" data-md-component="logo">
+    <a href="../.." title="Conreq Documentation" class="md-nav__button md-logo" aria-label="Conreq Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -280,47 +280,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Home
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         Home
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#welcome-to-the-conreq-documentation" class="md-nav__link">
-    Welcome to the Conreq Documentation
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -354,7 +318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configure/webserver/" class="md-nav__link">
+      <a href="../../configure/webserver/" class="md-nav__link">
         Built-in Webserver
       </a>
     </li>
@@ -366,7 +330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configure/static_files/" class="md-nav__link">
+      <a href="../../configure/static_files/" class="md-nav__link">
         Custom CSS/JS
       </a>
     </li>
@@ -378,7 +342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configure/organizr/" class="md-nav__link">
+      <a href="../../configure/organizr/" class="md-nav__link">
         Organizr Authentication
       </a>
     </li>
@@ -390,7 +354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configure/mysql/" class="md-nav__link">
+      <a href="../../configure/mysql/" class="md-nav__link">
         MySQL Database
       </a>
     </li>
@@ -409,12 +373,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       <label class="md-nav__link" for="__nav_3">
         Development
@@ -432,7 +398,7 @@
   
   
     <li class="md-nav__item">
-      <a href="develop/code_tldr/" class="md-nav__link">
+      <a href="../code_tldr/" class="md-nav__link">
         Our Code Explained
       </a>
     </li>
@@ -444,7 +410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="develop/run_conreq/" class="md-nav__link">
+      <a href="../run_conreq/" class="md-nav__link">
         Running Conreq (Manually)
       </a>
     </li>
@@ -454,11 +420,61 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="develop/creating_apps/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Creating Custom Apps
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Creating Custom Apps
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#app-file-structure" class="md-nav__link">
+    App File Structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-the-base-app" class="md-nav__link">
+    Creating the Base App
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -498,7 +514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib/docs/" class="md-nav__link">
+      <a href="../../contrib/docs/" class="md-nav__link">
         Updating the Docs
       </a>
     </li>
@@ -510,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib/apps/" class="md-nav__link">
+      <a href="../../contrib/apps/" class="md-nav__link">
         Listing an App
       </a>
     </li>
@@ -535,20 +551,23 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/develop/creating_apps.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Home</h1>
+                  <h1>Creating Custom Apps</h1>
                 
-                <p><a href="https://hub.docker.com/r/roxedus/conreq"><img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/roxedus/conreq?style=flat-square" /></a>
-<a href="https://hub.docker.com/r/roxedus/conreq"><img alt="Docker Stars" src="https://img.shields.io/docker/stars/roxedus/conreq?style=flat-square" /></a>
-<a href="https://hub.docker.com/r/roxedus/conreq"><img alt="Docker Hub" src="https://img.shields.io/badge/Open%20On-DockerHub-blue?style=flat-square" /></a>
-<a href="https://discord.gg/gQhGZzEjmX" title="Chat with the community and get realtime support!"><img alt="Discord" src="https://img.shields.io/discord/440067432552595457?style=flat-square&amp;label=Discord&amp;logo=discord" /></a></p>
-<h2 id="welcome-to-the-conreq-documentation">Welcome to the Conreq Documentation<a class="headerlink" href="#welcome-to-the-conreq-documentation" title="Permanent link">&para;</a></h2>
-<p>Conreq is an extensible web platform built around <a href="https://www.djangoproject.com/">Django</a>. Read through the docs to learn how to set up Conreq features, or learn how to contribute to the Conreq repository!</p>
-<p>Want to join the community or have a question? Chat with us on <a href="https://discord.gg/gQhGZzEjmX">Discord</a> or create a post on <a href="https://github.com/Archmonger/Conreq/discussions">GitHub Discussions</a>!</p>
+                <p>Work in Progress, Conreq app framework is not yet in place.</p>
+<hr />
+<h2 id="app-file-structure">App File Structure<a class="headerlink" href="#app-file-structure" title="Permanent link">&para;</a></h2>
+<p>Nothing here but chickens.</p>
+<hr />
+<h2 id="creating-the-base-app">Creating the Base App<a class="headerlink" href="#creating-the-base-app" title="Permanent link">&para;</a></h2>
+<p>Nothing here but chickens.</p>
+<hr />
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<p>Nothing here but chickens.</p>
                 
                   
                     
@@ -557,7 +576,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2021</span>
       
     
   </small>
@@ -581,15 +600,30 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
+        
+        <a href="../run_conreq/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Running Conreq (Manually)" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Running Conreq (Manually)
+            </div>
+          </div>
+        </a>
+      
       
         
-        <a href="configure/webserver/" class="md-footer__link md-footer__link--next" aria-label="Next: Built-in Webserver" rel="next">
+        <a href="../../contrib/docs/" class="md-footer__link md-footer__link--next" aria-label="Next: Updating the Docs" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Built-in Webserver
+              Updating the Docs
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -618,10 +652,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.ddd52ceb.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ddd52ceb.min.js"></script>
       
     
   </body>

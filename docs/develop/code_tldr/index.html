@@ -13,21 +13,21 @@
         <meta name="author" content="Archmonger">
       
       
-        <link rel="canonical" href="https://archmonger.github.io/Conreq/">
+        <link rel="canonical" href="https://archmonger.github.io/Conreq/develop/code_tldr/">
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.10">
     
     
       
-        <title>Conreq Documentation</title>
+        <title>Our Code Explained - Conreq Documentation</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.1fe995fd.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1fe995fd.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.f1a3b89f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
         
           
           
@@ -63,7 +63,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="teal">
   
     
-    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-the-conreq-documentation" class="md-skip">
+        <a href="#repository-structure" class="md-skip">
           Skip to content
         </a>
       
@@ -82,7 +82,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Conreq Documentation" class="md-header__button md-logo" aria-label="Conreq Documentation" data-md-component="logo">
+    <a href="../.." title="Conreq Documentation" class="md-header__button md-logo" aria-label="Conreq Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Our Code Explained
             
           </span>
         </div>
@@ -169,12 +169,10 @@
         
   
   
-    
-  
 
 
   <li class="md-tabs__item">
-    <a href="." class="md-tabs__link md-tabs__link--active">
+    <a href="../.." class="md-tabs__link">
       Home
     </a>
   </li>
@@ -189,7 +187,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="configure/webserver/" class="md-tabs__link">
+      <a href="../../configure/webserver/" class="md-tabs__link">
         Configuration
       </a>
     </li>
@@ -199,13 +197,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="develop/code_tldr/" class="md-tabs__link">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
         Development
       </a>
     </li>
@@ -221,7 +221,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="contrib/docs/" class="md-tabs__link">
+      <a href="../../contrib/docs/" class="md-tabs__link">
         Contribute
       </a>
     </li>
@@ -250,7 +250,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Conreq Documentation" class="md-nav__button md-logo" aria-label="Conreq Documentation" data-md-component="logo">
+    <a href="../.." title="Conreq Documentation" class="md-nav__button md-logo" aria-label="Conreq Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -280,47 +280,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Home
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         Home
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#welcome-to-the-conreq-documentation" class="md-nav__link">
-    Welcome to the Conreq Documentation
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -354,7 +318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configure/webserver/" class="md-nav__link">
+      <a href="../../configure/webserver/" class="md-nav__link">
         Built-in Webserver
       </a>
     </li>
@@ -366,7 +330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configure/static_files/" class="md-nav__link">
+      <a href="../../configure/static_files/" class="md-nav__link">
         Custom CSS/JS
       </a>
     </li>
@@ -378,7 +342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configure/organizr/" class="md-nav__link">
+      <a href="../../configure/organizr/" class="md-nav__link">
         Organizr Authentication
       </a>
     </li>
@@ -390,7 +354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="configure/mysql/" class="md-nav__link">
+      <a href="../../configure/mysql/" class="md-nav__link">
         MySQL Database
       </a>
     </li>
@@ -409,12 +373,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       <label class="md-nav__link" for="__nav_3">
         Development
@@ -430,11 +396,75 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="develop/code_tldr/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Our Code Explained
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Our Code Explained
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#repository-structure" class="md-nav__link">
+    Repository Structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fundamental-django-design" class="md-nav__link">
+    Fundamental Django Design
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conreq-viewport-rendering" class="md-nav__link">
+    Conreq Viewport Rendering
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conreq-modal-rendering" class="md-nav__link">
+    Conreq Modal Rendering
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django-websockets" class="md-nav__link">
+    Django Websockets
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -444,7 +474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="develop/run_conreq/" class="md-nav__link">
+      <a href="../run_conreq/" class="md-nav__link">
         Running Conreq (Manually)
       </a>
     </li>
@@ -456,7 +486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="develop/creating_apps/" class="md-nav__link">
+      <a href="../creating_apps/" class="md-nav__link">
         Creating Custom Apps
       </a>
     </li>
@@ -498,7 +528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib/docs/" class="md-nav__link">
+      <a href="../../contrib/docs/" class="md-nav__link">
         Updating the Docs
       </a>
     </li>
@@ -510,7 +540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib/apps/" class="md-nav__link">
+      <a href="../../contrib/apps/" class="md-nav__link">
         Listing an App
       </a>
     </li>
@@ -535,20 +565,53 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/develop/code_tldr.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Home</h1>
+                  <h1>Our Code Explained</h1>
                 
-                <p><a href="https://hub.docker.com/r/roxedus/conreq"><img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/roxedus/conreq?style=flat-square" /></a>
-<a href="https://hub.docker.com/r/roxedus/conreq"><img alt="Docker Stars" src="https://img.shields.io/docker/stars/roxedus/conreq?style=flat-square" /></a>
-<a href="https://hub.docker.com/r/roxedus/conreq"><img alt="Docker Hub" src="https://img.shields.io/badge/Open%20On-DockerHub-blue?style=flat-square" /></a>
-<a href="https://discord.gg/gQhGZzEjmX" title="Chat with the community and get realtime support!"><img alt="Discord" src="https://img.shields.io/discord/440067432552595457?style=flat-square&amp;label=Discord&amp;logo=discord" /></a></p>
-<h2 id="welcome-to-the-conreq-documentation">Welcome to the Conreq Documentation<a class="headerlink" href="#welcome-to-the-conreq-documentation" title="Permanent link">&para;</a></h2>
-<p>Conreq is an extensible web platform built around <a href="https://www.djangoproject.com/">Django</a>. Read through the docs to learn how to set up Conreq features, or learn how to contribute to the Conreq repository!</p>
-<p>Want to join the community or have a question? Chat with us on <a href="https://discord.gg/gQhGZzEjmX">Discord</a> or create a post on <a href="https://github.com/Archmonger/Conreq/discussions">GitHub Discussions</a>!</p>
+                <p>This guide is intended to help developers gain an understanding of how the code in Conreq works together to make a functional application.</p>
+<hr />
+<h2 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h2>
+<p><code>manage.py</code> - Django development tool <em>(runs the development web server, initialize the databases, <a href="https://docs.djangoproject.com/en/3.1/ref/django-admin/">and more.</a></em><br/>
+<code>misc/</code> - Branding, legal documents, and other miscellaneous files<br/></p>
+<p><code>conreq/</code> - Main Django application<br/>
+<code>conreq/settings.py</code> - Boot-time configuration and settings<br/>
+<code>conreq/urls.py</code> - Main HTTP URL path handler<br/>
+<code>conreq/asgi.py</code> - Main Websocket path handler<br/>
+<code>conreq/core/websockets/consumers.py</code> - Back-end websocket commands <em>(sends/receives json)</em><br/>
+<code>conreq/static/js/client_websockets.js</code> - Front-end websocket commands <em>(sends/receives json)</em>&lt;br/</p>
+<p><code>conreq/core/</code> - Core back-end functionality<br/>
+<code>conreq/static-dev/</code> - CSS, JavaScript, and Image files<br/>
+<code>conreq/templates/</code> - HTML templates used by sub-application's <code>views.py</code> to generate web pages<br/>
+<code>conreq/utils/</code> - Generic functions that can be used by their respective category<br/></p>
+<hr />
+<h2 id="fundamental-django-design">Fundamental Django Design<a class="headerlink" href="#fundamental-django-design" title="Permanent link">&para;</a></h2>
+<p>Almost all of the Conreq back-end "logic" will trace back to a <code>views.py</code> file. Within this file we import all sorts helper functions to help us render a specific URL address. Most of these helper functions are located within <code>conreq/utils/</code> and <code>conreq/core/</code>.</p>
+<p>Here's a high level example of what occurs when the browser visits a URL.</p>
+<ol>
+<li>The browser visits a Conreq web address</li>
+<li>Django determines how to handle this URL by comparing the path (let's use the example of <code>/server_settings/</code>) with what is contained in <code>conreq/urls.py</code></li>
+<li>Based on <code>conreq/urls.py</code>, Django determines there is another file that defines this path, and that file is <code>conreq/core/server_settings/urls.py</code>.</li>
+<li>Based on <code>conreq/core/server_settings/urls.py</code>, Django determines this URL is rendered by <code>conreq/core/server_settings/views.py</code></li>
+<li>Django renders the HTML (known as a <code>Django View</code>) by running the the respective view function contained within <code>conreq/core/server_settings/views.py</code></li>
+<li>The webserver determines how to send this view to the browser based on what was returned by the view (ex. a <code>HttpResponse</code> or <code>JsonResponse</code>)</li>
+</ol>
+<hr />
+<h2 id="conreq-viewport-rendering">Conreq Viewport Rendering<a class="headerlink" href="#conreq-viewport-rendering" title="Permanent link">&para;</a></h2>
+<p>Viewport rendering is currently being reassessed. These docs will be updated at a later time.</p>
+<hr />
+<h2 id="conreq-modal-rendering">Conreq Modal Rendering<a class="headerlink" href="#conreq-modal-rendering" title="Permanent link">&para;</a></h2>
+<p>Modal rendering is currently being reassessed. These docs will be updated at a later time.</p>
+<hr />
+<h2 id="django-websockets">Django Websockets<a class="headerlink" href="#django-websockets" title="Permanent link">&para;</a></h2>
+<p>Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as communicating via <em>chat messages</em>. When the page first loads, a connection to a <em>private chat room (direct messages)</em> is formed, and <em>chat bubbles</em> (<code>json</code> messages) are communicated back and forth between the server and client browser.</p>
+<p>On the server side, the URL location of where <em>private chat rooms</em> are created is determined within <code>conreq/asgi.py</code>. In this file, the URL is directly linked to a <code>consumer</code>. Django does support creating <em>chat groups</em> with multiple clients in it, however, Conreq currently does not utilize this feature.</p>
+<p>At the most fundamental level, a <code>consumer</code> is a Python class with a <em>send</em> and <em>receive</em> function. All of Conreq's consumers can be found in <code>conreq/core/websockets/consumers.py</code>.</p>
+<p>In Django, the receive and response format is most commonly JSON. This is determined based on your consumer's base class (ex. <code>JsonWebsocketConsumer</code>). These classes have built-in functions for sending and receiving JSON messages (ex. <code>send_json</code> and <code>recieve_json</code>). Overriding these functions will be where most of your Websocket logic will be written.</p>
+<p>When a JSON message is sent from server to the client browser, it will be received by the JavaScript file <code>conreq/static/js/client_websockets.js</code> using ES6 standard JavaScript Websockets. This file is also the one that initiates a new Websocket communication session when the page first loads.</p>
                 
                   
                     
@@ -557,7 +620,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2021</span>
       
     
   </small>
@@ -581,15 +644,30 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
+        
+        <a href="../../configure/mysql/" class="md-footer__link md-footer__link--prev" aria-label="Previous: MySQL Database" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              MySQL Database
+            </div>
+          </div>
+        </a>
+      
       
         
-        <a href="configure/webserver/" class="md-footer__link md-footer__link--next" aria-label="Next: Built-in Webserver" rel="next">
+        <a href="../run_conreq/" class="md-footer__link md-footer__link--next" aria-label="Next: Running Conreq (Manually)" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Built-in Webserver
+              Running Conreq (Manually)
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -618,10 +696,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.ddd52ceb.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ddd52ceb.min.js"></script>
       
     
   </body>
