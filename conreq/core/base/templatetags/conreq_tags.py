@@ -1,13 +1,11 @@
-import os
-
-from conreq.utils.generic import get_base_url
+from conreq.utils.generic import get_base_url, get_str_from_env
 from django import template
 from django.urls import reverse
 
 register = template.Library()
 base_url_len = len(get_base_url()) + 1
-conreq_app_name = os.environ.get("APP_NAME", "Conreq")
-conreq_app_description = os.environ.get("APP_DESCRIPTION", "Content Requesting")
+conreq_app_name = get_str_from_env("APP_NAME", "Conreq")
+conreq_app_description = get_str_from_env("APP_DESCRIPTION", "Content Requesting")
 
 
 @register.simple_tag

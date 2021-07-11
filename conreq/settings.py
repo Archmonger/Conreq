@@ -23,31 +23,32 @@ from conreq.utils.generic import (
     get_bool_from_env,
     get_database_type,
     get_debug_from_env,
+    get_str_from_env,
     list_modules,
 )
 
 # Environment and Project Variables
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE_DIR, "data"))
+DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
 APPS_DIR = os.path.join(DATA_DIR, "apps")
 DEBUG = get_debug_from_env()
 DB_ENGINE = get_database_type()
-MYSQL_CONFIG_FILE = os.environ.get("MYSQL_CONFIG_FILE", "")
+MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
 SSL_SECURITY = get_bool_from_env("SSL_SECURITY", False)
 PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
-X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY")
-ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
+X_FRAME_OPTIONS = get_str_from_env("X_FRAME_OPTIONS", "DENY")
+ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
 
 
 # Email Settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = get_bool_from_env("EMAIL_USE_TLS", True)
-EMAIL_PORT = os.environ.get("EMAIL_PORT", "587")
-EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_PORT = get_str_from_env("EMAIL_PORT", "")
+EMAIL_HOST = get_str_from_env("EMAIL_HOST", "")
+EMAIL_HOST_USER = get_str_from_env("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = get_str_from_env("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
@@ -86,8 +87,8 @@ HUEY = {
 
 
 # PWA
-PWA_APP_NAME = os.environ.get("APP_NAME", "Conreq")
-PWA_APP_DESCRIPTION = os.environ.get("APP_DESCRIPTION", "Content Requesting")
+PWA_APP_NAME = get_str_from_env("APP_NAME", "Conreq")
+PWA_APP_DESCRIPTION = get_str_from_env("APP_DESCRIPTION", "Content Requesting")
 PWA_APP_THEME_COLOR = "#3fcfa6"
 PWA_APP_BACKGROUND_COLOR = "#04110d"
 PWA_APP_ICONS = [
@@ -118,9 +119,9 @@ ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
 if DEBUG:
-    LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+    LOG_LEVEL = get_str_from_env("LOG_LEVEL", "INFO")
 else:
-    LOG_LEVEL = os.environ.get("LOG_LEVEL", "WARNING")
+    LOG_LEVEL = get_str_from_env("LOG_LEVEL", "WARNING")
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

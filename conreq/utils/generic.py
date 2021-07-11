@@ -3,9 +3,13 @@ import os
 import pkgutil
 from re import sub as substitution
 
+ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
+if ENV_PREFIX:
+    ENV_PREFIX = ENV_PREFIX + "_"
+
 
 def is_key_value_in_list(key, value, search_list, return_item=False):
-    """Iterate through each result and check for the key/value pair"""
+    """Iterate through a list of dicts to check if a specific key/value pair exists."""
     if isinstance(search_list, list):
         for item in search_list:
             if item.__contains__(key) and item[key] == value:
@@ -51,24 +55,26 @@ def str_to_bool(string, default_value=True):
 
 def get_bool_from_env(name, default_value=False):
     """Obtains a boolean from an environment variable"""
-    env_var = os.environ.get(name)
+    env_var = os.environ.get(ENV_PREFIX + name)
     return str_to_bool(env_var, default_value)
 
 
 def get_str_from_env(name, default_value=""):
     """Obtains a string from an environment variable"""
-    env_var = os.environ.get(name)
-    if env_var:
-        return env_var
-    return default_value
+    return os.environ.get(ENV_PREFIX + name, default_value)
 
 
 def get_int_from_env(name, default_value=0):
     """Obtains a integer from an environment variable"""
-    env_var = os.environ.get(name)
+    env_var = os.environ.get(ENV_PREFIX + name)
     if env_var.isdigit():
         return int(env_var)
     return default_value
+
+
+def get_env_prefix():
+    """Returns the environment variables prefix that should be used."""
+    return ENV_PREFIX
 
 
 def get_debug_from_env():

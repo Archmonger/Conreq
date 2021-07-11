@@ -24,6 +24,8 @@ BASE_URL = "requests"                     # default: None
 APP_NAME = "RequestCentral"               # default: Conreq
 APP_DESCRIPTION = "Get yo stuff!"         # default: Content Requesting
 ARR_REFRESH_INTERNAL = "*/15"             # default: */1 (Cron minutes for Sonarr/Radarr library refresh)
+LOG_LEVEL = "ERROR"                       # default: WARNING
+CONREQ_ENV_PREFIX = "CONREQ"              # default: None
 
 # Data Storage
 DATA_DIR = "/example/directory"           # default: /config (Defaults to "data" outside of docker)
@@ -39,9 +41,9 @@ DEBUG = False                             # default: False (Disable security fea
 
 # Email
 EMAIL_USE_TLS = "False"                   # default: True
-EMAIL_PORT = "465"                        # default: 587
-EMAIL_HOST = "smtp-mail.outlook.com"      # default: smtp.gmail.com
-EMAIL_HOST_USER = "myself@outlook.com"    # default: None
+EMAIL_PORT = "587"                        # default: None
+EMAIL_HOST = "smtp.gmail.com"             # default: None
+EMAIL_HOST_USER = "myself@gmail.com"      # default: None
 EMAIL_HOST_PASSWORD = "dogmemes123"       # default: None
 ```
 
