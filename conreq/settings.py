@@ -260,7 +260,7 @@ if ORIGINAL_SETTINGS != settings:
 # User Installed Apps
 if not os.path.exists(APPS_DIR):
     os.makedirs(APPS_DIR)
-sys.path.insert(1, APPS_DIR)
+sys.path.append(APPS_DIR)
 
 
 # Application Definitions

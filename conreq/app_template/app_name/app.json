@@ -1,0 +1,21 @@
+{
+	"app_name": "",
+	"app_version": "",
+	"description": "",
+	"notice_msg": "",
+	"gh_author": "",
+	"repository_url": "",
+	"homepage_url": "",
+	"support_url": "",
+	"donation_url": "",
+	"env_variables": [],
+	"categories": [],
+	"development_stage": "",
+	"mobile_compatible": false,
+	"min_conreq_version": "",
+	"tested_conreq_version": "",
+	"optional_apps": [""],
+	"required_apps": [""],
+	"incompatible_apps": [""],
+	"incompatible_app_categories": []
+}
