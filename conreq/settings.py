@@ -42,18 +42,8 @@ ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
 
 
-# Email Settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = get_bool_from_env("EMAIL_USE_TLS", True)
-EMAIL_PORT = get_str_from_env("EMAIL_PORT", "")
-EMAIL_HOST = get_str_from_env("EMAIL_HOST", "")
-EMAIL_HOST_USER = get_str_from_env("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = get_str_from_env("EMAIL_HOST_PASSWORD", "")
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-
 # Application Settings
-DJVERSION_VERSION = "0.19.0"
+DJVERSION_VERSION = "0.19.1"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = DEBUG
 SILKY_AUTHORISATION = DEBUG
@@ -84,6 +74,16 @@ HUEY = {
         "workers": 20,
     },
 }
+
+
+# Email Settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = get_bool_from_env("EMAIL_USE_TLS", True)
+EMAIL_PORT = get_str_from_env("EMAIL_PORT", "")
+EMAIL_HOST = get_str_from_env("EMAIL_HOST", "")
+EMAIL_HOST_USER = get_str_from_env("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = get_str_from_env("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # PWA
