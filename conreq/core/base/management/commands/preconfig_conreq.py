@@ -65,7 +65,7 @@ class Command(BaseCommand):
     def setup_sqlite_database(path, name, uid, gid):
         cprint(name.rstrip(" ") + " Database", "header")
         if not os.path.exists(path):
-            cprint("> Creating the database", "blue")
+            cprint("> Creating database", "blue")
         with sqlite3.connect(path) as cursor:
             cprint("> Vacuuming database", "blue")
             cursor.execute("VACUUM")
@@ -79,6 +79,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def recursive_chown(path, uid, gid):
+        cprint('Recursively applying permissions to "' + path + '"', "header")
         new_uid = uid if uid != -1 else None
         new_gid = gid if gid != -1 else None
         if uid != -1 or gid != -1:
