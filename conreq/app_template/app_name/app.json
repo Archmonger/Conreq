@@ -14,6 +14,7 @@
 	"mobile_compatible": false,
 	"min_conreq_version": "",
 	"tested_conreq_version": "",
+	"max_conreq_version": "",
 	"optional_apps": [""],
 	"required_apps": [""],
 	"incompatible_apps": [""],
