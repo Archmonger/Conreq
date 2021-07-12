@@ -5,6 +5,10 @@
 
 ## Welcome to the Conreq Documentation
 
-Conreq is an extensible web platform built around [Django](https://www.djangoproject.com/). Read through the docs to learn how to set up Conreq features, or learn how to contribute to the Conreq repository!
+Conreq is an extensible web platform built around [Django](https://www.djangoproject.com/). Read through the docs to learn how to set up Conreq, or how to contribute to the Conreq repository!
 
 Want to join the community or have a question? Chat with us on [Discord](https://discord.gg/gQhGZzEjmX) or create a post on [GitHub Discussions](https://github.com/Archmonger/Conreq/discussions)!
+
+---
+
+[Discord :fontawesome-brands-discord:](https://discord.gg/gQhGZzEjmX){ .md-button .md-button--primary } [GitHub Discussions :fontawesome-brands-github:](https://github.com/Archmonger/Conreq/discussions){ .md-button .md-button--primary }
