@@ -7,6 +7,7 @@ from conreq.utils.generic import cprint, get_database_type
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
+BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 DATABASES = getattr(settings, "DATABASES")
 HUEY_STORAGE = getattr(settings, "HUEY_STORAGE")
@@ -47,6 +48,9 @@ class Command(BaseCommand):
 
             # Debug dir
             self.recursive_chown(SILKY_PYTHON_PROFILER_RESULT_PATH, uid, gid)
+
+            # Conreq base dir
+            self.recursive_chown(BASE_DIR, uid, gid)
 
     def add_arguments(self, parser):
         parser.add_argument(
