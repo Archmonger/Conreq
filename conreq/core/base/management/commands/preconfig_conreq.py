@@ -40,10 +40,10 @@ class Command(BaseCommand):
             self.recursive_chown(CACHES["default"]["LOCATION"], uid, gid)
 
             # Logs folder
-            # self.recursive_chown(LOG_DIR, uid, gid)
+            self.recursive_chown(LOG_DIR, uid, gid)
 
             # Debug dir
-            # self.recursive_chown(SILKY_PYTHON_PROFILER_RESULT_PATH, uid, gid)
+            self.recursive_chown(SILKY_PYTHON_PROFILER_RESULT_PATH, uid, gid)
 
     def add_arguments(self, parser):
         parser.add_argument(
