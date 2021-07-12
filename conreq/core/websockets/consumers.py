@@ -1,8 +1,9 @@
 """Anything used to construct a websocket endpoint"""
-from channels.auth import AnonymousUser, login
+from channels.auth import login
 from channels.db import database_sync_to_async as convert_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from conreq.utils import log
+from django.contrib.auth.models import AnonymousUser
 
 _logger = log.get_logger(__name__)
 
