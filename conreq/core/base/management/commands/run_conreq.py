@@ -55,7 +55,7 @@ class Command(BaseCommand):
             config = HypercornConfig()
             config.bind = f"0.0.0.0:{port}"
             config.websocket_ping_interval = 20
-            config.workers = 6
+            config.workers = 3
             config.application_path = "conreq.asgi:application"
             config.accesslog = getattr(settings, "ACCESS_LOG_FILE")
 
