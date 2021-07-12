@@ -13,8 +13,8 @@ HUEY_STORAGE = getattr(settings, "HUEY_STORAGE")
 @db_periodic_task(crontab(minute="0", hour="12", day="1/1"))
 def bg_tasks_vacuum():
     """Periodically preforms a SQLITE vacuum on the background task database."""
-    with sqlite3.connect(HUEY_STORAGE) as conn:
-        conn.execute("VACUUM")
+    with sqlite3.connect(HUEY_STORAGE) as cursor:
+        cursor.execute("VACUUM")
 
 
 @db_periodic_task(crontab(minute="0", hour="12", day="1/1"))

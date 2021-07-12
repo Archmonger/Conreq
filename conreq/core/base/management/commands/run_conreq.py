@@ -20,20 +20,29 @@ class Command(BaseCommand):
     help = "Runs all commands needed to safely start Conreq."
 
     def handle(self, *args, **options):
-        # Execute tests to ensure Conreq is healthy
-        if not options["skip_checks"]:
-            call_command("test", "--noinput", "--failfast")
         port = options["port"]
 
+        # Run any preconfiguration tasks
+        if not options["disable_preconfig"]:
+            call_command("preconfig_conreq", options["uid"], options["gid"])
+
+        # Execute tests to ensure Conreq is healthy before starting
+        if not options["skip_checks"]:
+            call_command("test", "--noinput", "--failfast")
+
+        # Perform any Debug related clean-up
         if DEBUG:
             print("Conreq is in DEBUG mode.")
             print("DEBUG: Clearing cache...")
             cache.clear()
             self.reset_huey_db()
+            call_command("makemigrations", "silk")
+
+        # Migrate the database
+        call_command("migrate", "--noinput")
 
         if not DEBUG:
-            # Run any preparation steps
-            call_command("migrate", "--noinput")
+            # Collect static files
             call_command("collectstatic", "--link", "--noinput")
             call_command("compress", "--force")
 
@@ -41,8 +50,8 @@ class Command(BaseCommand):
         proc = Process(target=self.start_huey, daemon=True)
         proc.start()
 
+        # Run the production webserver
         if not DEBUG:
-            # Default webserver configuration
             config = HypercornConfig()
             config.bind = f"0.0.0.0:{port}"
             config.websocket_ping_interval = 20
@@ -57,8 +66,8 @@ class Command(BaseCommand):
             # Run the webserver
             run_hypercorn(config)
 
+        # Run the development webserver
         if DEBUG:
-            # Development webserver
             call_command("runserver", f"0.0.0.0:{port}")
 
     def add_arguments(self, parser):
@@ -68,6 +77,26 @@ class Command(BaseCommand):
             help="Select the port number for Conreq to run on.",
             default=8000,
             type=int,
+        )
+
+        parser.add_argument(
+            "--disable-preconfig",
+            action="store_true",
+            help="Disables Conreq's preconfiguration prior to startup.",
+        )
+
+        parser.add_argument(
+            "--uid",
+            help="User ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
+            type=int,
+            default=0,
+        )
+
+        parser.add_argument(
+            "--gid",
+            help="Group ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
+            type=int,
+            default=0,
         )
 
     @staticmethod

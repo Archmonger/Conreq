@@ -14,6 +14,7 @@ settings.json
 
 # Backup files #
 *.bak
+*_bak/
 
 # If you are using PyCharm #
 .idea/**/workspace.xml
