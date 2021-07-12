@@ -21,10 +21,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         port = options["port"]
+        set_perms = options["set_perms"]
 
         # Run any preconfiguration tasks
         if not options["disable_preconfig"]:
-            call_command("preconfig_conreq", options["uid"], options["gid"])
+            preconfig_args = [
+                "preconfig_conreq",
+                options["uid"],
+                options["gid"],
+            ]
+            if not set_perms:
+                preconfig_args.append("--no-perms")
+            call_command(*preconfig_args)
 
         # Execute tests to ensure Conreq is healthy before starting
         if not options["skip_checks"]:
@@ -97,6 +105,12 @@ class Command(BaseCommand):
             help="Group ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
             type=int,
             default=0,
+        )
+
+        parser.add_argument(
+            "--set-perms",
+            action="store_true",
+            help="Have Conreq set permissions during preconfig.",
         )
 
     @staticmethod

@@ -23,19 +23,22 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         uid = options["uid"]
         gid = options["gid"]
+        no_perms = options["no_perms"]
 
         cprint("Preconfiguring Conreq...", "bold")
 
         # Django database
         if get_database_type() == "SQLITE3":
             database = DATABASES["default"]["NAME"]
-            self.setup_sqlite_database(database, "Conreq", uid, gid)
+            self.setup_sqlite_database(database, "Conreq", uid, gid, no_perms)
 
         # Background task database
         if HUEY_STORAGE:
-            self.setup_sqlite_database(HUEY_STORAGE, "Background Task", uid, gid)
+            self.setup_sqlite_database(
+                HUEY_STORAGE, "Background Task", uid, gid, no_perms
+            )
 
-        if sys.platform == "linux":
+        if not no_perms and sys.platform == "linux":
             # Cache database
             self.recursive_chown(CACHES["default"]["LOCATION"], uid, gid)
 
@@ -61,15 +64,21 @@ class Command(BaseCommand):
             default=0,
         )
 
+        parser.add_argument(
+            "--no-perms",
+            action="store_true",
+            help="Prevent Conreq from setting permissions.",
+        )
+
     @staticmethod
-    def setup_sqlite_database(path, name, uid, gid):
+    def setup_sqlite_database(path, name, uid, gid, no_perms):
         cprint(name.rstrip(" ") + " Database", "header")
         if not os.path.exists(path):
             cprint("> Creating database", "blue")
         with sqlite3.connect(path) as cursor:
             cprint("> Vacuuming database", "blue")
             cursor.execute("VACUUM")
-        if uid != -1 or gid != -1:
+        if not no_perms and (uid != -1 or gid != -1):
             if sys.platform == "linux":
                 cprint("> Applying permissions", "blue")
                 new_uid = uid if uid else os.getuid()
