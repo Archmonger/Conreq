@@ -43,7 +43,7 @@ BASE_URL = get_base_url()
 
 
 # Application Settings
-DJVERSION_VERSION = "0.19.6"
+DJVERSION_VERSION = "0.19.7"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = DEBUG
 SILKY_AUTHORISATION = DEBUG
