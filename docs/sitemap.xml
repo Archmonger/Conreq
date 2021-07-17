@@ -6,6 +6,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://archmonger.github.io/Conreq/configure/env_vars/</loc>
+         <lastmod>2021-07-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://archmonger.github.io/Conreq/configure/mysql/</loc>
          <lastmod>2021-07-17</lastmod>
          <changefreq>daily</changefreq>

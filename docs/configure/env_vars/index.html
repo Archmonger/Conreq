@@ -13,14 +13,14 @@
         <meta name="author" content="Archmonger">
       
       
-        <link rel="canonical" href="https://archmonger.github.io/Conreq/develop/run_conreq/">
+        <link rel="canonical" href="https://archmonger.github.io/Conreq/configure/env_vars/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.10">
     
     
       
-        <title>Running Conreq (Manually) - Conreq Documentation</title>
+        <title>Environment Variables - Conreq Documentation</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#creating-a-development-environment" class="md-skip">
+        <a href="#available-variables" class="md-skip">
           Skip to content
         </a>
       
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Running Conreq (Manually)
+              Environment Variables
             
           </span>
         </div>
@@ -181,13 +181,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../configure/env_vars/" class="md-tabs__link">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
         Configuration
       </a>
     </li>
@@ -197,15 +199,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../code_tldr/" class="md-tabs__link md-tabs__link--active">
+      <a href="../../develop/code_tldr/" class="md-tabs__link">
         Development
       </a>
     </li>
@@ -295,12 +295,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       <label class="md-nav__link" for="__nav_2">
         Configuration
@@ -316,11 +318,47 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../configure/env_vars/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Environment Variables
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Environment Variables
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#available-variables" class="md-nav__link">
+    Available Variables
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -330,7 +368,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configure/webserver/" class="md-nav__link">
+      <a href="../webserver/" class="md-nav__link">
         Built-in Webserver
       </a>
     </li>
@@ -342,7 +380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configure/static_files/" class="md-nav__link">
+      <a href="../static_files/" class="md-nav__link">
         Custom CSS/JS
       </a>
     </li>
@@ -354,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configure/organizr/" class="md-nav__link">
+      <a href="../organizr/" class="md-nav__link">
         Organizr Authentication
       </a>
     </li>
@@ -366,7 +404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configure/mysql/" class="md-nav__link">
+      <a href="../mysql/" class="md-nav__link">
         MySQL Database
       </a>
     </li>
@@ -385,14 +423,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       <label class="md-nav__link" for="__nav_3">
         Development
@@ -410,7 +446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../code_tldr/" class="md-nav__link">
+      <a href="../../develop/code_tldr/" class="md-nav__link">
         Our Code Explained
       </a>
     </li>
@@ -420,101 +456,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Running Conreq (Manually)
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../develop/run_conreq/" class="md-nav__link">
         Running Conreq (Manually)
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#creating-a-development-environment" class="md-nav__link">
-    Creating a Development Environment
-  </a>
-  
-    <nav class="md-nav" aria-label="Creating a Development Environment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#software-required" class="md-nav__link">
-    Software Required
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#setting-up-the-environment" class="md-nav__link">
-    Setting Up the Environment
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#creating-a-production-environment" class="md-nav__link">
-    Creating a Production Environment
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#optional-visual-studio-code-configuration" class="md-nav__link">
-    Optional: Visual Studio Code Configuration
-  </a>
-  
-    <nav class="md-nav" aria-label="Optional: Visual Studio Code Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vs-code-extensions" class="md-nav__link">
-    VS Code Extensions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#vs-code-settings" class="md-nav__link">
-    VS Code Settings
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -524,7 +470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../creating_apps/" class="md-nav__link">
+      <a href="../../develop/creating_apps/" class="md-nav__link">
         Creating Custom Apps
       </a>
     </li>
@@ -603,73 +549,47 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/develop/run_conreq.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/Archmonger/Conreq/edit/docs/source/docs/configure/env_vars.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Running Conreq (Manually)</h1>
+                  <h1>Environment Variables</h1>
                 
-                <p>There are two environments Conreq can exist in: <a href="#creating-a-development-environment">Development</a> and <a href="#creating-a-production-environment">Production</a>.</p>
-<p>If you intend to edit Conreq's code, then proceed with the Development instructions.</p>
-<hr />
-<h2 id="creating-a-development-environment">Creating a Development Environment<a class="headerlink" href="#creating-a-development-environment" title="Permanent link">&para;</a></h2>
-<h3 id="software-required">Software Required<a class="headerlink" href="#software-required" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Install <a href="https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab">Python 3.8+</a> (Easiest if this is the only version of python on your computer)</li>
-<li><em>If using Windows</em>: Install <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">Visual Studio C++</a> (Within this installer, navigate to <em>C++ Build Tools</em>. Select <em>MSVC</em> and <em>Windows 10 SDK</em>)</li>
-<li><em>Optional</em>: Install <a href="https://code.visualstudio.com/">Visual Studio Code</a> (Any editor would work)</li>
-</ul>
-<h3 id="setting-up-the-environment">Setting Up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Pull the repository from GitHub.</li>
-<li>Open a terminal (ex. Command Prompt or PowerShell) as administrator at the root of the repository.</li>
-<li><em>If using Windows</em><ul>
-<li>Type <code>set-executionpolicy remotesigned</code> and select Yes to All to allow external Python scripts to run on your computer.</li>
-</ul>
-</li>
-<li>Type <code>python -m venv venv</code> to create a Python virtual environment called "venv".</li>
-<li>Type <code>./venv/Scripts/activate</code> to enter the virtual environment.</li>
-<li>Type <code>pip install -r requirements.txt</code> to install all Python dependencies within the virtual environment.</li>
-<li>Type <code>python manage.py run_conreq</code> to run the webserver.</li>
-</ol>
-<hr />
-<h2 id="creating-a-production-environment">Creating a Production Environment<a class="headerlink" href="#creating-a-production-environment" title="Permanent link">&para;</a></h2>
-<p>Follow all instructions laid out within <a href="#creating-a-development-environment">Creating a Development Environment</a>, but before running <code>python manage.py run_conreq</code> do the following:</p>
-<ol>
-<li>Set your environment variable of <code>DEBUG</code> to <code>false</code>. The method of doing this will <a href="https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html">vary based on operating system</a>.<ul>
-<li>Doing this enables <em>a lot</em> of <strong>security features</strong> that are mandatory for any user environment.</li>
-</ul>
-</li>
-<li>Before running the webserver via <code>python manage.py run_conreq</code>, you may want to configure the webserver (such as changing ports).<ul>
-<li>See our <a href="/webserver/">webserver documentation</a> for more information.</li>
-</ul>
-</li>
-</ol>
-<hr />
-<h2 id="optional-visual-studio-code-configuration">Optional: Visual Studio Code Configuration<a class="headerlink" href="#optional-visual-studio-code-configuration" title="Permanent link">&para;</a></h2>
-<h3 id="vs-code-extensions">VS Code Extensions<a class="headerlink" href="#vs-code-extensions" title="Permanent link">&para;</a></h3>
-<ul>
-<li>GitHub</li>
-<li>GitLens</li>
-<li>Python</li>
-<li>MagicPython</li>
-</ul>
-<h3 id="vs-code-settings">VS Code Settings<a class="headerlink" href="#vs-code-settings" title="Permanent link">&para;</a></h3>
-<ol>
-<li>If your terminal does not show <code>(venv) ...</code>, type <code>./venv/Scripts/activate</code>.</li>
-<li>Type <code>pip install -r requirements_dev.txt</code> to install VS Code editor packages within the virtual environment.</li>
-<li>Enable Python Formatting<ul>
-<li>Settings -&gt; Editor: Format On Save -&gt; <code>ON</code></li>
-<li>Settings -&gt; Python Formatting Provider -&gt; <code>Black</code></li>
-</ul>
-</li>
-<li>Enabling Python Linting<ul>
-<li>Ctrl+Shift+P -&gt; Python: Select Linter -&gt; <code>pylint</code></li>
-<li>Settings -&gt; Linting: Pylint Args -&gt; Add Item -&gt; <code>--disable=line-too-long,bare-except,bad-continuation</code></li>
-</ul>
-</li>
-</ol>
+                <p>Environment variables can be used to customize core Conreq features at boot.</p>
+<p>If running outside of docker, the method of setting environment variables will <a href="https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html">vary based on operating system</a>.</p>
+<p>For Unraid Docker installations, this will be done by clicking <code>Add another Path, Port, Variable, Label, or Device</code> through a docker's <code>Edit</code> menu, and then selecting a <code>Config Type</code> of <code>Variable</code>.</p>
+<p>For regular docker installations, you can use the <code>-e</code> parameter, such as <code>docker run -e 'DB_ENGINE'='MYSQL' -e 'MYSQL_CONFIG_FILE'='/config/mysql.cnf</code>.</p>
+<p>If using Docker Compose, see the <a href="https://docs.docker.com/compose/environment-variables/#set-environment-variables-in-containers">relevant documentation</a>.</p>
+<h2 id="available-variables">Available Variables<a class="headerlink" href="#available-variables" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># General Settings</span>
+<span class="n">TZ</span> <span class="o">=</span> <span class="s2">&quot;America/Los_Angeles&quot;</span>                <span class="c1"># default: UTC (Timezone for log files, in &quot;TZ Database&quot; format)</span>
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;requests&quot;</span>                     <span class="c1"># default: None</span>
+<span class="n">APP_NAME</span> <span class="o">=</span> <span class="s2">&quot;RequestCentral&quot;</span>               <span class="c1"># default: Conreq</span>
+<span class="n">APP_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;Get yo stuff!&quot;</span>         <span class="c1"># default: Content Requesting</span>
+<span class="n">ARR_REFRESH_INTERNAL</span> <span class="o">=</span> <span class="s2">&quot;*/15&quot;</span>             <span class="c1"># default: */1 (Cron minutes for Sonarr/Radarr library refresh)</span>
+<span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>                       <span class="c1"># default: WARNING</span>
+<span class="n">CONREQ_ENV_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;CONREQ&quot;</span>              <span class="c1"># default: None</span>
+
+<span class="c1"># Data Storage</span>
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="s2">&quot;/example/directory&quot;</span>           <span class="c1"># default: /config (Defaults to &quot;data&quot; outside of docker)</span>
+<span class="n">DB_ENGINE</span> <span class="o">=</span> <span class="s2">&quot;MYSQL&quot;</span>                       <span class="c1"># default: SQLITE3</span>
+<span class="n">MYSQL_CONFIG_FILE</span> <span class="o">=</span> <span class="s2">&quot;/config/mysql.cnf&quot;</span>   <span class="c1"># default: None</span>
+
+<span class="c1"># Security</span>
+<span class="n">SSL_SECURITY</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>                     <span class="c1"># default: False (True enables advanced SSL security features)</span>
+<span class="n">PWNED_VALIDATOR</span> <span class="o">=</span> <span class="s2">&quot;False&quot;</span>                 <span class="c1"># default: True (False disables checking for compromised passwords)</span>
+<span class="n">X_FRAME_OPTIONS</span> <span class="o">=</span> <span class="s2">&quot;SAMEORIGIN&quot;</span>            <span class="c1"># default: DENY (False disables X-Frame-Options)</span>
+<span class="n">ALLOWED_HOST</span> <span class="o">=</span> <span class="s2">&quot;192.168.0.199&quot;</span>            <span class="c1"># default: * (Allows all hosts)</span>
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>                             <span class="c1"># default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)</span>
+
+<span class="c1"># Email</span>
+<span class="n">EMAIL_USE_TLS</span> <span class="o">=</span> <span class="s2">&quot;False&quot;</span>                   <span class="c1"># default: True</span>
+<span class="n">EMAIL_PORT</span> <span class="o">=</span> <span class="s2">&quot;587&quot;</span>                        <span class="c1"># default: None</span>
+<span class="n">EMAIL_HOST</span> <span class="o">=</span> <span class="s2">&quot;smtp.gmail.com&quot;</span>             <span class="c1"># default: None</span>
+<span class="n">EMAIL_HOST_USER</span> <span class="o">=</span> <span class="s2">&quot;myself@gmail.com&quot;</span>      <span class="c1"># default: None</span>
+<span class="n">EMAIL_HOST_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;dogmemes123&quot;</span>       <span class="c1"># default: None</span>
+</code></pre></div>
                 
                   
                     
@@ -678,7 +598,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 16, 2021</span>
       
     
   </small>
@@ -703,7 +623,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../code_tldr/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Our Code Explained" rel="prev">
+        <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -712,20 +632,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Our Code Explained
+              Home
             </div>
           </div>
         </a>
       
       
         
-        <a href="../creating_apps/" class="md-footer__link md-footer__link--next" aria-label="Next: Creating Custom Apps" rel="next">
+        <a href="../webserver/" class="md-footer__link md-footer__link--next" aria-label="Next: Built-in Webserver" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Creating Custom Apps
+              Built-in Webserver
             </div>
           </div>
           <div class="md-footer__button md-icon">

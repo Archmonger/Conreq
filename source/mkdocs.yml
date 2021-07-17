@@ -1,6 +1,7 @@
 nav:
     - Home: index.md
     - Configuration:
+          - Environment Variables: configure/env_vars.md
           - Built-in Webserver: configure/webserver.md
           - Custom CSS/JS: configure/static_files.md
           - Organizr Authentication: configure/organizr.md
