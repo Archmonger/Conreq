@@ -11,4 +11,8 @@ Want to join the community or have a question? Chat with us on [Discord](https:/
 
 ---
 
-[Discord :fontawesome-brands-discord:](https://discord.gg/gQhGZzEjmX){ .md-button .md-button--primary } [GitHub Discussions :fontawesome-brands-github:](https://github.com/Archmonger/Conreq/discussions){ .md-button .md-button--primary }
+## Communities
+
+[:fontawesome-brands-discord: Discord](https://discord.gg/gQhGZzEjmX){ .md-button .md-button--primary }
+[:fontawesome-brands-reddit: Reddit](https://www.reddit.com/r/conreq/){ .md-button .md-button--primary }
+[:fontawesome-brands-github: GitHub Discussions](https://github.com/Archmonger/Conreq/discussions){ .md-button .md-button--primary }
