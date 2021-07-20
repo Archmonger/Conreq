@@ -30,7 +30,7 @@ SSL_SECURITY = "True"                     # default: False (True enables advance
 PWNED_VALIDATOR = "False"                 # default: True (False disables checking for compromised passwords)
 X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (False disables X-Frame-Options)
 ALLOWED_HOST = "192.168.0.199"            # default: * (Allows all hosts)
-DEBUG = False                             # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
+DEBUG = "False"                           # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
 
 # Email
 EMAIL_USE_TLS = "False"                   # default: True
