@@ -18,6 +18,7 @@ LOG_DIR = getattr(settings, "LOG_DIR")
 SILKY_PYTHON_PROFILER_RESULT_PATH = getattr(
     settings, "SILKY_PYTHON_PROFILER_RESULT_PATH"
 )
+SETTINGS_FILE = getattr(settings, "SETTINGS_FILE")
 
 
 class Command(BaseCommand):
@@ -57,6 +58,13 @@ class Command(BaseCommand):
 
             # Conreq base dir
             self.recursive_chown(BASE_DIR, uid, gid)
+
+            # settings.json
+            if not os.path.exists(SETTINGS_FILE):
+                # Create the file if it doesn't exist
+                with open(SETTINGS_FILE, "w") as settings_file:
+                    settings_file.write("{}")
+            shutil.chown(SETTINGS_FILE, uid, gid)
 
     def add_arguments(self, parser):
         parser.add_argument(
