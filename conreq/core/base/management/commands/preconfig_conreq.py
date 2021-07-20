@@ -12,6 +12,7 @@ DEBUG = get_debug_from_env()
 BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 APPS_DIR = getattr(settings, "APPS_DIR")
+LOG_DIR = getattr(settings, "LOG_DIR")
 DATABASES = getattr(settings, "DATABASES")
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 SETTINGS_FILE = getattr(settings, "SETTINGS_FILE")
@@ -19,7 +20,6 @@ USER_STATICFILES = getattr(settings, "USER_STATICFILES")
 SILKY_PYTHON_PROFILER_RESULT_PATH = getattr(
     settings, "SILKY_PYTHON_PROFILER_RESULT_PATH"
 )
-LOG_DIR = getattr(settings, "LOG_DIR")
 
 
 class Command(BaseCommand):
