@@ -134,6 +134,11 @@ LOGGING = {
         },
     },
     "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "minimal",
+        },
         "conreq_logs": {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
@@ -143,46 +148,15 @@ LOGGING = {
             "encoding": "utf-8",
             "filename": CONREQ_LOG_FILE,
         },
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "minimal",
-        },
-        "access_logs": {
-            "level": "INFO",
-            "class": "logging.handlers.RotatingFileHandler",
-            "formatter": "main",
-            "maxBytes": 1024 * 1024 * 5,  # 5 MB
-            "backupCount": 5,
-            "filename": ACCESS_LOG_FILE,
-        },
     },
     "loggers": {
         "django": {
-            "level": "INFO",
-        },
-        "django.security.*": {
-            "level": "INFO",
-        },
-        "django.request": {
             "level": LOG_LEVEL,
         },
-        "django.channels.server": {
+        "hypercorn": {
             "level": LOG_LEVEL,
-        },
-        "django.db.backends.schema": {
-            "level": LOG_LEVEL,
-        },
-        "hypercorn.error": {
-            "level": "WARNING",
         },
         "conreq": {
-            "level": LOG_LEVEL,
-        },
-        "conreq.*": {
-            "level": LOG_LEVEL,
-        },
-        "conreq.*.*": {
             "level": LOG_LEVEL,
         },
         "huey": {
