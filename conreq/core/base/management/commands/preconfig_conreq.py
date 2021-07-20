@@ -22,7 +22,10 @@ SETTINGS_FILE = getattr(settings, "SETTINGS_FILE")
 
 
 class Command(BaseCommand):
-    help = "Runs any tasks that may help with preconfiguration."
+    """Executes functions that may require admin privileges,
+    since it is expected that run_conreq is executed as a user."""
+
+    help = "Runs code that may be required prior to run_conreq Conreq."
 
     def handle(self, *args, **options):
         uid = options["uid"]
