@@ -13,6 +13,7 @@ BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 APPS_DIR = getattr(settings, "APPS_DIR")
 LOG_DIR = getattr(settings, "LOG_DIR")
+MEDIA_DIR = getattr(settings, "MEDIA_DIR")
 DATABASES = getattr(settings, "DATABASES")
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 SETTINGS_FILE = getattr(settings, "SETTINGS_FILE")
@@ -57,6 +58,10 @@ class Command(BaseCommand):
         # User staticfiles dir
         if not os.path.exists(USER_STATICFILES):
             os.makedirs(USER_STATICFILES)
+
+        # User staticfiles dir
+        if not os.path.exists(MEDIA_DIR):
+            os.makedirs(MEDIA_DIR)
 
         # settings.json
         if not os.path.exists(SETTINGS_FILE):

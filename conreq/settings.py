@@ -32,6 +32,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
 APPS_DIR = os.path.join(DATA_DIR, "apps")
+MEDIA_DIR = os.path.join(DATA_DIR, "media")
 DEBUG = get_debug_from_env()
 DB_ENGINE = get_database_type()
 MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
@@ -380,3 +381,5 @@ STATICFILES_FINDERS = [
     "compressor.finders.CompressorFinder",
 ]
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = "media/"
