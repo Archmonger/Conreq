@@ -12,16 +12,15 @@ If using Docker Compose, see the [relevant documentation](https://docs.docker.co
 
 ```python
 # General Settings
-TZ = "America/Los_Angeles"                # default: UTC (Timezone for log files, in "TZ Database" format)
 BASE_URL = "requests"                     # default: None
 APP_NAME = "RequestCentral"               # default: Conreq
 APP_DESCRIPTION = "Get yo stuff!"         # default: Content Requesting
 ARR_REFRESH_INTERNAL = "*/15"             # default: */1 (Cron minutes for Sonarr/Radarr library refresh)
 LOG_LEVEL = "ERROR"                       # default: WARNING
-CONREQ_ENV_PREFIX = "CONREQ"              # default: None
+CONREQ_ENV_PREFIX = "CONREQ"              # default: None (Prefix for all these environment variables)
 
 # Data Storage
-DATA_DIR = "/example/directory"           # default: /config (Defaults to "data" outside of docker)
+DATA_DIR = "/example/directory"           # default: /config (Defaults to "data/" outside of docker)
 DB_ENGINE = "MYSQL"                       # default: SQLITE3
 MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: None
 

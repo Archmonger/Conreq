@@ -563,16 +563,15 @@
 <p>If using Docker Compose, see the <a href="https://docs.docker.com/compose/environment-variables/#set-environment-variables-in-containers">relevant documentation</a>.</p>
 <h2 id="available-variables">Available Variables<a class="headerlink" href="#available-variables" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># General Settings</span>
-<span class="n">TZ</span> <span class="o">=</span> <span class="s2">&quot;America/Los_Angeles&quot;</span>                <span class="c1"># default: UTC (Timezone for log files, in &quot;TZ Database&quot; format)</span>
 <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;requests&quot;</span>                     <span class="c1"># default: None</span>
 <span class="n">APP_NAME</span> <span class="o">=</span> <span class="s2">&quot;RequestCentral&quot;</span>               <span class="c1"># default: Conreq</span>
 <span class="n">APP_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;Get yo stuff!&quot;</span>         <span class="c1"># default: Content Requesting</span>
 <span class="n">ARR_REFRESH_INTERNAL</span> <span class="o">=</span> <span class="s2">&quot;*/15&quot;</span>             <span class="c1"># default: */1 (Cron minutes for Sonarr/Radarr library refresh)</span>
 <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>                       <span class="c1"># default: WARNING</span>
-<span class="n">CONREQ_ENV_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;CONREQ&quot;</span>              <span class="c1"># default: None</span>
+<span class="n">CONREQ_ENV_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;CONREQ&quot;</span>              <span class="c1"># default: None (Prefix for all these environment variables)</span>
 
 <span class="c1"># Data Storage</span>
-<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="s2">&quot;/example/directory&quot;</span>           <span class="c1"># default: /config (Defaults to &quot;data&quot; outside of docker)</span>
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="s2">&quot;/example/directory&quot;</span>           <span class="c1"># default: /config (Defaults to &quot;data/&quot; outside of docker)</span>
 <span class="n">DB_ENGINE</span> <span class="o">=</span> <span class="s2">&quot;MYSQL&quot;</span>                       <span class="c1"># default: SQLITE3</span>
 <span class="n">MYSQL_CONFIG_FILE</span> <span class="o">=</span> <span class="s2">&quot;/config/mysql.cnf&quot;</span>   <span class="c1"># default: None</span>
 
@@ -598,7 +597,7 @@
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 16, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 20, 2021</span>
       
     
   </small>
