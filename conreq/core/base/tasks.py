@@ -7,13 +7,13 @@ from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
 DB_ENGINE = get_database_type()
-HUEY_STORAGE = getattr(settings, "HUEY_STORAGE")
+HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
 @db_periodic_task(crontab(minute="0", hour="12", day="1/1"))
 def bg_tasks_vacuum():
     """Periodically preforms a SQLITE vacuum on the background task database."""
-    with sqlite3.connect(HUEY_STORAGE) as cursor:
+    with sqlite3.connect(HUEY_FILENAME) as cursor:
         cursor.execute("VACUUM")
 
 

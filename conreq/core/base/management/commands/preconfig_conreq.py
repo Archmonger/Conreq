@@ -12,12 +12,7 @@ DEBUG = get_debug_from_env()
 BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 DATABASES = getattr(settings, "DATABASES")
-HUEY_STORAGE = getattr(settings, "HUEY_STORAGE")
-CACHES = getattr(settings, "CACHES")
-LOG_DIR = getattr(settings, "LOG_DIR")
-SILKY_PYTHON_PROFILER_RESULT_PATH = getattr(
-    settings, "SILKY_PYTHON_PROFILER_RESULT_PATH"
-)
+HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 SETTINGS_FILE = getattr(settings, "SETTINGS_FILE")
 
 
@@ -40,9 +35,9 @@ class Command(BaseCommand):
             self.setup_sqlite_database(database, "Conreq", uid, gid, no_perms)
 
         # Background task database
-        if HUEY_STORAGE:
+        if HUEY_FILENAME:
             self.setup_sqlite_database(
-                HUEY_STORAGE, "Background Task", uid, gid, no_perms
+                HUEY_FILENAME, "Background Task", uid, gid, no_perms
             )
 
         # Migrate silk due to their wonky dev choices
@@ -50,24 +45,17 @@ class Command(BaseCommand):
             call_command("makemigrations", "silk")
 
         if not no_perms and sys.platform == "linux":
-            # Cache database
-            self.recursive_chown(CACHES["default"]["LOCATION"], uid, gid)
-
-            # Logs folder
-            self.recursive_chown(LOG_DIR, uid, gid)
-
-            # Debug dir
-            self.recursive_chown(SILKY_PYTHON_PROFILER_RESULT_PATH, uid, gid)
-
-            # Conreq base dir
-            self.recursive_chown(BASE_DIR, uid, gid)
-
             # settings.json
             if not os.path.exists(SETTINGS_FILE):
                 # Create the file if it doesn't exist
                 with open(SETTINGS_FILE, "w") as settings_file:
                     settings_file.write("{}")
-            shutil.chown(SETTINGS_FILE, uid, gid)
+
+            # Conreq data dir
+            self.recursive_chown(DATA_DIR, uid, gid)
+
+            # Conreq core dir
+            self.recursive_chown(BASE_DIR, uid, gid)
 
     def add_arguments(self, parser):
         parser.add_argument(

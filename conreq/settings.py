@@ -62,11 +62,11 @@ COMPRESS_FILTERS = {
     "css": ["compressor.filters.cssmin.rCSSMinFilter"],
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
-HUEY_STORAGE = os.path.join(DATA_DIR, "bg_tasks.sqlite3")
+HUEY_FILENAME = os.path.join(DATA_DIR, "bg_tasks.sqlite3")
 HUEY = {
     "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
-    "filename": HUEY_STORAGE,  # Sqlite filename
+    "filename": HUEY_FILENAME,  # Sqlite filename
     "timeout": 3,  # 3 second query timeout
     "results": False,  # Do not store return values of tasks.
     "immediate": False,  # If True, run tasks synchronously.
@@ -246,9 +246,6 @@ with open(SETTINGS_FILE, "r+") as settings_file:
         # New secret key is needed
         SECRET_KEY = get_random_secret_key()
         settings["SECRET_KEY"] = SECRET_KEY
-    # Clear cache if Conreq has been updated
-    if settings.get("CONREQ_VERSION") != DJVERSION_VERSION:
-        settings["CONREQ_VERSION"] = DJVERSION_VERSION
 # Save settings.json if needed
 if ORIGINAL_SETTINGS != settings:
     with open(SETTINGS_FILE, "w") as settings_file:

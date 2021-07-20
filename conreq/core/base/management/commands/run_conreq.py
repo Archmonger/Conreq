@@ -13,7 +13,7 @@ from hypercorn.run import run as run_hypercorn
 
 HYPERCORN_TOML = os.path.join(getattr(settings, "DATA_DIR"), "hypercorn.toml")
 DEBUG = get_debug_from_env()
-HUEY_STORAGE = getattr(settings, "HUEY_STORAGE")
+HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
 class Command(BaseCommand):
@@ -115,7 +115,7 @@ class Command(BaseCommand):
     @staticmethod
     def reset_huey_db():
         """Deletes all entries within the Huey background task database."""
-        with sqlite3.connect(HUEY_STORAGE) as cursor:
+        with sqlite3.connect(HUEY_FILENAME) as cursor:
             tables = list(
                 cursor.execute("select name from sqlite_master where type is 'table'")
             )
