@@ -11,9 +11,15 @@ from django.core.management.base import BaseCommand
 DEBUG = get_debug_from_env()
 BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
+APPS_DIR = getattr(settings, "APPS_DIR")
 DATABASES = getattr(settings, "DATABASES")
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 SETTINGS_FILE = getattr(settings, "SETTINGS_FILE")
+USER_STATICFILES = getattr(settings, "USER_STATICFILES")
+SILKY_PYTHON_PROFILER_RESULT_PATH = getattr(
+    settings, "SILKY_PYTHON_PROFILER_RESULT_PATH"
+)
+LOG_DIR = getattr(settings, "LOG_DIR")
 
 
 class Command(BaseCommand):
@@ -40,17 +46,32 @@ class Command(BaseCommand):
                 HUEY_FILENAME, "Background Task", uid, gid, no_perms
             )
 
-        # Migrate silk due to their wonky dev choices
+        # Apps dir
+        if not os.path.exists(APPS_DIR):
+            os.makedirs(APPS_DIR)
+
+        # Logs dir
+        if not os.path.exists(LOG_DIR):
+            os.makedirs(LOG_DIR)
+
+        # User staticfiles dir
+        if not os.path.exists(USER_STATICFILES):
+            os.makedirs(USER_STATICFILES)
+
+        # settings.json
+        if not os.path.exists(SETTINGS_FILE):
+            with open(SETTINGS_FILE, "w") as settings_file:
+                settings_file.write("{}")
+
         if DEBUG:
+            # Make Silky performance profiling dir
+            if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
+                os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
+
+            # Migrate silk due to their wonky dev choices
             call_command("makemigrations", "silk")
 
         if not no_perms and sys.platform == "linux":
-            # settings.json
-            if not os.path.exists(SETTINGS_FILE):
-                # Create the file if it doesn't exist
-                with open(SETTINGS_FILE, "w") as settings_file:
-                    settings_file.write("{}")
-
             # Conreq data dir
             self.recursive_chown(DATA_DIR, uid, gid)
 

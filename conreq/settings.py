@@ -51,8 +51,6 @@ SILKY_ANALYZE_QUERIES = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = os.path.join(DATA_DIR, "metrics")
-if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
-    os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
 HTML_MINIFY = True
 WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 COMPRESS_OUTPUT_DIR = "minified"
@@ -115,9 +113,6 @@ PWA_APP_DEBUG_MODE = DEBUG
 # Logging
 LOG_DIR = os.path.join(DATA_DIR, "logs")
 CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
-ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
 if DEBUG:
     LOG_LEVEL = get_str_from_env("LOG_LEVEL", "INFO")
 else:
@@ -198,10 +193,6 @@ REST_FRAMEWORK = {
 # External "settings.json" file
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 ORIGINAL_SETTINGS = None
-if not os.path.exists(SETTINGS_FILE):
-    # Create the file if it doesn't exist
-    with open(SETTINGS_FILE, "w") as settings_file:
-        settings_file.write("{}")
 with open(SETTINGS_FILE, "r+") as settings_file:
     # Read the file
     settings = json.load(settings_file)
@@ -229,8 +220,6 @@ if ORIGINAL_SETTINGS != settings:
 
 
 # User Installed Apps
-if not os.path.exists(APPS_DIR):
-    os.makedirs(APPS_DIR)
 sys.path.append(APPS_DIR)
 
 
@@ -380,13 +369,11 @@ USE_TZ = True
 # Static Files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(BASE_DIR, "collectstatic")
 STATIC_URL = BASE_URL + "/static/"
-STATICFILES_USER_PROVIDED = os.path.join(DATA_DIR, "static")
+USER_STATICFILES = os.path.join(DATA_DIR, "static")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "conreq", "static"),
-    STATICFILES_USER_PROVIDED,
+    USER_STATICFILES,
 ]
-if not os.path.exists(STATICFILES_USER_PROVIDED):
-    os.makedirs(STATICFILES_USER_PROVIDED)
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
