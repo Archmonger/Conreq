@@ -3,10 +3,12 @@ import shutil
 import sqlite3
 import sys
 
-from conreq.utils.generic import cprint, get_database_type
+from conreq.utils.generic import cprint, get_database_type, get_debug_from_env
 from django.conf import settings
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
+DEBUG = get_debug_from_env()
 BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 DATABASES = getattr(settings, "DATABASES")
@@ -38,6 +40,10 @@ class Command(BaseCommand):
             self.setup_sqlite_database(
                 HUEY_STORAGE, "Background Task", uid, gid, no_perms
             )
+
+        # Migrate silk due to their wonky dev choices
+        if DEBUG:
+            call_command("makemigrations", "silk")
 
         if not no_perms and sys.platform == "linux":
             # Cache database

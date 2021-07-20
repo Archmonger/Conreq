@@ -44,7 +44,6 @@ class Command(BaseCommand):
             print("DEBUG: Clearing cache...")
             cache.clear()
             self.reset_huey_db()
-            call_command("makemigrations", "silk")
 
         # Migrate the database
         call_command("migrate", "--noinput")
