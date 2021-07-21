@@ -14,6 +14,7 @@ from hypercorn.run import run as run_hypercorn
 HYPERCORN_TOML = os.path.join(getattr(settings, "DATA_DIR"), "hypercorn.toml")
 DEBUG = get_debug_from_env()
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
+ACCESS_LOG_FILE = getattr(settings, "ACCESS_LOG_FILE")
 
 
 class Command(BaseCommand):
@@ -64,7 +65,7 @@ class Command(BaseCommand):
             config.websocket_ping_interval = 20
             config.workers = 3
             config.application_path = "conreq.asgi:application"
-            config.accesslog = getattr(settings, "ACCESS_LOG_FILE")
+            config.accesslog = ACCESS_LOG_FILE
 
             # Additonal webserver configuration
             if os.path.exists(HYPERCORN_TOML):
