@@ -7,7 +7,7 @@ Twisted[tls,http2]==21.2.0
 channels==3.0.4
 hypercorn[h3]==0.11.2
 whitenoise[brotli]==5.2.0
-requests==2.25.1
+requests==2.26.0
 pillow==8.3.1
 
 # Database/Storage
