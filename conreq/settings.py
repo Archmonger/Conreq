@@ -69,6 +69,7 @@ HUEY = {
     "timeout": 3,  # 3 second query timeout
     "results": False,  # Do not store return values of tasks.
     "immediate": False,  # If True, run tasks synchronously.
+    "strict_fifo": True,
     "consumer": {
         "workers": 20,
     },
