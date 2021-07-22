@@ -1,9 +1,8 @@
 # App configuration parameters used by Conreq
-AUTO_ADD_CSS = True
-AUTO_ADD_JS = True
-HEAD_HTML = ""
-BODY_HTML = ""
+HEAD_TEMPLATES = []
+BODY_TEMPLATES = []
 INIT_COMMANDS = []
 PRECONFIGURE_COMMANDS = []
+SPLASH_TEMPLATE = ""
 LOGIN_TEMPLATE = ""
 BASE_TEMPLATE = ""
