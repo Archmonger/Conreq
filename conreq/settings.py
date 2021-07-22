@@ -285,7 +285,6 @@ ASGI_APPLICATION = "conreq.asgi.application"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "conreq", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
