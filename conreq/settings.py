@@ -196,6 +196,11 @@ REST_FRAMEWORK = {
 # External "settings.json" file
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 ORIGINAL_SETTINGS = None
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+if not os.path.exists(SETTINGS_FILE):
+    with open(SETTINGS_FILE, "w") as settings_file:
+        settings_file.write("{}")
 with open(SETTINGS_FILE, "r+") as settings_file:
     # Read the file
     settings = json.load(settings_file)
