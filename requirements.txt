@@ -1,19 +1,19 @@
 # Python utils
 wheel
 
-# Webserver Related
+# Webserver
 django==3.2.5 
 Twisted[tls,http2]==21.2.0
 channels==3.0.4
 hypercorn[h3]==0.11.2
 whitenoise[brotli]==5.3.0
-requests==2.26.0
-pillow==8.3.1
 
 # Database/Storage
 pymysql==1.0.2
 huey==2.3.2
 diskcache==5.2.1
+
+# Extending Django DB Model Features
 django-url-or-relative-url-field==0.1.2
 django-searchable-encrypted-fields==0.1.9
 jsonfield==3.1.0
@@ -26,25 +26,26 @@ djangorestframework==3.12.4
 djangorestframework-api-key==2.0.0
 drf-yasg==1.20.0
 markdown==3.3.4
-django-filter==2.4.0
 
 # Debug
 django-silk==4.1.0
 docutils==0.17.1
 
-# Optimization
+# Optimization & Compression
 django-htmlmin==0.11.0
 django-compression-middleware==0.4.1
 django-compressor==2.4.1
 
 # Security
 pwned-passwords-django==1.5
+
+# Version Control
 django-project-version==0.15.1
 
 # Timezones
 tzlocal==2.1
 
-# Django Apps
+# Only used by Conreq Apps (Migrate later)
 pyarr==1.0.2
 tmdbsimple==2.8.0
 strsim==0.0.3
