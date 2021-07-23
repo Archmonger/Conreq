@@ -116,7 +116,7 @@
 	.sidebar.collapsed {
 		display: none;
 	}
-	.nav-tab.suboption .fas {
+	.nav-tab .fas {
 		opacity: 1;
 		margin: 0;
 		padding: var(--navpages-btn-padding);
@@ -134,10 +134,6 @@
 		padding-left: 0;
 		padding-right: 0;
 		background: none;
-	}
-	.navpages-tab.suboption {
-		padding-top: 20px;
-		padding-bottom: 20px;
 	}
 	/* More Info */
 	.tns-ovh {
