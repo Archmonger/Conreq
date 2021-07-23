@@ -73,7 +73,8 @@
 	font-weight: 400;
 }
 
-.poster-container:not(.cast, .person-roles) .poster-description {
+.poster-container.tv .poster-description,
+.poster-container.movie .poster-description {
 	display: none;
 }
 
