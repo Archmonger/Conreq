@@ -107,6 +107,8 @@ def person(request):
         tv_crew_contain_valid_id = is_key_value_in_list(
             "conreq_valid_id", True, results["tv_credits"]["crew"]
         )
+        if results.get("popularity"):
+            results["popularity"] = int(results["popularity"] * 10)
 
         # Generate context for page rendering
         context = {
