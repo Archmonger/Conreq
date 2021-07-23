@@ -30,9 +30,12 @@
 	color: #fff;
 }
 
+.nav-tab {
+	margin: 0 5px;
+}
+
 .nav-tab,
 .nav-group {
-	margin: 0 5px;
 	text-decoration: none;
 	font-size: var(--primary-font-size);
 	display: block;

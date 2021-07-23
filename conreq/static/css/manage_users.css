@@ -24,6 +24,8 @@
 .table-title-container h2 {
 	margin: 0;
 	font-size: 24px;
+	width: auto;
+	padding: 0;
 }
 .table-title-container .row {
 	display: flex;
@@ -36,7 +38,6 @@
 	float: right;
 	font-size: 13px;
 	background: #fff;
-	border: none;
 	min-width: 50px;
 	border-radius: 2px;
 	border: none;
@@ -66,7 +67,6 @@ table.table tr td {
 	border-right: none;
 }
 table.table tr th {
-	border: none;
 	background: rgba(255, 255, 255, 0.05);
 }
 table.table th i {
@@ -94,10 +94,7 @@ table.table td i {
 table.table td {
 	overflow-y: auto;
 }
-.table td,
-.table th {
-	border-color: rgb(255 255 255 / 0.2) !important;
-}
+
 table.table-striped tbody tr:nth-of-type(odd) {
 	background: transparent;
 }
@@ -106,6 +103,9 @@ table.table-striped.table-hover tbody tr:hover {
 }
 .table-hover tbody tr:hover {
 	color: rgb(255 255 255 / 1);
+}
+.table-bordered > :not(caption) > * {
+	border: none;
 }
 table.table .avatar {
 	border-radius: 50%;

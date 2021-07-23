@@ -14,7 +14,7 @@
     <div id="navpages" class="navpages">
         <!-- Discover Tab Group -->
         {% if server_settings.sonarr_enabled or server_settings.radarr_enabled %}
-        <div class="nav-group clickable" data-toggle="collapse" data-target="#discover-tabs" aria-expanded="true"
+        <div class="nav-group clickable" data-bs-toggle="collapse" data-bs-target="#discover-tabs" aria-expanded="true"
             aria-controls="discover-tabs">
             <div class="group-name line-clamp-1">
                 DISCOVER
@@ -58,7 +58,7 @@
         </div>
 
         <!-- User Tab Group -->
-        <div class="nav-group clickable" data-toggle="collapse" data-target="#user-tabs" aria-expanded="true"
+        <div class="nav-group clickable" data-bs-toggle="collapse" data-bs-target="#user-tabs" aria-expanded="true"
             aria-controls="user-tabs">
             <div class="group-name line-clamp-1">
                 USER
@@ -95,7 +95,7 @@
 
         <!-- Admin Tab Group -->
         {% if user.is_staff %}
-        <div class="nav-group clickable" data-toggle="collapse" data-target="#admin-tabs" aria-expanded="true"
+        <div class="nav-group clickable" data-bs-toggle="collapse" data-bs-target="#admin-tabs" aria-expanded="true"
             aria-controls="admin-tabs">
             <div class="group-name line-clamp-1">
                 ADMIN
@@ -131,7 +131,7 @@
         {% endif %}
 
         {% if user.is_staff and debug %}
-        <div class="nav-group clickable" data-toggle="collapse" data-target="#debug-tabs" aria-expanded="true"
+        <div class="nav-group clickable" data-bs-toggle="collapse" data-bs-target="#debug-tabs" aria-expanded="true"
             aria-controls="admin-tabs">
             <div class="group-name line-clamp-1">
                 DEBUG

@@ -2,7 +2,7 @@
     <div class="text-input-title">Anime Quality Profile</div>
     <div
         class="text-input-container dropdown no-highlighting {% if radarr_quality_profiles %} clickable {% endif %} {% if not current_radarr_anime_quality_profile and server_settings.radarr_enabled %}error{% endif %}">
-        <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        <div class="settings-item text-display-only dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             <div class="settings-item-text line-clamp-1">
                 {{ current_radarr_anime_quality_profile }}
@@ -24,7 +24,7 @@
     <div class="text-input-title">Movie Quality Profile</div>
     <div
         class="text-input-container dropdown no-highlighting {% if radarr_quality_profiles %} clickable {% endif %} {% if not current_radarr_movies_quality_profile and server_settings.radarr_enabled %}error{% endif %}">
-        <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        <div class="settings-item text-display-only dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             <div class="settings-item-text line-clamp-1">
                 {{ current_radarr_movies_quality_profile }}
@@ -46,7 +46,7 @@
     <div class="text-input-title">Anime Folder Path</div>
     <div
         class="text-input-container dropdown no-highlighting {% if radarr_folders %} clickable {% endif %} {% if not current_radarr_anime_folder and server_settings.radarr_enabled %}error{% endif %}">
-        <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        <div class="settings-item text-display-only dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             <div class="settings-item-text line-clamp-1">
                 {{ current_radarr_anime_folder }}
@@ -69,7 +69,7 @@
     <div class="text-input-title">Movie Folder Path</div>
     <div
         class="text-input-container dropdown no-highlighting {% if radarr_folders %} clickable {% endif %} {% if not current_radarr_movies_folder and server_settings.radarr_enabled %}error{% endif %}">
-        <div class="settings-item text-display-only dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        <div class="settings-item text-display-only dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             <div class="settings-item-text line-clamp-1">
                 {{ current_radarr_movies_folder }}

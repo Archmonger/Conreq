@@ -4,7 +4,7 @@
 {% include "primary/loading_animation.html" %}
 <div id="modal-content" class="modal-content">
     <div class="modal-header">
-        <div class="modal-header-btn-container" data-dismiss="modal" aria-label="Close">
+        <div class="modal-header-btn-container" data-bs-dismiss="modal" aria-label="Close">
             <i title="Close" class="fas fa-window-close clickable"></i>
         </div>
         <div class="title">SELECT EPISODES</div>
@@ -55,8 +55,8 @@
                 </div>
             </div>
             <div class="row-collapse-icon-container">
-                <i class="fas fa-angle-down clickable collapsed" data-toggle="collapse"
-                    data-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
+                <i class="fas fa-angle-down clickable collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#episodes-season-{{season.seasonNumber}}" aria-expanded="false"
                     aria-controls="episodes-season-{{season.seasonNumber}}"></i>
             </div>
 
