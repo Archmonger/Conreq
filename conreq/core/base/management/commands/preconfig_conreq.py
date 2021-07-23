@@ -11,14 +11,8 @@ from django.core.management.base import BaseCommand
 DEBUG = get_debug_from_env()
 BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
-APPS_DIR = getattr(settings, "APPS_DIR")
-MEDIA_DIR = getattr(settings, "MEDIA_DIR")
 DATABASES = getattr(settings, "DATABASES")
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
-USER_STATICFILES = getattr(settings, "USER_STATICFILES")
-SILKY_PYTHON_PROFILER_RESULT_PATH = getattr(
-    settings, "SILKY_PYTHON_PROFILER_RESULT_PATH"
-)
 
 
 class Command(BaseCommand):
@@ -45,23 +39,7 @@ class Command(BaseCommand):
                 HUEY_FILENAME, "Background Task", uid, gid, no_perms
             )
 
-        # Apps dir
-        if not os.path.exists(APPS_DIR):
-            os.makedirs(APPS_DIR)
-
-        # User staticfiles dir
-        if not os.path.exists(USER_STATICFILES):
-            os.makedirs(USER_STATICFILES)
-
-        # User staticfiles dir
-        if not os.path.exists(MEDIA_DIR):
-            os.makedirs(MEDIA_DIR)
-
         if DEBUG:
-            # Make Silky performance profiling dir
-            if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
-                os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
-
             # Migrate silk due to their wonky dev choices
             call_command("makemigrations", "silk")
 

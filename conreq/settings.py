@@ -33,6 +33,8 @@ DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
 APPS_DIR = os.path.join(DATA_DIR, "apps")
 MEDIA_DIR = os.path.join(DATA_DIR, "media")
+USER_STATICFILES_DIR = os.path.join(DATA_DIR, "static")
+LOG_DIR = os.path.join(DATA_DIR, "logs")
 DEBUG = get_debug_from_env()
 DB_ENGINE = get_database_type()
 MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
@@ -76,6 +78,21 @@ HUEY = {
 }
 
 
+# Directory Structure Creation
+if not os.path.exists(APPS_DIR):
+    os.makedirs(APPS_DIR)
+if not os.path.exists(USER_STATICFILES_DIR):
+    os.makedirs(USER_STATICFILES_DIR)
+if not os.path.exists(MEDIA_DIR):
+    os.makedirs(MEDIA_DIR)
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH) and DEBUG:
+    os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
+
+
 # Email Settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = get_bool_from_env("EMAIL_USE_TLS", True)
@@ -113,12 +130,8 @@ PWA_APP_DEBUG_MODE = DEBUG
 
 
 # Logging
-LOG_DIR = os.path.join(DATA_DIR, "logs")
 CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
 ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
-# Logs dir
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
 if DEBUG:
     LOG_LEVEL = get_str_from_env("LOG_LEVEL", "INFO")
 else:
@@ -199,8 +212,6 @@ REST_FRAMEWORK = {
 # External "settings.json" file
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 ORIGINAL_SETTINGS = None
-if not os.path.exists(DATA_DIR):
-    os.makedirs(DATA_DIR)
 if not os.path.exists(SETTINGS_FILE):
     with open(SETTINGS_FILE, "w") as settings_file:
         settings_file.write("{}")
@@ -379,10 +390,10 @@ USE_TZ = True
 # Static Files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(BASE_DIR, "collectstatic")
 STATIC_URL = BASE_URL + "/static/"
-USER_STATICFILES = os.path.join(DATA_DIR, "static")
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "conreq", "static"),
-    USER_STATICFILES,
+    USER_STATICFILES_DIR,
 ]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
