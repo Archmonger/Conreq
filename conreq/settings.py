@@ -116,6 +116,9 @@ PWA_APP_DEBUG_MODE = DEBUG
 LOG_DIR = os.path.join(DATA_DIR, "logs")
 CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
 ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
+# Logs dir
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
 if DEBUG:
     LOG_LEVEL = get_str_from_env("LOG_LEVEL", "INFO")
 else:

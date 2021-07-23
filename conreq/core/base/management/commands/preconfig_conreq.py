@@ -12,7 +12,6 @@ DEBUG = get_debug_from_env()
 BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 APPS_DIR = getattr(settings, "APPS_DIR")
-LOG_DIR = getattr(settings, "LOG_DIR")
 MEDIA_DIR = getattr(settings, "MEDIA_DIR")
 DATABASES = getattr(settings, "DATABASES")
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
@@ -49,10 +48,6 @@ class Command(BaseCommand):
         # Apps dir
         if not os.path.exists(APPS_DIR):
             os.makedirs(APPS_DIR)
-
-        # Logs dir
-        if not os.path.exists(LOG_DIR):
-            os.makedirs(LOG_DIR)
 
         # User staticfiles dir
         if not os.path.exists(USER_STATICFILES):
