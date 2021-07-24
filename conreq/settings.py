@@ -79,18 +79,21 @@ HUEY = {
 
 
 # Directory Structure Creation
-if not os.path.exists(APPS_DIR):
-    os.makedirs(APPS_DIR)
-if not os.path.exists(USER_STATICFILES_DIR):
-    os.makedirs(USER_STATICFILES_DIR)
-if not os.path.exists(MEDIA_DIR):
-    os.makedirs(MEDIA_DIR)
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
-if not os.path.exists(DATA_DIR):
-    os.makedirs(DATA_DIR)
-if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH) and DEBUG:
-    os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
+try:
+    if not os.path.exists(APPS_DIR):
+        os.makedirs(APPS_DIR)
+    if not os.path.exists(USER_STATICFILES_DIR):
+        os.makedirs(USER_STATICFILES_DIR)
+    if not os.path.exists(MEDIA_DIR):
+        os.makedirs(MEDIA_DIR)
+    if not os.path.exists(LOG_DIR):
+        os.makedirs(LOG_DIR)
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
+    if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH) and DEBUG:
+        os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
+except:
+    pass
 
 
 # Email Settings
