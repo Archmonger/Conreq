@@ -244,11 +244,8 @@ if ORIGINAL_SETTINGS != settings:
         settings_file.write(json.dumps(settings))
 
 
-# User Installed Apps
-sys.path.append(APPS_DIR)
-
-
-# Application Definitions
+# Django Apps & Middleware
+sys.path.append(APPS_DIR)  # User Installed Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.admindocs",
