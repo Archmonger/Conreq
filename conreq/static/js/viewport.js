@@ -102,7 +102,10 @@ let get_viewport = async function (
 	$(viewport_selector).trigger("url-changed");
 
 	// Abandon an old http request if the user clicks something else
-	if (viewport_http_request.status == undefined) {
+	if (
+		viewport_http_request.statusText != "OK" ||
+		viewport_http_request.statusText == null
+	) {
 		viewport_http_request_aborted = true;
 		viewport_http_request.abort();
 	}
@@ -112,13 +115,15 @@ let get_viewport = async function (
 		return success(response);
 	}).fail(async function () {
 		if (!viewport_http_request_aborted) {
+			console.error("Failed to fetch viewport!");
 			conreq_no_response_toast_message();
-			$(viewport_container_class).hide();
-			$(viewport_container_top_class + ">*").remove();
-			$(viewport_container_top_class).append(
-				"<p>Could not connect to the server!</p>"
+			await destroy_viewport(viewport_selector);
+			$(viewport_selector + ">*").remove();
+			$(viewport_selector).append(
+				"<h1>Could not connect to the server!</h1>"
 			);
-			$(viewport_container_top_class + ">p").css("text-align", "center");
+			$(viewport_selector + ">h1").css("text-align", "center");
+			select_active_viewport(viewport_selector);
 		}
 		viewport_http_request_aborted = false;
 	});
