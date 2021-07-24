@@ -22,15 +22,18 @@ def search(request):
 
     # Determine which search method to use (tv/movie/all)
     if content_type == "tv":
-        tmdb_results = searcher.television(query, page)["results"]
+        tmdb_results = searcher.television(query, page)
     elif content_type == "movie":
-        tmdb_results = searcher.movie(query, page)["results"]
+        tmdb_results = searcher.movie(query, page)
     else:
-        tmdb_results = searcher.all(query, page)["results"]
+        tmdb_results = searcher.all(query, page)
 
-    # Determine the availability
-    content_discovery.determine_id_validity(tmdb_results)
-    set_many_availability(tmdb_results)
+    if tmdb_results:
+        tmdb_results = tmdb_results.get("results")
+
+        # Determine the availability
+        content_discovery.determine_id_validity(tmdb_results)
+        set_many_availability(tmdb_results)
 
     context = {
         "all_cards": tmdb_results,

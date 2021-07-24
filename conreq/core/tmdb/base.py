@@ -461,7 +461,7 @@ class TmdbBase:
                 for result in results:
                     result["content_type"] = content_type
             # # Set a single media item
-            else:
+            elif isinstance(results, dict):
                 results["content_type"] = content_type
         except:
             log.handler(
