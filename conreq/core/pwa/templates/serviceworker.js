@@ -3,7 +3,7 @@
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
 	"{{ base_url|escapejs }}/offline/",
-	"{{ base_url|escapejs }}/static/css/django-pwa-app.css",
+	"{{ base_url|escapejs }}/static/css/main_slim.css",
 ];
 
 // Cache on install

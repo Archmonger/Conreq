@@ -32,7 +32,7 @@ body,
 	justify-content: center;
 }
 
-.main * {
+* {
 	font-size: var(--primary-font-size);
 	font-family: var(--global-font);
 	color: rgba(255, 255, 255, 0.75);
@@ -193,4 +193,23 @@ ul.errorlist > li {
 	.default-box-brand {
 		width: 80%;
 	}
+}
+
+/* Offline */
+.offline {
+	background: #363636
+		linear-gradient(
+			145deg,
+			rgba(18, 23, 25, 0.8),
+			rgba(18, 23, 25, 0.25),
+			rgba(18, 23, 25, 0.15),
+			rgba(0, 0, 0, 0)
+		);
+}
+
+.offline h1 {
+	font-size: 26px;
+	font-weight: 400;
+	margin-top: 40px;
+	text-align: center;
 }
