@@ -23,6 +23,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         port = options["port"]
         set_perms = options["set_perms"]
+        verbosity = "-v 1" if DEBUG else "-v 0"
 
         # Run any preconfiguration tasks
         if not options["disable_preconfig"]:
@@ -42,17 +43,16 @@ class Command(BaseCommand):
         # Perform any Debug related clean-up
         if DEBUG:
             print("Conreq is in DEBUG mode.")
-            print("DEBUG: Clearing cache...")
             cache.clear()
             self.reset_huey_db()
 
         # Migrate the database
-        call_command("migrate", "--noinput")
+        call_command("migrate", "--noinput", verbosity)
 
         if not DEBUG:
             # Collect static files
-            call_command("collectstatic", "--link", "--clear", "--noinput")
-            call_command("compress", "--force")
+            call_command("collectstatic", "--link", "--clear", "--noinput", verbosity)
+            call_command("compress", "--force", verbosity)
 
         # Run background task management
         proc = Process(target=self.start_huey, daemon=True)
@@ -129,5 +129,5 @@ class Command(BaseCommand):
         django.setup()
         if DEBUG:
             call_command("run_huey")
-        if not DEBUG:
+        else:
             call_command("run_huey", "--quiet")
