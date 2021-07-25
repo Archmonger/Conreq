@@ -1,6 +1,7 @@
 import os
-from multiprocessing import Process
 import sqlite3
+import sys
+from multiprocessing import Process
 
 import django
 from conreq.utils.generic import get_debug_from_env
