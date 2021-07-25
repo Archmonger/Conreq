@@ -40,10 +40,12 @@ class Command(BaseCommand):
         if not options["skip_checks"]:
             call_command("test", "--noinput", "--parallel", "--failfast")
 
-        # Perform any Debug related clean-up
+        # Perform any debug related clean-up
         if DEBUG:
             print("Conreq is in DEBUG mode.")
+            print("Clearing cache...")
             cache.clear()
+            print("Removing stale background tasks...")
             self.reset_huey_db()
 
         # Migrate the database
@@ -121,7 +123,6 @@ class Command(BaseCommand):
                 cursor.execute("select name from sqlite_master where type is 'table'")
             )
             cursor.executescript(";".join(["delete from %s" % i for i in tables]))
-        print("DEBUG: Removing stale background tasks...")
 
     @staticmethod
     def start_huey():
