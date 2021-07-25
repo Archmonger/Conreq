@@ -68,6 +68,8 @@ class Command(BaseCommand):
             config.workers = 3
             config.application_path = "conreq.asgi:application"
             config.accesslog = ACCESS_LOG_FILE
+            if sys.platform == "linux":
+                config.worker_class = "uvloop"
 
             # Additonal webserver configuration
             if os.path.exists(HYPERCORN_TOML):
