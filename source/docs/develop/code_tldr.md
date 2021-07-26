@@ -2,60 +2,59 @@ This guide is intended to help developers gain an understanding of how the code 
 
 ---
 
-## Repository Structure
+## Repository File Structure
 
-`manage.py` - Django development tool _(runs the development web server, initialize the databases, [and more.](https://docs.djangoproject.com/en/3.1/ref/django-admin/)_<br/>
-`misc/` - Branding, legal documents, and other miscellaneous files<br/>
-
-`conreq/` - Main Django application<br/>
-`conreq/settings.py` - Boot-time configuration and settings<br/>
-`conreq/urls.py` - Main HTTP URL path handler<br/>
-`conreq/asgi.py` - Main Websocket path handler<br/>
-`conreq/core/websockets/consumers.py` - Back-end websocket commands _(sends/receives json)_<br/>
-`conreq/static/js/client_websockets.js` - Front-end websocket commands _(sends/receives json)_<br/
-
-`conreq/core/` - Core back-end functionality<br/>
-`conreq/static-dev/` - CSS, JavaScript, and Image files<br/>
-`conreq/templates/` - HTML templates used by sub-application's `views.py` to generate web pages<br/>
-`conreq/utils/` - Generic functions that can be used by their respective category<br/>
-
----
-
-## Fundamental Django Design
-
-Almost all of the Conreq back-end "logic" will trace back to a `views.py` file. Within this file we import all sorts helper functions to help us render a specific URL address. Most of these helper functions are located within `conreq/utils/` and `conreq/core/`.
-
-Here's a high level example of what occurs when the browser visits a URL.
-
-1. The browser visits a Conreq web address
-2. Django determines how to handle this URL by comparing the path (let's use the example of `/server_settings/`) with what is contained in `conreq/urls.py`
-3. Based on `conreq/urls.py`, Django determines there is another file that defines this path, and that file is `conreq/core/server_settings/urls.py`.
-4. Based on `conreq/core/server_settings/urls.py`, Django determines this URL is rendered by `conreq/core/server_settings/views.py`
-5. Django renders the HTML (known as a `Django View`) by running the the respective view function contained within `conreq/core/server_settings/views.py`
-6. The webserver determines how to send this view to the browser based on what was returned by the view (ex. a `HttpResponse` or `JsonResponse`)
+| Path                                    | Description                                                                                                                                                |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `manage.py`                             | Django development tool _(runs the development web server, initialize the databases, [and more.](https://docs.djangoproject.com/en/3.1/ref/django-admin/)_ |
+| `misc/`                                 | Branding, legal documents, and other miscellaneous files                                                                                                   |
+| `conreq/`                               | Main Django application                                                                                                                                    |
+| `conreq/core/`                          | All back-end functionality                                                                                                                                 |
+| `conreq/static/`                        | CSS, JavaScript, and Image files                                                                                                                           |
+| `conreq/utils/`                         | Generic functions that may be helpful to use                                                                                                               |
+| `conreq/settings.py`                    | Boot-time configuration and settings                                                                                                                       |
+| `conreq/urls.py`                        | HTTP URLs                                                                                                                                                  |
+| `conreq/asgi.py`                        | Websocket URLs                                                                                                                                             |
+| `conreq/core/websockets/consumers.py`   | Back-end Websockets                                                                                                                                        |
+| `conreq/static/js/client_websockets.js` | Front-end websockets                                                                                                                                       |
 
 ---
 
-## Conreq Viewport Rendering
+## Viewport Rendering
 
 Viewport rendering is currently being reassessed. These docs will be updated at a later time.
 
 ---
 
-## Conreq Modal Rendering
+## Modal Rendering
 
 Modal rendering is currently being reassessed. These docs will be updated at a later time.
 
 ---
 
-## Django Websockets
+## HTTP URL Routing
 
-Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as communicating via _chat messages_. When the page first loads, a connection to a _private chat room (direct messages)_ is formed, and _chat bubbles_ (`json` messages) are communicated back and forth between the server and client browser.
+All of the HTTP routing logic will trace back to a `views.py` file. Within this file we write code render a specific URL address, which is effectively a string containing HTML.
 
-On the server side, the URL location of where _private chat rooms_ are created is determined within `conreq/asgi.py`. In this file, the URL is directly linked to a `consumer`. Django does support creating _chat groups_ with multiple clients in it, however, Conreq currently does not utilize this feature.
+Conreq relies on the [Django Framework](https://www.djangoproject.com/) for HTTP URL routing. Here's a high level example of what occurs when the browser visits a URL.
 
-At the most fundamental level, a `consumer` is a Python class with a _send_ and _receive_ function. All of Conreq's consumers can be found in `conreq/core/websockets/consumers.py`.
+1. The browser visits a Conreq web address
+2. Django determines how to handle this URL by comparing the path (let's use the example of `/server_settings/`) with what is contained in `conreq/urls.py`
+3. Django looks at `conreq/urls.py` at notices it points to `include("conreq.core.server_settings.urls")`. So, this tells Django there is another file that defines this path, and that file is `conreq/core/server_settings/urls.py`.
+4. Based on the `urlpatterns` in `conreq/core/server_settings/urls.py`, Django determines this URL is rendered by a function called `views.server_settings`.
+5. Django runs this function to renders the HTML (known as a `Django View`).
+6. The webserver determines how to send this view to the browser based on what was returned by the view (ex. a `HttpResponse` or `JsonResponse`)
 
-In Django, the receive and response format is most commonly JSON. This is determined based on your consumer's base class (ex. `JsonWebsocketConsumer`). These classes have built-in functions for sending and receiving JSON messages (ex. `send_json` and `recieve_json`). Overriding these functions will be where most of your Websocket logic will be written.
+---
 
-When a JSON message is sent from server to the client browser, it will be received by the JavaScript file `conreq/static/js/client_websockets.js` using ES6 standard JavaScript Websockets. This file is also the one that initiates a new Websocket communication session when the page first loads.
+## Websockets
+
+Websockets can be thought of as the server and browser communicating via _chat messages_. When the page first loads, a connection to a _chat room_ is formed, and _chat bubbles_ can be communicated back and forth between the server and browser.
+
+Chat rooms must exist at a specific URL. The URL they exist at is determined within `conreq/asgi.py`. In this file, a specific URL is directly linked to a [_websocket consumer_](https://channels.readthedocs.io/en/latest/topics/consumers.html).
+
+A websocket consumer is a Python class with a send/receive function, which typically process `json` data.
+
+The data format that gets processed is determined based on your consumer's base class. For example `AsyncJsonWebsocketConsumer` has `send_json()` and `recieve_json()` functions for processing JSON messages. Overriding these functions will be where most of your code will be written when working with websockets.
+
+In the situation where the server sends a JSON message via `send_json()`, it will be processed by the browser's JavaScript websocket client _(ex. `conreq/static/js/client_websockets.js`)_.

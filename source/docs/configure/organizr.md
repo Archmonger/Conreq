@@ -2,13 +2,13 @@
 
     _If using Unraid/Docker, set this using a Docker Variable._
 
-    _If you are using your own operating system, consider searching "How to set environment variables in ... [Windows 10]"_
+    _If manually running Conreq, the method of setting environment variables will [vary based on operating system](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)._
 
 2. Go to `Server Settings` within Conreq and enable `Organizr User Authentication`
 
 3. Set up a Nginx reverse proxy.
 
-    _If you need help with this, join the [Organizr Discord](https://discord.com/invite/TrNtY7N)._
+    _If you need help with this, join the [Organizr Discord](https://discord.com/invite/TrNtY7N) and post in #groups._
 
 4. In your Conreq block, add the following...
 

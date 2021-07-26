@@ -31,8 +31,7 @@ Follow all instructions laid out within [Creating a Development Environment](#cr
 
 1. Set your environment variable of `DEBUG` to `false`. The method of doing this will [vary based on operating system](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html).
     - Doing this enables _a lot_ of **security features** that are mandatory for any user environment.
-2. Before running the webserver via `python manage.py run_conreq`, you may want to configure the webserver (such as changing ports).
-    - See our [webserver documentation](/webserver/) for more information.
+2. The webserver is conifgured with good defaults for most cases, but if you want to configure the webserver _(such as changing ports)_ See our [webserver documentation](/webserver/) for more information.
 
 ---
 

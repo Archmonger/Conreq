@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#repository-structure" class="md-skip">
+        <a href="#repository-file-structure" class="md-skip">
           Skip to content
         </a>
       
@@ -205,7 +205,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="./" class="md-tabs__link md-tabs__link--active">
+      <a href="../run_conreq/" class="md-tabs__link md-tabs__link--active">
         Development
       </a>
     </li>
@@ -408,6 +408,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../run_conreq/" class="md-nav__link">
+        Running Conreq Manually
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -439,36 +451,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#repository-structure" class="md-nav__link">
-    Repository Structure
+  <a href="#repository-file-structure" class="md-nav__link">
+    Repository File Structure
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fundamental-django-design" class="md-nav__link">
-    Fundamental Django Design
+  <a href="#viewport-rendering" class="md-nav__link">
+    Viewport Rendering
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#conreq-viewport-rendering" class="md-nav__link">
-    Conreq Viewport Rendering
+  <a href="#modal-rendering" class="md-nav__link">
+    Modal Rendering
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#conreq-modal-rendering" class="md-nav__link">
-    Conreq Modal Rendering
+  <a href="#http-url-routing" class="md-nav__link">
+    HTTP URL Routing
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#django-websockets" class="md-nav__link">
-    Django Websockets
+  <a href="#websockets" class="md-nav__link">
+    Websockets
   </a>
   
 </li>
@@ -477,18 +489,6 @@
   
 </nav>
       
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../run_conreq/" class="md-nav__link">
-        Running Conreq (Manually)
-      </a>
     </li>
   
 
@@ -586,44 +586,86 @@
                 
                 <p>This guide is intended to help developers gain an understanding of how the code in Conreq works together to make a functional application.</p>
 <hr />
-<h2 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h2>
-<p><code>manage.py</code> - Django development tool <em>(runs the development web server, initialize the databases, <a href="https://docs.djangoproject.com/en/3.1/ref/django-admin/">and more.</a></em><br/>
-<code>misc/</code> - Branding, legal documents, and other miscellaneous files<br/></p>
-<p><code>conreq/</code> - Main Django application<br/>
-<code>conreq/settings.py</code> - Boot-time configuration and settings<br/>
-<code>conreq/urls.py</code> - Main HTTP URL path handler<br/>
-<code>conreq/asgi.py</code> - Main Websocket path handler<br/>
-<code>conreq/core/websockets/consumers.py</code> - Back-end websocket commands <em>(sends/receives json)</em><br/>
-<code>conreq/static/js/client_websockets.js</code> - Front-end websocket commands <em>(sends/receives json)</em>&lt;br/</p>
-<p><code>conreq/core/</code> - Core back-end functionality<br/>
-<code>conreq/static-dev/</code> - CSS, JavaScript, and Image files<br/>
-<code>conreq/templates/</code> - HTML templates used by sub-application's <code>views.py</code> to generate web pages<br/>
-<code>conreq/utils/</code> - Generic functions that can be used by their respective category<br/></p>
+<h2 id="repository-file-structure">Repository File Structure<a class="headerlink" href="#repository-file-structure" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>manage.py</code></td>
+<td>Django development tool <em>(runs the development web server, initialize the databases, <a href="https://docs.djangoproject.com/en/3.1/ref/django-admin/">and more.</a></em></td>
+</tr>
+<tr>
+<td><code>misc/</code></td>
+<td>Branding, legal documents, and other miscellaneous files</td>
+</tr>
+<tr>
+<td><code>conreq/</code></td>
+<td>Main Django application</td>
+</tr>
+<tr>
+<td><code>conreq/core/</code></td>
+<td>All back-end functionality</td>
+</tr>
+<tr>
+<td><code>conreq/static/</code></td>
+<td>CSS, JavaScript, and Image files</td>
+</tr>
+<tr>
+<td><code>conreq/utils/</code></td>
+<td>Generic functions that may be helpful to use</td>
+</tr>
+<tr>
+<td><code>conreq/settings.py</code></td>
+<td>Boot-time configuration and settings</td>
+</tr>
+<tr>
+<td><code>conreq/urls.py</code></td>
+<td>HTTP URLs</td>
+</tr>
+<tr>
+<td><code>conreq/asgi.py</code></td>
+<td>Websocket URLs</td>
+</tr>
+<tr>
+<td><code>conreq/core/websockets/consumers.py</code></td>
+<td>Back-end Websockets</td>
+</tr>
+<tr>
+<td><code>conreq/static/js/client_websockets.js</code></td>
+<td>Front-end websockets</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="fundamental-django-design">Fundamental Django Design<a class="headerlink" href="#fundamental-django-design" title="Permanent link">&para;</a></h2>
-<p>Almost all of the Conreq back-end "logic" will trace back to a <code>views.py</code> file. Within this file we import all sorts helper functions to help us render a specific URL address. Most of these helper functions are located within <code>conreq/utils/</code> and <code>conreq/core/</code>.</p>
-<p>Here's a high level example of what occurs when the browser visits a URL.</p>
+<h2 id="viewport-rendering">Viewport Rendering<a class="headerlink" href="#viewport-rendering" title="Permanent link">&para;</a></h2>
+<p>Viewport rendering is currently being reassessed. These docs will be updated at a later time.</p>
+<hr />
+<h2 id="modal-rendering">Modal Rendering<a class="headerlink" href="#modal-rendering" title="Permanent link">&para;</a></h2>
+<p>Modal rendering is currently being reassessed. These docs will be updated at a later time.</p>
+<hr />
+<h2 id="http-url-routing">HTTP URL Routing<a class="headerlink" href="#http-url-routing" title="Permanent link">&para;</a></h2>
+<p>All of the HTTP routing logic will trace back to a <code>views.py</code> file. Within this file we write code render a specific URL address, which is effectively a string containing HTML.</p>
+<p>Conreq relies on the <a href="https://www.djangoproject.com/">Django Framework</a> for HTTP URL routing. Here's a high level example of what occurs when the browser visits a URL.</p>
 <ol>
 <li>The browser visits a Conreq web address</li>
 <li>Django determines how to handle this URL by comparing the path (let's use the example of <code>/server_settings/</code>) with what is contained in <code>conreq/urls.py</code></li>
-<li>Based on <code>conreq/urls.py</code>, Django determines there is another file that defines this path, and that file is <code>conreq/core/server_settings/urls.py</code>.</li>
-<li>Based on <code>conreq/core/server_settings/urls.py</code>, Django determines this URL is rendered by <code>conreq/core/server_settings/views.py</code></li>
-<li>Django renders the HTML (known as a <code>Django View</code>) by running the the respective view function contained within <code>conreq/core/server_settings/views.py</code></li>
+<li>Django looks at <code>conreq/urls.py</code> at notices it points to <code>include("conreq.core.server_settings.urls")</code>. So, this tells Django there is another file that defines this path, and that file is <code>conreq/core/server_settings/urls.py</code>.</li>
+<li>Based on the <code>urlpatterns</code> in <code>conreq/core/server_settings/urls.py</code>, Django determines this URL is rendered by a function called <code>views.server_settings</code>.</li>
+<li>Django runs this function to renders the HTML (known as a <code>Django View</code>).</li>
 <li>The webserver determines how to send this view to the browser based on what was returned by the view (ex. a <code>HttpResponse</code> or <code>JsonResponse</code>)</li>
 </ol>
 <hr />
-<h2 id="conreq-viewport-rendering">Conreq Viewport Rendering<a class="headerlink" href="#conreq-viewport-rendering" title="Permanent link">&para;</a></h2>
-<p>Viewport rendering is currently being reassessed. These docs will be updated at a later time.</p>
-<hr />
-<h2 id="conreq-modal-rendering">Conreq Modal Rendering<a class="headerlink" href="#conreq-modal-rendering" title="Permanent link">&para;</a></h2>
-<p>Modal rendering is currently being reassessed. These docs will be updated at a later time.</p>
-<hr />
-<h2 id="django-websockets">Django Websockets<a class="headerlink" href="#django-websockets" title="Permanent link">&para;</a></h2>
-<p>Websockets exist alongside the normal HTTP requests (ex. viewport rendering). They can be thought of as communicating via <em>chat messages</em>. When the page first loads, a connection to a <em>private chat room (direct messages)</em> is formed, and <em>chat bubbles</em> (<code>json</code> messages) are communicated back and forth between the server and client browser.</p>
-<p>On the server side, the URL location of where <em>private chat rooms</em> are created is determined within <code>conreq/asgi.py</code>. In this file, the URL is directly linked to a <code>consumer</code>. Django does support creating <em>chat groups</em> with multiple clients in it, however, Conreq currently does not utilize this feature.</p>
-<p>At the most fundamental level, a <code>consumer</code> is a Python class with a <em>send</em> and <em>receive</em> function. All of Conreq's consumers can be found in <code>conreq/core/websockets/consumers.py</code>.</p>
-<p>In Django, the receive and response format is most commonly JSON. This is determined based on your consumer's base class (ex. <code>JsonWebsocketConsumer</code>). These classes have built-in functions for sending and receiving JSON messages (ex. <code>send_json</code> and <code>recieve_json</code>). Overriding these functions will be where most of your Websocket logic will be written.</p>
-<p>When a JSON message is sent from server to the client browser, it will be received by the JavaScript file <code>conreq/static/js/client_websockets.js</code> using ES6 standard JavaScript Websockets. This file is also the one that initiates a new Websocket communication session when the page first loads.</p>
+<h2 id="websockets">Websockets<a class="headerlink" href="#websockets" title="Permanent link">&para;</a></h2>
+<p>Websockets can be thought of as the server and browser communicating via <em>chat messages</em>. When the page first loads, a connection to a <em>chat room</em> is formed, and <em>chat bubbles</em> can be communicated back and forth between the server and browser.</p>
+<p>Chat rooms must exist at a specific URL. The URL they exist at is determined within <code>conreq/asgi.py</code>. In this file, a specific URL is directly linked to a <a href="https://channels.readthedocs.io/en/latest/topics/consumers.html"><em>websocket consumer</em></a>.</p>
+<p>A websocket consumer is a Python class with a send/receive function, which typically process <code>json</code> data.</p>
+<p>The data format that gets processed is determined based on your consumer's base class. For example <code>AsyncJsonWebsocketConsumer</code> has <code>send_json()</code> and <code>recieve_json()</code> functions for processing JSON messages. Overriding these functions will be where most of your code will be written when working with websockets.</p>
+<p>In the situation where the server sends a JSON message via <code>send_json()</code>, it will be processed by the browser's JavaScript websocket client <em>(ex. <code>conreq/static/js/client_websockets.js</code>)</em>.</p>
                 
                   
                     
@@ -657,7 +699,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../configure/mysql/" class="md-footer__link md-footer__link--prev" aria-label="Previous: MySQL Database" rel="prev">
+        <a href="../run_conreq/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Running Conreq Manually" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -666,20 +708,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              MySQL Database
+              Running Conreq Manually
             </div>
           </div>
         </a>
       
       
         
-        <a href="../run_conreq/" class="md-footer__link md-footer__link--next" aria-label="Next: Running Conreq (Manually)" rel="next">
+        <a href="../creating_apps/" class="md-footer__link md-footer__link--next" aria-label="Next: Creating Custom Apps" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Running Conreq (Manually)
+              Creating Custom Apps
             </div>
           </div>
           <div class="md-footer__button md-icon">

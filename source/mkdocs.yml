@@ -7,8 +7,8 @@ nav:
           - Organizr Authentication: configure/organizr.md
           - MySQL Database: configure/mysql.md
     - Development:
+          - Running Conreq Manually: develop/run_conreq.md
           - Our Code Explained: develop/code_tldr.md
-          - Running Conreq (Manually): develop/run_conreq.md
           - Creating Custom Apps: develop/creating_apps.md
     - Contribute:
           - Updating the Docs: contrib/docs.md
