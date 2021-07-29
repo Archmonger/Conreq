@@ -46,7 +46,7 @@ django-project-version==0.15.1
 tzlocal==2.1
 
 # Only used by Conreq Apps (Migrate later)
-pyarr==1.0.2
+pyarr==2.0.1
 tmdbsimple==2.8.0
 strsim==0.0.3
 titlecase==2.3
