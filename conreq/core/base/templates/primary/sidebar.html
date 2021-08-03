@@ -17,79 +17,80 @@
         <div class="nav-group clickable" data-bs-toggle="collapse" data-bs-target="#discover-tabs" aria-expanded="true"
             aria-controls="discover-tabs">
             <div class="group-name line-clamp-1">
-                DISCOVER
+                <i class="fas fa-compass icon-left"></i>
+                Discover
             </div>
             <i class="fas fa-angle-up icon-right" title="Collapse Group"></i>
         </div>
         {% endif %}
-        <div class="collapse show" id="discover-tabs">
-            {% if server_settings.sonarr_enabled and server_settings.radarr_enabled %}
-            <div class="nav-tab">
-                <a href="{% viewport_url 'discover:all' %}" class="line-clamp-1">
-                    <i class="fas fa-compass icon-left"></i>
-                    TV & Movies
-                </a>
-                <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
-                    data-modal-url="{% url 'discover:simple_filter_modal' %}"></i>
+        <div class="tabs-collapse collapse show" id="discover-tabs">
+            <div class="tabs-indicator"></div>
+            <div class="tabs">
+                {% if server_settings.sonarr_enabled and server_settings.radarr_enabled %}
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'discover:all' %}" class="line-clamp-1">
+                        TV & Movies
+                    </a>
+                    <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
+                        data-modal-url="{% url 'discover:simple_filter_modal' %}"></i>
+                </div>
+                {% endif %}
+                {% if server_settings.sonarr_enabled %}
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'discover:tv' %}" class="line-clamp-1">
+                        Television
+                    </a>
+                    <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
+                        data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=tv"
+                        data-content-type="tv"></i>
+                </div>
+                {% endif %}
+                {% if server_settings.radarr_enabled %}
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'discover:movies' %}" class="line-clamp-1">
+                        Movies
+                    </a>
+                    <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
+                        data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=movie"
+                        data-content-type="movie"></i>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
-            {% if server_settings.sonarr_enabled %}
-            <div class="nav-tab">
-                <a href="{% viewport_url 'discover:tv' %}" class="line-clamp-1">
-                    <i class="fas fa-tv icon-left"></i>
-                    Television
-                </a>
-                <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
-                    data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=tv"
-                    data-content-type="tv"></i>
-            </div>
-            {% endif %}
-            {% if server_settings.radarr_enabled %}
-            <div class="nav-tab">
-                <a href="{% viewport_url 'discover:movies' %}" class="line-clamp-1">
-                    <i class="fas fa-video icon-left"></i>
-                    Movies
-                </a>
-                <i class="fas fa-filter icon-right filter-modal-btn clickable" title="Filter"
-                    data-modal-url="{% url 'discover:simple_filter_modal' %}?content_type=movie"
-                    data-content-type="movie"></i>
-            </div>
-            {% endif %}
         </div>
 
         <!-- User Tab Group -->
         <div class="nav-group clickable" data-bs-toggle="collapse" data-bs-target="#user-tabs" aria-expanded="true"
             aria-controls="user-tabs">
             <div class="group-name line-clamp-1">
-                USER
+                <i class="fas fa-users icon-left"></i>
+                User
             </div>
             <i id="user-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
         </div>
-        <div class="collapse show" id="user-tabs">
-            <div class="nav-tab">
-                <a href="{% viewport_url 'user_requests:my_requests' %}" class="line-clamp-1">
-                    <i class="fas fa-plus icon-left"></i>
-                    My Requests
-                </a>
-            </div>
-            <div class="nav-tab">
-                <a href="{% viewport_url 'issue_reporting:my_issues' %}" class="line-clamp-1">
-                    <i class="fas fa-exclamation-circle icon-left"></i>
-                    My Issues
-                </a>
-            </div>
-            <div class="nav-tab">
-                <div class="line-clamp-1 manage-user-btn clickable"
-                    data-modal-url="{% url 'manage_users:manage_modal' %}" data-username="{{user.username}}">
-                    <i class="fas fa-user-cog icon-left"></i>
-                    Settings
+        <div class="tabs-collapse collapse show" id="user-tabs">
+            <div class="tabs-indicator"></div>
+            <div class="tabs">
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'user_requests:my_requests' %}" class="line-clamp-1">
+                        My Requests
+                    </a>
                 </div>
-            </div>
-            <div class="nav-tab">
-                <a href="{% url 'sign_out' %}" class="line-clamp-1">
-                    <i class="fas fa-sign-out-alt icon-left"></i>
-                    Sign Out
-                </a>
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'issue_reporting:my_issues' %}" class="line-clamp-1">
+                        My Issues
+                    </a>
+                </div>
+                <div class="nav-tab">
+                    <div class="line-clamp-1 manage-user-btn clickable"
+                        data-modal-url="{% url 'manage_users:manage_modal' %}" data-username="{{user.username}}">
+                        Settings
+                    </div>
+                </div>
+                <div class="nav-tab">
+                    <a href="{% url 'sign_out' %}" class="line-clamp-1">
+                        Sign Out
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -98,34 +99,34 @@
         <div class="nav-group clickable" data-bs-toggle="collapse" data-bs-target="#admin-tabs" aria-expanded="true"
             aria-controls="admin-tabs">
             <div class="group-name line-clamp-1">
-                ADMIN
+                <i class="fas fa-cogs icon-left"></i>
+                Admin
             </div>
             <i id="admin-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
         </div>
-        <div class="collapse show" id="admin-tabs">
-            <div class="nav-tab">
-                <a href="{% viewport_url 'user_requests:all_requests' %}" class="line-clamp-1">
-                    <i class="fas fa-folder-plus icon-left"></i>
-                    All Requests
-                </a>
-            </div>
-            <div class="nav-tab">
-                <a href="{% viewport_url 'issue_reporting:all_issues' %}" class="line-clamp-1">
-                    <i class="fas fa-viruses icon-left"></i>
-                    All Issues
-                </a>
-            </div>
-            <div class="nav-tab">
-                <a href="{% viewport_url 'manage_users:main' %}" class="line-clamp-1">
-                    <i class="fas fa-users icon-left"></i>
-                    Manage Users
-                </a>
-            </div>
-            <div class="nav-tab">
-                <a href="{% viewport_url 'server_settings:main' %}" class="line-clamp-1">
-                    <i class="fas fa-cogs icon-left"></i>
-                    Server Config
-                </a>
+        <div class="tabs-collapse collapse show" id="admin-tabs">
+            <div class="tabs-indicator"></div>
+            <div class="tabs">
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'user_requests:all_requests' %}" class="line-clamp-1">
+                        All Requests
+                    </a>
+                </div>
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'issue_reporting:all_issues' %}" class="line-clamp-1">
+                        All Issues
+                    </a>
+                </div>
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'manage_users:main' %}" class="line-clamp-1">
+                        Manage Users
+                    </a>
+                </div>
+                <div class="nav-tab">
+                    <a href="{% viewport_url 'server_settings:main' %}" class="line-clamp-1">
+                        Server Config
+                    </a>
+                </div>
             </div>
         </div>
         {% endif %}
@@ -134,40 +135,39 @@
         <div class="nav-group clickable" data-bs-toggle="collapse" data-bs-target="#debug-tabs" aria-expanded="true"
             aria-controls="admin-tabs">
             <div class="group-name line-clamp-1">
-                DEBUG
+                <i class="fas fa-spider icon-left"></i>
+                Debug
             </div>
             <i id="admin-fa" class="fas fa-angle-up icon-right" title="Collapse Group"></i>
         </div>
-        <div class="collapse show" id="debug-tabs">
-            <div class="nav-tab">
-                <a href="{% url 'silk:summary' %}" class="line-clamp-1">
-                    <i class="fas fa-spider icon-left"></i>
-                    Performance
-                </a>
-            </div>
-            <div class="nav-tab">
-                <a href="{% url 'admin:index' %}" class="line-clamp-1">
-                    <i class="fas fa-database icon-left"></i>
-                    Database
-                </a>
-            </div>
-            <div class="nav-tab">
-                <a href="{% url 'django-admindocs-docroot' %}" class="line-clamp-1">
-                    <i class="fas fa-book icon-left"></i>
-                    Code Outline
-                </a>
-            </div>
-            <div class="nav-tab">
-                <a href="{% url 'schema-redoc' %}" class="line-clamp-1">
-                    <i class="fas fa-book-open icon-left"></i>
-                    API Docs (ReDoc)
-                </a>
-            </div>
-            <div class="nav-tab">
-                <a href="{% url 'schema-swagger-ui' %}" class="line-clamp-1">
-                    <i class="fas fa-book-open icon-left"></i>
-                    API Docs (Swagger)
-                </a>
+        <div class="tabs-collapse collapse show" id="debug-tabs">
+            <div class="tabs-indicator"></div>
+            <div class="tabs">
+                <div class="nav-tab">
+                    <a href="{% url 'silk:summary' %}" class="line-clamp-1">
+                        Performance
+                    </a>
+                </div>
+                <div class="nav-tab">
+                    <a href="{% url 'admin:index' %}" class="line-clamp-1">
+                        Database
+                    </a>
+                </div>
+                <div class="nav-tab">
+                    <a href="{% url 'django-admindocs-docroot' %}" class="line-clamp-1">
+                        Code Outline
+                    </a>
+                </div>
+                <div class="nav-tab">
+                    <a href="{% url 'schema-redoc' %}" class="line-clamp-1">
+                        API Docs (ReDoc)
+                    </a>
+                </div>
+                <div class="nav-tab">
+                    <a href="{% url 'schema-swagger-ui' %}" class="line-clamp-1">
+                        API Docs (Swagger)
+                    </a>
+                </div>
             </div>
         </div>
         {% endif %}

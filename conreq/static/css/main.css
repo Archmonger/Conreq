@@ -16,9 +16,10 @@
 	--accent-color: #258a6d;
 	--placeholder-bg: var(--poster-bg-color);
 	/* Sidebar */
-	--sidebar-bg: transparent;
+	--sidebar-bg: rgb(30 31 30 / 30%);
 	--sidebar-width: 240px;
-	--navpages-btn-padding: 15px 20px;
+	--navgroup-padding: 23px 20px 13px 20px;
+	--navpages-btn-padding: 13px 15px;
 	/* Navbar */
 	--navbar-bg: rgba(255, 255, 255, 0.04);
 	--navbar-height: 0px;

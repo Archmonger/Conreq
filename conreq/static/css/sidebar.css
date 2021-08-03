@@ -7,12 +7,12 @@
 	background: var(--sidebar-bg);
 	overflow-x: hidden;
 	font-family: var(--global-font);
-	font-weight: 300;
+	font-weight: 400;
 	box-shadow: var(--box-shadow);
 	overflow-y: auto;
 	overflow-y: overlay;
 	display: inline-block;
-	color: rgba(255, 255, 255, 0.75);
+	color: rgb(146 146 146);
 }
 
 .sidebar .navpages {
@@ -44,13 +44,11 @@
 	overflow: hidden;
 	position: relative;
 	border-radius: 10px;
+	width: auto;
 }
 
 .nav-group {
-	color: rgba(255, 255, 255, 0.6);
-	font-weight: 700;
-	border-top: 1px solid rgba(255, 255, 255, 0.15);
-	margin-top: 5px;
+	font-size: 15px;
 }
 
 .nav-group.collapsed .fa-angle-up {
@@ -58,25 +56,12 @@
 }
 
 .nav-group > a,
-.nav-group > div,
+.nav-group > div {
+	padding: var(--navgroup-padding);
+}
 .nav-tab > a,
 .nav-tab > div {
 	padding: var(--navpages-btn-padding);
-	margin-right: 20px;
-}
-
-.nav-tab > a,
-.nav-tab > div {
-	margin-left: 30px;
-}
-
-.nav-tab .icon-left {
-	transition: color 0.3s ease, opacity 0.3s ease;
-	opacity: 1;
-	position: absolute;
-	left: 0;
-	top: 0;
-	margin: var(--navpages-btn-padding);
 }
 
 .nav-group .icon-right,
@@ -87,6 +72,13 @@
 	position: absolute;
 	right: 0;
 	top: 0;
+}
+
+.nav-group .icon-right {
+	margin: var(--navgroup-padding);
+}
+
+.nav-tab .icon-right {
 	margin: var(--navpages-btn-padding);
 }
 
@@ -97,7 +89,7 @@
 
 .sidebar-user {
 	color: #fff;
-	padding: var(--navpages-btn-padding);
+	padding: 15px 20px;
 	background: var(--accent-color);
 	border-radius: 0 0 10px 10px;
 }
@@ -121,5 +113,23 @@
 }
 
 .sidebar-user .username > div {
+	width: 100%;
+}
+
+.tabs-collapse {
+	display: flex;
+	width: 100%;
+}
+
+.tabs-indicator {
+	background: #5d5d5d;
+	width: 2px;
+	height: auto;
+	border-radius: 20px;
+	margin-left: 27px;
+	margin-bottom: 5px;
+}
+
+.tabs {
 	width: 100%;
 }
