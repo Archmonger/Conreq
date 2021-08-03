@@ -3,7 +3,7 @@ import shutil
 import sqlite3
 import sys
 
-from conreq.utils.generic import cprint, get_database_type, get_debug_from_env
+from conreq.utils.generic import get_database_type, get_debug_from_env
 from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
@@ -26,7 +26,7 @@ class Command(BaseCommand):
         gid = options["gid"]
         no_perms = options["no_perms"]
 
-        cprint("Preconfiguring Conreq...", "bold")
+        print("Preconfiguring Conreq...")
 
         # Django database
         if get_database_type() == "SQLITE3":
@@ -74,23 +74,23 @@ class Command(BaseCommand):
 
     @staticmethod
     def setup_sqlite_database(path, name, uid, gid, no_perms):
-        cprint(name.rstrip(" ") + " Database", "header")
+        print(name.rstrip(" ") + " Database")
         if not os.path.exists(path):
-            cprint("> Creating database", "blue")
+            print("> Creating database")
         with sqlite3.connect(path) as cursor:
-            cprint("> Vacuuming database", "blue")
+            print("> Vacuuming database")
             cursor.execute("VACUUM")
         if not no_perms and (uid != -1 or gid != -1):
             if sys.platform == "linux":
-                cprint("> Applying permissions", "blue")
+                print("> Applying permissions")
                 new_uid = uid if uid else os.getuid()
                 new_gid = gid if gid else os.getgid()
                 os.chown(path, new_uid, new_gid)
-        cprint("> Complete", "blue")
+        print("> Complete")
 
     @staticmethod
     def recursive_chown(path, uid, gid):
-        cprint('Recursively applying permissions to "' + path + '"', "header")
+        print('Recursively applying permissions to "' + path + '"')
         new_uid = uid if uid != -1 else None
         new_gid = gid if gid != -1 else None
         if uid != -1 or gid != -1:

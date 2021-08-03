@@ -105,29 +105,3 @@ def list_modules_with(path, submodule_name, prefix=""):
             urls_path = prefix + module + "." + submodule_name
             module_files.append((module, urls_path))
     return module_files
-
-
-class TermColors:
-    """Colors for terminal output.
-    This will work on unixes including OS X, Linux and Windows PowerShell."""
-
-    HEADER = "\033[95m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
-
-    BLUE = "\033[94m"
-    CYAN = "\033[96m"
-    GREEN = "\033[92m"
-
-    END_COLOR = "\033[0m"
-
-
-def cprint(message, style=None):
-    """Prints out a colored or stylized terminal output.
-    Fetches color values from TermColors based on attribute names."""
-    if style and hasattr(TermColors, style.upper()):
-        print(getattr(TermColors, style.upper()) + str(message) + TermColors.END_COLOR)
-    else:
-        print(str(message))
