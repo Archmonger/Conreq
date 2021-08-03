@@ -223,7 +223,7 @@ class ArrManager:
                 }
 
                 # Get the movie
-                movie = self.__radarr.get_movie(kwargs["radarr_id"])
+                movie = self.__radarr.get_movie_by_movie_id(kwargs["radarr_id"])
 
                 # Set the movie as monitored
                 movie["monitored"] = True
