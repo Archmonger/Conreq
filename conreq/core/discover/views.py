@@ -146,7 +146,7 @@ def simple_filter_modal(request):
     context = {
         "content_type": content_type,
         "filters": filters,
-        "filter_url": filter_url,
+        "filter_url": filter_url.lstrip("/"),
     }
     template = loader.get_template("modal/discover_filter_simple.html")
     return HttpResponse(template.render(context, request))
