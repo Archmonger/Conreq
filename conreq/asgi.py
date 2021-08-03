@@ -7,13 +7,10 @@ For more information on this file, see
 https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
-import os
-
 from django.conf.urls import url
 from django.core.asgi import get_asgi_application
 
 # Fetch ASGI application before importing dependencies that require ORM models.
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conreq.settings")
 django_asgi_app = get_asgi_application()
 
 from channels.auth import AuthMiddlewareStack
