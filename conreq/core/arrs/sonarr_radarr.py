@@ -3,7 +3,7 @@ from os.path import join as join_path
 
 from conreq.core.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
-from pyarr import RadarrAPIv1, SonarrAPI
+from pyarr import RadarrAPI, SonarrAPI
 
 _logger = log.get_logger(__name__)
 
@@ -24,7 +24,7 @@ class ArrManager:
         self.__sonarr = SonarrAPI(
             self.conreq_config.sonarr_url, self.conreq_config.sonarr_api_key
         )
-        self.__radarr = RadarrAPIv1(
+        self.__radarr = RadarrAPI(
             self.conreq_config.radarr_url, self.conreq_config.radarr_api_key
         )
 
@@ -153,8 +153,7 @@ class ArrManager:
                     kwargs["tmdb_id"],
                     kwargs["quality_profile_id"],
                     join_path(kwargs["root_dir"], ""),
-                    monitored=True,
-                    searchForMovie=False,
+                    search_for_movie=False,
                 )
 
             # Add a show, season, or episode with a specific TVDB ID to Sonarr.
@@ -164,10 +163,10 @@ class ArrManager:
                     kwargs["tvdb_id"],
                     kwargs["quality_profile_id"],
                     join_path(kwargs["root_dir"], ""),
-                    seasonFolder=kwargs["season_folders"],
+                    season_folder=kwargs["season_folders"],
                     monitored=False,
-                    ignoreEpisodesWithFiles=True,
-                    ignoreEpisodesWithoutFiles=True,
+                    ignore_episodes_with_files=True,
+                    ignore_episodes_without_files=True,
                 )["id"]
 
                 # Obtain all information that Sonarr collected about the series
@@ -230,14 +229,16 @@ class ArrManager:
                 movie["monitored"] = True
 
                 # Save the changes to Radarr
-                response["movie_update_results"] = self.__radarr.update_movie(movie)
+                response["movie_update_results"] = self.__radarr.upd_movie(
+                    movie, move_files=True
+                )
 
                 movie_id = [
                     kwargs["radarr_id"],
                 ]
 
                 # Search for the movie
-                response["movie_search_results"] = self.__radarr.set_command(
+                response["movie_search_results"] = self.__radarr.post_command(
                     name="MoviesSearch", movieIds=movie_id
                 )
 
@@ -301,7 +302,7 @@ class ArrManager:
 
                 # Search for the whole show
                 if not kwargs.get("seasons") and not kwargs.get("episode_ids"):
-                    response["show_search_results"] = self.__sonarr.set_command(
+                    response["show_search_results"] = self.__sonarr.post_command(
                         name="SeriesSearch", seriesId=kwargs["sonarr_id"]
                     )
                     return response
@@ -311,7 +312,7 @@ class ArrManager:
                     response["season_search_results"] = []
                     for season in kwargs["seasons"]:
                         response["season_search_results"].append(
-                            self.__sonarr.set_command(
+                            self.__sonarr.post_command(
                                 name="SeasonSearch",
                                 seriesId=kwargs["sonarr_id"],
                                 seasonNumber=season,
@@ -320,7 +321,7 @@ class ArrManager:
 
                 # Search for specific episodes
                 if kwargs.get("episode_ids"):
-                    response["episode_search_results"] = self.__sonarr.set_command(
+                    response["episode_search_results"] = self.__sonarr.post_command(
                         name="EpisodeSearch",
                         episodeIds=kwargs["episode_ids"],
                     )
@@ -354,24 +355,21 @@ class ArrManager:
             1) JSON response of removing the content.
             2) None
         """
-        # TODO: Need to remove any currently downloading content for things that are removed.
         # TODO: Need to blacklist deleted content.
         try:
             # Remove a movie with a specific Radarr ID.
             if kwargs.get("radarr_id"):
-                return self.__radarr.del_movie(kwargs["radarr_id"], delFiles=True)
+                return self.__radarr.del_movie(kwargs["radarr_id"], del_files=True)
 
             # Remove a show with a specific Sonarr ID.
             if kwargs.get("sonarr_id"):
                 # Remove the whole show
-                return self.__sonarr.del_series(kwargs["sonarr_id"], delFiles=True)
+                return self.__sonarr.del_series(kwargs["sonarr_id"], delete_files=True)
 
             # Remove episodes with Sonarr episode IDs.
             if kwargs.get("episode_file_id"):
                 # Remove an episode file
-                return self.__sonarr.del_episode_file_by_episode_id(
-                    kwargs["episode_file_id"]
-                )
+                return self.__sonarr.del_episode_file(kwargs["episode_file_id"])
 
             # Invalid parameter
             log.handler(
@@ -454,7 +452,7 @@ class ArrManager:
     def sonarr_root_dirs(self):
         """Returns the root dirs available within Sonarr"""
         try:
-            return self.__sonarr.get_root()
+            return self.__sonarr.get_root_folder()
 
         except:
             log.handler(
@@ -466,7 +464,7 @@ class ArrManager:
     def radarr_root_dirs(self):
         """Returns the root dirs available within Radarr"""
         try:
-            return self.__radarr.get_root()
+            return self.__radarr.get_root_folder()
 
         except:
             log.handler(
