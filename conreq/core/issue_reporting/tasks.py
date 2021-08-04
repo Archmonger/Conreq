@@ -150,7 +150,7 @@ def auto_resolve_watchdog():
             # Check if movie issues have been resolved
             if issue.content_type == "movie":
                 movie = content_manager.get(tmdb_id=issue.content_id)
-                if movie and movie.get("downloaded"):
+                if movie and movie.get("hasFile"):
                     issue.auto_resolve_in_progress = False
                     issue.auto_resolved = True
                     issue.resolved = True
