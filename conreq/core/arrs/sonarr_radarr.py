@@ -1,6 +1,4 @@
 """Conreq Content Manager: Talks with Sonarr/Radarr in order to add/remove content."""
-from os.path import join as join_path
-
 from conreq.core.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
 from pyarr import RadarrAPI, SonarrAPI
@@ -152,7 +150,7 @@ class ArrManager:
                 return self.__radarr.add_movie(
                     kwargs["tmdb_id"],
                     kwargs["quality_profile_id"],
-                    join_path(kwargs["root_dir"], ""),
+                    kwargs["root_dir"],
                     search_for_movie=False,
                 )
 
@@ -162,7 +160,7 @@ class ArrManager:
                 series_id = self.__sonarr.add_series(
                     kwargs["tvdb_id"],
                     kwargs["quality_profile_id"],
-                    join_path(kwargs["root_dir"], ""),
+                    kwargs["root_dir"],
                     season_folder=kwargs["season_folders"],
                     monitored=False,
                     ignore_episodes_with_files=True,
