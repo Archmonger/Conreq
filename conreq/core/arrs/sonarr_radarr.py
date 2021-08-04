@@ -357,7 +357,7 @@ class ArrManager:
         try:
             # Remove a movie with a specific Radarr ID.
             if kwargs.get("radarr_id"):
-                return self.__radarr.del_movie(kwargs["radarr_id"], del_files=True)
+                return self.__radarr.del_movie(kwargs["radarr_id"], delete_files=True)
 
             # Remove a show with a specific Sonarr ID.
             if kwargs.get("sonarr_id"):
