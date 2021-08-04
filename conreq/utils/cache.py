@@ -169,7 +169,8 @@ def handler(
         # was in cache, or cache was expired, run function()
         if cached_results is None or force_update_cache:
             function_results = function(*args, **kwargs)
-            background_task(cache.set, cache_key, function_results, cache_duration)
+            if function_results:
+                background_task(cache.set, cache_key, function_results, cache_duration)
             log.handler(
                 cache_name + " - " + function.__name__ + "()",
                 log.INFO,

@@ -235,7 +235,6 @@ class TmdbDiscovery(TmdbBase):
                 log.ERROR,
                 _logger,
             )
-            return {}
 
     def collections(self, collection_id):
         """Obtains items in the movie collection of a given TMDB Collection ID.

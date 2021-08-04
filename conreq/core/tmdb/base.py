@@ -285,7 +285,6 @@ class TmdbBase:
                 log.ERROR,
                 _logger,
             )
-        return {}
 
     @staticmethod
     def _shuffle_results(query):
@@ -300,7 +299,6 @@ class TmdbBase:
                 log.ERROR,
                 _logger,
             )
-            return {}
 
     @staticmethod
     def _remove_duplicate_results(query):
