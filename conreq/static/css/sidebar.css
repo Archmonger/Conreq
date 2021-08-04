@@ -12,7 +12,7 @@
 	overflow-y: auto;
 	overflow-y: overlay;
 	display: inline-block;
-	color: rgb(146 146 146);
+	color: rgb(156 156 156);
 }
 
 .sidebar .navpages {
@@ -66,9 +66,8 @@
 
 .nav-group .icon-right,
 .nav-tab .icon-right {
-	color: rgba(255, 255, 255, 0.6);
+	color: rgb(94 94 94);
 	transition: color 0.3s ease, opacity 0.3s ease;
-	opacity: 1;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -89,7 +88,7 @@
 
 .sidebar-user {
 	color: #fff;
-	padding: 15px 20px;
+	padding: 10px 15px;
 	background: var(--accent-color);
 	border-radius: 0 0 10px 10px;
 }
