@@ -46,7 +46,7 @@ BASE_URL = get_base_url()
 
 
 # Application Settings
-DJVERSION_VERSION = "0.19.30"
+DJVERSION_VERSION = "0.19.31"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
