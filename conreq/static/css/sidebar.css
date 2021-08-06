@@ -55,10 +55,10 @@
 	transform: rotate(180deg);
 }
 
-.nav-group > a,
-.nav-group > div {
+.group-name {
 	padding: var(--navgroup-padding);
 }
+
 .nav-tab > a,
 .nav-tab > div {
 	padding: var(--navpages-btn-padding);
@@ -131,4 +131,12 @@
 
 .tabs {
 	width: 100%;
+}
+
+.group-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	margin-left: -13px;
 }
