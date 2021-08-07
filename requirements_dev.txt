@@ -1,3 +1,4 @@
 black
 pylint
 rope
+pylint_django
