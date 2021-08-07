@@ -1,7 +1,5 @@
 import json
 
-from conreq.core.arrs.radarr import RadarrManager
-from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
@@ -32,14 +30,11 @@ def request_content(request):
             _logger,
         )
 
-        content_discovery = TmdbDiscovery()
-
         # TV show was requested
         if request_parameters["content_type"] == "tv":
-            sonarr_manager = SonarrManager()
             # Try to obtain a TVDB ID (from params or fetch it from TMDB)
             tmdb_id = request_parameters["tmdb_id"]
-            tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv").get("tvdb_id")
+            tvdb_id = TmdbDiscovery().get_external_ids(tmdb_id, "tv").get("tvdb_id")
 
             # Request the show by the TVDB ID
             if tvdb_id:
@@ -48,8 +43,6 @@ def request_content(request):
                     tmdb_id,
                     request,
                     request_parameters,
-                    sonarr_manager,
-                    content_discovery,
                 )
 
             else:
@@ -57,9 +50,8 @@ def request_content(request):
 
         # Movie was requested
         elif request_parameters["content_type"] == "movie":
-            radarr_manager = RadarrManager()
             tmdb_id = request_parameters["tmdb_id"]
-            radarr_request(tmdb_id, request, radarr_manager, content_discovery)
+            radarr_request(tmdb_id, request)
 
         # The request succeeded
         return JsonResponse({"success": True})

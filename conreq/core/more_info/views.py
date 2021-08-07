@@ -1,5 +1,4 @@
 from conreq.core.arrs.helpers import wait_for_series_info
-from conreq.core.arrs.radarr import RadarrManager
 from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.user_requests.models import UserRequest
@@ -140,9 +139,7 @@ def series_modal(request):
     # If it doesn't already exists, add then add it
     if requested_show is None:
 
-        sonarr_params = obtain_sonarr_parameters(
-            content_discovery, sonarr_manager, tmdb_id, tvdb_id
-        )
+        sonarr_params = obtain_sonarr_parameters(tmdb_id, tvdb_id)
 
         requested_show = sonarr_manager.add(
             tvdb_id=tvdb_id,
@@ -153,7 +150,7 @@ def series_modal(request):
         )
 
     # Keep refreshing until we get the series from Sonarr
-    series = wait_for_series_info(tvdb_id, sonarr_manager)
+    series = wait_for_series_info(tvdb_id)
 
     # Series successfully obtained from Sonarr
     if series:

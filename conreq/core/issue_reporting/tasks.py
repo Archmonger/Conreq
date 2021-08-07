@@ -32,9 +32,7 @@ def arr_auto_resolve_tv(issue_id, tmdb_id, seasons, episode_ids, resolutions):
         # Show doesn't exist, add it
         if not show:
             # Add the show
-            sonarr_params = obtain_sonarr_parameters(
-                content_discovery, sonarr_manager, tmdb_id
-            )
+            sonarr_params = obtain_sonarr_parameters(tmdb_id=tmdb_id)
             show = sonarr_manager.add(
                 tvdb_id=tvdb_id,
                 quality_profile_id=sonarr_params["sonarr_profile_id"],
@@ -49,9 +47,7 @@ def arr_auto_resolve_tv(issue_id, tmdb_id, seasons, episode_ids, resolutions):
             sonarr_manager.delete(sonarr_id=show.get("id"))
 
             # Re-add the show
-            sonarr_params = obtain_sonarr_parameters(
-                content_discovery, sonarr_manager, tmdb_id, tvdb_id
-            )
+            sonarr_params = obtain_sonarr_parameters(tmdb_id=tmdb_id, tvdb_id=tvdb_id)
             show = sonarr_manager.add(
                 tvdb_id=tvdb_id,
                 quality_profile_id=sonarr_params["sonarr_profile_id"],
@@ -79,7 +75,7 @@ def arr_auto_resolve_tv(issue_id, tmdb_id, seasons, episode_ids, resolutions):
                         )
 
         # Keep refreshing until we get the series from Sonarr
-        show = wait_for_series_info(tvdb_id, sonarr_manager)
+        show = wait_for_series_info(tvdb_id)
 
         # Download new copies
         sonarr_manager.request(
@@ -98,7 +94,6 @@ def arr_auto_resolve_movie(issue_id, tmdb_id, resolutions):
     conreq_config = ConreqConfig.get_solo()
     if conreq_config.conreq_auto_resolve_issues:
         radarr_manager = RadarrManager()
-        content_discovery = TmdbDiscovery()
 
         # Grab the movie from Radarr
         movie = radarr_manager.get(force_update_cache=True, tmdb_id=tmdb_id)
@@ -108,9 +103,7 @@ def arr_auto_resolve_movie(issue_id, tmdb_id, resolutions):
             radarr_manager.delete(radarr_id=movie["id"])
 
         # Add or re-add the movie
-        radarr_params = obtain_radarr_parameters(
-            content_discovery, radarr_manager, tmdb_id
-        )
+        radarr_params = obtain_radarr_parameters(tmdb_id)
         movie = radarr_manager.add(
             tmdb_id=tmdb_id,
             quality_profile_id=radarr_params["radarr_profile_id"],

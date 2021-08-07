@@ -1,7 +1,5 @@
 import json
 
-from conreq.core.arrs.radarr import RadarrManager
-from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.user_requests.helpers import radarr_request, sonarr_request
 from django.contrib.auth import authenticate, login
@@ -53,9 +51,7 @@ class RequestTv(APIView):
     )
     def post(self, request, tmdb_id):
         """Request a TV show by TMDB ID. Optionally, you can request specific seasons or episodes."""
-        sonarr_manager = SonarrManager()
-        content_discovery = TmdbDiscovery()
-        tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv")
+        tvdb_id = TmdbDiscovery().get_external_ids(tmdb_id, "tv")
         request_parameters = json.loads(request.body.decode("utf-8"))
 
         # Request the show by the TVDB ID
@@ -65,8 +61,6 @@ class RequestTv(APIView):
                 tmdb_id,
                 request,
                 request_parameters,
-                sonarr_manager,
-                content_discovery,
             )
             return Response(self.msg)
         return Response({"success": False, "detail": "Could not determine TVDB ID."})
@@ -96,16 +90,9 @@ class RequestMovie(APIView):
     )
     def post(self, request, tmdb_id):
         """Request a movie by TMDB ID."""
-        radarr_manager = RadarrManager()
-        content_discovery = TmdbDiscovery()
 
         # Request the show by the TMDB ID
-        radarr_request(
-            tmdb_id,
-            request,
-            radarr_manager,
-            content_discovery,
-        )
+        radarr_request(tmdb_id, request)
         return Response(self.msg)
 
 

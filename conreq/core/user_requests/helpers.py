@@ -1,4 +1,6 @@
 """Helpers for User Requests"""
+from conreq.core.arrs.radarr import RadarrManager
+from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
@@ -14,9 +16,10 @@ from django.contrib.auth.models import AnonymousUser
 _logger = log.get_logger(__name__)
 
 
-def radarr_request_background_task(tmdb_id, radarr_manager, radarr_params, username):
+def radarr_request_background_task(tmdb_id, radarr_params, username):
     """Function that can be run in the background to request something on Radarr"""
     try:
+        radarr_manager = RadarrManager()
         # Check if the movie is already within Radarr's collection
         movie = radarr_manager.get(tmdb_id=tmdb_id)
 
@@ -55,11 +58,10 @@ def radarr_request_background_task(tmdb_id, radarr_manager, radarr_params, usern
         )
 
 
-def sonarr_request_background_task(
-    tvdb_id, request_params, sonarr_manager, sonarr_params, username
-):
+def sonarr_request_background_task(tvdb_id, request_params, sonarr_params, username):
     """Function that can be run in the background to request something on Sonarr"""
     try:
+        sonarr_manager = SonarrManager()
         # Check if the show is already within Sonarr's collection
         show = sonarr_manager.get(tvdb_id=tvdb_id)
 
@@ -105,20 +107,15 @@ def sonarr_request_background_task(
         )
 
 
-def sonarr_request(
-    tvdb_id, tmdb_id, request, request_params, sonarr_manager, content_discovery
-):
+def sonarr_request(tvdb_id, tmdb_id, request, request_params):
     """Request on Sonarr and save request history item to DB"""
-    sonarr_params = obtain_sonarr_parameters(
-        content_discovery, sonarr_manager, tmdb_id, tvdb_id
-    )
+    sonarr_params = obtain_sonarr_parameters(tmdb_id, tvdb_id)
 
     # Request in the background
     background_task(
         sonarr_request_background_task,
         tvdb_id,
         request_params,
-        sonarr_manager,
         sonarr_params,
         request.user.username,
     )
@@ -133,15 +130,14 @@ def sonarr_request(
     )
 
 
-def radarr_request(tmdb_id, request, radarr_manager, content_discovery):
+def radarr_request(tmdb_id, request):
     """Request on Radarr and save request history item to DB"""
-    radarr_params = obtain_radarr_parameters(content_discovery, radarr_manager, tmdb_id)
+    radarr_params = obtain_radarr_parameters(tmdb_id)
 
     # Request in the background
     background_task(
         radarr_request_background_task,
         tmdb_id,
-        radarr_manager,
         radarr_params,
         request.user.username,
     )

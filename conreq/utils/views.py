@@ -96,12 +96,12 @@ def set_single_availability(card):
 
 
 def obtain_sonarr_parameters(
-    content_discovery,
-    sonarr_manager,
     tmdb_id=None,
     tvdb_id=None,
 ):
     """Returns the common parameters needed for adding a series to Sonarr."""
+    content_discovery = TmdbDiscovery()
+    sonarr_manager = SonarrManager()
     conreq_config = ConreqConfig.get_solo()
 
     # Attempt to convert TVDB to TMDB if possible
@@ -142,11 +142,11 @@ def obtain_sonarr_parameters(
 
 
 def obtain_radarr_parameters(
-    content_discovery,
-    radarr_manager,
     tmdb_id=None,
 ):
     """Returns the common parameters needed for adding a series to Radarr."""
+    content_discovery = TmdbDiscovery()
+    radarr_manager = RadarrManager()
     conreq_config = ConreqConfig.get_solo()
 
     is_anime = content_discovery.is_anime(tmdb_id, "movie")
