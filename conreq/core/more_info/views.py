@@ -1,5 +1,6 @@
 from conreq.core.arrs.helpers import wait_for_series_info
-from conreq.core.arrs.sonarr_radarr import ArrManager
+from conreq.core.arrs.radarr import RadarrManager
+from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
@@ -126,7 +127,7 @@ def person(request):
 @performance_metrics()
 def series_modal(request):
     content_discovery = TmdbDiscovery()
-    content_manager = ArrManager()
+    sonarr_manager = SonarrManager()
     report_modal = str_to_bool(request.GET.get("report_modal", "false"))
 
     # Get the ID from the URL
@@ -134,16 +135,16 @@ def series_modal(request):
     tvdb_id = content_discovery.get_external_ids(tmdb_id, "tv").get("tvdb_id")
 
     # Check if the show is already within Sonarr's collection
-    requested_show = content_manager.get(tvdb_id=tvdb_id)
+    requested_show = sonarr_manager.get(tvdb_id=tvdb_id)
 
     # If it doesn't already exists, add then add it
     if requested_show is None:
 
         sonarr_params = obtain_sonarr_parameters(
-            content_discovery, content_manager, tmdb_id, tvdb_id
+            content_discovery, sonarr_manager, tmdb_id, tvdb_id
         )
 
-        requested_show = content_manager.add(
+        requested_show = sonarr_manager.add(
             tvdb_id=tvdb_id,
             quality_profile_id=sonarr_params["sonarr_profile_id"],
             root_dir=sonarr_params["sonarr_root"],
@@ -152,7 +153,7 @@ def series_modal(request):
         )
 
     # Keep refreshing until we get the series from Sonarr
-    series = wait_for_series_info(tvdb_id, content_manager)
+    series = wait_for_series_info(tvdb_id, sonarr_manager)
 
     # Series successfully obtained from Sonarr
     if series:

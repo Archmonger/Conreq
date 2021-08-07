@@ -14,22 +14,22 @@ from django.contrib.auth.models import AnonymousUser
 _logger = log.get_logger(__name__)
 
 
-def radarr_request_background_task(tmdb_id, content_manager, radarr_params, username):
+def radarr_request_background_task(tmdb_id, radarr_manager, radarr_params, username):
     """Function that can be run in the background to request something on Radarr"""
     try:
         # Check if the movie is already within Radarr's collection
-        movie = content_manager.get(tmdb_id=tmdb_id)
+        movie = radarr_manager.get(tmdb_id=tmdb_id)
 
         # If it doesn't already exists, add then request it
         if movie is None:
-            movie = content_manager.add(
+            movie = radarr_manager.add(
                 tmdb_id=tmdb_id,
                 quality_profile_id=radarr_params["radarr_profile_id"],
                 root_dir=radarr_params["radarr_root"],
             )
 
         # Request
-        content_manager.request(radarr_id=movie["id"])
+        radarr_manager.request(radarr_id=movie["id"])
 
         username = username if username else "API"
         log.handler(
@@ -56,16 +56,16 @@ def radarr_request_background_task(tmdb_id, content_manager, radarr_params, user
 
 
 def sonarr_request_background_task(
-    tvdb_id, request_params, content_manager, sonarr_params, username
+    tvdb_id, request_params, sonarr_manager, sonarr_params, username
 ):
     """Function that can be run in the background to request something on Sonarr"""
     try:
         # Check if the show is already within Sonarr's collection
-        show = content_manager.get(tvdb_id=tvdb_id)
+        show = sonarr_manager.get(tvdb_id=tvdb_id)
 
         # If it doesn't already exists, add then request it
         if show is None:
-            show = content_manager.add(
+            show = sonarr_manager.add(
                 tvdb_id=tvdb_id,
                 quality_profile_id=sonarr_params["sonarr_profile_id"],
                 root_dir=sonarr_params["sonarr_root"],
@@ -74,7 +74,7 @@ def sonarr_request_background_task(
             )
 
         # Request
-        content_manager.request(
+        sonarr_manager.request(
             sonarr_id=show["id"],
             seasons=request_params.get("seasons"),
             episode_ids=request_params.get("episode_ids"),
@@ -106,11 +106,11 @@ def sonarr_request_background_task(
 
 
 def sonarr_request(
-    tvdb_id, tmdb_id, request, request_params, content_manager, content_discovery
+    tvdb_id, tmdb_id, request, request_params, sonarr_manager, content_discovery
 ):
     """Request on Sonarr and save request history item to DB"""
     sonarr_params = obtain_sonarr_parameters(
-        content_discovery, content_manager, tmdb_id, tvdb_id
+        content_discovery, sonarr_manager, tmdb_id, tvdb_id
     )
 
     # Request in the background
@@ -118,7 +118,7 @@ def sonarr_request(
         sonarr_request_background_task,
         tvdb_id,
         request_params,
-        content_manager,
+        sonarr_manager,
         sonarr_params,
         request.user.username,
     )
@@ -133,17 +133,15 @@ def sonarr_request(
     )
 
 
-def radarr_request(tmdb_id, request, content_manager, content_discovery):
+def radarr_request(tmdb_id, request, radarr_manager, content_discovery):
     """Request on Radarr and save request history item to DB"""
-    radarr_params = obtain_radarr_parameters(
-        content_discovery, content_manager, tmdb_id
-    )
+    radarr_params = obtain_radarr_parameters(content_discovery, radarr_manager, tmdb_id)
 
     # Request in the background
     background_task(
         radarr_request_background_task,
         tmdb_id,
-        content_manager,
+        radarr_manager,
         radarr_params,
         request.user.username,
     )

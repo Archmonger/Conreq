@@ -1,9 +1,10 @@
 """Functions commonly used to construct views."""
 from threading import Thread
 
+from conreq.core.arrs.radarr import RadarrManager
+from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.server_settings.models import ConreqConfig
 from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
 
@@ -61,31 +62,18 @@ def set_many_availability(results):
 
 def set_single_availability(card):
     """Sets the availabily on a single card."""
-    content_manager = ArrManager()
     content_discovery = TmdbDiscovery()
     try:
-        # Compute the availability of a Sonarr card
-        if card.__contains__("tvdbId"):
-            content = content_manager.get(tvdb_id=card["tvdbId"])
-            if content is not None:
-                card["availability"] = content["availability"]
-
-        # Compute the availability of a Radarr card
-        elif card.__contains__("tmdbId"):
-            content = content_manager.get(tmdb_id=card["tmdbId"])
-            if content is not None:
-                card["availability"] = content["availability"]
-
         # Compute the availability of TV show
-        elif card.__contains__("name"):
+        if card.__contains__("name"):
             external_id = content_discovery.get_external_ids(card["id"], "tv")
-            content = content_manager.get(tvdb_id=external_id["tvdb_id"])
+            content = SonarrManager().get(tvdb_id=external_id["tvdb_id"])
             if content is not None:
                 card["availability"] = content["availability"]
 
         # Compute the availability of movie
         elif card.__contains__("title"):
-            content = content_manager.get(tmdb_id=card["id"])
+            content = RadarrManager().get(tmdb_id=card["id"])
             if content is not None:
                 card["availability"] = content["availability"]
 
@@ -109,7 +97,7 @@ def set_single_availability(card):
 
 def obtain_sonarr_parameters(
     content_discovery,
-    content_manager,
+    sonarr_manager,
     tmdb_id=None,
     tvdb_id=None,
 ):
@@ -128,7 +116,7 @@ def obtain_sonarr_parameters(
         is_anime = content_discovery.is_anime(tmdb_id, "tv")
 
     season_folders = conreq_config.sonarr_season_folders
-    all_root_dirs = content_manager.sonarr_root_dirs()
+    all_root_dirs = sonarr_manager.sonarr_root_dirs()
 
     # Generate parameters
     if is_anime:
@@ -155,14 +143,14 @@ def obtain_sonarr_parameters(
 
 def obtain_radarr_parameters(
     content_discovery,
-    content_manager,
+    radarr_manager,
     tmdb_id=None,
 ):
     """Returns the common parameters needed for adding a series to Radarr."""
     conreq_config = ConreqConfig.get_solo()
 
     is_anime = content_discovery.is_anime(tmdb_id, "movie")
-    all_root_dirs = content_manager.radarr_root_dirs()
+    all_root_dirs = radarr_manager.radarr_root_dirs()
 
     if is_anime:
         radarr_root = is_key_value_in_list(

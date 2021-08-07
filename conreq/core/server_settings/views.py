@@ -1,14 +1,14 @@
 import json
-import secrets
 from platform import platform
 
+from conreq.core.arrs.radarr import RadarrManager
+from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.server_settings.models import ConreqConfig
-from conreq.core.arrs.sonarr_radarr import ArrManager
 from conreq.utils import log
 from conreq.utils.testing import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template import loader
 
 _logger = log.get_logger(__name__)
@@ -30,7 +30,7 @@ def radarr_settings(request):
     conreq_config = ConreqConfig.get_solo()
 
     # Obtain sonarr and radarr information
-    content_manger = ArrManager()
+    radarr_manager = RadarrManager()
     radarr_quality_profiles = []
     current_radarr_anime_quality_profile = ""
     current_radarr_movies_quality_profile = ""
@@ -41,7 +41,7 @@ def radarr_settings(request):
     if conreq_config.radarr_enabled:
         # Radarr Quality Profiles
         try:
-            for profile in content_manger.radarr_quality_profiles():
+            for profile in radarr_manager.radarr_quality_profiles():
                 # Current anime movies profile
                 if conreq_config.radarr_anime_quality_profile == profile["id"]:
                     current_radarr_anime_quality_profile = profile["name"]
@@ -57,7 +57,7 @@ def radarr_settings(request):
 
         # Radarr Folder Paths
         try:
-            for path in content_manger.radarr_root_dirs():
+            for path in radarr_manager.radarr_root_dirs():
                 # Current anime movies dirs
                 if conreq_config.radarr_anime_folder == path["id"]:
                     current_radarr_anime_folder = path["path"]
@@ -88,7 +88,7 @@ def sonarr_settings(request):
     conreq_config = ConreqConfig.get_solo()
 
     # Obtain sonarr and radarr information
-    content_manger = ArrManager()
+    sonarr_manager = SonarrManager()
     sonarr_quality_profiles = []
     current_sonarr_anime_quality_profile = ""
     current_sonarr_tv_quality_profile = ""
@@ -99,7 +99,7 @@ def sonarr_settings(request):
     if conreq_config.sonarr_enabled:
         # Sonarr Quality Profiles
         try:
-            for profile in content_manger.sonarr_quality_profiles():
+            for profile in sonarr_manager.sonarr_quality_profiles():
                 # Current anime profile
                 if conreq_config.sonarr_anime_quality_profile == profile["id"]:
                     current_sonarr_anime_quality_profile = profile["name"]
@@ -115,7 +115,7 @@ def sonarr_settings(request):
 
         # Sonarr Folder Paths
         try:
-            for path in content_manger.sonarr_root_dirs():
+            for path in sonarr_manager.sonarr_root_dirs():
                 # Current anime dirs
                 if conreq_config.sonarr_anime_folder == path["id"]:
                     current_sonarr_anime_folder = path["path"]
