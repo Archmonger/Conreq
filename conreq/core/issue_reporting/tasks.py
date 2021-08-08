@@ -118,7 +118,7 @@ def arr_auto_resolve_movie(issue_id, tmdb_id, resolutions):
 
 
 @db_periodic_task(crontab("*/1"))
-def auto_resolve_watchdog():
+def auto_resolve_completion_watchdog():
     """Checks to see if an auto resolution has finished completely."""
     # Check if auto resolution is turned on
     conreq_config = ConreqConfig.get_solo()
