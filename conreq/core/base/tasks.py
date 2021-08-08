@@ -1,3 +1,4 @@
+import os
 import sqlite3
 
 from conreq.utils.generic import get_database_type
@@ -11,14 +12,15 @@ HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
 @db_periodic_task(crontab(minute="0", hour="12", day="1/1"))
-def bg_tasks_vacuum():
+def vacuum_huey_sqlite_db():
     """Periodically preforms a SQLITE vacuum on the background task database."""
-    with sqlite3.connect(HUEY_FILENAME) as cursor:
-        cursor.execute("VACUUM")
+    if os.path.exists(HUEY_FILENAME):
+        with sqlite3.connect(HUEY_FILENAME) as cursor:
+            cursor.execute("VACUUM")
 
 
 @db_periodic_task(crontab(minute="0", hour="12", day="1/1"))
-def db_vacuum():
+def vacuum_conreq_sqlite_db():
     """Periodically performs any cleanup tasks needed for the default database."""
     if DB_ENGINE == "SQLITE3":
         with connection.cursor() as cursor:
