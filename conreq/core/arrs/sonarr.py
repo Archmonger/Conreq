@@ -159,7 +159,7 @@ class SonarrManager(ArrBase):
 
             # Set every season as monitored if no seasons were specified
             else:
-                for season in seasons:
+                for season in series["seasons"]:
                     if season["seasonNumber"] != 0:
                         season["monitored"] = True
 
