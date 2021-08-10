@@ -1,4 +1,4 @@
-from conreq.utils.testing import performance_metrics
+from conreq.utils.debug import performance_metrics
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.password_validation import validate_password

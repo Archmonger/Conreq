@@ -1,7 +1,7 @@
 from conreq.core.base.forms import InitializationForm
 from conreq.core.server_settings.models import ConreqConfig
-from conreq.utils.generic import get_base_url, get_debug_from_env
-from conreq.utils.testing import performance_metrics
+from conreq.utils.environment import get_base_url, get_debug_from_env
+from conreq.utils.debug import performance_metrics
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse

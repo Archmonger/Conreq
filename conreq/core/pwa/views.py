@@ -1,4 +1,4 @@
-from conreq.utils.generic import get_base_url
+from conreq.utils.environment import get_base_url
 from django.shortcuts import render
 
 from . import app_settings

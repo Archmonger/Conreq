@@ -1,4 +1,4 @@
-from conreq.utils.generic import get_base_url, get_str_from_env
+from conreq.utils.environment import get_base_url, get_str_from_env
 from django import template
 from django.urls import reverse
 

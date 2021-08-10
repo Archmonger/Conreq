@@ -3,7 +3,7 @@ import shutil
 import sqlite3
 import sys
 
-from conreq.utils.generic import get_database_type, get_debug_from_env
+from conreq.utils.environment import get_database_type, get_debug_from_env
 from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
@@ -82,6 +82,7 @@ class Command(BaseCommand):
             cursor.execute("VACUUM")
         if not no_perms and (uid != -1 or gid != -1):
             if sys.platform == "linux":
+                # pylint: disable=no-member
                 print("> Applying permissions")
                 new_uid = uid if uid else os.getuid()
                 new_gid = gid if gid else os.getgid()
@@ -94,6 +95,7 @@ class Command(BaseCommand):
         new_uid = uid if uid != -1 else None
         new_gid = gid if gid != -1 else None
         if uid != -1 or gid != -1:
+            # pylint: disable=unused-variable
             for dirpath, dirnames, filenames in os.walk(path):
                 shutil.chown(dirpath, new_uid, new_gid)
                 for filename in filenames:

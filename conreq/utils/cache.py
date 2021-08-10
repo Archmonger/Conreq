@@ -1,8 +1,9 @@
 """Django caching wrapper and cache related capabilities."""
 from conreq.utils import log
 from conreq.utils.generic import clean_string
-from conreq.utils.multiprocessing import ReturnThread, background_task
+from conreq.utils.threads import ReturnThread
 from django.core.cache import cache
+from huey.contrib.djhuey import db_task
 
 # Globals
 DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
@@ -27,6 +28,16 @@ def generate_cache_key(cache_name, cache_args, cache_kwargs, key):
 def obtain_key_from_cache_key(cache_key):
     """Parses the cache key and returns any values after the string '_key'"""
     return cache_key[cache_key.find("_key") + len("_key") :]
+
+
+@db_task()
+def __cache_set_many(missing_keys, cache_duration):
+    cache.set_many(missing_keys, cache_duration)
+
+
+@db_task()
+def __cache_set(cache_key, function_results, cache_duration):
+    cache.set(cache_key, function_results, cache_duration)
 
 
 def __multi_execution(
@@ -93,7 +104,7 @@ def __multi_execution(
             log.INFO,
             _logger,
         )
-        background_task(cache.set_many, missing_keys, cache_duration)
+        __cache_set_many(missing_keys, cache_duration)
 
     # Return all results
     cached_results.update(missing_keys)
@@ -170,7 +181,7 @@ def handler(
         if cached_results is None or force_update_cache:
             function_results = function(*args, **kwargs)
             if function_results:
-                background_task(cache.set, cache_key, function_results, cache_duration)
+                __cache_set(cache_key, function_results, cache_duration)
             log.handler(
                 cache_name + " - " + function.__name__ + "()",
                 log.INFO,

@@ -5,7 +5,7 @@ from conreq.core.arrs.radarr import RadarrManager
 from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.server_settings.models import ConreqConfig
 from conreq.utils import log
-from conreq.utils.testing import performance_metrics
+from conreq.utils.debug import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse

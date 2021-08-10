@@ -18,14 +18,14 @@ import sys
 from django.core.management.utils import get_random_secret_key
 from tzlocal import get_localzone
 
-from conreq.utils.generic import (
+from conreq.utils.environment import (
     get_base_url,
     get_bool_from_env,
     get_database_type,
     get_debug_from_env,
     get_str_from_env,
-    list_modules,
 )
+from conreq.utils.generic import list_modules
 
 # Environment and Project Variables
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

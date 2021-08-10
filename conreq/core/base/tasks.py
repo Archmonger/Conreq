@@ -1,7 +1,7 @@
 import os
 import sqlite3
 
-from conreq.utils.generic import get_database_type
+from conreq.utils.environment import get_database_type
 from django.conf import settings
 from django.db import connection
 from huey import crontab

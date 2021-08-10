@@ -4,7 +4,7 @@ from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
 from conreq.utils.generic import is_key_value_in_list, str_to_bool
-from conreq.utils.testing import performance_metrics
+from conreq.utils.debug import performance_metrics
 from conreq.utils.views import (
     obtain_sonarr_parameters,
     set_many_availability,

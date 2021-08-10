@@ -4,7 +4,7 @@ from random import shuffle
 import tmdbsimple as tmdb
 from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
-from conreq.utils.multiprocessing import ReturnThread
+from conreq.utils.threads import ReturnThread
 from tzlocal import get_localzone
 
 # TMDB API key is safe to hard-code. It can only access publicly available data.

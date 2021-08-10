@@ -1,7 +1,7 @@
 from secrets import token_hex
 
 from conreq.core.sign_up.forms import UserForm
-from conreq.utils.testing import performance_metrics
+from conreq.utils.debug import performance_metrics
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.cache import cache

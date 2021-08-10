@@ -1,7 +1,7 @@
 """ Settings required by django-app. """
 import os
 
-from conreq.utils.generic import get_base_url
+from conreq.utils.environment import get_base_url
 from django.conf import settings
 from django.shortcuts import resolve_url
 from django.urls import get_script_prefix

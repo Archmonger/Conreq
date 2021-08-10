@@ -3,7 +3,7 @@ import sqlite3
 from multiprocessing import Process
 
 import django
-from conreq.utils.generic import get_debug_from_env
+from conreq.utils.environment import get_debug_from_env
 from django.conf import settings
 from django.core.cache import cache
 from django.core.management import call_command

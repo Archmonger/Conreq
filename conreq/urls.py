@@ -19,7 +19,8 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from conreq.utils.generic import get_base_url, get_debug_from_env, list_modules_with
+from conreq.utils.environment import get_base_url, get_debug_from_env
+from conreq.utils.generic import list_modules_with
 
 APPS_DIR = getattr(settings, "APPS_DIR")
 DEBUG = get_debug_from_env()

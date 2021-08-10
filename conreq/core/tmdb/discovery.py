@@ -1,7 +1,7 @@
 """Conreq Content Discovery: Searches TMDB for content."""
 import tmdbsimple as tmdb
 from conreq.utils import cache, log
-from conreq.utils.multiprocessing import ReturnThread, threaded_execution
+from conreq.utils.threads import ReturnThread, threaded_execution
 
 from .base import (
     COLLECTION_CACHE_TIMEOUT,

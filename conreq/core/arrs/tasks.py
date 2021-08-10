@@ -1,4 +1,4 @@
-from conreq.utils.generic import get_str_from_env
+from conreq.utils.environment import get_str_from_env
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
