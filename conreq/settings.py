@@ -68,10 +68,9 @@ HUEY = {
     "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_FILENAME,  # Sqlite filename
-    "timeout": 3,  # 3 second query timeout
-    "results": False,  # Do not store return values of tasks.
+    "results": True,  # Store return values of tasks.
     "immediate": False,  # If True, run tasks synchronously.
-    "strict_fifo": True,
+    "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
     "consumer": {
         "workers": 20,
     },
