@@ -10,12 +10,95 @@ from django.template import loader
 
 from .helpers import initialize_conreq
 
-base_url = get_base_url()
-debug = get_debug_from_env()
+BASE_URL = get_base_url()
+DEBUG = get_debug_from_env()
+LANDING_TEMPLATE = None
+HOME_TEMPLATE = "primary/base_app.html"
+
+
+def configure(request):
+    user_objects = get_user_model().objects
+    conreq_config = ConreqConfig.get_solo()
+
+    # Authenticate using Organizr headers
+    # TODO: Turn this into a middleware app
+    organizr_username = request.headers.get("X-WEBAUTH-USER")
+    if conreq_config.conreq_http_header_auth and organizr_username:
+        # Configure the user parameters
+        organizr_email = request.headers.get("X-WEBAUTH-EMAIL")
+        organizr_group = int(request.headers.get("X-WEBAUTH-GROUP"))
+        user = user_objects.get_or_create(
+            username=organizr_username,
+        )[0]
+        user.email = organizr_email
+        user.is_staff = False
+        if organizr_group == 0:
+            user.is_superuser = True
+        if organizr_group == 0 or organizr_group == 1:
+            user.is_staff = True
+        if user.has_usable_password():
+            user.set_unusable_password()
+        user.save()
+
+        # Make sure the user is labeled as a HTTP auth user
+        if not user.profile.externally_authenticated:
+            user.profile.externally_authenticated = True
+            user.save()
+
+        login(request, user)
+
+    # Run the first time initialization if needed
+    if conreq_config.conreq_initialized is False:
+
+        # User submitted the first time setup form
+        if request.method == "POST":
+
+            form = InitializationForm(request.POST)
+
+            # Create the superuser and set up the database if the form is valid
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get("username")
+                password = form.cleaned_data.get("password1")
+                user = authenticate(username=username, password=password)
+                user.is_staff = True
+                user.is_admin = True
+                user.is_superuser = True
+                user.save()
+                login(request, user)
+                initialize_conreq(conreq_config, form)
+                return redirect("base:index")
+
+            # Form data wasn't valid, so return the error codes
+            template = loader.get_template("registration/initialization.html")
+            return HttpResponse(template.render({"form": form}, request))
+
+        # User needs to fill out the first time setup
+        template = loader.get_template("registration/initialization.html")
+        return HttpResponse(template.render({}, request))
 
 
 @performance_metrics()
-def main(request):
+def landing(request):
+    """The primary view that handles whether to take the user to
+    login, splash, initialization, or homepage."""
+
+    config_needed = configure(request)
+
+    if config_needed:
+        return config_needed
+
+    if not LANDING_TEMPLATE:
+        return redirect("base:homescreen")
+
+    # Render the landing page
+    return login_required(render)(
+        request, LANDING_TEMPLATE, {"base_url": BASE_URL, "debug": BASE_URL}
+    )
+
+
+@performance_metrics()
+def home(request):
     """The primary view that handles whether to take the user to
     login, splash, initialization, or homepage."""
     conreq_config = ConreqConfig.get_solo()
@@ -79,5 +162,5 @@ def main(request):
 
     # Render the base
     return login_required(render)(
-        request, "primary/base_app.html", {"base_url": base_url, "debug": debug}
+        request, HOME_TEMPLATE, {"base_url": BASE_URL, "debug": BASE_URL}
     )
