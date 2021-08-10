@@ -1,10 +1,13 @@
 from functools import wraps
 
+from huey.contrib.djhuey import db_periodic_task, db_task
+
 AUTH_ANONYMOUS = 0
 AUTH_USER = 1
 AUTH_ADMIN = 2
 
 # TODO: Create decorators
+# pylint: disable=unused-argument,unused-variable
 
 
 def url(path: str, regex: bool = False):
@@ -64,3 +67,8 @@ def component():
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             pass
+
+
+task = db_task
+
+periodic_task = db_periodic_task
