@@ -393,7 +393,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "collectstatic")
 STATIC_URL = BASE_URL + "/static/"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "conreq", "static"),
     USER_STATICFILES_DIR,
 ]
 STATICFILES_FINDERS = [
