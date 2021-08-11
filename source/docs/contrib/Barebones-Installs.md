@@ -45,11 +45,12 @@ It Should Look Like this in once you add all the relivant info.
 
 **Application Tab**
 
-![image](https://i.imgur.com/CE5piYo.png)
+![image](https://i.imgur.com/ht9eQuD.png)
 
 **Log on Tab**
 
-![image](https://i.imgur.com/ht9eQuD.png)
+![image](https://i.imgur.com/CE5piYo.png)
+
 
 7. Click save/edit Service.
 8. Go back to your Powershell and run `nssm start Conreq` You should see start Succesful `Conreq: START: The operation completed successfully.
