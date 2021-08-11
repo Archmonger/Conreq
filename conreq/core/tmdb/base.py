@@ -186,9 +186,9 @@ class TmdbBase:
 
         # Grab external IDs if needed
         if external_id_multi_fetch:
-            external_id_multi_fetch_results = cache.handler(
+            external_id_multi_fetch_results = cache.multi_handler(
                 "get tv external ids",
-                function=external_id_multi_fetch,
+                functions=external_id_multi_fetch,
                 cache_duration=EXTERNAL_ID_CACHE_TIMEOUT,
             )
 
