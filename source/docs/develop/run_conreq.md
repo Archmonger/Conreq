@@ -18,8 +18,8 @@ If you intend to edit Conreq's code, then proceed with the Development instructi
 2. Open a terminal (ex. Command Prompt or PowerShell) as administrator at the root of the repository.
 3. _If using Windows_
     - Type `set-executionpolicy remotesigned` and select Yes to All to allow external Python scripts to run on your computer.
-4. Type `python -m venv venv` to create a Python virtual environment called "venv".
-5. Type `./venv/Scripts/activate` to enter the virtual environment.
+4. Type `python -m venv .venv` to create a Python virtual environment called ".venv".
+5. Type `./.venv/Scripts/activate` to enter the virtual environment.
 6. Type `pip install -r requirements.txt` to install all Python dependencies within the virtual environment.
 7. Type `python manage.py run_conreq` to run the webserver.
 

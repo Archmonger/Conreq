@@ -1,5 +1,8 @@
 nav:
     - Home: index.md
+    - Install:
+          - Windows (NSSM): install/windows.md
+          - Linux (Docker): install/linux.md
     - Configuration:
           - Environment Variables: configure/env_vars.md
           - Built-in Webserver: configure/webserver.md
