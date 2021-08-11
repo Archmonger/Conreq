@@ -22,8 +22,8 @@ def handler(msg: str, level: int, logger: Logger):
         logger: A logger objected obtained from get_logger().
         level: Logging module log level (ex. logging.WARNING)
     """
-    # Remove trailing whitespace from the message
-    message = str(msg).rstrip()
+    # Remove trailing and proceeding whitespace from the message
+    message = str(msg).rstrip("\n").rstrip().lstrip("\n").lstrip()
 
     # Log within a different stream depending on severity
     if level == DEBUG:
