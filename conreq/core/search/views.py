@@ -1,6 +1,6 @@
 from conreq.core.tmdb.discovery import TmdbDiscovery
 from conreq.core.tmdb.search import TmdbSearch
-from conreq.utils.views import set_many_availability
+from conreq.core.discover.helpers import set_many_availability
 from conreq.utils.debug import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse

@@ -4,7 +4,7 @@ from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
 from conreq.utils.database import add_unique_to_db
 from conreq.utils.threads import threaded_execution_unique_args
-from conreq.utils.views import (
+from conreq.core.discover.helpers import (
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
     set_many_availability,

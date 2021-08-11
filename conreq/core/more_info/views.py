@@ -5,7 +5,7 @@ from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
 from conreq.utils.generic import is_key_value_in_list, str_to_bool
 from conreq.utils.debug import performance_metrics
-from conreq.utils.views import (
+from conreq.core.discover.helpers import (
     obtain_sonarr_parameters,
     set_many_availability,
     set_single_availability,
