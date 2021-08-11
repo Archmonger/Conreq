@@ -141,7 +141,7 @@ def multi_handler(
     functions: dict[dict],
     cache_duration: int = DEFAULT_CACHE_DURATION,
     timeout: int = 5,
-):
+) -> dict[dict]:
     """Retrieve, set, and potentially execute multiple cache functions at once.
     Functions must follow this format:
 
@@ -167,7 +167,9 @@ def multi_handler(
                 cache_name, value["args"], value["kwargs"], key
             )
             log.handler(
-                cache_name + " - Multi-execution generated cache key " + cache_key,
+                cache_name
+                + " - Cache multi execution generated cache key "
+                + cache_key,
                 log.DEBUG,
                 _logger,
             )
@@ -177,7 +179,7 @@ def multi_handler(
         cached_results = cache.get_many(requested_keys)
         log.handler(
             cache_name
-            + " - Multi-execution detected "
+            + " - Cache multi execution detected "
             + str(len(cached_results))
             + " available keys.",
             log.INFO,
@@ -205,7 +207,7 @@ def multi_handler(
         if bool(missing_keys):
             log.handler(
                 cache_name
-                + " - Multi-execution detected "
+                + " - Cache multi execution detected "
                 + str(len(missing_keys))
                 + " missing keys.",
                 log.INFO,
@@ -219,7 +221,7 @@ def multi_handler(
         # If results were none, log it.
         if cached_results is None:
             log.handler(
-                cache_name + " - Multi-execution generated no results!",
+                cache_name + " - Cache multi execution generated no results!",
                 log.WARNING,
                 _logger,
             )
