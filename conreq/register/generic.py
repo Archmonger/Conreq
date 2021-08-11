@@ -1,4 +1,5 @@
 # TODO: Create generics
+# pylint: disable=unused-argument,unused-variable
 
 
 def app(path: str):
@@ -17,12 +18,12 @@ def nav_tab(
     page_name: str,
     group_name: str,
     auth_level: int = 1,
-    group_icon_cls: str = None,
-    group_icon_txt: str = None,
     icon_left_cls: str = None,
     icon_left_txt: str = None,
     icon_right_cls: str = None,
     icon_right_txt: str = None,
+    group_icon_cls: str = None,
+    group_icon_txt: str = None,
 ):
     pass
 

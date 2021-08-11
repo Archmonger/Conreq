@@ -8,4 +8,4 @@ from .decorators import (
     server_settings,
     url,
 )
-from .generics import app, websocket
+from .generic import app, websocket
