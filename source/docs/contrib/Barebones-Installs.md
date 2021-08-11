@@ -2,7 +2,7 @@
 
 ## Windows 10 ##
 
-**Requirments**
+**Requirements**
 
 - Latest Pip
 - Python 3.8+ in Windows Path
