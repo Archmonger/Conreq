@@ -18,7 +18,7 @@ class ReturnThread(Thread):
         if self._target is not None:
             self._return = self._target(*self._args, **self._kwargs)
 
-    def join(self, timeout=None):
+    def join(self, timeout: int = None):
         """
         Join normally like the parent class, but added a return value which
         the parent class join method does not have.
@@ -27,7 +27,7 @@ class ReturnThread(Thread):
         return self._return
 
 
-def threaded_execution(function_list, args, **kwargs):
+def threaded_execution(function_list: list, args: list, **kwargs: dict):
     """Threaded execution of function calls where all functions utilize the same args/kwargs."""
     thread_list = []
     results = []
@@ -43,9 +43,10 @@ def threaded_execution(function_list, args, **kwargs):
     return results
 
 
-def threaded_execution_unique_args(functions):
+def threaded_execution_unique_args(functions: list[dict]):
     """Executes functions with unique arguements. It will return all returned values as a list.
-    To use this, pass in a list of dicts in the following format
+    Functions must follow this format:
+
         [{
             "function": foobar,
             "args": [],

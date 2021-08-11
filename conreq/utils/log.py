@@ -1,5 +1,6 @@
 """Conreq Logging: Simplified logging module."""
 import logging
+from logging import Logger
 from traceback import format_exc
 
 # Globals
@@ -13,12 +14,12 @@ CRITICAL = logging.CRITICAL
 get_logger = logging.getLogger
 
 
-def handler(msg, level, logger):
+def handler(msg: str, level: int, logger: Logger):
     """Submits a message to the log handler.
 
     Args:
         message: A string containing a verbose log message.
-        logger: A logger objected obtained from logging.getLogger().
+        logger: A logger objected obtained from get_logger().
         level: Logging module log level (ex. logging.WARNING)
     """
     # Remove trailing whitespace from the message

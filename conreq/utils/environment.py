@@ -16,18 +16,18 @@ def get_base_url():
     return base_url
 
 
-def get_bool_from_env(name, default_value=False):
+def get_bool_from_env(name: str, default_value: bool = False):
     """Obtains a boolean from an environment variable"""
     env_var = os.environ.get(ENV_PREFIX + name)
     return str_to_bool(env_var, default_value)
 
 
-def get_str_from_env(name, default_value=""):
+def get_str_from_env(name: str, default_value: str = ""):
     """Obtains a string from an environment variable"""
     return os.environ.get(ENV_PREFIX + name, default_value)
 
 
-def get_int_from_env(name, default_value=0):
+def get_int_from_env(name: str, default_value: int = 0):
     """Obtains a integer from an environment variable"""
     env_var = os.environ.get(ENV_PREFIX + name)
     if env_var.isdigit():
