@@ -366,7 +366,7 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-LOGIN_REDIRECT_URL = "base:index"
+LOGIN_REDIRECT_URL = "base:landing"
 LOGIN_URL = "sign_in"
 if PWNED_VALIDATOR:
     AUTH_PASSWORD_VALIDATORS.append(

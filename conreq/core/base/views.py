@@ -67,7 +67,7 @@ def configure(request):
                 user.save()
                 login(request, user)
                 initialize_conreq(conreq_config, form)
-                return redirect("base:index")
+                return redirect("base:landing")
 
             # Form data wasn't valid, so return the error codes
             template = loader.get_template("registration/initialization.html")
@@ -150,7 +150,7 @@ def home(request):
                 user.save()
                 login(request, user)
                 initialize_conreq(conreq_config, form)
-                return redirect("base:index")
+                return redirect("base:landing")
 
             # Form data wasn't valid, so return the error codes
             template = loader.get_template("registration/initialization.html")
