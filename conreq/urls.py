@@ -18,6 +18,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
+from django.views.generic.base import RedirectView
 
 from conreq.utils.environment import get_base_url, get_debug_from_env
 from conreq.utils.generic import list_modules_with
@@ -135,4 +136,7 @@ if DEBUG:
 
 # Wrap the urlpatterns in BASE_URL if required
 if BASE_URL:
-    urlpatterns = [path(BASE_URL[1:] + "/", include(urlpatterns))]
+    urlpatterns = [
+        path("", RedirectView.as_view(url=BASE_URL)),
+        path(BASE_URL[1:] + "/", include(urlpatterns)),
+    ]
