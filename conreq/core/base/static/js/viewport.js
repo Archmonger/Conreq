@@ -138,7 +138,7 @@ var generate_viewport = async function (standard_viewport_load = true) {
 		display_cached_viewport();
 	} else {
 		let viewport_selector = null;
-		if (get_window_location(true).startsWith("display/")) {
+		if (get_window_location(true).startsWith("/display/")) {
 			// Display on the top layer
 			viewport_selector = viewport_container_top_class;
 		} else {

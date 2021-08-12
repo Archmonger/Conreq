@@ -30,11 +30,11 @@ var get_window_location = function (raw = false) {
 	if (
 		raw == false &&
 		window_location &&
-		window_location.startsWith("display/")
+		window_location.startsWith("/display/")
 	) {
 		// Remove display from the non-raw url.
 		// It's only used to signify something is to be added to the secondary viewport.
-		window_location = window_location.slice("display/".length);
+		window_location = window_location.slice("/display/".length);
 	}
 	if (window_location) {
 		return window_location;
