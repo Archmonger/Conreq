@@ -17,7 +17,7 @@ def viewport_url(namespace):
 @register.simple_tag
 def viewport_top_url(namespace):
     url = reverse(namespace)
-    return "#" + "/display/" + url[base_url_len:]
+    return "#" + "/display" + url[base_url_len:]
 
 
 @register.simple_tag
