@@ -10,7 +10,7 @@ whitenoise[brotli]==5.3.0
 
 # Database/Storage
 pymysql==1.0.2
-huey==2.3.2
+huey==2.4.0
 diskcache==5.2.1
 
 # Extending Django DB Model Features
