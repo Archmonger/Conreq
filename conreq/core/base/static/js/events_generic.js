@@ -74,9 +74,11 @@ $(document).ready(async function () {
 		if ($(".viewport-container>.infinite-scroll").length) {
 			let elements_path = null;
 			if (get_window_location().includes("?")) {
-				elements_path = get_window_location() + "&page={{#}}";
+				elements_path =
+					base_url + get_window_location() + "&page={{#}}";
 			} else {
-				elements_path = get_window_location() + "?page={{#}}";
+				elements_path =
+					base_url + get_window_location() + "?page={{#}}";
 			}
 			setTimeout(async function () {
 				masonry_grid.infiniteScroll({

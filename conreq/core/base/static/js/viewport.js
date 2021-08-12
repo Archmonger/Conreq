@@ -240,7 +240,7 @@ let page_mutation_observer = async function () {
 };
 
 $(document).ready(async function () {
-	base_url = $("#base-url").val() + "/";
+	base_url = $("#base-url").val();
 	// Slide in animations for navbar, sidebar, and viewport
 	AOS.init();
 	// Obtain the initial page
