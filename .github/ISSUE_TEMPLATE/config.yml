@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+    - name: Feature Request
+      url: https://github.com/Archmonger/Conreq/discussions/categories/feature-requests
+      about: Click "New Discussion" to create a feature request. See an idea you like? Vote for it!
+    - name: Discord Support
+      url: https://discord.gg/gQhGZzEjmX
+      about: Ask a question within the support channel.
+    - name: GitHub Community Support
+      url: https://github.com/Archmonger/Conreq/discussions/categories/support
+      about: Click "New Discussion" to create a support ticket.
