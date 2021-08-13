@@ -318,16 +318,25 @@ TEMPLATES = [
 
 
 # Databases
-if DB_ENGINE == "MYSQL" and MYSQL_CONFIG_FILE != "":
-    # MySQL
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "OPTIONS": {
-                "read_default_file": MYSQL_CONFIG_FILE,
-            },
+if DB_ENGINE == "MYSQL":
+    if not MYSQL_CONFIG_FILE:
+        print("MYSQL_CONFIG_FILE is not set!")
+    elif not os.path.exists(MYSQL_CONFIG_FILE):
+        print(f"MYSQL_CONFIG_FILE '{MYSQL_CONFIG_FILE}' does not exist!")
+    else:
+        import pymysql
+
+        pymysql.install_as_MySQLdb()
+
+        # MySQL
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.mysql",
+                "OPTIONS": {
+                    "read_default_file": MYSQL_CONFIG_FILE,
+                },
+            }
         }
-    }
 else:
     # SQLite
     DATABASES = {
