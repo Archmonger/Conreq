@@ -7,8 +7,8 @@ For more information on this file, see
 https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
-from django.conf.urls import url
 from django.core.asgi import get_asgi_application
+from django.urls import path
 
 # Fetch ASGI application before importing dependencies that require ORM models.
 django_asgi_app = get_asgi_application()
@@ -46,7 +46,7 @@ application = ProtocolTypeRouter(
         # See https://github.com/django/channels/issues/1587
         "http": django_asgi_app,
         "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter([url("", CommandConsumer().as_asgi())]))
+            AuthMiddlewareStack(URLRouter([path("", CommandConsumer().as_asgi())]))
         ),
         "lifespan": LifespanApp,
     }
