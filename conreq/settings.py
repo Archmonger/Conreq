@@ -27,14 +27,30 @@ from conreq.utils.environment import (
 )
 from conreq.utils.generic import list_modules
 
-# Environment and Project Variables
+# Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
+DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"))
 APPS_DIR = os.path.join(DATA_DIR, "apps")
 MEDIA_DIR = os.path.join(DATA_DIR, "media")
+TEMP_DIR = os.path.join(DATA_DIR, "temp")
 USER_STATICFILES_DIR = os.path.join(DATA_DIR, "static")
 LOG_DIR = os.path.join(DATA_DIR, "logs")
+METRICS_DIR = os.path.join(DATA_DIR, "metrics")
+MAKE_DIRS = [
+    DATA_DIR,
+    APPS_DIR,
+    MEDIA_DIR,
+    TEMP_DIR,
+    USER_STATICFILES_DIR,
+    LOG_DIR,
+    METRICS_DIR,
+]
+for directory in MAKE_DIRS:
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+# Environment Variables
 DEBUG = get_debug_from_env()
 DB_ENGINE = get_database_type()
 MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
@@ -53,7 +69,7 @@ SILKY_AUTHORISATION = True
 SILKY_ANALYZE_QUERIES = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
-SILKY_PYTHON_PROFILER_RESULT_PATH = os.path.join(DATA_DIR, "metrics")
+SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
 HTML_MINIFY = True
 WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 COMPRESS_OUTPUT_DIR = "minified"
@@ -75,24 +91,6 @@ HUEY = {
         "workers": 20,
     },
 }
-
-
-# Directory Structure Creation
-try:
-    if not os.path.exists(APPS_DIR):
-        os.makedirs(APPS_DIR)
-    if not os.path.exists(USER_STATICFILES_DIR):
-        os.makedirs(USER_STATICFILES_DIR)
-    if not os.path.exists(MEDIA_DIR):
-        os.makedirs(MEDIA_DIR)
-    if not os.path.exists(LOG_DIR):
-        os.makedirs(LOG_DIR)
-    if not os.path.exists(DATA_DIR):
-        os.makedirs(DATA_DIR)
-    if not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH) and DEBUG:
-        os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
-except:
-    pass
 
 
 # Email Settings
@@ -300,7 +298,6 @@ if DEBUG:
 # URL Routing and Page Rendering
 ROOT_URLCONF = "conreq.urls"
 ASGI_APPLICATION = "conreq.asgi.application"
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -321,8 +318,10 @@ TEMPLATES = [
 if DB_ENGINE == "MYSQL":
     if not MYSQL_CONFIG_FILE:
         print("MYSQL_CONFIG_FILE is not set!")
+        sys.exit(1)
     elif not os.path.exists(MYSQL_CONFIG_FILE):
         print(f"MYSQL_CONFIG_FILE '{MYSQL_CONFIG_FILE}' does not exist!")
+        sys.exit(1)
     else:
         import pymysql
 
@@ -388,6 +387,7 @@ if PWNED_VALIDATOR:
         },
     )
 
+
 # Internationalization
 LANGUAGE_CODE = "en-US"
 TIME_ZONE = get_localzone().zone
@@ -399,7 +399,6 @@ USE_TZ = True
 # Static Files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(DATA_DIR, "collectstatic")
 STATIC_URL = BASE_URL + "/static/"
-
 STATICFILES_DIRS = [
     USER_STATICFILES_DIR,
 ]
