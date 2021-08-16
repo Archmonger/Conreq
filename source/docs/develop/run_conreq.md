@@ -8,7 +8,9 @@ If you intend to edit Conreq's code, then proceed with the Development instructi
 
 ### Software Required
 
--   Install [Python 3.9+](https://www.python.org/downloads/) (Easiest if this is the only version of python on your computer)
+-   Install [Python 3.9+](https://www.python.org/downloads/)
+    -   Make sure to select "Add Python 3.x to PATH" during installation.
+    -   Easiest if this is the only version of python on your computer
 -   _If using Windows_: Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
 -   _Optional_: Install [Visual Studio Code](https://code.visualstudio.com/) (Any editor would work)
 
@@ -30,8 +32,9 @@ If you intend to edit Conreq's code, then proceed with the Development instructi
 Follow all instructions laid out within [Creating a Development Environment](#creating-a-development-environment), but before running `python manage.py run_conreq` do the following:
 
 1. Set your environment variable of `DEBUG` to `false`. The method of doing this will [vary based on operating system](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html).
-    - Doing this enables _a lot_ of **security features** that are mandatory for any user environment.
-2. The webserver is conifgured with good defaults for most cases, but if you want to configure the webserver _(such as changing ports)_ See our [webserver documentation](/webserver/) for more information.
+    - Doing this enables _a lot_ of **security features**.
+2. The webserver is conifgured with good defaults for most cases. But if you want to configure the webserver see our [webserver documentation](/Conreq/configure/webserver/) for more information.
+3. Type `python manage.py run_conreq` to run the webserver.
 
 ---
 
