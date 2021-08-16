@@ -1,4 +1,4 @@
-These instructions use NSSM to automatically start Conreq. A Windows installater will eventually be developed, but is currently not available.
+These instructions use NSSM to automatically start Conreq. A Windows installer will eventually be developed, but is currently not available.
 
 ---
 
@@ -15,10 +15,10 @@ These instructions use NSSM to automatically start Conreq. A Windows installater
 1. Create the folder `C:\Program Files\Conreq`
 2. Use this folder to follow steps 1 to 6 of [setting up a Conreq environment](http://127.0.0.1:8000/Conreq/develop/run_conreq/#setting-up-the-environment).
 3. Unzip NSSM in a separate directory where you can permanently keep it (ex. `C:\Program Files\NSSM`).
-4. Open a terminal (ex. Command Prompt or PowerShell) within your NSSM directory.
+4. Open a terminal (ex. Command Prompt or PowerShell) within your NSSM directory **as administrator**.
 5. Open NSSM by typing `.\win64\nssm.exe install Conreq`.
 6. Under the Application tab, browse to the path of your **Conreq venv**.
-    - ex) `C:\Program Files\Conreq\.venv\Scripts\python.exe` <!-- TODO: Change this to run_conreq.bat -->
+    - ex) `C:\Program Files\Conreq\.venv\Scripts\python.exe`
 7. Under the Application tab, browse to the path of your **Conreq repository**.
     - ex) `C:\Program Files\Conreq\`
 8. Click "Install Service".
