@@ -43,7 +43,7 @@ pwned-passwords-django==1.5
 django-project-version==0.15.1
 
 # Timezones
-tzlocal==2.1
+tzlocal==3.0
 
 # Only used by Conreq Apps (Migrate later)
 pyarr==2.0.4
