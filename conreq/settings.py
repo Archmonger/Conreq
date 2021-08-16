@@ -390,7 +390,7 @@ if PWNED_VALIDATOR:
 
 # Internationalization
 LANGUAGE_CODE = "en-US"
-TIME_ZONE = get_localzone().zone
+TIME_ZONE = get_localzone().key
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
