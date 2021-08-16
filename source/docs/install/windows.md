@@ -4,7 +4,10 @@ These instructions use NSSM to automatically start Conreq. A Windows installater
 
 ### Software Required
 
--   Install [Python 3.8+](https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l#activetab=pivot:overviewtab) (Easiest if this is the only version of python on your computer)
+-   Install [Python 3.9+](https://www.python.org/downloads/)
+    - Make sure to select "Add Python to path" 
+    - Easiest if this is the only version of python on your computer
+    - You will experience issues if using the "Windows App Store" version of Python. Make sure to install it the traditional way.
 -   Download [NSSM](https://nssm.cc/download)
 
 ### Installation

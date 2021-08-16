@@ -4,7 +4,7 @@ We use [MkDocs](https://www.mkdocs.org/#overview) to create our documentation. F
 
 ## Setting Up the Environment
 
-1. Install `Python 3.8` or greater.
+1. Install `Python 3.x`
 2. Fork and pull `Conreq:docs` from GitHub.
 3. Open a terminal (ex. Command Prompt or PowerShell) at the root of the repository.
 4. Type `pip install -r requirements.txt` to install MkDocs.
