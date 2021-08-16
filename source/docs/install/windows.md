@@ -21,6 +21,7 @@ These instructions use NSSM to automatically start Conreq. A Windows installer w
     - ex) `C:\Program Files\Conreq\.venv\Scripts\python.exe`
 7. Under the Application tab, browse to the path of your **Conreq repository**.
     - ex) `C:\Program Files\Conreq\`
+8. Under the Application tab, set "Arguments" to `manage.py run_conreq`
 8. Click "Install Service".
 9. In your terminal, type `.\win64\nssm.exe start Conreq`.
     - You can check to make sure its running as a service by running `nssm status Conreq`
