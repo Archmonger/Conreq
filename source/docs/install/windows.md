@@ -10,6 +10,7 @@ A traditional Windows installer is targeted for development within our roadmap, 
     -   Make sure to select "Add Python 3.x to PATH" during installation.
     -   Easiest if this is the only version of python on your computer
     -   Steps below will not work with NSSM if using the "Windows App Store" version of Python.
+-   Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
 -   Download [NSSM](https://nssm.cc/download)
 
 ### Installation
