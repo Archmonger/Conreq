@@ -1,8 +1,6 @@
 from functools import wraps
 
 from channels.consumer import AsyncConsumer
-from huey.contrib.djhuey import db_periodic_task, db_task
-
 from conreq.app import AuthLevel, Icon, Navtab, Viewport
 
 # TODO: Create these functions
@@ -10,8 +8,8 @@ from conreq.app import AuthLevel, Icon, Navtab, Viewport
 
 
 def websocket(path: str, regex: bool = False):
-    def decorator(_class: AsyncConsumer):
-        @wraps(_class)
+    def decorator(class_: AsyncConsumer):
+        @wraps(class_)
         def _wrapped_class(*args, **kwargs):
             return _wrapped_class(*args, **kwargs)
 
@@ -56,10 +54,3 @@ def user_settings(admin_only: bool = False):
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
-
-
-# component = idom_component
-
-task = db_task
-
-periodic_task = db_periodic_task
