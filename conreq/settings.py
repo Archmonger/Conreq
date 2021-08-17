@@ -31,7 +31,7 @@ from conreq.utils.generic import list_modules
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"))
-APPS_DIR = os.path.join(DATA_DIR, "apps")
+APPS_DIR = os.path.join(DATA_DIR, "packages")
 MEDIA_DIR = os.path.join(DATA_DIR, "media")
 TEMP_DIR = os.path.join(DATA_DIR, "temp")
 USER_STATICFILES_DIR = os.path.join(DATA_DIR, "static")
