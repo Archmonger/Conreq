@@ -93,7 +93,7 @@ def landing(request):
 
     # Render the landing page
     return login_required(render)(
-        request, LANDING_TEMPLATE, {"base_url": BASE_URL, "debug": BASE_URL}
+        request, LANDING_TEMPLATE, {"base_url": BASE_URL, "debug": DEBUG}
     )
 
 
@@ -162,5 +162,5 @@ def home(request):
 
     # Render the base
     return login_required(render)(
-        request, HOME_TEMPLATE, {"base_url": BASE_URL, "debug": BASE_URL}
+        request, HOME_TEMPLATE, {"base_url": BASE_URL, "debug": DEBUG}
     )
