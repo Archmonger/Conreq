@@ -14,9 +14,9 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 
 -   Installable Apps
 -   Behaves as a Progressive Web App (PWA)
--   Customization for all core webpages
--   [Support for all Django features](https://github.com/django/django)
--   [Support for ReactJS components](https://github.com/idom-team/django-idom)
+-   Customization for all Core Webpages
+-   [Support for all Django Features](https://github.com/django/django)
+-   [Support for ReactJS Components](https://github.com/idom-team/django-idom)
 -   [Background Task Processing](https://github.com/coleifer/huey)
 -   [Static File Server](https://github.com/evansd/whitenoise)
 -   [CSS/JS File Compression](https://github.com/django-compressor/django-compressor)
