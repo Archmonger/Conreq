@@ -29,6 +29,20 @@ def setting(name, value):
     pass
 
 
+def setting_script():
+    """Runs a function in settings.py. Uses inspect.getsource(foo) and exec().
+    Function must have no args.
+    Appends `func.__name__()` at the end of the script.
+    See django-split-settings for inspiration:
+    https://github.com/sobolevn/django-split-settings/blob/872cf12005e6eb1323c302b5e37d190d4610f50a/split_settings/tools.py#L106
+    """
+
+    def decorator(func):
+        @wraps(func)
+        def _wrapped_func(*args, **kwargs):
+            return _wrapped_func(*args, **kwargs)
+
+
 def installed_app(path: str):
     """Adds a something to Django's "installed app" list in settings.py."""
     pass
