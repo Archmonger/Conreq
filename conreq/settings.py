@@ -30,8 +30,11 @@ from conreq.utils.generic import list_modules
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
+TEMPLATE_DIR = os.path.join(BASE_DIR, "conreq", "app", "templates")
+PACKAGE_TEMPLATE = os.path.join(TEMPLATE_DIR, "app")
+APP_TEMPLATE = os.path.join(TEMPLATE_DIR, "subapp")
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"))
-APPS_DIR = os.path.join(DATA_DIR, "packages")
+PACKAGES_DIR = os.path.join(DATA_DIR, "packages")
 MEDIA_DIR = os.path.join(DATA_DIR, "media")
 TEMP_DIR = os.path.join(DATA_DIR, "temp")
 USER_STATICFILES_DIR = os.path.join(DATA_DIR, "static")
@@ -39,7 +42,7 @@ LOG_DIR = os.path.join(DATA_DIR, "logs")
 METRICS_DIR = os.path.join(DATA_DIR, "metrics")
 MAKE_DIRS = [
     DATA_DIR,
-    APPS_DIR,
+    PACKAGES_DIR,
     MEDIA_DIR,
     TEMP_DIR,
     USER_STATICFILES_DIR,
@@ -242,7 +245,7 @@ if ORIGINAL_SETTINGS != settings:
 
 
 # Django Apps & Middleware
-sys.path.append(APPS_DIR)  # User Installed Apps
+sys.path.append(PACKAGES_DIR)  # User Installed Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.admindocs",
@@ -264,7 +267,7 @@ INSTALLED_APPS = [
     "rest_framework",  # OpenAPI Framework
     "rest_framework_api_key",  # API Key Manager
     "rest_framework.authtoken",  # API User Authentication
-    *list_modules(APPS_DIR),  # User Installed Apps
+    *list_modules(PACKAGES_DIR),  # User Installed Apps
 ]
 MIDDLEWARE = [
     "compression_middleware.middleware.CompressionMiddleware",

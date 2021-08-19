@@ -23,7 +23,7 @@ from django.views.generic.base import RedirectView
 from conreq.utils.environment import get_base_url, get_debug_from_env
 from conreq.utils.generic import list_modules_with
 
-APPS_DIR = getattr(settings, "APPS_DIR")
+PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
 DEBUG = get_debug_from_env()
 BASE_URL = get_base_url()
 
@@ -50,7 +50,7 @@ urlpatterns = [
 ]
 
 # Add User Installed Apps URLS
-for app_name, module_path in list_modules_with(APPS_DIR, "urls"):
+for app_name, module_path in list_modules_with(PACKAGES_DIR, "urls"):
     urlpatterns.insert(0, path(app_name + "/", include(module_path)))
 
 # Debug tools
