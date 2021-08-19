@@ -33,9 +33,6 @@ django-htmlmin==0.11.0
 django-compression-middleware==0.4.1
 django-compressor==2.4.1
 
-# Security
-pwned-passwords-django==1.5
-
 # Version Control
 django-project-version==0.15.1
 
@@ -43,6 +40,7 @@ django-project-version==0.15.1
 tzlocal==3.0
 
 # Only used by Conreq Apps (Migrate later)
+pwned-passwords-django==1.5
 pyarr==2.0.4
 tmdbsimple==2.8.0
 strsim==0.0.3
