@@ -5,70 +5,42 @@
 [![Docker Hub](https://img.shields.io/badge/Open%20On-DockerHub-blue?style=flat-square)](https://hub.docker.com/r/roxedus/conreq)
 [![Discord](https://img.shields.io/discord/440067432552595457?style=flat-square&label=Discord&logo=discord)](https://discord.gg/gQhGZzEjmX "Chat with the community and get realtime support!")
 
-Conreq, a content requesting platform.
+Conreq, a cross-platform web framework with an app store.
 
-Want to join the community or have a question? Join us on [Discord](https://discord.gg/gQhGZzEjmX), discuss on [GitHub Discussions](https://github.com/Archmonger/Conreq/discussions), or see our planned features and roadmap on [GitHub Projects](https://github.com/Archmonger/Conreq/projects)!
+View the **[roadmap](https://github.com/Archmonger/Conreq/projects)** to see what features are upcoming!
 
-Looking for more info? Are you a developer and want to contribute? Check out our [Documentation](https://archmonger.github.io/Conreq/)!
+Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for info on how to develop with Conreq!
 
-## Installation (Production Environment)
+## Features
 
-Install through **[Unraid Community Applications](https://squidly271.github.io/forumpost0.html)**, or **[Hotio](https://hotio.dev/containers/conreq/)**/**[SelfHosters](https://registry.hub.docker.com/r/roxedus/conreq) Docker**.
+-   Installable Apps
+-   Behaves as a Progressive Web App (PWA)
+-   Customization for all core webpages
+-   [Support for all Django features](https://github.com/django/django)
+-   [Support for ReactJS components](https://github.com/idom-team/django-idom)
+-   [Background Task Processing](https://github.com/coleifer/huey)
+-   [Static File Server](https://github.com/evansd/whitenoise)
+-   [CSS/JS File Compression](https://github.com/django-compressor/django-compressor)
+-   [Automatic HTML File Compression](https://github.com/cobrateam/django-htmlmin)
+-   [Caching](https://github.com/grantjenks/python-diskcache)
+-   [Automatic Cache Busting](https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#django.contrib.staticfiles.storage.ManifestStaticFilesStorage)
+-   [High Performance Webserver](https://github.com/pgjones/hypercorn)
+-   [Asynchronous (ASGI)](https://github.com/django/channels)
+-   [OpenAPI Framework](https://github.com/encode/django-rest-framework)
+-   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
+-   [SASS/SCSS Support](https://github.com/jrief/django-sass-processor)
+-   [NPM Support](https://github.com/kevin1024/django-npm)
 
-Here's a list of all available environment variables:
+## Communities
 
-```python
-# General Settings
-TZ = "America/Los_Angeles"                # default: UTC (Timezone for log files, in "TZ Database" format)
-BASE_URL = "requests"                     # default: None
-APP_NAME = "RequestCentral"               # default: Conreq
-APP_DESCRIPTION = "Get yo stuff!"         # default: Content Requesting
-ARR_REFRESH_INTERNAL = "*/15"             # default: */1 (Cron minutes for Sonarr/Radarr library refresh)
-LOG_LEVEL = "ERROR"                       # default: WARNING
-CONREQ_ENV_PREFIX = "CONREQ"              # default: None
+-   [Discord](https://discord.gg/gQhGZzEjmX)
+-   [Reddit](https://www.reddit.com/r/conreq/)
+-   [GitHub Discussions](https://github.com/Archmonger/Conreq/discussions)
 
-# Data Storage
-DATA_DIR = "/example/directory"           # default: /config (Defaults to "data" outside of docker)
-DB_ENGINE = "MYSQL"                       # default: SQLITE3
-MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: None
+## Installation
 
-# Security
-SSL_SECURITY = "True"                     # default: False (True enables advanced SSL security features)
-PWNED_VALIDATOR = "False"                 # default: True (False disables checking for compromised passwords)
-X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (False disables X-Frame-Options)
-ALLOWED_HOST = "192.168.0.199"            # default: * (Allows all hosts)
-DEBUG = False                             # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
+Install through **[Unraid Community Applications](https://squidly271.github.io/forumpost0.html)**, or manually through **[Hotio](https://hotio.dev/containers/conreq/) or [SelfHosters](https://registry.hub.docker.com/r/roxedus/conreq)** Docker.
 
-# Email
-EMAIL_USE_TLS = "False"                   # default: True
-EMAIL_PORT = "587"                        # default: None
-EMAIL_HOST = "smtp.gmail.com"             # default: None
-EMAIL_HOST_USER = "myself@gmail.com"      # default: None
-EMAIL_HOST_PASSWORD = "dogmemes123"       # default: None
-```
+See our docs for information on our **[environment variables](https://archmonger.github.io/Conreq/configure/env_vars/)**.
 
-# Screenshots
-
-| ![Login screen](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_discover.png?raw=true) | ![Discover tab](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_more_info.png?raw=true) |
-| :------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-|                                               Discover (Desktop)                                               |                                               More Info (Desktop)                                               |
-
-| ![More Info Tab](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_modal_episode_selection.png?raw=true) | ![Content Preview Modal](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_modal_filter.png?raw=true) |
-| :----------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
-|                                               Episode Selection Modal (Desktop)                                                |                                                   Filter Modal (Desktop)                                                    |
-
-| ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_modal_preview.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_sign_in.png?raw=true) |
-| :------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
-|                                                  Preview Modal (Desktop)                                                   |                                                   Sign In (Desktop)                                                   |
-
-| ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_discover.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_more_info.png?raw=true) |
-| :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
-|                                                  Discover (Mobile)                                                   |                                                   More Info (Mobile)                                                   |
-
-| ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_modal_episode_selection.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_modal_filter.png?raw=true) |
-| :---------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
-|                                                  Episode Selection Modal (Mobile)                                                   |                                                   Filter Modal (Mobile)                                                   |
-
-| ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_registration.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_sign_in.png?raw=true) |
-| :----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-|                                                  Registration (Mobile)                                                   |                                                   Sign In (Mobile)                                                   |
+Since Conreq is pure python, it can be **[manually run](https://archmonger.github.io/Conreq/develop/run_conreq/)** on any operating system.
