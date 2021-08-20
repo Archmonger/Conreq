@@ -2,17 +2,21 @@
 # pylint: disable=unused-argument,unused-variable
 
 # Custom Functions
-def css(path, attributes=None):
+def css(path: str, attributes: list[tuple] = None):
     pass
 
 
-def javascript(path, attributes=None):
+def scss(path: str):
     pass
 
 
-def font(path, attributes=None):
+def javascript(path: str, attributes: list[tuple] = None):
     pass
 
 
-def head_content(template):
+def font(path: str, attributes: list[tuple] = None):
+    pass
+
+
+def head_content(template: str):
     pass
