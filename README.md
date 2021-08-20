@@ -15,6 +15,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   Installable Apps
 -   Behaves as a Progressive Web App (PWA)
 -   Customization for all Core Webpages
+-   Supports Multiple Database Backends
 -   [Support for all Django Features](https://github.com/django/django)
 -   [Async and Websockets (ASGI)](https://github.com/django/channels)
 -   [Virtual DOM with Support for ReactJS Components](https://github.com/idom-team/django-idom)
@@ -30,6 +31,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [Automatic Code Performance Graphs](https://github.com/jazzband/django-silk)
 -   [Automatic NPM Package Installation](https://github.com/kevin1024/django-npm)
 -   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
+-   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
 
 ## Communities
 
