@@ -50,6 +50,7 @@ for directory in MAKE_DIRS:
     if not os.path.exists(directory):
         os.makedirs(directory)
 
+
 # Environment Variables
 DEBUG = get_debug_from_env()
 DB_ENGINE = get_database_type()
@@ -59,6 +60,11 @@ PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
 X_FRAME_OPTIONS = get_str_from_env("X_FRAME_OPTIONS", "DENY")
 ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
+DOTENV_FILE = os.path.join(DATA_DIR, ".env")
+os.environ.setdefault("CONREQ_DOTENV_FILE", DOTENV_FILE)
+if not os.path.exists(DOTENV_FILE):
+    with open(DOTENV_FILE, "w") as fp:
+        pass
 
 
 # Application Settings
@@ -359,7 +365,7 @@ CACHES = {
 }
 
 
-# User Authenticaiton
+# User Authentication
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",

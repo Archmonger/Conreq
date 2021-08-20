@@ -1,8 +1,10 @@
+import functools
 import os
 
-import functools
+import dotenv
 from conreq.utils.generic import str_to_bool
 
+DOTENV_FILE = None
 ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
 if ENV_PREFIX:
     ENV_PREFIX = ENV_PREFIX + "_"
@@ -40,11 +42,6 @@ def get_int_from_env(name: str, default_value: int = 0):
     return default_value
 
 
-def get_env_prefix():
-    """Returns the environment variables prefix that should be used."""
-    return os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
-
-
 @functools.cache
 def get_debug_from_env():
     """Shortcut to obtain DEBUG from env variables"""
@@ -58,3 +55,21 @@ def get_database_type():
     if db_engine.upper() == "MYSQL":
         return "MYSQL"
     return "SQLITE3"
+
+
+@functools.cache
+def get_str_from_dotenv(name: str):
+    return dotenv.get_key(DOTENV_FILE, name)
+
+
+def set_env(name: str, value: str = "", sys_env=True, dot_env=True):
+    # Set environment variable
+    if sys_env:
+        os.environ.setdefault(ENV_PREFIX + name, value)
+
+    # Set dotenv variable
+    if dot_env:
+        global DOTENV_FILE  # pylint: disable=global-statement
+        if not DOTENV_FILE:
+            DOTENV_FILE = get_str_from_env("CONREQ_DOTENV_FILE")
+        dotenv.set_key(DOTENV_FILE, name, value)
