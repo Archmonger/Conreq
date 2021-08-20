@@ -27,6 +27,7 @@ from conreq.utils.environment import (
 )
 from conreq.utils.generic import list_modules
 
+
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
@@ -52,6 +53,7 @@ MAKE_DIRS = [
 for directory in MAKE_DIRS:
     if not os.path.exists(directory):
         os.makedirs(directory)
+
 
 # Environment Variables
 DEBUG = get_debug_from_env()
@@ -317,7 +319,7 @@ TEMPLATES = [
 ]
 
 
-# Databases
+# Databases and Caches
 if DB_ENGINE == "MYSQL":
     if not MYSQL_CONFIG_FILE:
         print("MYSQL_CONFIG_FILE is not set!")
