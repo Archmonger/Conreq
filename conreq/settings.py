@@ -60,7 +60,7 @@ PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
 X_FRAME_OPTIONS = get_str_from_env("X_FRAME_OPTIONS", "DENY")
 ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
-DOTENV_FILE = os.path.join(DATA_DIR, ".env")
+DOTENV_FILE = os.path.join(DATA_DIR, "settings.env")
 os.environ.setdefault("CONREQ_DOTENV_FILE", DOTENV_FILE)
 if not os.path.exists(DOTENV_FILE):
     with open(DOTENV_FILE, "w") as fp:
