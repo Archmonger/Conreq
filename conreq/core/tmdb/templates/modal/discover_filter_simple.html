@@ -38,7 +38,7 @@
         <div class="simple-filter-container">
             {% for filter_name in filters %}
             <a class="simple-filter-btn clickable no-highlighting"
-                data-href="#{{ filter_url }}?filter={{ filter_name|slugify }}">
+                data-href="#/{{ filter_url }}?filter={{ filter_name|slugify }}">
                 {{filter_name|upper}}
             </a>
             {% endfor %}
