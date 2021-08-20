@@ -364,7 +364,7 @@ CACHES = {
 }
 
 
-# User Authenticaiton
+# User Authentication
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -381,6 +381,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 LOGIN_REDIRECT_URL = "base:landing"
 LOGIN_URL = "sign_in"
+
+# TODO: Move this to a seperate app
 if PWNED_VALIDATOR:
     AUTH_PASSWORD_VALIDATORS.append(
         {
