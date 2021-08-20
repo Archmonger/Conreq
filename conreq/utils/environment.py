@@ -59,17 +59,30 @@ def get_database_type():
 
 @functools.cache
 def get_str_from_dotenv(name: str):
+    """Fetches a value from the .env file."""
     return dotenv.get_key(DOTENV_FILE, name)
 
 
-def set_env(name: str, value: str = "", sys_env=True, dot_env=True):
-    # Set environment variable
-    if sys_env:
-        os.environ.setdefault(ENV_PREFIX + name, value)
+@functools.cache
+def _dotenv_path():
+    """Fetches the .env file path set during Conreq startup."""
+    global DOTENV_FILE  # pylint: disable=global-statement
+    if not DOTENV_FILE:
+        DOTENV_FILE = get_str_from_env("CONREQ_DOTENV_FILE")
+    return DOTENV_FILE
 
-    # Set dotenv variable
+
+def set_env(name: str, value: str = "", sys_env=True, dot_env=True):
+    """Sets a value in either the system environment, and/or the .env file."""
+    if sys_env:
+        os.environ[ENV_PREFIX + name] = value
     if dot_env:
-        global DOTENV_FILE  # pylint: disable=global-statement
-        if not DOTENV_FILE:
-            DOTENV_FILE = get_str_from_env("CONREQ_DOTENV_FILE")
-        dotenv.set_key(DOTENV_FILE, name, value)
+        dotenv.set_key(_dotenv_path(), name, value)
+
+
+def remove_env(name: str, sys_env=True, dot_env=True):
+    """Removes a value in either the system environment, and/or the .env file."""
+    if sys_env and os.environ.get(ENV_PREFIX + name) is not None:
+        del os.environ[ENV_PREFIX + name]
+    if dot_env:
+        dotenv.unset_key(_dotenv_path(), name)
