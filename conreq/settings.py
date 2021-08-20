@@ -68,7 +68,7 @@ if not os.path.exists(DOTENV_FILE):
 
 
 # Application Settings
-DJVERSION_VERSION = "0.20.13"
+DJVERSION_VERSION = "0.20.14"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
