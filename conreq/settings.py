@@ -253,10 +253,9 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",  # API User Authentication
 ]
 MIDDLEWARE = [
-    "compression_middleware.middleware.CompressionMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
-    "django.middleware.gzip.GZipMiddleware",
+    "compression_middleware.middleware.CompressionMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
