@@ -257,6 +257,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    "conreq",
     *list_modules(CORE_DIR, prefix="conreq.core."),
     "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
