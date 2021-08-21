@@ -24,8 +24,10 @@ from conreq.utils.environment import (
     get_database_type,
     get_debug,
     get_str_from_env,
+    set_env,
 )
 from conreq.utils.generic import list_modules
+
 
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -215,36 +217,28 @@ REST_FRAMEWORK = {
 }
 
 
-# External "settings.json" file
+# settings.json (old) -> settings.env
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
-ORIGINAL_SETTINGS = None
-if not os.path.exists(SETTINGS_FILE):
-    with open(SETTINGS_FILE, "w") as settings_file:
-        settings_file.write("{}")
-with open(SETTINGS_FILE, "r+") as settings_file:
-    # Read the file
-    settings = json.load(settings_file)
-    ORIGINAL_SETTINGS = settings.copy()
-    # Obtain the DB Encryption Key from the file
-    if settings.get("DB_ENCRYPTION_KEY"):
-        FIELD_ENCRYPTION_KEYS = [settings["DB_ENCRYPTION_KEY"]]
-    else:
-        # DB Encryption Key wasn't found, a new one is needed
-        FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
-        settings["DB_ENCRYPTION_KEY"] = FIELD_ENCRYPTION_KEYS[0]
-    # Obtain the Secret Key from the file
-    if settings.get("SECRET_KEY"):
-        SECRET_KEY = settings["SECRET_KEY"]
-    else:
-        # New secret key is needed
-        SECRET_KEY = get_random_secret_key()
-        settings["SECRET_KEY"] = SECRET_KEY
-# Save settings.json if needed
-if ORIGINAL_SETTINGS != settings:
-    with open(SETTINGS_FILE, "w") as settings_file:
-        if DEBUG:
-            print("Updating settings.json to ", settings)
-        settings_file.write(json.dumps(settings))
+if os.path.exists(SETTINGS_FILE):
+    with open(SETTINGS_FILE, "r+") as settings_file:
+        settings = json.load(settings_file)
+        if settings.get("DB_ENCRYPTION_KEY"):
+            set_env("DB_ENCRYPTION_KEY", settings["DB_ENCRYPTION_KEY"])
+        if settings.get("SECRET_KEY"):
+            set_env("WEB_ENCRYPTION_KEY", settings["SECRET_KEY"])
+    os.remove(SETTINGS_FILE)
+
+
+# Encryption
+if get_str_from_env("DB_ENCRYPTION_KEY"):
+    FIELD_ENCRYPTION_KEYS = [get_str_from_env("DB_ENCRYPTION_KEY")]
+else:
+    FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
+    set_env("DB_ENCRYPTION_KEY", FIELD_ENCRYPTION_KEYS[0])
+if get_str_from_env("WEB_ENCRYPTION_KEY"):
+    SECRET_KEY = get_str_from_env("WEB_ENCRYPTION_KEY")
+else:
+    SECRET_KEY = set_env(get_random_secret_key(), return_value=True)
 
 
 # Django Apps & Middleware
