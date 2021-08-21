@@ -245,7 +245,7 @@ $(document).ready(async function () {
 	AOS.init();
 	// Obtain the initial page
 	page_mutation_observer();
-	generate_viewport();
+	// generate_viewport();
 });
 
 // Fetch a new page when the URL changes

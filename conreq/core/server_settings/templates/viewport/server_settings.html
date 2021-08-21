@@ -1,0 +1,61 @@
+{% load solo_tags %}
+{% load djversion_tags %}
+{% load static %}
+{% get_solo 'server_settings.ConreqConfig' as server_settings %}
+{% project_version as VERSION %}
+{% csrf_token %}
+{% include "primary/loading_animation_container.html" %}
+<input class="page-name" type="hidden" value="Server Settings">
+
+<div class="viewport server settings" data-url="{% url 'server_settings:update_settings' %}">
+    <!-- Conreq Server Settings Group -->
+    <div class="settings-group">
+        <div class="settings-group-title bold">Basic Configuration</div>
+        <div class="settings-input-group">
+            <div class="settings-item-group">
+                <div class="text-input-title">API Key</div>
+                <div class="text-input-container">
+                    <div class="settings-item text-display-only">
+                        <div class="settings-item-text line-clamp-1" id="conreq-api-key">
+                            Under Development
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-item-group">
+                <div class="text-input-title">Custom CSS</div>
+                <div class="text-input-container">
+                    <input type="text" class="settings-item small-text-input admin"
+                        placeholder="ex. /static/my_styles.css" autocomplete="off" autocorrect="off"
+                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom CSS"
+                        value="{{ server_settings.conreq_custom_css }}" />
+                </div>
+            </div>
+            <div class="settings-item-group">
+                <div class="text-input-title">Custom JavaScript</div>
+                <div class="text-input-container">
+                    <input type="text" class="settings-item small-text-input admin"
+                        placeholder="ex. /static/my_scripts.js" autocomplete="off" autocorrect="off"
+                        autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom JS"
+                        value="{{ server_settings.conreq_custom_js }}" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Conreq -->
+    <div class="settings-group">
+        <div class="settings-group-title bold">About Conreq</div>
+        <div class="settings-input-group">
+            <div class="settings-item-group info">
+                <div class="text-input-title info">System Information</div>
+                <div class="settings-item-details info">{{ os_platform }}</div>
+            </div>
+            <div class="settings-item-group info">
+                <div class="text-input-title info">Version</div>
+                <div class="settings-item-details info">{{ VERSION }}</div>
+            </div>
+        </div>
+    </div>
+
+</div>

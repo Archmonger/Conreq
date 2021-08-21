@@ -138,11 +138,6 @@
 <script src="{% static 'js/viewport.js' %}" crossorigin="anonymous"></script>
 {% endcompress %}
 
-<!-- Toggable CSS -->
-{% if server_settings.conreq_simple_posters %}
-{% include "compressed/simple_posters_css.html" %}
-{% endif %}
-
 <!-- User defined JS -->
 {% if server_settings.conreq_custom_js %}
 <script src="{{ server_settings.conreq_custom_js }}" crossorigin="anonymous"></script>

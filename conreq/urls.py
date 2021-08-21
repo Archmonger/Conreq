@@ -38,12 +38,6 @@ urlpatterns = [
     ),
     path("sign_out/", auth_views.logout_then_login, name="sign_out"),
     path("sign_up/", include("conreq.core.sign_up.urls")),
-    path("request/", include("conreq.core.user_requests.urls")),
-    # Viewport Locations
-    path("discover/", include("conreq.core.discover.urls")),
-    path("more_info/", include("conreq.core.more_info.urls")),
-    path("report_issue/", include("conreq.core.issue_reporting.urls")),
-    path("search/", include("conreq.core.search.urls")),
     path("manage_users/", include("conreq.core.manage_users.urls")),
     path("server_settings/", include("conreq.core.server_settings.urls")),
     path("api/v1/", include("conreq.core.api.urls")),
