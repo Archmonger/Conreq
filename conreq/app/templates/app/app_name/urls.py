@@ -1,2 +1,2 @@
-app_name = "{{ app_name }}_{{ sub_app_name }}"
+app_name = "{{ package_name }}_{{ app_name }}"
 urlpattern = []

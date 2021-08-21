@@ -3,7 +3,6 @@ from django.core.management import call_command
 from django.core.management.templates import TemplateCommand
 
 PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
-BASE_DIR = getattr(settings, "BASE_DIR")
 PACKAGE_TEMPLATE = getattr(settings, "PACKAGE_TEMPLATE")
 
 
@@ -17,13 +16,13 @@ class Command(TemplateCommand):
         call_command(
             "startapp",
             "--template=" + PACKAGE_TEMPLATE,
-            options["name"],
+            options["package_name"],
             PACKAGES_DIR,
         )
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "name",
+            "package_name",
             help="Name of the new app.",
         )
         parser.add_argument(
