@@ -14,7 +14,7 @@ CRITICAL = logging.CRITICAL
 get_logger = logging.getLogger
 
 
-def handler(msg: str, level: int, logger: Logger):
+def handler(msg: str, level: int, logger: Logger) -> None:
     """Submits a message to the log handler.
 
     Args:

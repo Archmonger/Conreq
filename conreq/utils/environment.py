@@ -1,6 +1,5 @@
 import functools
 import os
-
 from typing import Optional
 
 import dotenv
@@ -12,13 +11,13 @@ if ENV_PREFIX:
 
 
 @functools.cache
-def _dotenv_path():
+def _dotenv_path() -> str:
     """Fetches the .env file path set during Conreq startup."""
     return os.environ["CONREQ_DOTENV_FILE"]
 
 
 @functools.cache
-def _get_str_from_dotenv(name: str, default_value: str = ""):
+def _get_str_from_dotenv(name: str, default_value: str = "") -> str:
     """Fetches a value from the .env file."""
     value = dotenv.main.DotEnv(_dotenv_path()).get(str(name).upper())
     if not value:
@@ -29,7 +28,9 @@ def _get_str_from_dotenv(name: str, default_value: str = ""):
 
 
 @functools.cache
-def get_str_from_env(name: str, default_value: str = "", sys_env=True, dot_env=True):
+def get_str_from_env(
+    name: str, default_value: str = "", sys_env=True, dot_env=True
+) -> str:
     """Obtains a string from an environment variable"""
     value = ""
     if sys_env:
@@ -44,27 +45,29 @@ def get_str_from_env(name: str, default_value: str = "", sys_env=True, dot_env=T
 @functools.cache
 def get_bool_from_env(
     name: str, default_value: bool = False, sys_env=True, dot_env=True
-):
+) -> bool:
     """Obtains a boolean from an environment variable"""
     value = get_str_from_env(name, str(default_value), sys_env, dot_env)
     return str_to_bool(value, default_value)
 
 
 @functools.cache
-def get_int_from_env(name: str, default_value: int = 0, sys_env=True, dot_env=True):
+def get_int_from_env(
+    name: str, default_value: int = 0, sys_env=True, dot_env=True
+) -> str:
     """Obtains a integer from an environment variable"""
     value = get_str_from_env(name, str(default_value), sys_env=sys_env, dot_env=dot_env)
     return str_to_int(value, default_value)
 
 
 @functools.cache
-def get_debug():
+def get_debug() -> bool:
     """Shortcut to obtain DEBUG from environment variables"""
     return get_bool_from_env("DEBUG", True)
 
 
 @functools.cache
-def get_base_url():
+def get_base_url() -> str:
     """Obtains the base URL from the environment variables"""
     base_url = get_str_from_env("BASE_URL")
     if isinstance(base_url, str) and base_url:
@@ -74,7 +77,7 @@ def get_base_url():
 
 
 @functools.cache
-def get_database_type():
+def get_database_type() -> str:
     """Determines what type of database the current Conreq instance should be using. Ex) MYSQL, SQLITE, etc."""
     db_engine = get_str_from_env("DB_ENGINE")
     if db_engine.upper() == "MYSQL":
@@ -94,7 +97,7 @@ def set_env(
         return value
 
 
-def remove_env(name: str, sys_env=False, dot_env=True):
+def remove_env(name: str, sys_env=False, dot_env=True) -> None:
     """Removes a value in either the system environment, and/or the .env file."""
     if sys_env and os.environ.get(ENV_PREFIX + str(name).upper()) is not None:
         del os.environ[ENV_PREFIX + str(name).upper()]
