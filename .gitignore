@@ -11,6 +11,9 @@ cache/
 data/
 settings.json
 
+# Temp files
+*.tmp
+
 # Backup files #
 *.bak
 *_bak/
