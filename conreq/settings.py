@@ -94,7 +94,6 @@ COMPRESS_FILTERS = {
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
 HUEY_FILENAME = os.path.join(DATA_DIR, "bg_tasks.sqlite3")
-HUEY_THREADS = 20
 HUEY = {
     "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
@@ -103,7 +102,7 @@ HUEY = {
     "immediate": False,  # If True, run tasks synchronously.
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
     "consumer": {
-        "workers": HUEY_THREADS,
+        "workers": 20,
     },
 }
 
