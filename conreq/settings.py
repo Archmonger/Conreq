@@ -73,7 +73,7 @@ BASE_URL = get_base_url()
 
 
 # Application Settings
-DJVERSION_VERSION = "0.20.15"
+DJVERSION_VERSION = "0.20.16"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
@@ -241,7 +241,9 @@ else:
 if get_str_from_env("WEB_ENCRYPTION_KEY"):
     SECRET_KEY = get_str_from_env("WEB_ENCRYPTION_KEY")
 else:
-    SECRET_KEY = set_env(get_random_secret_key(), return_value=True)
+    SECRET_KEY = set_env(
+        "WEB_ENCRYPTION_KEY", get_random_secret_key(), return_value=True
+    )
 
 
 # Django Apps & Middleware

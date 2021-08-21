@@ -83,7 +83,7 @@ def get_database_type():
 
 
 def set_env(
-    name: str, value: str = "", sys_env=False, dot_env=True, return_value=False
+    name: str, value: str, sys_env=False, dot_env=True, return_value=False
 ) -> Optional[str]:
     """Sets a value in either the system environment, and/or the .env file."""
     if sys_env:
