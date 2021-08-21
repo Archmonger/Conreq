@@ -14,7 +14,9 @@ DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
 _logger = log.get_logger(__name__)
 
 
-def generate_cache_key(cache_name: str, cache_args: list, cache_kwargs: dict, key: str):
+def generate_cache_key(
+    cache_name: str, cache_args: list, cache_kwargs: dict, key: str
+) -> str:
     """Generates a key to be used with django caching"""
     return clean_string(
         cache_name
@@ -27,7 +29,7 @@ def generate_cache_key(cache_name: str, cache_args: list, cache_kwargs: dict, ke
     )
 
 
-def obtain_key_from_cache_key(cache_key: str):
+def obtain_key_from_cache_key(cache_key: str) -> str:
     """Parses the cache key and returns any values after the string '_key'"""
     return cache_key[cache_key.find("_key") + len("_key") :]
 
@@ -50,7 +52,7 @@ def handler(
     cache_duration: int = DEFAULT_CACHE_DURATION,
     args: list = (),
     kwargs: dict = None,
-) -> str:
+) -> any:
     """Handles caching for results and data.
 
     Args:

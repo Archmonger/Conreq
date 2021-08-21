@@ -27,7 +27,7 @@ class ReturnThread(Thread):
         return self._return
 
 
-def threaded_execution(function_list: list, args: list, **kwargs: dict):
+def threaded_execution(function_list: list, args: list, **kwargs: dict) -> list[any]:
     """Threaded execution of function calls where all functions utilize the same args/kwargs."""
     thread_list = []
     results = []
@@ -43,7 +43,7 @@ def threaded_execution(function_list: list, args: list, **kwargs: dict):
     return results
 
 
-def threaded_execution_unique_args(functions: list[dict]):
+def threaded_execution_unique_args(functions: list[dict]) -> list[any]:
     """Executes functions with unique arguements. It will return all returned values as a list.
     Functions must follow this format:
 

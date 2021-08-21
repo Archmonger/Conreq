@@ -8,7 +8,7 @@ from .generic import list_modules
 APPS_DIR = getattr(settings, "APPS_DIR")
 
 
-def list_user_apps():
+def list_user_apps() -> list[str]:
     apps_list = []
     user_apps = list_modules(APPS_DIR)
     for user_app in user_apps:
@@ -34,7 +34,7 @@ def list_user_apps():
     return apps_list
 
 
-def list_user_apps_with(submodule_name):
+def list_user_apps_with(submodule_name: str) -> list[str]:
     apps_list = []
     user_apps = list_modules(APPS_DIR)
     for user_app in user_apps:
