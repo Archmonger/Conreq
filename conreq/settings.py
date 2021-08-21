@@ -35,6 +35,7 @@ CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"), dot_env=False)
 APPS_DIR = os.path.join(DATA_DIR, "packages")
 MEDIA_DIR = os.path.join(DATA_DIR, "media")
+BACKUP_DIR = os.path.join(DATA_DIR, "backup")
 TEMP_DIR = os.path.join(DATA_DIR, "temp")
 USER_STATICFILES_DIR = os.path.join(DATA_DIR, "static")
 LOG_DIR = os.path.join(DATA_DIR, "logs")
@@ -43,6 +44,7 @@ MAKE_DIRS = [
     DATA_DIR,
     APPS_DIR,
     MEDIA_DIR,
+    BACKUP_DIR,
     TEMP_DIR,
     USER_STATICFILES_DIR,
     LOG_DIR,
