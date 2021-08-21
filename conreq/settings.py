@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import json
 import os
 import secrets
 import sys
@@ -32,9 +31,6 @@ from conreq.utils.generic import list_modules
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
-TEMPLATE_DIR = os.path.join(BASE_DIR, "conreq", "app", "templates")
-PACKAGE_TEMPLATE = os.path.join(TEMPLATE_DIR, "app")
-APP_TEMPLATE = os.path.join(TEMPLATE_DIR, "subapp")
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"), dot_env=False)
 PACKAGES_DIR = os.path.join(DATA_DIR, "packages")
 MEDIA_DIR = os.path.join(DATA_DIR, "media")
@@ -56,6 +52,14 @@ for directory in MAKE_DIRS:
         os.makedirs(directory)
 
 
+# App Template Diretories
+TEMPLATE_DIR = os.path.join(BASE_DIR, "conreq", "app", "templates")
+PACKAGE_TEMPLATE = os.path.join(TEMPLATE_DIR, "package")
+PACKAGE_SLIM_TEMPLATE = os.path.join(TEMPLATE_DIR, "package")
+APP_TEMPLATE = os.path.join(TEMPLATE_DIR, "app")
+APP_SLIM_TEMPLATE = os.path.join(TEMPLATE_DIR, "app")
+
+
 # Environment Variables
 DOTENV_FILE = os.path.join(DATA_DIR, "settings.env")
 os.environ["CONREQ_DOTENV_FILE"] = DOTENV_FILE
@@ -66,7 +70,6 @@ DEBUG = get_debug()
 DB_ENGINE = get_database_type()
 MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
 SSL_SECURITY = get_bool_from_env("SSL_SECURITY", False)
-PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
 X_FRAME_OPTIONS = get_str_from_env("X_FRAME_OPTIONS", "DENY")
 ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
@@ -102,16 +105,6 @@ HUEY = {
         "workers": 20,
     },
 }
-
-
-# Email Settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = get_bool_from_env("EMAIL_USE_TLS", True)
-EMAIL_PORT = get_str_from_env("EMAIL_PORT", "")
-EMAIL_HOST = get_str_from_env("EMAIL_HOST", "")
-EMAIL_HOST_USER = get_str_from_env("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = get_str_from_env("EMAIL_HOST_PASSWORD", "")
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # PWA
@@ -220,18 +213,6 @@ REST_FRAMEWORK = {
 }
 
 
-# settings.json (old) -> settings.env
-SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
-if os.path.exists(SETTINGS_FILE):
-    with open(SETTINGS_FILE, "r+") as settings_file:
-        settings = json.load(settings_file)
-        if settings.get("DB_ENCRYPTION_KEY"):
-            set_env("DB_ENCRYPTION_KEY", settings["DB_ENCRYPTION_KEY"])
-        if settings.get("SECRET_KEY"):
-            set_env("WEB_ENCRYPTION_KEY", settings["SECRET_KEY"])
-    os.remove(SETTINGS_FILE)
-
-
 # Encryption
 if get_str_from_env("DB_ENCRYPTION_KEY"):
     FIELD_ENCRYPTION_KEYS = [get_str_from_env("DB_ENCRYPTION_KEY")]
@@ -263,14 +244,13 @@ INSTALLED_APPS = [
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
-    "djversion",  # Obtains the git commit as a version number
+    "djversion",  # Version number tracking
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
     "rest_framework",  # OpenAPI Framework
     "rest_framework_api_key",  # API Key Manager
     "rest_framework.authtoken",  # API User Authentication
-    # *list_modules(PACKAGES_DIR),  # TODO: Create a list_apps() that fetches from <package_name>/apps/*
 ]
 MIDDLEWARE = [
     "compression_middleware.middleware.CompressionMiddleware",
@@ -382,18 +362,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 LOGIN_REDIRECT_URL = "base:landing"
 LOGIN_URL = "sign_in"
-
-# TODO: Move this to a seperate app
-if PWNED_VALIDATOR:
-    AUTH_PASSWORD_VALIDATORS.append(
-        {
-            "NAME": "pwned_passwords_django.validators.PwnedPasswordsValidator",
-            "OPTIONS": {
-                "error_message": "Cannot use a compromised password. This password was detected %(amount)d time(s) on 'haveibeenpwned.com'.",
-                "help_message": "Your password can't be a compromised password.",
-            },
-        },
-    )
 
 
 # Internationalization
