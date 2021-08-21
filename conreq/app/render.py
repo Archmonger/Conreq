@@ -3,6 +3,7 @@ from functools import wraps
 
 from conreq.app import AuthLevel, Icon, Navtab, Viewport
 
+
 # TODO: Create these functions
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass
 
@@ -12,14 +13,14 @@ def toast_message(
     message: str,
     icon: str,
     params: dict = None,
-):
+) -> None:
     """Renders a toast message with a specific message."""
 
     pass
 
 
-def modal():
-    """Decorates a Modal class type (not yet created)."""
+def modal() -> object:
+    """Decorates a Modal class (not yet created)."""
 
     def decorator(class_: object):
         @wraps(class_)
@@ -34,7 +35,7 @@ def viewport(
     group_icon: Icon = None,
     icon_left: Icon = None,
     icon_right: Icon = None,
-):
+) -> object:
     """Decorates an IDOM component. Forcibly changes the viewport content."""
 
     def decorator(func):

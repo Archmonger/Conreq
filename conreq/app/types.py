@@ -9,19 +9,6 @@ class AuthLevel:
 
 
 @dataclass
-class Icon:
-    html_tag: str
-    classes: str
-    text: str
-
-
-@dataclass
-class Navtab:
-    page_name: str
-    group_name: str
-
-
-@dataclass
 class Viewport:
     primary: int = 0
     secondary: int = 1
