@@ -22,7 +22,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         port = options["port"]
-        set_perms = options["set_perms"]
         verbosity = "-v 1" if DEBUG else "-v 0"
 
         # Run any preconfiguration tasks
@@ -32,7 +31,7 @@ class Command(BaseCommand):
                 options["uid"],
                 options["gid"],
             ]
-            if not set_perms:
+            if not options["set_perms"]:
                 preconfig_args.append("--no-perms")
             call_command(*preconfig_args)
 
