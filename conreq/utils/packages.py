@@ -1,3 +1,4 @@
+import functools
 import os
 from importlib import import_module
 
@@ -8,7 +9,9 @@ from .generic import list_modules
 PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
 
 
-def list_user_apps() -> list[str]:
+@functools.cache
+def list_apps() -> list[str]:
+    """Lists all Conreq apps within uster installed packages."""
     apps_list = []
     user_apps = list_modules(PACKAGES_DIR)
     for user_app in user_apps:
@@ -34,7 +37,9 @@ def list_user_apps() -> list[str]:
     return apps_list
 
 
-def list_user_apps_with(submodule_name: str) -> list[str]:
+@functools.cache
+def list_apps_with(submodule_name: str) -> list[str]:
+    """Iterates through all Conreq apps within user installed packages and returns a list of apps that contain a specific module name."""
     apps_list = []
     user_apps = list_modules(PACKAGES_DIR)
     for user_app in user_apps:
