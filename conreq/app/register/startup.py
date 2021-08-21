@@ -112,3 +112,12 @@ def password_reset_view() -> None:
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
+
+
+def manage_users_component() -> None:
+    """Changes the manage users component."""
+
+    def decorator(func):
+        @wraps(func)
+        def _wrapped_func(*args, **kwargs):
+            return _wrapped_func(*args, **kwargs)
