@@ -6,15 +6,11 @@ from django.core.management.templates import TemplateCommand
 PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
 PACKAGE_TEMPLATE = getattr(settings, "PACKAGE_TEMPLATE")
 APP_TEMPLATE = getattr(settings, "APP_TEMPLATE")
+APP_SLIM_TEMPLATE = getattr(settings, "APP_SLIM_TEMPLATE")
 
 
 class Command(TemplateCommand):
-    """Minor rewrite of TemplateCommand to be able to create Conreq subapps."""
-
-    help = (
-        "Creates a Conreq app directory structure for the given package in "
-        "the current directory or optionally in the given directory."
-    )
+    help = "Creates a Conreq app structure within a package."
 
     # pylint: disable=arguments-differ
     def handle(self, package_name, app_name, **options):
@@ -32,8 +28,8 @@ class Command(TemplateCommand):
     def add_arguments(self, parser):
         parser.add_argument("package_name", help="Name of the application or project.")
         parser.add_argument("app_name", help="Name of the sub application.")
-        parser.add_argument(
-            "--slim",
-            action="store_true",
-            help="Creates the bare minimum structure required.",
-        )
+        # parser.add_argument(
+        #     "--slim",
+        #     action="store_true",
+        #     help="Creates the bare minimum structure required.",
+        # )

@@ -4,13 +4,11 @@ from django.core.management.templates import TemplateCommand
 
 PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
 PACKAGE_TEMPLATE = getattr(settings, "PACKAGE_TEMPLATE")
+PACKAGE_SLIM_TEMPLATE = getattr(settings, "PACKAGE_SLIM_TEMPLATE")
 
 
 class Command(TemplateCommand):
-    help = (
-        "Creates a Conreq app directory structure for the given app name in "
-        "the current directory or optionally in the given directory."
-    )
+    help = "Creates a Conreq package structure with given name."
 
     def handle(self, *args, **options):
         call_command(
@@ -25,8 +23,8 @@ class Command(TemplateCommand):
             "package_name",
             help="Name of the new app.",
         )
-        parser.add_argument(
-            "--slim",
-            action="store_true",
-            help="Creates the bare minimum structure required.",
-        )
+        # parser.add_argument(
+        #     "--slim",
+        #     action="store_true",
+        #     help="Creates the bare minimum structure required.",
+        # )
