@@ -267,7 +267,7 @@ INSTALLED_APPS = [
     "rest_framework",  # OpenAPI Framework
     "rest_framework_api_key",  # API Key Manager
     "rest_framework.authtoken",  # API User Authentication
-    *list_modules(PACKAGES_DIR),  # User Installed Apps
+    # *list_modules(PACKAGES_DIR),  # TODO: Create a list_apps() that fetches from <package_name>/apps/*
 ]
 MIDDLEWARE = [
     "compression_middleware.middleware.CompressionMiddleware",
