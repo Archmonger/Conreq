@@ -37,6 +37,13 @@ def str_to_bool(string: str, default_value: bool = True):
     return default_value
 
 
+def str_to_int(string: str, default_value: int = 0):
+    """Converts a string into a integer."""
+    if isinstance(string, str) and value.isdigit():
+        return int(value)
+    return default_value
+
+
 def list_modules(path: str, prefix: str = ""):
     """Returns all modules in a path"""
     return [name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)]

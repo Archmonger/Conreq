@@ -1,7 +1,7 @@
 """Capabilities used while in DEBUG, that turn off in production environments."""
 from functools import wraps
 
-from conreq.utils.environment import get_debug_from_env
+from conreq.utils.environment import get_debug
 
 # Helper function for doing nothing
 def do_nothing(function=None):
@@ -22,7 +22,7 @@ class DoNothing(object):
 
 
 # Set functionality depending on whether we are in DEBUG=True
-if get_debug_from_env():
+if get_debug():
     from silk.profiling.profiler import silk_profile
 
     class performance_metrics(silk_profile):

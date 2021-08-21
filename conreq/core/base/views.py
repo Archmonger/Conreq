@@ -1,6 +1,6 @@
 from conreq.core.base.forms import InitializationForm
 from conreq.core.server_settings.models import ConreqConfig
-from conreq.utils.environment import get_base_url, get_debug_from_env
+from conreq.utils.environment import get_base_url, get_debug
 from conreq.utils.debug import performance_metrics
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,7 @@ from django.template import loader
 from .helpers import initialize_conreq
 
 BASE_URL = get_base_url()
-DEBUG = get_debug_from_env()
+DEBUG = get_debug()
 LANDING_TEMPLATE = None
 HOME_TEMPLATE = "primary/base_app.html"
 

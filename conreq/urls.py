@@ -20,11 +20,11 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 
-from conreq.utils.environment import get_base_url, get_debug_from_env
+from conreq.utils.environment import get_base_url, get_debug
 from conreq.utils.generic import list_modules_with
 
 APPS_DIR = getattr(settings, "APPS_DIR")
-DEBUG = get_debug_from_env()
+DEBUG = get_debug()
 BASE_URL = get_base_url()
 
 

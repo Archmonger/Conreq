@@ -22,7 +22,7 @@ from conreq.utils.environment import (
     get_base_url,
     get_bool_from_env,
     get_database_type,
-    get_debug_from_env,
+    get_debug,
     get_str_from_env,
 )
 from conreq.utils.generic import list_modules
@@ -30,7 +30,7 @@ from conreq.utils.generic import list_modules
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
-DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"))
+DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"), dot_env=False)
 APPS_DIR = os.path.join(DATA_DIR, "packages")
 MEDIA_DIR = os.path.join(DATA_DIR, "media")
 TEMP_DIR = os.path.join(DATA_DIR, "temp")
@@ -52,7 +52,12 @@ for directory in MAKE_DIRS:
 
 
 # Environment Variables
-DEBUG = get_debug_from_env()
+DOTENV_FILE = os.path.join(DATA_DIR, "settings.env")
+os.environ["CONREQ_DOTENV_FILE"] = DOTENV_FILE
+if not os.path.exists(DOTENV_FILE):
+    with open(DOTENV_FILE, "w") as fp:
+        pass
+DEBUG = get_debug()
 DB_ENGINE = get_database_type()
 MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
 SSL_SECURITY = get_bool_from_env("SSL_SECURITY", False)
@@ -60,11 +65,6 @@ PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
 X_FRAME_OPTIONS = get_str_from_env("X_FRAME_OPTIONS", "DENY")
 ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
-DOTENV_FILE = os.path.join(DATA_DIR, "settings.env")
-os.environ.setdefault("CONREQ_DOTENV_FILE", DOTENV_FILE)
-if not os.path.exists(DOTENV_FILE):
-    with open(DOTENV_FILE, "w") as fp:
-        pass
 
 
 # Application Settings

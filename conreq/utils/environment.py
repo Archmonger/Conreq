@@ -1,19 +1,72 @@
 import functools
 import os
 
-import dotenv
-from conreq.utils.generic import str_to_bool
+from typing import Optional
 
-DOTENV_FILE = None
+import dotenv
+from conreq.utils.generic import str_to_bool, str_to_int
+
 ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
 if ENV_PREFIX:
     ENV_PREFIX = ENV_PREFIX + "_"
 
 
 @functools.cache
+def _dotenv_path():
+    """Fetches the .env file path set during Conreq startup."""
+    return os.environ["CONREQ_DOTENV_FILE"]
+
+
+@functools.cache
+def _get_str_from_dotenv(name: str, default_value: str = ""):
+    """Fetches a value from the .env file."""
+    value = dotenv.main.DotEnv(_dotenv_path()).get(str(name).upper())
+    if not value:
+        value = default_value
+    else:
+        value = str(value)
+    return value
+
+
+@functools.cache
+def get_str_from_env(name: str, default_value: str = "", sys_env=True, dot_env=True):
+    """Obtains a string from an environment variable"""
+    value = ""
+    if sys_env:
+        value = os.environ.get(ENV_PREFIX + str(name).upper(), "")
+    if dot_env and not value:
+        value = _get_str_from_dotenv(str(name).upper())
+    if not value:
+        return default_value
+    return value
+
+
+@functools.cache
+def get_bool_from_env(
+    name: str, default_value: bool = False, sys_env=True, dot_env=True
+):
+    """Obtains a boolean from an environment variable"""
+    value = get_str_from_env(name, str(default_value), sys_env, dot_env)
+    return str_to_bool(value, default_value)
+
+
+@functools.cache
+def get_int_from_env(name: str, default_value: int = 0, sys_env=True, dot_env=True):
+    """Obtains a integer from an environment variable"""
+    value = get_str_from_env(name, str(default_value), sys_env=sys_env, dot_env=dot_env)
+    return str_to_int(value, default_value)
+
+
+@functools.cache
+def get_debug():
+    """Shortcut to obtain DEBUG from environment variables"""
+    return get_bool_from_env("DEBUG", True)
+
+
+@functools.cache
 def get_base_url():
     """Obtains the base URL from the environment variables"""
-    base_url = os.environ.get("BASE_URL", "")
+    base_url = get_str_from_env("BASE_URL")
     if isinstance(base_url, str) and base_url:
         base_url = base_url.replace("/", "").replace("\\", "")
         base_url = "/" + base_url
@@ -21,68 +74,29 @@ def get_base_url():
 
 
 @functools.cache
-def get_bool_from_env(name: str, default_value: bool = False):
-    """Obtains a boolean from an environment variable"""
-    env_var = os.environ.get(ENV_PREFIX + name)
-    return str_to_bool(env_var, default_value)
-
-
-@functools.cache
-def get_str_from_env(name: str, default_value: str = ""):
-    """Obtains a string from an environment variable"""
-    return os.environ.get(ENV_PREFIX + name, default_value)
-
-
-@functools.cache
-def get_int_from_env(name: str, default_value: int = 0):
-    """Obtains a integer from an environment variable"""
-    env_var = os.environ.get(ENV_PREFIX + name)
-    if env_var.isdigit():
-        return int(env_var)
-    return default_value
-
-
-@functools.cache
-def get_debug_from_env():
-    """Shortcut to obtain DEBUG from env variables"""
-    return get_bool_from_env("DEBUG", True)
-
-
-@functools.cache
 def get_database_type():
     """Determines what type of database the current Conreq instance should be using. Ex) MYSQL, SQLITE, etc."""
-    db_engine = os.environ.get("DB_ENGINE", "")
+    db_engine = get_str_from_env("DB_ENGINE")
     if db_engine.upper() == "MYSQL":
         return "MYSQL"
     return "SQLITE3"
 
 
-@functools.cache
-def get_str_from_dotenv(name: str):
-    """Fetches a value from the .env file."""
-    return dotenv.get_key(DOTENV_FILE, name)
-
-
-@functools.cache
-def _dotenv_path():
-    """Fetches the .env file path set during Conreq startup."""
-    global DOTENV_FILE  # pylint: disable=global-statement
-    if not DOTENV_FILE:
-        DOTENV_FILE = get_str_from_env("CONREQ_DOTENV_FILE")
-    return DOTENV_FILE
-
-
-def set_env(name: str, value: str = "", sys_env=True, dot_env=True):
+def set_env(
+    name: str, value: str = "", sys_env=False, dot_env=True, return_value=False
+) -> Optional[str]:
     """Sets a value in either the system environment, and/or the .env file."""
     if sys_env:
-        os.environ[ENV_PREFIX + name] = value
+        os.environ[ENV_PREFIX + str(name).upper()] = str(value)
     if dot_env:
-        dotenv.set_key(_dotenv_path(), name, value)
+        dotenv.set_key(_dotenv_path(), str(name).upper(), str(value))
+    if return_value:
+        return value
 
 
-def remove_env(name: str, sys_env=True, dot_env=True):
+def remove_env(name: str, sys_env=False, dot_env=True):
     """Removes a value in either the system environment, and/or the .env file."""
-    if sys_env and os.environ.get(ENV_PREFIX + name) is not None:
-        del os.environ[ENV_PREFIX + name]
+    if sys_env and os.environ.get(ENV_PREFIX + str(name).upper()) is not None:
+        del os.environ[ENV_PREFIX + str(name).upper()]
     if dot_env:
-        dotenv.unset_key(_dotenv_path(), name)
+        dotenv.unset_key(_dotenv_path(), str(name).upper())
