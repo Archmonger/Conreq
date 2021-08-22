@@ -1,5 +1,4 @@
 """Helpers for Base"""
-from secrets import token_hex
 
 
 def initialize_conreq(conreq_config, form):
