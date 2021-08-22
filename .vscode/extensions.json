@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "irongeek.vscode-env",
+        "eamodio.gitlens",
+        "github.vscode-pull-request-github",
+        "knisterpeter.vscode-github",
+        "wholroyd.jinja",
+        "esbenp.prettier-vscode",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "mrmlnc.vscode-autoprefixer"
+    ]
+}
