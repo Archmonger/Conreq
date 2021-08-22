@@ -6,10 +6,7 @@ logs
 .dccache
 __pycache__
 *.sqlite3
-media/
-cache/
 data/
-settings.json
 
 # Temp files
 *.tmp
@@ -114,12 +111,9 @@ Control.system-ca-bundle
 GitHub.sublime-settings
 
 # Visual Studio Code #
-.vscode/
 .vscode/*
-.vscode/settings.json
-.vscode/tasks.json
-.vscode/launch.json
-.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/extensions.json
 .history/
 %SystemDrive%
 
