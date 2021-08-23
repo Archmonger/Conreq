@@ -5,6 +5,7 @@ from conreq.core.user_requests.models import UserRequest
 from conreq.utils import log
 from conreq.utils.debug import performance_metrics
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
@@ -70,7 +71,13 @@ def my_requests(request):
         .reverse()
         .values()
     )
-    all_cards = generate_requests_cards(user_requests)
+    page_number = int(request.GET.get("page", 1))
+    paginator = Paginator(user_requests, 25)
+    page_obj = paginator.get_page(page_number)
+    if page_number <= paginator.num_pages:
+        all_cards = generate_requests_cards(page_obj)
+    else:
+        all_cards = None
     context = {"all_cards": all_cards, "page_name": "My Requests"}
     template = loader.get_template("viewport/requests.html")
     return HttpResponse(template.render(context, request))
@@ -90,7 +97,13 @@ def all_requests(request):
             "requested_by__username",
         )
     )
-    all_cards = generate_requests_cards(user_requests)
+    page_number = int(request.GET.get("page", 1))
+    paginator = Paginator(user_requests, 25)
+    page_obj = paginator.get_page(page_number)
+    if page_number <= paginator.num_pages:
+        all_cards = generate_requests_cards(page_obj)
+    else:
+        all_cards = None
     context = {"all_cards": all_cards, "page_name": "All Requests"}
     template = loader.get_template("viewport/requests.html")
     return HttpResponse(template.render(context, request))

@@ -3,7 +3,7 @@
 {% include "primary/loading_animation_container.html" %}
 <input class="page-name" type="hidden" value="{{page_name}}">
 
-<div class="viewport requests {% if all_cards %}viewport-masonry{% endif %}">
+<div class="viewport requests {% if all_cards %}viewport-masonry infinite-scroll{% endif %}">
     {% if not all_cards %}
     <div class="empty-viewport">
         No requests were found! Try requesting something first!
