@@ -5,3 +5,4 @@ def add_unique_to_db(model, **kwargs):
         new_request.clean_fields()
         new_request.save()
         return new_request
+    return None

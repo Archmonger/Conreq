@@ -7,7 +7,9 @@ User = get_user_model()
 
 # Create your models here.
 @receiver(post_save, sender=User)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
+def create_auth_token(
+    sender, instance=None, created=False, **kwargs
+):  # pylint: disable=unused-argument
     # Create the token if it doesn't exist
     if not hasattr(instance, "auth_token"):
         Token.objects.create(user=instance)

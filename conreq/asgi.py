@@ -6,7 +6,7 @@ It exposes the ASGI callable as a module-level variable named ``application``.
 For more information on this file, see
 https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
-
+# pylint: disable=wrong-import-position
 from django.core.asgi import get_asgi_application
 from django.urls import path
 
@@ -21,6 +21,7 @@ from conreq.core.websockets.consumers import CommandConsumer
 
 
 class LifespanApp:
+    # pylint: disable=too-few-public-methods
     """
     Temporary shim for https://github.com/django/channels/issues/1216
     Needed so that hypercorn doesn't display an error.

@@ -1,4 +1,7 @@
 [MASTER]
-disable=line-too-long, bare-except, bad-continuation, broad-except, wrong-import-order, missing-module-docstring
+ignore=migrations
+disable=broad-except
 load-plugins=pylint_django
 django-settings-module=conreq.settings
+[FORMAT]
+max-line-length=150

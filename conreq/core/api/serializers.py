@@ -1,6 +1,7 @@
-from conreq.core.manage_users.models import Profile
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+
+from conreq.core.manage_users.models import Profile
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

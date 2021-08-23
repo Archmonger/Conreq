@@ -3,6 +3,7 @@ import os
 from typing import Optional
 
 import dotenv
+
 from conreq.utils.generic import str_to_bool, str_to_int
 
 ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
@@ -85,16 +86,13 @@ def get_database_type() -> str:
     return "SQLITE3"
 
 
-def set_env(
-    name: str, value: str, sys_env=False, dot_env=True, return_value=False
-) -> Optional[str]:
+def set_env(name: str, value: str, sys_env=False, dot_env=True) -> Optional[str]:
     """Sets a value in either the system environment, and/or the .env file."""
     if sys_env:
         os.environ[ENV_PREFIX + str(name).upper()] = str(value)
     if dot_env:
         dotenv.set_key(_dotenv_path(), str(name).upper(), str(value))
-    if return_value:
-        return value
+    return (name, value)
 
 
 def remove_env(name: str, sys_env=False, dot_env=True) -> None:

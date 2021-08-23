@@ -1,11 +1,12 @@
 """ Settings required by django-app. """
 import os
 
-from conreq.utils.environment import get_base_url
 from django.conf import settings
 from django.shortcuts import resolve_url
 from django.urls import get_script_prefix
 from django.utils.functional import lazy
+
+from conreq.utils.environment import get_base_url
 
 # Lazy-evaluate URLs so including pwa.urls in root urlconf works
 resolve_url = lazy(resolve_url, str)

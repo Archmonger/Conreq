@@ -1,4 +1,3 @@
-from conreq.utils.debug import performance_metrics
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.password_validation import validate_password
@@ -6,6 +5,8 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
+
+from conreq.utils.debug import performance_metrics
 
 
 @cache_page(1)
@@ -21,7 +22,7 @@ def manage_users(request):
         # Fetch the user from DB
         try:
             user = get_user_model().objects.get(username=original_username)
-        except:
+        except Exception:
             return JsonResponse(
                 {
                     "success": False,
@@ -92,7 +93,7 @@ def delete_user(request):
             user = get_user_model().objects.get(username=username)
             user.delete()
 
-        except:
+        except Exception:
             return JsonResponse({"success": False})
 
         return JsonResponse({"success": True})
@@ -109,7 +110,7 @@ def manage_modal(request):
     try:
         user = get_user_model().objects.get(username=username)
 
-    except:
+    except Exception:
         pass
 
     context = {"account": user}

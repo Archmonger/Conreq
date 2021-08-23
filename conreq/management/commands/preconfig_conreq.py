@@ -3,10 +3,11 @@ import shutil
 import sqlite3
 import sys
 
-from conreq.utils.environment import get_database_type, get_debug
 from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
+
+from conreq.utils.environment import get_database_type, get_debug
 
 DEBUG = get_debug()
 BASE_DIR = getattr(settings, "BASE_DIR")

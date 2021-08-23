@@ -1,13 +1,14 @@
 import json
 from platform import platform
 
-from conreq.core.server_settings.models import ConreqConfig
-from conreq.utils import log
-from conreq.utils.debug import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template import loader
+
+from conreq.core.server_settings.models import ConreqConfig
+from conreq.utils import log
+from conreq.utils.debug import performance_metrics
 
 _logger = log.get_logger(__name__)
 
@@ -134,7 +135,7 @@ def update_settings(request):
                 return JsonResponse(response)
 
         # Unknown exception occured
-        except:
+        except Exception:
             response["success"] = False
             response["error_message"] = "Unknown error!"
             log.handler(

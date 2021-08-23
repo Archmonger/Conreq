@@ -70,7 +70,7 @@ def threaded_execution_unique_args(functions: list[dict]) -> list[any]:
         result = None
         try:
             result = thread.join()
-        except:
+        except Exception:
             pass
         results.insert(index, result)
 

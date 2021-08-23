@@ -1,7 +1,5 @@
 import json
 
-from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.user_requests.helpers import radarr_request, sonarr_request
 from django.contrib.auth import authenticate, login
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -9,6 +7,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.user_requests.helpers import radarr_request, sonarr_request
 
 from .serializers import UserSerializer
 
@@ -172,15 +173,14 @@ class LocalAuthentication(APIView):
         },
     )
     def post(self, request):
-        """Authenticate a session using a `username` and `password`. Requires CSRF tokens on all further insecure requests (POST, PUT, DELETE, PATCH)."""
+        """Authenticate a session using a `username` and `password`.
+        Requires CSRF tokens on all further insecure requests (POST, PUT, DELETE, PATCH)."""
         username = request.data.get("username")
         password = request.data.get("password")
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             return Response(UserSerializer(user).data)
-        else:
-            pass
 
 
 @api_view(["GET"])

@@ -3,6 +3,8 @@ from functools import wraps
 
 from conreq.utils.environment import get_debug
 
+
+# pylint: disable=invalid-name,too-few-public-methods
 # Helper function for doing nothing
 def do_nothing(function=None):
     def decorator(view_func):
@@ -16,7 +18,7 @@ def do_nothing(function=None):
 
 
 # Helper class for doing nothing
-class DoNothing(object):
+class DoNothing:
     def __call__(self, target):
         return target
 

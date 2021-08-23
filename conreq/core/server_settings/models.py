@@ -1,9 +1,10 @@
-from conreq.core.base.fields import ExtendedURLField
 from django.db import models
 from encrypted_fields.fields import EncryptedCharField
 from model_utils import FieldTracker
 from solo.models import SingletonModel
 from url_or_relative_url_field.fields import URLOrRelativeURLField
+
+from conreq.core.base.fields import ExtendedURLField
 
 
 # Create your models here.

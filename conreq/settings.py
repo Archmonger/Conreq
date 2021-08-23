@@ -27,7 +27,6 @@ from conreq.utils.environment import (
 )
 from conreq.utils.generic import list_modules
 
-
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
@@ -78,7 +77,7 @@ BASE_URL = get_base_url()
 
 
 # Application Settings
-DJVERSION_VERSION = "0.20.18"
+DJVERSION_VERSION = "0.20.20"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
@@ -224,9 +223,7 @@ else:
 if get_str_from_env("WEB_ENCRYPTION_KEY"):
     SECRET_KEY = get_str_from_env("WEB_ENCRYPTION_KEY")
 else:
-    SECRET_KEY = set_env(
-        "WEB_ENCRYPTION_KEY", get_random_secret_key(), return_value=True
-    )
+    SECRET_KEY = set_env("WEB_ENCRYPTION_KEY", get_random_secret_key())[1]
 
 
 # Django Apps & Middleware

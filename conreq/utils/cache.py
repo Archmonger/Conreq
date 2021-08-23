@@ -1,11 +1,12 @@
 """Django caching wrapper and cache related capabilities."""
 from collections.abc import Callable
 
+from django.core.cache import cache
+from huey.contrib.djhuey import db_task
+
 from conreq.utils import log
 from conreq.utils.generic import clean_string
 from conreq.utils.threads import ReturnThread
-from django.core.cache import cache
-from huey.contrib.djhuey import db_task
 
 # Globals
 DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
@@ -58,7 +59,8 @@ def handler(
     Args:
         cache_name: Name prepended to cache get/set calls.
         page_key: A value to use as a page key.
-        function: The function to be executed (if cached values are expired). If no function is provided, whatever was stored in cache is always returned.
+        function: The function to be executed (if cached values are expired).
+            If no function is provided, whatever was stored in cache is always returned.
         force_update_cache: Forces execution of function, regardless if value is expired or not. Does not work with multi execution.
         cache_duration: Duration in seconds that the cached value should be valid for.
         args: A list of arguements to pass into function.
@@ -117,7 +119,7 @@ def handler(
         # If a value was in cache and not expired, return that value
         return cached_results
 
-    except:
+    except Exception:
         # If the function threw an exception, return none.
         if hasattr(function, "__name__"):
             log.handler(
@@ -136,6 +138,7 @@ def handler(
                 log.ERROR,
                 _logger,
             )
+    return None
 
 
 def multi_handler(
@@ -230,9 +233,10 @@ def multi_handler(
 
         return cached_results
 
-    except:
+    except Exception:
         log.handler(
             "Functions " + str(functions) + " failed to execute!",
             log.ERROR,
             _logger,
         )
+    return None
