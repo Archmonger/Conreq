@@ -1,13 +1,14 @@
 from secrets import token_hex
 
-from conreq.core.sign_up.forms import UserForm
-from conreq.utils.debug import performance_metrics
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.cache import cache
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.template import loader
+
+from conreq.core.sign_up.forms import UserForm
+from conreq.utils.debug import performance_metrics
 
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60

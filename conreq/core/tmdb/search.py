@@ -1,8 +1,9 @@
 """Conreq Searching: Searches for content."""
 
 import tmdbsimple as tmdb
+
 from conreq.core.server_settings.models import ConreqConfig
-from conreq.core.tmdb.base import TmdbBase, LANGUAGE
+from conreq.core.tmdb.base import LANGUAGE, TmdbBase
 from conreq.utils import cache, log
 
 _logger = log.get_logger(__name__)
@@ -44,7 +45,7 @@ class TmdbSearch(TmdbBase):
             )
             return results
 
-        except:
+        except Exception:
             log.handler(
                 "Searching for all failed!",
                 log.ERROR,
@@ -76,7 +77,7 @@ class TmdbSearch(TmdbBase):
             )
             return results
 
-        except:
+        except Exception:
             log.handler(
                 "Searching for TV failed!",
                 log.ERROR,
@@ -107,7 +108,7 @@ class TmdbSearch(TmdbBase):
             )
             return results
 
-        except:
+        except Exception:
             log.handler(
                 "Searching for movies failed!",
                 log.ERROR,

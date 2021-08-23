@@ -1,6 +1,7 @@
-from conreq.utils.environment import get_base_url, get_str_from_env
 from django import template
 from django.urls import reverse
+
+from conreq.utils.environment import get_base_url, get_str_from_env
 
 register = template.Library()
 base_url_len = len(get_base_url())

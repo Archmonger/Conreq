@@ -1,19 +1,20 @@
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseNotFound
+from django.template import loader
+from django.views.decorators.cache import cache_page
+
 from conreq.core.arrs.helpers import wait_for_series_info
 from conreq.core.arrs.sonarr import SonarrManager
-from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.user_requests.models import UserRequest
-from conreq.utils import log
-from conreq.utils.generic import is_key_value_in_list, str_to_bool
-from conreq.utils.debug import performance_metrics
 from conreq.core.discover.helpers import (
     obtain_sonarr_parameters,
     set_many_availability,
     set_single_availability,
 )
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseNotFound
-from django.template import loader
-from django.views.decorators.cache import cache_page
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.user_requests.models import UserRequest
+from conreq.utils import log
+from conreq.utils.debug import performance_metrics
+from conreq.utils.generic import is_key_value_in_list, str_to_bool
 
 from .helpers import preprocess_tmdb_person, preprocess_tmdb_result
 

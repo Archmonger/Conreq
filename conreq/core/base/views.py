@@ -1,12 +1,13 @@
-from conreq.core.base.forms import InitializationForm
-from conreq.core.server_settings.models import ConreqConfig
-from conreq.utils.environment import get_base_url, get_debug
-from conreq.utils.debug import performance_metrics
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
+
+from conreq.core.base.forms import InitializationForm
+from conreq.core.server_settings.models import ConreqConfig
+from conreq.utils.debug import performance_metrics
+from conreq.utils.environment import get_base_url, get_debug
 
 from .helpers import initialize_conreq
 
@@ -34,7 +35,7 @@ def configure(request):
         user.is_staff = False
         if organizr_group == 0:
             user.is_superuser = True
-        if organizr_group == 0 or organizr_group == 1:
+        if organizr_group in (0, 1):
             user.is_staff = True
         if user.has_usable_password():
             user.set_unusable_password()
@@ -117,7 +118,7 @@ def home(request):
         user.is_staff = False
         if organizr_group == 0:
             user.is_superuser = True
-        if organizr_group == 0 or organizr_group == 1:
+        if organizr_group in (0, 1):
             user.is_staff = True
         if user.has_usable_password():
             user.set_unusable_password()

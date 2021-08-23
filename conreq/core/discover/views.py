@@ -1,17 +1,14 @@
-from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.tmdb.preset_filters import (
-    combined_filters,
-    movie_filters,
-    tv_filters,
-)
-from conreq.core.discover.helpers import set_many_availability
-from conreq.utils.debug import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 from titlecase import titlecase
+
+from conreq.core.discover.helpers import set_many_availability
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.tmdb.preset_filters import combined_filters, movie_filters, tv_filters
+from conreq.utils.debug import performance_metrics
 
 from .helpers import preset_filter_extras
 

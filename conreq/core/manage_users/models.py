@@ -16,6 +16,7 @@ class Profile(models.Model):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
+    # pylint: disable=unused-argument
     # Create the profile if it doesn't exist
     if not hasattr(instance, "profile"):
         Profile.objects.create(user=instance)

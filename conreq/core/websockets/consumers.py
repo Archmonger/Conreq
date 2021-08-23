@@ -2,8 +2,9 @@
 from channels.auth import login
 from channels.db import database_sync_to_async as convert_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
-from conreq.utils import log
 from django.contrib.auth.models import AnonymousUser
+
+from conreq.utils import log
 
 _logger = log.get_logger(__name__)
 
@@ -23,7 +24,7 @@ class CommandConsumer(AsyncJsonWebsocketConsumer):
             await login(self.scope, self.scope["user"])
             # Save the session to the database
             await convert_to_async(self.scope["session"].save)()
-        except:
+        except Exception:
             # User could not be logged in
             log.handler(
                 "Websocket login failure on initial connection!",

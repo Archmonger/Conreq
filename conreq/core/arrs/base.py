@@ -9,6 +9,7 @@ ARR_LIBRARY_CACHE_TIMEOUT = 24 * 60 * 60
 class ArrBase:
     """Adds and removes content from Sonarr and Radarr, and can return the request state."""
 
+    # pylint: disable=too-few-public-methods
     @staticmethod
     def _set_content_attributes(content_type, content_source, results):
         # Set a list of results
@@ -24,6 +25,7 @@ class ArrBase:
     @staticmethod
     def _check_availability(content):
         """Checks the availability of one item. For use within check_availability()"""
+        # TODO: Rewrite this
         #####################
         ### "Unavailable" ###
         #####################
@@ -32,7 +34,7 @@ class ArrBase:
             if not content["hasFile"]:
                 content["availability"] = "Unavailable"
                 return content
-        except:
+        except Exception:
             pass
 
         # Check if a season or series is completely unavailable (Sonarr)
@@ -40,7 +42,7 @@ class ArrBase:
             if content["episodeFileCount"] == 0:
                 content["availability"] = "Unavailable"
                 return content
-        except:
+        except Exception:
             pass
 
         #################
@@ -64,7 +66,7 @@ class ArrBase:
             ):
                 content["availability"] = "Partial"
                 return content
-        except:
+        except Exception:
             pass
 
         ###################
@@ -88,7 +90,7 @@ class ArrBase:
             ):
                 content["availability"] = "Available"
                 return content
-        except:
+        except Exception:
             pass
 
         # Check if an individual movie or individual episode exists (Sonarr & Radarr)
@@ -96,7 +98,7 @@ class ArrBase:
             if content["hasFile"]:
                 content["availability"] = "Available"
                 return content
-        except:
+        except Exception:
             pass
 
         content["availability"] = "Unknown"

@@ -1,15 +1,16 @@
 """Helpers for User Requests"""
-from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.user_requests.models import UserRequest
-from conreq.utils import log
-from conreq.utils.database import add_unique_to_db
-from conreq.utils.threads import threaded_execution_unique_args
+from django.contrib.auth.models import AnonymousUser
+
 from conreq.core.discover.helpers import (
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
     set_many_availability,
 )
-from django.contrib.auth.models import AnonymousUser
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.user_requests.models import UserRequest
+from conreq.utils import log
+from conreq.utils.database import add_unique_to_db
+from conreq.utils.threads import threaded_execution_unique_args
 
 from .tasks import radarr_request_background_task, sonarr_request_background_task
 

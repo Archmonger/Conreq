@@ -1,7 +1,8 @@
 """Conreq Content Manager: Talks with Radarr in order to add/remove content."""
+from pyarr import RadarrAPI
+
 from conreq.core.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
-from pyarr import RadarrAPI
 
 from .base import ARR_LIBRARY_CACHE_TIMEOUT, ArrBase
 
@@ -62,12 +63,13 @@ class RadarrManager(ArrBase):
                 _logger,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to get content!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def add(self, tmdb_id, quality_profile_id, root_dir):
         """Adds a new movie using Radarr.
@@ -91,12 +93,13 @@ class RadarrManager(ArrBase):
                 search_for_movie=False,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to add content!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def request(self, radarr_id):
         """Monitors and searches for an existing movie using Radarr.
@@ -133,12 +136,13 @@ class RadarrManager(ArrBase):
 
             return response
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to request content!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def delete(self, radarr_id):
         """Deletes an existing movie using Radarr.
@@ -154,12 +158,13 @@ class RadarrManager(ArrBase):
             # Remove a movie with a specific Radarr ID.
             return self.__radarr.del_movie(radarr_id, delete_files=True)
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to delete content!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def check_radarr_defaults(self):
         """Will configure default root dirs and quality profiles (if unset)"""
@@ -199,24 +204,26 @@ class RadarrManager(ArrBase):
         try:
             return self.__radarr.get_root_folder()
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to get radarr root dirs!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def radarr_quality_profiles(self):
         """Returns the quality profiles available within Radarr"""
         try:
             return self.__radarr.get_quality_profiles()
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to get radarr quality profiles!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def refresh_library(self):
         """Refreshes our local copy of Radarr's library"""
@@ -228,7 +235,7 @@ class RadarrManager(ArrBase):
                     cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
-        except:
+        except Exception:
             log.handler(
                 "Failed to refresh radarr!",
                 log.WARNING,
@@ -260,9 +267,10 @@ class RadarrManager(ArrBase):
                     _logger,
                 )
 
-        except:
+        except Exception:
             log.handler(
                 "Could not get movies!",
                 log.ERROR,
                 _logger,
             )
+        return None

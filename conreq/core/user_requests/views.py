@@ -1,15 +1,16 @@
 import json
 
-from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.user_requests.models import UserRequest
-from conreq.utils import log
-from conreq.utils.debug import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
+
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.user_requests.models import UserRequest
+from conreq.utils import log
+from conreq.utils.debug import performance_metrics
 
 from .helpers import generate_requests_cards, radarr_request, sonarr_request
 

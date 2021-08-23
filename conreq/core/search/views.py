@@ -1,11 +1,12 @@
-from conreq.core.tmdb.discovery import TmdbDiscovery
-from conreq.core.tmdb.search import TmdbSearch
-from conreq.core.discover.helpers import set_many_availability
-from conreq.utils.debug import performance_metrics
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
+
+from conreq.core.discover.helpers import set_many_availability
+from conreq.core.tmdb.discovery import TmdbDiscovery
+from conreq.core.tmdb.search import TmdbSearch
+from conreq.utils.debug import performance_metrics
 
 
 @cache_page(15)

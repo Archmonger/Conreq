@@ -1,6 +1,7 @@
-from conreq.utils.environment import get_str_from_env
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
+
+from conreq.utils.environment import get_str_from_env
 
 from .radarr import RadarrManager
 from .sonarr import SonarrManager

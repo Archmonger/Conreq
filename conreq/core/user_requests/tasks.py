@@ -1,7 +1,8 @@
+from huey.contrib.djhuey import db_task
+
 from conreq.core.arrs.radarr import RadarrManager
 from conreq.core.arrs.sonarr import SonarrManager
 from conreq.utils import log
-from huey.contrib.djhuey import db_task
 
 _logger = log.get_logger(__name__)
 
@@ -37,7 +38,7 @@ def sonarr_request_background_task(tvdb_id, request_params, sonarr_params, usern
             log.INFO,
             _logger,
         )
-    except:
+    except Exception:
         if "show" not in locals():
             show = {"title": "Conreq Uninitialized"}
         log.handler(
@@ -81,7 +82,7 @@ def radarr_request_background_task(tmdb_id, radarr_params, username):
             log.INFO,
             _logger,
         )
-    except:
+    except Exception:
         if "movie" not in locals():
             movie = {"title": "Conreq Uninitialized"}
         log.handler(

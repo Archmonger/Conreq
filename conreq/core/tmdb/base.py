@@ -2,10 +2,11 @@
 from random import shuffle
 
 import tmdbsimple as tmdb
+from django.conf import settings
+
 from conreq.utils import cache, log
 from conreq.utils.generic import is_key_value_in_list
 from conreq.utils.threads import ReturnThread
-from django.conf import settings
 
 # TMDB API key is safe to hard-code. It can only access publicly available data.
 tmdb.API_KEY = "112fd4c96274603f68620c78067d5422"
@@ -70,7 +71,7 @@ class TmdbBase:
                 _logger,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to check if content is anime!",
                 log.ERROR,
@@ -113,7 +114,7 @@ class TmdbBase:
                 _logger,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to obtain external ID!",
                 log.ERROR,
@@ -152,7 +153,7 @@ class TmdbBase:
                 _logger,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to obtain genres!",
                 log.ERROR,
@@ -208,7 +209,7 @@ class TmdbBase:
                             "tvdb_id"
                         ] = external_id_results["tvdb_id"]
 
-                except:
+                except Exception:
                     pass
 
         return tmdb_response
@@ -279,12 +280,13 @@ class TmdbBase:
 
             return self._remove_duplicate_results(merged_results)
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to merge results!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     @staticmethod
     def _shuffle_results(query):
@@ -293,12 +295,13 @@ class TmdbBase:
             shuffle(query["results"])
             return query
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to shuffle results!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     @staticmethod
     def _remove_duplicate_results(query):
@@ -338,12 +341,13 @@ class TmdbBase:
             query["results"] = clean_results
             return query
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to remove duplicate results!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     @staticmethod
     def _shuffled_page_numbers():
@@ -461,7 +465,7 @@ class TmdbBase:
             # # Set a single media item
             elif isinstance(results, dict):
                 results["content_type"] = content_type
-        except:
+        except Exception:
             log.handler(
                 "Failed to set content attributes!",
                 log.ERROR,
@@ -481,10 +485,10 @@ class TmdbBase:
                 new_results["results"] = []
                 for result in results["results"]:
                     content_type = result.get("content_type")
-                    if content_type == "movie" or content_type == "tv":
+                    if content_type in ("movie", "tv"):
                         new_results["results"].append(result)
                 return new_results
-        except:
+        except Exception:
             log.handler(
                 "Failed to set content attributes!",
                 log.ERROR,

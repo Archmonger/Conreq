@@ -1,3 +1,6 @@
+from huey import crontab
+from huey.contrib.djhuey import db_periodic_task, db_task
+
 from conreq.core.arrs.helpers import wait_for_series_info
 from conreq.core.arrs.radarr import RadarrManager
 from conreq.core.arrs.sonarr import SonarrManager
@@ -7,8 +10,6 @@ from conreq.core.user_requests.helpers import (
     obtain_radarr_parameters,
     obtain_sonarr_parameters,
 )
-from huey import crontab
-from huey.contrib.djhuey import db_periodic_task, db_task
 
 from .models import ReportedIssue
 

@@ -1,5 +1,6 @@
 """Conreq Content Discovery: Searches TMDB for content."""
 import tmdbsimple as tmdb
+
 from conreq.utils import cache, log
 from conreq.utils.threads import ReturnThread, threaded_execution
 
@@ -229,12 +230,13 @@ class TmdbDiscovery(TmdbBase):
             self.determine_id_validity(merged_results["results"])
             return merged_results
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to obtain merged Similar and Recommended!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def collections(self, collection_id):
         """Obtains items in the movie collection of a given TMDB Collection ID.
@@ -253,12 +255,13 @@ class TmdbDiscovery(TmdbBase):
                 ),
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to obtain collection with ID " + str(collection_id) + "!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def person(self, person_id):
         """Obtain a person given a TMDB person ID.
@@ -325,7 +328,7 @@ class TmdbDiscovery(TmdbBase):
                 _logger,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to obtain content by ID!",
                 log.ERROR,
@@ -349,7 +352,7 @@ class TmdbDiscovery(TmdbBase):
             )
             self._set_content_attributes("tv", results["tv_results"])
             return results
-        except:
+        except Exception:
             log.handler(
                 "Failed to obtain content with TVDB ID " + str(tvdb_id) + "!",
                 log.ERROR,
@@ -436,7 +439,7 @@ class TmdbDiscovery(TmdbBase):
                 _logger,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to obtain recommendations!",
                 log.ERROR,
@@ -490,7 +493,7 @@ class TmdbDiscovery(TmdbBase):
                 _logger,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to obtain similar content!",
                 log.ERROR,

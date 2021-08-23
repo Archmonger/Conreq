@@ -3,13 +3,14 @@ import sqlite3
 from multiprocessing import Process
 
 import django
-from conreq.utils.environment import get_debug
 from django.conf import settings
 from django.core.cache import cache
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from hypercorn.config import Config as HypercornConfig
 from hypercorn.run import run as run_hypercorn
+
+from conreq.utils.environment import get_debug
 
 HYPERCORN_TOML = os.path.join(getattr(settings, "DATA_DIR"), "hypercorn.toml")
 DEBUG = get_debug()

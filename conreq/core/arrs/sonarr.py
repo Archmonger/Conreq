@@ -1,7 +1,8 @@
 """Conreq Content Manager: Talks with Sonarr in order to add/remove content."""
+from pyarr import SonarrAPI
+
 from conreq.core.server_settings.models import ConreqConfig
 from conreq.utils import cache, log
-from pyarr import SonarrAPI
 
 from .base import ARR_LIBRARY_CACHE_TIMEOUT, ArrBase
 
@@ -69,12 +70,13 @@ class SonarrManager(ArrBase):
                 _logger,
             )
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to get content!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def add(
         self, tvdb_id, quality_profile_id, root_dir, series_type, season_folders=True
@@ -112,12 +114,13 @@ class SonarrManager(ArrBase):
             new_series["seriesType"] = series_type.lower().capitalize()
             return self.__sonarr.upd_series(new_series)
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to add content!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def request(self, sonarr_id, seasons=None, episode_ids=None):
         """Monitors and searches for an existing series, season(s), and/or episode(s) using Sonarr.
@@ -219,12 +222,13 @@ class SonarrManager(ArrBase):
 
             return response
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to request content!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def delete(self, sonarr_id):
         """Deletes an existing series using Sonarr.
@@ -240,12 +244,13 @@ class SonarrManager(ArrBase):
             # Remove a show with a specific Sonarr ID.
             return self.__sonarr.del_series(sonarr_id, delete_files=True)
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to delete series!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def delete_episode(self, episode_file_id):
         """Deletes episode(s) using Sonarr.
@@ -260,12 +265,13 @@ class SonarrManager(ArrBase):
         try:
             return self.__sonarr.del_episode_file(episode_file_id)
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to delete episode!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def check_sonarr_defaults(self):
         """Will configure default root dirs and quality profiles (if unset)"""
@@ -303,24 +309,26 @@ class SonarrManager(ArrBase):
         try:
             return self.__sonarr.get_root_folder()
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to get sonarr root dirs!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def sonarr_quality_profiles(self):
         """Returns the quality profiles available within Sonarr"""
         try:
             return self.__sonarr.get_quality_profiles()
 
-        except:
+        except Exception:
             log.handler(
                 "Failed to get sonarr quality profiles!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def refresh_library(self):
         """Refreshes our local copy of Sonarr's library"""
@@ -332,7 +340,7 @@ class SonarrManager(ArrBase):
                     cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                     force_update_cache=True,
                 )
-        except:
+        except Exception:
             log.handler(
                 "Failed to refresh sonarr!",
                 log.WARNING,
@@ -364,12 +372,13 @@ class SonarrManager(ArrBase):
                     _logger,
                 )
 
-        except:
+        except Exception:
             log.handler(
                 "Could not get series!",
                 log.ERROR,
                 _logger,
             )
+        return None
 
     def _season_episode_availability(self, series):
         """Checks the availability of seasons."""

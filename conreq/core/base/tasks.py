@@ -1,11 +1,12 @@
 import os
 import sqlite3
 
-from conreq.utils.environment import get_database_type
 from django.conf import settings
 from django.db import connection
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
+
+from conreq.utils.environment import get_database_type
 
 DB_ENGINE = get_database_type()
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")

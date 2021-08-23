@@ -96,13 +96,13 @@ def set_single_availability(card):
             )
             return card
 
-    except:
+    except Exception:
         log.handler(
             "Could not determine the availability of card!\n" + str(card),
             log.ERROR,
             _logger,
         )
-        return card
+    return card
 
 
 def obtain_sonarr_parameters(

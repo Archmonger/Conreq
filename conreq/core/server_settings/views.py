@@ -1,15 +1,16 @@
 import json
 from platform import platform
 
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import ValidationError
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.template import loader
+
 from conreq.core.arrs.radarr import RadarrManager
 from conreq.core.arrs.sonarr import SonarrManager
 from conreq.core.server_settings.models import ConreqConfig
 from conreq.utils import log
 from conreq.utils.debug import performance_metrics
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.exceptions import ValidationError
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.template import loader
 
 _logger = log.get_logger(__name__)
 
@@ -52,7 +53,7 @@ def radarr_settings(request):
                 radarr_quality_profiles.append(
                     {"id": profile["id"], "label": profile["name"]}
                 )
-        except:
+        except Exception:
             log.handler("Failed to obtain Radarr Quality Profiles!", log.ERROR, _logger)
 
         # Radarr Folder Paths
@@ -66,7 +67,7 @@ def radarr_settings(request):
                     current_radarr_movies_folder = path["path"]
                 # List of all dropdown entries
                 radarr_folders.append({"id": path["id"], "label": path["path"]})
-        except:
+        except Exception:
             log.handler("Failed to obtain Radarr Folder Paths!", log.ERROR, _logger)
 
     context = {
@@ -110,7 +111,7 @@ def sonarr_settings(request):
                 sonarr_quality_profiles.append(
                     {"id": profile["id"], "label": profile["name"]}
                 )
-        except:
+        except Exception:
             log.handler("Failed to obtain Sonarr Quality Profiles!", log.ERROR, _logger)
 
         # Sonarr Folder Paths
@@ -124,7 +125,7 @@ def sonarr_settings(request):
                     current_sonarr_tv_folder = path["path"]
                 # List of all dropdown entries
                 sonarr_folders.append({"id": path["id"], "label": path["path"]})
-        except:
+        except Exception:
             log.handler("Failed to obtain Sonarr Folder Paths!", log.ERROR, _logger)
 
     context = {
@@ -252,7 +253,7 @@ def update_settings(request):
                 return JsonResponse(response)
 
         # Unknown exception occured
-        except:
+        except Exception:
             response["success"] = False
             response["error_message"] = "Unknown error!"
             log.handler(
