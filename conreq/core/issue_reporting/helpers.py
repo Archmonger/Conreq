@@ -30,19 +30,7 @@ def generate_issue_cards(reported_issues):
     content_discovery = TmdbDiscovery()
     all_cards = []
     card = None
-    for entry in reported_issues.values(
-        "id",
-        "reported_by__username",
-        "content_id",
-        "resolved",
-        "auto_resolved",
-        "auto_resolve_in_progress",
-        "date_reported",
-        "content_type",
-        "issues",
-        "seasons",
-        "episodes",
-    ):
+    for entry in reported_issues:
         # Fetch TMDB entry
         card = content_discovery.get_by_tmdb_id(
             tmdb_id=entry["content_id"],

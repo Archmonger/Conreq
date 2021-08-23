@@ -5,6 +5,7 @@ from conreq.utils import log
 from conreq.utils.database import add_unique_to_db
 from conreq.utils.debug import performance_metrics
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
@@ -119,8 +120,31 @@ def report_issue_modal(request):
 @user_passes_test(lambda u: u.is_staff)
 @performance_metrics()
 def all_issues(request):
-    reported_issues = ReportedIssue.objects.all().order_by("id").reverse()
-    all_cards = generate_issue_cards(reported_issues)
+    reported_issues = (
+        ReportedIssue.objects.all()
+        .order_by("id")
+        .reverse()
+        .values(
+            "id",
+            "reported_by__username",
+            "content_id",
+            "resolved",
+            "auto_resolved",
+            "auto_resolve_in_progress",
+            "date_reported",
+            "content_type",
+            "issues",
+            "seasons",
+            "episodes",
+        )
+    )
+    page_number = int(request.GET.get("page", 1))
+    paginator = Paginator(reported_issues, 25)
+    page_obj = paginator.get_page(page_number)
+    if page_number <= paginator.num_pages:
+        all_cards = generate_issue_cards(page_obj)
+    else:
+        all_cards = None
     context = {"all_cards": all_cards, "page_name": "All Issues"}
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))
@@ -131,9 +155,30 @@ def all_issues(request):
 @performance_metrics()
 def my_issues(request):
     reported_issues = (
-        ReportedIssue.objects.filter(reported_by=request.user).order_by("id").reverse()
+        ReportedIssue.objects.filter(reported_by=request.user)
+        .order_by("id")
+        .reverse()
+        .values(
+            "id",
+            "reported_by__username",
+            "content_id",
+            "resolved",
+            "auto_resolved",
+            "auto_resolve_in_progress",
+            "date_reported",
+            "content_type",
+            "issues",
+            "seasons",
+            "episodes",
+        )
     )
-    all_cards = generate_issue_cards(reported_issues)
+    page_number = int(request.GET.get("page", 1))
+    paginator = Paginator(reported_issues, 25)
+    page_obj = paginator.get_page(page_number)
+    if page_number <= paginator.num_pages:
+        all_cards = generate_issue_cards(page_obj)
+    else:
+        all_cards = None
     context = {"all_cards": all_cards, "page_name": "My Issues"}
     template = loader.get_template("viewport/reported_issues.html")
     return HttpResponse(template.render(context, request))
