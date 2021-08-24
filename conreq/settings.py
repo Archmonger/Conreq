@@ -64,7 +64,6 @@ APP_SLIM_TEMPLATE = os.path.join(TEMPLATE_DIR, "app")
 
 # Environment Variables
 DOTENV_FILE = os.path.join(DATA_DIR, "settings.env")
-os.environ["CONREQ_DOTENV_FILE"] = DOTENV_FILE
 if not os.path.exists(DOTENV_FILE):
     with open(DOTENV_FILE, "w") as fp:
         pass

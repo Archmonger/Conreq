@@ -13,8 +13,11 @@ if ENV_PREFIX:
 
 @functools.cache
 def _dotenv_path() -> str:
-    """Fetches the .env file path set during Conreq startup."""
-    return os.environ["CONREQ_DOTENV_FILE"]
+    """Load the .env path from a different context to avoid circular imports."""
+    # pylint: disable=import-outside-toplevel
+    from conreq.settings import DOTENV_FILE
+
+    return DOTENV_FILE
 
 
 @functools.cache
