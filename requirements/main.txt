@@ -13,6 +13,8 @@ diskcache==5.2.1
 # Extending Django DB Model Features
 django-url-or-relative-url-field==0.1.2
 django-searchable-encrypted-fields==0.1.9
+django-multiselectfield==0.1.12
+django-versionfield==1.0.2
 jsonfield==3.1.0
 django-model-utils==4.1.1
 django-solo==1.1.5

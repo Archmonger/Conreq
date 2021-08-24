@@ -241,17 +241,23 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "conreq",
     *list_modules(CORE_DIR, prefix="conreq.core."),
-    "channels",  # Websocket library
+    # Database Fields
     "encrypted_fields",  # Allow for encrypted text in the DB
+    "versionfield",  # Allows for easily storing/retrieving version numbers in the DB
     "solo",  # Allow for single-row fields in the DB
-    "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
-    "djversion",  # Version number tracking
-    "huey.contrib.djhuey",  # Queuing background tasks
-    "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
+    # ASGI
+    "channels",  # Websocket library
+    # API
     "rest_framework",  # OpenAPI Framework
     "rest_framework_api_key",  # API Key Manager
     "rest_framework.authtoken",  # API User Authentication
+    # Miscellaneous
+    "djversion",  # Version number tracking
+    "huey.contrib.djhuey",  # Queuing background tasks
+    "compressor",  # Minifies CSS/JS files
+    # Cleanup
+    "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
