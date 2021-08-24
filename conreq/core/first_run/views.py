@@ -41,3 +41,5 @@ def initialize(request):
         # User needs to fill out the first time setup
         template = loader.get_template("registration/initialization.html")
         return HttpResponse(template.render({}, request))
+
+    return None
