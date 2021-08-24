@@ -4,7 +4,7 @@ from django import template
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.safestring import mark_safe
 
-from .. import app_settings
+from .. import apps
 
 register = template.Library()
 
@@ -16,10 +16,10 @@ def js(obj):
 
 
 @register.inclusion_tag("pwa.html", takes_context=True)
-def progressive_web_app_meta(context):
+def progressive_web_app_meta(context):  # pylint: disable=unused-argument
     # Pass all PWA_* settings into the template
     return {
-        setting_name: getattr(app_settings, setting_name)
-        for setting_name in dir(app_settings)
+        setting_name: getattr(apps, setting_name)
+        for setting_name in dir(apps)
         if setting_name.startswith("PWA_")
     }
