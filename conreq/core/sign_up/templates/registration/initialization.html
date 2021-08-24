@@ -42,48 +42,16 @@
                 </div>
 
 
-                <div class="tab">
-                    <h2>Set up Sonarr (optional)</h2>
-
-                    {{ form.sonarr_url.errors }}
-                    <input placeholder="Sonarr URL (ex. http://192.168.86.50:8989)" oninput="this.className = ''"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="url"
-                        name="sonarr_url" value="{{ form.data.sonarr_url }}">
-
-                    {{ form.sonarr_api_key.errors }}
-                    <input placeholder="Sonarr API Key" oninput="this.className = ''" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text" name="sonarr_api_key"
-                        value="{{ form.data.sonarr_api_key }}">
-                </div>
-
-
-                <div class="tab">
-                    <h2>Set up Radarr (optional)</h2>
-
-                    {{ form.radarr_url.errors }}
-                    <input placeholder="Radarr URL (ex. http://192.168.86.50:7878)" oninput="this.className = ''"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="url"
-                        name="radarr_url" value="{{ form.data.radarr_url }}">
-
-                    {{ form.radarr_api_key.errors }}
-                    <input placeholder="Radarr API Key" oninput="this.className = ''" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" type="text" name="radarr_api_key"
-                        value="{{ form.data.radarr_api_key }}">
-                </div>
-
-
                 <!-- Previous and next (or submit) buttons -->
                 <div id="box-nav-container">
                     <button type="button" id="prevBtn" onclick="previous_tab()"
                         style="visibility: hidden;">Previous</button>
-                    <button type="button" id="nextBtn" onclick="next_tab()">Next</button>
+                    <button type="button" id="nextBtn" onclick="next_tab()">Submit</button>
                 </div>
 
                 <!-- Circles which indicates the step of the form -->
                 <div style="text-align:center;margin-top:40px;">
                     <span class="step active"></span>
-                    <span class="step"></span>
-                    <span class="step"></span>
                 </div>
 
             </form>
