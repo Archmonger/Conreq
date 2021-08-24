@@ -12,3 +12,8 @@ def modal() -> object:
         @wraps(class_)
         def _wrapped_class(*args, **kwargs):
             return _wrapped_class(*args, **kwargs)
+
+
+def close_modal():
+    """Closes a modal."""
+    pass
