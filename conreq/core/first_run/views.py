@@ -6,8 +6,6 @@ from django.template import loader
 from .forms import InitializationForm
 from conreq.core.server_settings.models import ConreqConfig
 
-from .helpers import initialize_conreq
-
 
 def initialize(request):
     conreq_config = ConreqConfig.get_solo()
@@ -31,7 +29,8 @@ def initialize(request):
                 user.is_superuser = True
                 user.save()
                 login(request, user)
-                initialize_conreq(conreq_config, form)
+                conreq_config.initialized = True
+                conreq_config.save()
                 return redirect("base:landing")
 
             # Form data wasn't valid, so return the error codes
