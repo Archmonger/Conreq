@@ -122,6 +122,7 @@
 		padding: var(--navpages-btn-padding);
 		padding-left: 20px;
 	}
+	.viewport-container-loading,
 	.viewport-container,
 	.viewport-container-top,
 	.viewport-loader {

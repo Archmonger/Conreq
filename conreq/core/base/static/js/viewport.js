@@ -81,7 +81,7 @@ let display_cached_viewport = async function () {
 // Destroys old viewport JS instances
 let destroy_viewport = async function (viewport_selector) {
 	$(viewport_selector).trigger("destroy");
-	$(viewport_selector + ">*:not(.loading-animation-container)").remove();
+	$(viewport_selector + ">*").remove();
 };
 
 // Preforms any actions needed to prepare the viewport
@@ -190,10 +190,8 @@ var generate_viewport = async function (standard_viewport_load = true) {
 				$(viewport_selector).trigger("loaded");
 
 				// Display the new content
-				$(viewport_selector + ">.loading-animation-container").hide();
-				$(
-					viewport_selector + ">*:not(.loading-animation-container)"
-				).show();
+				$(".viewport-container-loading").hide();
+				$(viewport_selector).show();
 
 				// Set scroll position
 				if (standard_viewport_load) {
@@ -207,10 +205,8 @@ var generate_viewport = async function (standard_viewport_load = true) {
 			if (!viewport_loaded && standard_viewport_load) {
 				// Hide the viewport and display the loading animation
 				select_active_viewport(viewport_selector);
-				$(viewport_selector + ">.loading-animation-container").show();
-				$(
-					viewport_selector + ">*:not(.loading-animation-container)"
-				).hide();
+				$(".viewport-container-loading").show();
+				$(viewport_selector).hide();
 			}
 		}, 500);
 	}

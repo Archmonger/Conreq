@@ -1,3 +1,4 @@
+.viewport-container-loading,
 .viewport-container,
 .viewport-container-top {
 	position: absolute;
@@ -36,8 +37,7 @@
 	line-height: 1.5;
 }
 
-.viewport-container > .loading-animation-container,
-.viewport-container-top > .loading-animation-container {
+.viewport-container-loading > .loading-animation-container {
 	display: flex;
 	height: 100%;
 	width: 100%;

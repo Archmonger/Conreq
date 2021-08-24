@@ -1,8 +1,9 @@
 {% load solo_tags %}
-{% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% load static compress %}
 {% load static %}
 {% load conreq_tags %}
+{% get_solo 'server_settings.ConreqConfig' as server_settings %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,14 +15,13 @@
     <input id="app-name" type="hidden" value="{% app_name %}">
     <input id="base-url" type="hidden" value="{{ base_url }}">
     {% include "primary/navbar.html" %}
-    {% include "primary/sidebar.html" %}
     {% include "modal/default.html" %}
-    <main class="viewport-container-top" hidden>
+    {% include "primary/sidebar.html" %}
+    <main class="viewport-container-loading">
         {% include "primary/loading_animation_container.html" %}
     </main>
-    <main class="viewport-container">
-        {% include "primary/loading_animation_container.html" %}
-    </main>
+    <main class="viewport-container-top" hidden="hidden"> </main>
+    <main class="viewport-container" hidden="hidden"> </main>
 </body>
 
 </html>
