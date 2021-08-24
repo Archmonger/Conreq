@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 from conreq.core.base.forms import InitializationForm
 from conreq.core.server_settings.models import ConreqConfig
@@ -51,6 +53,8 @@ def configure(request):
         return HttpResponse(template.render({}, request))
 
 
+@cache_page(30)
+@vary_on_cookie
 @performance_metrics()
 def landing(request):
     """The primary view that handles whether to take the user to
@@ -65,11 +69,11 @@ def landing(request):
         return redirect("base:homescreen")
 
     # Render the landing page
-    return login_required(render)(
-        request, LANDING_TEMPLATE, {"base_url": BASE_URL, "debug": DEBUG}
-    )
+    return render(request, LANDING_TEMPLATE, {"base_url": BASE_URL, "debug": DEBUG})
 
 
+@cache_page(30)
+@vary_on_cookie
 @performance_metrics()
 def home(request):
     """The primary view that handles whether to take the user to
