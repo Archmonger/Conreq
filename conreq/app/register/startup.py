@@ -15,15 +15,6 @@ def pre_run(admin_required: bool = False) -> object:
             return _wrapped_func(*args, **kwargs)
 
 
-def pre_startup() -> object:
-    """Decorates any function that needs to be run prior to Django has been configured."""
-
-    def decorator(func):
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return _wrapped_func(*args, **kwargs)
-
-
 def setting_script(file_path: str) -> None:
     """Runs a file in settings.py. See django-split-settings for more details."""
     pass
