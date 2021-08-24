@@ -29,12 +29,3 @@ def app_name():
 @register.simple_tag
 def app_description():
     return conreq_app_description
-
-
-@register.filter
-def contains_valid_id(results):
-    if isinstance(results, list):
-        for result in results:
-            if isinstance(result, dict) and result.get("conreq_valid_id"):
-                return True
-    return False
