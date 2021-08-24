@@ -3,8 +3,9 @@ from django.db.models import URLField
 from . import forms, validators
 
 
-class ExtendedURLField(URLField):
+class HostnameOrURLField(URLField):
     """URL field that supports hostnames (ex. https://sonarr:8000)"""
+
     default_validators = [validators.ExtendedURLValidator()]
 
     def formfield(self, **kwargs):
@@ -12,7 +13,7 @@ class ExtendedURLField(URLField):
         # twice.
         return super().formfield(
             **{
-                "form_class": forms.ExtendedURLField,
+                "form_class": forms.HostnameOrURLField,
                 **kwargs,
             }
         )

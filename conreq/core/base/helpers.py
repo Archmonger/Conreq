@@ -18,5 +18,5 @@ def initialize_conreq(conreq_config, form):
         conreq_config.radarr_enabled = True
 
     # Remember that the database has been initialized
-    conreq_config.conreq_initialized = True
+    conreq_config.initialized = True
     conreq_config.save()

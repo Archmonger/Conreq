@@ -19,11 +19,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="conreqconfig",
             name="radarr_url",
-            field=conreq.core.base.fields.ExtendedURLField(blank=True, default=""),
+            field=conreq.core.base.fields.HostnameOrURLField(blank=True, default=""),
         ),
         migrations.AlterField(
             model_name="conreqconfig",
             name="sonarr_url",
-            field=conreq.core.base.fields.ExtendedURLField(blank=True, default=""),
+            field=conreq.core.base.fields.HostnameOrURLField(blank=True, default=""),
         ),
     ]
