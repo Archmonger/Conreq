@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.management import call_command
 from django.core.management.templates import TemplateCommand
 
-PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
+PACKAGES_DIR = getattr(settings, "PACKAGES_DEV_DIR")
 PACKAGE_TEMPLATE = getattr(settings, "PACKAGE_TEMPLATE")
 PACKAGE_SLIM_TEMPLATE = getattr(settings, "PACKAGE_SLIM_TEMPLATE")
 

@@ -31,7 +31,8 @@ from conreq.utils.generic import list_modules
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"), dot_env=False)
-PACKAGES_DIR = os.path.join(DATA_DIR, "packages")
+PACKAGES_DIR = os.path.join(DATA_DIR, "packages", "__installed__")
+PACKAGES_DEV_DIR = os.path.join(DATA_DIR, "packages", "develop")
 MEDIA_DIR = os.path.join(DATA_DIR, "media")
 BACKUP_DIR = os.path.join(DATA_DIR, "backup")
 TEMP_DIR = os.path.join(DATA_DIR, "temp")
@@ -228,6 +229,7 @@ else:
 
 # Django Apps & Middleware
 sys.path.append(PACKAGES_DIR)  # User Installed Apps
+sys.path.append(PACKAGES_DEV_DIR)  # Developer Installed Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.admindocs",

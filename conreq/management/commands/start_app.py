@@ -3,7 +3,7 @@ import os
 from django.conf import settings
 from django.core.management.templates import TemplateCommand
 
-PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
+PACKAGES_DIR = getattr(settings, "PACKAGES_DEV_DIR")
 PACKAGE_TEMPLATE = getattr(settings, "PACKAGE_TEMPLATE")
 APP_TEMPLATE = getattr(settings, "APP_TEMPLATE")
 APP_SLIM_TEMPLATE = getattr(settings, "APP_SLIM_TEMPLATE")
