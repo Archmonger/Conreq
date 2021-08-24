@@ -1,2 +1,3 @@
-from conreq.app.components.types import Icon, Navtab
-from conreq.app.selectors import AuthLevel, Viewport
+from conreq.app.config import Config
+
+config = Config()

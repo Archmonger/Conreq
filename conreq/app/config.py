@@ -1,38 +1,43 @@
 """Conreq's configuration values."""
 
-# Startup
-PRE_RUN = []
-PRE_STARTUP = []
-SETTING_SCRIPTS = []
-INSTALLED_APPS = []
-MIDDLEWARE = []
-LANDING_TEMPLATE = ""
-LANDING_VIEW = None
-HOME_TEMPLATE = ""
-HOME_VIEW = None
-SIGN_UP_TEMPLATE = ""
-SIGN_UP_VIEW = None
-SIGN_IN_TEMPLATE = ""
-SIGN_IN_VIEW = None
-PASSWORD_RESET_TEMPLATE = ""
-PASSWORD_RESET_VIEW = None
-MANAGE_USERS_COMPONENT = None
+from dataclasses import dataclass
 
-# ASGI
-WEBSOCKETS = []
 
-# WSGI
-API_ENDPOINTS = []
-URL_PATTERNS = []
+@dataclass
+class Config:
+    # Startup
+    pre_run = []
+    pre_startup = []
+    setting_scripts = []
+    installed_apps = []
+    middleware = []
+    landing_template = ""
+    landing_view = None
+    home_template = ""
+    home_view = None
+    sign_up_template = ""
+    sign_up_view = None
+    sign_in_template = ""
+    sign_in_view = None
+    password_reset_template = ""
+    password_reset_view = None
+    manage_users_component = None
 
-# Components
-NAVTABS = []
-SERVER_SETTING_TABS = []
-USER_SETTING_COMPONENTS = []
+    # ASGI
+    websockets = []
 
-# HTML Head
-CSS = []
-SCSS = []
-JAVASCRIPT = []
-FONTS = []
-HEAD_CONTENT = []
+    # WSGI
+    api_endpoints = []
+    url_patterns = []
+
+    # Components
+    navtabs = []
+    server_setting_tabs = []
+    user_setting_components = []
+
+    # HTML Head
+    css = []
+    scss = []
+    javascript = []
+    fonts = []
+    head_content = []
