@@ -31,6 +31,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [Automatic Code Performance Graphs](https://github.com/jazzband/django-silk)
 -   [Automatic NPM Package Installation](https://github.com/kevin1024/django-npm)
 -   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
+-   [Automatic Database Optimization (SQLite)](https://www.sqlite.org/lang_vacuum.html)
 -   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
 
 ## Communities
