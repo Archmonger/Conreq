@@ -26,6 +26,7 @@ from conreq.utils.environment import (
     set_env,
 )
 from conreq.utils.generic import list_modules
+from conreq.utils.packages import list_apps
 
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -254,6 +255,8 @@ INSTALLED_APPS = [
     "djversion",  # Version number tracking
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
+    # User Installed Apps
+    *list_apps(),
     # Cleanup
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
 ]
