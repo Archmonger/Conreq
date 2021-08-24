@@ -5,14 +5,6 @@ let page_reload_needed = false;
 let viewport_http_request = $.ajax({});
 let viewport_http_request_aborted = false;
 
-// Create the lazyloader
-var lazyloader = new LazyLoad({
-	threshold: 0,
-	callback_error: async function (element) {
-		element.src = "/static/images/transparent.png";
-	},
-});
-
 // Updates the current tab based on the URL
 let update_active_tab = async function () {
 	$(".nav-tab").each(async function () {
@@ -35,9 +27,7 @@ let update_active_tab = async function () {
 
 // Updates the page name
 let update_page_title = async function (viewport_selector) {
-	let page_name = DOMPurify.sanitize(
-		$(viewport_selector + ">.page-name").val()
-	);
+	let page_name = $(viewport_selector + ">.page-name").val();
 	let app_name = $("#app-name").val();
 	if (page_name) {
 		document.title = page_name + " | " + app_name;
@@ -88,9 +78,6 @@ let destroy_viewport = async function (viewport_selector) {
 let prepare_viewport = async function (viewport_selector) {
 	$(viewport_selector).trigger("prepare");
 	$(viewport_selector).attr("data-url", get_window_location());
-
-	// Lazy load page elements
-	lazyloader.update();
 };
 
 // Gets the viewport from a URL
@@ -132,7 +119,8 @@ let get_viewport = async function (
 
 // Fetch the new viewport and update the current tab
 var generate_viewport = async function (standard_viewport_load = true) {
-	hide_modals_and_popups();
+	$("html").trigger("hide-popups");
+	hide_popups();
 
 	if (cached_viewport_exists() && standard_viewport_load == true) {
 		display_cached_viewport();
@@ -182,8 +170,7 @@ var generate_viewport = async function (standard_viewport_load = true) {
 				await destroy_viewport(viewport_selector);
 
 				// Inject and configure the new content
-				$(viewport_selector)[0].innerHTML =
-					DOMPurify.sanitize(viewport_html);
+				$(viewport_selector)[0].innerHTML = viewport_html;
 				select_active_viewport(viewport_selector);
 				await prepare_viewport(viewport_selector);
 				update_page_title(viewport_selector);
@@ -216,8 +203,6 @@ var generate_viewport = async function (standard_viewport_load = true) {
 let page_mutation_observer = async function () {
 	let observer = new MutationObserver(async function () {
 		$("html").trigger("modified");
-		// Initiate Lazyload on any new images
-		lazyloader.update();
 	});
 
 	// Configuration of the observer

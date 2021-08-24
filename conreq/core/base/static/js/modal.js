@@ -10,7 +10,7 @@ var generate_modal = async function (modal_url) {
 		modal_loaded = true;
 
 		// Place the new HTML on the page
-		modal_dialog[0].innerHTML = DOMPurify.sanitize(modal_html);
+		modal_dialog[0].innerHTML = modal_html;
 
 		// Show the new content
 		$("#modal-container .loading-animation").hide();
@@ -18,18 +18,6 @@ var generate_modal = async function (modal_url) {
 		$("#modal-container").modal("show");
 
 		// Add click events
-		request_btn_click_event();
-		content_modal_click_event();
-		modal_select_all_btn_click_event();
-		modal_expand_btn_click_event();
-		row_title_click_event();
-		row_checkbox_click_event();
-		row_suboption_title_click_event();
-		row_suboption_checkbox_click_event();
-		create_report_modal_click_event();
-		report_btn_click_event();
-		simple_filter_btn_click_event();
-		modal_poster_popup_click_event();
 		delete_user_btn_click_event();
 		save_user_btn_click_event();
 	}).fail(async function () {

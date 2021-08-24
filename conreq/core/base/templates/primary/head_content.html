@@ -29,7 +29,7 @@
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/webfonts/fa-solid-900.woff2"
     as="font" type="font/woff2" crossorigin="anonymous">
 
-<!-- Pre-made Styling and JS (Bootstrap) -->
+<!-- Bootstrap Styling and JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -39,13 +39,6 @@
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
     integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
-    crossorigin="anonymous"></script>
-
-<!-- Sliders/Carousels (TinySlider) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css"
-    integrity="sha384-PZZ0iQUb2LawAE6IluKzBVRHVB85dkzT3VbPqYx+he9UEfPLUsTpu2B/Qwv6ueAk" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/min/tiny-slider.js"
-    integrity="sha384-17ZL7z7TDMjv+bN855ZqaY8prxaSVXFicbC8iyJfMz2Ng5ElaurJF2GCSUutad6e"
     crossorigin="anonymous"></script>
 
 <!-- Bootstrap Tables -->
@@ -63,21 +56,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"
     integrity="sha384-ICB8i/maQ/5+tGLDUEcswB7Ch+OO9Oj8Z4Ov/Gs0gxqfTgLLkD3F43MhcEJ2x6/D" crossorigin="anonymous">
 
-<!-- Masonry Layout (Desandro Masonry) -->
-<script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
-    integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
-    crossorigin="anonymous"></script>
-
-<!-- Infinite Scrolling (Desandro Infinite Scroll) -->
-<script src="https://unpkg.com/infinite-scroll@4.0.1/dist/infinite-scroll.pkgd.min.js"
-    integrity="sha384-+83ma0Y8eQWtTIhmx2gjueu3BY0XU4gX4EkL12u3M+WPc4SDskKaIpIL7QiB8ikh"
-    crossorigin="anonymous"></script>
-
-<!-- Lazy Loading -->
-<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js"
-    integrity="sha384-kRtC+xB8cw+Y0KUfSp5bAwFpjBrYzkokPi0bNVo+/S2YOMfXSFSaQIts2DkuEBGd"
-    crossorigin="anonymous"></script>
-
 <!-- Animate on Scroll (AOS) -->
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"
     integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
@@ -85,29 +63,8 @@
     integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
     crossorigin="anonymous"></script>
 
-<!-- Youtube iFrame API -->
-<script>
-    let tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    let first_script_tag = document.getElementsByTagName('script')[0];
-    first_script_tag.parentNode.insertBefore(tag, first_script_tag);
-</script>
-
-{% compress js %}
-<!-- Image popups (jQuery Magnific Popup) -->
-<script src="{% static 'js/libraries/magnific_popup_1.1.0.min.js' %}" crossorigin="anonymous"></script>
-
-<!-- Notification Popups (izi Toast) -->
-<script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
-
-<!-- XSS Protection (DOM Purify) -->
-<script src="{% static 'js/libraries/dom_purify_2.2.min.js' %}" crossorigin="anonymous"></script>
-{% endcompress %}
 
 {% compress css %}
-<!-- Image popups (jQuery Magnific Popup) -->
-<link rel="stylesheet" href="{% static 'css/libraries/magnific_popup_1.1.0.css' %}" crossorigin="anonymous">
-
 <!-- Notification Popups (izi Toast) -->
 <link rel="stylesheet" href="{% static 'css/libraries/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous">
 
@@ -116,17 +73,17 @@
 <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/viewport.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/posters.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/modal.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/more_info.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/server_settings.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/manage_users.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/issues.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/mobile.css' %}" crossorigin="anonymous">
 {% endcompress %}
 
-<!-- Local JS -->
+
 {% compress js %}
+<!-- Notification Popups (izi Toast) -->
+<script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
+<!-- Local JS -->
 <script src="{% static 'js/toast_messages.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
@@ -134,7 +91,6 @@
 <script src="{% static 'js/events_generic.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/sidebar.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>
-<script src="{% static 'js/more_info.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/viewport.js' %}" crossorigin="anonymous"></script>
 {% endcompress %}
 
@@ -145,4 +101,5 @@
 
 <!-- User defined CSS -->
 {% if server_settings.conreq_custom_css %}
-<link rel="stylesheet" href="{{ server_settings.conreq_custom_css }}" crossorigin="anonymous"> {% endif %}
+<link rel="stylesheet" href="{{ server_settings.conreq_custom_css }}" crossorigin="anonymous">
+{% endif %}
