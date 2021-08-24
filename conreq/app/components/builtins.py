@@ -1,6 +1,7 @@
 from functools import wraps
 
-from conreq.app import AuthLevel, Icon, Navtab, Viewport
+from conreq.app.components.types import Icon, Navtab
+from conreq.app.selectors import AuthLevel, Viewport
 
 # TODO: Create these functions
 # pylint: disable=unused-argument,unused-variable
@@ -11,8 +12,8 @@ def navtab(
     auth_level: AuthLevel = AuthLevel.user,
     nav_tab: Navtab = None,
     group_icon: Icon = None,
-    icon_left: Icon = None,
-    icon_right: Icon = None,
+    icon: Icon = None,
+    button: Icon = None,
 ) -> object:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked."""
 
