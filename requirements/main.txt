@@ -46,7 +46,7 @@ tzlocal==3.0
 python-dotenv==0.19.0
 
 # Only used by Conreq Apps (Migrate later)
-pyarr==2.0.4
+pyarr==2.0.5
 tmdbsimple==2.8.0
 strsim==0.0.3
 titlecase==2.3
