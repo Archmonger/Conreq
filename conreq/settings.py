@@ -228,8 +228,8 @@ else:
 
 
 # Django Apps & Middleware
+sys.path.append(PACKAGES_DEV_DIR)  # Developer Created Apps
 sys.path.append(PACKAGES_DIR)  # User Installed Apps
-sys.path.append(PACKAGES_DEV_DIR)  # Developer Installed Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.admindocs",
