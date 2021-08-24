@@ -160,7 +160,7 @@ var generate_viewport = async function (standard_viewport_load = true) {
 				window.history.replaceState(
 					{},
 					null,
-					$(".nav-tab a").attr("href")
+					$(".nav-tab a[href*='#']").attr("href")
 				);
 				window_location = window.location.hash.split("#")[1];
 			}
@@ -241,7 +241,7 @@ $(document).ready(async function () {
 	AOS.init();
 	// Obtain the initial page
 	page_mutation_observer();
-	// generate_viewport();
+	generate_viewport();
 });
 
 // Fetch a new page when the URL changes
