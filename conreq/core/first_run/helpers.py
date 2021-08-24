@@ -1,6 +1,3 @@
-"""Helpers for Base"""
-
-
 def initialize_conreq(conreq_config, form):
     """Sets up the initial database values during Conreq's first run sequence."""
     # Obtain the sonarr/radarr parameters

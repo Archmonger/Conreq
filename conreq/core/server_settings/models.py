@@ -3,7 +3,7 @@ from model_utils import FieldTracker
 from solo.models import SingletonModel
 from url_or_relative_url_field.fields import URLOrRelativeURLField
 
-from conreq.core.base.fields import HostnameOrURLField
+from conreq.utils.fields import HostnameOrURLField
 
 
 # Create your models here.
