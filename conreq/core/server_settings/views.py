@@ -1,16 +1,10 @@
-import json
 from platform import platform
 
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.exceptions import ValidationError
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse
 from django.template import loader
 
-from conreq.core.server_settings.models import ConreqConfig
-from conreq.utils import log
 from conreq.utils.debug import performance_metrics
-
-_logger = log.get_logger(__name__)
 
 
 @login_required
