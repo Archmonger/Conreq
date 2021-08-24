@@ -8,6 +8,13 @@ from conreq.core.base.fields import HostnameOrURLField
 
 # Create your models here.
 class ConreqConfig(SingletonModel):
+    def __str__(self):
+        return "Server Configuration Values"
+
+    class Meta:
+        verbose_name = "Configuration"
+        verbose_name_plural = verbose_name
+
     # Basic settings
     custom_css_url = URLOrRelativeURLField(default="", blank=True)
     custom_js_url = URLOrRelativeURLField(default="", blank=True)

@@ -8,6 +8,9 @@ User = get_user_model()
 
 # Create your models here.
 class Profile(models.Model):
+    def __str__(self):
+        return self.user.username
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     language = models.CharField(max_length=30, default="en-US")
     externally_authenticated = models.BooleanField(default=False)
