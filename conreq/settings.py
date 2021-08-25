@@ -160,10 +160,11 @@ LOGGING = {
         },
         "conreq_logs": {
             "level": "INFO",
-            "class": "logging.handlers.RotatingFileHandler",
+            "class": "logging."
+            + ("handlers.RotatingFileHandler" if not DEBUG else "FileHandler"),
             "formatter": "main",
-            "maxBytes": 1024 * 1024 * 5,  # 5 MB
-            "backupCount": 5,
+            **({"maxBytes": 1024 * 1024 * 5} if not DEBUG else {}),
+            **({"backupCount": 5} if not DEBUG else {}),
             "encoding": "utf-8",
             "filename": CONREQ_LOG_FILE,
         },
