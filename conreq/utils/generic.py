@@ -44,18 +44,17 @@ def str_to_int(value: str, default_value: int = 0) -> int:
     return default_value
 
 
-def list_modules(path: str, prefix: str = "") -> list[str]:
+def find_modules(path: str, prefix: str = "") -> set[str]:
     """Returns all modules in a path"""
-    return [name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)]
+    return {name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)}
 
 
-def list_modules_with(path: str, submodule_name: str, prefix: str = "") -> list[str]:
+def find_modules_with(path: str, submodule_name: str, prefix: str = "") -> set[str]:
     """Returns a tuple of all modules containing module name and an importable path to 'example.module.urls'"""
-    modules = list_modules(path)
-    module_files = []
+    modules = find_modules(path)
+    modules_with = {}
     for module in modules:
-        module_path = os.path.join(path, module)
-        if submodule_name in list_modules(module_path):
-            urls_path = prefix + module + "." + submodule_name
-            module_files.append((module, urls_path))
-    return module_files
+        submodules = os.path.join(path, module)
+        if submodule_name in find_modules(submodules):
+            modules_with.add(module)
+    return modules_with

@@ -3,7 +3,7 @@ import os
 
 from conreq.utils import log
 
-from .generic import list_modules
+from .generic import find_modules
 
 _logger = log.get_logger(__name__)
 
@@ -26,50 +26,51 @@ def _packages_dev_dir():
     return getattr(settings, "PACKAGES_DEV_DIR")
 
 
-def _duplicate_package_check(packages):
-    seen = set()
-    for package in packages:
-        if package in seen:
-            log.handler(
-                f"Using development copy of duplicate package '{package}'",
-                log.WARNING,
-                _logger,
-            )
-        seen.add(package)
+def _duplicate_package_check(packages, packages_dev):
+    seen = set(packages).intersection(packages_dev)
+    for package in seen:
+        log.handler(
+            "\033[93m"
+            + f"Duplicate package detected. Using development copy of duplicate package '{package}'."
+            + "\033[0m",
+            log.WARNING,
+            _logger,
+        )
 
 
 @functools.cache
-def list_packages() -> set[str]:
+def find_packages() -> set[str]:
     """Returns all Conreq packages."""
-    packages = list_modules(_packages_dir()) + list_modules(_packages_dev_dir())
-    _duplicate_package_check(packages)
-    return set(packages)
+    packages = find_modules(_packages_dir())
+    packages_dev = find_modules(_packages_dev_dir())
+    _duplicate_package_check(packages, packages_dev)
+    return packages | packages_dev
 
 
 @functools.cache
-def list_apps() -> set[str]:
+def find_apps() -> set[str]:
     """Returns all Conreq apps within packages."""
     apps = set()
-    user_packages = list_packages()
+    user_packages = find_packages()
     for package in user_packages:
         apps_dir = os.path.join(_packages_dir(), package, "apps")
         apps_dev_dir = os.path.join(_packages_dev_dir(), package, "apps")
-        all_modules = list_modules(apps_dir) + list_modules(apps_dev_dir)
+        all_modules = find_modules(apps_dir) | find_modules(apps_dev_dir)
         for app in all_modules:
             apps.add(f"{package}.apps.{app}")
     return apps
 
 
 @functools.cache
-def list_apps_with(module_name: str) -> set[str]:
+def find_apps_with(module_name: str) -> set[str]:
     """Returns all Conreq apps that contain a specific module name."""
     apps_with = set()
-    apps = list_apps()
+    apps = find_apps()
     for app in apps:
         package, apps_dir, app_name = app.split(".")
         apps_dir = os.path.join(_packages_dir(), package, apps_dir, app_name)
         apps_dev_dir = os.path.join(_packages_dev_dir(), package, apps_dir, app_name)
-        all_modules = list_modules(apps_dir) + list_modules(apps_dev_dir)
+        all_modules = find_modules(apps_dir) + find_modules(apps_dev_dir)
         for module in all_modules:
             print(module)
             if module == module_name:

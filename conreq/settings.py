@@ -25,8 +25,8 @@ from conreq.utils.environment import (
     get_str_from_env,
     set_env,
 )
-from conreq.utils.generic import list_modules
-from conreq.utils.packages import list_apps
+from conreq.utils.generic import find_modules
+from conreq.utils.packages import find_apps
 
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -239,7 +239,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
-    *list_modules(CORE_DIR, prefix="conreq.core."),
+    *find_modules(CORE_DIR, prefix="conreq.core."),
     # Database Fields
     "encrypted_fields",  # Allow for encrypted text in the DB
     "versionfield",  # Allows for easily storing/retrieving version numbers in the DB
@@ -256,7 +256,7 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     # User Installed Apps
-    *list_apps(),
+    *find_apps(),
     # Cleanup
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
 ]
