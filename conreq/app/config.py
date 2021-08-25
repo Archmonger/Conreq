@@ -1,17 +1,17 @@
 """Conreq's configuration values."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Callable
 
 
 @dataclass
 class Config:
     # Startup
-    pre_run: list = []
-    pre_startup: list = []
-    setting_scripts: list = []
-    installed_apps: list = []
-    middleware: list = []
+    pre_run: list = field(default_factory=list)
+    pre_startup: list = field(default_factory=list)
+    setting_scripts: list = field(default_factory=list)
+    installed_apps: list = field(default_factory=list)
+    middleware: list = field(default_factory=list)
     landing_template: str = ""
     landing_view: Callable = None
     home_template: str = ""
@@ -26,20 +26,20 @@ class Config:
     server_settings_component: Callable = None
 
     # ASGI
-    websockets: list = []
+    websockets: list = field(default_factory=list)
 
     # WSGI
-    api_endpoints: list = []
-    url_patterns: list = []
+    api_endpoints: list = field(default_factory=list)
+    url_patterns: list = field(default_factory=list)
 
     # Components
-    navtabs: list = []
-    server_setting_tabs: list = []
-    user_setting_components: list = []
+    navtabs: list = field(default_factory=list)
+    server_setting_tabs: list = field(default_factory=list)
+    user_setting_components: list = field(default_factory=list)
 
     # HTML Head
-    css: list = []
-    scss: list = []
-    javascript: list = []
-    fonts: list = []
-    head_content: list = []
+    css: list = field(default_factory=list)
+    scss: list = field(default_factory=list)
+    javascript: list = field(default_factory=list)
+    fonts: list = field(default_factory=list)
+    head_content: list = field(default_factory=list)
