@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from conreq.utils.environment import get_base_url
 
-from . import apps
+from .apps import PwaConfig
 
 BASE_URL = get_base_url()
 
@@ -21,8 +21,8 @@ def manifest(request):
         request,
         "manifest.json",
         {
-            setting_name: getattr(apps, setting_name)
-            for setting_name in dir(apps)
+            setting_name: getattr(PwaConfig, setting_name)
+            for setting_name in dir(PwaConfig)
             if setting_name.startswith("PWA_")
         },
         content_type="application/json",
