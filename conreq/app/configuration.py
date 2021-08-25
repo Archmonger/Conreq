@@ -24,7 +24,9 @@ class _Config:
     sign_up_template: str = "registration/sign_up.html"
     sign_up_view: Callable = sign_up
     sign_in_template: str = "registration/sign_in.html"
-    sign_in_view: Callable = auth_views.LoginView.as_view
+    sign_in_view: Callable = auth_views.LoginView.as_view(
+        template_name=sign_in_template
+    )
     password_reset_template: str = ""
     password_reset_view: Callable = None
     loading_animation_template: str = "etc/loading_animation.html"

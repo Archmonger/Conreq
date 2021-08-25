@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.views.generic.base import RedirectView
-
+from conreq import app
 from conreq.utils.environment import get_base_url, get_debug
 
 PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
@@ -32,7 +32,7 @@ urlpatterns = [
     path("", include("conreq.core.pwa.urls")),
     path(
         "sign_in/",
-        auth_views.LoginView.as_view(template_name="registration/sign_in.html"),
+        app.config("sign_in_view"),
         name="sign_in",
     ),
     path("sign_out/", auth_views.logout_then_login, name="sign_out"),
