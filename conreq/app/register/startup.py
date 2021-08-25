@@ -105,6 +105,11 @@ def password_reset_view() -> None:
             return _wrapped_func(*args, **kwargs)
 
 
+def loading_animation_template(template: str) -> None:
+    """Changes the loading animation template variable."""
+    pass
+
+
 def manage_users_component() -> None:
     """Changes the manage users component."""
 

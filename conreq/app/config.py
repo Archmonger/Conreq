@@ -22,6 +22,7 @@ class Config:
     sign_in_view: Callable = None
     password_reset_template: str = ""
     password_reset_view: Callable = None
+    loading_animation_template: str = ""
     manage_users_component: Callable = None
     server_settings_component: Callable = None
 
