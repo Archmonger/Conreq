@@ -8,6 +8,7 @@
         "esbenp.prettier-vscode",
         "ms-python.vscode-pylance",
         "ms-python.python",
-        "mrmlnc.vscode-autoprefixer"
+        "mrmlnc.vscode-autoprefixer",
+        "gruntfuggly.todo-tree"
     ]
 }

@@ -1,6 +1,6 @@
 [MASTER]
 ignore=migrations
-disable=broad-except
+disable=broad-except, fixme
 load-plugins=pylint_django
 django-settings-module=conreq.settings
 [FORMAT]
