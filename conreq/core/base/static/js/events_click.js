@@ -45,7 +45,7 @@ var save_user_btn_click_event = async function () {
 };
 
 var invite_user_btn_click_event = async function () {
-	$(".standard-btn.invite-user").click(async function () {
+	$(".cr-btn.invite-user").click(async function () {
 		let btn = $(this);
 		let generate_invite_url = btn.data("generate-invite-url");
 		let sign_up_url = window.location.origin + btn.data("sign-up-url");

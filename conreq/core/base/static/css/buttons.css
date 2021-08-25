@@ -1,0 +1,33 @@
+.cr-btn {
+	color: #fff;
+	font-family: var(--global-font);
+	font-size: 17px;
+	line-height: 40px;
+	text-align: center;
+	width: auto;
+	padding-left: 15px;
+	padding-right: 15px;
+	height: 40px;
+	border-radius: 4px;
+	background: var(--accent-color);
+	float: right;
+	font-weight: 700;
+	transition: filter 0.3s ease;
+}
+
+.cr-btn.red {
+	background: #a53939;
+}
+
+.cr-btn.grey {
+	background: #6d6d6d;
+}
+
+.cr-btn:hover {
+	filter: brightness(1.1);
+}
+
+.cr-btn.available,
+.cr-btn.available:hover {
+	background: #333;
+}
