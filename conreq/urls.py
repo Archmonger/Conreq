@@ -21,7 +21,6 @@ from django.urls import include, path
 from django.views.generic.base import RedirectView
 
 from conreq.utils.environment import get_base_url, get_debug
-from conreq.utils.generic import list_modules_with
 
 PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
 DEBUG = get_debug()
@@ -42,10 +41,6 @@ urlpatterns = [
     path("server_settings/", include("conreq.core.server_settings.urls")),
     path("api/v1/", include("conreq.core.api.urls")),
 ]
-
-# Add User Installed Apps URLS
-for app_name, module_path in list_modules_with(PACKAGES_DIR, "urls"):
-    urlpatterns.insert(0, path(app_name + "/", include(module_path)))
 
 # Debug tools
 if DEBUG:
