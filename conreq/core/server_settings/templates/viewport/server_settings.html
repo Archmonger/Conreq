@@ -1,7 +1,7 @@
 {% load solo_tags %}
 {% load djversion_tags %}
 {% load static %}
-{% get_solo 'server_settings.ServerConfig' as server_settings %}
+{% get_solo 'server_settings.ServerConfig' as server_config %}
 {% project_version as VERSION %}
 {% csrf_token %}
 <input class="page-name" type="hidden" value="Server Settings">
@@ -27,7 +27,7 @@
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. /static/my_styles.css" autocomplete="off" autocorrect="off"
                         autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom CSS"
-                        value="{{ server_settings.conreq_custom_css }}" />
+                        value="{{ server_config.custom_css }}" />
                 </div>
             </div>
             <div class="settings-item-group">
@@ -36,7 +36,7 @@
                     <input type="text" class="settings-item small-text-input admin"
                         placeholder="ex. /static/my_scripts.js" autocomplete="off" autocorrect="off"
                         autocapitalize="off" spellcheck="false" data-setting-name="Conreq Custom JS"
-                        value="{{ server_settings.conreq_custom_js }}" />
+                        value="{{ server_config.custom_js }}" />
                 </div>
             </div>
         </div>
