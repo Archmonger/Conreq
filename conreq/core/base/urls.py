@@ -1,10 +1,11 @@
 from django.urls import path
 
-from . import views
+from conreq import app
 
 app_name = "base"
 
+
 urlpatterns = [
-    path("", views.landing, name="landing"),
-    path("home/", views.home, name="homescreen"),
+    path("", app.config("landing_view"), name="landing"),
+    path("home/", app.config("home_view"), name="home"),
 ]
