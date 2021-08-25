@@ -25,8 +25,7 @@ from conreq.utils.environment import (
     get_str_from_env,
     set_env,
 )
-from conreq.utils.generic import find_modules
-from conreq.utils.packages import find_apps
+from conreq.utils.packages import find_apps, find_modules
 
 # Project Directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

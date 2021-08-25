@@ -1,6 +1,4 @@
 """Generic functions to be used anywhere. All functions only have stdlib dependencies."""
-import os
-import pkgutil
 from re import sub
 
 
@@ -42,19 +40,3 @@ def str_to_int(value: str, default_value: int = 0) -> int:
     if isinstance(value, str) and value.isdigit():
         return int(value)
     return default_value
-
-
-def find_modules(path: str, prefix: str = "") -> set[str]:
-    """Returns all modules in a path"""
-    return {name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)}
-
-
-def find_modules_with(path: str, submodule_name: str, prefix: str = "") -> set[str]:
-    """Returns a tuple of all modules containing module name and an importable path to 'example.module.urls'"""
-    modules = find_modules(path)
-    modules_with = {}
-    for module in modules:
-        submodules = os.path.join(path, module)
-        if submodule_name in find_modules(submodules):
-            modules_with.add(module)
-    return modules_with
