@@ -37,7 +37,7 @@
 	line-height: 1.5;
 }
 
-.viewport-container-loading > .loading-animation-container {
+.viewport-container-loading {
 	display: flex;
 	height: 100%;
 	width: 100%;

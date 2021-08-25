@@ -3,6 +3,11 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
+from django.contrib.auth import views as auth_views
+
+from conreq.core.base.views import home, landing
+from conreq.core.sign_up.views import sign_up
+
 
 @dataclass
 class _Config:
@@ -13,16 +18,16 @@ class _Config:
     installed_apps: list = field(default_factory=list)
     middleware: list = field(default_factory=list)
     landing_template: str = ""
-    landing_view: Callable = None
-    home_template: str = ""
-    home_view: Callable = None
-    sign_up_template: str = ""
-    sign_up_view: Callable = None
-    sign_in_template: str = ""
-    sign_in_view: Callable = None
+    landing_view: Callable = landing
+    home_template: str = "homepage/home.html"
+    home_view: Callable = home
+    sign_up_template: str = "registration/sign_up.html"
+    sign_up_view: Callable = sign_up
+    sign_in_template: str = "registration/sign_in.html"
+    sign_in_view: Callable = auth_views.LoginView.as_view
     password_reset_template: str = ""
     password_reset_view: Callable = None
-    loading_animation_template: str = ""
+    loading_animation_template: str = "etc/loading_animation.html"
     manage_users_component: Callable = None
     server_settings_component: Callable = None
 
