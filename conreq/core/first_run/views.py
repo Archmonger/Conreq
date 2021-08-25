@@ -3,13 +3,13 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
 
-from conreq.core.server_settings.models import ConreqConfig
+from conreq.core.server_settings.models import ServerConfig
 
 from .forms import InitializationForm
 
 
 def initialize(request):
-    conreq_config = ConreqConfig.get_solo()
+    conreq_config = ServerConfig.get_solo()
 
     # Run the first time initialization if needed
     if conreq_config.initialized is False:

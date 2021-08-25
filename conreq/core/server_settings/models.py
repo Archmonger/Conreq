@@ -7,7 +7,7 @@ from conreq.utils.fields import HostnameOrURLField
 
 
 # Create your models here.
-class ConreqConfig(SingletonModel):
+class ServerConfig(SingletonModel):
     def __str__(self):
         return "Server Configuration Values"
 
