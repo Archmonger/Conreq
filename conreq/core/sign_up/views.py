@@ -15,7 +15,7 @@ INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 
 
 @performance_metrics()
-def invite(request):
+def sign_up(request):
     # User submitted the registration form
     invite_code = request.GET.get("invite_code", "")
     invite_key = "invite_code" + invite_code

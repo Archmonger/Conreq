@@ -16,7 +16,7 @@
             <div class="default-box-header">
                 <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
             </div>
-            <form method="post" action="{% url 'sign_up:invite_code' %}">
+            <form method="post" action="{% url 'sign_up:register' %}">
                 {% csrf_token %}
                 <h1>REGISTRATION</h1>
 
