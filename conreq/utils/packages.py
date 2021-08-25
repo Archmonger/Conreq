@@ -1,7 +1,11 @@
 import functools
 import os
 
+from conreq.utils import log
+
 from .generic import list_modules
+
+_logger = log.get_logger(__name__)
 
 
 @functools.cache
@@ -22,10 +26,24 @@ def _packages_dev_dir():
     return getattr(settings, "PACKAGES_DEV_DIR")
 
 
+def _duplicate_package_check(packages):
+    seen = set()
+    for package in packages:
+        if package in seen:
+            log.handler(
+                f"Using development copy of duplicate package '{package}'",
+                log.WARNING,
+                _logger,
+            )
+        seen.add(package)
+
+
 @functools.cache
 def list_packages() -> set[str]:
     """Returns all Conreq packages."""
-    return set(list_modules(_packages_dir()) + list_modules(_packages_dev_dir()))
+    packages = list_modules(_packages_dir()) + list_modules(_packages_dev_dir())
+    _duplicate_package_check(packages)
+    return set(packages)
 
 
 @functools.cache
