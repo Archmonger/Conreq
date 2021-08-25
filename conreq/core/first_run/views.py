@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
 
-from .forms import InitializationForm
 from conreq.core.server_settings.models import ConreqConfig
+
+from .forms import InitializationForm
 
 
 def initialize(request):

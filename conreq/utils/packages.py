@@ -4,7 +4,6 @@ import pkgutil
 
 from conreq.utils import log
 
-
 _logger = log.get_logger(__name__)
 
 
