@@ -1,27 +1,3 @@
 {
-	"app_name": "",
-	"app_version": "",
-	"description": "",
-	"screenshots": [""],
-	"notice_msg": "",
-	"gh_author": "",
-	"repository_url": "",
-	"homepage_url": "",
-	"support_url": "",
-	"donation_url": "",
-	"env_variables": [""],
-	"categories": [""],
-	"development_stage": 0,
-	"touch_compatible": false,
-	"mobile_compatible": false,
-	"min_conreq_version": "",
-	"tested_conreq_version": "",
-	"max_conreq_version": "",
-	"optional_apps": [""],
-	"required_apps": [""],
-	"incompatible_apps": [""],
-	"incompatible_app_categories": [""],
-	"sys_platforms": ["Any"],
-	"async_compatibility": 0,
-	"redirect_app_to": ""
+    "empty": "Please generate this file via the management command prior to listing on the app store"
 }

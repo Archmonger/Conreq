@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core.management.templates import TemplateCommand
 
 PACKAGES_DIR = getattr(settings, "PACKAGES_DEV_DIR")
-PACKAGE_TEMPLATE = getattr(settings, "PACKAGE_TEMPLATE")
 APP_TEMPLATE = getattr(settings, "APP_TEMPLATE")
 APP_SLIM_TEMPLATE = getattr(settings, "APP_SLIM_TEMPLATE")
 
@@ -13,7 +12,7 @@ class Command(TemplateCommand):
     help = "Creates a Conreq app structure within a package."
 
     # pylint: disable=arguments-differ
-    def handle(self, package_name, app_name, **options):
+    def handle(self, package_name: str, app_name: str, **options: dict):
         # Conreq Customizatizations to TemplateCommand.handle()
         name = app_name
         app_or_project = "app"
@@ -21,8 +20,8 @@ class Command(TemplateCommand):
         options["template"] = APP_TEMPLATE
         options["extensions"] = ["py"]
         options["files"] = []
-        options["template"] = APP_TEMPLATE
         options["package_name"] = package_name
+        options["verbose_name"] = app_name.replace("_", " ").title()
         super().handle(app_or_project, name, target, **options)
 
     def add_arguments(self, parser):
