@@ -1,21 +1,21 @@
 from typing import Any
 
-_CONFIG_OBJECT = None
+CONFIG = None
 
 
 def _load_config():
     """Load configuration functionally to avoid circular imports."""
     # pylint: disable=global-statement,import-outside-toplevel
-    global _CONFIG_OBJECT
+    global CONFIG
 
-    if not _CONFIG_OBJECT:
+    if not CONFIG:
         from conreq.app.configuration import _Config
 
-        _CONFIG_OBJECT = _Config()
+        CONFIG = _Config()
 
 
 def config(attribute: str, value: Any = None):
     _load_config()
     if not value:
-        return getattr(_CONFIG_OBJECT, attribute, None)
-    return setattr(_CONFIG_OBJECT, attribute)
+        return getattr(CONFIG, attribute, None)
+    return setattr(CONFIG, attribute)

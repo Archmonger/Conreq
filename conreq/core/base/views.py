@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
+from conreq import app
 from conreq.core.first_run.views import initialize
 from conreq.utils.debug import performance_metrics
 from conreq.utils.environment import get_base_url, get_debug
-from conreq import app
 
 BASE_URL = get_base_url()
 DEBUG = get_debug()
@@ -24,7 +24,11 @@ def landing(request):
         return redirect("base:home")
 
     # Render the landing page
-    return render(request, landing_template, {"base_url": BASE_URL, "debug": DEBUG})
+    return render(
+        request,
+        landing_template,
+        {"base_url": BASE_URL, "debug": DEBUG, "app_config": app.CONFIG},
+    )
 
 
 @performance_metrics()
@@ -38,5 +42,7 @@ def home(request):
 
     # Render the home page
     return login_required(render)(
-        request, app.config("home_template"), {"base_url": BASE_URL, "debug": DEBUG}
+        request,
+        app.config("home_template"),
+        {"base_url": BASE_URL, "debug": DEBUG, "app_config": app.CONFIG},
     )
