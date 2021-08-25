@@ -4,7 +4,7 @@ from functools import wraps
 # pylint: disable=unused-argument,unused-variable
 
 
-def url(path: str, use_regex: bool = False) -> object:
+def url(path: str, name: str = None, use_regex: bool = False) -> object:
     """Decorates a Django view function."""
 
     def decorator(func):
