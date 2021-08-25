@@ -5,7 +5,7 @@ from typing import Callable
 
 
 @dataclass
-class Config:
+class _Config:
     # Startup
     pre_run: list = field(default_factory=list)
     pre_startup: list = field(default_factory=list)
@@ -44,3 +44,6 @@ class Config:
     javascript: list = field(default_factory=list)
     fonts: list = field(default_factory=list)
     head_content: list = field(default_factory=list)
+
+
+Config = _Config()

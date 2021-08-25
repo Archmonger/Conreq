@@ -1,3 +1,3 @@
-from conreq.app.config import Config as _Config
+from conreq.app.config import Config
 
-Config = _Config()
+__all__ = ["Config"]
