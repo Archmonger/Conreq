@@ -1,9 +1,7 @@
 """Helpers to render IDOM elements on the page"""
 from functools import wraps
 
-from conreq.app.component.icon import Icon
-from conreq.app.component.viewport import Navtab, Viewport
-from conreq.app.selectors import AuthLevel
+from conreq.app.selectors import AuthLevel, Viewport
 
 # TODO: Create these functions
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass
@@ -12,10 +10,6 @@ from conreq.app.selectors import AuthLevel
 def viewport(
     selector: Viewport = Viewport.primary,
     auth_level: AuthLevel = AuthLevel.user,
-    nav_tab: Navtab = None,
-    group_icon: Icon = None,
-    icon_left: Icon = None,
-    icon_right: Icon = None,
 ) -> object:
     """Decorates an IDOM component. Forcibly changes the viewport content."""
 

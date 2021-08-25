@@ -1,7 +1,6 @@
 from functools import wraps
 
 from conreq.app.component.icon import Icon
-from conreq.app.component.viewport import Navtab
 
 from ..selectors import AuthLevel, Viewport
 
@@ -9,13 +8,19 @@ from ..selectors import AuthLevel, Viewport
 # pylint: disable=unused-argument,unused-variable
 
 
-def navtab(
+def nav_group(
+    group_name: str,
+    group_icon: Icon = None,
+):
+    pass
+
+
+def nav_tab(
+    tab_name: str,
+    group_name: str,
     selector: Viewport = Viewport.primary,
     auth_level: AuthLevel = AuthLevel.user,
-    nav_tab: Navtab = None,
-    group_icon: Icon = None,
     icon: Icon = None,
-    button: Icon = None,
 ) -> object:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked."""
 
@@ -25,17 +30,8 @@ def navtab(
             return _wrapped_func(*args, **kwargs)
 
 
-def server_settings(page_name: str) -> object:
+def server_setting(page_name: str) -> object:
     """Decorates an IDOM component. Creates a settings page."""
-
-    def decorator(func):
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return _wrapped_func(*args, **kwargs)
-
-
-def user_settings(admin_only: bool = False) -> object:
-    """Decorates an IDOM component. Component is injected into the user settings modal."""
 
     def decorator(func):
         @wraps(func)
