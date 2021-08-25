@@ -20,6 +20,9 @@ django-model-utils==4.1.1
 django-solo==1.1.5
 django-cleanup==5.2.0
 
+# Front End
+django-idom==0.0.1
+
 # API
 djangorestframework==3.12.4
 djangorestframework-api-key==2.0.0
