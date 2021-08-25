@@ -49,6 +49,3 @@ class _Config:
     javascript: list = field(default_factory=list)
     fonts: list = field(default_factory=list)
     head_content: list = field(default_factory=list)
-
-
-Config = _Config()
