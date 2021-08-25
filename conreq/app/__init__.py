@@ -1,3 +1,3 @@
-from conreq.app.config import Config
+from conreq.app.config import Config as _Config
 
-config = Config()
+Config = _Config()

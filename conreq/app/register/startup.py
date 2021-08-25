@@ -112,3 +112,12 @@ def manage_users_component() -> None:
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
+
+
+def server_settings_component() -> None:
+    """Changes the server settings component."""
+
+    def decorator(func):
+        @wraps(func)
+        def _wrapped_func(*args, **kwargs):
+            return _wrapped_func(*args, **kwargs)

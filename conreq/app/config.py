@@ -1,43 +1,45 @@
 """Conreq's configuration values."""
 
 from dataclasses import dataclass
+from typing import Callable
 
 
 @dataclass
 class Config:
     # Startup
-    pre_run = []
-    pre_startup = []
-    setting_scripts = []
-    installed_apps = []
-    middleware = []
-    landing_template = ""
-    landing_view = None
-    home_template = ""
-    home_view = None
-    sign_up_template = ""
-    sign_up_view = None
-    sign_in_template = ""
-    sign_in_view = None
-    password_reset_template = ""
-    password_reset_view = None
-    manage_users_component = None
+    pre_run: list = []
+    pre_startup: list = []
+    setting_scripts: list = []
+    installed_apps: list = []
+    middleware: list = []
+    landing_template: str = ""
+    landing_view: Callable = None
+    home_template: str = ""
+    home_view: Callable = None
+    sign_up_template: str = ""
+    sign_up_view: Callable = None
+    sign_in_template: str = ""
+    sign_in_view: Callable = None
+    password_reset_template: str = ""
+    password_reset_view: Callable = None
+    manage_users_component: Callable = None
+    server_settings_component: Callable = None
 
     # ASGI
-    websockets = []
+    websockets: list = []
 
     # WSGI
-    api_endpoints = []
-    url_patterns = []
+    api_endpoints: list = []
+    url_patterns: list = []
 
     # Components
-    navtabs = []
-    server_setting_tabs = []
-    user_setting_components = []
+    navtabs: list = []
+    server_setting_tabs: list = []
+    user_setting_components: list = []
 
     # HTML Head
-    css = []
-    scss = []
-    javascript = []
-    fonts = []
-    head_content = []
+    css: list = []
+    scss: list = []
+    javascript: list = []
+    fonts: list = []
+    head_content: list = []
