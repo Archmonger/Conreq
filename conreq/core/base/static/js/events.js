@@ -10,29 +10,6 @@ var show_modal = async function () {
 	$("#modal-container").modal("show");
 };
 
-// TODO: Reassess
-var sidebar_collapse = async function () {
-	$(".nav-tab.suboption, .navbar-toggler").each(async function () {
-		$(this).click(async function () {
-			if (window.matchMedia("(max-width: 800px)").matches) {
-				if ($("#sidebar").hasClass("collapsed")) {
-					$("#sidebar").removeClass("collapsed");
-				} else {
-					$("#sidebar").addClass("collapsed");
-				}
-			}
-		});
-	});
-};
-
-// TODO: Reassess
-$(document).ready(async function () {
-	if ($("#sidebar")[0]) {
-		new SimpleBar($("#sidebar")[0]);
-		sidebar_collapse();
-	}
-});
-
 // Shows a toast message
 var toast_message = async function (parameters) {
 	iziToast.show(parameters);
@@ -60,3 +37,26 @@ var create_invite_link_elem = function (invite_link) {
 	el.className = "invite_link";
 	document.body.appendChild(el);
 };
+
+// TODO: Reassess
+var sidebar_collapse = async function () {
+	$(".nav-tab.suboption, .navbar-toggler").each(async function () {
+		$(this).click(async function () {
+			if (window.matchMedia("(max-width: 800px)").matches) {
+				if ($("#sidebar").hasClass("collapsed")) {
+					$("#sidebar").removeClass("collapsed");
+				} else {
+					$("#sidebar").addClass("collapsed");
+				}
+			}
+		});
+	});
+};
+
+// TODO: Reassess
+$(document).ready(async function () {
+	if ($("#sidebar")[0]) {
+		new SimpleBar($("#sidebar")[0]);
+		sidebar_collapse();
+	}
+});
