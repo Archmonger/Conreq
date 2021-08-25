@@ -17,6 +17,8 @@ class Profile(models.Model):
     tracker = FieldTracker()
 
 
+# TODO: Make a generic version of this in the database utils
+# Perhaps call it auto_generate_model?
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     # pylint: disable=unused-argument
