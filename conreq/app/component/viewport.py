@@ -1,10 +1,18 @@
+from dataclasses import dataclass
 from functools import wraps
 
+from conreq.app.component.icon import Icon
+
 from ..selectors import AuthLevel, Viewport
-from .types import Icon, Navtab
 
 # TODO: Create these functions
 # pylint: disable=unused-argument,unused-variable
+
+
+@dataclass
+class Navtab:
+    page_name: str
+    group_name: str
 
 
 def navtab(

@@ -1,7 +1,9 @@
 """Helpers to render IDOM elements on the page"""
 from functools import wraps
 
-from conreq.app import AuthLevel, Icon, Navtab, Viewport
+from conreq.app.component.icon import Icon
+from conreq.app.component.viewport import Navtab, Viewport
+from conreq.app.selectors import AuthLevel
 
 # TODO: Create these functions
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass
