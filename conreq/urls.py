@@ -118,11 +118,6 @@ if DEBUG:
             SchemaView.with_ui("swagger", cache_timeout=0),
             name="schema-swagger-ui",
         ),
-        re_path(
-            r"^redoc/$",
-            SchemaView.with_ui("redoc", cache_timeout=0),
-            name="schema-redoc",
-        ),
     ]
 
     for pattern in docs_urlpatterns:
