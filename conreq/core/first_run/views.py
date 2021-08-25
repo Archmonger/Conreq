@@ -9,10 +9,10 @@ from .forms import InitializationForm
 
 
 def initialize(request):
-    conreq_config = ServerConfig.get_solo()
+    server_config = ServerConfig.get_solo()
 
     # Run the first time initialization if needed
-    if conreq_config.initialized is False:
+    if server_config.initialized is False:
 
         # User submitted the first time setup form
         if request.method == "POST":
@@ -30,8 +30,8 @@ def initialize(request):
                 user.is_superuser = True
                 user.save()
                 login(request, user)
-                conreq_config.initialized = True
-                conreq_config.save()
+                server_config.initialized = True
+                server_config.save()
                 return redirect("base:landing")
 
             # Form data wasn't valid, so return the error codes
