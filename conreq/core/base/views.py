@@ -8,7 +8,7 @@ from conreq.utils.environment import get_base_url, get_debug
 BASE_URL = get_base_url()
 DEBUG = get_debug()
 LANDING_TEMPLATE = None
-HOME_TEMPLATE = "primary/base_app.html"
+HOME_TEMPLATE = "homepage/home.html"
 
 
 @performance_metrics()

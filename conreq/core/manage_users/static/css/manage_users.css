@@ -183,3 +183,17 @@ table.table .avatar {
 	margin-top: 10px;
 	font-size: 13px;
 }
+
+@media only screen and (max-width: 800px) {
+	.table-wrapper {
+		padding: 0;
+	}
+	.table-title-container {
+		margin: 0;
+	}
+	.table-wrapper .fixed-table-pagination,
+	.table-wrapper .fixed-table-toolbar {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}

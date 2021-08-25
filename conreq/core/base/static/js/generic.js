@@ -118,6 +118,7 @@ var create_invite_link_elem = function (invite_link) {
 	document.body.appendChild(el);
 };
 
+// TODO: Remove this
 // Post to a URL
 var post_url = function (url, callback) {
 	http_request.abort();
@@ -133,6 +134,7 @@ var post_url = function (url, callback) {
 	return http_request;
 };
 
+// TODO: Remove this
 // Post JSON to a URL
 var post_json = function (url, data, callback) {
 	http_request.abort();
@@ -150,6 +152,7 @@ var post_json = function (url, data, callback) {
 	return http_request;
 };
 
+// TODO: Remove this
 // Gets a URL
 var get_url = function (location, success = function () {}) {
 	http_request.abort();
@@ -157,29 +160,6 @@ var get_url = function (location, success = function () {}) {
 		return success(response);
 	});
 	return http_request;
-};
-
-// Post a form to a URL
-var post_modal_form = function (callback) {
-	let modal_form = $(".modal-body form");
-	if (modal_form.length) {
-		let url = modal_form.attr("action");
-		http_request.abort();
-		http_request = $.ajax({
-			type: "POST",
-			url: url,
-			headers: {
-				"X-CSRFToken": document.getElementsByName(
-					"csrfmiddlewaretoken"
-				)[0].value,
-			},
-			data: modal_form.serialize(),
-			success: callback,
-		});
-		return http_request;
-	}
-	console.warn("Attempted to submit modal form that doesn't exist!");
-	return false;
 };
 
 // Hide any floaty objects

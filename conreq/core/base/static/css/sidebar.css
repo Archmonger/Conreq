@@ -140,3 +140,35 @@
 	width: 42px;
 	margin-left: -13px;
 }
+
+@media only screen and (max-width: 1150px) {
+	:root {
+		--sidebar-width: 200px;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	:root {
+		--sidebar-width: 100%;
+	}
+	.searchbar {
+		width: auto;
+		margin-bottom: 15px;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.sidebar {
+		z-index: 99;
+		transition: height 0.4s ease-in;
+		background: #1f1f1f;
+	}
+	.sidebar.collapsed {
+		display: none;
+	}
+	.nav-tab .fas {
+		opacity: 1;
+		margin: 0;
+		padding: var(--navpages-btn-padding);
+		padding-left: 20px;
+	}
+}

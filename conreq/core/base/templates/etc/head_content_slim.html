@@ -9,7 +9,7 @@
 <meta name="Description" content="Conreq: Content Requesting">
 
 <!-- Favicons and App icons -->
-{% include "primary/icons.html" %}
+{% include "etc/icons.html" %}
 
 <!-- Preconnections -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,19 +29,16 @@
     integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
     crossorigin="anonymous"></script>
 
-{% compress css %}
-<!-- Notification Popups (izi Toast) -->
-<link rel="stylesheet" href="{% static 'css/libraries/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous">
 <!-- Local CSS -->
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/main_slim.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/login.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/initialization.css' %}" crossorigin="anonymous">
 {% endcompress %}
 
-{% compress js %}
-<!-- Notification Popups (izi Toast) -->
-<script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
 <!-- Local JS -->
-<script src="{% static 'js/toast_messages.js' %}" crossorigin="anonymous"></script>
-<script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
+{% compress js %}
+<script src="{% static 'js/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
+<script src="{% static 'js/events.js' %}" crossorigin="anonymous"></script>
+<script src="{% static 'js/generic.js' %}" crossorigin="anonymous"></script>
 {% endcompress %}

@@ -213,3 +213,8 @@ ul.errorlist > li {
 	margin-top: 40px;
 	text-align: center;
 }
+
+/* Sign In */
+.sign-in-form {
+	margin-top: 35px;
+}

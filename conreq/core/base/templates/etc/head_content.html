@@ -4,12 +4,12 @@
 {% load conreq_tags %}
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>{{ server_settings.conreq_app_name }}</title>
+<title>{{ server_settings.app_name }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="Description" content="{% app_description %}">
 
 <!-- Favicons and App icons -->
-{% include "primary/icons.html" %}
+{% include "etc/icons.html" %}
 {% progressive_web_app_meta %}
 
 <!-- Preconnections -->
@@ -63,12 +63,9 @@
     integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
     crossorigin="anonymous"></script>
 
-
-{% compress css %}
-<!-- Notification Popups (izi Toast) -->
-<link rel="stylesheet" href="{% static 'css/libraries/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous">
-
 <!-- Local CSS -->
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/izi_toast_1.4.0.min.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/main.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/buttons.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" crossorigin="anonymous">
@@ -77,30 +74,13 @@
 <link rel="stylesheet" href="{% static 'css/modal.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/server_settings.css' %}" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/manage_users.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/mobile.css' %}" crossorigin="anonymous">
 {% endcompress %}
 
-
-{% compress js %}
-<!-- Notification Popups (izi Toast) -->
-<script src="{% static 'js/libraries/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
 <!-- Local JS -->
-<script src="{% static 'js/toast_messages.js' %}" crossorigin="anonymous"></script>
-<script src="{% static 'js/generic_functions.js' %}" crossorigin="anonymous"></script>
+{% compress js %}
+<script src="{% static 'js/izi_toast_1.4.0.min.js' %}" crossorigin="anonymous"></script>
+<script src="{% static 'js/generic.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/client_websockets.js' %}" crossorigin="anonymous"></script>
-<script src="{% static 'js/events_click.js' %}" crossorigin="anonymous"></script>
-<script src="{% static 'js/events_generic.js' %}" crossorigin="anonymous"></script>
-<script src="{% static 'js/sidebar.js' %}" crossorigin="anonymous"></script>
-<script src="{% static 'js/modal.js' %}" crossorigin="anonymous"></script>
+<script src="{% static 'js/events.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'js/viewport.js' %}" crossorigin="anonymous"></script>
 {% endcompress %}
-
-<!-- User defined JS -->
-{% if server_settings.conreq_custom_js %}
-<script src="{{ server_settings.conreq_custom_js }}" crossorigin="anonymous"></script>
-{% endif %}
-
-<!-- User defined CSS -->
-{% if server_settings.conreq_custom_css %}
-<link rel="stylesheet" href="{{ server_settings.conreq_custom_css }}" crossorigin="anonymous">
-{% endif %}
