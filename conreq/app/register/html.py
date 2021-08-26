@@ -10,7 +10,7 @@ def css(path: str, attributes: dict = None, local=True) -> None:
 
 
 def scss(path: str, attributes: list[tuple] = None):
-    app.config("scss").append((path, attributes))
+    app.config("scss_stylesheets").append((path, attributes))
 
 
 def javascript(path: str, attributes: list[tuple] = None, local=True) -> None:
