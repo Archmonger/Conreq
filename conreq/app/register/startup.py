@@ -3,14 +3,16 @@
 from functools import wraps
 from typing import Callable
 
-# TODO: Create these functions
-# pylint: disable=unused-argument,unused-variable,unnecessary-pass
+from conreq import app
 
 
-def pre_run(admin_required: bool = False) -> Callable:
-    """Decorates any function that needs to be run prior to the webserver being up, but after Django has been configured."""
+def pre_run() -> Callable:
+    """Decorates any function that needs to be run prior to the webserver being up."""
 
     def decorator(func):
+
+        app.config("pre_run").append(func)
+
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
@@ -18,20 +20,26 @@ def pre_run(admin_required: bool = False) -> Callable:
     return decorator
 
 
-def setting_script(file_path: str) -> None:
+def setting_script(path: str) -> None:
     """Runs a file in settings.py. See django-split-settings for more details."""
-    pass
+    app.config("setting_script").append(path)
 
 
 def installed_app(path: str) -> None:
     """Shortcut to add an installed app to Django."""
-    pass
+    app.config("installed_apps").append(path)
 
 
 def middleware(
     path: str,
     positioning_element: str = None,
-    position_bottom: bool = True,
+    position_below: bool = True,
 ) -> None:
     """Shortcut to add middleware to Django."""
-    pass
+    app.config("middlewares").append(
+        {
+            "path": path,
+            "pos_elem": positioning_element,
+            "below": position_below,
+        }
+    )

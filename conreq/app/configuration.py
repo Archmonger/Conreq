@@ -14,7 +14,7 @@ class _Config:
     pre_run: list[Callable] = field(default_factory=list)
     setting_scripts: list[str] = field(default_factory=list)
     installed_apps: list[str] = field(default_factory=list)
-    middleware: list[str] = field(default_factory=list)
+    middlewares: list[dict] = field(default_factory=list)
 
     # Views
     landing_view: Callable = landing
