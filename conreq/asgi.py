@@ -8,7 +8,6 @@ https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 # pylint: disable=wrong-import-position
 from django.core.asgi import get_asgi_application
-from django.urls import path
 
 # Fetch ASGI application before importing dependencies that require ORM models.
 django_asgi_app = get_asgi_application()
@@ -17,7 +16,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 
-from conreq.core.websockets.consumers import CommandConsumer
+from conreq import app
 
 
 class LifespanApp:
@@ -47,7 +46,7 @@ application = ProtocolTypeRouter(
         # See https://github.com/django/channels/issues/1587
         "http": django_asgi_app,
         "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter([path("", CommandConsumer().as_asgi())]))
+            AuthMiddlewareStack(URLRouter(app.config("websockets")))
         ),
         "lifespan": LifespanApp,
     }

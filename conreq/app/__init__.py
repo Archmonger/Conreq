@@ -1,10 +1,14 @@
 from typing import Any
 
+from . import component, register, render, selectors
+
+__all__ = ["component", "register", "render", "selectors"]
+
 CONFIG: object = None
 
 
 def _load_config() -> None:
-    """Load configuration functionally to avoid circular imports."""
+    """Load configuration in a different context to avoid circular imports."""
     # pylint: disable=global-statement,import-outside-toplevel
     global CONFIG
 

@@ -9,7 +9,7 @@ from conreq.utils import log
 _logger = log.get_logger(__name__)
 
 
-class CommandConsumer(AsyncJsonWebsocketConsumer):
+class BaseWebsocket(AsyncJsonWebsocketConsumer):
     """Conreq websocket communication."""
 
     # INITIAL CONNECTION
