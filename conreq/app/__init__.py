@@ -19,6 +19,7 @@ def _load_config() -> None:
 
 
 def config(attribute: str, value: Any = None) -> Any:
+    """Get or set global Conreq app configuration values."""
     _load_config()
     if not value:
         return getattr(CONFIG, attribute, None)
