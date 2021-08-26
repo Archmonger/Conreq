@@ -48,8 +48,9 @@ class _Config:
     user_setting_components: list = field(default_factory=list)
 
     # HTML Head
-    css: list = field(default_factory=list)
-    scss: list = field(default_factory=list)
-    javascript: list = field(default_factory=list)
-    fonts: list = field(default_factory=list)
+    local_stylesheets: list[tuple[str, dict]] = field(default_factory=list)
+    remote_stylesheets: list[tuple[str, dict]] = field(default_factory=list)
+    local_javascript: list[tuple[str, dict]] = field(default_factory=list)
+    remote_javascript: list[tuple[str, dict]] = field(default_factory=list)
+    scss: list[tuple[str, dict]] = field(default_factory=list)
     head_content: list = field(default_factory=list)
