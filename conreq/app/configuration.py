@@ -11,11 +11,10 @@ from conreq.core.sign_up.views import sign_up
 @dataclass
 class _Config:
     # Startup
-    pre_run: list = field(default_factory=list)
-    pre_startup: list = field(default_factory=list)
-    setting_scripts: list = field(default_factory=list)
-    installed_apps: list = field(default_factory=list)
-    middleware: list = field(default_factory=list)
+    pre_run: list[Callable] = field(default_factory=list)
+    setting_scripts: list[str] = field(default_factory=list)
+    installed_apps: list[str] = field(default_factory=list)
+    middleware: list[str] = field(default_factory=list)
 
     # Views
     landing_view: Callable = landing
@@ -37,15 +36,15 @@ class _Config:
     server_settings_component: Callable = None
 
     # ASGI
-    websockets: list = field(default_factory=list)
+    websockets: list[Callable] = field(default_factory=list)
 
     # WSGI (API and URLs)
     url_patterns: list = field(default_factory=list)
 
     # Components
     nav_tabs: dict[str, dict] = field(default_factory=dict)
-    server_setting_tabs: list = field(default_factory=list)
-    user_setting_components: list = field(default_factory=list)
+    server_setting_tabs: list[tuple[str, Callable]] = field(default_factory=list)
+    user_setting_components: list[Callable] = field(default_factory=list)
 
     # HTML Head
     local_stylesheets: list[tuple[str, dict]] = field(default_factory=list)
