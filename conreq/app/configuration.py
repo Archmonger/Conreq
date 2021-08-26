@@ -49,7 +49,7 @@ class _Config:
     # HTML Head
     local_stylesheets: list[tuple[str, dict]] = field(default_factory=list)
     remote_stylesheets: list[tuple[str, dict]] = field(default_factory=list)
-    local_javascript: list[tuple[str, dict]] = field(default_factory=list)
-    remote_javascript: list[tuple[str, dict]] = field(default_factory=list)
+    local_scripts: list[tuple[str, dict]] = field(default_factory=list)
+    remote_scripts: list[tuple[str, dict]] = field(default_factory=list)
     scss: list[tuple[str, dict]] = field(default_factory=list)
     head_content: list = field(default_factory=list)

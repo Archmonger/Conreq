@@ -15,9 +15,9 @@ def scss(path: str, attributes: list[tuple] = None):
 
 def javascript(path: str, attributes: list[tuple] = None, local=True) -> None:
     if local:
-        app.config("local_javascript").append((path, attributes))
+        app.config("local_scripts").append((path, attributes))
     else:
-        app.config("remote_javascript").append((path, attributes))
+        app.config("remote_scripts").append((path, attributes))
 
 
 def font(path: str, attributes: list[tuple] = None, local=True) -> None:
