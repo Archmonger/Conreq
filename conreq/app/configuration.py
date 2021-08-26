@@ -47,9 +47,9 @@ class _Config:
     user_setting_components: list[Callable] = field(default_factory=list)
 
     # HTML Head
-    local_stylesheets: list[tuple[str, dict]] = field(default_factory=list)
-    remote_stylesheets: list[tuple[str, dict]] = field(default_factory=list)
-    scss_stylesheets: list[tuple[str, dict]] = field(default_factory=list)
-    local_scripts: list[tuple[str, dict]] = field(default_factory=list)
-    remote_scripts: list[tuple[str, dict]] = field(default_factory=list)
+    local_stylesheets: list[dict] = field(default_factory=list)
+    remote_stylesheets: list[dict] = field(default_factory=list)
+    scss_stylesheets: list[dict] = field(default_factory=list)
+    local_scripts: list[dict] = field(default_factory=list)
+    remote_scripts: list[dict] = field(default_factory=list)
     head_content: list = field(default_factory=list)
