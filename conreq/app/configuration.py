@@ -3,8 +3,6 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
-from django.contrib.auth import views as auth_views
-
 from conreq.core.base.views import home, landing
 from conreq.core.sign_in.views import sign_in
 from conreq.core.sign_up.views import sign_up
