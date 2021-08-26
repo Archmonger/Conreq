@@ -81,6 +81,15 @@ def get_base_url() -> str:
 
 
 @functools.cache
+def get_home_url() -> str:
+    """Obtains the base URL from the environment variables"""
+    home_url = get_str_from_env("HOME_URL", "home")
+    if home_url:
+        home_url = home_url.replace("/", "").replace("\\", "")
+    return home_url
+
+
+@functools.cache
 def get_database_type() -> str:
     """Determines what type of database the current Conreq instance should be using. Ex) MYSQL, SQLITE, etc."""
     db_engine = get_str_from_env("DB_ENGINE")
