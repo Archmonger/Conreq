@@ -1,17 +1,39 @@
 from functools import wraps
-from typing import Callable
+from typing import Callable, Union
 
-# TODO: Create these functions
-# pylint: disable=unused-argument,unused-variable
+from django import urls
+from django.views.generic import View
+
+from conreq import app
+from conreq.utils.environment import get_base_url
+
+BASE_URL = get_base_url()
 
 
-def url(path: str, name: str = None, use_regex: bool = False) -> Callable:
-    """Decorates a Django view function."""
+def url(
+    path: str,
+    name: str = None,
+    use_regex: bool = False,
+) -> Union[Callable, View]:
+    """Decorates a Django view function or view class."""
 
-    def decorator(func):
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return _wrapped_func(*args, **kwargs)
+    def decorator(func_or_cls: Union[Callable, View]):
+
+        view = func_or_cls
+        if isinstance(func_or_cls, View):
+            view = view.as_view()
+
+        url_patterns = app.config("url_patterns")
+        if not use_regex:
+            url_patterns.append(urls.path(f"{BASE_URL}/{path}", func_or_cls, name=name))
+        else:
+            url_patterns.append(
+                urls.re_path(f"{BASE_URL}/{path}", func_or_cls, name=name)
+            )
+
+        @wraps(func_or_cls)
+        def _wrapped_view(*args, **kwargs):
+            return _wrapped_view(*args, **kwargs)
 
     return decorator
 
@@ -19,14 +41,26 @@ def url(path: str, name: str = None, use_regex: bool = False) -> Callable:
 def api(
     path: str,
     version: int,
-    auth: bool = True,
     use_regex: bool = False,
-) -> Callable:
-    """Decorates a DRF view function."""
+) -> View:
+    """Decorates a DRF view function or view class."""
 
-    def decorator(func):
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return _wrapped_func(*args, **kwargs)
+    def decorator(func_or_cls: Union[Callable, View]):
+
+        view = func_or_cls
+        if isinstance(func_or_cls, View):
+            view = view.as_view()
+
+        url_patterns = app.config("url_patterns")
+        if not use_regex:
+            url_patterns.append(urls.path(f"{BASE_URL}/v{version}/{path}", func_or_cls))
+        else:
+            url_patterns.append(
+                urls.re_path(f"{BASE_URL}/v{version}/{path}", func_or_cls)
+            )
+
+        @wraps(func_or_cls)
+        def _wrapped_view(*args, **kwargs):
+            return _wrapped_view(*args, **kwargs)
 
     return decorator

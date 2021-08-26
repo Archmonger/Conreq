@@ -6,9 +6,7 @@ from django import urls
 from conreq import app
 from conreq.utils.environment import get_base_url
 
-BASE_URL = get_base_url().lstrip("/")
-if BASE_URL:
-    BASE_URL = BASE_URL + "/"
+BASE_URL = get_base_url()
 
 
 def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
@@ -18,9 +16,9 @@ def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
 
         websockets = app.config("websockets")
         if not use_regex:
-            websockets.append(urls.path(BASE_URL + path, class_.as_asgi()))
+            websockets.append(urls.path(f"{BASE_URL}/{path}", class_.as_asgi()))
         else:
-            websockets.append(urls.re_path(BASE_URL + path, class_.as_asgi()))
+            websockets.append(urls.re_path(f"{BASE_URL}/{path}", class_.as_asgi()))
 
         @wraps(class_)
         def _wrapped_class(*args, **kwargs):
