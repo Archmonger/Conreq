@@ -14,9 +14,9 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 
 -   Installable Apps
 -   Behaves as a Progressive Web App (PWA)
--   Customization for all Core Webpages
--   Supports Multiple Database Backends
--   [Support for all Django Features](https://github.com/django/django)
+-   Customization for All Core Webpages
+-   Support for MySQL, MariaDB, and SQLite Databases
+-   [Support for All Django Features](https://github.com/django/django)
 -   [Async and Websockets (ASGI)](https://github.com/django/channels)
 -   [Virtual DOM with Support for ReactJS Components](https://github.com/idom-team/django-idom)
 -   [Background Task Processing](https://github.com/coleifer/huey)
@@ -25,13 +25,17 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [High Performance Webserver](https://github.com/pgjones/hypercorn)
 -   [High Performance Caching](https://github.com/grantjenks/python-diskcache)
 -   [Automatic CSS/JS File Compression](https://github.com/django-compressor/django-compressor)
--   [Automatic SASS/SCSS to CSS Compilation](https://github.com/jrief/django-sass-processor)
 -   [Automatic HTML File Compression](https://github.com/friedelwolff/django-compression-middleware)
 -   [Automatic Cache Busting](https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#django.contrib.staticfiles.storage.ManifestStaticFilesStorage)
 -   [Automatic Code Performance Graphs](https://github.com/jazzband/django-silk)
 -   [Automatic NPM Package Installation](https://github.com/kevin1024/django-npm)
 -   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
 -   [Automatic Database Optimization (SQLite)](https://www.sqlite.org/lang_vacuum.html)
+
+## Features (Coming Soon)
+
+-   Supports for Oracle, PostgreSQL, and MongoDB Databases
+-   [Automatic SASS/SCSS to CSS Compilation](https://github.com/jrief/django-sass-processor)
 -   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
 
 ## Communities
