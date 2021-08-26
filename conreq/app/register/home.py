@@ -29,6 +29,8 @@ def nav_tab(
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
 
+    return decorator
+
 
 def server_setting(page_name: str) -> object:
     """Decorates an IDOM component. Creates a settings page."""
@@ -37,3 +39,5 @@ def server_setting(page_name: str) -> object:
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
+
+    return decorator

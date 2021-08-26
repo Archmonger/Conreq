@@ -17,3 +17,5 @@ def viewport(
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
+
+    return decorator

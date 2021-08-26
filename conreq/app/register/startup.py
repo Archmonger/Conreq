@@ -14,6 +14,8 @@ def pre_run(admin_required: bool = False) -> object:
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
 
+    return decorator
+
 
 def setting_script(file_path: str) -> None:
     """Runs a file in settings.py. See django-split-settings for more details."""

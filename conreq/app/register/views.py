@@ -12,6 +12,8 @@ def landing_view() -> None:
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
 
+    return decorator
+
 
 def home_view() -> None:
     """Changes the home view."""
@@ -20,6 +22,8 @@ def home_view() -> None:
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
+
+    return decorator
 
 
 def sign_up_view() -> None:
@@ -30,6 +34,8 @@ def sign_up_view() -> None:
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
 
+    return decorator
+
 
 def sign_in_view() -> None:
     """Changes the sign in view."""
@@ -39,6 +45,8 @@ def sign_in_view() -> None:
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
 
+    return decorator
+
 
 def password_reset_view() -> None:
     """Changes the password reset view."""
@@ -47,3 +55,5 @@ def password_reset_view() -> None:
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
             return _wrapped_func(*args, **kwargs)
+
+    return decorator
