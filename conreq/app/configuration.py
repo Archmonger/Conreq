@@ -39,7 +39,7 @@ class _Config:
     url_patterns: list = field(default_factory=list)
 
     # Components
-    navtabs: list = field(default_factory=list)
+    nav_tabs: dict[str, dict] = field(default_factory=dict)
     server_setting_tabs: list = field(default_factory=list)
     user_setting_components: list = field(default_factory=list)
 
