@@ -1,9 +1,9 @@
 from typing import Any
 
-CONFIG = None
+CONFIG: object = None
 
 
-def _load_config():
+def _load_config() -> None:
     """Load configuration functionally to avoid circular imports."""
     # pylint: disable=global-statement,import-outside-toplevel
     global CONFIG
@@ -14,7 +14,7 @@ def _load_config():
         CONFIG = _Config()
 
 
-def config(attribute: str, value: Any = None):
+def config(attribute: str, value: Any = None) -> Any:
     _load_config()
     if not value:
         return getattr(CONFIG, attribute, None)
