@@ -1,4 +1,5 @@
 from functools import wraps
+from typing import Callable
 
 from conreq.app.component.icon import Icon
 
@@ -21,7 +22,7 @@ def nav_tab(
     selector: Viewport = Viewport.primary,
     auth_level: AuthLevel = AuthLevel.user,
     icon: Icon = None,
-) -> object:
+) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked."""
 
     def decorator(func):
@@ -32,7 +33,7 @@ def nav_tab(
     return decorator
 
 
-def server_setting(page_name: str) -> object:
+def server_setting(page_name: str) -> Callable:
     """Decorates an IDOM component. Creates a settings page."""
 
     def decorator(func):

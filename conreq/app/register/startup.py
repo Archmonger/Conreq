@@ -1,12 +1,13 @@
 """Modifies the start behavior of Conreq, primarily related to conreq/settings.py."""
 
 from functools import wraps
+from typing import Callable
 
 # TODO: Create these functions
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass
 
 
-def pre_run(admin_required: bool = False) -> object:
+def pre_run(admin_required: bool = False) -> Callable:
     """Decorates any function that needs to be run prior to the webserver being up, but after Django has been configured."""
 
     def decorator(func):

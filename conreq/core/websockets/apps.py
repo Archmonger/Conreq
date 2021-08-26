@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+
 from conreq.app import register
 
 

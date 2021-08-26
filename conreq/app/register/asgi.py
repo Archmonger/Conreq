@@ -11,7 +11,7 @@ if BASE_URL:
     BASE_URL = BASE_URL + "/"
 
 
-def websocket(path: str, use_regex: bool = False) -> object:
+def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
     """Decorates a websocket consumer class."""
 
     def decorator(class_: AsyncConsumer):

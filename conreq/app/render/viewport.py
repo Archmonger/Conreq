@@ -1,5 +1,6 @@
 """Helpers to render IDOM elements on the page"""
 from functools import wraps
+from typing import Callable
 
 from conreq.app.selectors import AuthLevel, Viewport
 
@@ -10,7 +11,7 @@ from conreq.app.selectors import AuthLevel, Viewport
 def viewport(
     selector: Viewport = Viewport.primary,
     auth_level: AuthLevel = AuthLevel.user,
-) -> object:
+) -> Callable:
     """Decorates an IDOM component. Forcibly changes the viewport content."""
 
     def decorator(func):
