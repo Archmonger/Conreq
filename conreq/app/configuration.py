@@ -28,7 +28,7 @@ class _Config:
     sign_in_view: Callable = sign_in
     password_reset_template: str = ""
     password_reset_view: Callable = None
-    loading_animation_template: str = "etc/loading_animation.html"
+    loading_animation_template: str = "loading/spinner.html"
     manage_users_component: Callable = None
     server_settings_component: Callable = None
 
