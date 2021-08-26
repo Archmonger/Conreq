@@ -36,8 +36,7 @@ class _Config:
     # ASGI
     websockets: list = field(default_factory=list)
 
-    # WSGI
-    api_endpoints: list = field(default_factory=list)
+    # WSGI (API and URLs)
     url_patterns: list = field(default_factory=list)
 
     # Components
