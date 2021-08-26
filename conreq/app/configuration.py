@@ -43,7 +43,7 @@ class _Config:
 
     # Components
     nav_tabs: dict[str, dict] = field(default_factory=dict)
-    server_setting_tabs: list[tuple[str, Callable]] = field(default_factory=list)
+    server_setting_tabs: list[dict] = field(default_factory=list)
     user_setting_components: list[Callable] = field(default_factory=list)
 
     # HTML Head
