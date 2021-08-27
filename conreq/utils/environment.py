@@ -20,7 +20,6 @@ def _dotenv_path() -> str:
     return DOTENV_FILE
 
 
-@functools.cache
 def _get_str_from_dotenv(name: str, default_value: str = "") -> str:
     """Fetches a value from the .env file."""
     value = dotenv.main.DotEnv(_dotenv_path()).get(str(name).upper())
@@ -31,7 +30,6 @@ def _get_str_from_dotenv(name: str, default_value: str = "") -> str:
     return value
 
 
-@functools.cache
 def get_str_from_env(
     name: str, default_value: str = "", sys_env=True, dot_env=True
 ) -> str:
@@ -46,7 +44,6 @@ def get_str_from_env(
     return value
 
 
-@functools.cache
 def get_bool_from_env(
     name: str, default_value: bool = False, sys_env=True, dot_env=True
 ) -> bool:
@@ -55,7 +52,6 @@ def get_bool_from_env(
     return str_to_bool(value, default_value)
 
 
-@functools.cache
 def get_int_from_env(
     name: str, default_value: int = 0, sys_env=True, dot_env=True
 ) -> str:
