@@ -34,7 +34,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 
 ## Features (Coming Soon)
 
--   Supports for Oracle, PostgreSQL, and MongoDB Databases
+-   Support for Oracle, PostgreSQL, and MongoDB Databases
 -   [Automatic SASS/SCSS to CSS Compilation](https://github.com/jrief/django-sass-processor)
 -   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
 
