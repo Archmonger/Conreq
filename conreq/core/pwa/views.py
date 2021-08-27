@@ -19,12 +19,8 @@ def service_worker(request):
 def manifest(request):
     return render(
         request,
-        "manifest.json",
-        {
-            setting_name: getattr(PwaConfig, setting_name)
-            for setting_name in dir(PwaConfig)
-            if setting_name.startswith("PWA_")
-        },
+        "site.webmanifest",
+        {"pwa": PwaConfig.__dict__},
         content_type="application/json",
     )
 

@@ -20,37 +20,35 @@ class PwaConfig(AppConfig):
     name = "conreq.core.pwa"
 
     # Path to the service worker implementation.  Default implementation is empty.
-    PWA_SERVICE_WORKER_PATH = getattr(
+    SERVICE_WORKER_PATH = getattr(
         settings,
         "PWA_SERVICE_WORKER_PATH",
         os.path.join(
             os.path.abspath(os.path.dirname(__file__)), "templates", "serviceworker.js"
         ),
     )
-    # App parameters to include in manifest.json and appropriate meta tags
-    PWA_APP_NAME = getattr(settings, "PWA_APP_NAME", "MyApp")
-    PWA_APP_DESCRIPTION = getattr(
-        settings, "PWA_APP_DESCRIPTION", "My Progressive Web App"
-    )
-    PWA_APP_ROOT_URL = resolve_url(
+    # App parameters to include in site.webmanifest and appropriate meta tags
+    APP_NAME = getattr(settings, "PWA_APP_NAME", "MyApp")
+    APP_DESCRIPTION = getattr(settings, "PWA_APP_DESCRIPTION", "My Progressive Web App")
+    APP_ROOT_URL = resolve_url(
         getattr(settings, "PWA_APP_ROOT_URL", _PWA_SCRIPT_PREFIX)
     )
-    PWA_APP_THEME_COLOR = getattr(settings, "PWA_APP_THEME_COLOR", "#000")
-    PWA_APP_BACKGROUND_COLOR = getattr(settings, "PWA_APP_BACKGROUND_COLOR", "#fff")
-    PWA_APP_DISPLAY = getattr(settings, "PWA_APP_DISPLAY", "standalone")
-    PWA_APP_SCOPE = resolve_url(getattr(settings, "PWA_APP_SCOPE", _PWA_SCRIPT_PREFIX))
-    PWA_APP_DEBUG_MODE = getattr(settings, "PWA_APP_DEBUG_MODE", True)
-    PWA_APP_ORIENTATION = getattr(settings, "PWA_APP_ORIENTATION", "any")
-    PWA_APP_START_URL = resolve_url(
+    APP_THEME_COLOR = getattr(settings, "PWA_APP_THEME_COLOR", "#000")
+    APP_BACKGROUND_COLOR = getattr(settings, "PWA_APP_BACKGROUND_COLOR", "#fff")
+    APP_DISPLAY = getattr(settings, "PWA_APP_DISPLAY", "standalone")
+    APP_SCOPE = resolve_url(getattr(settings, "PWA_APP_SCOPE", _PWA_SCRIPT_PREFIX))
+    APP_DEBUG_MODE = getattr(settings, "PWA_APP_DEBUG_MODE", True)
+    APP_ORIENTATION = getattr(settings, "PWA_APP_ORIENTATION", "any")
+    APP_START_URL = resolve_url(
         getattr(settings, "PWA_APP_START_URL", _PWA_SCRIPT_PREFIX)
     )
-    PWA_APP_FETCH_URL = resolve_url(
+    APP_FETCH_URL = resolve_url(
         getattr(settings, "PWA_APP_FETCH_URL", _PWA_SCRIPT_PREFIX)
     )
-    PWA_APP_STATUS_BAR_COLOR = getattr(settings, "PWA_APP_STATUS_BAR_COLOR", "default")
-    PWA_APP_ICONS = getattr(settings, "PWA_APP_ICONS", [])
-    PWA_APP_ICONS_APPLE = getattr(settings, "PWA_APP_ICONS_APPLE", [])
-    PWA_APP_SPLASH_SCREEN = getattr(settings, "PWA_APP_SPLASH_SCREEN", [])
-    PWA_APP_DIR = getattr(settings, "PWA_APP_DIR", "auto")
-    PWA_APP_LANG = getattr(settings, "PWA_APP_LANG", "en-US")
-    PWA_BASE_URL = get_base_url()
+    APP_STATUS_BAR_COLOR = getattr(settings, "PWA_APP_STATUS_BAR_COLOR", "default")
+    APP_ICONS = getattr(settings, "PWA_APP_ICONS", [])
+    APP_ICONS_APPLE = getattr(settings, "PWA_APP_ICONS_APPLE", [])
+    APP_SPLASH_SCREEN = getattr(settings, "PWA_APP_SPLASH_SCREEN", [])
+    APP_DIR = getattr(settings, "PWA_APP_DIR", "auto")
+    APP_LANG = getattr(settings, "PWA_APP_LANG", "en-US")
+    BASE_URL = get_base_url()

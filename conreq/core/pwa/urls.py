@@ -1,11 +1,12 @@
-from django.conf.urls import url
+from django.urls import path
 
 from .views import manifest, offline, service_worker
 
 app_name = "pwa"
-# Serve up serviceworker.js and manifest.json at the root
+
+# Serve up serviceworker.js and site.webmanifest at the root
 urlpatterns = [
-    url(r"^serviceworker\.js$", service_worker, name="serviceworker"),
-    url(r"^manifest\.json$", manifest, name="manifest"),
-    url("^offline/$", offline, name="offline"),
+    path("serviceworker.js", service_worker, name="serviceworker"),
+    path("site.webmanifest", manifest, name="manifest"),
+    path("offline/", offline, name="offline"),
 ]
