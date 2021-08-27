@@ -311,38 +311,16 @@ TEMPLATES = [
 
 
 # Databases and Caches
-if DB_ENGINE == "MYSQL":
-    if not MYSQL_CONFIG_FILE:
-        print("MYSQL_CONFIG_FILE is not set!")
-        sys.exit(1)
-    elif not os.path.exists(MYSQL_CONFIG_FILE):
-        print(f"MYSQL_CONFIG_FILE '{MYSQL_CONFIG_FILE}' does not exist!")
-        sys.exit(1)
-    else:
-        import pymysql
-
-        pymysql.install_as_MySQLdb()
-
-        # MySQL
-        DATABASES = {
-            "default": {
-                "ENGINE": "django.db.backends.mysql",
-                "OPTIONS": {
-                    "read_default_file": MYSQL_CONFIG_FILE,
-                },
-            }
-        }
-else:
-    # SQLite
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
-            "OPTIONS": {
-                "timeout": 3,  # 3 second query timeout
-            },
-        }
+# SQLite
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
+        "OPTIONS": {
+            "timeout": 3,  # 3 second query timeout
+        },
     }
+}
 CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
@@ -358,17 +336,11 @@ CACHES = {
 # User Authentication
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 LOGIN_REDIRECT_URL = "base:landing"
 LOGIN_URL = "sign_in"
