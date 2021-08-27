@@ -71,21 +71,30 @@ def get_debug() -> bool:
 
 
 @functools.cache
-def get_base_url() -> str:
+def get_base_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
     """Obtains the base URL from the environment variables"""
     base_url = get_str_from_env("BASE_URL")
-    if isinstance(base_url, str) and base_url:
+    if base_url:
         base_url = base_url.replace("/", "").replace("\\", "")
+    if append_slash:
+        base_url = base_url + "/"
+    if prepend_slash:
         base_url = "/" + base_url
+    base_url = base_url.replace("//", "/")
     return base_url
 
 
 @functools.cache
-def get_home_url() -> str:
+def get_home_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
     """Obtains the base URL from the environment variables"""
     home_url = get_str_from_env("HOME_URL", "home")
     if home_url:
         home_url = home_url.replace("/", "").replace("\\", "")
+    if append_slash:
+        home_url = home_url + "/"
+    if prepend_slash:
+        home_url = "/" + home_url
+    home_url = home_url.replace("//", "/")
     return home_url
 
 

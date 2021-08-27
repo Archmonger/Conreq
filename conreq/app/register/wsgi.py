@@ -7,7 +7,9 @@ from django.views.generic import View
 from conreq import app
 from conreq.utils.environment import get_base_url
 
-BASE_URL = get_base_url()
+BASE_URL = get_base_url(append_slash=False, prepend_slash=False)
+if BASE_URL:
+    BASE_URL = BASE_URL + "/"
 
 
 def url(
@@ -25,11 +27,9 @@ def url(
 
         url_patterns = app.config("url_patterns")
         if not use_regex:
-            url_patterns.append(urls.path(f"{BASE_URL}/{path}", func_or_cls, name=name))
+            url_patterns.append(urls.path(BASE_URL + path, func_or_cls, name=name))
         else:
-            url_patterns.append(
-                urls.re_path(f"{BASE_URL}/{path}", func_or_cls, name=name)
-            )
+            url_patterns.append(urls.re_path(BASE_URL + path, func_or_cls, name=name))
 
         @wraps(func_or_cls)
         def _wrapped_view(*args, **kwargs):
