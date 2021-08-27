@@ -33,12 +33,12 @@ CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"), dot_env=False)
 PACKAGES_DIR = os.path.join(DATA_DIR, "packages", "__installed__")
 PACKAGES_DEV_DIR = os.path.join(DATA_DIR, "packages", "develop")
-MEDIA_DIR = os.path.join(DATA_DIR, "media")
+MEDIA_DIR = os.path.join(DATA_DIR, "files")
+METRICS_DIR = os.path.join(MEDIA_DIR, "metrics")
 BACKUP_DIR = os.path.join(DATA_DIR, "backup")
 TEMP_DIR = os.path.join(DATA_DIR, "temp")
 USER_STATICFILES_DIR = os.path.join(DATA_DIR, "static")
 LOG_DIR = os.path.join(DATA_DIR, "logs")
-METRICS_DIR = os.path.join(DATA_DIR, "metrics")
 MAKE_DIRS = [
     DATA_DIR,
     PACKAGES_DIR,
