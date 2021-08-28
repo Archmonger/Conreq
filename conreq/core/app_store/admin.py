@@ -1,19 +1,29 @@
 from django.contrib import admin
 
-from .models import AppPackage, Category, Subcategory
+from conreq.core.app_store import models
 
 
 # Register your models here.
-@admin.register(Category)
+@admin.register(models.Category)
 class AppCategories(admin.ModelAdmin):
     pass
 
 
-@admin.register(Subcategory)
+@admin.register(models.Subcategory)
 class AppSubCategories(admin.ModelAdmin):
     pass
 
 
-@admin.register(AppPackage)
+@admin.register(models.AppPackage)
 class Apps(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.Screenshot)
+class Screenshots(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.EnvVar)
+class EnvVars(admin.ModelAdmin):
     pass

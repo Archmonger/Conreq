@@ -71,17 +71,27 @@ class Subcategory(models.Model):
 
 
 class EnvVar(models.Model):
+    def __str__(self):
+        return self.name + ":" + self.default
+
+    class Meta:
+        verbose_name = "Environment Variable"
+
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
+    default = models.CharField(max_length=255, default="")
     example = models.CharField(max_length=255)
     required = models.BooleanField(default=False)
 
 
 class Screenshot(models.Model):
+    def __str__(self):
+        return self.title
+
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True, null=True)
-    url = models.ImageField()
+    image = models.ImageField(upload_to="app_store/screenshot/")
 
 
 class AppPackage(models.Model):
@@ -95,7 +105,7 @@ class AppPackage(models.Model):
     package_name = models.CharField(max_length=100, help_text="Must be snake_case.")
     verbose_name = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True, null=True)
-    long_description = models.TextField(blank=True, null=True)
+    long_description = models.FileField(upload_to="app_store/readme/")
     long_description_type = models.CharField(
         max_length=20,
         choices=DescriptionTypes.choices,
@@ -117,7 +127,7 @@ class AppPackage(models.Model):
     support_url = models.URLField(blank=True, null=True)
     donation_url = models.URLField(blank=True, null=True)
     pypi_url = models.URLField(blank=True, null=True)
-    license = models.CharField(max_length=100, default="GPLv3")
+    license_type = models.CharField(max_length=100, default="GPLv3")
 
     # Environment
     environment_variables = models.ManyToManyField(EnvVar, blank=True)
