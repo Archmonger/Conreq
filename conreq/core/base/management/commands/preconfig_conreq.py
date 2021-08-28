@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 from conreq.utils.environment import get_database_type, get_debug
 
 DEBUG = get_debug()
-BASE_DIR = getattr(settings, "BASE_DIR")
+ROOT_DIR = getattr(settings, "ROOT_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 DATABASES = getattr(settings, "DATABASES")
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
@@ -49,7 +49,7 @@ class Command(BaseCommand):
             self.recursive_chown(DATA_DIR, uid, gid)
 
             # Conreq core dir
-            self.recursive_chown(BASE_DIR, uid, gid)
+            self.recursive_chown(ROOT_DIR, uid, gid)
 
     def add_arguments(self, parser):
         parser.add_argument(

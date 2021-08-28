@@ -28,9 +28,9 @@ from conreq.utils.environment import (
 from conreq.utils.packages import find_apps, find_modules
 
 # Project Directories
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CORE_DIR = os.path.join(BASE_DIR, "conreq", "core")
-DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(BASE_DIR, "data"), dot_env=False)
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CORE_DIR = os.path.join(ROOT_DIR, "conreq", "core")
+DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(ROOT_DIR, "data"), dot_env=False)
 PACKAGES_DIR = os.path.join(DATA_DIR, "packages", "__installed__")
 PACKAGES_DEV_DIR = os.path.join(DATA_DIR, "packages", "develop")
 MEDIA_DIR = os.path.join(DATA_DIR, "files")
@@ -55,7 +55,7 @@ for directory in MAKE_DIRS:
 
 
 # App Template Diretories
-TEMPLATE_DIR = os.path.join(BASE_DIR, "conreq", "app", "templates")
+TEMPLATE_DIR = os.path.join(ROOT_DIR, "conreq", "app", "templates")
 PACKAGE_TEMPLATE = os.path.join(TEMPLATE_DIR, "package")
 PACKAGE_SLIM_TEMPLATE = os.path.join(TEMPLATE_DIR, "package")
 APP_TEMPLATE = os.path.join(TEMPLATE_DIR, "app")
