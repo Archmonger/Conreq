@@ -1,7 +1,6 @@
 import uuid
 
 from django.db import models
-from jsonfield import JSONField
 from model_utils import FieldTracker
 from multiselectfield import MultiSelectField
 from versionfield import VersionField
@@ -9,12 +8,13 @@ from versionfield import VersionField
 
 # Create your models here.
 class DevelopmentStage(models.TextChoices):
-    PREALPHA = "PREALPHA", "Pre-Alpha"
-    ALPHA = "ALPHA", "Alpha"
-    BETA = "BETA", "Beta"
-    STABLE = "STABLE", "Stable"
-    DEPRECATED = "DEPRECATED", "Deprecated"
-    OBSOLETE = "OBSOLETE", "Obsolete"
+    PLANNING = "1 - Planning", "Planning"
+    PREALPHA = "2 - Pre-Alpha", "Pre-Alpha"
+    ALPHA = "3 - Alpha", "Alpha"
+    BETA = "4 - Beta", "Beta"
+    STABLE = "5 - Production/Stable", "Stable"
+    MATURE = "6 - Mature", "Mature"
+    INACTIVE = "7 - Inactive", "Inactive"
 
 
 class AsyncCompatibility(models.TextChoices):
@@ -29,6 +29,12 @@ class SysPlatforms(models.TextChoices):
     WINDOWS = "WINDOWS", "Windows"
     CYGWIN = "CYGWIN", "Cygwin"
     MACOS = "MACOS", "Darwin"
+
+
+class DescriptionTypes(models.TextChoices):
+    PLAIN = "text/plain", "Plain Text (.txt)"
+    RST = "text/x-rst", "reStructuredText (.rst)"
+    MARKDOWN = "text/markdown", "Markdown (.md)"
 
 
 class Category(models.Model):
@@ -64,33 +70,57 @@ class Subcategory(models.Model):
     tracker = FieldTracker()
 
 
+class EnvVar(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=50)
+    example = models.CharField(max_length=255)
+    required = models.BooleanField(default=False)
+
+
+class Screenshot(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    url = models.ImageField()
+
+
 class AppPackage(models.Model):
     def __str__(self):
-        return self.name
+        return self.verbose_name
 
     # Unique Identifier
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # Basic Info
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    package_name = models.CharField(max_length=100, help_text="Must be snake_case.")
+    verbose_name = models.CharField(max_length=100)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    long_description = models.TextField(blank=True, null=True)
+    long_description_type = models.CharField(
+        max_length=20,
+        choices=DescriptionTypes.choices,
+        default=DescriptionTypes.MARKDOWN,
+    )
     subcategories = models.ManyToManyField(Subcategory)
     development_stage = models.CharField(
-        max_length=20, choices=DevelopmentStage.choices, blank=True, null=True
+        max_length=21, choices=DevelopmentStage.choices, blank=True, null=True
     )
     version = VersionField()
-    screenshots = JSONField(default=[], blank=True)
+    screenshots = models.ManyToManyField(Screenshot, blank=True)
     notice_message = models.TextField(blank=True, null=True)
 
     # Ownership Info
     author = models.CharField(max_length=50)
-    repository_url = models.URLField(blank=True, null=True)
+    author_email = models.EmailField(blank=True, null=True)
+    repository_url = models.URLField()
     homepage_url = models.URLField(blank=True, null=True)
     support_url = models.URLField(blank=True, null=True)
     donation_url = models.URLField(blank=True, null=True)
+    pypi_url = models.URLField(blank=True, null=True)
+    license = models.CharField(max_length=100, default="GPLv3")
 
     # Environment
-    environment_variables = JSONField(default=[], blank=True)
+    environment_variables = models.ManyToManyField(EnvVar, blank=True)
     sys_platforms = MultiSelectField(choices=SysPlatforms.choices, max_length=10)
 
     # Compatibility
