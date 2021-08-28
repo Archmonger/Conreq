@@ -26,7 +26,7 @@ def _packages_dev_dir():
 
 
 def _duplicate_package_check(packages, packages_dev):
-    seen = set(packages).intersection(packages_dev)
+    seen = packages.intersection(packages_dev)
     for package in seen:
         log.handler(
             "\033[93m"
@@ -37,25 +37,22 @@ def _duplicate_package_check(packages, packages_dev):
         )
 
 
-@functools.cache
 def find_modules(path: str, prefix: str = "") -> set[str]:
     """Returns all modules in a path"""
     return {name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)}
 
 
-@functools.cache
 def find_modules_with(path: str, submodule_name: str, prefix: str = "") -> set[str]:
     """Returns a tuple of all modules containing module name and an importable path to 'example.module.urls'"""
     modules = find_modules(path)
-    modules_with = {}
+    modules_with = set()
     for module in modules:
         submodules = os.path.join(path, module)
         if submodule_name in find_modules(submodules):
-            modules_with.add(module)
+            modules_with.add(prefix + module)
     return modules_with
 
 
-@functools.cache
 def find_packages() -> set[str]:
     """Returns all Conreq packages."""
     packages = find_modules(_packages_dir())
@@ -64,7 +61,6 @@ def find_packages() -> set[str]:
     return packages | packages_dev
 
 
-@functools.cache
 def find_apps() -> set[str]:
     """Returns all Conreq apps within packages."""
     apps = set()
@@ -78,7 +74,6 @@ def find_apps() -> set[str]:
     return apps
 
 
-@functools.cache
 def find_apps_with(module_name: str) -> set[str]:
     """Returns all Conreq apps that contain a specific module name."""
     apps_with = set()
