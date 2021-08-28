@@ -31,20 +31,18 @@ class _Config:
     password_reset_template: str = ""
     loading_animation_template: str = "loading/spinner.html"
 
-    # Components
+    # IDOM Components
     manage_users_component: Callable = None
     server_settings_component: Callable = None
+    user_setting_sections: list[Callable] = field(default_factory=list)
+    server_setting_tabs: list[dict] = field(default_factory=list)
+    nav_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
 
     # ASGI
     websockets: list[Callable] = field(default_factory=list)
 
     # WSGI (API and URLs)
     url_patterns: list = field(default_factory=list)
-
-    # Components
-    nav_tabs: dict[str, dict] = field(default_factory=dict)
-    server_setting_tabs: list[dict] = field(default_factory=list)
-    user_setting_components: list[Callable] = field(default_factory=list)
 
     # HTML Head
     local_stylesheets: list[dict] = field(default_factory=list)
