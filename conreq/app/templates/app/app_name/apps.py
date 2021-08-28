@@ -10,12 +10,14 @@ See more information in the Django AppConfig docs.
 """
 from django.apps import AppConfig
 
+MODULE = __name__
+PACKAGE = MODULE[: MODULE.find(".")]
+APP = MODULE[MODULE.rfind(".") + 1 :]
 
 class {{ camel_case_app_name }}Config(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = '{{ package_name }}.apps.{{ app_name }}'
-    label = '{{ package_name }}_{{ app_name }}'
-    verbose_name = '{{ verbose_name }}'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = APP
+    label = verbose_name = "{{ verbose_name }}"
 
     def ready(self):
         """Code that only executes after Django has been initialized."""
