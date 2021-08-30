@@ -22,12 +22,7 @@ def sonarr_request(tvdb_id, tmdb_id, request, request_params):
     sonarr_params = obtain_sonarr_parameters(tmdb_id, tvdb_id)
 
     # Request in the background
-    sonarr_request_background_task(
-        tvdb_id,
-        request_params,
-        sonarr_params,
-        request.user.username,
-    )
+    sonarr_request_background_task(tvdb_id, request_params, sonarr_params)
 
     # Save to DB
     requested_by = request.user if not isinstance(request.user, AnonymousUser) else None
@@ -44,11 +39,7 @@ def radarr_request(tmdb_id, request):
     radarr_params = obtain_radarr_parameters(tmdb_id)
 
     # Request in the background
-    radarr_request_background_task(
-        tmdb_id,
-        radarr_params,
-        request.user.username,
-    )
+    radarr_request_background_task(tmdb_id, radarr_params)
 
     # Save to DB
     requested_by = request.user if not isinstance(request.user, AnonymousUser) else None

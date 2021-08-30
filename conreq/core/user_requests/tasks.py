@@ -8,7 +8,7 @@ _logger = log.get_logger(__name__)
 
 
 @db_task()
-def sonarr_request_background_task(tvdb_id, request_params, sonarr_params, username):
+def sonarr_request_background_task(tvdb_id, request_params, sonarr_params):
     """Function that can be run in the background to request something on Sonarr"""
     try:
         sonarr_manager = SonarrManager()
@@ -32,9 +32,8 @@ def sonarr_request_background_task(tvdb_id, request_params, sonarr_params, usern
             episode_ids=request_params.get("episode_ids"),
         )
 
-        username = username if username else "API"
         log.handler(
-            username + " requested TV series " + show["title"],
+            "Requested TV series " + show["title"],
             log.INFO,
             _logger,
         )
@@ -49,7 +48,6 @@ def sonarr_request_background_task(tvdb_id, request_params, sonarr_params, usern
                     f"request_params: {request_params}",
                     f"sonarr_params: {sonarr_params}",
                     f"show: {show}",
-                    f"username: {username}",
                 )
             ),
             log.ERROR,
@@ -58,7 +56,7 @@ def sonarr_request_background_task(tvdb_id, request_params, sonarr_params, usern
 
 
 @db_task()
-def radarr_request_background_task(tmdb_id, radarr_params, username):
+def radarr_request_background_task(tmdb_id, radarr_params):
     """Function that can be run in the background to request something on Radarr"""
     try:
         radarr_manager = RadarrManager()
@@ -76,9 +74,8 @@ def radarr_request_background_task(tmdb_id, radarr_params, username):
         # Request
         radarr_manager.request(radarr_id=movie["id"])
 
-        username = username if username else "API"
         log.handler(
-            username + " requested movie " + movie["title"],
+            "Requested movie " + movie["title"],
             log.INFO,
             _logger,
         )
@@ -92,7 +89,6 @@ def radarr_request_background_task(tmdb_id, radarr_params, username):
                     f"tmdb_id: {tmdb_id}",
                     f"radarr_params: {radarr_params}",
                     f"movie: {movie}",
-                    f"username: {username}",
                 )
             ),
             log.ERROR,
