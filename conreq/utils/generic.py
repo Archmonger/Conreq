@@ -25,9 +25,23 @@ def remove_duplicates_from_list(duplicate_list: list) -> list:
     return list(dict.fromkeys(duplicate_list))
 
 
-def clean_string(string: str) -> str:
+def clean_string(
+    string: str,
+    spaces: bool = True,
+    special_chars: bool = True,
+    lowercase: bool = True,
+    spaces_replacement: str = "",
+) -> str:
     """Removes non-alphanumerics from a string"""
-    return sub(r"\W+", "", string).lower()
+    new_string = string.encode("ascii", "ignore").decode()
+    if not spaces:
+        new_string = new_string.replace(" ", spaces_replacement)
+    if not special_chars:
+        new_string = sub(r"[^a-zA-Z0-9 ]+", "", new_string)
+    if lowercase:
+        new_string = new_string.lower()
+    new_string = sub(r"  +", " ", new_string)
+    return new_string
 
 
 def str_to_bool(string: str, default_value: bool = True) -> bool:
