@@ -261,7 +261,7 @@ INSTALLED_APPS = [
     # User Installed Apps
     *find_apps(),
     # Cleanup
-    "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
+    "django_cleanup.apps.CleanupConfig",  # Automatically delete dangling files
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

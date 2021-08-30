@@ -42,7 +42,6 @@ class Category(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Category"
         verbose_name_plural = "Categories"
 
     # Basic Info
@@ -70,30 +69,6 @@ class Subcategory(models.Model):
     tracker = FieldTracker()
 
 
-class EnvVar(models.Model):
-    def __str__(self):
-        return self.name + ":" + self.default
-
-    class Meta:
-        verbose_name = "Environment Variable"
-
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=50)
-    default = models.CharField(max_length=255, default="")
-    example = models.CharField(max_length=255)
-    required = models.BooleanField(default=False)
-
-
-class Screenshot(models.Model):
-    def __str__(self):
-        return self.title
-
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=100)
-    description = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(upload_to="app_store/screenshot/")
-
-
 class AppPackage(models.Model):
     def __str__(self):
         return self.verbose_name
@@ -116,7 +91,6 @@ class AppPackage(models.Model):
         max_length=21, choices=DevelopmentStage.choices, blank=True, null=True
     )
     version = VersionField()
-    screenshots = models.ManyToManyField(Screenshot, blank=True)
     notice_message = models.TextField(blank=True, null=True)
 
     # Ownership Info
@@ -130,7 +104,6 @@ class AppPackage(models.Model):
     license_type = models.CharField(max_length=100, default="GPLv3")
 
     # Environment
-    environment_variables = models.ManyToManyField(EnvVar, blank=True)
     sys_platforms = MultiSelectField(choices=SysPlatforms.choices, max_length=10)
 
     # Compatibility
@@ -154,3 +127,29 @@ class AppPackage(models.Model):
 
     # Tracker
     tracker = FieldTracker()
+
+
+class EnvVar(models.Model):
+    def __str__(self):
+        return self.name + ' = "' + str(self.default) + '"'
+
+    class Meta:
+        verbose_name = "Environment Variable"
+
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=50)
+    default = models.CharField(max_length=255, blank=True, null=True)
+    example = models.CharField(max_length=255)
+    required = models.BooleanField(default=False)
+    app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
+
+
+class Screenshot(models.Model):
+    def __str__(self):
+        return self.title
+
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    image = models.ImageField(upload_to="app_store/screenshot/")
+    app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
