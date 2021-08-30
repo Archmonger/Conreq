@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Callable, Union
 
-from django import urls
+from django.urls import include, path, re_path
 from django.views.generic import View
 
 from conreq import app
@@ -25,7 +25,7 @@ def _load_performance_metrics():
 
 
 def url(
-    path: str,
+    pattern: str,
     name: str = None,
     use_regex: bool = False,
 ) -> Union[Callable, View]:
@@ -42,9 +42,9 @@ def url(
 
         url_patterns = app.config.url_patterns
         if not use_regex:
-            url_patterns.append(urls.path(BASE_URL + path, view, name=name))
+            url_patterns.append(path(BASE_URL + pattern, view, name=name))
         else:
-            url_patterns.append(urls.re_path(BASE_URL + path, view, name=name))
+            url_patterns.append(re_path(BASE_URL + pattern, view, name=name))
 
         @wraps(view)
         def _wrapped_view(*args, **kwargs):
@@ -53,8 +53,15 @@ def url(
     return decorator
 
 
+def urls(base_pattern: str, url_patterns: list, namespace: str = None) -> None:
+    """Registers a list of URL patterns."""
+
+    patterns = app.config.url_patterns
+    patterns.append(path(base_pattern, include(url_patterns, namespace)))
+
+
 def api(
-    path: str,
+    pattern: str,
     version: int,
     use_regex: bool = False,
 ) -> View:
@@ -71,9 +78,9 @@ def api(
 
         url_patterns = app.config.url_patterns
         if not use_regex:
-            url_patterns.append(urls.path(f"{BASE_URL}/v{version}/{path}", view))
+            url_patterns.append(path(f"{BASE_URL}/v{version}/{pattern}", view))
         else:
-            url_patterns.append(urls.re_path(f"{BASE_URL}/v{version}/{path}", view))
+            url_patterns.append(re_path(f"{BASE_URL}/v{version}/{pattern}", view))
 
         @wraps(view)
         def _wrapped_view(*args, **kwargs):
