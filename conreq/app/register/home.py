@@ -11,6 +11,7 @@ def nav_group(
     group_name: str,
     group_icon: Icon = None,
 ):
+    """Creates a nav group and sets the group icon."""
     nav_tabs = app.config.nav_tabs
     group = nav_tabs.get(group_name)
 
