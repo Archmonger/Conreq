@@ -12,7 +12,7 @@ from django.apps import AppConfig
 
 MODULE = __name__
 PACKAGE = MODULE[: MODULE.find(".")]
-APP = MODULE[MODULE.rfind(".") + 1 :]
+APP = MODULE[: MODULE.rfind(".")]
 
 class {{ camel_case_app_name }}Config(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"

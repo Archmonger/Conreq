@@ -55,11 +55,11 @@ for directory in MAKE_DIRS:
 
 
 # App Template Diretories
-TEMPLATE_DIR = os.path.join(ROOT_DIR, "conreq", "app", "templates")
-PACKAGE_TEMPLATE = os.path.join(TEMPLATE_DIR, "package")
-PACKAGE_SLIM_TEMPLATE = os.path.join(TEMPLATE_DIR, "package")
-APP_TEMPLATE = os.path.join(TEMPLATE_DIR, "app")
-APP_SLIM_TEMPLATE = os.path.join(TEMPLATE_DIR, "app")
+APP_TEMPLATE_DIR = os.path.join(CORE_DIR, "app_templates")
+PACKAGE_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "package")
+PACKAGE_SLIM_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "package")
+APP_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "app")
+APP_SLIM_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "app")
 
 
 # Environment Variables
