@@ -26,6 +26,7 @@ let update_active_tab = async function () {
 };
 
 // Updates the page name
+// TODO: Reasses. See if this can be done through IDOM.
 let update_page_title = async function (viewport_selector) {
 	let page_name = $(viewport_selector + ">.page-name").val();
 	let app_name = $("#app-name").val();
