@@ -15,6 +15,11 @@ def is_key_value_in_list(
     return False
 
 
+def replace_item_in_list(search_for, replace_with, search_list):
+    "Replaces matching items in a list with a replacement value"
+    return [replace_with if x == search_for else x for x in search_list]
+
+
 def remove_duplicates_from_list(duplicate_list: list) -> list:
     """Returns a list that contains no duplicate values"""
     return list(dict.fromkeys(duplicate_list))
