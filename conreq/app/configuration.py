@@ -2,7 +2,14 @@
 
 from dataclasses import dataclass, field
 from typing import Callable
-from conreq.utils.views import stub
+
+from conreq.core.view_wrappers.views import (
+    home,
+    landing,
+    password_reset,
+    sign_in,
+    sign_up,
+)
 
 
 @dataclass
@@ -14,12 +21,11 @@ class _Config:
     middlewares: list[dict] = field(default_factory=list)
 
     # Views
-    # TODO: Make view wrappers for each of these.
-    landing_view: Callable = stub
-    home_view: Callable = stub
-    sign_up_view: Callable = stub
-    sign_in_view: Callable = stub
-    password_reset_view: Callable = stub
+    landing_view: Callable = landing
+    home_view: Callable = home
+    sign_up_view: Callable = sign_up
+    sign_in_view: Callable = sign_in
+    password_reset_view: Callable = password_reset
 
     # Templates
     landing_template: str = ""
