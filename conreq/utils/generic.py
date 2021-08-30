@@ -58,4 +58,6 @@ def str_to_int(value: str, default_value: int = 0) -> int:
     """Converts a string into a integer."""
     if isinstance(value, str) and value.isdigit():
         return int(value)
+    if isinstance(value, int):
+        return value
     return default_value
