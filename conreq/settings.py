@@ -148,7 +148,7 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "main": {
+        "default": {
             "format": "%(asctime)s %(levelname)s %(name)s: %(message)s",
         },
         "minimal": {
@@ -165,7 +165,7 @@ LOGGING = {
             "level": "INFO",
             "class": "logging."
             + ("handlers.RotatingFileHandler" if not DEBUG else "FileHandler"),
-            "formatter": "main",
+            "formatter": "default",
             **({"maxBytes": 1024 * 1024 * 5} if not DEBUG else {}),
             **({"backupCount": 5} if not DEBUG else {}),
             "encoding": "utf-8",
