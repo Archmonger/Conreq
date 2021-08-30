@@ -19,7 +19,7 @@ urlpatterns = [
     path("", include("conreq.core.pwa.urls")),
     path(
         "sign_in/",
-        app.config("sign_in_view"),
+        app.config.sign_in_view,
         name="sign_in",
     ),
     path("sign_out/", auth_views.logout_then_login, name="sign_out"),

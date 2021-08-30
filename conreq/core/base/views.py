@@ -16,7 +16,7 @@ def landing(request):
     """Renders the landing page (if available)."""
 
     initialization_needed = initialize(request)
-    landing_template = app.config("landing_template")
+    landing_template = app.config.landing_template
 
     if initialization_needed:
         return initialization_needed
@@ -32,7 +32,7 @@ def landing(request):
             "base_url": BASE_URL,
             "home_url": HOME_URL,
             "debug": DEBUG,
-            "app_config": app.CONFIG,
+            "app_config": app.config,
         },
     )
 
@@ -49,11 +49,11 @@ def home(request):
     # Render the home page
     return login_required(render)(
         request,
-        app.config("home_template"),
+        app.config.home_template,
         {
             "base_url": BASE_URL,
             "home_url": HOME_URL,
             "debug": DEBUG,
-            "app_config": app.CONFIG,
+            "app_config": app.config,
         },
     )

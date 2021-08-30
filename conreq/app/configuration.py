@@ -3,9 +3,9 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
-from conreq.core.base.views import home, landing
-from conreq.core.sign_in.views import sign_in
-from conreq.core.sign_up.views import sign_up
+
+def view_stub(request):
+    """Empty view function, to be populated later via app.register"""
 
 
 @dataclass
@@ -18,11 +18,11 @@ class _Config:
 
     # Views
     # TODO: Make view wrappers for each of these.
-    landing_view: Callable = landing
-    home_view: Callable = home
-    sign_up_view: Callable = sign_up
-    sign_in_view: Callable = sign_in
-    password_reset_view: Callable = None
+    landing_view: Callable = view_stub
+    home_view: Callable = view_stub
+    sign_up_view: Callable = view_stub
+    sign_in_view: Callable = view_stub
+    password_reset_view: Callable = view_stub
 
     # Templates
     landing_template: str = ""

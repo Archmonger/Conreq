@@ -46,7 +46,7 @@ application = ProtocolTypeRouter(
         # See https://github.com/django/channels/issues/1587
         "http": django_asgi_app,
         "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter(app.config("websockets")))
+            AuthMiddlewareStack(URLRouter(app.config.websockets))
         ),
         "lifespan": LifespanApp,
     }

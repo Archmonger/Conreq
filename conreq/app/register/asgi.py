@@ -16,7 +16,7 @@ def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
 
     def decorator(class_: AsyncConsumer):
 
-        websockets = app.config("websockets")
+        websockets = app.config.websockets
         if not use_regex:
             websockets.append(urls.path(BASE_URL + path, class_.as_asgi()))
         else:

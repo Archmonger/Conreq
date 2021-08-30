@@ -11,7 +11,7 @@ def user_setting() -> Callable:
 
     def decorator(func):
 
-        app.config("user_setting_components").append(func)
+        app.config.user_setting_sections.append(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

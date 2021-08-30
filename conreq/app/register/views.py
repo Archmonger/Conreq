@@ -8,7 +8,7 @@ def landing_view() -> None:
 
     def decorator(func):
 
-        app.config("landing_view", func)
+        app.config.landing_view = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -22,7 +22,7 @@ def home_view() -> None:
 
     def decorator(func):
 
-        app.config("home_view", func)
+        app.config.home_view = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -36,7 +36,7 @@ def sign_up_view() -> None:
 
     def decorator(func):
 
-        app.config("sign_up_view", func)
+        app.config.sign_up_view = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -50,7 +50,7 @@ def sign_in_view() -> None:
 
     def decorator(func):
 
-        app.config("sign_in_view", func)
+        app.config.sign_in_view = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -64,7 +64,7 @@ def password_reset_view() -> None:
 
     def decorator(func):
 
-        app.config("password_reset_view", func)
+        app.config.password_reset_view = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

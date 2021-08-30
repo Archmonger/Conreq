@@ -11,7 +11,7 @@ def nav_group(
     group_name: str,
     group_icon: Icon = None,
 ):
-    nav_tabs = app.config("nav_tabs")
+    nav_tabs = app.config.nav_tabs
     group = nav_tabs.get(group_name)
 
     if not group:
@@ -30,7 +30,7 @@ def nav_tab(
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked."""
 
-    nav_tabs = app.config("nav_tabs")
+    nav_tabs = app.config.nav_tabs
     group = nav_tabs.get(group_name)
 
     if not group:
@@ -59,7 +59,7 @@ def nav_tab(
 def server_setting(page_name: str) -> Callable:
     """Decorates an IDOM component. Creates a settings page."""
 
-    server_setting_tabs = app.config("server_setting_tabs")
+    server_setting_tabs = app.config.server_setting_tabs
 
     def decorator(func):
 

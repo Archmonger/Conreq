@@ -40,7 +40,7 @@ def url(
         else:
             view = METRICS()(func_or_cls)
 
-        url_patterns = app.config("url_patterns")
+        url_patterns = app.config.url_patterns
         if not use_regex:
             url_patterns.append(urls.path(BASE_URL + path, view, name=name))
         else:
@@ -69,7 +69,7 @@ def api(
         else:
             view = METRICS()(func_or_cls)
 
-        url_patterns = app.config("url_patterns")
+        url_patterns = app.config.url_patterns
         if not use_regex:
             url_patterns.append(urls.path(f"{BASE_URL}/v{version}/{path}", view))
         else:
