@@ -17,6 +17,7 @@ class _Config:
     middlewares: list[dict] = field(default_factory=list)
 
     # Views
+    # TODO: Make view wrappers for each of these.
     landing_view: Callable = landing
     home_view: Callable = home
     sign_up_view: Callable = sign_up
