@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from django.template import loader
 
 from conreq.core.sign_up.forms import UserForm
-from conreq.utils.debug import performance_metrics
+from conreq.utils.profiling import performance_metrics
 
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60

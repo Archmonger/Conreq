@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
-from conreq.utils.debug import performance_metrics
+from conreq.utils.profiling import performance_metrics
 
 
 @cache_page(1)

@@ -19,7 +19,7 @@ def _load_performance_metrics():
     global METRICS
 
     if not METRICS:
-        from conreq.utils.debug import performance_metrics
+        from conreq.utils.profiling import performance_metrics
 
         METRICS = performance_metrics
 

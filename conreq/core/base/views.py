@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 
 from conreq import app
 from conreq.core.first_run.views import initialize
-from conreq.utils.debug import performance_metrics
+from conreq.utils.profiling import performance_metrics
 from conreq.utils.environment import get_base_url, get_debug, get_home_url
 
 BASE_URL = get_base_url()

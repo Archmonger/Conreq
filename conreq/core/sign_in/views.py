@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LoginView
 
 from conreq import app
-from conreq.utils.debug import performance_metrics
+from conreq.utils.profiling import performance_metrics
 
 
 @performance_metrics()
