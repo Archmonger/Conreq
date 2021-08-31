@@ -6,12 +6,12 @@ from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.template import loader
 from django.views.decorators.cache import cache_page
 
-from conreq.utils.profiling import performance_metrics
+from conreq.utils.profiling import metrics
 
 
 @cache_page(1)
 @login_required
-@performance_metrics()
+@metrics()
 def manage_users(request):
     if request.method == "POST":
         # Ensure non-admins aren't trying to edit other accounts
@@ -85,7 +85,7 @@ def manage_users(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
-@performance_metrics()
+@metrics()
 def delete_user(request):
     if request.method == "POST":
         try:
@@ -102,7 +102,7 @@ def delete_user(request):
 
 
 @login_required
-@performance_metrics()
+@metrics()
 def manage_modal(request):
     template = loader.get_template("modal/manage_user.html")
     username = request.GET.get("username", None)

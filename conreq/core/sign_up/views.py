@@ -8,13 +8,13 @@ from django.shortcuts import redirect
 from django.template import loader
 
 from conreq.core.sign_up.forms import UserForm
-from conreq.utils.profiling import performance_metrics
+from conreq.utils.profiling import metrics
 
 # Days, Hours, Minutes, Seconds
 INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 
 
-@performance_metrics()
+@metrics()
 def sign_up(request):
     # User submitted the registration form
     invite_code = request.GET.get("invite_code", "")
@@ -54,7 +54,7 @@ def sign_up(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
-@performance_metrics()
+@metrics()
 def generate_invite_code(request):
     # Create an invite code that doesn't already exist
     while True:

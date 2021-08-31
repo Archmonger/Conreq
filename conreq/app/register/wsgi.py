@@ -23,12 +23,12 @@ def url(
 
     def decorator(func_or_cls: Union[Callable, View]):
 
-        from conreq.utils.profiling import performance_metrics
+        from conreq.utils.profiling import metrics
 
         if isinstance(func_or_cls, View):
-            view = performance_metrics()(func_or_cls.as_view())
+            view = metrics()(func_or_cls.as_view())
         else:
-            view = performance_metrics()(func_or_cls)
+            view = metrics()(func_or_cls)
 
         url_patterns = app.config.url_patterns
         if not use_regex:
@@ -59,12 +59,12 @@ def api(
 
     def decorator(func_or_cls: Union[Callable, View]):
 
-        from conreq.utils.profiling import performance_metrics
+        from conreq.utils.profiling import metrics
 
         if isinstance(func_or_cls, View):
-            view = performance_metrics()(func_or_cls.as_view())
+            view = metrics()(func_or_cls.as_view())
         else:
-            view = performance_metrics()(func_or_cls)
+            view = metrics()(func_or_cls)
 
         url_patterns = app.config.url_patterns
         if not use_regex:

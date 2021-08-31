@@ -1,9 +1,9 @@
 from django.contrib.auth.views import LoginView
 
 from conreq import app
-from conreq.utils.profiling import performance_metrics
+from conreq.utils.profiling import metrics
 
 
-@performance_metrics()
+@metrics()
 def sign_in(request):
     return LoginView.as_view(template_name=app.config.sign_in_template)(request)

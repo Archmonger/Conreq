@@ -14,7 +14,7 @@ class DoNothing:
 
 # Set performance profiling capabilities depending on whether DEBUG=True
 if get_debug():
-    from silk.profiling.profiler import silk_profile as performance_metrics
+    from silk.profiling.profiler import silk_profile as metrics
 
 else:
-    performance_metrics = DoNothing
+    metrics = DoNothing
