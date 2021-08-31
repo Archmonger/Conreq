@@ -24,6 +24,11 @@ class Screenshots(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.EnvVar)
-class EnvVars(admin.ModelAdmin):
+@admin.register(models.EnvironmentVariable)
+class EnvironmentVariables(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.NoticeMessage)
+class NoticeMessages(admin.ModelAdmin):
     pass

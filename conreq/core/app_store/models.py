@@ -91,7 +91,7 @@ class AppPackage(models.Model):
         max_length=21, choices=DevelopmentStage.choices, blank=True, null=True
     )
     version = VersionField()
-    notice_message = models.TextField(blank=True, null=True)
+    banner_message = models.TextField(blank=True, null=True)
 
     # Ownership Info
     author = models.CharField(max_length=50)
@@ -129,12 +129,9 @@ class AppPackage(models.Model):
     tracker = FieldTracker()
 
 
-class EnvVar(models.Model):
+class EnvironmentVariable(models.Model):
     def __str__(self):
         return self.name + ' = "' + str(self.default) + '"'
-
-    class Meta:
-        verbose_name = "Environment Variable"
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
@@ -152,4 +149,15 @@ class Screenshot(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to="app_store/screenshot/")
+    app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
+
+
+class NoticeMessage(models.Model):
+    def __str__(self):
+        return self.title
+
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    mark_read = models.BooleanField(default=False)
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
