@@ -10,7 +10,7 @@ See more information in the Django AppConfig docs.
 """
 from django.apps import AppConfig
 
-from conreq.utils.modules import load_module
+from conreq.utils.modules import load
 
 MODULE = __name__
 APP = MODULE[: MODULE.rfind(".")]
