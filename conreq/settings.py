@@ -109,6 +109,7 @@ HUEY = {
         "workers": 20,
     },
 }
+IDOM_BASE_URL = BASE_URL[1:] + "idom/"
 
 
 # PWA
@@ -250,6 +251,7 @@ INSTALLED_APPS = [
     "url_or_relative_url_field",  # Validates relative URLs
     # ASGI
     "channels",  # Websocket library
+    "django_idom",  # React JS for Python
     # API
     "rest_framework",  # OpenAPI Framework
     "rest_framework_api_key",  # API Key Manager

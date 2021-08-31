@@ -1,7 +1,6 @@
 """Capabilities used while in DEBUG, that turn off in production environments."""
 from conreq.utils.environment import get_debug
 
-
 # pylint: disable=invalid-name,too-few-public-methods,unused-import
 
 

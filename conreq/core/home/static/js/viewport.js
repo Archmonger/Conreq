@@ -227,21 +227,21 @@ $(document).ready(async function () {
 	AOS.init();
 	// Obtain the initial page
 	page_mutation_observer();
-	generate_viewport();
+	// generate_viewport();
 });
 
 // Fetch a new page when the URL changes
 if ("onhashchange" in window) {
 	// Window anchor change event supported
 	window.onhashchange = async function () {
-		generate_viewport();
+		// generate_viewport();
 	};
 } else {
 	// Window anchor change event not supported
 	let stored_hash = window.location.hash;
 	window.setInterval(async function () {
 		if (window.location.hash != stored_hash) {
-			generate_viewport();
+			// generate_viewport();
 		}
 	}, 100);
 }
