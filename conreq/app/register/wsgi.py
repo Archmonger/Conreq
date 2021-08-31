@@ -7,21 +7,11 @@ from django.views.generic import View
 from conreq import app
 from conreq.utils.environment import get_base_url
 
-METRICS = None
+# pylint: disable=import-outside-toplevel
+
 BASE_URL = get_base_url(append_slash=False, prepend_slash=False)
 if BASE_URL:
     BASE_URL = BASE_URL + "/"
-
-
-def _load_performance_metrics():
-    # pylint: disable=global-statement,import-outside-toplevel
-
-    global METRICS
-
-    if not METRICS:
-        from conreq.utils.profiling import performance_metrics
-
-        METRICS = performance_metrics
 
 
 def url(
@@ -33,12 +23,12 @@ def url(
 
     def decorator(func_or_cls: Union[Callable, View]):
 
-        _load_performance_metrics()
+        from conreq.utils.profiling import performance_metrics
 
         if isinstance(func_or_cls, View):
-            view = METRICS()(func_or_cls.as_view())
+            view = performance_metrics()(func_or_cls.as_view())
         else:
-            view = METRICS()(func_or_cls)
+            view = performance_metrics()(func_or_cls)
 
         url_patterns = app.config.url_patterns
         if not use_regex:
@@ -69,12 +59,12 @@ def api(
 
     def decorator(func_or_cls: Union[Callable, View]):
 
-        _load_performance_metrics()
+        from conreq.utils.profiling import performance_metrics
 
         if isinstance(func_or_cls, View):
-            view = METRICS()(func_or_cls.as_view())
+            view = performance_metrics()(func_or_cls.as_view())
         else:
-            view = METRICS()(func_or_cls)
+            view = performance_metrics()(func_or_cls)
 
         url_patterns = app.config.url_patterns
         if not use_regex:

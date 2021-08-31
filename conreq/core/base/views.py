@@ -3,7 +3,6 @@ from django.shortcuts import redirect, render
 
 from conreq import app
 from conreq.core.first_run.views import initialize
-from conreq.utils.profiling import performance_metrics
 from conreq.utils.environment import get_base_url, get_debug, get_home_url
 
 BASE_URL = get_base_url()
@@ -11,7 +10,7 @@ HOME_URL = get_home_url()
 DEBUG = get_debug()
 
 
-@performance_metrics()
+@app.register.landing_view()
 def landing(request):
     """Renders the landing page (if available)."""
 
@@ -37,11 +36,12 @@ def landing(request):
     )
 
 
-@performance_metrics()
+@app.register.home_view()
 def home(request):
     """Renders the homepage."""
 
     initialization_needed = initialize(request)
+    home_template = app.config.home_template
 
     if initialization_needed:
         return initialization_needed
@@ -49,7 +49,7 @@ def home(request):
     # Render the home page
     return login_required(render)(
         request,
-        app.config.home_template,
+        home_template,
         {
             "base_url": BASE_URL,
             "home_url": HOME_URL,
