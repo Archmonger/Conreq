@@ -32,7 +32,7 @@ def initialize(request):
                 login(request, user)
                 server_config.initialized = True
                 server_config.save()
-                return redirect("base:landing")
+                return redirect("landing:main")
 
             # Form data wasn't valid, so return the error codes
             template = loader.get_template("registration/initialization.html")

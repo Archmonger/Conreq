@@ -10,32 +10,6 @@ HOME_URL = get_home_url()
 DEBUG = get_debug()
 
 
-@app.register.landing_view()
-def landing(request):
-    """Renders the landing page (if available)."""
-
-    initialization_needed = initialize(request)
-    landing_template = app.config.landing_template
-
-    if initialization_needed:
-        return initialization_needed
-
-    if not landing_template:
-        return redirect("base:home")
-
-    # Render the landing page
-    return render(
-        request,
-        landing_template,
-        {
-            "base_url": BASE_URL,
-            "home_url": HOME_URL,
-            "debug": DEBUG,
-            "app_config": app.config,
-        },
-    )
-
-
 @app.register.home_view()
 def home(request):
     """Renders the homepage."""

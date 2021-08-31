@@ -15,7 +15,8 @@ BASE_URL = get_base_url(prepend_slash=False)
 
 
 urlpatterns = [
-    path("", include("conreq.core.base.urls")),
+    path("", include("conreq.core.landing.urls")),
+    path("", include("conreq.core.home.urls")),
     path("", include("conreq.core.pwa.urls")),
     path(
         "sign_in/",

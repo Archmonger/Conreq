@@ -342,7 +342,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
-LOGIN_REDIRECT_URL = "base:landing"
+LOGIN_REDIRECT_URL = "landing:main"
 LOGIN_URL = "sign_in"
 
 

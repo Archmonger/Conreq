@@ -33,11 +33,11 @@ def sign_up(request):
                 password = form.cleaned_data.get("password1")
                 user = authenticate(username=username, password=password)
                 login(request, user)
-                return redirect("base:landing")
+                return redirect("landing:main")
 
         # Invite code invalid!
         else:
-            return redirect("base:landing")
+            return redirect("landing:main")
 
         # Submission wasn't valid, so return the error codes
         template = loader.get_template("registration/sign_up.html")
@@ -49,7 +49,7 @@ def sign_up(request):
         return HttpResponse(template.render({}, request))
 
     # User tried to use an invalid invite code!
-    return redirect("base:landing")
+    return redirect("landing:main")
 
 
 @login_required
