@@ -136,8 +136,8 @@ class EnvironmentVariable(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
     default = models.CharField(max_length=255, blank=True, null=True)
-    example = models.CharField(max_length=255)
-    required = models.BooleanField(default=False)
+    example = models.CharField(max_length=255, blank=True, null=True)
+    required = models.BooleanField(default=False, blank=True, null=True)
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
 
 
@@ -158,6 +158,6 @@ class NoticeMessage(models.Model):
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
-    description = models.TextField()
-    mark_read = models.BooleanField(default=False)
+    description = models.TextField(blank=True, null=True)
+    mark_read = models.BooleanField(default=False, blank=True, null=True)
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
