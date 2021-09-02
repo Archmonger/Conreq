@@ -20,6 +20,9 @@ def url(
     use_regex: bool = False,
 ) -> Union[Callable, View]:
     """Decorates a Django view function or view class."""
+    # TODO: Split URLs at every slash and create nested URLpatterns for every registered URL.
+    # Would improve performance of the Django URL router significantly for configurations
+    # with large numbers of registered URLs.
 
     def decorator(func_or_cls: Union[Callable, View]):
 
@@ -41,13 +44,6 @@ def url(
             return _wrapped_view(*args, **kwargs)
 
     return decorator
-
-
-def urls(base_pattern: str, url_patterns: list, namespace: str = None) -> None:
-    """Registers a list of URL patterns."""
-
-    patterns = app.config.url_patterns
-    patterns.append(path(base_pattern, include(url_patterns, namespace)))
 
 
 def api(
