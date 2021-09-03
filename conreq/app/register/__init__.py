@@ -21,7 +21,7 @@ from .views import (
     sign_in_view,
     sign_up_view,
 )
-from .wsgi import api, url, urls
+from .wsgi import api, url
 
 __all__ = [
     "component",
@@ -29,7 +29,6 @@ __all__ = [
     "periodic_task",
     "websocket",
     "url",
-    "urls",
     "api",
     "nav_group",
     "nav_tab",
