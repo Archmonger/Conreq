@@ -20,3 +20,8 @@ def viewport(
             return _wrapped_func(*args, **kwargs)
 
     return decorator
+
+
+def background(css_string: str):
+    """Changes the homescreen's background to a specific CSS string."""
+    pass
