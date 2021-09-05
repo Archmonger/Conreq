@@ -6,7 +6,7 @@
 
 Conreq, a cross platform web framework with an app store, designed to push the limits of Python.
 
-View the **[Core Roadmap](https://github.com/Archmonger/Conreq/projects)** to see what features are upcoming, or the [App Roadmap](https://github.com/Archmonger/Conreq/projects/7) to see what will be added to the app store.
+View the **[Core Roadmap](https://github.com/Archmonger/Conreq/projects)** to see what features are upcoming, or the **[App Roadmap](https://github.com/Archmonger/Conreq/projects/7)** to see what will be added to the app store.
 
 Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for info on how to develop with Conreq!
 
