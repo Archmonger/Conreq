@@ -69,6 +69,8 @@ body,
 	max-height: 90%;
 	overflow-x: hidden;
 	overflow-y: auto;
+	-webkit-backdrop-filter: blur(5px);
+	backdrop-filter: blur(5px);
 }
 
 .default-box-brand {
