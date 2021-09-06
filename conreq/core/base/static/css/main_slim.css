@@ -44,8 +44,8 @@ body,
 		rgb(0 0 0)
 	);
 	background-size: 400% 400%;
-	-webkit-animation: gradient 50s ease infinite;
-	animation: gradient 50s ease infinite;
+	-webkit-animation: gradient 35s ease infinite;
+	animation: gradient 35s ease infinite;
 }
 
 * {
