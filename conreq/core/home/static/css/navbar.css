@@ -16,8 +16,16 @@
 	font-size: 16px;
 }
 
-.navbar .navbar-toggler {
-	display: flex;
+.navbar-toggler {
+	display: inline-block;
+	border: none;
+	padding-left: 0;
+	padding-right: 0;
+	background: none;
+	border-radius: 5px;
+}
+.navbar-toggler:focus {
+	box-shadow: none;
 }
 
 .navbar-toggler-icon {
@@ -96,12 +104,5 @@ button:focus {
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: flex-start;
-	}
-	.navbar .navbar-toggler {
-		display: inline-block;
-		border: none;
-		padding-left: 0;
-		padding-right: 0;
-		background: none;
 	}
 }
