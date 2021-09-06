@@ -224,8 +224,8 @@ ul.errorlist > li {
 	left: 0;
 	background: #015871;
 	opacity: 0.08;
-	-webkit-animation: hue_rotate 30s ease infinite;
-	animation: hue_rotate 30s ease-in-out infinite;
+	-webkit-animation: rgb-rotate 250s ease-in-out infinite;
+	animation: rgb-rotate 250s ease-in-out infinite;
 	transition: -webkit-filter 2s ease;
 	transition: filter 2s ease;
 	transition: filter 2s ease, -webkit-filter 2s ease;
@@ -315,7 +315,7 @@ ul.errorlist > li {
 	}
 }
 
-@-webkit-keyframes hue_rotate {
+@-webkit-keyframes rgb-rotate {
 	0%,
 	100% {
 		-webkit-filter: hue-rotate(360deg) brightness(200%) saturate(125%);
@@ -327,14 +327,14 @@ ul.errorlist > li {
 	}
 }
 
-@keyframes hue_rotate {
+@keyframes rgb-rotate {
 	0%,
 	100% {
 		-webkit-filter: hue-rotate(360deg) brightness(200%) saturate(125%);
 		filter: hue-rotate(360deg) brightness(200%) saturate(125%);
 	}
 	50% {
-		-webkit-filter: hue-rotate(330deg) brightness(200%) saturate(100%);
-		filter: hue-rotate(330deg) brightness(200%) saturate(100%);
+		-webkit-filter: hue-rotate(0deg) brightness(110%) saturate(125%);
+		filter: hue-rotate(0deg) brightness(110%) saturate(125%);
 	}
 }
