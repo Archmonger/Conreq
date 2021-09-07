@@ -36,11 +36,11 @@ body,
 	background: linear-gradient(
 		145deg,
 		rgb(0 0 0),
-		rgb(35 47 47),
+		rgb(30 38 39),
 		rgb(40 51 53),
-		rgb(43 49 44),
+		rgb(49 60 51),
 		rgb(35 47 47),
-		rgb(40 51 53),
+		rgb(30 38 39),
 		rgb(0 0 0)
 	);
 	background-size: 400% 400%;
@@ -318,23 +318,23 @@ ul.errorlist > li {
 @-webkit-keyframes rgb-rotate {
 	0%,
 	100% {
-		-webkit-filter: hue-rotate(360deg) brightness(200%) saturate(125%);
-		filter: hue-rotate(360deg) brightness(200%) saturate(125%);
+		-webkit-filter: hue-rotate(360deg) brightness(200%) saturate(150%);
+		filter: hue-rotate(360deg) brightness(200%) saturate(150%);
 	}
 	50% {
-		-webkit-filter: hue-rotate(330deg) brightness(200%) saturate(100%);
-		filter: hue-rotate(330deg) brightness(200%) saturate(100%);
+		-webkit-filter: hue-rotate(0deg) brightness(150%) saturate(125%);
+		filter: hue-rotate(0deg) brightness(150%) saturate(125%);
 	}
 }
 
 @keyframes rgb-rotate {
 	0%,
 	100% {
-		-webkit-filter: hue-rotate(360deg) brightness(200%) saturate(125%);
-		filter: hue-rotate(360deg) brightness(200%) saturate(125%);
+		-webkit-filter: hue-rotate(360deg) brightness(200%) saturate(150%);
+		filter: hue-rotate(360deg) brightness(200%) saturate(150%);
 	}
 	50% {
-		-webkit-filter: hue-rotate(0deg) brightness(110%) saturate(125%);
-		filter: hue-rotate(0deg) brightness(110%) saturate(125%);
+		-webkit-filter: hue-rotate(0deg) brightness(150%) saturate(125%);
+		filter: hue-rotate(0deg) brightness(150%) saturate(125%);
 	}
 }
