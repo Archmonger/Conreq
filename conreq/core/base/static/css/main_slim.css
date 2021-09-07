@@ -185,6 +185,8 @@ ul.errorlist > li {
 	.default-box {
 		width: 100%;
 		box-shadow: none;
+		-webkit-backdrop-filter: blur(0px);
+		backdrop-filter: blur(0px);
 	}
 	.default-box-brand {
 		width: 80%;
