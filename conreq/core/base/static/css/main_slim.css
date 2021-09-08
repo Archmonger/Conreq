@@ -324,8 +324,8 @@ ul.errorlist > li {
 		filter: hue-rotate(360deg) brightness(250%) saturate(300%);
 	}
 	50% {
-		-webkit-filter: hue-rotate(0deg) brightness(250%) saturate(300%);
-		filter: hue-rotate(0deg) brightness(250%) saturate(300%);
+		-webkit-filter: hue-rotate(0deg) brightness(150%) saturate(300%);
+		filter: hue-rotate(0deg) brightness(150%) saturate(300%);
 	}
 }
 
@@ -336,7 +336,7 @@ ul.errorlist > li {
 		filter: hue-rotate(360deg) brightness(250%) saturate(300%);
 	}
 	50% {
-		-webkit-filter: hue-rotate(0deg) brightness(250%) saturate(300%);
-		filter: hue-rotate(0deg) brightness(250%) saturate(300%);
+		-webkit-filter: hue-rotate(0deg) brightness(150%) saturate(300%);
+		filter: hue-rotate(0deg) brightness(150%) saturate(300%);
 	}
 }
