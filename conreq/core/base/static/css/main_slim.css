@@ -320,23 +320,23 @@ ul.errorlist > li {
 @-webkit-keyframes rgb-rotate {
 	0%,
 	100% {
-		-webkit-filter: hue-rotate(360deg) brightness(200%) saturate(150%);
-		filter: hue-rotate(360deg) brightness(200%) saturate(150%);
+		-webkit-filter: hue-rotate(360deg) brightness(250%) saturate(300%);
+		filter: hue-rotate(360deg) brightness(250%) saturate(300%);
 	}
 	50% {
-		-webkit-filter: hue-rotate(0deg) brightness(150%) saturate(125%);
-		filter: hue-rotate(0deg) brightness(150%) saturate(125%);
+		-webkit-filter: hue-rotate(0deg) brightness(250%) saturate(300%);
+		filter: hue-rotate(0deg) brightness(250%) saturate(300%);
 	}
 }
 
 @keyframes rgb-rotate {
 	0%,
 	100% {
-		-webkit-filter: hue-rotate(360deg) brightness(200%) saturate(150%);
-		filter: hue-rotate(360deg) brightness(200%) saturate(150%);
+		-webkit-filter: hue-rotate(360deg) brightness(250%) saturate(300%);
+		filter: hue-rotate(360deg) brightness(250%) saturate(300%);
 	}
 	50% {
-		-webkit-filter: hue-rotate(0deg) brightness(150%) saturate(125%);
-		filter: hue-rotate(0deg) brightness(150%) saturate(125%);
+		-webkit-filter: hue-rotate(0deg) brightness(250%) saturate(300%);
+		filter: hue-rotate(0deg) brightness(250%) saturate(300%);
 	}
 }
