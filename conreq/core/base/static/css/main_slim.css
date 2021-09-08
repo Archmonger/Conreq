@@ -225,7 +225,7 @@ ul.errorlist > li {
 	bottom: 0;
 	left: 0;
 	background: #015871;
-	opacity: 0.08;
+	opacity: 0.1;
 	-webkit-animation: rgb-rotate 250s ease-in-out infinite;
 	animation: rgb-rotate 250s ease-in-out infinite;
 	transition: -webkit-filter 2s ease;
