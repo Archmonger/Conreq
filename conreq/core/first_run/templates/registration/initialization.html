@@ -1,76 +1,52 @@
-{% load static compress %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    {% include "head/content_slim.html" %}
+    {% include "head/initialization.html" %}
 </head>
 
 <body>
-    <div class="main">
+    <!-- Wave Animation -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 
-        <div class="default-box">
+    <div class="main">
+        <div class="default-box" data-aos="zoom-in" data-aos-duration="1000">
             <div class="default-box-header">
-                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
+                <img src="{% static 'images/conreq_logo.png' %}" class="logo">
             </div>
+
             <form id="initialization-form" method="post" action="{% url 'landing:main' %}">
                 {% csrf_token %}
                 <h1>FIRST TIME SETUP</h1>
+                <h2>Create your admin account</h2>
 
+                {{ form.email.errors }}
+                <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+                    autocapitalize="off" spellcheck="false" type="email" required="" name="email"
+                    value="{{ form.data.email }}">
 
-                <div class="tab" style="display: flex;">
-                    <h2>Create your admin account</h2>
-                    {{ form.email.errors }}
-                    <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" type="email" required="" name="email"
-                        value="{{ form.data.email }}">
+                {{ form.username.errors }}
+                <input placeholder="Username" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+                    autocapitalize="off" spellcheck="false" type="text" required="" name="username"
+                    autocomplete="username" maxlength="150" value="{{ form.data.username }}">
 
-                    {{ form.username.errors }}
-                    <input placeholder="Username" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" type="text" required="" name="username"
-                        autocomplete="username" maxlength="150" value="{{ form.data.username }}">
+                {{ form.password2.errors }}
+                <input placeholder="Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+                    autocapitalize="off" spellcheck="false" type="password" required="" name="password1"
+                    autocomplete="current-password" id="password" value="{{ form.data.password1 }}">
 
-                    {{ form.password2.errors }}
-                    <input placeholder="Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false" type="password" required="" name="password1"
-                        autocomplete="current-password" id="password" value="{{ form.data.password1 }}">
+                <input placeholder="Confirm Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+                    autocapitalize="off" spellcheck="false" type="password" required="" id="confirm_password"
+                    name="password2" value="{{ form.data.password2 }}">
 
-                    <input placeholder="Confirm Password" oninput="this.className = ''" autocomplete="off"
-                        autocorrect="off" autocapitalize="off" spellcheck="false" type="password" required=""
-                        id="confirm_password" name="password2" value="{{ form.data.password2 }}">
-                </div>
-
-
-                <!-- Previous and next (or submit) buttons -->
-                <div id="box-nav-container">
-                    <button type="button" id="prevBtn" onclick="previous_tab()"
-                        style="visibility: hidden;">Previous</button>
-                    <button type="button" id="nextBtn" onclick="next_tab()">Submit</button>
-                </div>
-
-                <!-- Circles which indicates the step of the form -->
-                <div style="text-align:center;margin-top:40px;">
-                    <span class="step active"></span>
-                </div>
-
+                <input type="submit" value="Submit">
             </form>
+
         </div>
-        <div class="default-bg">
-            <div class="default-bg-tint">
-            </div>
-        </div>
-
-
-        {% if form.errors %}
-        <script>
-            conreq_submission_failed_toast_message();
-        </script>
-        {% endif %}
-
-        {% compress js %}
-        <script src="{% static 'js/initialization.js' %}" crossorigin="anonymous"></script>
-        {% endcompress %}
     </div>
 </body>
 

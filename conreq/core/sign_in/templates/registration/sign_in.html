@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    {% include "head/content_slim.html" %}
+    {% include "head/sign_in.html" %}
 </head>
 
 <body>
@@ -16,26 +16,26 @@
     <div class="main">
         <div class="default-box" data-aos="zoom-in" data-aos-duration="1000">
             <div class="default-box-header">
-                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
+                <img src="{% static 'images/conreq_logo.png' %}" class="logo">
             </div>
+
             <form method="post" action="{% url 'sign_in' %}" class="sign-in-form">
                 {% csrf_token %}
+
+                {{ form.non_field_errors }}
                 <input placeholder="Username" autocapitalize="none" autocomplete="username" autofocus=""
-                    id="id_username" maxlength="150" name="username" required="" type="text">
+                    id="id_username" maxlength="150" name="username" required="" type="text"
+                    value="{{ form.data.username }}">
+
                 <input placeholder="Password" autocapitalize="none" autocomplete="current-password" id="id_password"
-                    name="password" required="" type="password">
+                    name="password" required="" type="password" value="{{ form.data.password }}">
+
                 <input type="submit" value="Sign In">
                 <input type="hidden" name="next" value="{{ next }}">
             </form>
 
-            {% if form.errors %}
-            <script>
-                login_failed_toast_message();
-            </script>
-            {% endif %}
         </div>
     </div>
-
 </body>
 
 </html>

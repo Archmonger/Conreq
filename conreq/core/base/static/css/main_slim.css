@@ -1,17 +1,11 @@
 :root {
-	--global-font: "Roboto", sans-serif;
-	--primary-font-size: 14px;
+	--font-family: "Roboto", sans-serif;
+	--font-size: 14px;
 	--box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
 		0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 	--accent-color: #258a6d;
 	--input-bg: #252525;
 	--logo-drop-shadow: drop-shadow(3px 3px 5px #2222224f);
-}
-
-@media only screen and (max-width: 800px) {
-	:root {
-		--primary-font-size: 16px;
-	}
 }
 
 html,
@@ -29,10 +23,6 @@ body,
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 100%;
-	width: 100%;
-	margin: 0px;
-	overflow: hidden;
 	background: linear-gradient(
 		145deg,
 		rgb(0 0 0),
@@ -49,8 +39,8 @@ body,
 }
 
 * {
-	font-size: var(--primary-font-size);
-	font-family: var(--global-font);
+	font-size: var(--font-size);
+	font-family: var(--font-family);
 	color: rgba(255, 255, 255, 0.75);
 }
 
@@ -67,7 +57,7 @@ body,
 	backdrop-filter: blur(10px);
 }
 
-.default-box-brand {
+.logo {
 	width: 50%;
 	margin: 0 25%;
 	-webkit-filter: var(--logo-drop-shadow);
@@ -144,7 +134,7 @@ input[type="submit" i]:focus {
 	filter: brightness(1.1);
 }
 
-form {
+.default-box form {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -181,6 +171,7 @@ ul.errorlist > li {
 	color: inherit;
 }
 
+/* Mobile */
 @media only screen and (max-width: 1000px) {
 	.default-box {
 		width: 100%;
@@ -188,33 +179,15 @@ ul.errorlist > li {
 		-webkit-backdrop-filter: blur(0px);
 		backdrop-filter: blur(0px);
 	}
-	.default-box-brand {
+	.logo {
 		width: 80%;
 	}
 }
 
-/* Offline */
-.offline {
-	background: #363636
-		linear-gradient(
-			145deg,
-			rgba(18, 23, 25, 0.8),
-			rgba(18, 23, 25, 0.25),
-			rgba(18, 23, 25, 0.15),
-			rgba(0, 0, 0, 0)
-		);
-}
-
-.offline h1 {
-	font-size: 26px;
-	font-weight: 400;
-	margin-top: 40px;
-	text-align: center;
-}
-
-/* Sign In */
-.sign-in-form {
-	margin-top: 35px;
+@media only screen and (max-width: 800px) {
+	:root {
+		--font-size: 16px;
+	}
 }
 
 /* Animations */
