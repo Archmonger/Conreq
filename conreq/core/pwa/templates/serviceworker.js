@@ -1,11 +1,12 @@
-// Base Service Worker implementation.  To use your own Service Worker, set the PWA_SERVICE_WORKER_PATH variable in settings.py
+// Base Service Worker implementation. To use your own Service Worker, set the PWA_SERVICE_WORKER_PATH variable in settings.py
+/* {% load static %} */
 
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
 	"{{ base_url|escapejs }}offline/",
-	"{{ base_url|escapejs }}static/css/main_slim.css",
-	"{{ base_url|escapejs }}static/css/offline.css",
-	"{{ base_url|escapejs }}static/js/offline.js",
+	"{% static 'css/main_slim.css' %}",
+	"{% static 'css/offline.css' %}",
+	"{% static 'js/offline.js' %}",
 ];
 
 // Cache on install
