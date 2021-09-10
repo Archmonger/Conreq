@@ -10,11 +10,16 @@
 </head>
 
 <body>
-    <div class="main">
+    <!-- Wave Animation -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 
+    <div class="main">
         <div class="default-box">
             <div class="default-box-header">
-                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
+                <img src="{% static 'images/conreq_logo.png' %}" class="logo">
             </div>
             <form method="post" action="{% url 'sign_up:register' %}">
                 {% csrf_token %}
@@ -44,10 +49,6 @@
                 <input type="hidden" name="next" value="{{ next }}">
 
             </form>
-        </div>
-        <div class="default-bg">
-            <div class="default-bg-tint">
-            </div>
         </div>
 
 
