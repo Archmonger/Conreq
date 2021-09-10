@@ -1,12 +1,11 @@
 {% load static compress %}
-{% load solo_tags %}
-{% get_solo 'server_settings.ServerConfig' as server_config %}
 {% load static %}
+{% load conreq_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    {% include "head/content_slim.html" %}
+    {% include "head/sign_up.html" %}
 </head>
 
 <body>
@@ -17,15 +16,16 @@
     </div>
 
     <div class="main">
-        <div class="default-box">
+        <div class="default-box" data-aos="zoom-in" data-aos-duration="1000">
             <div class="default-box-header">
                 <img src="{% static 'images/conreq_logo.png' %}" class="logo">
             </div>
+
             <form method="post" action="{% url 'sign_up:register' %}">
                 {% csrf_token %}
                 <h1>REGISTRATION</h1>
+                <h2>Create your new {% app_name %} account!</h2>
 
-                <h2>Create your new {{ server_config.app_name }} account!</h2>
                 {{ form.email.errors }}
                 <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off"
                     autocapitalize="off" spellcheck="false" type="email" required="" name="email"
@@ -46,21 +46,9 @@
                     name="password2" value="{{ form.data.password2 }}">
 
                 <input type="submit" value="Sign Up">
-                <input type="hidden" name="next" value="{{ next }}">
-
             </form>
+
         </div>
-
-
-        {% if form.errors %}
-        <script>
-            conreq_submission_failed_toast_message();
-        </script>
-        {% endif %}
-
-        {% compress js %}
-        <script src="{% static 'js/sign_up.js' %}" crossorigin="anonymous"></script>
-        {% endcompress %}
     </div>
 </body>
 
