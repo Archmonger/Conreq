@@ -1,0 +1,282 @@
+:root {
+	--global-font: "Roboto", sans-serif;
+	--font-size: 14px;
+	--box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+		0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+	--accent-color: #258a6d;
+	--input-bg: #252525;
+	--logo-drop-shadow: drop-shadow(3px 3px 5px #2222224f);
+}
+
+html,
+body,
+.main {
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	overflow: hidden;
+}
+
+.main {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	overflow: hidden;
+	background: linear-gradient(
+		145deg,
+		rgb(0 0 0),
+		rgb(30 38 39),
+		rgb(40 51 53),
+		rgb(49 60 51),
+		rgb(35 47 47),
+		rgb(30 38 39),
+		rgb(0 0 0)
+	);
+	background-size: 400% 400%;
+	-webkit-animation: gradient 35s ease infinite;
+	animation: gradient 35s ease infinite;
+}
+
+* {
+	font-size: var(--font-size);
+	font-family: var(--global-font);
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.default-box {
+	width: 50%;
+	border-radius: 4px;
+	box-shadow: var(--box-shadow);
+	max-width: 750px;
+	padding: 25px;
+	max-height: 90%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+}
+
+.logo {
+	width: 50%;
+	margin: 0 25%;
+	-webkit-filter: var(--logo-drop-shadow);
+	filter: var(--logo-drop-shadow);
+	-o-object-fit: contain;
+	object-fit: contain;
+	max-height: 100px;
+}
+
+.default-box-header {
+	width: 100%;
+	height: -webkit-fit-content;
+	height: -moz-fit-content;
+	height: fit-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+input[type="text"],
+input[type="password"] {
+	width: 80%;
+	margin-bottom: 35px;
+	background: rgb(0 0 0 / 0.25);
+	display: block;
+	border: none;
+	outline: none !important;
+	color: rgb(255 255 255 / 0.65);
+	padding: 10px;
+	transition: background 0.3s ease, color 0.3s ease;
+	border-radius: 4px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+	background: #fff;
+	color: var(--input-bg);
+}
+
+input[type="submit"] {
+	background: var(--accent-color);
+	color: #fff;
+	width: auto;
+	min-width: 100px;
+	margin-top: 30px;
+	box-sizing: border-box;
+	padding: 10px 15px;
+	border-radius: 4px;
+	text-align: center;
+	transition: background 0.3s ease;
+	border: none;
+	font-weight: 300;
+	-webkit-appearance: none;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:active {
+	background: #249e7b;
+}
+
+input[type="submit" i]:focus {
+	outline: none;
+	-webkit-filter: brightness(1.1);
+	filter: brightness(1.1);
+}
+
+form {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: space-evenly;
+	margin-top: 35px;
+}
+
+/* Mobile */
+@media only screen and (max-width: 1000px) {
+	.default-box {
+		width: 100%;
+		box-shadow: none;
+		-webkit-backdrop-filter: blur(0px);
+		backdrop-filter: blur(0px);
+	}
+	.logo {
+		width: 80%;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	:root {
+		--font-size: 16px;
+	}
+}
+
+/* Animations */
+.ocean {
+	height: 45%;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: #015871;
+	opacity: 0.1;
+	-webkit-animation: rgb-rotate 250s ease-in-out infinite;
+	animation: rgb-rotate 250s ease-in-out infinite;
+	transition: -webkit-filter 2s ease;
+	transition: filter 2s ease;
+	transition: filter 2s ease, -webkit-filter 2s ease;
+}
+
+.wave {
+	background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjE5OCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSI1MCUiIHgyPSI1MCUiIHkxPSItMTAuOTU5JSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjNTdCQkMxIiBzdG9wLW9wYWNpdHk9Ii4yNSIgb2Zmc2V0PSIwJSIvPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjMDE1ODcxIiBvZmZzZXQ9IjEwMCUiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxwYXRoIGZpbGw9InVybCgjYSkiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTS4wMDUgMTIxQzMxMSAxMjEgNDA5Ljg5OC0uMjUgODExIDBjNDAwIDAgNTAwIDEyMSA3ODkgMTIxdjc3SDBzLjAwNS00OCAuMDA1LTc3eiIgdHJhbnNmb3JtPSJtYXRyaXgoLTEgMCAwIDEgMTYwMCAwKSIvPgo8L3N2Zz4K")
+		repeat-x;
+	position: absolute;
+	top: -198px;
+	width: 6400px;
+	height: 198px;
+	-webkit-animation: wave 100s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+	animation: wave 100s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+	transform: translate3d(0, 0, 0);
+}
+
+.wave:nth-of-type(2) {
+	top: -175px;
+	left: -250px;
+	-webkit-animation: wave 50s cubic-bezier(0.36, 0.45, 0.63, 0.53) -0.125s infinite,
+		swell 7s ease -1.25s infinite;
+	animation: wave 50s cubic-bezier(0.36, 0.45, 0.63, 0.53) -0.125s infinite,
+		swell 7s ease -1.25s infinite;
+	opacity: 1;
+}
+
+@-webkit-keyframes wave {
+	0% {
+		margin-left: 0;
+	}
+	100% {
+		margin-left: -1600px;
+	}
+}
+
+@keyframes wave {
+	0% {
+		margin-left: 0;
+	}
+	100% {
+		margin-left: -1600px;
+	}
+}
+
+@-webkit-keyframes swell {
+	0%,
+	100% {
+		transform: translate3d(0, -25px, 0);
+	}
+	50% {
+		transform: translate3d(0, 5px, 0);
+	}
+}
+
+@keyframes swell {
+	0%,
+	100% {
+		transform: translate3d(0, -25px, 0);
+	}
+	50% {
+		transform: translate3d(0, 5px, 0);
+	}
+}
+
+@-webkit-keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@-webkit-keyframes rgb-rotate {
+	0%,
+	100% {
+		-webkit-filter: hue-rotate(360deg) brightness(250%) saturate(300%);
+		filter: hue-rotate(360deg) brightness(250%) saturate(300%);
+	}
+	50% {
+		-webkit-filter: hue-rotate(0deg) brightness(150%) saturate(300%);
+		filter: hue-rotate(0deg) brightness(150%) saturate(300%);
+	}
+}
+
+@keyframes rgb-rotate {
+	0%,
+	100% {
+		-webkit-filter: hue-rotate(360deg) brightness(250%) saturate(300%);
+		filter: hue-rotate(360deg) brightness(250%) saturate(300%);
+	}
+	50% {
+		-webkit-filter: hue-rotate(0deg) brightness(150%) saturate(300%);
+		filter: hue-rotate(0deg) brightness(150%) saturate(300%);
+	}
+}

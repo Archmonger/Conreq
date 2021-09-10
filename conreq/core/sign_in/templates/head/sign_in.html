@@ -1,0 +1,38 @@
+{% load static compress %}
+{% load static %}
+{% load conreq_tags %}
+{% load solo_tags %}
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{% app_name %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="Description" content="{% app_description %}">
+
+<!-- Favicons and App icons -->
+{% include "head/icons.html" %}
+
+<!-- Font (Roboto) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap"
+    crossorigin="anonymous">
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+    crossorigin="anonymous"></script>
+
+<!-- Animate on Scroll (AOS) -->
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+    integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"
+    integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
+    crossorigin="anonymous"></script>
+
+<!-- Local CSS -->
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/sign_in.css' %}" crossorigin="anonymous">
+{% endcompress %}
+
+<!-- Local JS -->
+{% compress js %}
+<script src="{% static 'js/sign_in.js' %}" crossorigin="anonymous"></script>
+{% endcompress %}
