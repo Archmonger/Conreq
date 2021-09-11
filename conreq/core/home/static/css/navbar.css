@@ -1,5 +1,5 @@
 .navbar {
-	background: var(--navbar-bg);
+	background: rgba(255, 255, 255, 0.04);
 	height: var(--navbar-height);
 	box-shadow: var(--box-shadow);
 	padding-left: 20px;
@@ -37,7 +37,7 @@
 	height: 40px;
 	margin: auto;
 	margin-bottom: 30px;
-	width: var(--searchbar-width);
+	width: 45%;
 	background: rgb(0 0 0 / 0.45);
 	border-radius: 15px;
 	transition: background 0.4s ease, color 0.4s ease;
@@ -93,12 +93,15 @@ button:focus {
 
 @media only screen and (max-width: 800px) {
 	:root {
-		--searchbar-width: 80%;
 		--navbar-height: 45px;
 	}
 	::-webkit-scrollbar {
 		display: none;
 	}
+	.searchbar {
+		width: 80%;
+	}
+
 	.navbar {
 		z-index: 100;
 		display: flex;

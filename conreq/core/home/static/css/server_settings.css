@@ -3,13 +3,6 @@
 	line-height: 1.5;
 }
 
-.viewport.settings {
-	width: 100%;
-	max-width: calc(
-		1920px - var(--sidebar-width) - var(--viewport-total-padding)
-	);
-}
-
 .settings-group {
 	width: 100%;
 	margin-bottom: 30px;
