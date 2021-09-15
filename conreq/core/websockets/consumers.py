@@ -42,10 +42,7 @@ class BaseWebsocket(AsyncJsonWebsocketConsumer):
             _logger,
         )
         # Reject users that aren't logged in
-        if (
-            isinstance(self.scope["user"], AnonymousUser)
-            or not self.scope["user"].is_authenticated
-        ):
+        if not self.scope["user"].is_authenticated:
             await self.__forbidden()
 
     # COMMAND RESPONSE: FORBIDDEN
