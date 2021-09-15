@@ -53,5 +53,4 @@ class BaseWebsocket(AsyncJsonWebsocketConsumer):
 
     async def __forbidden(self):
         """Notify an unauthenticated user that they shouldn't be here."""
-        response = {"command_name": "forbidden"}
-        await self.send_json(response)
+        await self.send_json({"command_name": "forbidden"})
