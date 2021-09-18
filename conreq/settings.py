@@ -65,7 +65,7 @@ APP_SLIM_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "app")
 # Environment Variables
 DOTENV_FILE = os.path.join(DATA_DIR, "settings.env")
 if not os.path.exists(DOTENV_FILE):
-    with open(DOTENV_FILE, "w") as fp:
+    with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
         pass
 DEBUG = get_debug()
 DB_ENGINE = get_database_type()
@@ -77,7 +77,7 @@ BASE_URL = get_base_url()
 
 
 # Python Packages
-DJVERSION_VERSION = "0.20.22"
+DJVERSION_VERSION = "0.20.23"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
