@@ -51,7 +51,7 @@ var get_window_location_no_params = function () {
 
 // Successful copy event
 let copy_to_clipboard_success = async function () {
-	invite_copied_toast_message();
+	// invite_copied_toast_message();
 	$(".invite_link").remove();
 };
 
@@ -59,9 +59,8 @@ let copy_to_clipboard_success = async function () {
 let copy_to_clipboard_fallback = async function () {
 	let invite_link_element = document.getElementById("invite_link");
 	invite_link_element.select();
-	document.execCommand("copy")
-		? copy_to_clipboard_success()
-		: conreq_no_response_toast_message();
+	document.execCommand("copy") ? copy_to_clipboard_success() : function () {};
+	// : conreq_no_response_toast_message();
 };
 
 // Copies the text of an element to the clipboard
@@ -74,7 +73,7 @@ var copy_to_clipboard = async function () {
 			break;
 		} else if (try_num >= max_retries) {
 			// The element failed to load in time, notify the user.
-			conreq_no_response_toast_message();
+			// conreq_no_response_toast_message();
 			return;
 		}
 		await sleep(250);

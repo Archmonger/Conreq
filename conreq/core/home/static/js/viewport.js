@@ -104,7 +104,7 @@ let get_viewport = async function (
 	}).fail(async function () {
 		if (!viewport_http_request_aborted) {
 			console.error("Failed to fetch viewport!");
-			conreq_no_response_toast_message();
+			// conreq_no_response_toast_message();
 			await destroy_viewport(viewport_selector);
 			$(viewport_selector + ">*").remove();
 			$(viewport_selector).append(

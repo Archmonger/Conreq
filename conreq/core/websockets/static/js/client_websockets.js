@@ -47,7 +47,7 @@ $(document).ready(async function () {
 				first_websocket_connection = false;
 			} else {
 				// Show a message saying we reconnected
-				reconnected_toast_message();
+				// reconnected_toast_message();
 			}
 		};
 
@@ -55,7 +55,7 @@ $(document).ready(async function () {
 		COMMAND_SOCKET.onclose = function () {
 			// Toast message to notify that the user has disconnected from the server
 			if (display_disconnected_toast) {
-				disconnected_toast_message();
+				// disconnected_toast_message();
 				first_websocket_connection = false;
 				display_disconnected_toast = false;
 			}
@@ -83,7 +83,7 @@ $(document).ready(async function () {
 		// WEBSOCKET EVENT: ON ERROR
 		COMMAND_SOCKET.onerror = function (error) {
 			if (display_disconnected_toast) {
-				disconnected_toast_message();
+				// disconnected_toast_message();
 				first_websocket_connection = false;
 				display_disconnected_toast = false;
 			}
