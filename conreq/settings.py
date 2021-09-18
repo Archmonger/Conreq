@@ -58,7 +58,7 @@ for directory in MAKE_DIRS:
 DOTENV_FILE = os.path.join(DATA_DIR, "settings.env")
 os.environ["CONREQ_DOTENV_FILE"] = DOTENV_FILE
 if not os.path.exists(DOTENV_FILE):
-    with open(DOTENV_FILE, "w") as fp:
+    with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
         pass
 DEBUG = get_debug()
 DB_ENGINE = get_database_type()
@@ -221,7 +221,7 @@ REST_FRAMEWORK = {
 # settings.json (old) -> settings.env
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 if os.path.exists(SETTINGS_FILE):
-    with open(SETTINGS_FILE, "r+") as settings_file:
+    with open(SETTINGS_FILE, "r+", encoding="utf-8") as settings_file:
         settings = json.load(settings_file)
         if settings.get("DB_ENCRYPTION_KEY"):
             set_env("DB_ENCRYPTION_KEY", settings["DB_ENCRYPTION_KEY"])
