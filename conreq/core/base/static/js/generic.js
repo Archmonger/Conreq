@@ -20,11 +20,6 @@ var add_base_url = function (window_location = null) {
 	return window_location;
 };
 
-// Obtains a URL that can be imported (handles Base URL scenarios)
-var local_js = function (path) {
-	// return STATIC_URL + path
-};
-
 // Gets the current window location from the hash
 var get_window_location = function (raw = false) {
 	// Read the URL hash to determine what page we are on
@@ -52,17 +47,6 @@ var get_window_location_no_params = function () {
 		return window_location.split(/\?(.+)/)[0];
 	}
 	return window_location;
-};
-
-// Gets the current window location from the hash
-var get_window_params = function () {
-	// Read the URL hash to determine what page we are on
-	let window_hash = window.location.hash;
-
-	if (window_hash.includes("?")) {
-		return window.location.hash.split(/\?(.+)/)[1];
-	}
-	return "";
 };
 
 // Successful copy event
@@ -108,11 +92,4 @@ var copy_to_clipboard = async function () {
 	else {
 		copy_to_clipboard_fallback();
 	}
-};
-
-$.fn.replaceWithPush = function (a) {
-	let $a = $(a);
-
-	this.replaceWith($a);
-	return $a;
 };
