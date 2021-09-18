@@ -17,6 +17,7 @@ var toast_message = async function (parameters) {
 
 // Hide any floaty objects
 var hide_popups = async function () {
+	// TODO: Add event trigger
 	$("#modal-container").modal("hide");
 	if (window.matchMedia("(max-width: 800px)").matches) {
 		if (!$("#sidebar").hasClass("collapsed")) {
