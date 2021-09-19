@@ -9,10 +9,10 @@ from conreq.utils.fields import HostnameOrURLField
 # Create your models here.
 class ServerConfig(SingletonModel):
     def __str__(self):
-        return "Server Configuration Values"
+        return "Server Settings"
 
     class Meta:
-        verbose_name = "Configuration"
+        verbose_name = "Server Settings"
         verbose_name_plural = verbose_name
 
     # Basic settings
