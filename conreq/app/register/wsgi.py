@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Callable, Union
 
-from django.urls import include, path, re_path
+from django.urls import path, re_path
 from django.views.generic import View
 
 from conreq import app

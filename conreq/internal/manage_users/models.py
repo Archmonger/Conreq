@@ -6,7 +6,7 @@ from model_utils import FieldTracker
 
 User = get_user_model()
 
-# Create your models here.
+
 class Profile(models.Model):
     def __str__(self):
         return self.user.username
