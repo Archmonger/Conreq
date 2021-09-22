@@ -73,3 +73,12 @@ def api(
             return _wrapped_view(*args, **kwargs)
 
     return decorator
+
+
+def middleware(
+    path: str,
+    positioning_element: str = None,
+    positioning: str = "before",
+) -> None:
+    """Shortcut to add middleware to Django."""
+    # TODO: Implement this

@@ -28,18 +28,3 @@ def setting_script(path: str) -> None:
 def installed_app(path: str) -> None:
     """Shortcut to add an installed app to Django."""
     app.config.installed_apps.append(path)
-
-
-def middleware(
-    path: str,
-    positioning_element: str = None,
-    position_below: bool = True,
-) -> None:
-    """Shortcut to add middleware to Django."""
-    app.config.middlewares.append(
-        {
-            "path": path,
-            "pos_elem": positioning_element,
-            "below": position_below,
-        }
-    )
