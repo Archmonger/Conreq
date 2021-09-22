@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
-from conreq.core.view_wrappers.views import (
+from conreq.internal.view_wrappers.views import (
     home,
     landing,
     password_reset,

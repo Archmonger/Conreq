@@ -15,19 +15,19 @@ BASE_URL = get_base_url(prepend_slash=False)
 
 
 urlpatterns = [
-    path("", include("conreq.core.landing.urls")),
-    path("", include("conreq.core.home.urls")),
-    path("", include("conreq.core.pwa.urls")),
+    path("", include("conreq.internal.landing.urls")),
+    path("", include("conreq.internal.home.urls")),
+    path("", include("conreq.internal.pwa.urls")),
     path(
         "sign_in/",
         app.config.sign_in_view,
         name="sign_in",
     ),
     path("sign_out/", auth_views.logout_then_login, name="sign_out"),
-    path("sign_up/", include("conreq.core.sign_up.urls")),
-    path("manage_users/", include("conreq.core.manage_users.urls")),
-    path("server_settings/", include("conreq.core.server_settings.urls")),
-    path("api/v1/", include("conreq.core.api.urls")),
+    path("sign_up/", include("conreq.internal.sign_up.urls")),
+    path("manage_users/", include("conreq.internal.manage_users.urls")),
+    path("server_settings/", include("conreq.internal.server_settings.urls")),
+    path("api/v1/", include("conreq.internal.api.urls")),
 ]
 
 # Debug tools

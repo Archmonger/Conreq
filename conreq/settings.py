@@ -29,7 +29,7 @@ from conreq.utils.packages import find_apps, find_modules
 
 # Project Directories
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CORE_DIR = os.path.join(ROOT_DIR, "conreq", "core")
+INTERNAL_DIR = os.path.join(ROOT_DIR, "conreq", "internal")
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(ROOT_DIR, "data"), dot_env=False)
 PACKAGES_DIR = os.path.join(DATA_DIR, "packages", "__installed__")
 PACKAGES_DEV_DIR = os.path.join(DATA_DIR, "packages", "develop")
@@ -55,7 +55,7 @@ for directory in MAKE_DIRS:
 
 
 # App Template Diretories
-APP_TEMPLATE_DIR = os.path.join(CORE_DIR, "app_templates")
+APP_TEMPLATE_DIR = os.path.join(INTERNAL_DIR, "app_templates")
 PACKAGE_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "package")
 PACKAGE_SLIM_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "package")
 APP_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "app")
@@ -214,7 +214,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
-        "conreq.core.api.permissions.HasAPIKey",
+        "conreq.internal.api.permissions.HasAPIKey",
     ],
 }
 
@@ -243,7 +243,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
-    *find_modules(CORE_DIR, prefix="conreq.core."),
+    *find_modules(INTERNAL_DIR, prefix="conreq.internal."),
     # Database Fields
     "encrypted_fields",  # Allow for encrypted text in the DB
     "versionfield",  # Allows for easily storing/retrieving version numbers in the DB

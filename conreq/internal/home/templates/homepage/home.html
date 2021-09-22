@@ -1,0 +1,32 @@
+{% load solo_tags %}
+{% load static compress %}
+{% load static %}
+{% load conreq_tags %}
+{% load idom %}
+{% get_solo 'server_settings.ServerConfig' as server_config %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "head/content.html" %}
+</head>
+
+<body>
+    <input id="app-name" type="hidden" value="{% app_name %}">
+    <input id="base-url" type="hidden" value="{{ base_url }}">
+    {% include "homepage/navbar.html" %}
+    {% include "modal/default.html" %}
+    {% include "homepage/sidebar.html" %}
+    <main class="viewport-container-loading">
+        {% include app_config.loading_animation_template %}
+    </main>
+    <main class="viewport-container-top" hidden="hidden">
+        {% idom_component "conreq.internal.home.components.hello" %}
+    </main>
+    <main class="viewport-container" hidden="hidden">
+        {% idom_component "conreq.internal.home.components.hello" %}
+    </main>
+</body>
+
+</html>
