@@ -5,7 +5,7 @@ from conreq.utils.environment import get_base_url, get_str_from_env
 
 register = template.Library()
 BASE_URL_LEN = len(get_base_url())
-APP_NAME = get_str_from_env("APP_NAME", "Conreq")
+SERVER_NAME = get_str_from_env("SERVER_NAME", "Conreq")
 APP_DESCRIPTION = get_str_from_env("APP_DESCRIPTION", "Content Requesting")
 
 
@@ -22,8 +22,8 @@ def viewport_top_url(namespace):
 
 
 @register.simple_tag
-def app_name():
-    return APP_NAME
+def server_name():
+    return SERVER_NAME
 
 
 @register.simple_tag

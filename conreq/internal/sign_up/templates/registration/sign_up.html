@@ -24,7 +24,7 @@
             <form method="post" action="{% url 'sign_up:register' %}">
                 {% csrf_token %}
                 <h1>REGISTRATION</h1>
-                <h2>Create your new {% app_name %} account!</h2>
+                <h2>Create your new {% server_name %} account!</h2>
 
                 {{ form.email.errors }}
                 <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off"
