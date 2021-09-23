@@ -12,6 +12,7 @@ from conreq.utils.environment import get_database_type, get_debug
 DEBUG = get_debug()
 ROOT_DIR = getattr(settings, "ROOT_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
+TEMP_DIR = getattr(settings, "TEMP_DIR")
 DATABASES = getattr(settings, "DATABASES")
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
@@ -28,6 +29,10 @@ class Command(BaseCommand):
         no_perms = options["no_perms"]
 
         print("Preconfiguring Conreq...")
+
+        # Delete temp files
+        if os.path.exists(TEMP_DIR):
+            shutil.rmtree(TEMP_DIR)
 
         # Django database
         if get_database_type() == "SQLITE3":
