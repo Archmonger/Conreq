@@ -33,8 +33,8 @@ INTERNAL_DIR = os.path.join(ROOT_DIR, "conreq", "internal")
 DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(ROOT_DIR, "data"), dot_env=False)
 PACKAGES_DIR = os.path.join(DATA_DIR, "packages", "__installed__")
 PACKAGES_DEV_DIR = os.path.join(DATA_DIR, "packages", "develop")
-MEDIA_DIR = os.path.join(DATA_DIR, "files")
-METRICS_DIR = os.path.join(MEDIA_DIR, "metrics")
+MEDIA_DIR = os.path.join(DATA_DIR, "media")
+METRICS_DIR = os.path.join(DATA_DIR, "metrics")
 BACKUP_DIR = os.path.join(DATA_DIR, "backup")
 TEMP_DIR = os.path.join(DATA_DIR, "temp")
 USER_STATICFILES_DIR = os.path.join(DATA_DIR, "static")
@@ -141,10 +141,8 @@ PWA_APP_DEBUG_MODE = DEBUG
 # Logging
 CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
 ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
-if DEBUG:
-    LOG_LEVEL = get_str_from_env("LOG_LEVEL", "INFO")
-else:
-    LOG_LEVEL = get_str_from_env("LOG_LEVEL", "WARNING")
+LOG_LEVEL = get_str_from_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -188,8 +186,8 @@ LOGGING = {
         },
     },
 }
-for logger in LOGGING["loggers"]:
-    LOGGING["loggers"][logger]["handlers"] = ["console", "conreq_logs"]
+for logger_name in LOGGING["loggers"]:
+    LOGGING["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
 
 
 # Security Settings
@@ -197,14 +195,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "no-referrer"
 ALLOWED_HOSTS = [ALLOWED_HOST]
 SECURE_BROWSER_XSS_FILTER = True
-if SSL_SECURITY:
-    SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
-    SECURE_HSTS_PRELOAD = True  # Allow for HSTS preload
-    SECURE_HSTS_SECONDS = 31536000  # Allow for HSTS preload
-    SESSION_COOKIE_SECURE = True  # Only send cookie over HTTPS
-    CSRF_COOKIE_SECURE = True  # Only send cookie over HTTPS
-    LANGUAGE_COOKIE_SECURE = True  # Only send cookie over HTTPS
-    LANGUAGE_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
 
 
 # API Settings
@@ -246,7 +236,6 @@ INSTALLED_APPS = [
     *find_modules(INTERNAL_DIR, prefix="conreq.internal."),
     # Database Fields
     "encrypted_fields",  # Allow for encrypted text in the DB
-    "versionfield",  # Allows for easily storing/retrieving version numbers in the DB
     "solo",  # Allow for single-row fields in the DB
     "url_or_relative_url_field",  # Validates relative URLs
     # ASGI
@@ -262,8 +251,6 @@ INSTALLED_APPS = [
     "compressor",  # Minifies CSS/JS files
     # User Installed Apps
     *find_apps(),
-    # Cleanup
-    "django_cleanup.apps.CleanupConfig",  # Automatically delete dangling files
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -291,6 +278,9 @@ if DEBUG:
     MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
     # API docs generator
     INSTALLED_APPS.append("drf_yasg")
+else:
+    # Automatically delete dangling files
+    INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
 
 
 # URL Routing and Page Rendering
@@ -327,10 +317,10 @@ CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
         "LOCATION": os.path.join(DATA_DIR, "cache"),
-        "TIMEOUT": 300,  # Django setting for default timeout of each key.
-        "SHARDS": 8,  # Number of "sharded" cache dbs to create
-        "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds
-        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte
+        "TIMEOUT": 300,  # Default timeout of each key.
+        "SHARDS": 8,  # Number of sharded cache DBs to create
+        "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds query timeout
+        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte max cache size
     }
 }
 
@@ -357,7 +347,7 @@ USE_TZ = True
 
 
 # Static Files (CSS, JavaScript, Images)
-STATIC_ROOT = os.path.join(DATA_DIR, "collectstatic")
+STATIC_ROOT = os.path.join(TEMP_DIR, "collect_static")
 STATIC_URL = BASE_URL + "static/"
 STATICFILES_DIRS = [
     USER_STATICFILES_DIR,
