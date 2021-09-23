@@ -70,8 +70,8 @@ ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
 
 
-# Application Settings
-DJVERSION_VERSION = "0.20.23"
+# Python Packages
+DJVERSION_VERSION = "0.20.24"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
