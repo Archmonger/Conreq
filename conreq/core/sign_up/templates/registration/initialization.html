@@ -8,12 +8,18 @@
 </head>
 
 <body>
-    <div class="main">
+    <!-- Wave Animation -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 
-        <div class="default-box">
+    <div class="main">
+        <div class="default-box" data-aos="zoom-in" data-aos-duration="1000">
             <div class="default-box-header">
-                <img src="{% static 'images/conreq_logo.png' %}" alt="conreq logo" class="default-box-brand">
+                <img src="{% static 'images/conreq_logo.png' %}" class="logo">
             </div>
+
             <form id="initialization-form" method="post" action="{% url 'base:landing' %}">
                 {% csrf_token %}
                 <h1>FIRST TIME SETUP</h1>
@@ -87,10 +93,6 @@
                 </div>
 
             </form>
-        </div>
-        <div class="default-bg">
-            <div class="default-bg-tint">
-            </div>
         </div>
 
 

@@ -2,9 +2,10 @@
 {% load solo_tags %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
 {% load static %}
+{% load conreq_tags %}
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>{{ server_settings.conreq_app_name }}</title>
+<title>{% app_name %}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="Description" content="Conreq: Content Requesting">
 

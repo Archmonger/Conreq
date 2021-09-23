@@ -4,13 +4,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>{% app_name %}</title>
     {% include "primary/head_content_slim.html" %}
 </head>
 
-<body class="offline">
-    <h1>Could not connect to {% app_name %}. Check your network connection or try again later.</h1>
+<body>
+    <!-- Wave Animation -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="main">
+        <div class="default-box offline" data-aos="zoom-in" data-aos-duration="1000">
+            <p>Could not connect to {% app_name %}.</p>
+            <p>Check your network connection or try again later.</p>
+        </div>
+    </div>
 </body>
 
 </html>
