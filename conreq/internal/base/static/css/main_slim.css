@@ -55,6 +55,7 @@ body,
 	overflow-y: auto;
 	-webkit-backdrop-filter: blur(10px);
 	backdrop-filter: blur(10px);
+	z-index: 1;
 }
 
 .logo {
