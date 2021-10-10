@@ -202,11 +202,11 @@ img.lazy:not([src]) {
 }
 
 .mfp-bg {
-	z-index: 1054;
+	z-index: 1061;
 }
 
 .mfp-wrap {
-	z-index: 1055;
+	z-index: 1062;
 }
 
 /* Scrollbar */
