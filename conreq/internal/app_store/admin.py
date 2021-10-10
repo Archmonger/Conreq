@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from conreq.internal.app_store import models
+from . import models
 
 
 # Register your models here.
