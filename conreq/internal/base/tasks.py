@@ -1,4 +1,3 @@
-import os
 import sqlite3
 
 from django.conf import settings
@@ -14,8 +13,8 @@ HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 @db_periodic_task(crontab(minute="0", hour="0", strict=True))
 def vacuum_huey_sqlite_db():
-    """Periodically preforms a SQLITE vacuum on the background task database."""
-    if os.path.exists(HUEY_FILENAME):
+    """Periodically performs a SQLITE vacuum on the background task database."""
+    if HUEY_FILENAME.exists():
         with sqlite3.connect(HUEY_FILENAME) as cursor:
             cursor.execute("VACUUM")
 

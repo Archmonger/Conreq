@@ -1,4 +1,3 @@
-import os
 import sqlite3
 from multiprocessing import Process
 
@@ -12,7 +11,7 @@ from hypercorn.run import run as run_hypercorn
 
 from conreq.utils.environment import get_debug
 
-HYPERCORN_TOML = os.path.join(getattr(settings, "DATA_DIR"), "hypercorn.toml")
+HYPERCORN_TOML = getattr(settings, "DATA_DIR") / "hypercorn.toml"
 DEBUG = get_debug()
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 ACCESS_LOG_FILE = getattr(settings, "ACCESS_LOG_FILE")
@@ -70,7 +69,7 @@ class Command(BaseCommand):
             config.accesslog = ACCESS_LOG_FILE
 
             # Additonal webserver configuration
-            if os.path.exists(HYPERCORN_TOML):
+            if HYPERCORN_TOML.exists():
                 config.from_toml(HYPERCORN_TOML)
 
             # Run the webserver

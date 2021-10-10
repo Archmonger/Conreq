@@ -1,5 +1,3 @@
-import os
-
 from django.conf import settings
 from django.core.management.templates import TemplateCommand
 
@@ -13,11 +11,10 @@ class Command(TemplateCommand):
 
     # pylint: disable=arguments-differ
     def handle(self, package_name: str, app_name: str, **options: dict):
-        # Conreq Customizatizations to TemplateCommand.handle()
         name = app_name
         app_or_project = "app"
-        target = os.path.join(PACKAGES_DIR, package_name, "apps")
-        options["template"] = APP_TEMPLATE
+        target = str(PACKAGES_DIR / package_name / "apps" / "")
+        options["template"] = str(APP_TEMPLATE)
         options["extensions"] = ["py"]
         options["files"] = []
         options["package_name"] = package_name

@@ -31,7 +31,7 @@ class Command(BaseCommand):
         print("Preconfiguring Conreq...")
 
         # Delete temp files
-        if os.path.exists(TEMP_DIR):
+        if TEMP_DIR.exists():
             shutil.rmtree(TEMP_DIR)
 
         # Django database
@@ -81,7 +81,7 @@ class Command(BaseCommand):
     @staticmethod
     def setup_sqlite_database(path, name, uid, gid, no_perms):
         print(name.rstrip(" ") + " Database")
-        if not os.path.exists(path):
+        if not path.exists():
             print("> Creating database")
         with sqlite3.connect(path) as cursor:
             print("> Vacuuming database")

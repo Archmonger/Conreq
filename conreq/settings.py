@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
 import secrets
 import sys
+from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 from tzlocal import get_localzone
@@ -28,43 +28,44 @@ from conreq.utils.environment import (
 from conreq.utils.packages import find_apps, find_modules
 
 # Project Directories
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-INTERNAL_DIR = os.path.join(ROOT_DIR, "conreq", "internal")
-DATA_DIR = get_str_from_env("DATA_DIR", os.path.join(ROOT_DIR, "data"), dot_env=False)
-PACKAGES_DIR = os.path.join(DATA_DIR, "packages", "__installed__")
-PACKAGES_DEV_DIR = os.path.join(DATA_DIR, "packages", "develop")
-MEDIA_DIR = os.path.join(DATA_DIR, "media")
-METRICS_DIR = os.path.join(DATA_DIR, "metrics")
-BACKUP_DIR = os.path.join(DATA_DIR, "backup")
-TEMP_DIR = os.path.join(DATA_DIR, "temp")
-USER_STATICFILES_DIR = os.path.join(DATA_DIR, "static")
-LOG_DIR = os.path.join(DATA_DIR, "logs")
+ROOT_DIR = Path(__file__).resolve().parent.parent
+INTERNAL_DIR = ROOT_DIR / "conreq" / "internal"
+DATA_DIR = get_str_from_env("DATA_DIR", ROOT_DIR / "data", dot_env=False)
+PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
+PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
+MEDIA_DIR = DATA_DIR / "media"
+METRICS_DIR = DATA_DIR / "metrics"
+BACKUP_DIR = DATA_DIR / "backup"
+TEMP_DIR = DATA_DIR / "temp"
+USER_STATICFILES_DIR = DATA_DIR / "static"
+LOG_DIR = DATA_DIR / "logs"
 MAKE_DIRS = [
     DATA_DIR,
     PACKAGES_DIR,
+    PACKAGES_DEV_DIR,
     MEDIA_DIR,
+    METRICS_DIR,
     BACKUP_DIR,
     TEMP_DIR,
     USER_STATICFILES_DIR,
     LOG_DIR,
-    METRICS_DIR,
 ]
 for directory in MAKE_DIRS:
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    if not directory.exists():
+        directory.mkdir(parents=True)
 
 
 # App Template Diretories
-APP_TEMPLATE_DIR = os.path.join(INTERNAL_DIR, "app_templates")
-PACKAGE_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "package")
-PACKAGE_SLIM_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "package")
-APP_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "app")
-APP_SLIM_TEMPLATE = os.path.join(APP_TEMPLATE_DIR, "app")
+APP_TEMPLATE_DIR = INTERNAL_DIR / "app_templates"
+PACKAGE_TEMPLATE = APP_TEMPLATE_DIR / "package"
+PACKAGE_SLIM_TEMPLATE = APP_TEMPLATE_DIR / "package_slim"
+APP_TEMPLATE = APP_TEMPLATE_DIR / "app"
+APP_SLIM_TEMPLATE = APP_TEMPLATE_DIR / "app_slim"
 
 
 # Environment Variables
-DOTENV_FILE = os.path.join(DATA_DIR, "settings.env")
-if not os.path.exists(DOTENV_FILE):
+DOTENV_FILE = DATA_DIR / "settings.env"
+if not DOTENV_FILE.exists():
     with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
         pass
 DEBUG = get_debug()
@@ -97,12 +98,11 @@ COMPRESS_FILTERS = {
     "css": ["compressor.filters.cssmin.rCSSMinFilter"],
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
-HUEY_FILENAME = os.path.join(DATA_DIR, "bg_tasks.sqlite3")
+HUEY_FILENAME = DATA_DIR / "bg_tasks.sqlite3"
 HUEY = {
     "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_FILENAME,  # Sqlite filename
-    "results": True,  # Store return values of tasks.
     "immediate": False,  # If True, run tasks synchronously.
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
     "consumer": {
@@ -139,8 +139,8 @@ PWA_APP_DEBUG_MODE = DEBUG
 
 
 # Logging
-CONREQ_LOG_FILE = os.path.join(LOG_DIR, "conreq.log")
-ACCESS_LOG_FILE = os.path.join(LOG_DIR, "access.log")
+CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
+ACCESS_LOG_FILE = LOG_DIR / "access.log"
 LOG_LEVEL = get_str_from_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
 
 LOGGING = {
@@ -306,7 +306,7 @@ TEMPLATES = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
+        "NAME": DATA_DIR / "db.sqlite3",
         "OPTIONS": {
             "timeout": 3,  # 3 second query timeout
         },
@@ -315,7 +315,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
-        "LOCATION": os.path.join(DATA_DIR, "cache"),
+        "LOCATION": DATA_DIR / "cache",
         "TIMEOUT": 300,  # Default timeout of each key.
         "SHARDS": 8,  # Number of sharded cache DBs to create
         "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds query timeout
@@ -346,7 +346,7 @@ USE_TZ = True
 
 
 # Static Files (CSS, JavaScript, Images)
-STATIC_ROOT = os.path.join(TEMP_DIR, "collect_static")
+STATIC_ROOT = TEMP_DIR / "collect_static"
 STATIC_URL = BASE_URL + "static/"
 STATICFILES_DIRS = [
     USER_STATICFILES_DIR,
