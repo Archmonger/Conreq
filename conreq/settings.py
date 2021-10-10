@@ -303,7 +303,6 @@ TEMPLATES = [
 
 
 # Databases and Caches
-# SQLite
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
