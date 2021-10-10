@@ -12,7 +12,7 @@ DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
 _logger = logging.getLogger(__name__)
 
 
-def generate_cache_key(
+def create_cache_key(
     cache_name: str, cache_args: list, cache_kwargs: dict, key: str
 ) -> str:
     """Generates a key to be used with django caching"""
@@ -33,13 +33,13 @@ def obtain_key_from_cache_key(cache_key: str) -> str:
 
 
 @db_task()
-def __cache_set_many(missing_keys, cache_duration):
-    cache.set_many(missing_keys, cache_duration)
+def lazy_set_many(cache_dict, duration):
+    cache.set_many(cache_dict, duration)
 
 
 @db_task()
-def __cache_set(cache_key, function_results, cache_duration):
-    cache.set(cache_key, function_results, cache_duration)
+def lazy_set(cache_key, cache_value, duration):
+    cache.set(cache_key, cache_value, duration)
 
 
 def handler(
@@ -47,7 +47,7 @@ def handler(
     page_key: str = "",
     function: Callable = None,
     force_update_cache: bool = False,
-    cache_duration: int = DEFAULT_CACHE_DURATION,
+    duration: int = DEFAULT_CACHE_DURATION,
     args: list = (),
     kwargs: dict = None,
 ) -> any:
@@ -59,7 +59,7 @@ def handler(
         function: The function to be executed (if cached values are expired).
             If no function is provided, whatever was stored in cache is always returned.
         force_update_cache: Forces execution of function, regardless if value is expired or not. Does not work with multi execution.
-        cache_duration: Duration in seconds that the cached value should be valid for.
+        duration: Duration in seconds that the cached value should be valid for.
         args: A list of arguements to pass into function.
         kwargs: A dictionary of keyworded arguements to pass into function.
     """
@@ -72,7 +72,7 @@ def handler(
         _logger.debug("%s - Accessed.", cache_name)
 
         # Get the cached value
-        cache_key = generate_cache_key(cache_name, args, kwargs, page_key)
+        cache_key = create_cache_key(cache_name, args, kwargs, page_key)
         cached_results = cache.get(cache_key)
         _logger.debug("%s - Generated cache key %s", cache_name, cache_key)
 
@@ -86,7 +86,7 @@ def handler(
         if cached_results is None or force_update_cache:
             function_results = function(*args, **kwargs)
             if function_results:
-                __cache_set(cache_key, function_results, cache_duration)
+                lazy_set(cache_key, function_results, duration)
             _logger.info("%s - %s()", cache_name, function.__name__)
             return function_results
 
@@ -113,7 +113,7 @@ def handler(
 def multi_handler(
     cache_name: str,
     functions: dict[dict],
-    cache_duration: int = DEFAULT_CACHE_DURATION,
+    duration: int = DEFAULT_CACHE_DURATION,
     timeout: int = 5,
 ) -> dict[dict]:
     """Retrieve, set, and potentially execute multiple cache functions at once.
@@ -133,7 +133,7 @@ def multi_handler(
 
         requested_keys = []
         for key, value in functions.items():
-            cache_key = generate_cache_key(
+            cache_key = create_cache_key(
                 cache_name, value["args"], value["kwargs"], key
             )
             _logger.debug(
@@ -175,7 +175,7 @@ def multi_handler(
                 cache_name,
                 missing_keys,
             )
-            __cache_set_many(missing_keys, cache_duration)
+            lazy_set_many(missing_keys, duration)
 
         # Return all results
         cached_results.update(missing_keys)
