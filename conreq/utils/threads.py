@@ -1,5 +1,6 @@
 """Any function that assists in multithreading or multiprocessing"""
 from threading import Thread
+from typing import Any
 
 
 class ReturnThread(Thread):
@@ -27,7 +28,7 @@ class ReturnThread(Thread):
         return self._return
 
 
-def threaded_execution(function_list: list, args: list, **kwargs: dict) -> list[any]:
+def threaded_execution(function_list: list, args: list, **kwargs: dict) -> list[Any]:
     """Threaded execution of function calls where all functions utilize the same args/kwargs."""
     thread_list = []
     results = []
@@ -43,7 +44,7 @@ def threaded_execution(function_list: list, args: list, **kwargs: dict) -> list[
     return results
 
 
-def threaded_execution_unique_args(functions: list[dict]) -> list[any]:
+def threaded_execution_unique_args(functions: list[dict]) -> list[Any]:
     """Executes functions with unique arguements. It will return all returned values as a list.
     Functions must follow this format:
 

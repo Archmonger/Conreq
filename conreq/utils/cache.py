@@ -1,6 +1,7 @@
 """Django caching wrapper and cache related capabilities."""
 import logging
 from collections.abc import Callable
+from typing import Any
 
 from django.core.cache import cache
 from huey.contrib.djhuey import db_task
@@ -50,7 +51,7 @@ def handler(
     duration: int = DEFAULT_CACHE_DURATION,
     args: list = (),
     kwargs: dict = None,
-) -> any:
+) -> Any:
     """Handles caching for results and data.
 
     Args:

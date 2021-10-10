@@ -1,9 +1,10 @@
 """Generic functions to be used anywhere. All functions only have stdlib dependencies."""
 from re import sub
+from typing import Any
 
 
 def is_key_value_in_list(
-    key: any, value: any, search_list: list, return_item: bool = False
+    key: Any, value: Any, search_list: list, return_item: bool = False
 ) -> bool:
     """Iterate through a list of dicts to check if a specific key/value pair exists."""
     if isinstance(search_list, list):
