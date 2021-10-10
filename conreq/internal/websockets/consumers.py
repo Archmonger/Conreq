@@ -1,11 +1,11 @@
 """Conreq's main websockets."""
+import logging
+
 from channels.auth import login
 from channels.db import database_sync_to_async as convert_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
-from conreq.utils import log
-
-_logger = log.get_logger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 class BaseWebsocket(AsyncJsonWebsocketConsumer):
@@ -32,20 +32,12 @@ class BaseWebsocket(AsyncJsonWebsocketConsumer):
 
         # User could not be logged in
         except Exception:
-            log.handler(
-                "Websocket login failure on initial connection!",
-                log.ERROR,
-                _logger,
-            )
+            _logger.exception("Websocket login failure on initial connection!")
             await self.__forbidden()
 
     async def receive_json(self, content, **kwargs):
         """Event that occurs when the browser sent a message to the server."""
-        log.handler(
-            f"Message received: {content}",
-            log.INFO,
-            _logger,
-        )
+        _logger.info("Message received: %s", content)
 
         # Reject users that aren't logged in
         if not self.scope["user"].is_authenticated:

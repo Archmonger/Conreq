@@ -1,10 +1,9 @@
 import functools
+import logging
 import os
 import pkgutil
 
-from conreq.utils import log
-
-_logger = log.get_logger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 @functools.cache
@@ -28,12 +27,9 @@ def _packages_dev_dir():
 def _duplicate_package_check(packages, packages_dev):
     seen = packages.intersection(packages_dev)
     for package in seen:
-        log.handler(
-            "\033[93m"
-            + f"Duplicate package detected. Using development copy of duplicate package '{package}'."
-            + "\033[0m",
-            log.WARNING,
-            _logger,
+        _logger.warning(
+            "\033[93mDuplicate package detected. Using development copy of duplicate package '%s'.\033[0m",
+            package,
         )
 
 

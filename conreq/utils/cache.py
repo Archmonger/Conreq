@@ -1,18 +1,15 @@
 """Django caching wrapper and cache related capabilities."""
+import logging
 from collections.abc import Callable
 
 from django.core.cache import cache
 from huey.contrib.djhuey import db_task
 
-from conreq.utils import log
 from conreq.utils.generic import clean_string
 from conreq.utils.threads import ReturnThread
 
-# Globals
 DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
-
-# Creating a logger (for log files)
-_logger = log.get_logger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 def generate_cache_key(
@@ -72,28 +69,16 @@ def handler(
         kwargs = {}
     # Looks through cache and will perform a search if needed.
     try:
-        log.handler(
-            cache_name + " - Accessed.",
-            log.DEBUG,
-            _logger,
-        )
+        _logger.debug("%s - Accessed.", cache_name)
 
         # Get the cached value
         cache_key = generate_cache_key(cache_name, args, kwargs, page_key)
         cached_results = cache.get(cache_key)
-        log.handler(
-            cache_name + " - Generated cache key " + cache_key,
-            log.DEBUG,
-            _logger,
-        )
+        _logger.debug("%s - Generated cache key %s", cache_name, cache_key)
 
         # No function was provided, just return a bare cache value
         if function is None:
-            log.handler(
-                cache_name + " - Requested raw cache values.",
-                log.DEBUG,
-                _logger,
-            )
+            _logger.debug("%s - Requested raw cache values.", cache_name)
             return cached_results
 
         # If the user wants to force update the cache, nothing
@@ -102,19 +87,11 @@ def handler(
             function_results = function(*args, **kwargs)
             if function_results:
                 __cache_set(cache_key, function_results, cache_duration)
-            log.handler(
-                cache_name + " - " + function.__name__ + "()",
-                log.INFO,
-                _logger,
-            )
+            _logger.info("%s - %s()", cache_name, function.__name__)
             return function_results
 
         if cached_results is None:
-            log.handler(
-                cache_name + " - Cache key " + cache_key + " was empty!",
-                log.INFO,
-                _logger,
-            )
+            _logger.info("%s - Cache key %s was empty!", cache_name, cache_key)
 
         # If a value was in cache and not expired, return that value
         return cached_results
@@ -122,21 +99,13 @@ def handler(
     except Exception:
         # If the function threw an exception, return none.
         if hasattr(function, "__name__"):
-            log.handler(
-                "Function " + function.__name__ + " failed to execute!",
-                log.ERROR,
-                _logger,
-            )
+            _logger.exception("Function %s failed to execute!", function.__name__)
         else:
-            log.handler(
-                "Cache handler has failed! Function: "
-                + str(function)
-                + " Cache Name: "
-                + str(cache_name)
-                + " Page Key: "
-                + str(page_key),
-                log.ERROR,
-                _logger,
+            _logger.exception(
+                "Cache handler has failed! Function: %s Cache Name: %s Page Key: %s",
+                function,
+                cache_name,
+                page_key,
             )
     return None
 
@@ -160,35 +129,26 @@ def multi_handler(
     }
     """
     try:
-        log.handler(
-            cache_name + " - Accessed.",
-            log.DEBUG,
-            _logger,
-        )
+        _logger.debug("%s - Accessed.", cache_name)
 
         requested_keys = []
         for key, value in functions.items():
             cache_key = generate_cache_key(
                 cache_name, value["args"], value["kwargs"], key
             )
-            log.handler(
-                cache_name
-                + " - Cache multi execution generated cache key "
-                + cache_key,
-                log.DEBUG,
-                _logger,
+            _logger.debug(
+                "%s - Cache multi execution generated cache key %s",
+                cache_name,
+                cache_key,
             )
             requested_keys.append(cache_key)
 
         # Search cache for all keys
         cached_results = cache.get_many(requested_keys)
-        log.handler(
-            cache_name
-            + " - Cache multi execution detected "
-            + str(len(cached_results))
-            + " available keys.",
-            log.INFO,
-            _logger,
+        _logger.info(
+            "%s - Cache multi execution detected %d available keys.",
+            cache_name,
+            cached_results,
         )
 
         # If nothing was in cache, or cache was expired, run function()
@@ -210,13 +170,10 @@ def multi_handler(
 
         # Set values in cache for any newly executed functions
         if bool(missing_keys):
-            log.handler(
-                cache_name
-                + " - Cache multi execution detected "
-                + str(len(missing_keys))
-                + " missing keys.",
-                log.INFO,
-                _logger,
+            _logger.info(
+                "%s - Cache multi execution detected %d missing keys.",
+                cache_name,
+                missing_keys,
             )
             __cache_set_many(missing_keys, cache_duration)
 
@@ -225,18 +182,12 @@ def multi_handler(
 
         # If results were none, log it.
         if cached_results is None:
-            log.handler(
-                cache_name + " - Cache multi execution generated no results!",
-                log.WARNING,
-                _logger,
+            _logger.warning(
+                "%s - Cache multi execution generated no results!", cache_name
             )
 
         return cached_results
 
     except Exception:
-        log.handler(
-            "Functions " + str(functions) + " failed to execute!",
-            log.ERROR,
-            _logger,
-        )
+        _logger.exception("Functions %s failed to execute!", functions)
     return None
