@@ -8,5 +8,5 @@ app_name = "home"
 HOME_URL = get_home_url(prepend_slash=False)
 
 urlpatterns = [
-    path(f"{HOME_URL}", app.config.home_view, name="main"),
+    path(HOME_URL, app.config.home_view, name="main"),
 ]
