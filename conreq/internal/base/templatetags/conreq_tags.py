@@ -6,7 +6,7 @@ from conreq.utils.environment import get_base_url, get_env
 register = template.Library()
 BASE_URL_LEN = len(get_base_url())
 SERVER_NAME = get_env("SERVER_NAME", "Conreq")
-APP_DESCRIPTION = get_env("APP_DESCRIPTION", "Content Requesting")
+SERVER_DESCRIPTION = get_env("APP_DESCRIPTION", "")
 
 
 @register.simple_tag
@@ -28,4 +28,4 @@ def server_name():
 
 @register.simple_tag
 def app_description():
-    return APP_DESCRIPTION
+    return SERVER_DESCRIPTION
