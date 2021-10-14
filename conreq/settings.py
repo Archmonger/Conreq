@@ -19,10 +19,9 @@ from tzlocal import get_localzone
 
 from conreq.utils.environment import (
     get_base_url,
-    get_bool_from_env,
     get_database_type,
     get_debug,
-    get_str_from_env,
+    get_env,
     set_env,
 )
 from conreq.utils.packages import find_apps, find_modules
@@ -30,7 +29,7 @@ from conreq.utils.packages import find_apps, find_modules
 # Project Directories
 ROOT_DIR = Path(__file__).resolve().parent.parent
 INTERNAL_DIR = ROOT_DIR / "conreq" / "internal"
-DATA_DIR = get_str_from_env("DATA_DIR", ROOT_DIR / "data", dot_env=False)
+DATA_DIR = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False)
 PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
 PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
 MEDIA_DIR = DATA_DIR / "media"
@@ -70,10 +69,10 @@ if not DOTENV_FILE.exists():
         pass
 DEBUG = get_debug()
 DB_ENGINE = get_database_type()
-MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
-SSL_SECURITY = get_bool_from_env("SSL_SECURITY", False)
-X_FRAME_OPTIONS = get_str_from_env("X_FRAME_OPTIONS", "DENY")
-ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
+MYSQL_CONFIG_FILE = get_env("MYSQL_CONFIG_FILE", "")
+SSL_SECURITY = get_env("SSL_SECURITY", False, return_type=bool)
+X_FRAME_OPTIONS = get_env("X_FRAME_OPTIONS", "DENY")
+ALLOWED_HOST = get_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
 
 
@@ -113,8 +112,8 @@ IDOM_BASE_URL = BASE_URL[1:] + "idom/"
 
 
 # PWA
-PWA_APP_NAME = get_str_from_env("APP_NAME", "Conreq")
-PWA_APP_DESCRIPTION = get_str_from_env("APP_DESCRIPTION", "Content Requesting")
+PWA_APP_NAME = get_env("APP_NAME", "Conreq")
+PWA_APP_DESCRIPTION = get_env("APP_DESCRIPTION", "Content Requesting")
 PWA_APP_THEME_COLOR = "#3fcfa6"
 PWA_APP_BACKGROUND_COLOR = "#04110d"
 PWA_APP_ICONS = [
@@ -141,7 +140,7 @@ PWA_APP_DEBUG_MODE = DEBUG
 # Logging
 CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
 ACCESS_LOG_FILE = LOG_DIR / "access.log"
-LOG_LEVEL = get_str_from_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
+LOG_LEVEL = get_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
 
 LOGGING = {
     "version": 1,
@@ -210,13 +209,13 @@ REST_FRAMEWORK = {
 
 
 # Encryption
-if get_str_from_env("DB_ENCRYPTION_KEY"):
-    FIELD_ENCRYPTION_KEYS = [get_str_from_env("DB_ENCRYPTION_KEY")]
+if get_env("DB_ENCRYPTION_KEY"):
+    FIELD_ENCRYPTION_KEYS = [get_env("DB_ENCRYPTION_KEY")]
 else:
     FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
     set_env("DB_ENCRYPTION_KEY", FIELD_ENCRYPTION_KEYS[0])
-if get_str_from_env("WEB_ENCRYPTION_KEY"):
-    SECRET_KEY = get_str_from_env("WEB_ENCRYPTION_KEY")
+if get_env("WEB_ENCRYPTION_KEY"):
+    SECRET_KEY = get_env("WEB_ENCRYPTION_KEY")
 else:
     SECRET_KEY = set_env("WEB_ENCRYPTION_KEY", get_random_secret_key())[1]
 

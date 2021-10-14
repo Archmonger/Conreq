@@ -1,12 +1,12 @@
 from django import template
 from django.urls import reverse
 
-from conreq.utils.environment import get_base_url, get_str_from_env
+from conreq.utils.environment import get_base_url, get_env
 
 register = template.Library()
 BASE_URL_LEN = len(get_base_url())
-SERVER_NAME = get_str_from_env("SERVER_NAME", "Conreq")
-APP_DESCRIPTION = get_str_from_env("APP_DESCRIPTION", "Content Requesting")
+SERVER_NAME = get_env("SERVER_NAME", "Conreq")
+APP_DESCRIPTION = get_env("APP_DESCRIPTION", "Content Requesting")
 
 
 @register.simple_tag
