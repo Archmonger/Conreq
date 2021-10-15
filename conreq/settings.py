@@ -49,6 +49,8 @@ MAKE_DIRS = [
     USER_STATICFILES_DIR,
     LOG_DIR,
 ]
+if not DATA_DIR.parent.exists:
+    raise OSError
 for directory in MAKE_DIRS:
     if not directory.exists():
         directory.mkdir(parents=True)
@@ -69,9 +71,6 @@ if not DOTENV_FILE.exists():
         pass
 DEBUG = get_debug()
 DB_ENGINE = get_database_type()
-SSL_SECURITY = get_env("SSL_SECURITY", False, return_type=bool)
-X_FRAME_OPTIONS = get_env("X_FRAME_OPTIONS", "DENY")
-ALLOWED_HOST = get_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
 
 
@@ -192,7 +191,7 @@ for logger_name in LOGGING["loggers"]:
 # Security Settings
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "no-referrer"
-ALLOWED_HOSTS = [ALLOWED_HOST]
+ALLOWED_HOSTS = [get_env("ALLOWED_HOST", "*")]
 SECURE_BROWSER_XSS_FILTER = True
 
 
@@ -209,14 +208,12 @@ REST_FRAMEWORK = {
 
 
 # Encryption
-if get_env("DB_ENCRYPTION_KEY"):
-    FIELD_ENCRYPTION_KEYS = [get_env("DB_ENCRYPTION_KEY")]
-else:
+FIELD_ENCRYPTION_KEYS = [get_env("DB_ENCRYPTION_KEY")]
+SECRET_KEY = get_env("WEB_ENCRYPTION_KEY")
+if not FIELD_ENCRYPTION_KEYS[0]:
     FIELD_ENCRYPTION_KEYS = [secrets.token_hex(32)]
     set_env("DB_ENCRYPTION_KEY", FIELD_ENCRYPTION_KEYS[0])
-if get_env("WEB_ENCRYPTION_KEY"):
-    SECRET_KEY = get_env("WEB_ENCRYPTION_KEY")
-else:
+if not SECRET_KEY:
     SECRET_KEY = set_env("WEB_ENCRYPTION_KEY", get_random_secret_key())[1]
 
 
@@ -267,10 +264,6 @@ MIDDLEWARE = [
 ]
 
 
-# Enabling apps/middleware based on flags
-if X_FRAME_OPTIONS.lower() != "false" and not DEBUG:
-    # Block embedding conreq
-    MIDDLEWARE.append("django.middleware.clickjacking.XFrameOptionsMiddleware")
 if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
