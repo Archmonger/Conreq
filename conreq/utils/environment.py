@@ -33,9 +33,9 @@ def get_env(
         value = os.environ.get(ENV_PREFIX + name.upper(), "")
     if dot_env and not value:
         value = dotenv_values(dotenv_path()).get(name.upper())
+
     if not value:
         return default_value
-
     if return_type is bool and isinstance(value, str):
         return strtobool(value)
     if return_type in {list, dict} and isinstance(value, str):
