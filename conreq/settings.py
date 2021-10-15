@@ -97,6 +97,7 @@ COMPRESS_FILTERS = {
     "css": ["compressor.filters.cssmin.rCSSMinFilter"],
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
+# TODO: Move huey into seperate app
 HUEY_FILENAME = DATA_DIR / "bg_tasks.sqlite3"
 HUEY = {
     "name": "huey",  # DB name for huey.
