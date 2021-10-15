@@ -52,6 +52,12 @@ def get_debug() -> bool:
 
 
 @functools.cache
+def get_safe_mode() -> bool:
+    """Shortcut to obtain SAFE_MODE from environment variables"""
+    return get_env("SAFE_MODE", False, return_type=bool)
+
+
+@functools.cache
 def get_base_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
     """Obtains the base URL from the environment variables"""
     base_url = get_env("BASE_URL", "")
