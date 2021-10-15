@@ -1,4 +1,5 @@
 import functools
+import json
 import os
 from distutils.util import strtobool
 from typing import Any, Callable, Optional
@@ -37,6 +38,8 @@ def get_env(
 
     if return_type is bool and isinstance(value, str):
         return strtobool(value)
+    if return_type in {list, dict} and isinstance(value, str):
+        return json.loads(value)
     if not isinstance(value, return_type):
         return return_type(value)
     return value
