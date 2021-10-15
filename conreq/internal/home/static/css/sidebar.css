@@ -2,7 +2,7 @@
 	z-index: 2;
 	height: calc(100% - var(--navbar-height));
 	width: var(--sidebar-width);
-	position: relative;
+	position: absolute;
 	left: 0;
 	background: rgb(30 31 30 / 30%);
 	overflow-x: hidden;

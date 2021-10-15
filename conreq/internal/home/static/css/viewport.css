@@ -2,6 +2,7 @@
 .viewport-container,
 .viewport-container-top {
 	position: absolute;
+	left: var(--sidebar-width);
 	height: calc(100% - var(--navbar-height));
 	overflow-x: hidden;
 	overflow-y: auto;
