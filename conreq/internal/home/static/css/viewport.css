@@ -57,5 +57,6 @@
 	.viewport-loader {
 		z-index: 4;
 		width: 100vw;
+		left: 0px;
 	}
 }
