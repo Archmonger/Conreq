@@ -37,6 +37,7 @@ class Command(BaseCommand):
 
         # Execute tests to ensure Conreq is healthy before starting
         if not options["skip_checks"]:
+            call_command("check")
             call_command("test", "--noinput", "--parallel", "--failfast")
 
         # Perform any debug related clean-up
