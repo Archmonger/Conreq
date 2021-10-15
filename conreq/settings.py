@@ -69,7 +69,6 @@ if not DOTENV_FILE.exists():
         pass
 DEBUG = get_debug()
 DB_ENGINE = get_database_type()
-MYSQL_CONFIG_FILE = get_env("MYSQL_CONFIG_FILE", "")
 SSL_SECURITY = get_env("SSL_SECURITY", False, return_type=bool)
 X_FRAME_OPTIONS = get_env("X_FRAME_OPTIONS", "DENY")
 ALLOWED_HOST = get_env("ALLOWED_HOST", "*")
