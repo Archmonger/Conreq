@@ -45,10 +45,6 @@ class Command(BaseCommand):
                 HUEY_FILENAME, "Background Task", uid, gid, no_perms
             )
 
-        if DEBUG:
-            # Migrate silk due to their wonky dev choices
-            call_command("makemigrations", "silk")
-
         if not no_perms and sys.platform == "linux":
             # Conreq data dir
             self.recursive_chown(DATA_DIR, uid, gid)
