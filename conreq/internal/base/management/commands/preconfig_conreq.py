@@ -82,6 +82,11 @@ class Command(BaseCommand):
         with sqlite3.connect(path) as cursor:
             print("> Vacuuming database")
             cursor.execute("VACUUM")
+            print("> Optimizing database")
+            cursor.execute("PRAGMA journal_mode=WAL")
+            cursor.execute("PRAGMA synchronous=NORMAL")
+            cursor.execute("PRAGMA temp_store=MEMORY")
+            cursor.execute("PRAGMA optimize")
         if not no_perms and (uid != -1 or gid != -1):
             if sys.platform == "linux":
                 # pylint: disable=no-member

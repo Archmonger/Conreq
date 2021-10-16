@@ -17,6 +17,7 @@ def vacuum_huey_sqlite_db():
     if HUEY_FILENAME.exists():
         with sqlite3.connect(HUEY_FILENAME) as cursor:
             cursor.execute("VACUUM")
+            cursor.execute("PRAGMA optimize")
 
 
 @db_periodic_task(crontab(minute="0", hour="0", strict=True))
@@ -25,3 +26,4 @@ def vacuum_conreq_sqlite_db():
     if DB_ENGINE == "SQLITE3":
         with connection.cursor() as cursor:
             cursor.execute("VACUUM")
+            cursor.execute("PRAGMA optimize")
