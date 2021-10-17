@@ -159,9 +159,9 @@ def get_or_set_many(
                 thread.start()
                 thread_list.append((cache_key, thread))
 
-        missing_keys = {}
-        for key, thread in thread_list:
-            missing_keys[key] = thread.join(timeout=timeout)
+        missing_keys = {
+            key: thread.join(timeout=timeout) for key, thread in thread_list
+        }
 
         # Set values in cache for any newly executed functions
         if bool(missing_keys):

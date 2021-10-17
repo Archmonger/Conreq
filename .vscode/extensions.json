@@ -9,6 +9,7 @@
         "ms-python.vscode-pylance",
         "ms-python.python",
         "mrmlnc.vscode-autoprefixer",
-        "gruntfuggly.todo-tree"
+        "gruntfuggly.todo-tree",
+        "sourcery.sourcery"
     ]
 }

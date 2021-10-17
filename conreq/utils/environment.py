@@ -28,9 +28,8 @@ def get_env(
     dot_env=True,
     return_type: Callable = str,
 ) -> Any:
-    value = ""
-    if sys_env:
-        value = os.environ.get(ENV_PREFIX + name.upper(), "")
+    """Returns an environment variable from either system variables or Conreq's dotenv file."""
+    value = os.environ.get(ENV_PREFIX + name.upper()) if sys_env else None
     if dot_env and not value:
         value = dotenv_values(dotenv_path()).get(name.upper())
 

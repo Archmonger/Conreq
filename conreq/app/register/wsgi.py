@@ -76,7 +76,7 @@ def api(
 
 
 def middleware(
-    path: str,
+    dotted_path: str,
     positioning_element: str = None,
     positioning: str = "before",
 ) -> None:
