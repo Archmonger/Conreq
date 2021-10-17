@@ -58,7 +58,7 @@ for directory in MAKE_DIRS:
 
 
 # App Template Diretories
-APP_TEMPLATE_DIR = INTERNAL_DIR / "app_templates"
+APP_TEMPLATE_DIR = ROOT_DIR / "conreq" / "templates"
 PACKAGE_TEMPLATE = APP_TEMPLATE_DIR / "package"
 PACKAGE_SLIM_TEMPLATE = APP_TEMPLATE_DIR / "package_slim"
 APP_TEMPLATE = APP_TEMPLATE_DIR / "app"
