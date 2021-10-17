@@ -1,6 +1,6 @@
 [MASTER]
 ignore=migrations
-disable=broad-except, fixme
+disable=broad-except, fixme, missing-module-docstring, missing-class-docstring, missing-function-docstring
 load-plugins=pylint_django
 django-settings-module=conreq.settings
 [FORMAT]

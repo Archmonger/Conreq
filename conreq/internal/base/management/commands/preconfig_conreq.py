@@ -4,7 +4,6 @@ import sqlite3
 import sys
 
 from django.conf import settings
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from conreq.utils.environment import get_database_type, get_debug

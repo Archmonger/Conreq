@@ -1,4 +1,3 @@
-import sqlite3
 from multiprocessing import Process
 
 import django
@@ -45,8 +44,6 @@ class Command(BaseCommand):
             print("Conreq is in DEBUG mode.")
             print("Clearing cache...")
             cache.clear()
-            print("Removing stale background tasks...")
-            self.reset_huey_db()
 
         # Migrate the database
         call_command("migrate", "--noinput", verbosity)
@@ -114,15 +111,6 @@ class Command(BaseCommand):
             action="store_true",
             help="Have Conreq set permissions during preconfig.",
         )
-
-    @staticmethod
-    def reset_huey_db():
-        """Deletes all entries within the Huey background task database."""
-        with sqlite3.connect(HUEY_FILENAME) as cursor:
-            tables = list(
-                cursor.execute("select name from sqlite_master where type is 'table'")
-            )
-            cursor.executescript(";".join(["delete from %s" % i for i in tables]))
 
     @staticmethod
     def start_huey():
