@@ -1,4 +1,5 @@
 """Django caching wrapper and cache related capabilities."""
+
 import logging
 from collections.abc import Callable
 from typing import Any
@@ -9,7 +10,7 @@ from huey.contrib.djhuey import db_task
 from conreq.utils.generic import clean_string
 from conreq.utils.threads import ReturnThread
 
-DEFAULT_CACHE_DURATION = 60 * 60  # Time in seconds
+DEFAULT_CACHE_DURATION = 60**2
 _logger = logging.getLogger(__name__)
 
 
