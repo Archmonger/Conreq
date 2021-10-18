@@ -1,5 +1,5 @@
 black
 pylint
-rope
 pylint_django
+rope
 twine
