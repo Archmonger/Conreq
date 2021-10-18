@@ -62,11 +62,9 @@ def get_or_set(
     cached_results = None
     if kwargs is None:
         kwargs = {}
-    # Looks through cache and will perform a search if needed.
     try:
-        _logger.debug("%s - Accessed.", cache_name)
-
         # Get the cached value
+        _logger.debug("%s - Accessed.", cache_name)
         cache_key = create_cache_key(cache_name, args, kwargs, page_key)
         cached_results = djcache.get(cache_key)
         _logger.debug("%s - Generated cache key %s", cache_name, cache_key)
@@ -92,17 +90,12 @@ def get_or_set(
         return cached_results
 
     except Exception:
-        # If the function threw an exception, return none.
-        failed_func = function
-        if hasattr(function, "__name__"):
-            failed_func = function.__name__
-        else:
-            _logger.exception(
-                "Cache handler has failed to execute. Function: %s Cache Name: %s Page Key: %s",
-                failed_func,
-                cache_name,
-                page_key,
-            )
+        _logger.exception(
+            "Cache handler has failed to execute. Function: %s Cache Name: %s Page Key: %s",
+            getattr(function, "__name__", function),
+            cache_name,
+            page_key,
+        )
     return None
 
 

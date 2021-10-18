@@ -21,6 +21,19 @@ def dotenv_path() -> str:
     return DOTENV_FILE
 
 
+def _parse_env_value(value: Any, default_value: Any, return_type: Callable) -> Any:
+    """Returns a value based"""
+    if not value:
+        return default_value
+    if return_type is bool and isinstance(value, str):
+        return strtobool(value)
+    if return_type in {list, dict} and isinstance(value, str):
+        return json.loads(value)
+    if not isinstance(value, return_type):
+        return return_type(value)
+    return value
+
+
 def get_env(
     name: str,
     default_value: Any = None,
@@ -33,15 +46,7 @@ def get_env(
     if dot_env and not value:
         value = dotenv_values(dotenv_path()).get(name.upper())
 
-    if not value:
-        return default_value
-    if return_type is bool and isinstance(value, str):
-        return strtobool(value)
-    if return_type in {list, dict} and isinstance(value, str):
-        return json.loads(value)
-    if not isinstance(value, return_type):
-        return return_type(value)
-    return value
+    return _parse_env_value(value, default_value, return_type)
 
 
 @functools.cache
