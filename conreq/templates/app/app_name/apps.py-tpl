@@ -21,6 +21,7 @@ class {{ camel_case_app_name }}Config(AppConfig):
     label = "{{ app_name }}"
     default_auto_field = "django.db.models.BigAutoField"
     autoload_modules = True
+    autoload_fail_silently = False
 
     def ready(self):
         """Code that only executes after Django has been initialized."""

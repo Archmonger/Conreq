@@ -264,6 +264,8 @@ MIDDLEWARE = [
     "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
 
+INSTALLED_APPS.remove("conreq.internal.app_loader")
+INSTALLED_APPS.append("conreq.internal.app_loader")
 
 if DEBUG:
     # Performance analysis tools
