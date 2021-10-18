@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0002_auto_20210118_2004'),
+        ("server_settings", "0002_auto_20210118_2004"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='conreqconfig',
-            name='conreq_initialized',
+            model_name="conreqconfig",
+            name="conreq_initialized",
             field=models.BooleanField(default=False),
         ),
     ]

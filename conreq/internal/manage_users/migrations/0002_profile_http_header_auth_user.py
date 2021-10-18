@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manage_users', '0001_initial'),
+        ("manage_users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='http_header_auth_user',
+            model_name="profile",
+            name="http_header_auth_user",
             field=models.BooleanField(default=False),
         ),
     ]
