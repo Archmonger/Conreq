@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0007_conreqconfig_conreq_http_header_auth'),
+        ("server_settings", "0007_conreqconfig_conreq_http_header_auth"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='conreqconfig',
-            name='conreq_simple_posters',
+            model_name="conreqconfig",
+            name="conreq_simple_posters",
             field=models.BooleanField(default=True),
         ),
     ]

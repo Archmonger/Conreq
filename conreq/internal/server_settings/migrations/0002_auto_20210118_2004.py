@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0001_initial'),
+        ("server_settings", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='conreqconfig',
-            name='radarr_anime_folder',
+            model_name="conreqconfig",
+            name="radarr_anime_folder",
             field=models.PositiveIntegerField(default=1),
         ),
         migrations.AlterField(
-            model_name='conreqconfig',
-            name='radarr_movies_folder',
+            model_name="conreqconfig",
+            name="radarr_movies_folder",
             field=models.PositiveIntegerField(default=1),
         ),
         migrations.AlterField(
-            model_name='conreqconfig',
-            name='sonarr_anime_folder',
+            model_name="conreqconfig",
+            name="sonarr_anime_folder",
             field=models.PositiveIntegerField(default=1),
         ),
         migrations.AlterField(
-            model_name='conreqconfig',
-            name='sonarr_tv_folder',
+            model_name="conreqconfig",
+            name="sonarr_tv_folder",
             field=models.PositiveIntegerField(default=1),
         ),
     ]
