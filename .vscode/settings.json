@@ -18,7 +18,7 @@
     "files.associations": {
         "**/requirements/*.txt": "pip-requirements",
         "**/templates/*.json": "jinja",
-        "**/templates/*.webmanifest": "jinja",
+        "**/templates/*.webmanifest": "jinja"
     },
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
@@ -35,5 +35,5 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
     },
-    "python.pythonPath": ".venv\\Scripts\\python.exe",
+    "python.pythonPath": ".venv\\Scripts\\python.exe"
 }
