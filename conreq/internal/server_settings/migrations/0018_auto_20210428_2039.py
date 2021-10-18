@@ -6,48 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("server_settings", "0017_remove_conreqconfig_conreq_dark_theme"),
+        ('server_settings', '0017_remove_conreqconfig_conreq_dark_theme'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="conreqconfig",
-            name="radarr_anime_folder",
+            model_name='conreqconfig',
+            name='radarr_anime_folder',
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name="conreqconfig",
-            name="radarr_anime_quality_profile",
+            model_name='conreqconfig',
+            name='radarr_anime_quality_profile',
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name="conreqconfig",
-            name="radarr_movies_folder",
+            model_name='conreqconfig',
+            name='radarr_movies_folder',
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name="conreqconfig",
-            name="radarr_movies_quality_profile",
+            model_name='conreqconfig',
+            name='radarr_movies_quality_profile',
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name="conreqconfig",
-            name="sonarr_anime_folder",
+            model_name='conreqconfig',
+            name='sonarr_anime_folder',
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name="conreqconfig",
-            name="sonarr_anime_quality_profile",
+            model_name='conreqconfig',
+            name='sonarr_anime_quality_profile',
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name="conreqconfig",
-            name="sonarr_tv_folder",
+            model_name='conreqconfig',
+            name='sonarr_tv_folder',
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name="conreqconfig",
-            name="sonarr_tv_quality_profile",
+            model_name='conreqconfig',
+            name='sonarr_tv_quality_profile',
             field=models.PositiveIntegerField(default=0),
         ),
     ]
