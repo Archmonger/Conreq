@@ -50,8 +50,7 @@ class Command(BaseCommand):
 
         if not DEBUG:
             # Collect static files
-            call_command("collectstatic", "--link",
-                         "--clear", "--noinput", verbosity)
+            call_command("collectstatic", "--link", "--clear", "--noinput", verbosity)
             call_command("compress", "--force", verbosity)
 
         # Run background task management

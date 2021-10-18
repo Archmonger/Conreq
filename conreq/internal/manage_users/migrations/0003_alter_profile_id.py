@@ -6,15 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("manage_users", "0002_profile_http_header_auth_user"),
+        ('manage_users', '0002_profile_http_header_auth_user'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="profile",
-            name="id",
-            field=models.BigAutoField(
-                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
-            ),
+            model_name='profile',
+            name='id',
+            field=models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
         ),
     ]

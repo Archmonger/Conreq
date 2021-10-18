@@ -7,15 +7,17 @@ For more information on this file, see
 https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 # pylint: disable=wrong-import-position
-from conreq import app
-from channels.sessions import SessionMiddlewareStack
-from channels.security.websocket import AllowedHostsOriginValidator
-from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.auth import AuthMiddlewareStack
 from django.core.asgi import get_asgi_application
 
 # Fetch ASGI application before importing dependencies that require ORM models.
 django_asgi_app = get_asgi_application()
+
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.security.websocket import AllowedHostsOriginValidator
+from channels.sessions import SessionMiddlewareStack
+
+from conreq import app
 
 
 class LifespanApp:
