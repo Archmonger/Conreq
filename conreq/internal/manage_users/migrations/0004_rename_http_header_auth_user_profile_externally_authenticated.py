@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manage_users', '0003_alter_profile_id'),
+        ("manage_users", "0003_alter_profile_id"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='profile',
-            old_name='http_header_auth_user',
-            new_name='externally_authenticated',
+            model_name="profile",
+            old_name="http_header_auth_user",
+            new_name="externally_authenticated",
         ),
     ]
