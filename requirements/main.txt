@@ -21,7 +21,7 @@ django-cleanup==5.2.0
 pillow==8.3.2
 
 # Front End
-django-idom==0.0.1
+git+https://github.com/Archmonger/django-idom.git@more-ws-features
 
 # API
 djangorestframework==3.12.4

@@ -2,5 +2,5 @@ import idom
 
 
 @idom.component
-def hello():
+def hello(websocket):
     return idom.html.h1("Hello World!")
