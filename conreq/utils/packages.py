@@ -33,17 +33,19 @@ def _duplicate_package_check(packages, packages_dev):
         )
 
 
-def find_modules(path: str, prefix: str = "") -> set[str]:
+def find_modules(folder_path: str, prefix: str = "") -> set[str]:
     """Returns all modules in a path"""
-    return {name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)}
+    return {name for _, name, _ in pkgutil.iter_modules([folder_path], prefix=prefix)}
 
 
-def find_modules_with(path: str, submodule_name: str, prefix: str = "") -> set[str]:
+def find_modules_with(
+    folder_path: str, submodule_name: str, prefix: str = ""
+) -> set[str]:
     """Returns a tuple of all modules containing module name and an importable path to 'example.module.urls'"""
-    modules = find_modules(path)
+    modules = find_modules(folder_path)
     modules_with = set()
     for module in modules:
-        submodules = os.path.join(path, module)
+        submodules = os.path.join(folder_path, module)
         if submodule_name in find_modules(submodules):
             modules_with.add(prefix + module)
     return modules_with

@@ -20,11 +20,11 @@ def pre_run() -> Callable:
     return decorator
 
 
-def setting_script(path: str) -> None:
+def setting_script(dotted_path: str) -> None:
     """Runs a file in settings.py. See django-split-settings for more details."""
-    app.config.setting_scripts.append(path)
+    app.config.setting_scripts.append(dotted_path)
 
 
-def installed_app(path: str) -> None:
+def installed_app(dotted_path: str) -> None:
     """Shortcut to add an installed app to Django."""
-    app.config.installed_apps.append(path)
+    app.config.installed_apps.append(dotted_path)
