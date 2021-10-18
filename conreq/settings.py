@@ -22,8 +22,8 @@ from conreq.utils.environment import (
     get_database_type,
     get_debug,
     get_env,
-    set_env,
     get_safe_mode,
+    set_env,
 )
 from conreq.utils.packages import find_apps, find_modules
 
