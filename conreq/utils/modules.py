@@ -1,17 +1,21 @@
 import inspect
-from importlib import import_module
+from importlib import import_module as _import
+from types import ModuleType
+from typing import Union
 
 
-def load_module(dotted_path: str, fail_silently: bool = False):
+def import_module(
+    dotted_path: str, *args, fail_silently: bool = False, **kwargs
+) -> Union[ModuleType, None]:
     """
-    Import a dotted module path and return the module reference.
-    Raise ImportError if the import failed.
+    Light wrapper for `importlib.import_module` that can fail silently.
     """
     try:
-        return import_module(dotted_path)
+        return _import(dotted_path, *args, **kwargs)
     except ModuleNotFoundError as err:
         if not fail_silently:
             raise ImportError(f"{dotted_path} doesn't exist!") from err
+        return None
 
 
 def load(module: str, fail_silently: bool = False):
@@ -23,4 +27,4 @@ def load(module: str, fail_silently: bool = False):
     stack = inspect.stack()[1]
     full_module_path = inspect.getmodule(stack[0]).__name__
     parent_module, current_module = full_module_path.rsplit(".", 1)
-    return load_module(".".join([parent_module, module]), fail_silently)
+    return import_module(".".join([parent_module, module]), fail_silently)

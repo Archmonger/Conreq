@@ -59,23 +59,27 @@ class Command(BaseCommand):
 
         # Run the production webserver
         if not DEBUG:
-            config = HypercornConfig()
-            config.bind = f"0.0.0.0:{port}"
-            config.websocket_ping_interval = 20
-            config.workers = 3
-            config.application_path = "conreq.asgi:application"
-            config.accesslog = ACCESS_LOG_FILE
-
-            # Additonal webserver configuration
-            if HYPERCORN_TOML.exists():
-                config.from_toml(HYPERCORN_TOML)
-
-            # Run the webserver
-            run_hypercorn(config)
+            self._run_hypercorn(port)
 
         # Run the development webserver
         if DEBUG:
             call_command("runserver", f"0.0.0.0:{port}")
+
+    @staticmethod
+    def _run_hypercorn(port):
+        config = HypercornConfig()
+        config.bind = f"0.0.0.0:{port}"
+        config.websocket_ping_interval = 20
+        config.workers = 3
+        config.application_path = "conreq.asgi:application"
+        config.accesslog = ACCESS_LOG_FILE
+
+        # Additonal webserver configuration
+        if HYPERCORN_TOML.exists():
+            config.from_toml(HYPERCORN_TOML)
+
+        # Run the webserver
+        run_hypercorn(config)
 
     def add_arguments(self, parser):
         parser.add_argument(

@@ -22,21 +22,19 @@ def sign_up(request):
 
     if request.method == "POST":
         # Check if the invite code was valid
-        if cache.get(invite_key):
-            # Check if form submission is clean
-            form = UserForm(request.POST)
-            if form.is_valid():
-                # Remove the invite code, then create & login the user
-                cache.delete(invite_key)
-                form.save()
-                username = form.cleaned_data.get("username")
-                password = form.cleaned_data.get("password1")
-                user = authenticate(username=username, password=password)
-                login(request, user)
-                return redirect("landing:main")
+        if not cache.get(invite_key):
+            return redirect("landing:main")
 
-        # Invite code invalid!
-        else:
+        # Check if form submission is clean
+        form = UserForm(request.POST)
+        if form.is_valid():
+            # Remove the invite code, then create & login the user
+            cache.delete(invite_key)
+            form.save()
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=password)
+            login(request, user)
             return redirect("landing:main")
 
         # Submission wasn't valid, so return the error codes

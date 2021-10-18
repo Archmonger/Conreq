@@ -93,3 +93,4 @@ class LocalAuthentication(APIView):
         if user is not None:
             login(request, user)
             return Response(UserSerializer(user).data)
+        return Response(None)

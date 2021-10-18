@@ -14,6 +14,7 @@ from conreq.internal.view_wrappers.views import (
 
 @dataclass
 class _Config:
+    # pylint: disable=too-many-instance-attributes
     # Startup
     pre_run: list[Callable] = field(default_factory=list)
     setting_scripts: list[str] = field(default_factory=list)

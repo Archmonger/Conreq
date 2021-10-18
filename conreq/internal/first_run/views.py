@@ -21,18 +21,7 @@ def initialize(request):
 
             # Create the superuser and set up the database if the form is valid
             if form.is_valid():
-                form.save()
-                username = form.cleaned_data.get("username")
-                password = form.cleaned_data.get("password1")
-                user = authenticate(username=username, password=password)
-                user.is_staff = True
-                user.is_admin = True
-                user.is_superuser = True
-                user.save()
-                login(request, user)
-                server_config.initialized = True
-                server_config.save()
-                return redirect("landing:main")
+                return _first_time_configuration(form, request, server_config)
 
             # Form data wasn't valid, so return the error codes
             template = loader.get_template("registration/initialization.html")
@@ -43,3 +32,18 @@ def initialize(request):
         return HttpResponse(template.render({}, request))
 
     return None
+
+
+def _first_time_configuration(form, request, server_config):
+    form.save()
+    username = form.cleaned_data.get("username")
+    password = form.cleaned_data.get("password1")
+    user = authenticate(username=username, password=password)
+    user.is_staff = True
+    user.is_admin = True
+    user.is_superuser = True
+    user.save()
+    login(request, user)
+    server_config.initialized = True
+    server_config.save()
+    return redirect("landing:main")
