@@ -2,7 +2,6 @@
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
     "python.linting.pylintEnabled": true,
-    "python.linting.pylintUseMinimalCheckers": false,
     "python.linting.pylintArgs": [],
     "python.languageServer": "Pylance",
     "python.analysis.typeCheckingMode": "off",
