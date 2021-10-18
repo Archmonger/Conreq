@@ -21,7 +21,7 @@ def create_cache_key(cache_name: str, args: list, kwargs: dict, key: str) -> str
 
 def obtain_key_from_cache_key(cache_key: str) -> str:
     """Parses the cache key and returns any values after the string '_key'"""
-    return cache_key[cache_key.find("_key") + len("_key") :]
+    return cache_key[cache_key.find("_key") + len("_key"):]
 
 
 @db_task()

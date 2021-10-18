@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0018_auto_20210428_2039'),
+        ("server_settings", "0018_auto_20210428_2039"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='conreqconfig',
-            name='conreq_api_key',
+            model_name="conreqconfig",
+            name="conreq_api_key",
         ),
     ]

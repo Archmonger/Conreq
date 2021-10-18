@@ -104,4 +104,5 @@ class Command(BaseCommand):
             for dirpath, dirnames, filenames in os.walk(path):
                 shutil.chown(dirpath, new_uid, new_gid)
                 for filename in filenames:
-                    shutil.chown(os.path.join(dirpath, filename), new_uid, new_gid)
+                    shutil.chown(os.path.join(
+                        dirpath, filename), new_uid, new_gid)

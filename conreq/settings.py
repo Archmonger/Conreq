@@ -22,8 +22,8 @@ from conreq.utils.environment import (
     get_database_type,
     get_debug,
     get_env,
-    set_env,
     get_safe_mode,
+    set_env,
 )
 from conreq.utils.packages import find_apps, find_modules
 
@@ -251,7 +251,8 @@ if not get_safe_mode():
     INSTALLED_APPS.extend(find_apps())
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
+    # Serve static files through Django securely
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "compression_middleware.middleware.CompressionMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",

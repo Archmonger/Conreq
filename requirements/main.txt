@@ -1,54 +1,54 @@
+channels==3.0.4
+diskcache==5.2.1
 # Webserver
 django==3.2.7
-Twisted[tls,http2]==21.7.0
-channels==3.0.4
-hypercorn[h3]==0.11.2
-whitenoise[brotli]==5.3.0
+django-cleanup==5.2.0
+django-compression-middleware==0.4.1
+django-compressor==2.4.1
 
-# Database/Storage
-pymysql==1.0.2
-huey==2.4.0
-diskcache==5.2.1
+# Optimization & Compression
+django-htmlmin==0.11.0
+django-model-utils==4.1.1
+django-multiselectfield==0.1.12
+
+# Version Control
+django-project-version==0.15.1
+django-searchable-encrypted-fields==0.1.9
+
+# Debug
+git+https://github.com/jazzband/django-silk.git@12e36541d7b9d80afad2f4c3e1033043aecc5263#egg=django-silk
+django-solo==1.1.5
 
 # Extending Django DB Model Features
 django-url-or-relative-url-field==0.1.2
-django-searchable-encrypted-fields==0.1.9
-django-multiselectfield==0.1.12
 django-versionfield==1.0.2
-django-model-utils==4.1.1
-django-solo==1.1.5
-django-cleanup==5.2.0
-pillow==8.3.2
-
-# Front End
-git+https://github.com/Archmonger/django-idom.git@more-ws-features
 
 # API
 djangorestframework==3.12.4
 djangorestframework-api-key==2.0.0
-drf-yasg==1.20.0
-markdown==3.3.4
-
-# Debug
-git+https://github.com/jazzband/django-silk.git@12e36541d7b9d80afad2f4c3e1033043aecc5263#egg=django-silk
 docutils==0.17.1
+drf-yasg==1.20.0
 
-# Optimization & Compression
-django-htmlmin==0.11.0
-django-compression-middleware==0.4.1
-django-compressor==2.4.1
-
-# Version Control
-django-project-version==0.15.1
-
-# Timezones
-tzlocal==3.0
-
-# Environment
-python-dotenv==0.19.0
+# Front End
+git+https://github.com/Archmonger/django-idom.git@more-ws-features
+huey==2.4.0
+hypercorn[h3]==0.11.2
+markdown==3.3.4
+pillow==8.3.2
 
 # Only used by Conreq Apps (Migrate later)
 pyarr==2.0.6
-tmdbsimple==2.8.0
+
+# Database/Storage
+pymysql==1.0.2
+
+# Environment
+python-dotenv==0.19.0
 strsim==0.0.3
 titlecase==2.3
+tmdbsimple==2.8.0
+Twisted[tls,http2]==21.7.0
+
+# Timezones
+tzlocal==3.0
+whitenoise[brotli]==5.3.0

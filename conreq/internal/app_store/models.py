@@ -74,10 +74,12 @@ class AppPackage(models.Model):
         return self.verbose_name
 
     # Unique Identifier
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
 
     # Basic Info
-    package_name = models.CharField(max_length=100, help_text="Must be snake_case.")
+    package_name = models.CharField(
+        max_length=100, help_text="Must be snake_case.")
     verbose_name = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True, null=True)
     long_description = models.FileField(upload_to="app_store/readme/")
@@ -104,7 +106,8 @@ class AppPackage(models.Model):
     license_type = models.CharField(max_length=100, default="GPLv3")
 
     # Environment
-    sys_platforms = MultiSelectField(choices=SysPlatforms.choices, max_length=10)
+    sys_platforms = MultiSelectField(
+        choices=SysPlatforms.choices, max_length=10)
 
     # Compatibility
     touch_compatible = models.BooleanField()
@@ -112,7 +115,8 @@ class AppPackage(models.Model):
     minimum_conreq_version = VersionField()
     tested_conreq_version = VersionField()
     max_conreq_version = VersionField(blank=True, null=True)
-    asynchronous = models.CharField(max_length=20, choices=AsyncCompatibility.choices)
+    asynchronous = models.CharField(
+        max_length=20, choices=AsyncCompatibility.choices)
 
     # App Dependencies
     required_apps = models.ManyToManyField("self", blank=True)
@@ -133,7 +137,8 @@ class EnvironmentVariable(models.Model):
     def __str__(self):
         return self.name + ' = "' + str(self.default) + '"'
 
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
     default = models.CharField(max_length=255, blank=True, null=True)
     example = models.CharField(max_length=255, blank=True, null=True)
@@ -145,7 +150,8 @@ class Screenshot(models.Model):
     def __str__(self):
         return self.title
 
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to="app_store/screenshot/")
@@ -156,7 +162,8 @@ class NoticeMessage(models.Model):
     def __str__(self):
         return self.title
 
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     mark_read = models.BooleanField(default=False, blank=True, null=True)

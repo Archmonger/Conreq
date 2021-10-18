@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('email', '0001_initial'),
+        ("email", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='emailconfig',
-            name='smtp_server',
-            field=models.CharField(default='smtp.gmail.com', max_length=255),
+            model_name="emailconfig",
+            name="smtp_server",
+            field=models.CharField(default="smtp.gmail.com", max_length=255),
         ),
     ]

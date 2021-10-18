@@ -22,7 +22,8 @@ class Command(TemplateCommand):
         super().handle(app_or_project, name, target, **options)
 
     def add_arguments(self, parser):
-        parser.add_argument("package_name", help="Name of the application or project.")
+        parser.add_argument(
+            "package_name", help="Name of the application or project.")
         parser.add_argument("app_name", help="Name of the sub application.")
         # parser.add_argument(
         #     "--slim",

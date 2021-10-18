@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0005_auto_20210127_0107'),
+        ("server_settings", "0005_auto_20210127_0107"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='conreqconfig',
-            name='conreq_custom_css',
-            field=models.CharField(blank=True, default='', max_length=100),
+            model_name="conreqconfig",
+            name="conreq_custom_css",
+            field=models.CharField(blank=True, default="", max_length=100),
         ),
         migrations.AlterField(
-            model_name='conreqconfig',
-            name='conreq_custom_js',
-            field=models.CharField(blank=True, default='', max_length=100),
+            model_name="conreqconfig",
+            name="conreq_custom_js",
+            field=models.CharField(blank=True, default="", max_length=100),
         ),
     ]

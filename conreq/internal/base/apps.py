@@ -15,4 +15,5 @@ class BaseConfig(AppConfig):
         app.register.websocket(IDOM_WEBSOCKET_URL + "<view_id>/")(
             IdomAsyncWebsocketConsumer
         )
-        app.register.url(IDOM_WEB_MODULES_URL + "<path:file>")(web_modules_file)
+        app.register.url(IDOM_WEB_MODULES_URL +
+                         "<path:file>")(web_modules_file)

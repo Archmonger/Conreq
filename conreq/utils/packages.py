@@ -77,7 +77,8 @@ def find_apps_with(module_name: str) -> set[str]:
     for app in apps:
         package, apps_dir, app_name = app.split(".")
         apps_dir = os.path.join(_packages_dir(), package, apps_dir, app_name)
-        apps_dev_dir = os.path.join(_packages_dev_dir(), package, apps_dir, app_name)
+        apps_dev_dir = os.path.join(
+            _packages_dev_dir(), package, apps_dir, app_name)
         all_modules = find_modules(apps_dir) + find_modules(apps_dev_dir)
         for module in all_modules:
             print(module)

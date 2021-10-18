@@ -66,7 +66,8 @@ def api(
         if not use_regex:
             url_patterns.append(path(f"{BASE_URL}/v{version}/{pattern}", view))
         else:
-            url_patterns.append(re_path(f"{BASE_URL}/v{version}/{pattern}", view))
+            url_patterns.append(
+                re_path(f"{BASE_URL}/v{version}/{pattern}", view))
 
         @wraps(view)
         def _wrapped_view(*args, **kwargs):
