@@ -6,24 +6,24 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("server_settings", "0013_conreqconfig_conreq_allow_tv_specials"),
+        ('server_settings', '0013_conreqconfig_conreq_allow_tv_specials'),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name="conreqconfig",
-            name="conreq_app_logo",
+            model_name='conreqconfig',
+            name='conreq_app_logo',
         ),
         migrations.RemoveField(
-            model_name="conreqconfig",
-            name="conreq_app_url",
+            model_name='conreqconfig',
+            name='conreq_app_url',
         ),
         migrations.RemoveField(
-            model_name="conreqconfig",
-            name="conreq_guest_login",
+            model_name='conreqconfig',
+            name='conreq_guest_login',
         ),
         migrations.RemoveField(
-            model_name="conreqconfig",
-            name="conreq_language",
+            model_name='conreqconfig',
+            name='conreq_language',
         ),
     ]

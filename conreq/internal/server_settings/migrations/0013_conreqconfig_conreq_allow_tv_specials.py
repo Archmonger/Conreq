@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("server_settings", "0012_auto_20210209_2144"),
+        ('server_settings', '0012_auto_20210209_2144'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="conreqconfig",
-            name="conreq_allow_tv_specials",
+            model_name='conreqconfig',
+            name='conreq_allow_tv_specials',
             field=models.BooleanField(default=True),
         ),
     ]

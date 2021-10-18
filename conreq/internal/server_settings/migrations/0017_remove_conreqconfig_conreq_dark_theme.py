@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("server_settings", "0016_alter_conreqconfig_id"),
+        ('server_settings', '0016_alter_conreqconfig_id'),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name="conreqconfig",
-            name="conreq_dark_theme",
+            model_name='conreqconfig',
+            name='conreq_dark_theme',
         ),
     ]
