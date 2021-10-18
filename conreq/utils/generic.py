@@ -43,22 +43,3 @@ def clean_string(
         new_string = new_string.lower()
     new_string = sub(r"  +", " ", new_string)
     return new_string
-
-
-def str_to_bool(string: str, default_value: bool = True) -> bool:
-    """Converts a string into a boolean."""
-    if isinstance(string, str):
-        if string.lower() == "true" or string == "1":
-            return True
-        if string.lower() == "false" or string == "0":
-            return False
-    return default_value
-
-
-def str_to_int(value: str, default_value: int = 0) -> int:
-    """Converts a string into a integer."""
-    if isinstance(value, str) and value.isdigit():
-        return int(value)
-    if isinstance(value, int):
-        return value
-    return default_value
