@@ -101,9 +101,9 @@ def get_database_type() -> str:
 def set_env(name: str, value: str, sys_env=False, dot_env=True) -> Optional[str]:
     """Sets a value in either the system environment, and/or the .env file."""
     if sys_env:
-        os.environ[ENV_PREFIX + name.upper()] = value
+        os.environ[ENV_PREFIX + name.upper()] = str(value)
     if dot_env:
-        dotenv.set_key(dotenv_path(), name.upper(), value)
+        dotenv.set_key(dotenv_path(), name.upper(), str(value))
     return (name, value)
 
 
