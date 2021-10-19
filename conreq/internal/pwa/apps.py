@@ -1,6 +1,4 @@
 """ Settings required by django-app. """
-import os
-
 from django.apps import AppConfig
 from django.conf import settings
 from django.shortcuts import resolve_url as _resolve
@@ -12,15 +10,6 @@ resolve_url = lazy(_resolve, str)
 
 class PwaConfig(AppConfig):
     name = "conreq.internal.pwa"
-
-    # Path to the service worker implementation.  Default implementation is empty.
-    SERVICE_WORKER_PATH = getattr(
-        settings,
-        "PWA_SERVICE_WORKER_PATH",
-        os.path.join(
-            os.path.abspath(os.path.dirname(__file__)), "templates", "serviceworker.js"
-        ),
-    )
 
     # Parameters to include in site.webmanifest and appropriate meta tags
     app_name = "Conreq"
