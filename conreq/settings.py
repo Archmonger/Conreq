@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import secrets
 import sys
-from importlib import import_module
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
@@ -28,11 +27,7 @@ from conreq.utils.environment import (
     get_safe_mode,
     set_env,
 )
-from conreq.utils.packages import (
-    find_apps,
-    find_modules,
-    load_app_startup,
-)
+from conreq.utils.packages import find_apps, find_modules, load_app_startup
 
 # Project Directories
 ROOT_DIR = Path(__file__).resolve().parent.parent
