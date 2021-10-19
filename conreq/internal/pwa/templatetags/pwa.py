@@ -25,6 +25,6 @@ def jsonify(obj):
 
 
 @register.inclusion_tag("pwa.html", takes_context=True)
-def progressive_web_app_meta(context):
+def pwa_head_content(context):
     # pylint: disable=unused-argument
     return {"pwa": PwaConfig.__dict__, "base_url": BASE_URL}
