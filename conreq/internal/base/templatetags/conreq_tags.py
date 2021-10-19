@@ -1,5 +1,4 @@
 from django import template
-from django.urls import reverse
 
 from conreq.utils.environment import get_base_url, get_env
 
