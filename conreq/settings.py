@@ -113,32 +113,6 @@ HUEY = {
 IDOM_BASE_URL = BASE_URL[1:] + "idom/"
 
 
-# PWA
-PWA_APP_NAME = get_env("APP_NAME", "Conreq")
-PWA_APP_DESCRIPTION = get_env("APP_DESCRIPTION", "Content Requesting")
-PWA_APP_THEME_COLOR = "#3fcfa6"
-PWA_APP_BACKGROUND_COLOR = "#04110d"
-PWA_APP_ICONS = [
-    {
-        "src": BASE_URL + "static/icons/standard.png",
-        "sizes": "512x512",
-        "purpose": "any",
-    },
-    {
-        "src": BASE_URL + "static/icons/maskable.png",
-        "sizes": "512x512",
-        "purpose": "maskable",
-    },
-]
-PWA_APP_ICONS_APPLE = [
-    {"src": BASE_URL + "static/icons/apple-touch-icon.png", "sizes": "180x180"}
-]
-PWA_APP_SPLASH_SCREEN = []
-PWA_APP_START_URL = BASE_URL
-PWA_APP_SCOPE = PWA_APP_START_URL
-PWA_APP_DEBUG_MODE = DEBUG
-
-
 # Logging
 CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
 ACCESS_LOG_FILE = LOG_DIR / "access.log"

@@ -1,6 +1,6 @@
 {% load static %}
 <!-- Path to site.webmanifest -->
-<link rel="manifest" href="{{ pwa.BASE_URL }}site.webmanifest" crossorigin="use-credentials">
+<link rel="manifest" href="{{ base_url }}site.webmanifest" crossorigin="use-credentials">
 
 <!-- Add to homescreen for Chrome on Android -->
 <meta name="mobile-web-app-capable" content="yes">
@@ -35,7 +35,7 @@
 <script type="text/javascript">
     // Initialize the service worker
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('{{ pwa.BASE_URL|escapejs }}serviceworker.js', {
+        navigator.serviceWorker.register('{{ base_url|escapejs }}serviceworker.js', {
             scope: '{{ pwa.APP_SCOPE|escapejs }}'
         }).then(function (registration) {
             // Registration successful
