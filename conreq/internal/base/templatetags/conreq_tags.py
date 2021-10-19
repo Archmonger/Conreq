@@ -10,18 +10,6 @@ SERVER_DESCRIPTION = get_env("SERVER_DESCRIPTION", "A hub for great things.")
 
 
 @register.simple_tag
-def viewport_url(namespace):
-    url = reverse(namespace)
-    return "#" + url[BASE_URL_LEN:]
-
-
-@register.simple_tag
-def viewport_top_url(namespace):
-    url = reverse(namespace)
-    return "#" + "/display" + url[BASE_URL_LEN:]
-
-
-@register.simple_tag
 def server_name():
     return SERVER_NAME
 

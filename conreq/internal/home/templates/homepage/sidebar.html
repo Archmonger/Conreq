@@ -1,5 +1,4 @@
 {% load static %}
-{% load conreq_tags %}
 <nav id="sidebar" class="sidebar no-highlighting collapsed" data-aos="fade-right" data-aos-duration="1000">
     <div class="sidebar-user clickable manage-user-btn" data-modal-url="{% url 'manage_users:manage_modal' %}"
         data-username="{{user.username}}">
@@ -56,12 +55,12 @@
             <div class="tabs-indicator"></div>
             <div class="tabs">
                 <div class="nav-tab">
-                    <a href="{% viewport_url 'manage_users:main' %}" class="ellipsis">
+                    <a href="#" class="ellipsis">
                         Manage Users
                     </a>
                 </div>
                 <div class="nav-tab">
-                    <a href="{% viewport_url 'server_settings:main' %}" class="ellipsis">
+                    <a href="#" class="ellipsis">
                         Server Config
                     </a>
                 </div>
