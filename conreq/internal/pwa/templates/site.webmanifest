@@ -1,16 +1,16 @@
 {% load pwa %}
 {
-  "name": {{ pwa.APP_NAME|jsonify }},
-  "short_name": {{ pwa.APP_NAME|jsonify }},
-  "description": {{ pwa.APP_DESCRIPTION|jsonify }},
-  "start_url": {{ pwa.APP_START_URL|jsonify }},
-  "display": {{ pwa.APP_DISPLAY|jsonify }},
-  "scope": {{ pwa.APP_SCOPE|jsonify }},
-  "orientation": {{ pwa.APP_ORIENTATION|jsonify }},
-  "background_color": {{ pwa.APP_BACKGROUND_COLOR|jsonify }},
-  "theme_color": {{ pwa.APP_THEME_COLOR|jsonify }},
-  "status_bar": {{ pwa.APP_STATUS_BAR_COLOR|jsonify }},
-  "icons": {{ pwa.APP_ICONS|jsonify }},
-  "dir": {{ pwa.APP_DIR|jsonify }},
-  "lang": {{ pwa.APP_LANG|jsonify }}
+  "name": {{ pwa.app_name|jsonify }},
+  "short_name": {{ pwa.app_name|jsonify }},
+  "description": {{ pwa.app_description|jsonify }},
+  "start_url": {{ pwa.app_start_url|jsonify }},
+  "display": {{ pwa.app_display|jsonify }},
+  "scope": {{ pwa.app_scope|jsonify }},
+  "orientation": {{ pwa.app_orientation|jsonify }},
+  "background_color": {{ pwa.app_background_color|jsonify }},
+  "theme_color": {{ pwa.app_theme_color|jsonify }},
+  "status_bar": {{ pwa.app_status_bar_color|jsonify }},
+  "icons": {{ pwa.app_icons|jsonify }},
+  "dir": {{ pwa.app_dir|jsonify }},
+  "lang": {{ pwa.app_lang|jsonify }}
 }

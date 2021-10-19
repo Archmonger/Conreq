@@ -4,31 +4,31 @@
 
 <!-- Add to homescreen for Chrome on Android -->
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="{{ pwa.APP_NAME }}">
+<meta name="application-name" content="{{ pwa.app_name }}">
 
 <!-- Chrome for Android theme color -->
-<meta name="theme-color" content="{{ pwa.APP_THEME_COLOR }}">
+<meta name="theme-color" content="{{ pwa.app_theme_color }}">
 
 <!-- Add to homescreen for Safari on iOS -->
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="{{ pwa.APP_NAME }}">
-<meta name="apple-mobile-web-app-status-bar-style" content="{{ pwa.APP_STATUS_BAR_COLOR }}">
+<meta name="apple-mobile-web-app-title" content="{{ pwa.app_name }}">
+<meta name="apple-mobile-web-app-status-bar-style" content="{{ pwa.app_status_bar_color }}">
 
 <!-- Android and iOS icons -->
-{% for icon in pwa.APP_ICONS_APPLE %}
+{% for icon in pwa.app_icons_apple %}
 <link rel="apple-touch-icon" href="{{ icon.src }}" sizes="{{ icon.sizes }}">
 {% endfor %}
-{% for icon in pwa.APP_ICONS %}
+{% for icon in pwa.app_icons %}
 <link rel="icon" href="{{ icon.src }}" sizes="{{ icon.sizes }}" purpose="{{ icon.purpose }}">
 {% endfor %}
 
 <!-- Splash screen icons -->
-{% for splash in pwa.APP_SPLASH_SCREEN %}
+{% for splash in pwa.app_splash_screen %}
 <link href="{{ splash.src }}" media="{{ splash.media }}" rel="apple-touch-startup-image" />
 {% endfor %}
 
 <!-- Tile for Win8 -->
-<meta name="msapplication-TileColor" content="{{ pwa.APP_BACKGROUND_COLOR }}">
+<meta name="msapplication-TileColor" content="{{ pwa.app_background_color }}">
 <meta name="msapplication-TileImage" content="{% static 'icons/standard.png' %}">
 
 
@@ -36,15 +36,15 @@
     // Initialize the service worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('{{ base_url|escapejs }}serviceworker.js', {
-            scope: '{{ pwa.APP_SCOPE|escapejs }}'
+            scope: '{{ pwa.app_scope|escapejs }}'
         }).then(function (registration) {
             // Registration successful
-            {% if pwa.APP_DEBUG_MODE %}
+            {% if pwa.app_debug_mode %}
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
             {% endif %}
         }, function (err) {
             // Registration failed
-            {% if pwa.APP_DEBUG_MODE %}
+            {% if pwa.app_debug_mode %}
             console.log('ServiceWorker registration failed: ', err);
             {% endif %}
         });

@@ -23,17 +23,17 @@ class PwaConfig(AppConfig):
     )
 
     # Parameters to include in site.webmanifest and appropriate meta tags
-    APP_NAME = "Conreq"
-    APP_DESCRIPTION = "A hub for great things."
-    APP_THEME_COLOR = "#3fcfa6"
-    APP_BACKGROUND_COLOR = "#04110d"
-    APP_DISPLAY = "standalone"
-    APP_START_URL = resolve_url(settings.BASE_URL)
-    APP_SCOPE = resolve_url(settings.BASE_URL)
-    APP_DEBUG_MODE = settings.DEBUG
-    APP_ORIENTATION = "any"
-    APP_STATUS_BAR_COLOR = "default"
-    APP_ICONS = [
+    app_name = "Conreq"
+    app_description = "A hub for great things."
+    app_theme_color = "#3fcfa6"
+    app_background_color = "#04110d"
+    app_display = "standalone"
+    app_start_url = resolve_url(settings.BASE_URL)
+    app_scope = resolve_url(settings.BASE_URL)
+    app_debug_mode = settings.DEBUG
+    app_orientation = "any"
+    app_status_bar_color = "default"
+    app_icons = [
         {
             "src": settings.BASE_URL + "static/icons/standard.png",
             "sizes": "512x512",
@@ -45,12 +45,12 @@ class PwaConfig(AppConfig):
             "purpose": "maskable",
         },
     ]
-    APP_ICONS_APPLE = [
+    app_icons_apple = [
         {
             "src": settings.BASE_URL + "static/icons/apple-touch-icon.png",
             "sizes": "180x180",
         }
     ]
-    APP_SPLASH_SCREEN = []
-    APP_DIR = "auto"
-    APP_LANG = "en-US"
+    app_splash_screen = []
+    app_dir = "auto"
+    app_lang = "en-US"
