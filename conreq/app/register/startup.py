@@ -11,7 +11,7 @@ def pre_run() -> Callable:
 
     def decorator(func):
 
-        app.config.pre_run.append(func)
+        app.config.pre_run.add(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -21,10 +21,13 @@ def pre_run() -> Callable:
 
 
 def setting_script(dotted_path: str) -> None:
-    """Runs a file in settings.py. See django-split-settings for more details."""
-    app.config.setting_scripts.append(dotted_path)
+    """
+    Runs a file within settings.py. Wildcards are accepted.
+    See django-split-settings docs for more details.
+    """
+    app.config.setting_scripts.add(dotted_path)
 
 
 def installed_app(dotted_path: str) -> None:
     """Shortcut to add an installed app to Django."""
-    app.config.installed_apps.append(dotted_path)
+    app.config.installed_apps.add(dotted_path)

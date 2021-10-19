@@ -12,11 +12,14 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import secrets
 import sys
+from importlib import import_module
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
+from split_settings.tools import include
 from tzlocal import get_localzone
 
+from conreq import app
 from conreq.utils.environment import (
     get_base_url,
     get_database_type,
@@ -25,7 +28,11 @@ from conreq.utils.environment import (
     get_safe_mode,
     set_env,
 )
-from conreq.utils.packages import find_apps, find_modules
+from conreq.utils.packages import (
+    find_apps,
+    find_modules,
+    load_app_startup,
+)
 
 # Project Directories
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -219,8 +226,8 @@ if not SECRET_KEY:
 
 
 # Django Apps & Middleware
-sys.path.append(PACKAGES_DEV_DIR)  # Developer Created Apps
-sys.path.append(PACKAGES_DIR)  # User Installed Apps
+sys.path.append(str(PACKAGES_DEV_DIR))  # Developer Created Apps
+sys.path.append(str(PACKAGES_DIR))  # User Installed Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.admindocs",
@@ -263,9 +270,6 @@ MIDDLEWARE = [
     "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
     "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
-
-INSTALLED_APPS.remove("conreq.internal.app_loader")
-INSTALLED_APPS.append("conreq.internal.app_loader")
 
 if DEBUG:
     # Performance analysis tools
@@ -354,3 +358,14 @@ STATICFILES_FINDERS = [
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = "media/"
+
+
+# Load startup.py from Conreq apps
+load_app_startup()
+
+# Execute settings scripts from Conreq Apps
+include(*app.config.setting_scripts)
+
+# Ensure Conreq app loader comes last
+INSTALLED_APPS.remove("conreq.internal.app_loader")
+INSTALLED_APPS.append("conreq.internal.app_loader")

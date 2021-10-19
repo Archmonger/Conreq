@@ -16,10 +16,10 @@ from conreq.internal.view_wrappers.views import (
 class _Config:
     # pylint: disable=too-many-instance-attributes
     # Startup
-    pre_run: list[Callable] = field(default_factory=list)
-    setting_scripts: list[str] = field(default_factory=list)
-    installed_apps: list[str] = field(default_factory=list)
-    middlewares: list[dict] = field(default_factory=list)
+    pre_run: set[Callable] = field(default_factory=set)
+    setting_scripts: set[str] = field(default_factory=set)
+    installed_apps: set[str] = field(default_factory=set)
+    middlewares: set[dict] = field(default_factory=set)
 
     # Views
     landing_view: Callable = landing

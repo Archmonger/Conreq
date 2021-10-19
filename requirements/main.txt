@@ -15,6 +15,7 @@ django-url-or-relative-url-field==0.1.2
 django-versionfield==1.0.2
 djangorestframework==3.12.4
 djangorestframework-api-key==2.0.0
+django-split-settings==1.1.0
 docutils==0.17.1
 drf-yasg==1.20.0
 git+https://github.com/Archmonger/django-idom.git@more-ws-features
