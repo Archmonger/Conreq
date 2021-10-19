@@ -27,7 +27,7 @@ from conreq.utils.environment import (
     get_safe_mode,
     set_env,
 )
-from conreq.utils.packages import find_apps, find_modules, load_app_startup
+from conreq.utils.packages import execute_package_startup, find_apps, find_modules
 
 # Project Directories
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -221,8 +221,6 @@ if not SECRET_KEY:
 
 
 # Django Apps & Middleware
-sys.path.append(str(PACKAGES_DEV_DIR))  # Developer Created Apps
-sys.path.append(str(PACKAGES_DIR))  # User Installed Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.admindocs",
@@ -249,8 +247,7 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
 ]
-if not get_safe_mode():
-    INSTALLED_APPS.extend(find_apps())
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
@@ -265,16 +262,6 @@ MIDDLEWARE = [
     "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
     "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
-
-if DEBUG:
-    # Performance analysis tools
-    INSTALLED_APPS.append("silk")
-    MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
-    # API docs generator
-    INSTALLED_APPS.append("drf_yasg")
-else:
-    # Automatically delete dangling files
-    INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
 
 
 # URL Routing and Page Rendering
@@ -355,11 +342,30 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = "media/"
 
 
+# Conreq Apps
+# Add packages folder to Python's path
+sys.path.append(str(PACKAGES_DEV_DIR))
+sys.path.append(str(PACKAGES_DIR))
+
+if not get_safe_mode():
+    INSTALLED_APPS.extend(find_apps())
+
 # Load startup.py from Conreq apps
-load_app_startup()
+execute_package_startup()
 
 # Execute settings scripts from Conreq Apps
 include(*app.config.setting_scripts)
+
+# Add conditional apps
+if DEBUG:
+    # Performance analysis tools
+    INSTALLED_APPS.append("silk")
+    MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
+    # API docs generator
+    INSTALLED_APPS.append("drf_yasg")
+else:
+    # Automatically delete dangling files
+    INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
 
 # Ensure Conreq app loader comes last
 INSTALLED_APPS.remove("conreq.internal.app_loader")

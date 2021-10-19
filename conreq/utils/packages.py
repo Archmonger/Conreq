@@ -25,7 +25,7 @@ def _packages_dev_dir():
     return getattr(settings, "PACKAGES_DEV_DIR")
 
 
-def _duplicate_package_check(packages, packages_dev):
+def _duplicate_package_check(packages: set, packages_dev: set):
     seen = packages.intersection(packages_dev)
 
     for package in seen:
@@ -95,7 +95,7 @@ def find_apps_with(module_name: str) -> set[str]:
     return apps_with
 
 
-def load_app_startup():
+def execute_package_startup():
     packages = find_packages()
 
     for package in packages:
