@@ -9,6 +9,10 @@
     "python.sortImports.args": [
         "--src=${workspaceFolder}"
     ],
+    "python.analysis.extraPaths": [
+        "data/packages/__installed__",
+        "data/packages/develop"
+    ],
     "terminal.integrated.scrollback": 20000,
     "git.autofetch": true,
     "prettier.tabWidth": 4,
