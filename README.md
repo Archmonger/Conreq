@@ -17,7 +17,7 @@ Install through **[Unraid Community Applications](https://squidly271.github.io/f
 
 Here's a list of all available environment variables:
 
-```conf
+```nginx
 # General Settings
 TZ = America/Los_Angeles                # default: UTC (Timezone for log files, in "TZ Database" format)
 BASE_URL = requests                     # default: None
