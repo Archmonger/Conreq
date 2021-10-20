@@ -17,34 +17,34 @@ Install through **[Unraid Community Applications](https://squidly271.github.io/f
 
 Here's a list of all available environment variables:
 
-```python
+```conf
 # General Settings
-TZ = "America/Los_Angeles"                # default: UTC (Timezone for log files, in "TZ Database" format)
-BASE_URL = "requests"                     # default: None
-APP_NAME = "RequestCentral"               # default: Conreq
-APP_DESCRIPTION = "Get yo stuff!"         # default: Content Requesting
-ARR_REFRESH_INTERNAL = "*/15"             # default: */1 (Cron minutes for Sonarr/Radarr library refresh)
-LOG_LEVEL = "ERROR"                       # default: WARNING
-CONREQ_ENV_PREFIX = "CONREQ"              # default: None
+TZ = America/Los_Angeles                # default: UTC (Timezone for log files, in "TZ Database" format)
+BASE_URL = requests                     # default: None
+APP_NAME = RequestCentral               # default: Conreq
+APP_DESCRIPTION = Get yo stuff!         # default: Content Requesting
+ARR_REFRESH_INTERNAL = */15             # default: */1 (Cron minutes for Sonarr/Radarr library refresh)
+LOG_LEVEL = ERROR                       # default: WARNING
+CONREQ_ENV_PREFIX = CONREQ              # default: None
 
 # Data Storage
-DATA_DIR = "/example/directory"           # default: /config (Defaults to "data" outside of docker)
-DB_ENGINE = "MYSQL"                       # default: SQLITE3
-MYSQL_CONFIG_FILE = "/config/mysql.cnf"   # default: None
+DATA_DIR = /example/directory           # default: /config (Defaults to "data" outside of docker)
+DB_ENGINE = MYSQL                       # default: SQLITE3
+MYSQL_CONFIG_FILE = /config/mysql.cnf   # default: None
 
 # Security
-SSL_SECURITY = "True"                     # default: False (True enables advanced SSL security features)
-PWNED_VALIDATOR = "False"                 # default: True (False disables checking for compromised passwords)
-X_FRAME_OPTIONS = "SAMEORIGIN"            # default: DENY (False disables X-Frame-Options)
-ALLOWED_HOST = "192.168.0.199"            # default: * (Allows all hosts)
-DEBUG = False                             # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
+SSL_SECURITY = True                     # default: False (True enables advanced SSL security features)
+PWNED_VALIDATOR = False                 # default: True (False disables checking for compromised passwords)
+X_FRAME_OPTIONS = SAMEORIGIN            # default: DENY (False disables X-Frame-Options)
+ALLOWED_HOST = 192.168.0.199            # default: * (Allows all hosts)
+DEBUG = False                           # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
 
 # Email
-EMAIL_USE_TLS = "False"                   # default: True
-EMAIL_PORT = "587"                        # default: None
-EMAIL_HOST = "smtp.gmail.com"             # default: None
-EMAIL_HOST_USER = "myself@gmail.com"      # default: None
-EMAIL_HOST_PASSWORD = "dogmemes123"       # default: None
+EMAIL_USE_TLS = False                   # default: True
+EMAIL_PORT = 587                        # default: None
+EMAIL_HOST = smtp.gmail.com             # default: None
+EMAIL_HOST_USER = myself@gmail.com      # default: None
+EMAIL_HOST_PASSWORD = dogmemes123       # default: None
 ```
 
 # Screenshots
