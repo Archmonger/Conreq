@@ -12,26 +12,25 @@ def initialize(request):
     server_config = ServerConfig.get_solo()
 
     # Run the first time initialization if needed
-    if server_config.initialized is False:
+    if server_config.initialized is True:
+        return
 
-        # User submitted the first time setup form
-        if request.method == "POST":
+    # User submitted the first time setup form
+    if request.method == "POST":
 
-            form = InitializationForm(request.POST)
+        form = InitializationForm(request.POST)
 
-            # Create the superuser and set up the database if the form is valid
-            if form.is_valid():
-                return _first_time_configuration(form, request, server_config)
+        # Create the superuser and set up the database if the form is valid
+        if form.is_valid():
+            return _first_time_configuration(form, request, server_config)
 
-            # Form data wasn't valid, so return the error codes
-            template = loader.get_template("registration/initialization.html")
-            return HttpResponse(template.render({"form": form}, request))
-
-        # User needs to fill out the first time setup
+        # Form data wasn't valid, so return the error codes
         template = loader.get_template("registration/initialization.html")
-        return HttpResponse(template.render({}, request))
+        return HttpResponse(template.render({"form": form}, request))
 
-    return None
+    # User needs to fill out the first time setup
+    template = loader.get_template("registration/initialization.html")
+    return HttpResponse(template.render({}, request))
 
 
 def _first_time_configuration(form, request, server_config):
