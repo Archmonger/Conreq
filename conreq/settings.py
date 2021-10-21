@@ -343,4 +343,5 @@ else:
 
 # Ensure Conreq app loader comes last
 INSTALLED_APPS.remove("conreq.internal.app_loader")
-INSTALLED_APPS.append("conreq.internal.app_loader")
+if not get_safe_mode():
+    INSTALLED_APPS.append("conreq.internal.app_loader")
