@@ -4,20 +4,22 @@
 [![GitHub Discussions](https://img.shields.io/badge/-View-purple?style=flat-square&label=GitHub%20Discussions&logo=github)](https://github.com/Archmonger/Conreq/discussions)
 [![Reddit](https://img.shields.io/badge/-View-red?style=flat-square&label=Reddit&logo=reddit)](https://www.reddit.com/r/conreq)
 
-Conreq, a cross platform web framework with an app store, designed to push the limits of Python.
+Conreq, a _super cool_ web development bundle of a full-stack framework, web server, and background task queue. Code that developers create can then be shared with others through our app store.
+
+Designed to push the limits of cross-platform **pure Python**.
 
 View the **[Core Roadmap](https://github.com/Archmonger/Conreq/projects)** to see what features are upcoming, or the **[App Roadmap](https://github.com/Archmonger/Conreq/projects/7)** to see what will be added to the app store.
 
 Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for info on how to develop with Conreq!
 
-## Features
+## Technical Features
 
 -   Installable Apps
 -   Behaves as a Progressive Web App (PWA)
 -   Customization for All Core Webpages
 -   Support for MySQL, MariaDB, and SQLite Databases
--   [Support for All Django Features](https://github.com/django/django)
--   [Virtual DOM with Support for ReactJS Components](https://github.com/idom-team/django-idom)
+-   [Interactive HTML via ReactJS Python Wrapper](https://github.com/idom-team/django-idom)
+-   [Support for Django Features](https://github.com/django/django)
 -   [Background Task Processing](https://github.com/coleifer/huey)
 -   [Async and Websockets (ASGI)](https://github.com/django/channels)
 -   [REST API Framework](https://github.com/encode/django-rest-framework)
