@@ -9,7 +9,7 @@ django-model-utils==4.1.1
 django-multiselectfield==0.1.12
 django-project-version==0.15.1
 django-searchable-encrypted-fields==0.1.9
-git+https://github.com/jazzband/django-silk.git@12e36541d7b9d80afad2f4c3e1033043aecc5263#egg=django-silk
+django-silk==4.2.0
 django-solo==1.1.5
 django-split-settings==1.1.0
 django-url-or-relative-url-field==0.1.2
