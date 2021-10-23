@@ -25,7 +25,7 @@ drf-yasg==1.20.0
 markdown==3.3.4
 
 # Debug
-git+https://github.com/jazzband/django-silk.git@7f03cfef0b554af541dc53fc6d5bee850469098a#egg=django-silk
+django-silk==4.2.0
 docutils==0.17.1
 
 # Optimization & Compression
