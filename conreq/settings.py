@@ -101,7 +101,7 @@ COMPRESS_FILTERS = {
 HUEY_FILENAME = DATA_DIR / "bg_tasks.sqlite3"
 HUEY = {
     "name": "huey",  # DB name for huey.
-    "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
+    "huey_class": "conreq.internal.bg_tasks.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_FILENAME,  # Sqlite filename
     "immediate": False,  # If True, run tasks synchronously.
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
