@@ -4,7 +4,7 @@
 [![GitHub Discussions](https://img.shields.io/badge/-View-purple?style=flat-square&label=GitHub%20Discussions&logo=github)](https://github.com/Archmonger/Conreq/discussions)
 [![Reddit](https://img.shields.io/badge/-View-red?style=flat-square&label=Reddit&logo=reddit)](https://www.reddit.com/r/conreq)
 
-Conreq, a _super cool_ web development bundle of a full-stack framework, web server, and background task queue. Code that developers create can then be shared with others through our app store.
+Conreq, a web development bundle containing a full-stack framework, web server, and background task queue. Code that developers create can then be shared with others through our app store.
 
 Designed to push the limits of cross-platform **pure Python**.
 
