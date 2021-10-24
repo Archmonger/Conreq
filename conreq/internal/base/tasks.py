@@ -11,7 +11,7 @@ DB_ENGINE = get_database_type()
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
-@db_periodic_task(crontab(minute="0", hour="0", strict=True))
+@db_periodic_task(crontab(minute="0", hour="0"))
 def vacuum_huey_sqlite_db():
     """Periodically performs a SQLITE vacuum on the background task database."""
     if HUEY_FILENAME.exists():
@@ -20,7 +20,7 @@ def vacuum_huey_sqlite_db():
             cursor.execute("PRAGMA optimize")
 
 
-@db_periodic_task(crontab(minute="0", hour="0", strict=True))
+@db_periodic_task(crontab(minute="0", hour="0"))
 def vacuum_conreq_sqlite_db():
     """Periodically performs any cleanup tasks needed for the default database."""
     if DB_ENGINE == "SQLITE3":
