@@ -16,6 +16,7 @@ huey.crontab = crontab
 
 # The time a task last ran
 tasks_last_run = {}
+crontab_last_run = {}
 
 
 class SqliteHuey(Huey):
@@ -69,13 +70,31 @@ class SqliteHuey(Huey):
             return decorator
 
         # Crontab
-        return super().periodic_task(
-            crontab_or_seconds,
-            retries=retries,
-            retry_delay=retry_delay,
-            priority=priority,
-            context=context,
-            name=name,
-            expires=expires,
-            **kwargs,
-        )
+        def decorator(func):
+            def method_validate(self, timestamp):
+                function_name = str(self).split(": ")[0]
+
+                if not crontab_last_run.get(function_name):
+                    crontab_last_run[function_name] = time()
+
+                if round(time() - crontab_last_run[function_name]) < 60:
+                    return False
+
+                crontab_last_run[function_name] = time()
+                return crontab_or_seconds(timestamp)
+
+            return TaskWrapper(
+                self,
+                func.func if isinstance(func, TaskWrapper) else func,
+                context=context,
+                name=name,
+                default_retries=retries,
+                default_retry_delay=retry_delay,
+                default_priority=priority,
+                default_expires=expires,
+                validate_datetime=method_validate,
+                task_base=PeriodicTask,
+                **kwargs,
+            )
+
+        return decorator
