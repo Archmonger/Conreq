@@ -19,6 +19,39 @@ tasks_last_run = {}
 crontab_last_run = {}
 
 
+def seconds_validator(crontab_or_seconds):
+    def method_validate(self, timestamp):
+        function_name = str(self).split(": ")[0]
+        seconds = crontab_or_seconds
+
+        if not tasks_last_run.get(function_name):
+            tasks_last_run[function_name] = time()
+
+        if round(time() - tasks_last_run[function_name]) >= seconds:
+            tasks_last_run[function_name] = time()
+            return True
+
+        return False
+
+    return method_validate
+
+
+def crontab_validator(crontab_or_seconds):
+    def method_validate(self, timestamp):
+        function_name = str(self).split(": ")[0]
+
+        if not crontab_last_run.get(function_name):
+            crontab_last_run[function_name] = time()
+
+        if round(time() - crontab_last_run[function_name]) < 60:
+            return False
+
+        crontab_last_run[function_name] = time()
+        return crontab_or_seconds(timestamp)
+
+    return method_validate
+
+
 class SqliteHuey(Huey):
     storage_class = SqliteStorage
 
@@ -36,52 +69,14 @@ class SqliteHuey(Huey):
         expires=None,
         **kwargs,
     ):
-        # Seconds
-        if isinstance(crontab_or_seconds, int):
-
-            def decorator(func):
-                def method_validate(self, datetime):
-                    function_name = str(self).split(": ")[0]
-                    seconds = crontab_or_seconds
-
-                    if not tasks_last_run.get(function_name):
-                        tasks_last_run[function_name] = time()
-
-                    if round(time() - tasks_last_run[function_name]) >= seconds:
-                        tasks_last_run[function_name] = time()
-                        return True
-
-                    return False
-
-                return TaskWrapper(
-                    self,
-                    func.func if isinstance(func, TaskWrapper) else func,
-                    context=context,
-                    name=name,
-                    default_retries=retries,
-                    default_retry_delay=retry_delay,
-                    default_priority=priority,
-                    default_expires=expires,
-                    validate_datetime=method_validate,
-                    task_base=PeriodicTask,
-                    **kwargs,
-                )
-
-            return decorator
-
-        # Crontab
         def decorator(func):
-            def method_validate(self, timestamp):
-                function_name = str(self).split(": ")[0]
+            # Seconds
+            if isinstance(crontab_or_seconds, int):
+                validation_method = seconds_validator(crontab_or_seconds)
 
-                if not crontab_last_run.get(function_name):
-                    crontab_last_run[function_name] = time()
-
-                if round(time() - crontab_last_run[function_name]) < 60:
-                    return False
-
-                crontab_last_run[function_name] = time()
-                return crontab_or_seconds(timestamp)
+            # Crontab
+            else:
+                validation_method = crontab_validator(crontab_or_seconds)
 
             return TaskWrapper(
                 self,
@@ -92,7 +87,7 @@ class SqliteHuey(Huey):
                 default_retry_delay=retry_delay,
                 default_priority=priority,
                 default_expires=expires,
-                validate_datetime=method_validate,
+                validate_datetime=validation_method,
                 task_base=PeriodicTask,
                 **kwargs,
             )
