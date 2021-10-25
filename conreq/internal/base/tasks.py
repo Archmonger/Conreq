@@ -20,10 +20,11 @@ def vacuum_huey_sqlite_db():
             cursor.execute("PRAGMA optimize")
 
 
-@db_periodic_task(crontab(minute="0", hour="0"))
-def vacuum_conreq_sqlite_db():
-    """Periodically performs any cleanup tasks needed for the default database."""
-    if DB_ENGINE == "SQLITE3":
+if DB_ENGINE == "SQLITE3":
+
+    @db_periodic_task(crontab(minute="0", hour="0"))
+    def vacuum_conreq_sqlite_db():
+        """Periodically performs any cleanup tasks needed for the default database."""
         with connection.cursor() as cursor:
             cursor.execute("VACUUM")
             cursor.execute("PRAGMA optimize")
