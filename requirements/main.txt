@@ -10,7 +10,7 @@ django-url-or-relative-url-field==0.1.2
 django-searchable-encrypted-fields==0.1.9
 jsonfield==3.1.0
 django-model-utils==4.1.1
-django-solo==1.1.5
+django-solo==1.2.0
 django-cleanup==5.2.0
 djangorestframework==3.12.4
 djangorestframework-api-key==2.0.0
