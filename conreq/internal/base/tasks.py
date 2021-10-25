@@ -12,7 +12,7 @@ HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
 @db_periodic_task(crontab(minute="0", hour="0"))
-def vacuum_huey_sqlite_db():
+def clean_bg_task_db():
     """Periodically performs a SQLITE vacuum on the background task database."""
     if HUEY_FILENAME.exists():
         with sqlite3.connect(HUEY_FILENAME) as cursor:
@@ -23,7 +23,7 @@ def vacuum_huey_sqlite_db():
 if DB_ENGINE == "SQLITE3":
 
     @db_periodic_task(crontab(minute="0", hour="0"))
-    def vacuum_conreq_sqlite_db():
+    def clean_conreq_db():
         """Periodically performs any cleanup tasks needed for the default database."""
         with connection.cursor() as cursor:
             cursor.execute("VACUUM")
