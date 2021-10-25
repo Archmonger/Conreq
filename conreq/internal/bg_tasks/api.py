@@ -43,11 +43,11 @@ def crontab_validator(crontab_or_seconds):
         if not crontab_last_run.get(function_name):
             crontab_last_run[function_name] = time()
 
-        if round(time() - crontab_last_run[function_name]) < 60:
-            return False
+        if round(time() - crontab_last_run[function_name]) >= 60:
+            crontab_last_run[function_name] = time()
+            return crontab_or_seconds(timestamp)
 
-        crontab_last_run[function_name] = time()
-        return crontab_or_seconds(timestamp)
+        return False
 
     return method_validate
 
