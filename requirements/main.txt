@@ -1,4 +1,4 @@
-django==3.2.6 
+django==3.2.8 
 Twisted[tls,http2]==21.7.0
 channels==3.0.4
 hypercorn[h3]==0.11.2
