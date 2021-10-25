@@ -18,6 +18,11 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 
 from conreq.core.websockets.consumers import CommandConsumer
+from conreq.utils.environment import get_base_url
+
+BASE_URL = get_base_url()
+if BASE_URL:
+    BASE_URL = BASE_URL[1:]
 
 
 class LifespanApp:
@@ -47,7 +52,9 @@ application = ProtocolTypeRouter(
         # See https://github.com/django/channels/issues/1587
         "http": django_asgi_app,
         "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter([path("", CommandConsumer().as_asgi())]))
+            AuthMiddlewareStack(
+                URLRouter([path(BASE_URL, CommandConsumer().as_asgi())])
+            )
         ),
         "lifespan": LifespanApp,
     }
