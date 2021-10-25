@@ -13,7 +13,7 @@ django-model-utils==4.1.1
 django-solo==1.1.5
 django-cleanup==5.2.0
 djangorestframework==3.12.4
-djangorestframework-api-key==2.0.0
+djangorestframework-api-key==2.1.0
 drf-yasg==1.20.0
 markdown==3.3.4
 django-silk==4.2.0
