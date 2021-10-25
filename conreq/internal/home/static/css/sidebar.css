@@ -56,11 +56,12 @@
 }
 
 .group-name {
-	padding: var(--navgroup-padding);
+	padding: 23px 30px 10px 20px;
 }
 
 .nav-tab > a,
 .nav-tab > div {
+	display: block;
 	padding: var(--navpages-btn-padding);
 }
 
@@ -74,7 +75,7 @@
 }
 
 .nav-group .icon-right {
-	margin: var(--navgroup-padding);
+	margin: 23px 20px 10px 20px;
 }
 
 .nav-tab .icon-right {
