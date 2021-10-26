@@ -15,7 +15,7 @@
 	color: rgb(156 156 156);
 }
 
-.sidebar #navpage {
+.sidebar #navigation {
 	white-space: nowrap;
 	height: 100%;
 	text-overflow: ellipsis;
@@ -62,7 +62,7 @@
 .nav-tab > a,
 .nav-tab > div {
 	display: block;
-	padding: var(--navpages-btn-padding);
+	padding: var(--navigation-btn-padding);
 }
 
 .nav-group .icon-right,
@@ -79,7 +79,7 @@
 }
 
 .nav-tab .icon-right {
-	margin: var(--navpages-btn-padding);
+	margin: var(--navigation-btn-padding);
 }
 
 .nav-group .icon-right:hover,
@@ -169,7 +169,7 @@
 	.nav-tab .fas {
 		opacity: 1;
 		margin: 0;
-		padding: var(--navpages-btn-padding);
+		padding: var(--navigation-btn-padding);
 		padding-left: 20px;
 	}
 }

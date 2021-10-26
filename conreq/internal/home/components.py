@@ -16,7 +16,7 @@ USER_PIC = {"class": "sidebar-profile-pic"}
 USER_PIC_PLACEHOLDER = {"class": "fas fa-user"}
 USERNAME = {"class": "username"}
 ELLIPSIS = {"class": "ellipsis"}
-NAVPAGES = {"id": "navpage"}
+NAVIGATION = {"id": "navigation"}
 NAVGROUP = {
     "class": "nav-group clickable",
     "data-bs-toggle": "collapse",
@@ -91,7 +91,7 @@ def sidebar(websocket):
             div(USERNAME, div(ELLIPSIS, websocket.scope["user"].get_username())),
         ),
         div(
-            NAVPAGES,
+            NAVIGATION,
             *(  # App tabs
                 sidebar_group(group_name, group_values)
                 for group_name, group_values in all_tabs
