@@ -16,3 +16,8 @@ class BaseConfig(AppConfig):
             IdomAsyncWebsocketConsumer
         )
         app.register.url(IDOM_WEB_MODULES_URL + "<path:file>")(web_modules_file)
+        # TODO: Remove this later
+        app.register.nav_tab("User", "Settings")(lambda X: None)
+        app.register.nav_tab("User", "Sign Out")(lambda X: None)
+        app.register.nav_tab("Admin", "Manage Users")(lambda X: None)
+        app.register.nav_tab("Admin", "Server Config")(lambda X: None)

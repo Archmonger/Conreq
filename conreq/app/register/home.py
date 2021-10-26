@@ -7,27 +7,13 @@ from conreq.app.component.icon import Icon
 from ..selectors import AuthLevel, Viewport
 
 
-def nav_group(
-    group_name: str,
-    group_icon: Icon = None,
-):
-    """Creates a nav group and sets the group icon."""
-    nav_tabs = app.config.nav_tabs
-    group = nav_tabs.get(group_name)
-
-    if not group:
-        nav_tabs[group_name] = {"icon": group_icon, "tabs": []}
-
-    else:
-        nav_tabs[group_name].update("icon", group_icon)
-
-
 def nav_tab(
-    tab_name: str,
     group_name: str,
+    tab_name: str,
+    group_icon: Icon = None,
+    tab_icon: Icon = None,
     selector: Viewport = Viewport.primary,
     auth_level: AuthLevel = AuthLevel.user,
-    icon: Icon = None,
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked."""
 
@@ -35,17 +21,16 @@ def nav_tab(
     group = nav_tabs.get(group_name)
 
     if not group:
-        nav_tabs[group_name] = {"icon": None, "tabs": []}
+        nav_tabs[group_name] = {"icon": group_icon, "tabs": []}
         group = nav_tabs[group_name]
 
     def decorator(func):
-
         group["tabs"].append(
             {
                 "name": tab_name,
                 "selector": selector,
                 "auth": auth_level,
-                "icon": icon,
+                "icon": tab_icon,
                 "component": func,
             }
         )

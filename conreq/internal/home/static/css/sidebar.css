@@ -15,7 +15,7 @@
 	color: rgb(156 156 156);
 }
 
-.sidebar .navpages {
+.sidebar #navpage {
 	white-space: nowrap;
 	height: 100%;
 	text-overflow: ellipsis;

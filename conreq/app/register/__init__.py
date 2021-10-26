@@ -4,7 +4,7 @@ from idom import component
 
 from .asgi import websocket
 from .components import manage_users_component, server_settings_component
-from .home import nav_group, nav_tab, server_setting
+from .home import nav_tab, server_setting
 from .templates import (
     home_template,
     landing_template,
@@ -30,7 +30,6 @@ __all__ = [
     "websocket",
     "url",
     "api",
-    "nav_group",
     "nav_tab",
     "server_setting",
     "user_setting",

@@ -1,5 +1,9 @@
+from pprint import pprint
+
 import idom
-from idom.html import a, div, i, nav, h1
+from idom.html import a, div, i, nav
+from django.utils.text import slugify
+from conreq import app
 
 SIDEBAR = {
     "id": "sidebar",
@@ -12,31 +16,73 @@ USER_PIC = {"class": "sidebar-profile-pic"}
 USER_PIC_PLACEHOLDER = {"class": "fas fa-user"}
 USERNAME = {"class": "username"}
 ELLIPSIS = {"class": "ellipsis"}
-NAVPAGES = {"id": "navpage", "class": "navpages"}
+NAVPAGES = {"id": "navpage"}
 NAVGROUP = {
     "class": "nav-group clickable",
     "data-bs-toggle": "collapse",
-    "data-bs-target": "#user-tabs",
     "aria-expanded": "true",
-    "aria-controls": "user-tabs",
 }
 GROUP_NAME = {"class": "group-name ellipsis"}
 GROUP_ICON = {"class": "group-icon"}
 EXAMPLE_GROUP_ICON = {"class": "fas fa-user icon-left"}
-GROUP_CARET = {"class": "fas fa-caret-up icon-right", "title": "Collapse group"}
-TABS_COLLAPSE = {"id": "user-tabs", "class": "tabs-collapse collapse show"}
+GROUP_CARET = {"class": "fas fa-caret-up icon-right"}
+TABS_COLLAPSE = {
+    "class": "tabs-collapse collapse show",
+}
 TABS_INDICATOR = {"class": "tabs-indicator"}
 TABS = {"class": "tabs"}
 NAV_TAB = {"class": "nav-tab"}
 
 
-@idom.component
-def hello(websocket):
-    return h1("Hello World!")
+def sidebar_group_icon(icon):
+    return i("a")
+
+
+def sidebar_tabs(tabs):
+    return (
+        div(
+            NAV_TAB,
+            a(ELLIPSIS, tab["name"]),
+        )
+        for tab in tabs
+    )
+
+
+def sidebar_group(group_name, group_values):
+    group_icon = group_values["icon"]
+    tabs = group_values["tabs"]
+    group_id = f"{slugify(group_name)}-tabs"
+
+    return (
+        div(
+            NAVGROUP
+            | {
+                "data-bs-target": f"#{group_id}",
+                "aria-controls": group_id,
+                "title": group_name,
+            },
+            div(
+                GROUP_NAME,
+                div(GROUP_ICON, sidebar_group_icon(group_icon)),
+                group_name,
+            ),
+            i(GROUP_CARET | {"title": f'Collapse the "{group_name}" group.'}),
+        ),
+        div(
+            TABS_COLLAPSE | {"id": group_id},
+            div(TABS_INDICATOR),
+            div(TABS, *sidebar_tabs(tabs)),
+        ),
+    )
 
 
 @idom.component
 def sidebar(websocket):
+    if not websocket.scope["user"].is_authenticated:
+        return None
+
+    all_tabs = app.config.nav_tabs.items()
+
     return nav(
         SIDEBAR,
         div(
@@ -46,23 +92,20 @@ def sidebar(websocket):
         ),
         div(
             NAVPAGES,
-            div(
-                NAVGROUP,
-                div(
-                    GROUP_NAME,
-                    div(GROUP_ICON, i(EXAMPLE_GROUP_ICON)),
-                    "This is an example sidebar group name!",
-                ),
-                i(GROUP_CARET),
+            *(  # App tabs
+                sidebar_group(group_name, group_values)
+                for group_name, group_values in all_tabs
+                if group_name not in {"User", "Admin"}
             ),
-            div(
-                TABS_COLLAPSE,
-                div(TABS_INDICATOR),
-                div(
-                    TABS,
-                    div(NAV_TAB, a(ELLIPSIS, "Example Tab Name")),
-                    div(NAV_TAB, a(ELLIPSIS, "Example Tab Name 2")),
-                ),
+            *(  # User tabs
+                sidebar_group(group_name, group_values)
+                for group_name, group_values in all_tabs
+                if group_name is "User"
+            ),
+            *(  # Admin tabs
+                sidebar_group(group_name, group_values)
+                for group_name, group_values in all_tabs
+                if group_name is "Admin" and websocket.scope["user"].is_staff
             ),
         ),
     )
