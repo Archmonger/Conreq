@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 
+from conreq import app
 from conreq.app import register
 from conreq.internal.first_run.views import initialize
 from conreq.utils.environment import get_base_url, get_debug, get_home_url
