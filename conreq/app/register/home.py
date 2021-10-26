@@ -42,6 +42,21 @@ def nav_tab(
     return decorator
 
 
+def nav_group(
+    group_name: str,
+    group_icon: Icon = None,
+):
+    """Creates a nav group and/or sets the group icon."""
+    nav_tabs = app.config.nav_tabs
+    group = nav_tabs.get(group_name)
+
+    if not group:
+        nav_tabs[group_name] = {"icon": group_icon, "tabs": []}
+
+    else:
+        nav_tabs[group_name].update("icon", group_icon)
+
+
 def server_setting(page_name: str) -> Callable:
     """Decorates an IDOM component. Creates a settings page."""
 

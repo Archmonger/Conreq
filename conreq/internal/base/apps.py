@@ -18,13 +18,9 @@ class BaseConfig(AppConfig):
         )
         register.url(IDOM_WEB_MODULES_URL + "<path:file>")(web_modules_file)
         # TODO: Remove this later
-        register.nav_tab(
-            "User", "Settings", group_icon=i({"className": "fas fa-users icon-left"})
-        )(lambda X: None)
+        register.nav_group("User", i({"className": "fas fa-users icon-left"}))
+        register.nav_tab("User", "Settings")(lambda X: None)
         register.nav_tab("User", "Sign Out")(lambda X: None)
-        register.nav_tab(
-            "Admin",
-            "Manage Users",
-            group_icon=i({"className": "fas fa-cogs icon-left"}),
-        )(lambda X: None)
+        register.nav_group("Admin", i({"className": "fas fa-cogs icon-left"}))
+        register.nav_tab("Admin", "Manage Users")(lambda X: None)
         register.nav_tab("Admin", "Server Config")(lambda X: None)
