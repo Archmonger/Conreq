@@ -12,7 +12,7 @@ def nav_tab(
     tab_name: str,
     group_icon: Icon = None,
     tab_icon: Icon = None,
-    selector: Viewport = Viewport.primary,
+    selector: Viewport = Viewport.primary,  # TODO: Can be viewport, modal, or none
     auth_level: AuthLevel = AuthLevel.user,
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked."""
