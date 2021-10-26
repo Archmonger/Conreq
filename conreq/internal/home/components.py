@@ -70,6 +70,9 @@ def sidebar(websocket):
 
 
 def sidebar_group_icon(icon):
+    if not icon:
+        return i({"class": "far fa-circle"})
+
     return i("a")
 
 
