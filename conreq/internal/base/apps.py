@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 from django_idom.views import web_modules_file
 from django_idom.websocket_consumer import IdomAsyncWebsocketConsumer
+from idom.html import i
 
 from conreq.app import register
-from idom.html import i
 
 
 class BaseConfig(AppConfig):
