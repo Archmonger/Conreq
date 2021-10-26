@@ -1,8 +1,7 @@
-from pprint import pprint
-
 import idom
-from idom.html import a, div, i, nav
 from django.utils.text import slugify
+from idom.html import a, div, i, nav
+
 from conreq import app
 
 SIDEBAR = {
@@ -58,12 +57,12 @@ def sidebar(websocket):
             *(  # User tabs
                 sidebar_group(group_name, group_values)
                 for group_name, group_values in all_tabs
-                if group_name is "User"
+                if group_name == "User"
             ),
             *(  # Admin tabs
                 sidebar_group(group_name, group_values)
                 for group_name, group_values in all_tabs
-                if group_name is "Admin" and websocket.scope["user"].is_staff
+                if group_name == "Admin" and websocket.scope["user"].is_staff
             ),
         ),
     )
