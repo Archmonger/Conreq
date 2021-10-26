@@ -34,6 +34,41 @@ TABS = {"class": "tabs"}
 NAV_TAB = {"class": "nav-tab"}
 
 
+@idom.component
+def sidebar(websocket):
+    if not websocket.scope["user"].is_authenticated:
+        return None
+
+    all_tabs = app.config.nav_tabs.items()
+
+    return nav(
+        SIDEBAR,
+        div(
+            SIDEBAR_USER,
+            div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
+            div(USERNAME, div(ELLIPSIS, websocket.scope["user"].get_username())),
+        ),
+        div(
+            NAVIGATION,
+            *(  # App tabs
+                sidebar_group(group_name, group_values)
+                for group_name, group_values in all_tabs
+                if group_name not in {"User", "Admin"}
+            ),
+            *(  # User tabs
+                sidebar_group(group_name, group_values)
+                for group_name, group_values in all_tabs
+                if group_name is "User"
+            ),
+            *(  # Admin tabs
+                sidebar_group(group_name, group_values)
+                for group_name, group_values in all_tabs
+                if group_name is "Admin" and websocket.scope["user"].is_staff
+            ),
+        ),
+    )
+
+
 def sidebar_group_icon(icon):
     return i("a")
 
@@ -72,40 +107,5 @@ def sidebar_group(group_name, group_values):
             TABS_COLLAPSE | {"id": group_id},
             div(TABS_INDICATOR),
             div(TABS, *sidebar_tabs(tabs)),
-        ),
-    )
-
-
-@idom.component
-def sidebar(websocket):
-    if not websocket.scope["user"].is_authenticated:
-        return None
-
-    all_tabs = app.config.nav_tabs.items()
-
-    return nav(
-        SIDEBAR,
-        div(
-            SIDEBAR_USER,
-            div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
-            div(USERNAME, div(ELLIPSIS, websocket.scope["user"].get_username())),
-        ),
-        div(
-            NAVIGATION,
-            *(  # App tabs
-                sidebar_group(group_name, group_values)
-                for group_name, group_values in all_tabs
-                if group_name not in {"User", "Admin"}
-            ),
-            *(  # User tabs
-                sidebar_group(group_name, group_values)
-                for group_name, group_values in all_tabs
-                if group_name is "User"
-            ),
-            *(  # Admin tabs
-                sidebar_group(group_name, group_values)
-                for group_name, group_values in all_tabs
-                if group_name is "Admin" and websocket.scope["user"].is_staff
-            ),
         ),
     )
