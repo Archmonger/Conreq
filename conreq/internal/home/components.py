@@ -6,31 +6,31 @@ from conreq import app
 
 SIDEBAR = {
     "id": "sidebar",
-    "class": "sidebar no-hightlighting collapsed",
+    "className": "sidebar no-hightlighting collapsed",
     "data-aos": "fade-right",
     "data-aos-duration": "1000",
 }
-SIDEBAR_USER = {"class": "sidebar-user clickable"}
-USER_PIC = {"class": "sidebar-profile-pic"}
-USER_PIC_PLACEHOLDER = {"class": "fas fa-user"}
-USERNAME = {"class": "username"}
-ELLIPSIS = {"class": "ellipsis"}
+SIDEBAR_USER = {"className": "sidebar-user clickable"}
+USER_PIC = {"className": "sidebar-profile-pic"}
+USER_PIC_PLACEHOLDER = {"className": "fas fa-user"}
+USERNAME = {"className": "username"}
+ELLIPSIS = {"className": "ellipsis"}
 NAVIGATION = {"id": "navigation"}
 NAVGROUP = {
-    "class": "nav-group clickable",
+    "className": "nav-group clickable",
     "data-bs-toggle": "collapse",
     "aria-expanded": "true",
 }
-GROUP_NAME = {"class": "group-name ellipsis"}
-GROUP_ICON = {"class": "group-icon"}
-EXAMPLE_GROUP_ICON = {"class": "fas fa-user icon-left"}
-GROUP_CARET = {"class": "fas fa-caret-up icon-right"}
+GROUP_NAME = {"className": "group-name ellipsis"}
+GROUP_ICON = {"className": "group-icon"}
+EXAMPLE_GROUP_ICON = {"className": "fas fa-user icon-left"}
+GROUP_CARET = {"className": "fas fa-caret-up icon-right"}
 TABS_COLLAPSE = {
-    "class": "tabs-collapse collapse show",
+    "className": "tabs-collapse collapse show",
 }
-TABS_INDICATOR = {"class": "tabs-indicator"}
-TABS = {"class": "tabs"}
-NAV_TAB = {"class": "nav-tab"}
+TABS_INDICATOR = {"className": "tabs-indicator"}
+TABS = {"className": "tabs"}
+NAV_TAB = {"className": "nav-tab"}
 
 
 @idom.component
@@ -70,7 +70,7 @@ def sidebar(websocket):
 
 def sidebar_group_icon(icon):
     if not icon:
-        return i({"class": "far fa-circle"})
+        return i({"className": "far fa-circle"})
 
     return i("a")
 
