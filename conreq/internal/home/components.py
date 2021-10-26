@@ -31,6 +31,7 @@ TABS_COLLAPSE = {
 TABS_INDICATOR = {"className": "tabs-indicator"}
 TABS = {"className": "tabs"}
 NAV_TAB = {"className": "nav-tab"}
+DEFAULT_ICON = i({"className": "far fa-circle"})
 
 
 @idom.component
@@ -68,13 +69,6 @@ def sidebar(websocket):
     )
 
 
-def sidebar_group_icon(icon):
-    if not icon:
-        return i({"className": "far fa-circle"})
-
-    return i("a")
-
-
 def sidebar_tabs(tabs):
     return (
         div(
@@ -86,7 +80,7 @@ def sidebar_tabs(tabs):
 
 
 def sidebar_group(group_name, group_values):
-    group_icon = group_values["icon"]
+    icon = group_values["icon"]
     tabs = group_values["tabs"]
     group_id = f"{slugify(group_name)}-tabs"
 
@@ -100,7 +94,7 @@ def sidebar_group(group_name, group_values):
             },
             div(
                 GROUP_NAME,
-                div(GROUP_ICON, sidebar_group_icon(group_icon)),
+                div(GROUP_ICON, DEFAULT_ICON if not icon else icon),
                 group_name,
             ),
             i(GROUP_CARET | {"title": f'Collapse the "{group_name}" group.'}),
