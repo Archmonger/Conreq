@@ -14,7 +14,7 @@
 
 <body>
     <input id="base-url" type="hidden" value="{{ base_url }}">
-    {% include "homepage/navbar.html" %}
+    {% idom_component "conreq.internal.home.components.navbar" %}
     {% idom_component "conreq.internal.home.components.modal" %}
     {% idom_component "conreq.internal.home.components.sidebar" %}
     {% idom_component "conreq.internal.home.components.viewport_loading_animation" %}

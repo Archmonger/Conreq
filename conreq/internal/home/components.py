@@ -1,6 +1,6 @@
 import idom
 from django.utils.text import slugify
-from idom.html import a, div, i, nav
+from idom.html import a, div, i, nav, button, span
 
 from conreq import app
 
@@ -63,6 +63,17 @@ VIEWPORT_CONTAINER = {"className": "viewport-container", "hidden": "hidden"}
 VIEWPORT_CONTAINER_TOP = {"className": "viewport-container-top", "hidden": "hidden"}
 VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container-loading"}
 
+# Navbar
+NAVBAR = {"className": "navbar navbar-expand-md navbar-dark", "data-aos": "fade-down"}
+NAVBAR_TOGGLER = {
+    "className": "navbar-toggler",
+    "type": "button",
+    "aria-label": "Toggle sidebar",
+    "title": "Toggle sidebar",
+}
+NAVBAR_TOGGLER_ICON = {"className": "navbar-toggler-icon"}
+NAVBAR_BRAND = {"className": "navbar-brand ellipsis"}
+
 # Generic VDOM
 DEFAULT_NAV_GROUP_ICON = i({"className": "far fa-circle"})
 MODAL_CLOSE_BTN = i(
@@ -124,6 +135,18 @@ def viewport_top(websocket):
 @idom.component
 def viewport(websocket):
     return div(VIEWPORT_CONTAINER)
+
+
+@idom.component
+def navbar(websocket):
+    return div(
+        NAVBAR,
+        button(
+            NAVBAR_TOGGLER,
+            span(NAVBAR_TOGGLER_ICON),
+        ),
+        div(NAVBAR_BRAND, "Loading..."),
+    )
 
 
 @idom.component
