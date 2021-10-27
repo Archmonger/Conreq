@@ -1,9 +1,8 @@
 import idom
 from django.utils.text import slugify
-from idom.html import a, div, i, nav, button, span
+from idom.html import a, button, div, i, nav, span
 
 from conreq import app
-
 
 # Sidebar
 SIDEBAR = {
