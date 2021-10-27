@@ -4,6 +4,8 @@ from idom.html import a, div, i, nav
 
 from conreq import app
 
+
+# Sidebar
 SIDEBAR = {
     "id": "sidebar",
     "className": "sidebar no-hightlighting collapsed",
@@ -31,6 +33,8 @@ TABS_COLLAPSE = {
 TABS_INDICATOR = {"className": "tabs-indicator"}
 TABS = {"className": "tabs"}
 NAV_TAB = {"className": "nav-tab"}
+
+# Modal
 MODAL_CONTAINER = {
     "id": "modal-container",
     "className": "modal fade",
@@ -54,7 +58,13 @@ MODAL_TITLE = {"className": "title"}
 MODAL_BODY = {"className": "modal-body loading"}
 MODAL_FOOTER = {"className": "modal-footer"}
 
-DEFAULT_ICON = i({"className": "far fa-circle"})
+# Viewport
+VIEWPORT_CONTAINER = {"className": "viewport-container", "hidden": "hidden"}
+VIEWPORT_CONTAINER_TOP = {"className": "viewport-container-top", "hidden": "hidden"}
+VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container-loading"}
+
+# Generic VDOM
+DEFAULT_NAV_GROUP_ICON = i({"className": "far fa-circle"})
 MODAL_CLOSE_BTN = i(
     {
         "title": "Close",
@@ -99,21 +109,21 @@ def sidebar(websocket):
 
 
 @idom.component
-def viewport_loader(websocket):
+def viewport_loading_animation(websocket):
     return div(
-        {"className": "viewport-container-loading"},
+        VIEWPORT_CONTAINER_LOADING,
         app.config.loading_animation_vdom,
     )
 
 
 @idom.component
 def viewport_top(websocket):
-    return div({"className": "viewport-container-top", "hidden": "hidden"})
+    return div(VIEWPORT_CONTAINER_TOP)
 
 
 @idom.component
 def viewport(websocket):
-    return div({"className": "viewport-container", "hidden": "hidden"})
+    return div(VIEWPORT_CONTAINER)
 
 
 @idom.component
@@ -164,7 +174,7 @@ def sidebar_group(group_name, group_values):
             },
             div(
                 GROUP_NAME,
-                div(GROUP_ICON, DEFAULT_ICON if not icon else icon),
+                div(GROUP_ICON, DEFAULT_NAV_GROUP_ICON if not icon else icon),
                 group_name,
             ),
             i(GROUP_CARET | {"title": f'Collapse the "{group_name}" group.'}),
