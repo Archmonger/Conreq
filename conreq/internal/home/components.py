@@ -31,8 +31,36 @@ TABS_COLLAPSE = {
 TABS_INDICATOR = {"className": "tabs-indicator"}
 TABS = {"className": "tabs"}
 NAV_TAB = {"className": "nav-tab"}
+MODAL_CONTAINER = {
+    "id": "modal-container",
+    "className": "modal fade",
+    "tabIndex": "-1",
+    "role": "dialog",
+    "aria-hidden": "true",
+}
+MODAL_DIALOG = {
+    "id": "modal-dialog",
+    "className": "modal-dialog modal-dialog-centered modal-lg",
+    "role": "document",
+}
+MODAL_CONTENT = {"id": "modal-content", "className": "modal-content"}
+MODAL_HEADER = {"className": "modal-header"}
+MODAL_HEADER_BTN_CONTAINER = {
+    "className": "modal-header-btn-container",
+    "data-bs-dismiss": "modal",
+    "aria-label": "Close",
+}
+MODAL_TITLE = {"className": "title"}
+MODAL_BODY = {"className": "modal-body loading"}
+MODAL_FOOTER = {"className": "modal-footer"}
 
 DEFAULT_ICON = i({"className": "far fa-circle"})
+MODAL_CLOSE_BTN = i(
+    {
+        "title": "Close",
+        "className": "fas fa-window-close clickable",
+    }
+)
 
 
 @idom.component
@@ -86,6 +114,29 @@ def viewport_top(websocket):
 @idom.component
 def viewport(websocket):
     return div({"className": "viewport-container", "hidden": "hidden"})
+
+
+@idom.component
+def modal(websocket):
+    return div(
+        MODAL_CONTAINER,
+        div(
+            MODAL_DIALOG,
+            div(
+                MODAL_CONTENT,
+                div(
+                    MODAL_HEADER,
+                    div(MODAL_HEADER_BTN_CONTAINER, MODAL_CLOSE_BTN),
+                    div(MODAL_TITLE, "Loading..."),
+                ),
+                div(
+                    MODAL_BODY,
+                    div({"className": "loading"}, app.config.loading_animation_vdom),
+                ),
+                div(MODAL_FOOTER),
+            ),
+        ),
+    )
 
 
 def sidebar_tabs(tabs):

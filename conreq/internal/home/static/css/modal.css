@@ -19,6 +19,13 @@
 	overflow-y: overlay;
 }
 
+.modal-body > .loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 65px;
+}
+
 .modal .text-input-container {
 	background: rgb(255 255 255 / 0.08);
 	color: rgb(255 255 255 / 0.75);
