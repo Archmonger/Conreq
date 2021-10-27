@@ -23,21 +23,6 @@
 	transition: opacity 1.5s ease;
 }
 
-.empty-viewport {
-	text-align: center;
-	min-width: -webkit-fit-content;
-	min-width: -moz-fit-content;
-	min-width: fit-content;
-	width: 30%;
-	max-width: 100%;
-	margin: auto;
-	margin-top: 10px;
-	padding: 40px;
-	border-radius: 6px;
-	box-shadow: var(--box-shadow);
-	line-height: 1.5;
-}
-
 .viewport-container-loading {
 	display: inline-flex;
 }
@@ -53,8 +38,7 @@
 	}
 	.viewport-container-loading,
 	.viewport-container,
-	.viewport-container-top,
-	.viewport-loader {
+	.viewport-container-top {
 		z-index: 4;
 		width: 100vw;
 		left: 0px;

@@ -17,15 +17,9 @@
     {% include "homepage/navbar.html" %}
     {% include "modal/default.html" %}
     {% idom_component "conreq.internal.home.components.sidebar" %}
-    <main class="viewport-container-loading">
-        {% include app_config.loading_animation_template %}
-    </main>
-    <main class="viewport-container-top" hidden="hidden">
-
-    </main>
-    <main class="viewport-container" hidden="hidden">
-
-    </main>
+    {% idom_component "conreq.internal.home.components.viewport_loader" %}
+    {% idom_component "conreq.internal.home.components.viewport_top" %}
+    {% idom_component "conreq.internal.home.components.viewport" %}
 </body>
 
 </html>

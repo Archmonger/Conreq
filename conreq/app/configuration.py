@@ -3,6 +3,9 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
+from idom.core.proto import VdomDict
+from idom.html import div, span
+
 from conreq.internal.view_wrappers.views import (
     home,
     landing,
@@ -34,7 +37,6 @@ class _Config:
     sign_up_template: str = "registration/sign_up.html"
     sign_in_template: str = "registration/sign_in.html"
     password_reset_template: str = ""
-    loading_animation_template: str = "loading/spinner.html"
 
     # IDOM Components
     manage_users_component: Callable = None
@@ -42,6 +44,14 @@ class _Config:
     user_setting_sections: list[Callable] = field(default_factory=list)
     server_setting_tabs: list[dict] = field(default_factory=list)
     nav_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
+
+    # IDOM VDOMs
+    loading_animation_vdom: VdomDict = field(
+        default_factory=lambda: div(
+            {"className": "spinner-border loading-animation", "role": "status"},
+            span({"className": "sr-only"}, "Loading..."),
+        ),
+    )
 
     # ASGI
     websockets: list[Callable] = field(default_factory=list)

@@ -31,6 +31,7 @@ TABS_COLLAPSE = {
 TABS_INDICATOR = {"className": "tabs-indicator"}
 TABS = {"className": "tabs"}
 NAV_TAB = {"className": "nav-tab"}
+
 DEFAULT_ICON = i({"className": "far fa-circle"})
 
 
@@ -67,6 +68,24 @@ def sidebar(websocket):
             ),
         ),
     )
+
+
+@idom.component
+def viewport_loader(websocket):
+    return div(
+        {"className": "viewport-container-loading"},
+        app.config.loading_animation_vdom,
+    )
+
+
+@idom.component
+def viewport_top(websocket):
+    return div({"className": "viewport-container-top", "hidden": "hidden"})
+
+
+@idom.component
+def viewport(websocket):
+    return div({"className": "viewport-container", "hidden": "hidden"})
 
 
 def sidebar_tabs(tabs):
