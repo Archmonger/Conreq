@@ -59,7 +59,6 @@ MODAL_FOOTER = {"className": "modal-footer"}
 
 # Viewport
 VIEWPORT_CONTAINER = {"className": "viewport-container", "hidden": "hidden"}
-VIEWPORT_CONTAINER_TOP = {"className": "viewport-container-top", "hidden": "hidden"}
 VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container-loading"}
 
 # Navbar
@@ -124,11 +123,6 @@ def viewport_loading_animation(websocket):
         VIEWPORT_CONTAINER_LOADING,
         app.config.loading_animation_vdom,
     )
-
-
-@idom.component
-def viewport_top(websocket):
-    return div(VIEWPORT_CONTAINER_TOP)
 
 
 @idom.component
