@@ -83,7 +83,18 @@ MODAL_CLOSE_BTN = i(
 
 
 @idom.component
-def sidebar(websocket):
+def homepage(websocket):
+    state, set_state = idom.hooks.use_state({})
+    return div(
+        navbar(state, set_state),
+        modal(state, set_state),
+        sidebar(state, set_state, websocket),
+        viewport_loading_animation(state, set_state),
+        viewport(state, set_state),
+    )
+
+
+def sidebar(state, set_state, websocket):
     if not websocket.scope["user"].is_authenticated:
         return None
 
@@ -117,21 +128,18 @@ def sidebar(websocket):
     )
 
 
-@idom.component
-def viewport_loading_animation(websocket):
+def viewport_loading_animation(state, set_state):
     return div(
         VIEWPORT_CONTAINER_LOADING,
         app.config.loading_animation_vdom,
     )
 
 
-@idom.component
-def viewport(websocket):
+def viewport(state, set_state):
     return div(VIEWPORT_CONTAINER)
 
 
-@idom.component
-def navbar(websocket):
+def navbar(state, set_state):
     return div(
         NAVBAR,
         button(
@@ -142,8 +150,7 @@ def navbar(websocket):
     )
 
 
-@idom.component
-def modal(websocket):
+def modal(state, set_state):
     return div(
         MODAL_CONTAINER,
         div(
