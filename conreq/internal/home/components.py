@@ -59,6 +59,7 @@ MODAL_FOOTER = {"className": "modal-footer"}
 
 # Viewport
 VIEWPORT_CONTAINER = {"className": "viewport-container", "hidden": "hidden"}
+VIEWPORT_CONTAINER_TOP = {"className": "viewport-container-top", "hidden": "hidden"}
 VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container-loading"}
 
 # Navbar
@@ -90,6 +91,7 @@ def homepage(websocket):
         modal(state, set_state),
         sidebar(state, set_state, websocket),
         viewport_loading_animation(state, set_state),
+        viewport_top(state, set_state),
         viewport(state, set_state),
     )
 
@@ -135,7 +137,13 @@ def viewport_loading_animation(state, set_state):
     )
 
 
-def viewport(state, set_state):
+@idom.component
+def viewport_top(websocket, state, set_state):
+    return div(VIEWPORT_CONTAINER_TOP)
+
+
+@idom.component
+def viewport(websocket, state, set_state):
     return div(VIEWPORT_CONTAINER)
 
 
