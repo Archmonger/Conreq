@@ -100,3 +100,8 @@ $(document).ready(async function () {
 	// First connection attempt
 	ws_connect();
 });
+
+// Ensure the websocket terminates when the browser tab closes
+window.addEventListener("unload", function () {
+	if (COMMAND_SOCKET.readyState != WebSocket.CLOSED) COMMAND_SOCKET.close();
+});
