@@ -272,7 +272,7 @@ CACHES = {
         "LOCATION": DATA_DIR / "cache",
         "TIMEOUT": 300,  # Default timeout of each key.
         "SHARDS": 8,  # Number of sharded cache DBs to create
-        "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds query timeout
+        "DATABASE_TIMEOUT": 0.1,  # 100 milliseconds query timeout
         "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte max cache size
     }
 }
