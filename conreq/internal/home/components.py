@@ -31,7 +31,7 @@ TABS_COLLAPSE = {
 }
 TABS_INDICATOR = {"className": "tabs-indicator"}
 TABS = {"className": "tabs"}
-NAV_TAB = {"className": "nav-tab"}
+NAV_TAB = {"className": "nav-tab clickable"}
 
 # Modal
 MODAL_CONTAINER = {
