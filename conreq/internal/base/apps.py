@@ -4,6 +4,7 @@ from django_idom.websocket_consumer import IdomAsyncWebsocketConsumer
 from idom.html import i
 
 from conreq.app import register
+from conreq.internal.websockets.consumers import BaseWebsocket
 
 
 class BaseConfig(AppConfig):
@@ -13,10 +14,12 @@ class BaseConfig(AppConfig):
         # pylint: disable=import-outside-toplevel
         from django_idom.config import IDOM_WEB_MODULES_URL, IDOM_WEBSOCKET_URL
 
+        register.websocket("")(BaseWebsocket)
         register.websocket(IDOM_WEBSOCKET_URL + "<view_id>/")(
             IdomAsyncWebsocketConsumer
         )
         register.url(IDOM_WEB_MODULES_URL + "<path:file>")(web_modules_file)
+
         # TODO: Remove this later
         register.nav_group("User", i({"className": "fas fa-users icon-left"}))
         register.nav_tab("User", "Settings")(lambda X: None)
