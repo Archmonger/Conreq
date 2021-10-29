@@ -96,6 +96,7 @@ def homepage(websocket):
     )
 
 
+@idom.component
 def sidebar(websocket, state, set_state):
     if not websocket.scope["user"].is_authenticated:
         return None
@@ -130,6 +131,7 @@ def sidebar(websocket, state, set_state):
     )
 
 
+@idom.component
 def viewport_loading_animation(websocket, state, set_state):
     return div(
         VIEWPORT_CONTAINER_LOADING,
@@ -147,6 +149,7 @@ def viewport(websocket, state, set_state):
     return div(VIEWPORT_CONTAINER)
 
 
+@idom.component
 def navbar(websocket, state, set_state):
     return div(
         NAVBAR,
@@ -158,6 +161,7 @@ def navbar(websocket, state, set_state):
     )
 
 
+@idom.component
 def modal(websocket, state, set_state):
     return div(
         MODAL_CONTAINER,
