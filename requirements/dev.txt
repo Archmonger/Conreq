@@ -1,5 +1,7 @@
 black
 pylint
 pylint_django
+flake8
+flake8-django
 rope
 twine
