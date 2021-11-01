@@ -1,7 +1,7 @@
 black
-pylint
-pylint_django
 flake8
 flake8-django
+pylint
+pylint_django
 rope
 twine
