@@ -15,8 +15,8 @@ crontab.__doc__ = _crontab.__doc__
 huey.crontab = crontab
 
 # The time a task last ran
-tasks_last_run = {}
-crontab_last_run = {}
+seconds_tasks_last_run = {}
+crontab_tasks_last_run = {}
 
 
 def seconds_validator(crontab_or_seconds):
@@ -24,11 +24,11 @@ def seconds_validator(crontab_or_seconds):
         function_name = str(self).split(": ")[0]
         seconds = crontab_or_seconds
 
-        if not tasks_last_run.get(function_name):
-            tasks_last_run[function_name] = time()
+        if not seconds_tasks_last_run.get(function_name):
+            seconds_tasks_last_run[function_name] = time()
 
-        if round(time() - tasks_last_run[function_name]) >= seconds:
-            tasks_last_run[function_name] = time()
+        if round(time() - seconds_tasks_last_run[function_name]) >= seconds:
+            seconds_tasks_last_run[function_name] = time()
             return True
 
         return False
@@ -40,11 +40,11 @@ def crontab_validator(crontab_or_seconds):
     def method_validate(self, timestamp):
         function_name = str(self).split(": ")[0]
 
-        if not crontab_last_run.get(function_name):
-            crontab_last_run[function_name] = time()
+        if not crontab_tasks_last_run.get(function_name):
+            crontab_tasks_last_run[function_name] = time()
 
-        if round(time() - crontab_last_run[function_name]) >= 60:
-            crontab_last_run[function_name] = time()
+        if round(time() - crontab_tasks_last_run[function_name]) >= 60:
+            crontab_tasks_last_run[function_name] = time()
             return crontab_or_seconds(timestamp)
 
         return False
