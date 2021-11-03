@@ -32,74 +32,12 @@
 	font-size: 16px;
 }
 
-.searchbar {
-	position: relative;
-	height: 40px;
-	margin: auto;
-	margin-bottom: 30px;
-	width: 45%;
-	background: rgb(0 0 0 / 0.45);
-	border-radius: 15px;
-	transition: background 0.4s ease, color 0.4s ease;
-	color: rgba(255, 255, 255, 0.3);
-	overflow: hidden;
-	display: flex;
-}
-
-.viewport-container .searchbar,
-.viewport-container-top .searchbar {
-	box-shadow: var(--poster-box-shadow);
-}
-
-.searchbar:focus-within {
-	background: #fff;
-	color: #252525;
-}
-
-.searchbar input {
-	box-sizing: border-box;
-	height: 100%;
-	max-width: 100%;
-	background: none;
-	width: calc(100% - 40px);
-	color: inherit;
-	border: none;
-	font-size: var(--primary-font-size);
-	font-weight: 500;
-	padding-left: 15px;
-	outline: none !important;
-}
-
-.searchbar .fa-search {
-	top: 0px;
-	right: 0px;
-	margin-right: 15px;
-	width: calc(var(--navbar-height) * 0.3);
-	color: inherit;
-	margin: 0 auto;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-button {
-	transition: background 0.3s ease;
-}
-
-button:focus {
-	outline: none;
-	background: rgb(255 255 255 / 0.04);
-}
-
 @media only screen and (max-width: 800px) {
 	:root {
 		--navbar-height: 45px;
 	}
 	::-webkit-scrollbar {
 		display: none;
-	}
-	.searchbar {
-		width: 80%;
 	}
 
 	.navbar {
