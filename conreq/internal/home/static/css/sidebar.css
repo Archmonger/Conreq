@@ -106,13 +106,13 @@
 	align-items: center;
 }
 
-.sidebar-user .username {
+.sidebar-user .username-container {
 	display: inline-flex;
 	width: calc(100% - 50px);
 	font-weight: 700;
 }
 
-.sidebar-user .username > div {
+.sidebar-user .username-container .username {
 	width: 100%;
 }
 

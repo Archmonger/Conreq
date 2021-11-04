@@ -1,6 +1,4 @@
-.viewport-container-loading,
-.viewport-container,
-.viewport-container-top {
+.viewport-container {
 	position: absolute;
 	left: var(--sidebar-width);
 	height: calc(100% - var(--navbar-height));
@@ -14,6 +12,10 @@
 	color: rgb(255 255 255 / 0.75);
 }
 
+.viewport-container.loading {
+	display: inline-flex;
+}
+
 .viewport {
 	padding-bottom: var(--viewport-padding);
 	min-height: -webkit-fit-content;
@@ -21,10 +23,6 @@
 	min-height: fit-content;
 	margin: auto;
 	transition: opacity 1.5s ease;
-}
-
-.viewport-container-loading {
-	display: inline-flex;
 }
 
 @media only screen and (max-width: 800px) {
@@ -36,9 +34,7 @@
 	::-webkit-scrollbar {
 		display: none;
 	}
-	.viewport-container-loading,
-	.viewport-container,
-	.viewport-container-top {
+	.viewport-container {
 		z-index: 4;
 		width: 100vw;
 		left: 0px;

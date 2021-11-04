@@ -1,8 +1,9 @@
 import idom
 from django.utils.text import slugify
-from idom.html import a, button, div, i, nav, span
+from idom.html import button, div, i, nav, span
 
 from conreq import app
+from conreq.app.selectors import Viewport
 
 # Sidebar
 SIDEBAR = {
@@ -14,8 +15,8 @@ SIDEBAR = {
 SIDEBAR_USER = {"className": "sidebar-user clickable"}
 USER_PIC = {"className": "sidebar-profile-pic"}
 USER_PIC_PLACEHOLDER = {"className": "fas fa-user"}
-USERNAME = {"className": "username"}
-ELLIPSIS = {"className": "ellipsis"}
+USERNAME_CONTAINER = {"className": "username-container"}
+USERNAME = {"className": "username ellipsis"}
 NAVIGATION = {"id": "navigation"}
 NAVGROUP = {
     "className": "nav-group clickable",
@@ -32,6 +33,7 @@ TABS_COLLAPSE = {
 TABS_INDICATOR = {"className": "tabs-indicator"}
 TABS = {"className": "tabs"}
 NAV_TAB = {"className": "nav-tab clickable"}
+TAB_NAME = {"className": "tab-name ellipsis"}
 
 # Modal
 MODAL_CONTAINER = {
@@ -58,9 +60,12 @@ MODAL_BODY = {"className": "modal-body loading"}
 MODAL_FOOTER = {"className": "modal-footer"}
 
 # Viewport
-VIEWPORT_CONTAINER = {"className": "viewport-container", "hidden": "hidden"}
-VIEWPORT_CONTAINER_TOP = {"className": "viewport-container-top", "hidden": "hidden"}
-VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container-loading"}
+VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
+VIEWPORT_CONTAINER_SECONDARY = {"className": "viewport-container secondary"}
+VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container loading"}
+
+# Generic rules
+HIDDEN = {"hidden": "hidden"}
 
 # Navbar
 NAVBAR = {"className": "navbar navbar-expand-md navbar-dark", "data-aos": "fade-down"}
@@ -83,16 +88,20 @@ MODAL_CLOSE_BTN = i(
 )
 
 
+def hello_world(*args):
+    print("Hello World")
+
+
 @idom.component
 def homepage(websocket):
-    state, set_state = idom.hooks.use_state({})
+    state, set_state = idom.hooks.use_state({"viewport": None, "modal": False})
     return div(
         navbar(websocket, state, set_state),
         modal(websocket, state, set_state),
         sidebar(websocket, state, set_state),
-        viewport_loading_animation(websocket, state, set_state),
-        viewport_top(websocket, state, set_state),
-        viewport(websocket, state, set_state),
+        viewport_loading(websocket, state, set_state),
+        viewport_primary(websocket, state, set_state),
+        viewport_secondary(websocket, state, set_state),
     )
 
 
@@ -108,22 +117,25 @@ def sidebar(websocket, state, set_state):
         div(
             SIDEBAR_USER,
             div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
-            div(USERNAME, div(ELLIPSIS, websocket.scope["user"].get_username())),
+            div(
+                USERNAME_CONTAINER,
+                div(USERNAME, websocket.scope["user"].get_username()),
+            ),
         ),
         div(
             NAVIGATION,
             *(  # App tabs
-                sidebar_group(group_name, group_values)
+                sidebar_group(websocket, state, set_state, group_name, group_values)
                 for group_name, group_values in all_tabs
                 if group_name not in {"User", "Admin"}
             ),
             *(  # User tabs
-                sidebar_group(group_name, group_values)
+                sidebar_group(websocket, state, set_state, group_name, group_values)
                 for group_name, group_values in all_tabs
                 if group_name == "User"
             ),
             *(  # Admin tabs
-                sidebar_group(group_name, group_values)
+                sidebar_group(websocket, state, set_state, group_name, group_values)
                 for group_name, group_values in all_tabs
                 if group_name == "Admin" and websocket.scope["user"].is_staff
             ),
@@ -132,21 +144,27 @@ def sidebar(websocket, state, set_state):
 
 
 @idom.component
-def viewport_loading_animation(websocket, state, set_state):
+def viewport_loading(websocket, state, set_state):
     return div(
-        VIEWPORT_CONTAINER_LOADING,
+        VIEWPORT_CONTAINER_LOADING | ({} if not state["viewport"] else HIDDEN),
         app.config.loading_animation_vdom,
     )
 
 
 @idom.component
-def viewport_top(websocket, state, set_state):
-    return div(VIEWPORT_CONTAINER_TOP)
+def viewport_primary(websocket, state, set_state):
+    return div(
+        VIEWPORT_CONTAINER_PRIMARY
+        | ({} if state["viewport"] == Viewport.primary else HIDDEN)
+    )
 
 
 @idom.component
-def viewport(websocket, state, set_state):
-    return div(VIEWPORT_CONTAINER)
+def viewport_secondary(websocket, state, set_state):
+    return div(
+        VIEWPORT_CONTAINER_SECONDARY
+        | ({} if state["viewport"] == Viewport.secondary else HIDDEN)
+    )
 
 
 @idom.component
@@ -184,17 +202,17 @@ def modal(websocket, state, set_state):
     )
 
 
-def sidebar_tabs(tabs):
+def sidebar_tabs(websocket, state, set_state, tabs):
     return (
         div(
-            NAV_TAB,
-            a(ELLIPSIS, tab["name"]),
+            NAV_TAB | {"onClick": hello_world},
+            div(TAB_NAME, tab["name"]),
         )
         for tab in tabs
     )
 
 
-def sidebar_group(group_name, group_values):
+def sidebar_group(websocket, state, set_state, group_name, group_values):
     icon = group_values["icon"]
     tabs = group_values["tabs"]
     group_id = f"{slugify(group_name)}-tabs"
@@ -217,6 +235,6 @@ def sidebar_group(group_name, group_values):
         div(
             TABS_COLLAPSE | {"id": group_id},
             div(TABS_INDICATOR),
-            div(TABS, *sidebar_tabs(tabs)),
+            div(TABS, *sidebar_tabs(websocket, state, set_state, tabs)),
         ),
     )
