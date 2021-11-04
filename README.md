@@ -4,7 +4,7 @@
 [![GitHub Discussions](https://img.shields.io/badge/-View-purple?style=flat-square&label=GitHub%20Discussions&logo=github)](https://github.com/Archmonger/Conreq/discussions)
 [![Reddit](https://img.shields.io/badge/-View-red?style=flat-square&label=Reddit&logo=reddit)](https://www.reddit.com/r/conreq)
 
-Conreq, a web development bundle containing a full-stack framework, web server, and background task queue. Code that developers create can then be shared with others through our app store.
+Conreq, a web development bundle containing a full-stack framework (ReactJS in Python), web server, and background task queue. Features that developers create can then be shared with others through our app store.
 
 Designed to push the limits of cross-platform **pure Python**.
 
@@ -12,13 +12,13 @@ View the **[Core Roadmap](https://github.com/Archmonger/Conreq/projects)** to se
 
 Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for info on how to develop with Conreq!
 
-## Technical Features
+## Features
 
 -   Installable Apps
 -   Behaves as a Progressive Web App (PWA)
 -   Customization for All Core Webpages
 -   Support for MySQL, MariaDB, and SQLite Databases
--   [Interactive HTML via ReactJS Python Wrapper](https://github.com/idom-team/django-idom)
+-   [Interactive HTML via ReactJS in Python](https://github.com/idom-team/django-idom)
 -   [Support for Django Features](https://github.com/django/django)
 -   [Background Task Processing](https://github.com/coleifer/huey)
 -   [Async and Websockets (ASGI)](https://github.com/django/channels)
@@ -32,9 +32,9 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [Automatic Code Performance Graphs](https://github.com/jazzband/django-silk)
 -   [Automatic NPM Package Installation](https://github.com/kevin1024/django-npm)
 -   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
--   [Automatic Database Optimization (SQLite)](https://www.sqlite.org/lang_vacuum.html)
+-   [Automatic SQLite Database Optimization](https://www.sqlite.org/lang_vacuum.html)
 
-## Features (Coming Soon)
+## Coming Soon
 
 -   Support for Oracle, PostgreSQL, and MongoDB Databases
 -   [Automatic SASS/SCSS to CSS Compilation](https://github.com/jrief/django-sass-processor)
