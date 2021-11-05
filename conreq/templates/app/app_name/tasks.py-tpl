@@ -1,0 +1,10 @@
+"""
+Background tasks for {{ verbose_name }}.
+
+Can be scheduled to execute automatically via seconds or crontab.
+Or, they can be defined to only be executed on-demand.
+
+See more information in the Huey docs.
+"""
+from huey import crontab
+from huey.contrib.djhuey import db_periodic_task, db_task, periodic_task, task
