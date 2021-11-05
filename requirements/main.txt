@@ -22,7 +22,7 @@ markdown==3.3.4
 pwned-passwords-django==1.5
 pyarr==2.0.7
 pymysql==1.0.2
-python-dotenv==0.19.0
+python-dotenv==0.19.1
 strsim==0.0.3
 titlecase==2.3
 tmdbsimple==2.8.0
