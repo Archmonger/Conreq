@@ -10,5 +10,13 @@ class AuthLevel:
 
 @dataclass
 class Viewport:
-    primary: int = 0
-    secondary: int = 1
+    loading: int = 0
+    primary: int = 1
+    secondary: int = 2
+
+
+@dataclass
+class Modal:
+    loading: int = 0
+    hidden: int = 1
+    show: int = 2

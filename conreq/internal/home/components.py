@@ -3,7 +3,7 @@ from django.utils.text import slugify
 from idom.html import button, div, i, nav, span
 
 from conreq import app
-from conreq.app.selectors import Viewport
+from conreq.app.selectors import Modal, Viewport
 
 # Sidebar
 SIDEBAR = {
@@ -41,6 +41,7 @@ MODAL_CONTAINER = {
     "className": "modal fade",
     "tabIndex": "-1",
     "role": "dialog",
+    "style": {"display": "none"},
     "aria-hidden": "true",
 }
 MODAL_DIALOG = {
@@ -88,13 +89,25 @@ MODAL_CLOSE_BTN = i(
 )
 
 
-def hello_world(*args):
-    print("Hello World")
+def hello_world(event):
+    print(event)
 
 
 @idom.component
 def homepage(websocket):
-    state, set_state = idom.hooks.use_state({"viewport": None, "modal": False})
+    state, set_state = idom.hooks.use_state(
+        {
+            "page_title": "Loading...",
+            "viewport": Viewport.loading,
+            "viewport_primary": None,
+            "viewport_secondary": None,
+            "modal": Modal.loading,
+            "modal_title": "Loading...",
+            "modal_header": None,
+            "modal_body": None,
+            "modal_footer": None,
+        }
+    )
     return div(
         navbar(websocket, state, set_state),
         modal(websocket, state, set_state),
@@ -143,69 +156,10 @@ def sidebar(websocket, state, set_state):
     )
 
 
-@idom.component
-def viewport_loading(websocket, state, set_state):
-    return div(
-        VIEWPORT_CONTAINER_LOADING | ({} if not state["viewport"] else HIDDEN),
-        app.config.loading_animation_vdom,
-    )
-
-
-@idom.component
-def viewport_primary(websocket, state, set_state):
-    return div(
-        VIEWPORT_CONTAINER_PRIMARY
-        | ({} if state["viewport"] == Viewport.primary else HIDDEN)
-    )
-
-
-@idom.component
-def viewport_secondary(websocket, state, set_state):
-    return div(
-        VIEWPORT_CONTAINER_SECONDARY
-        | ({} if state["viewport"] == Viewport.secondary else HIDDEN)
-    )
-
-
-@idom.component
-def navbar(websocket, state, set_state):
-    return div(
-        NAVBAR,
-        button(
-            NAVBAR_TOGGLER,
-            span(NAVBAR_TOGGLER_ICON),
-        ),
-        div(NAVBAR_BRAND, "Loading..."),
-    )
-
-
-@idom.component
-def modal(websocket, state, set_state):
-    return div(
-        MODAL_CONTAINER,
-        div(
-            MODAL_DIALOG,
-            div(
-                MODAL_CONTENT,
-                div(
-                    MODAL_HEADER,
-                    div(MODAL_HEADER_BTN_CONTAINER, MODAL_CLOSE_BTN),
-                    div(MODAL_TITLE, "Loading..."),
-                ),
-                div(
-                    MODAL_BODY,
-                    div({"className": "loading"}, app.config.loading_animation_vdom),
-                ),
-                div(MODAL_FOOTER),
-            ),
-        ),
-    )
-
-
 def sidebar_tabs(websocket, state, set_state, tabs):
     return (
         div(
-            NAV_TAB | {"onClick": hello_world},
+            NAV_TAB | {"onClick": lambda x: set_state(state | {"modal": Modal.show})},
             div(TAB_NAME, tab["name"]),
         )
         for tab in tabs
@@ -238,3 +192,83 @@ def sidebar_group(websocket, state, set_state, group_name, group_values):
             div(TABS, *sidebar_tabs(websocket, state, set_state, tabs)),
         ),
     )
+
+
+@idom.component
+def viewport_loading(websocket, state, set_state):
+    return div(
+        VIEWPORT_CONTAINER_LOADING
+        | ({} if state["viewport"] == Viewport.loading else HIDDEN),
+        app.config.loading_animation_vdom,
+    )
+
+
+@idom.component
+def viewport_primary(websocket, state, set_state):
+    return div(
+        VIEWPORT_CONTAINER_PRIMARY
+        | ({} if state["viewport"] == Viewport.primary else HIDDEN),
+        *([state["viewport_primary"]] if state["viewport_primary"] else []),
+    )
+
+
+@idom.component
+def viewport_secondary(websocket, state, set_state):
+    return div(
+        VIEWPORT_CONTAINER_SECONDARY
+        | ({} if state["viewport"] == Viewport.secondary else HIDDEN),
+        *([state["viewport_secondary"]] if state["viewport_secondary"] else []),
+    )
+
+
+@idom.component
+def navbar(websocket, state, set_state):
+    return div(
+        NAVBAR,
+        button(
+            NAVBAR_TOGGLER,
+            span(NAVBAR_TOGGLER_ICON),
+        ),
+        div(NAVBAR_BRAND, state["page_title"]),
+    )
+
+
+@idom.component
+def modal(websocket, state, set_state):
+    return div(
+        MODAL_CONTAINER,
+        div(
+            MODAL_DIALOG,
+            div(
+                MODAL_CONTENT,
+                modal_head(websocket, state, set_state),
+                modal_body(websocket, state, set_state),
+                modal_footer(websocket, state, set_state),
+            ),
+        ),
+    )
+
+
+def modal_head(websocket, state, set_state):
+    if state["modal"] == Modal.show and state["modal_header"]:
+        return state["modal_header"]
+    return div(
+        MODAL_HEADER,
+        div(MODAL_HEADER_BTN_CONTAINER, MODAL_CLOSE_BTN),
+        div(MODAL_TITLE, state["modal_title"]),
+    )
+
+
+def modal_body(websocket, state, set_state):
+    if state["modal"] == Modal.show and state["modal_body"]:
+        return state["modal_body"]
+    return div(
+        MODAL_BODY,
+        div({"className": "loading"}, app.config.loading_animation_vdom),
+    )
+
+
+def modal_footer(websocket, state, set_state):
+    if state["modal"] == Modal.show and state["modal_footer"]:
+        return state["modal_footer"]
+    return div(MODAL_FOOTER)
