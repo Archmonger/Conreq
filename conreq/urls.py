@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.views.generic.base import RedirectView
+from django_idom import IDOM_WEB_MODULES_PATH
 
 from conreq import app
 from conreq.utils.environment import get_base_url, get_debug
@@ -113,3 +114,6 @@ if BASE_URL != "/":
         path("", RedirectView.as_view(url=BASE_URL)),
         path(BASE_URL, include(urlpatterns)),
     ]
+
+# Add IDOM web modules
+urlpatterns.append(IDOM_WEB_MODULES_PATH)
