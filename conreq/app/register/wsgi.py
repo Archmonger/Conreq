@@ -4,7 +4,6 @@ from typing import Callable, Union
 from django.urls import path, re_path
 from django.views.generic import View
 
-from conreq import app
 from conreq.utils.environment import get_base_url
 
 # pylint: disable=import-outside-toplevel
@@ -20,6 +19,8 @@ def url(
     use_regex: bool = False,
 ) -> Union[Callable, View]:
     """Decorates a Django view function or view class."""
+    from conreq.urls import urlpatterns
+
     # TODO: Split URLs at every slash and create nested URLpatterns for every registered URL.
     # Would improve performance of the Django URL router significantly for configurations
     # with large numbers of registered URLs.
@@ -33,11 +34,10 @@ def url(
         else:
             view = metrics()(func_or_cls)
 
-        url_patterns = app.config.url_patterns
         if not use_regex:
-            url_patterns.append(path(BASE_URL + pattern, view, name=name))
+            urlpatterns.append(path(BASE_URL + pattern, view, name=name))
         else:
-            url_patterns.append(re_path(BASE_URL + pattern, view, name=name))
+            urlpatterns.append(re_path(BASE_URL + pattern, view, name=name))
 
         @wraps(view)
         def _wrapped_view(*args, **kwargs):
@@ -52,6 +52,7 @@ def api(
     use_regex: bool = False,
 ) -> View:
     """Decorates a DRF view function or view class."""
+    from conreq.urls import urlpatterns
 
     def decorator(func_or_cls: Union[Callable, View]):
 
@@ -62,11 +63,10 @@ def api(
         else:
             view = metrics()(func_or_cls)
 
-        url_patterns = app.config.url_patterns
         if not use_regex:
-            url_patterns.append(path(f"{BASE_URL}/v{version}/{pattern}", view))
+            urlpatterns.append(path(f"{BASE_URL}/v{version}/{pattern}", view))
         else:
-            url_patterns.append(re_path(f"{BASE_URL}/v{version}/{pattern}", view))
+            urlpatterns.append(re_path(f"{BASE_URL}/v{version}/{pattern}", view))
 
         @wraps(view)
         def _wrapped_view(*args, **kwargs):
