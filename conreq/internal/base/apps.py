@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from idom.html import i
 
-from conreq.app import register, config
+from conreq.app import config, register
 
 
 class BaseConfig(AppConfig):
