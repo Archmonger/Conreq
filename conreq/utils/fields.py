@@ -49,7 +49,7 @@ class _AutoSingleRelatedObjectDescriptor(ReverseOneToOneDescriptor):
         model = getattr(self.related, "related_model", self.related.model)
 
         try:
-            return super(_AutoSingleRelatedObjectDescriptor, self).__get__(
+            return super().__get__(
                 instance, instance_type
             )
         except model.DoesNotExist:
