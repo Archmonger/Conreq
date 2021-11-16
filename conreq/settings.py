@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import os
 import secrets
 import sys
 from pathlib import Path
@@ -135,13 +136,12 @@ LOGGING = {
         },
         "conreq_logs": {
             "level": "INFO",
-            "class": "logging."
-            + ("handlers.RotatingFileHandler" if not DEBUG else "FileHandler"),
             "formatter": "default",
-            **({"maxBytes": 1024 * 1024 * 5} if not DEBUG else {}),
-            **({"backupCount": 5} if not DEBUG else {}),
             "encoding": "utf-8",
             "filename": CONREQ_LOG_FILE,
+            "class": "logging.handlers.RotatingFileHandler",
+            "maxBytes": 1024 * 1024 * 5,
+            "backupCount": 5,
         },
     },
     "loggers": {
@@ -161,6 +161,8 @@ LOGGING = {
 }
 for logger_name in LOGGING["loggers"]:
     LOGGING["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
+if DEBUG and os.environ.get("RUN_MAIN", None) != "true":
+    LOGGING = {}
 
 
 # Security Settings
