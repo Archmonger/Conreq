@@ -226,11 +226,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
     *(
-        {
-            "compression_middleware.middleware.CompressionMiddleware",
-            "htmlmin.middleware.HtmlMinifyMiddleware",
-            "htmlmin.middleware.MarkRequestMiddleware",
-        }
+        {"compression_middleware.middleware.CompressionMiddleware"}
         if get_env("COMPRESS_RESPONSES", return_type=bool)
         else {}
     ),
@@ -241,6 +237,14 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    *(
+        {
+            "htmlmin.middleware.HtmlMinifyMiddleware",
+            "htmlmin.middleware.MarkRequestMiddleware",
+        }
+        if get_env("COMPRESS_RESPONSES", return_type=bool)
+        else {}
+    ),
 ]
 
 
