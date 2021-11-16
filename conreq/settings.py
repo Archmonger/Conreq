@@ -100,10 +100,10 @@ COMPRESS_FILTERS = {
 }
 HUEY_FILENAME = DATA_DIR / "bg_tasks.sqlite3"
 HUEY = {
-    "name": "huey",  # DB name for huey.
-    "huey_class": "conreq.internal.bg_tasks.SqliteHuey",  # Huey implementation to use.
+    "name": "huey",  # DB table name
+    "huey_class": "conreq.internal.bg_tasks.SqliteHuey",  # Huey implementation to use
     "filename": HUEY_FILENAME,  # Sqlite filename
-    "immediate": False,  # If True, run tasks synchronously.
+    "immediate": False,  # If True, run tasks synchronously
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
     "consumer": {
         "workers": 20,
@@ -271,8 +271,8 @@ CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
         "LOCATION": DATA_DIR / "cache",
-        "TIMEOUT": 300,  # Default timeout of each key.
-        "SHARDS": 8,  # Number of sharded cache DBs to create
+        "TIMEOUT": 300,  # Default timeout of each key
+        "SHARDS": 8,  # Number of cache DBs to create
         "DATABASE_TIMEOUT": 0.1,  # 100 milliseconds query timeout
         "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte max cache size
     }
