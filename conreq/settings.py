@@ -168,7 +168,9 @@ if DEBUG and os.environ.get("RUN_MAIN", None) != "true":
 # Security Settings
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "no-referrer"
-ALLOWED_HOSTS = [get_env("ALLOWED_HOST", "*")]
+ALLOWED_HOSTS = [
+    get_env("ALLOWED_HOST", "*")
+]  # TODO: Add a check for 'ALLOWED_HOSTS' as an array
 SECURE_BROWSER_XSS_FILTER = True
 
 
@@ -237,7 +239,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    *(
+    *(  # TODO: Move this to an app
         {
             "htmlmin.middleware.HtmlMinifyMiddleware",
             "htmlmin.middleware.MarkRequestMiddleware",
