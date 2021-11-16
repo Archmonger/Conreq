@@ -26,7 +26,10 @@ def _parse_env_value(value: Any, default_value: Any, return_type: Callable) -> A
     if not value:
         return default_value
     if return_type is bool and isinstance(value, str):
-        return bool(strtobool(value))
+        try:
+            return bool(strtobool(value))
+        except ValueError:
+            return default_value
     if return_type in {list, dict} and isinstance(value, str):
         return json.loads(value)
     if not isinstance(value, return_type):

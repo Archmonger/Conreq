@@ -225,7 +225,15 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
-    "compression_middleware.middleware.CompressionMiddleware",
+    *(
+        {
+            "compression_middleware.middleware.CompressionMiddleware",
+            "htmlmin.middleware.HtmlMinifyMiddleware",
+            "htmlmin.middleware.MarkRequestMiddleware",
+        }
+        if get_env("COMPRESS_RESPONSES", return_type=bool)
+        else {}
+    ),
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -233,8 +241,6 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
-    "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
 
 
