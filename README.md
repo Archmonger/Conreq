@@ -17,13 +17,15 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   Installable Apps
 -   Behaves as a Progressive Web App (PWA)
 -   Customization for All Core Webpages
--   Support for MySQL, MariaDB, and SQLite Databases
+-   MySQL, MariaDB, and SQLite Databases
+-   Customizable Base URL
 -   [Interactive HTML via ReactJS in Python](https://github.com/idom-team/django-idom)
 -   [Support for Django Features](https://github.com/django/django)
 -   [Background Task Processing](https://github.com/coleifer/huey)
 -   [Async and Websockets (ASGI)](https://github.com/django/channels)
 -   [REST API Framework](https://github.com/encode/django-rest-framework)
 -   [Static File Server](https://github.com/evansd/whitenoise)
+-   [Database Field Encryption](https://gitlab.com/guywillett/django-searchable-encrypted-fields)
 -   [High Performance Webserver](https://github.com/pgjones/hypercorn)
 -   [High Performance Caching](https://github.com/grantjenks/python-diskcache)
 -   [Automatic CSS/JS File Compression](https://github.com/django-compressor/django-compressor)
