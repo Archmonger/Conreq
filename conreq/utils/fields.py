@@ -49,9 +49,7 @@ class _AutoSingleRelatedObjectDescriptor(ReverseOneToOneDescriptor):
         model = getattr(self.related, "related_model", self.related.model)
 
         try:
-            return super().__get__(
-                instance, instance_type
-            )
+            return super().__get__(instance, instance_type)
         except model.DoesNotExist:
             # Using get_or_create instead() of save() or create() as it better handles race conditions
             obj, _ = model.objects.get_or_create(**{self.related.field.name: instance})
