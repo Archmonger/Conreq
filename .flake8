@@ -3,3 +3,4 @@ ignore =
     E501,
     E203,
     W503
+exclude = conreq/templates/*
