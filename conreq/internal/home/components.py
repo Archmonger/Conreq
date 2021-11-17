@@ -89,10 +89,6 @@ MODAL_CLOSE_BTN = i(
 )
 
 
-def hello_world(event):
-    print(event)
-
-
 @idom.component
 def homepage(websocket):
     state, set_state = idom.hooks.use_state(
