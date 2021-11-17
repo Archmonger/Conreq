@@ -1,5 +1,6 @@
 from functools import wraps
-from typing import Callable, Union
+from inspect import isclass
+from typing import Any, Callable, Union
 
 from django.urls import path, re_path
 from django.views.generic import View
@@ -25,14 +26,16 @@ def url(
     # Would improve performance of the Django URL router significantly for configurations
     # with large numbers of registered URLs.
 
-    def decorator(func_or_cls: Union[Callable, View]):
+    def decorator(new_path: Any):
 
         from conreq.utils.profiling import metrics
 
-        if isinstance(func_or_cls, View):
-            view = metrics()(func_or_cls.as_view())
+        if not callable(new_path):
+            view = new_path
+        elif isclass(new_path):
+            view = metrics()(new_path.as_view())
         else:
-            view = metrics()(func_or_cls)
+            view = metrics()(new_path)
 
         if not use_regex:
             urlpatterns.append(path(BASE_URL + pattern, view, name=name))
@@ -54,14 +57,16 @@ def api(
     """Decorates a DRF view function or view class."""
     from conreq.urls import urlpatterns
 
-    def decorator(func_or_cls: Union[Callable, View]):
+    def decorator(new_path: Any):
 
         from conreq.utils.profiling import metrics
 
-        if isinstance(func_or_cls, View):
-            view = metrics()(func_or_cls.as_view())
+        if not callable(new_path):
+            view = new_path
+        elif isclass(new_path):
+            view = metrics()(new_path.as_view())
         else:
-            view = metrics()(func_or_cls)
+            view = metrics()(new_path)
 
         if not use_regex:
             urlpatterns.append(path(f"{BASE_URL}/v{version}/{pattern}", view))
