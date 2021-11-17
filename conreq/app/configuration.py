@@ -56,9 +56,6 @@ class _Config:
     # ASGI
     websockets: list[Callable] = field(default_factory=list)
 
-    # WSGI (API and URLs)
-    url_patterns: list = field(default_factory=list)
-
     # HTML Head
     local_stylesheets: list[dict] = field(default_factory=list)
     remote_stylesheets: list[dict] = field(default_factory=list)
