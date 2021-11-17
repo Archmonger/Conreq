@@ -14,7 +14,9 @@ class Command(TemplateCommand):
         name = app_name
         app_or_project = "app"
         target = str(PACKAGES_DIR / package_name / "apps" / "")
-        options["template"] = str(APP_TEMPLATE)
+        options["template"] = str(
+            APP_SLIM_TEMPLATE if options.get("slim") else APP_TEMPLATE
+        )
         options["extensions"] = ["py"]
         options["files"] = []
         options["package_name"] = package_name
@@ -24,8 +26,8 @@ class Command(TemplateCommand):
     def add_arguments(self, parser):
         parser.add_argument("package_name", help="Name of the application or project.")
         parser.add_argument("app_name", help="Name of the sub application.")
-        # parser.add_argument(
-        #     "--slim",
-        #     action="store_true",
-        #     help="Creates the bare minimum structure required.",
-        # )
+        parser.add_argument(
+            "--slim",
+            action="store_true",
+            help="Creates the bare minimum structure required.",
+        )

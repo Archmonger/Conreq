@@ -46,7 +46,7 @@ def autoload_modules(app_config: AppConfig):
     if not getattr(app_config, "autoload_modules", False):
         return
 
-    fail_silently = getattr(app_config, "autoload_fail_silently", False)
+    fail_silently = getattr(app_config, "autoload_modules_silent", False)
 
     for loader, module_name, is_pkg in pkgutil.walk_packages([app_config.path]):
         try:
