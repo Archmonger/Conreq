@@ -1,19 +1,15 @@
 """Conreq URL Configuration"""
 
 
-from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django_idom import IDOM_WEB_MODULES_PATH
 
 import conreq
-from conreq.utils.environment import get_base_url, get_debug
+from conreq.utils.environment import get_base_url
 
-PACKAGES_DIR = getattr(settings, "PACKAGES_DIR")
-DEBUG = get_debug()
 BASE_URL = get_base_url(prepend_slash=False)
-
 
 urlpatterns = [
     path("", include("conreq.internal.landing.urls")),
