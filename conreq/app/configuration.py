@@ -22,7 +22,6 @@ class _Config:
     pre_run: set[Callable] = field(default_factory=set)
     setting_scripts: set[str] = field(default_factory=set)
     installed_apps: set[str] = field(default_factory=set)
-    middlewares: set[dict] = field(default_factory=set)
 
     # Views
     landing_view: Callable = landing
@@ -53,8 +52,12 @@ class _Config:
         ),
     )
 
+    # WSGI
+    wsgi_middleware: set[dict] = field(default_factory=set)
+
     # ASGI
     websockets: list[Callable] = field(default_factory=list)
+    asgi_middleware: set[dict] = field(default_factory=set)
 
     # HTML Head
     local_stylesheets: list[dict] = field(default_factory=list)
