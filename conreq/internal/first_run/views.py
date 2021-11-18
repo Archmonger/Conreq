@@ -14,7 +14,7 @@ def initialize(request):
 
     # Run the first time initialization if needed
     if server_config.initialized is True:
-        return
+        return False
 
     # User submitted the first time setup form
     if request.method == "POST":

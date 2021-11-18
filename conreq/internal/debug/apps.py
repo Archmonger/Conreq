@@ -5,9 +5,10 @@ from django.urls import include
 from conreq.app import register
 from conreq.utils.environment import get_debug
 
+
 DEBUG = get_debug()
 
-
+# pylint: disable=import-outside-toplevel
 class DebugConfig(AppConfig):
     name = "conreq.internal.debug"
 

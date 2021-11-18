@@ -9,7 +9,7 @@ User = get_user_model()
 
 class Profile(models.Model):
     def __str__(self):
-        return self.user.username
+        return self.user.username  # pylint: disable=no-member
 
     user = AutoOneToOneField(User, on_delete=models.CASCADE)
     language = models.CharField(max_length=30, default="en-US")

@@ -21,7 +21,7 @@ crontab_tasks_last_run = {}
 
 def seconds_validator(crontab_or_seconds):
     def method_validate(self, timestamp):
-        function_name = str(self).split(": ")[0]
+        function_name = str(self).split(": ", maxsplit=1)[0]
         seconds = crontab_or_seconds
 
         if not seconds_tasks_last_run.get(function_name):
@@ -38,7 +38,7 @@ def seconds_validator(crontab_or_seconds):
 
 def crontab_validator(crontab_or_seconds):
     def method_validate(self, timestamp):
-        function_name = str(self).split(": ")[0]
+        function_name = str(self).split(": ", maxsplit=1)[0]
 
         if not crontab_tasks_last_run.get(function_name):
             crontab_tasks_last_run[function_name] = time()
@@ -60,7 +60,7 @@ class SqliteHuey(Huey):
 
     def periodic_task(
         self,
-        crontab_or_seconds,
+        validate_datetime,
         retries=0,
         retry_delay=0,
         priority=None,
@@ -71,12 +71,12 @@ class SqliteHuey(Huey):
     ):
         def decorator(func):
             # Seconds
-            if isinstance(crontab_or_seconds, int):
-                validation_method = seconds_validator(crontab_or_seconds)
+            if isinstance(validate_datetime, int):
+                validation_method = seconds_validator(validate_datetime)
 
             # Crontab
             else:
-                validation_method = crontab_validator(crontab_or_seconds)
+                validation_method = crontab_validator(validate_datetime)
 
             return TaskWrapper(
                 self,

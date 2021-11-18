@@ -6,18 +6,18 @@ from typing import Callable
 from idom.core.proto import VdomDict
 from idom.html import div, span
 
-from conreq.internal.view_wrappers.views import (
-    home,
-    landing,
-    password_reset,
-    sign_in,
-    sign_up,
-)
-
 
 @dataclass
 class _Config:
-    # pylint: disable=too-many-instance-attributes
+    # pylint: disable=too-many-instance-attributes, import-outside-toplevel
+    from conreq.internal.view_wrappers.views import (
+        home,
+        landing,
+        password_reset,
+        sign_in,
+        sign_up,
+    )
+
     # Startup
     pre_run: set[Callable] = field(default_factory=set)
     setting_scripts: set[str] = field(default_factory=set)
