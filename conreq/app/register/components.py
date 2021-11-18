@@ -1,6 +1,6 @@
 from functools import wraps
 
-from conreq import app
+import conreq
 
 
 def manage_users_component() -> None:
@@ -8,7 +8,7 @@ def manage_users_component() -> None:
 
     def decorator(func):
 
-        app.config.manage_users_component = func
+        conreq.config.manage_users_component = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -22,7 +22,7 @@ def server_settings_component() -> None:
 
     def decorator(func):
 
-        app.config.server_settings_component = func
+        conreq.config.server_settings_component = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

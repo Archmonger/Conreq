@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Callable
 
-from conreq import app
+import conreq
 
 
 def user_setting() -> Callable:
@@ -11,7 +11,7 @@ def user_setting() -> Callable:
 
     def decorator(func):
 
-        app.config.user_setting_sections.append(func)
+        conreq.config.user_setting_sections.append(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

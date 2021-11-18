@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from conreq import app
+import conreq
 from conreq.app import register
 from conreq.internal.first_run.views import initialize
 from conreq.utils.environment import get_base_url, get_debug, get_home_url
@@ -16,7 +16,7 @@ def home(request):
     """Renders the homepage."""
 
     initialization_needed = initialize(request)
-    home_template = app.config.home_template
+    home_template = conreq.config.home_template
 
     if initialization_needed:
         return initialization_needed
@@ -29,6 +29,6 @@ def home(request):
             "base_url": BASE_URL,
             "home_url": HOME_URL,
             "debug": DEBUG,
-            "app_config": app.config,
+            "app_config": conreq.config,
         },
     )

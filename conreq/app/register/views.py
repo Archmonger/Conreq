@@ -1,6 +1,6 @@
 from functools import wraps
 
-from conreq import app
+import conreq
 
 # pylint: disable=import-outside-toplevel
 
@@ -12,7 +12,7 @@ def landing_view() -> None:
 
         from conreq.utils.profiling import metrics
 
-        app.config.landing_view = metrics()(func)
+        conreq.config.landing_view = metrics()(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -28,7 +28,7 @@ def home_view() -> None:
 
         from conreq.utils.profiling import metrics
 
-        app.config.home_view = metrics()(func)
+        conreq.config.home_view = metrics()(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -44,7 +44,7 @@ def sign_up_view() -> None:
 
         from conreq.utils.profiling import metrics
 
-        app.config.sign_up_view = metrics()(func)
+        conreq.config.sign_up_view = metrics()(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -60,7 +60,7 @@ def sign_in_view() -> None:
 
         from conreq.utils.profiling import metrics
 
-        app.config.sign_in_view = metrics()(func)
+        conreq.config.sign_in_view = metrics()(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -76,7 +76,7 @@ def password_reset_view() -> None:
 
         from conreq.utils.profiling import metrics
 
-        app.config.password_reset_view = metrics()(func)
+        conreq.config.password_reset_view = metrics()(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

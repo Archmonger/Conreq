@@ -1,7 +1,8 @@
 from django.apps import AppConfig
 from idom.html import i
 
-from conreq.app import config, register
+import conreq
+from conreq.app import register
 
 
 class BaseConfig(AppConfig):
@@ -11,7 +12,7 @@ class BaseConfig(AppConfig):
         # pylint: disable=import-outside-toplevel
         from django_idom import IDOM_WEBSOCKET_PATH
 
-        config.websockets.append(IDOM_WEBSOCKET_PATH)
+        conreq.config.websockets.append(IDOM_WEBSOCKET_PATH)
 
         # TODO: Remove this later
         register.nav_group("User", i({"className": "fas fa-users icon-left"}))

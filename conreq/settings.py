@@ -19,7 +19,7 @@ from django.core.management.utils import get_random_secret_key
 from split_settings.tools import include
 from tzlocal import get_localzone
 
-from conreq import app
+import conreq
 from conreq.utils.environment import (
     get_base_url,
     get_database_type,
@@ -329,7 +329,7 @@ if not get_safe_mode():
 execute_package_startup()
 
 # Execute settings scripts from Conreq Apps
-include(*app.config.setting_scripts)
+include(*conreq.config.setting_scripts)
 
 # Add conditional apps
 if DEBUG:

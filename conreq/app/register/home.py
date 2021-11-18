@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Callable
 
-from conreq import app
+import conreq
 from conreq.app.component.icon import Icon
 
 from ..selectors import AuthLevel, Viewport
@@ -17,7 +17,7 @@ def nav_tab(
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked."""
 
-    nav_tabs = app.config.nav_tabs
+    nav_tabs = conreq.config.nav_tabs
     group = nav_tabs.get(group_name)
 
     if not group:
@@ -47,7 +47,7 @@ def nav_group(
     group_icon: Icon = None,
 ):
     """Creates a nav group and/or sets the group icon."""
-    nav_tabs = app.config.nav_tabs
+    nav_tabs = conreq.config.nav_tabs
     group = nav_tabs.get(group_name)
 
     if not group:
@@ -60,7 +60,7 @@ def nav_group(
 def server_setting(page_name: str) -> Callable:
     """Decorates an IDOM component. Creates a settings page."""
 
-    server_setting_tabs = app.config.server_setting_tabs
+    server_setting_tabs = conreq.config.server_setting_tabs
 
     def decorator(func):
 

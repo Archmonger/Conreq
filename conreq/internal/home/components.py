@@ -2,7 +2,7 @@ import idom
 from django.utils.text import slugify
 from idom.html import button, div, i, nav, span
 
-from conreq import app
+import conreq
 from conreq.app.selectors import Modal, Viewport
 
 # Sidebar
@@ -119,7 +119,7 @@ def sidebar(websocket, state, set_state):
     if not websocket.scope["user"].is_authenticated:
         return None
 
-    all_tabs = app.config.nav_tabs.items()
+    all_tabs = conreq.config.nav_tabs.items()
 
     return nav(
         SIDEBAR,
@@ -195,7 +195,7 @@ def viewport_loading(websocket, state, set_state):
     return div(
         VIEWPORT_CONTAINER_LOADING
         | ({} if state["viewport"] == Viewport.loading else HIDDEN),
-        app.config.loading_animation_vdom,
+        conreq.config.loading_animation_vdom,
     )
 
 
@@ -260,7 +260,7 @@ def modal_body(websocket, state, set_state):
         return state["modal_body"]
     return div(
         MODAL_BODY,
-        div({"className": "loading"}, app.config.loading_animation_vdom),
+        div({"className": "loading"}, conreq.config.loading_animation_vdom),
     )
 
 

@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 
-from conreq import app
+import conreq
 from conreq.app import register
 from conreq.internal.first_run.views import initialize
 from conreq.utils.environment import get_base_url, get_debug, get_home_url
@@ -15,7 +15,7 @@ def landing(request):
     """Renders the landing page (if available)."""
 
     initialization_needed = initialize(request)
-    landing_template = app.config.landing_template
+    landing_template = conreq.config.landing_template
 
     if initialization_needed:
         return initialization_needed
@@ -31,6 +31,6 @@ def landing(request):
             "base_url": BASE_URL,
             "home_url": HOME_URL,
             "debug": DEBUG,
-            "app_config": app.config,
+            "app_config": conreq.config,
         },
     )
