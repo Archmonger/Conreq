@@ -4,6 +4,7 @@ import os
 import pkgutil
 from importlib import import_module as _import
 
+
 _logger = logging.getLogger(__name__)
 
 
@@ -103,3 +104,7 @@ def execute_package_startup():
             _import(".".join([package, "startup"]))
         except ModuleNotFoundError:
             pass
+        except Exception as exception:
+            _logger.error(
+                '%s startup script has failed due to "%s"!', package, exception
+            )

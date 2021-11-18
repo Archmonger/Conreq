@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import secrets
 import sys
+from logging.config import dictConfig as logging_config
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
@@ -161,6 +162,7 @@ LOGGING = {
 }
 for logger_name in LOGGING["loggers"]:
     LOGGING["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
+logging_config(LOGGING)
 if DEBUG and os.environ.get("RUN_MAIN", None) != "true":
     LOGGING = {}
 
