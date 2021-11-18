@@ -162,9 +162,9 @@ LOGGING = {
 }
 for logger_name in LOGGING["loggers"]:
     LOGGING["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
-logging_config(LOGGING)
 if DEBUG and os.environ.get("RUN_MAIN", None) != "true":
-    LOGGING = {}
+    LOGGING = {"version": 1}
+logging_config(LOGGING)
 
 
 # Security Settings
