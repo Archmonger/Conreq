@@ -29,7 +29,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [High Performance Webserver](https://github.com/pgjones/hypercorn)
 -   [High Performance Caching](https://github.com/grantjenks/python-diskcache)
 -   [Automatic CSS/JS File Compression](https://github.com/django-compressor/django-compressor)
--   [Automatic HTML File Compression](https://github.com/friedelwolff/django-compression-middleware)
+-   [Automatic HTTP Compression](https://github.com/friedelwolff/django-compression-middleware)
 -   [Automatic Cache Busting](https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#django.contrib.staticfiles.storage.ManifestStaticFilesStorage)
 -   [Automatic Code Performance Graphs](https://github.com/jazzband/django-silk)
 -   [Automatic NPM Package Installation](https://github.com/kevin1024/django-npm)

@@ -227,11 +227,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
-    *(
-        {"compression_middleware.middleware.CompressionMiddleware"}
-        if get_env("COMPRESS_RESPONSES", return_type=bool)
-        else {}
-    ),
+    "compression_middleware.middleware.CompressionMiddleware",
+    *({"silk.middleware.SilkyMiddleware"} if DEBUG else {}),
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -239,14 +236,6 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    *(  # TODO: Move this to an app
-        {
-            "htmlmin.middleware.HtmlMinifyMiddleware",
-            "htmlmin.middleware.MarkRequestMiddleware",
-        }
-        if get_env("COMPRESS_RESPONSES", return_type=bool)
-        else {}
-    ),
 ]
 
 
@@ -346,7 +335,6 @@ include(*app.config.setting_scripts)
 if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
-    MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
     # API docs generator
     INSTALLED_APPS.append("drf_yasg")
 else:
