@@ -44,12 +44,14 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "Categories"
 
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True
+    )
+    tracker = FieldTracker()
+
     # Basic Info
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
-
-    # Tracker
-    tracker = FieldTracker()
 
 
 class Subcategory(models.Model):
@@ -60,21 +62,25 @@ class Subcategory(models.Model):
         verbose_name = "Subcategory"
         verbose_name_plural = "Subcategories"
 
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True
+    )
+    tracker = FieldTracker()
+
     # Basic Info
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-    # Tracker
-    tracker = FieldTracker()
 
 
 class AppPackage(models.Model):
     def __str__(self):
         return self.verbose_name
 
-    # Unique Identifier
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True
+    )
+    tracker = FieldTracker()
 
     # Basic Info
     package_name = models.CharField(max_length=100, help_text="Must be snake_case.")
@@ -125,15 +131,16 @@ class AppPackage(models.Model):
         Subcategory, related_name="incompatible_subcategories", blank=True
     )
 
-    # Tracker
-    tracker = FieldTracker()
-
 
 class EnvironmentVariable(models.Model):
     def __str__(self):
         return self.name + ' = "' + str(self.default) + '"'
 
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True
+    )
+    tracker = FieldTracker()
+
     name = models.CharField(max_length=50)
     default = models.CharField(max_length=255, blank=True, null=True)
     example = models.CharField(max_length=255, blank=True, null=True)
@@ -145,7 +152,11 @@ class Screenshot(models.Model):
     def __str__(self):
         return self.title
 
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True
+    )
+    tracker = FieldTracker()
+
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to="app_store/screenshot/")
@@ -156,7 +167,11 @@ class NoticeMessage(models.Model):
     def __str__(self):
         return self.title
 
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True
+    )
+    tracker = FieldTracker()
+
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     mark_read = models.BooleanField(default=False, blank=True, null=True)
