@@ -4,9 +4,9 @@
 [![GitHub Discussions](https://img.shields.io/badge/-View-purple?style=flat-square&label=GitHub%20Discussions&logo=github)](https://github.com/Archmonger/Conreq/discussions)
 [![Reddit](https://img.shields.io/badge/-View-red?style=flat-square&label=Reddit&logo=reddit)](https://www.reddit.com/r/conreq)
 
-Conreq, a web development bundle containing a full-stack framework (ReactJS in Python), web server, and background task queue. Features that developers create can then be shared with others through our app store.
+Conreq bundles together the best open source technologies to create a web development platform. Key features include a full-stack framework (ReactJS in Python), web server, database ORM, and background task queue. Creations made by developers can be shared with others through our app store.
 
-Designed to push the limits of cross-platform **pure Python**.
+Designed as a passion project to push the limits of web development in cross-platform **pure Python**.
 
 View the **[Core Roadmap](https://github.com/Archmonger/Conreq/projects)** to see what features are upcoming, or the **[App Roadmap](https://github.com/Archmonger/Conreq/projects/7)** to see what will be added to the app store.
 
@@ -17,7 +17,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   Installable Apps
 -   Behaves as a Progressive Web App (PWA)
 -   Customization for All Core Webpages
--   MySQL, MariaDB, and SQLite Databases
+-   MySQL and SQLite Databases
 -   Customizable Base URL
 -   [Interactive HTML via ReactJS in Python](https://github.com/idom-team/django-idom)
 -   [Support for Django Features](https://github.com/django/django)
@@ -38,7 +38,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 
 ## Coming Soon
 
--   Support for Oracle, PostgreSQL, and MongoDB Databases
+-   Support for MariaDB, Oracle, PostgreSQL, and MongoDB Databases
 -   [Automatic SASS/SCSS to CSS Compilation](https://github.com/jrief/django-sass-processor)
 -   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
 
