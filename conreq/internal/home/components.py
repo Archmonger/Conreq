@@ -33,6 +33,7 @@ TABS_COLLAPSE = {
 TABS_INDICATOR = {"className": "tabs-indicator"}
 TABS = {"className": "tabs"}
 NAV_TAB = {"className": "nav-tab clickable"}
+NAV_TAB_ACTIVE = {"className": "nav-tab clickable active"}
 TAB_NAME = {"className": "tab-name ellipsis"}
 
 # Modal
@@ -154,17 +155,25 @@ def sidebar(websocket, state, set_state):
     )
 
 
+def nav_tab_properties(websocket, state, set_state, tab):
+    # pylint: disable=unused-argument
+    if (
+        state["viewport"] is not Viewport.loading
+        and tab["component"] is state[f'viewport_{state["viewport"]}']
+    ):
+        return NAV_TAB_ACTIVE
+    return NAV_TAB
+
+
 def sidebar_tab(websocket, state, set_state, tab):
     return div(
-        NAV_TAB
+        nav_tab_properties(websocket, state, set_state, tab)
         | {
             "onClick": lambda x: set_state(
                 state
                 | {
                     "viewport": tab["viewport"],
-                    f'viewport_{tab["viewport"]}': tab["component"](
-                        websocket, state, set_state
-                    ),
+                    f'viewport_{tab["viewport"]}': tab["component"],
                 }
             )
             if not tab["on_click"]
@@ -218,7 +227,11 @@ def viewport_primary(websocket, state, set_state):
     return div(
         VIEWPORT_CONTAINER_PRIMARY
         | ({} if state["viewport"] == Viewport.primary else HIDDEN),
-        *([state["viewport_primary"]] if state["viewport_primary"] else []),
+        *(
+            [state["viewport_primary"](websocket, state, set_state)]
+            if state["viewport_primary"]
+            else []
+        ),
     )
 
 
@@ -228,7 +241,11 @@ def viewport_secondary(websocket, state, set_state):
     return div(
         VIEWPORT_CONTAINER_SECONDARY
         | ({} if state["viewport"] == Viewport.secondary else HIDDEN),
-        *([state["viewport_secondary"]] if state["viewport_secondary"] else []),
+        *(
+            [state["viewport_secondary"](websocket, state, set_state)]
+            if state["viewport_secondary"]
+            else []
+        ),
     )
 
 
