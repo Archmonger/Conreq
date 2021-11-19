@@ -37,6 +37,11 @@ def manage_users(websocket, state, set_state):
     return p("manage users")
 
 
-@register.nav_tab("Server Config", "Admin")
-def server_config(websocket, state, set_state):
-    return p("server config")
+@register.nav_tab("App Store", "Admin")
+def app_store(websocket, state, set_state):
+    return p("app store")
+
+
+@register.nav_tab("System Settings", "Admin")
+def system_settings(websocket, state, set_state):
+    return p("system settings")
