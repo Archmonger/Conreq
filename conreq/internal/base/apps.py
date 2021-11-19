@@ -1,5 +1,8 @@
+import idom
+from asgiref.sync import async_to_sync
+from channels.auth import logout
 from django.apps import AppConfig
-from idom.html import i, p
+from idom.html import div, i, p
 
 import conreq
 from conreq.app import register
@@ -27,13 +30,18 @@ def settings(websocket, state, set_state):
     return p("settings")
 
 
-@register.nav_tab("Sign Out", "User", viewport=Viewport.secondary)
+@register.nav_tab("Sign Out", "User")
+@idom.component
 def sign_out(websocket, state, set_state):
-    return p("sign out")
+    @idom.hooks.use_effect
+    async def logout_user():
+        await logout(websocket.scope)
+
+    return div()
 
 
 @register.nav_tab("Manage Users", "Admin")
-def manage_users(websocket, state, set_state):
+def manage_users(websocket, state, set_state, viewport=Viewport.secondary):
     return p("manage users")
 
 
