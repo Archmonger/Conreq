@@ -5,7 +5,6 @@ from idom.html import button, div, i, nav, span
 import conreq
 from conreq.app.selectors import Modal, Viewport
 
-
 # Sidebar
 SIDEBAR = {
     "id": "sidebar",
