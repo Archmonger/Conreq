@@ -6,18 +6,18 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('email', '0002_alter_emailconfig_smtp_server'),
+        ("email", "0002_alter_emailconfig_smtp_server"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='emailconfig',
-            old_name='smtp_port',
-            new_name='port',
+            model_name="emailconfig",
+            old_name="smtp_port",
+            new_name="port",
         ),
         migrations.RenameField(
-            model_name='emailconfig',
-            old_name='smtp_server',
-            new_name='server',
+            model_name="emailconfig",
+            old_name="smtp_server",
+            new_name="server",
         ),
     ]
