@@ -88,6 +88,8 @@ MODAL_CLOSE_BTN = i(
     }
 )
 
+# TODO: Add the following react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
+
 
 @idom.component
 def homepage(websocket):
