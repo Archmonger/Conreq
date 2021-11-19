@@ -32,7 +32,7 @@ class Command(BaseCommand):
             ]
             if not options["set_perms"]:
                 preconfig_args.append("--no-perms")
-            call_command(*preconfig_args)
+            call_command(*preconfig_args, verbosity)
 
         # Execute tests to ensure Conreq is healthy before starting
         if not options["skip_checks"]:

@@ -16,6 +16,11 @@ DATABASES = getattr(settings, "DATABASES")
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
+def vprint(message, verbosity):
+    if verbosity != 0:
+        print(message)
+
+
 class Command(BaseCommand):
     """Executes functions that may require admin privileges,
     since it is expected that run_conreq is executed as a user."""
@@ -26,8 +31,9 @@ class Command(BaseCommand):
         uid = options["uid"]
         gid = options["gid"]
         no_perms = options["no_perms"]
+        verbosity = options["verbosity"]
 
-        print("Preconfiguring Conreq...")
+        vprint("Preconfiguring Conreq...", verbosity)
 
         # Delete temp files
         if TEMP_DIR.exists():
@@ -36,20 +42,22 @@ class Command(BaseCommand):
         # Django database
         if get_database_type() == "SQLITE3":
             database = DATABASES["default"]["NAME"]
-            self.setup_sqlite_database(database, "Conreq", uid, gid, no_perms)
+            self.setup_sqlite_database(
+                database, "Conreq", uid, gid, no_perms, verbosity
+            )
 
         # Background task database
         if HUEY_FILENAME:
             self.setup_sqlite_database(
-                HUEY_FILENAME, "Background Task", uid, gid, no_perms
+                HUEY_FILENAME, "Background Task", uid, gid, no_perms, verbosity
             )
 
         if not no_perms and sys.platform == "linux":
             # Conreq data dir
-            self.recursive_chown(DATA_DIR, uid, gid)
+            self.recursive_chown(DATA_DIR, uid, gid, verbosity)
 
             # Conreq core dir
-            self.recursive_chown(ROOT_DIR, uid, gid)
+            self.recursive_chown(ROOT_DIR, uid, gid, verbosity)
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -66,7 +74,6 @@ class Command(BaseCommand):
             type=int,
             default=0,
         )
-
         parser.add_argument(
             "--no-perms",
             action="store_true",
@@ -74,14 +81,14 @@ class Command(BaseCommand):
         )
 
     @staticmethod
-    def setup_sqlite_database(path, name, uid, gid, no_perms):
-        print(name.rstrip(" ") + " Database")
+    def setup_sqlite_database(path, name, uid, gid, no_perms, verbosity):
+        vprint(name.rstrip(" ") + " Database", verbosity)
         if not path.exists():
-            print("> Creating database")
+            vprint("> Creating database", verbosity)
         with sqlite3.connect(path) as cursor:
-            print("> Vacuuming database")
+            vprint("> Vacuuming database", verbosity)
             cursor.execute("VACUUM")
-            print("> Optimizing database")
+            vprint("> Optimizing database", verbosity)
             cursor.execute("PRAGMA journal_mode=WAL")
             cursor.execute("PRAGMA synchronous=NORMAL")
             cursor.execute("PRAGMA temp_store=MEMORY")
@@ -92,11 +99,11 @@ class Command(BaseCommand):
             new_uid = uid or os.getuid()
             new_gid = gid or os.getgid()
             os.chown(path, new_uid, new_gid)
-        print("> Complete")
+        vprint("> Complete", verbosity)
 
     @staticmethod
-    def recursive_chown(path, uid, gid):
-        print('Recursively applying permissions to "' + path + '"')
+    def recursive_chown(path, uid, gid, verbosity):
+        vprint('Recursively applying permissions to "' + path + '"', verbosity)
         new_uid = uid if uid != -1 else None
         new_gid = gid if gid != -1 else None
         if uid != -1 or gid != -1:
