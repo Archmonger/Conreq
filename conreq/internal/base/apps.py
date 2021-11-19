@@ -1,5 +1,4 @@
 import idom
-from asgiref.sync import async_to_sync
 from channels.auth import logout
 from django.apps import AppConfig
 from idom.html import div, i, p
