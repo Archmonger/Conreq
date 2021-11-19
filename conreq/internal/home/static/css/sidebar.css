@@ -17,7 +17,9 @@
 
 .sidebar #navigation {
 	white-space: nowrap;
-	height: 100%;
+	height: -webkit-min-content;
+	height: -moz-min-content;
+	height: min-content;
 	text-overflow: ellipsis;
 }
 
