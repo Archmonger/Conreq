@@ -20,7 +20,7 @@ class Email:
     recipient_list: list
 
 
-def get_mail_backend(config=None):
+def get_mail_backend(config: EmailConfig = None):
     if not config:
         config = EmailConfig.get_solo()
 
@@ -35,7 +35,7 @@ def get_mail_backend(config=None):
     )
 
 
-def get_from_name(config=None):
+def get_from_name(config: EmailConfig = None):
     if not config:
         config = EmailConfig.get_solo()
 
@@ -48,10 +48,10 @@ def get_from_name(config=None):
 
 def send_mail(
     email: Email,
-    retries=0,
-    retry_delay=0,
-    priority=None,
-    expires=None,
+    retries: int = 0,
+    retry_delay: int = 0,
+    priority: int = None,
+    expires: int = None,
 ):
     """
     Sends a single message to list of recipients. All members of the list
@@ -73,10 +73,10 @@ def send_mail(
 
 def send_mass_mail(
     emails: Iterable[Email],
-    retries=0,
-    retry_delay=0,
-    priority=None,
-    expires=None,
+    retries: int = 0,
+    retry_delay: int = 0,
+    priority: int = None,
+    expires: int = None,
 ):
     """
     Sends out multiple emails while reusing one SMTP connection.
@@ -88,7 +88,9 @@ def send_mass_mail(
     )(_send_mass_email)(connection=backend, emails=emails, config=config)
 
 
-def _send_mass_email(connection, emails: Iterable[Email], config):
+def _send_mass_email(
+    connection: EmailBackend, emails: Iterable[Email], config: EmailConfig
+):
     messages = []
     for subject, message, html_message, recipient_list in emails:
         message = EmailMultiAlternatives(
