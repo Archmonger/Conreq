@@ -37,6 +37,7 @@ class Command(BaseCommand):
         # Execute tests to ensure Conreq is healthy before starting
         if not options["skip_checks"]:
             call_command("check")
+        if options["test"]:
             call_command("test", "--noinput", "--parallel", "--failfast")
 
         # Perform any debug related clean-up
@@ -89,31 +90,32 @@ class Command(BaseCommand):
             default=8000,
             type=int,
         )
-
         parser.add_argument(
             "--disable-preconfig",
             action="store_true",
             help="Disables Conreq's preconfiguration prior to startup.",
         )
-
         parser.add_argument(
             "--uid",
             help="User ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
             type=int,
             default=0,
         )
-
         parser.add_argument(
             "--gid",
             help="Group ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
             type=int,
             default=0,
         )
-
         parser.add_argument(
             "--set-perms",
             action="store_true",
             help="Have Conreq set permissions during preconfig.",
+        )
+        parser.add_argument(
+            "--test",
+            action="store_true",
+            help="Run tests before starting Conreq.",
         )
 
     @staticmethod
