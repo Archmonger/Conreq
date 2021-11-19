@@ -5,6 +5,9 @@ from idom.html import button, div, i, nav, span
 import conreq
 from conreq.app.selectors import Modal, Viewport
 
+# pylint: disable=unused-argument
+
+
 # Sidebar
 SIDEBAR = {
     "id": "sidebar",
@@ -152,13 +155,11 @@ def sidebar(websocket, state, set_state):
     )
 
 
-def sidebar_tabs(websocket, state, set_state, tabs):
-    return (
-        div(
-            NAV_TAB | {"onClick": lambda x: set_state(state | {"modal": Modal.show})},
-            div(TAB_NAME, tab["name"]),
-        )
-        for tab in tabs
+def sidebar_tab(websocket, state, set_state, tab):
+    return div(
+        NAV_TAB
+        | {"onClick": lambda x: set_state(state | {"viewport": tab["selector"]})},
+        div(TAB_NAME, tab["name"]),
     )
 
 
@@ -185,7 +186,7 @@ def sidebar_group(websocket, state, set_state, group_name, group_values):
         div(
             TABS_COLLAPSE | {"id": group_id},
             div(TABS_INDICATOR),
-            div(TABS, *sidebar_tabs(websocket, state, set_state, tabs)),
+            div(TABS, *(sidebar_tab(websocket, state, set_state, tab) for tab in tabs)),
         ),
     )
 
