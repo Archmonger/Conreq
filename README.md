@@ -32,7 +32,6 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [Automatic HTTP Compression](https://github.com/friedelwolff/django-compression-middleware)
 -   [Automatic Cache Busting](https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#django.contrib.staticfiles.storage.ManifestStaticFilesStorage)
 -   [Automatic Code Performance Graphs](https://github.com/jazzband/django-silk)
--   [Automatic NPM Package Installation](https://github.com/kevin1024/django-npm)
 -   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
 -   [Automatic SQLite Database Optimization](https://www.sqlite.org/lang_vacuum.html)
 
@@ -41,6 +40,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   Support for MariaDB, Oracle, and PostgreSQL
 -   [Automatic SASS/SCSS to CSS Compilation](https://github.com/jrief/django-sass-processor)
 -   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
+-   [Automatic NPM Package Installation](https://github.com/kevin1024/django-npm)
 
 ## Communities
 
