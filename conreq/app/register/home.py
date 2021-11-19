@@ -12,10 +12,13 @@ def nav_tab(
     tab_name: str,
     group_icon: Icon = None,
     tab_icon: Icon = None,
-    selector: Viewport = Viewport.primary,  # TODO: Can be viewport, modal, or none
+    selector: Viewport = Viewport.primary,
+    on_click: Callable = None,  # Args = websocket, state, set_state, tab
     auth_level: AuthLevel = AuthLevel.user,
 ) -> Callable:
-    """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked."""
+    """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked.
+    By default, the function decorated will be rendered to the viewport. The `on_click` event
+    can be overridden to change this behavior."""
 
     nav_tabs = conreq.config.nav_tabs
     group = nav_tabs.get(group_name)
@@ -29,6 +32,7 @@ def nav_tab(
             {
                 "name": tab_name,
                 "selector": selector,
+                "on_click": on_click,
                 "auth": auth_level,
                 "icon": tab_icon,
                 "component": func,
