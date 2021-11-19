@@ -4,6 +4,7 @@ from idom.html import button, div, i, nav, span
 
 import conreq
 from conreq.app.selectors import Modal, Viewport
+from conreq.utils.components import authenticated
 
 # Sidebar
 SIDEBAR = {
@@ -93,6 +94,7 @@ MODAL_CLOSE_BTN = i(
 
 
 @idom.component
+@authenticated()
 def homepage(websocket):
     state, set_state = idom.hooks.use_state(
         {
