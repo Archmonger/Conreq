@@ -63,7 +63,7 @@ def nav_group(
         nav_tabs[group_name].update("icon", group_icon)
 
 
-def server_setting(page_name: str) -> Callable:
+def system_setting(page_name: str) -> Callable:
     """Decorates an IDOM component. Creates a settings page."""
 
     server_setting_tabs = conreq.config.server_setting_tabs
