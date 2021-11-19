@@ -12,7 +12,7 @@ def nav_tab(
     tab_name: str,
     group_icon: Icon = None,
     tab_icon: Icon = None,
-    selector: Viewport = Viewport.primary,
+    viewport: Viewport = Viewport.primary,
     on_click: Callable = None,  # Args = websocket, state, set_state, tab
     auth_level: AuthLevel = AuthLevel.user,
 ) -> Callable:
@@ -31,7 +31,7 @@ def nav_tab(
         group["tabs"].append(
             {
                 "name": tab_name,
-                "selector": selector,
+                "viewport": viewport,
                 "on_click": on_click,
                 "auth": auth_level,
                 "icon": tab_icon,

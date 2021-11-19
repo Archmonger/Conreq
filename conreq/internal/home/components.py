@@ -5,8 +5,6 @@ from idom.html import button, div, i, nav, span
 import conreq
 from conreq.app.selectors import Modal, Viewport
 
-# pylint: disable=unused-argument
-
 
 # Sidebar
 SIDEBAR = {
@@ -158,7 +156,19 @@ def sidebar(websocket, state, set_state):
 def sidebar_tab(websocket, state, set_state, tab):
     return div(
         NAV_TAB
-        | {"onClick": lambda x: set_state(state | {"viewport": tab["selector"]})},
+        | {
+            "onClick": lambda x: set_state(
+                state
+                | {
+                    "viewport": tab["viewport"],
+                    f'viewport_{tab["viewport"]}': tab["component"](
+                        websocket, state, set_state
+                    ),
+                }
+            )
+            if not tab["on_click"]
+            else tab["on_click"](websocket, state, set_state, tab)
+        },
         div(TAB_NAME, tab["name"]),
     )
 
@@ -193,6 +203,7 @@ def sidebar_group(websocket, state, set_state, group_name, group_values):
 
 @idom.component
 def viewport_loading(websocket, state, set_state):
+    # pylint: disable=unused-argument
     return div(
         VIEWPORT_CONTAINER_LOADING
         | ({} if state["viewport"] == Viewport.loading else HIDDEN),
@@ -202,6 +213,7 @@ def viewport_loading(websocket, state, set_state):
 
 @idom.component
 def viewport_primary(websocket, state, set_state):
+    # pylint: disable=unused-argument
     return div(
         VIEWPORT_CONTAINER_PRIMARY
         | ({} if state["viewport"] == Viewport.primary else HIDDEN),
@@ -211,6 +223,7 @@ def viewport_primary(websocket, state, set_state):
 
 @idom.component
 def viewport_secondary(websocket, state, set_state):
+    # pylint: disable=unused-argument
     return div(
         VIEWPORT_CONTAINER_SECONDARY
         | ({} if state["viewport"] == Viewport.secondary else HIDDEN),
@@ -220,6 +233,7 @@ def viewport_secondary(websocket, state, set_state):
 
 @idom.component
 def navbar(websocket, state, set_state):
+    # pylint: disable=unused-argument
     return div(
         NAVBAR,
         button(
@@ -247,6 +261,7 @@ def modal(websocket, state, set_state):
 
 
 def modal_head(websocket, state, set_state):
+    # pylint: disable=unused-argument
     if state["modal"] == Modal.show and state["modal_header"]:
         return state["modal_header"]
     return div(
@@ -257,6 +272,7 @@ def modal_head(websocket, state, set_state):
 
 
 def modal_body(websocket, state, set_state):
+    # pylint: disable=unused-argument
     if state["modal"] == Modal.show and state["modal_body"]:
         return state["modal_body"]
     return div(
@@ -266,6 +282,7 @@ def modal_body(websocket, state, set_state):
 
 
 def modal_footer(websocket, state, set_state):
+    # pylint: disable=unused-argument
     if state["modal"] == Modal.show and state["modal_footer"]:
         return state["modal_footer"]
     return div(MODAL_FOOTER)
