@@ -5,7 +5,7 @@ var filesToCache = [
 	"{{ base_url|escapejs }}offline/",
 	"{% static 'css/main_slim.css' %}",
 	"{% static 'css/offline.css' %}",
-	"{% static 'js/offline.js' %}",
+	"{% static 'js/aos-init.js' %}",
 ];
 
 // Cache on install
