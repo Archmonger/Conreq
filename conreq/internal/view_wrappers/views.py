@@ -1,5 +1,7 @@
 from inspect import iscoroutinefunction
 
+from channels.db import database_sync_to_async as convert_to_async
+
 import conreq
 from conreq.utils.views import stub
 
@@ -11,7 +13,7 @@ async def landing(request, *args, **kwargs):
         return stub(request)
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)
-    return view(request, *args, **kwargs)
+    return await convert_to_async(view)(request, *args, **kwargs)
 
 
 async def home(request, *args, **kwargs):
@@ -21,7 +23,7 @@ async def home(request, *args, **kwargs):
         return stub(request)
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)
-    return view(request, *args, **kwargs)
+    return await convert_to_async(view)(request, *args, **kwargs)
 
 
 async def sign_up(request, *args, **kwargs):
@@ -31,7 +33,7 @@ async def sign_up(request, *args, **kwargs):
         return stub(request)
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)
-    return view(request, *args, **kwargs)
+    return await convert_to_async(view)(request, *args, **kwargs)
 
 
 async def sign_in(request, *args, **kwargs):
@@ -41,7 +43,7 @@ async def sign_in(request, *args, **kwargs):
         return stub(request)
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)
-    return view(request, *args, **kwargs)
+    return await convert_to_async(view)(request, *args, **kwargs)
 
 
 async def password_reset(request, *args, **kwargs):
@@ -51,4 +53,4 @@ async def password_reset(request, *args, **kwargs):
         return stub(request)
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)
-    return view(request, *args, **kwargs)
+    return await convert_to_async(view)(request, *args, **kwargs)
