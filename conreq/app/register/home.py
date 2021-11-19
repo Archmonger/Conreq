@@ -2,7 +2,7 @@ from functools import wraps
 from typing import Callable
 
 import conreq
-from conreq.app.component.icon import Icon
+from conreq.app.components.icon import Icon
 
 from ..selectors import AuthLevel, Viewport
 
