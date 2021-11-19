@@ -1,7 +1,3 @@
-from huey.contrib.djhuey import db_periodic_task as periodic_task
-from huey.contrib.djhuey import db_task as task
-from idom import component
-
 from .asgi import websocket
 from .components import manage_users_component, server_settings_component
 from .home import nav_group, nav_tab, system_setting
@@ -24,9 +20,6 @@ from .views import (
 from .wsgi import api, url
 
 __all__ = [
-    "component",
-    "task",
-    "periodic_task",
     "websocket",
     "url",
     "api",
