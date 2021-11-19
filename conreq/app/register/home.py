@@ -41,7 +41,9 @@ def nav_tab(
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
-            return _wrapped_func(*args, **kwargs)
+            return func(*args, **kwargs)
+
+        return _wrapped_func
 
     return decorator
 
@@ -72,6 +74,8 @@ def server_setting(page_name: str) -> Callable:
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
-            return _wrapped_func(*args, **kwargs)
+            return func(*args, **kwargs)
+
+        return _wrapped_func
 
     return decorator
