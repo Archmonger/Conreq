@@ -22,21 +22,21 @@ register.nav_group("User", i({"className": "fas fa-users icon-left"}))
 register.nav_group("Admin", i({"className": "fas fa-cogs icon-left"}))
 
 
-@register.nav_tab("User", "Settings")
+@register.nav_tab("Settings", "User")
 def settings(websocket, state, set_state):
     return p("settings")
 
 
-@register.nav_tab("User", "Sign Out", viewport=Viewport.secondary)
+@register.nav_tab("Sign Out", "User", viewport=Viewport.secondary)
 def sign_out(websocket, state, set_state):
     return p("sign out")
 
 
-@register.nav_tab("Admin", "Manage Users")
+@register.nav_tab("Manage Users", "Admin")
 def manage_users(websocket, state, set_state):
     return p("manage users")
 
 
-@register.nav_tab("Admin", "Server Config")
+@register.nav_tab("Server Config", "Admin")
 def server_config(websocket, state, set_state):
     return p("server config")

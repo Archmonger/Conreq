@@ -8,8 +8,8 @@ from ..selectors import AuthLevel, Viewport
 
 
 def nav_tab(
-    group_name: str,
     tab_name: str,
+    group_name: str,
     group_icon: Icon = None,
     tab_icon: Icon = None,
     viewport: Viewport = Viewport.primary,
