@@ -12,19 +12,27 @@ from huey.contrib.djhuey import db_task
 from conreq.internal.email.models import AuthEncryption, EmailConfig
 
 
+class WithDoNothing:
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+
 @dataclass
 class Email:
     subject: str
     message: str
-    html_message: Union[str, None]
     recipient_list: list
+    html_message: Union[str, None] = None
 
 
 def get_mail_backend(config: EmailConfig = None):
     if not config:
         config = EmailConfig.get_solo()
 
-    return EmailBackend(
+    backend = EmailBackend(
         host=config.server,
         port=config.port,
         username=config.username,
@@ -33,6 +41,10 @@ def get_mail_backend(config: EmailConfig = None):
         use_ssl=config.auth_encryption == AuthEncryption.SSL,
         timeout=config.timeout,
     )
+    # Note: A new backend connection needs to be formed every task run
+    # since threading.rlock is not serializable by Huey
+    backend._lock = WithDoNothing()  # pylint: disable=protected-access
+    return backend
 
 
 def get_from_name(config: EmailConfig = None):
@@ -92,10 +104,11 @@ def _send_mass_email(
     connection: EmailBackend, emails: Iterable[Email], config: EmailConfig
 ):
     messages = []
-    for subject, message, html_message, recipient_list in emails:
+    for email in emails:
         message = EmailMultiAlternatives(
-            subject, message, get_from_name(config), recipient_list
+            email.subject, email.message, get_from_name(config), email.recipient_list
         )
-        message.attach_alternative(html_message, "text/html")
+        if email.html_message:
+            message.attach_alternative(email.html_message, "text/html")
         messages.append(message)
     return connection.send_messages(messages)
