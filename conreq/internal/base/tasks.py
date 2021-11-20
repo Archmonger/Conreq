@@ -5,7 +5,7 @@ from django.db import connection
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
-from conreq.utils.database import backup_needed, backup
+from conreq.utils.database import backup, backup_needed
 from conreq.utils.environment import get_database_type
 from conreq.utils.time import Seconds
 
