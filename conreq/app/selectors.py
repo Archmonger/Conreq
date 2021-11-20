@@ -3,20 +3,20 @@ from dataclasses import dataclass
 
 @dataclass
 class AuthLevel:
-    anonymous: int = "anonymous"
-    user: int = "user"
-    admin: int = "admin"
+    anonymous: str = "anonymous"
+    user: str = "user"
+    admin: str = "admin"
 
 
 @dataclass
 class Viewport:
-    loading: int = "loading"
-    primary: int = "primary"
-    secondary: int = "secondary"
+    loading: str = "loading"
+    primary: str = "primary"
+    secondary: str = "secondary"
 
 
 @dataclass
 class Modal:
-    loading: int = "loading"
-    hidden: int = "hidden"
-    show: int = "show"
+    loading: str = "loading"
+    hidden: str = "hidden"
+    show: str = "show"
