@@ -35,4 +35,3 @@ Follow all instructions laid out within [Creating a Development Environment](#cr
     - Doing this enables _a lot_ of **security features**.
 2. The webserver is conifgured with good defaults for most cases. But if you want to configure the webserver see our [webserver documentation](/Conreq/configure/webserver/) for more information.
 3. Type `python manage.py run_conreq` to run the webserver.
-
