@@ -16,14 +16,14 @@ class AppLoaderConfig(AppConfig):
 
     def ready(self):
         for app_config in apps.get_app_configs():
-            self.autoload_all(app_config)
+            self.auto_import_all(app_config)
 
-    def autoload_all(self, app_config: AppConfig):
-        """Autoloads modules when the AppConfig registry is fully populated."""
-        if not getattr(app_config, "autoload_modules", False):
+    def auto_import_all(self, app_config: AppConfig):
+        """Imports all submodules for a specific app."""
+        if not getattr(app_config, "auto_import", False):
             return
 
-        fail_silently = getattr(app_config, "autoload_modules_silent", False)
+        fail_silently = getattr(app_config, "auto_import_silent", False)
 
         for loader, module_name, is_pkg in pkgutil.walk_packages([app_config.path]):
             try:
