@@ -34,12 +34,12 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [Automatic Code Performance Graphs](https://github.com/jazzband/django-silk)
 -   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
 -   [Automatic SQLite Database Optimization](https://www.sqlite.org/lang_vacuum.html)
+-   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
 
 ## Coming Soon
 
 -   Support for MariaDB, Oracle, and PostgreSQL
 -   [Automatic SASS/SCSS to CSS Compilation](https://github.com/jrief/django-sass-processor)
--   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
 -   [Automatic NPM Package Installation](https://github.com/kevin1024/django-npm)
 
 ## Communities

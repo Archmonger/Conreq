@@ -110,7 +110,13 @@ HUEY = {
     },
 }
 IDOM_BASE_URL = BASE_URL[1:] + "idom/"
-
+DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
+DBBACKUP_STORAGE_OPTIONS = {"location": BACKUP_DIR}
+DBBACKUP_TMP_DIR = TEMP_DIR
+DBBACKUP_FILENAME_TEMPLATE = "{datetime}.{extension}"
+DBBACKUP_CLEANUP_KEEP = 20
+DBBACKUP_CLEANUP_KEEP_MEDIA = 20
+DBBACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M%S"
 
 # Logging
 CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
@@ -223,6 +229,7 @@ INSTALLED_APPS = [
     "djversion",  # Version number tracking
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
+    "dbbackup",
 ]
 
 MIDDLEWARE = [

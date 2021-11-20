@@ -27,3 +27,4 @@ python-dotenv==0.19.2
 Twisted[tls,http2]==21.7.0
 tzlocal==3.0
 whitenoise[brotli]==5.3.0
+django-dbbackup==3.3.0
