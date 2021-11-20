@@ -10,14 +10,7 @@ from django.core.mail.backends.smtp import EmailBackend
 from huey.contrib.djhuey import db_task
 
 from conreq.internal.email.models import AuthEncryption, EmailConfig
-
-
-class WithDoNothing:
-    def __enter__(self):
-        pass
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+from conreq.utils.generic import DoNothingWith
 
 
 @dataclass
@@ -43,7 +36,7 @@ def get_mail_backend(config: EmailConfig = None):
     )
     # Note: A new backend connection needs to be formed every task run
     # since threading.rlock is not serializable by Huey
-    backend._lock = WithDoNothing()  # pylint: disable=protected-access
+    backend._lock = DoNothingWith()  # pylint: disable=protected-access
     return backend
 
 

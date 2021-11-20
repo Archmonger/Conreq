@@ -43,3 +43,22 @@ def clean_string(
         new_string = new_string.lower()
     new_string = sub(r"  +", " ", new_string)
     return new_string
+
+
+class DoNothingDecorator:
+    """Decorator that does nothing."""
+
+    # pylint: disable=too-few-public-methods
+
+    def __call__(self, target):
+        return target
+
+
+class DoNothingWith:
+    """Class usable in a python `with` statement that does nothing."""
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
