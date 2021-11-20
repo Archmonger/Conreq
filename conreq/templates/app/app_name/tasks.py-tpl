@@ -8,3 +8,5 @@ See more information in the Huey docs.
 """
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task, db_task, periodic_task, task
+
+from conreq.utils.time import Seconds

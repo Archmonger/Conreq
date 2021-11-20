@@ -1,7 +1,4 @@
-from datetime import datetime, timedelta
-from glob import glob
 from multiprocessing import Process
-from pathlib import Path
 
 import django
 from django.conf import settings
@@ -12,14 +9,13 @@ from huey.contrib.djhuey import db_task
 from hypercorn.config import Config as HypercornConfig
 from hypercorn.run import run as run_hypercorn
 
+from conreq.utils.database import backup_needed, backup
 from conreq.utils.environment import get_debug
 
 HYPERCORN_TOML = getattr(settings, "DATA_DIR") / "hypercorn.toml"
 DEBUG = get_debug()
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 ACCESS_LOG_FILE = getattr(settings, "ACCESS_LOG_FILE")
-BACKUP_DIR = getattr(settings, "BACKUP_DIR")
-DBBACKUP_DATE_FORMAT = getattr(settings, "DBBACKUP_DATE_FORMAT")
 
 
 class Command(BaseCommand):
@@ -46,7 +42,8 @@ class Command(BaseCommand):
         if options["test"]:
             call_command("test", "--noinput", "--parallel", "--failfast")
 
-        backup_if_needed()
+        # Queue a task to backup the database if needed
+        backup_db()
 
         # Perform any debug related clean-up
         if DEBUG:
@@ -137,18 +134,7 @@ class Command(BaseCommand):
 
 
 @db_task()
-def backup_if_needed():
-    """Performs a backups if the last backup was more than a week ago."""
-    backup_files = sorted(glob(str(BACKUP_DIR / "*.dump")), reverse=True)
-    for file_path in backup_files:
-        try:
-            file_name = Path(file_path).stem
-            file_date = datetime.strptime(file_name, DBBACKUP_DATE_FORMAT)
-            if datetime.now() - timedelta(weeks=1) > file_date:
-                call_command("dbbackup", "--clean")
-            return
-        except Exception:
-            pass
-
-    # No backups were found
-    call_command("dbbackup", "--clean")
+def backup_db():
+    """Performs a backup if the last backup was longer than the threshold."""
+    if backup_needed():
+        backup()

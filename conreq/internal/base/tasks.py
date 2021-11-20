@@ -1,11 +1,11 @@
 import sqlite3
 
 from django.conf import settings
-from django.core.management import call_command
 from django.db import connection
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
+from conreq.utils.database import backup_needed, backup
 from conreq.utils.environment import get_database_type
 from conreq.utils.time import Seconds
 
@@ -32,7 +32,8 @@ if DB_ENGINE == "SQLITE3":
             cursor.execute("PRAGMA optimize")
 
 
-@db_periodic_task(Seconds.week)
+@db_periodic_task(Seconds.day)
 def backup_conreq_db():
-    """Backup the database once a week."""
-    call_command("dbbackup", "--clean")
+    """Backup the database when needed."""
+    if backup_needed():
+        backup()
