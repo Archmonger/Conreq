@@ -1,0 +1,55 @@
+nav:
+    - Home: index.md
+    - Install:
+          - Windows (NSSM): install/windows.md
+          - Linux (Docker): install/linux.md
+    - Configuration:
+          - Environment Variables: configure/env_vars.md
+          - Built-in Webserver: configure/webserver.md
+          - Custom CSS/JS: configure/static_files.md
+          - Organizr Authentication: configure/organizr.md
+          - MySQL Database: configure/mysql.md
+    - Development:
+          - Running Conreq Manually: develop/run_conreq.md
+          - Our Code Explained: develop/code_tldr.md
+          - Creating Custom Apps: develop/creating_apps.md
+    - Contribute:
+          - Updating the Docs: contrib/docs.md
+          - Listing an App: contrib/apps.md
+
+theme:
+    name: material
+    palette:
+        primary: teal
+        accent: teal
+    features:
+        - navigation.instant
+        - navigation.tabs
+        - navigation.sections
+        - toc.integrate
+
+    icon:
+        repo: fontawesome/brands/github
+
+markdown_extensions:
+    - toc:
+          permalink: true
+    - pymdownx.emoji:
+          emoji_index: !!python/name:materialx.emoji.twemoji
+          emoji_generator: !!python/name:materialx.emoji.to_svg
+    - pymdownx.highlight
+    - pymdownx.superfences
+    - attr_list
+
+plugins:
+    - search
+    - git-revision-date-localized:
+          fallback_to_build_date: true
+
+site_name: Conreq Documentation
+site_author: Archmonger
+site_description: Conreq Web Platform
+repo_url: https://github.com/Archmonger/Conreq/
+site_url: https://archmonger.github.io/Conreq/
+repo_name: Archmonger/Conreq
+edit_uri: edit/docs/source/docs
