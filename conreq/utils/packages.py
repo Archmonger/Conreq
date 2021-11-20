@@ -93,17 +93,3 @@ def find_apps_with(module_name: str) -> set[str]:
                 apps_with.add(app)
 
     return apps_with
-
-
-def execute_package_startup():
-    packages = find_packages()
-
-    for package in packages:
-        try:
-            _import(".".join([package, "startup"]))
-        except ModuleNotFoundError:
-            pass
-        except Exception as exception:
-            _logger.error(
-                '%s startup script has failed due to "%s"!', package, exception
-            )

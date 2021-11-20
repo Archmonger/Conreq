@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import logging
 import os
 import secrets
 import sys
+from importlib import import_module
 from logging.config import dictConfig as logging_config
 from pathlib import Path
 
@@ -29,7 +31,9 @@ from conreq.utils.environment import (
     get_safe_mode,
     set_env,
 )
-from conreq.utils.packages import execute_package_startup, find_apps, find_modules
+from conreq.utils.packages import find_apps, find_modules, find_packages
+
+_logger = logging.getLogger(__name__)
 
 # Project Directories
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -333,8 +337,15 @@ sys.path.append(str(PACKAGES_DIR))
 if not get_safe_mode():
     INSTALLED_APPS.extend(find_apps())
 
-# Load startup.py from Conreq apps
-execute_package_startup()
+# Run startup.py
+packages = find_packages()
+for package in packages:
+    try:
+        import_module(".".join([package, "startup"]))
+    except ModuleNotFoundError:
+        pass
+    except Exception as exception:
+        _logger.error('%s startup script has failed due to "%s"!', package, exception)
 
 # Execute settings scripts from Conreq Apps
 include(*conreq.config.setting_scripts)
