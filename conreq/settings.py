@@ -127,7 +127,7 @@ CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
 ACCESS_LOG_FILE = LOG_DIR / "access.log"
 LOG_LEVEL = get_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
 
-LOGGING = {
+LOGGING_INITIAL = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
@@ -169,10 +169,12 @@ LOGGING = {
         },
     },
 }
-for logger_name in LOGGING["loggers"]:
-    LOGGING["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
+for logger_name in LOGGING_INITIAL["loggers"]:
+    LOGGING_INITIAL["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
 if DEBUG and os.environ.get("RUN_MAIN", None) != "true":
     LOGGING = {"version": 1}
+else:
+    LOGGING = LOGGING_INITIAL
 logging_config(LOGGING)
 
 

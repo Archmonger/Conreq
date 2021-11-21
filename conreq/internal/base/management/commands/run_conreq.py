@@ -1,3 +1,4 @@
+from logging.config import dictConfig as logging_config
 from multiprocessing import Process
 
 import django
@@ -126,6 +127,8 @@ class Command(BaseCommand):
     @staticmethod
     def start_huey():
         """Starts the Huey background task manager."""
+        logging_initial = getattr(settings, "LOGGING_INITIAL")
+        logging_config(logging_initial)
         django.setup()
         if DEBUG:
             call_command("run_huey")
