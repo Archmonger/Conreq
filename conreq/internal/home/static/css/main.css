@@ -172,31 +172,6 @@ a:hover {
 	outline: none !important;
 }
 
-/* Images */
-/* TODO: Move this into a components file */
-
-img.lazy {
-	opacity: 0;
-}
-
-img.lazy.initial,
-img.lazy.loaded,
-img.lazy.error {
-	opacity: 1;
-}
-
-img.lazy:not([src]) {
-	visibility: hidden;
-}
-
-.mfp-bg {
-	z-index: 1061;
-}
-
-.mfp-wrap {
-	z-index: 1062;
-}
-
 /* Scrollbar */
 
 .simplebar-scrollbar::before {
