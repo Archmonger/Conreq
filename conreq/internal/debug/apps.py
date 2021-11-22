@@ -23,12 +23,12 @@ class DebugConfig(AppConfig):
 
 
 def performance_profiling():
-    register.url("silk")(include("silk.urls", namespace="silk"))
+    register.url("silk/")(include("silk.urls", namespace="silk"))
 
 
 def admin_panel():
-    register.url("admin/docs")(include("django.contrib.admindocs.urls"))
-    register.url("admin")(admin.site.urls)
+    register.url("admin/docs/")(include("django.contrib.admindocs.urls"))
+    register.url("admin/")(admin.site.urls)
 
 
 def password_reset():
