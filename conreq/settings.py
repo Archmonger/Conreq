@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+
 import logging
 import os
 import secrets
@@ -91,8 +92,7 @@ SILKY_AUTHORISATION = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
-if DB_ENGINE != "SQLITE3":
-    SILKY_ANALYZE_QUERIES = True
+SILKY_ANALYZE_QUERIES = DB_ENGINE != "SQLITE3"
 SILKY_MAX_RECORDED_REQUESTS = 100
 WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 COMPRESS_OUTPUT_DIR = "minified"
