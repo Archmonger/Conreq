@@ -5,6 +5,9 @@ from idom.html import button, div, i, nav, span
 import conreq
 from conreq.app.selectors import Modal, Viewport
 from conreq.utils.components import authenticated
+from conreq.utils.environment import get_debug
+
+DEBUG = get_debug()
 
 # Sidebar
 SIDEBAR = {
@@ -141,7 +144,7 @@ def sidebar(websocket, state, set_state):
             *(  # App tabs
                 sidebar_group(websocket, state, set_state, group_name, group_values)
                 for group_name, group_values in all_tabs
-                if group_name not in {"User", "Admin"}
+                if group_name not in {"User", "Admin", "Debug"}
             ),
             *(  # User tabs
                 sidebar_group(websocket, state, set_state, group_name, group_values)
@@ -152,6 +155,11 @@ def sidebar(websocket, state, set_state):
                 sidebar_group(websocket, state, set_state, group_name, group_values)
                 for group_name, group_values in all_tabs
                 if group_name == "Admin" and websocket.scope["user"].is_staff
+            ),
+            *(  # Debug tabs
+                sidebar_group(websocket, state, set_state, group_name, group_values)
+                for group_name, group_values in all_tabs
+                if group_name == "Debug" and websocket.scope["user"].is_staff and DEBUG
             ),
         ),
     )
