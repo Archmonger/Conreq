@@ -180,8 +180,3 @@ def get_or_set_many(
     except Exception:
         _logger.exception("Functions %s failed to execute!", functions)
     return None
-
-
-def cached():
-    # TODO: Add cached function decorator
-    pass
