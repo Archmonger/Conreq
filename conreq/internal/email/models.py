@@ -29,5 +29,6 @@ class EmailConfig(SingletonModel):
     username = EncryptedCharField(max_length=255, default="", blank=True)
     password = EncryptedCharField(max_length=255, default="", blank=True)
     sender_name = models.CharField(max_length=50, default="", blank=True)
+    enabled = models.BooleanField(default=False)
 
     tracker = FieldTracker()
