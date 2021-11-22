@@ -16,6 +16,7 @@ INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 
 @metrics()
 def sign_up(request):
+    # TODO: Rewrite this. Store keys in DB.
     # User submitted the registration form
     invite_code = request.GET.get("invite_code", "")
     invite_key = "invite_code" + invite_code
@@ -23,7 +24,7 @@ def sign_up(request):
     if request.method == "POST":
         # Check if the invite code was valid
         if not cache.get(invite_key):
-            return redirect("landing:main")
+            return redirect("landing:landing")
 
         # Check if form submission is clean
         form = UserForm(request.POST)
@@ -35,7 +36,7 @@ def sign_up(request):
             password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect("landing:main")
+            return redirect("landing:landing")
 
         # Submission wasn't valid, so return the error codes
         template = loader.get_template("registration/sign_up.html")
@@ -47,7 +48,7 @@ def sign_up(request):
         return HttpResponse(template.render({}, request))
 
     # User tried to use an invalid invite code!
-    return redirect("landing:main")
+    return redirect("landing:landing")
 
 
 @login_required

@@ -235,7 +235,7 @@ INSTALLED_APPS = [
     "djversion",  # Version number tracking
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
-    "dbbackup",
+    "dbbackup",  # Convenient database backup API
 ]
 
 MIDDLEWARE = [
@@ -255,6 +255,7 @@ MIDDLEWARE = [
 
 # URL Routing and Page Rendering
 ROOT_URLCONF = "conreq.urls"
+APPEND_SLASH = False
 ASGI_APPLICATION = "conreq.asgi.application"
 TEMPLATES = [
     {
@@ -303,7 +304,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
-LOGIN_REDIRECT_URL = "landing:main"
+LOGIN_REDIRECT_URL = "landing:landing"
 LOGIN_URL = "sign_in"
 
 

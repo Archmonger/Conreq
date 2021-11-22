@@ -8,5 +8,5 @@ app_name = "pwa"
 urlpatterns = [
     path("serviceworker.js", service_worker, name="serviceworker"),
     path("site.webmanifest", manifest, name="manifest"),
-    path("offline/", offline, name="offline"),
+    path("offline", offline, name="offline"),
 ]

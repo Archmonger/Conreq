@@ -23,27 +23,27 @@ class DebugConfig(AppConfig):
 
 
 def performance_profiling():
-    register.url("silk/")(include("silk.urls", namespace="silk"))
+    register.url("silk")(include("silk.urls", namespace="silk"))
 
 
 def admin_panel():
-    register.url("admin/docs/")(include("django.contrib.admindocs.urls"))
-    register.url("admin/")(admin.site.urls)
+    register.url("admin/docs")(include("django.contrib.admindocs.urls"))
+    register.url("admin")(admin.site.urls)
 
 
 def password_reset():
     from django.contrib.auth import views as auth_views
 
-    register.url("password_reset/", name="password_reset_done")(
+    register.url("password_reset", name="password_reset_done")(
         auth_views.PasswordResetView
     )
-    register.url("password_reset/done/", name="password_reset_done")(
+    register.url("password_reset/done", name="password_reset_done")(
         auth_views.PasswordResetDoneView
     )
-    register.url("reset/<uidb64>/<token>/", name="password_reset_confirm")(
+    register.url("reset/<uidb64>/<token>", name="password_reset_confirm")(
         auth_views.PasswordResetConfirmView
     )
-    register.url("reset/done/", name="password_reset_complete")(
+    register.url("reset/done", name="password_reset_complete")(
         auth_views.PasswordResetCompleteView
     )
 
@@ -73,8 +73,8 @@ def api_docs():
     )
 
     register.url(
-        r"^swagger(?P<format>\.json|\.yaml)$", name="schema-json", use_regex=True
+        r"^swagger(?P<format>\.json|\.yaml)$", name="swagger_json", use_regex=True
     )(SchemaView.without_ui(cache_timeout=0))
-    register.url(r"^swagger/$", name="schema-swagger-ui", use_regex=True)(
+    register.url(r"^swagger$", name="swagger_ui", use_regex=True)(
         SchemaView.with_ui("swagger", cache_timeout=0)
     )

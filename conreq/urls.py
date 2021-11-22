@@ -15,10 +15,10 @@ urlpatterns = [
     path("", include("conreq.internal.landing.urls")),
     path("", include("conreq.internal.home.urls")),
     path("", include("conreq.internal.pwa.urls")),
-    path("sign_in/", conreq.config.sign_in_view, name="sign_in"),
-    path("sign_out/", auth_views.logout_then_login, name="sign_out"),
-    path("sign_up/", include("conreq.internal.sign_up.urls")),
-    path("api/v1/", include("conreq.internal.api.urls")),
+    path("sign_in", conreq.config.sign_in_view, name="sign_in"),
+    path("sign_out", auth_views.logout_then_login, name="sign_out"),
+    path("sign_up", include("conreq.internal.sign_up.urls")),
+    path("api/v1", include("conreq.internal.api.urls")),
 ]
 
 

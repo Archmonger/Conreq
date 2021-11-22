@@ -8,5 +8,5 @@ app_name = "landing"
 HOME_URL = get_home_url(prepend_slash=False)
 
 urlpatterns = [
-    path("", conreq.config.landing_view, name="main"),
+    path("", conreq.config.landing_view, name="landing"),
 ]

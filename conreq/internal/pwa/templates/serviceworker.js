@@ -2,7 +2,7 @@
 
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
-	"{{ base_url|escapejs }}offline/",
+	"{{ base_url|escapejs }}offline",
 	"{% static 'css/main_slim.css' %}",
 	"{% static 'css/offline.css' %}",
 	"{% static 'js/aos-init.js' %}",
@@ -41,7 +41,7 @@ self.addEventListener("fetch", (event) => {
 				return response || fetch(event.request);
 			})
 			.catch(() => {
-				return caches.match("{{ base_url|escapejs }}offline/");
+				return caches.match("{{ base_url|escapejs }}offline");
 			})
 	);
 });

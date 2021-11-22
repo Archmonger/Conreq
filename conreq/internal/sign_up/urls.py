@@ -1,11 +1,9 @@
 from django.urls import path
 
-from . import views
+from .views import sign_up
 
 app_name = "sign_up"
+
 urlpatterns = [
-    path("", views.sign_up, name="register"),
-    path(
-        "generate_invite_code/", views.generate_invite_code, name="generate_invite_code"
-    ),
+    path("", sign_up, name="sign_up"),
 ]

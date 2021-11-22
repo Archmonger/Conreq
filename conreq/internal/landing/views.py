@@ -21,7 +21,7 @@ def landing(request):
         return initialization_needed
 
     if not landing_template:
-        return redirect("home:main")
+        return redirect("home:home")
 
     # Render the landing page
     return render(
