@@ -180,10 +180,10 @@ logging_config(LOGGING)
 
 # Security Settings
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_REFERRER_POLICY = "no-referrer"
-ALLOWED_HOSTS = [
+SECURE_REFERRER_POLICY = get_env("SECURE_REFERRER_POLICY", "no-referrer")
+ALLOWED_HOSTS = get_env("ALLOWED_HOSTS", return_type=list) or [
     get_env("ALLOWED_HOST", "*")
-]  # TODO: Add a check for 'ALLOWED_HOSTS' as an array
+]
 SECURE_BROWSER_XSS_FILTER = True
 
 
