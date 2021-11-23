@@ -12,7 +12,7 @@ class ServerConfig(SingletonModel):
         return "Server Settings"
 
     class Meta:
-        verbose_name = "Server Settings"
+        verbose_name = "Server settings"
         verbose_name_plural = verbose_name
 
     # Basic settings

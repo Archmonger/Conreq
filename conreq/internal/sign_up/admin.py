@@ -6,4 +6,4 @@ from conreq.internal.sign_up.models import InviteCode
 # Register your models here.
 @admin.register(InviteCode)
 class InviteCodes(admin.ModelAdmin):
-    pass
+    list_display = ("created_at", "email", "code")

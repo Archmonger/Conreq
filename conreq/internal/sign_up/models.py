@@ -14,7 +14,7 @@ def _expiration():
 
 class InviteCode(models.Model):
     def __str__(self):
-        return f"{self.email} ({self.code})"
+        return self.code
 
     code = models.CharField(
         default=uuid.uuid4, editable=False, unique=True, max_length=30
@@ -38,7 +38,7 @@ class InviteCode(models.Model):
     @property
     def is_used(self):
         """Checks if the code has been used."""
-        return self.used_by is not None
+        return self.used_by is not None or self.used_at is not None
 
     @property
     def is_valid(self):

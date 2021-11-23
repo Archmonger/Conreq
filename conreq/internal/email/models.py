@@ -12,10 +12,10 @@ class AuthEncryption(models.TextChoices):
 
 class EmailConfig(SingletonModel):
     def __str__(self):
-        return "Email Settings"
+        return "Email settings"
 
     class Meta:
-        verbose_name = "Email Settings"
+        verbose_name = "Email settings"
         verbose_name_plural = verbose_name
 
     server = models.CharField(max_length=255, default="smtp.gmail.com")
