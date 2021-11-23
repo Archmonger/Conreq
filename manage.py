@@ -38,9 +38,9 @@ def run_in_safe_mode(exception):
         set_env("SAFE_MODE", True, sys_env=True, dot_env=False)
         get_safe_mode.cache_clear()
         start_command = f"{sys.executable} {' '.join(arg for arg in sys.argv)}"
-        subprocess.run(start_command)
-    except Exception:
-        raise exception
+        subprocess.run(start_command, check=True)
+    except Exception as exception_2:
+        raise exception from exception_2
 
 
 if __name__ == "__main__":
