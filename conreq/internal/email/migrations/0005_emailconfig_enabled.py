@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('email', '0004_emailconfig_timeout'),
+        ("email", "0004_emailconfig_timeout"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='emailconfig',
-            name='enabled',
+            model_name="emailconfig",
+            name="enabled",
             field=models.BooleanField(default=False),
         ),
     ]
