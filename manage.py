@@ -20,13 +20,17 @@ def main():
 
     # Run Django
     try:
-        execute_from_command_line(sys.argv)
+        if int(os.environ.get("SAFE_MODE_DEPTH", 0)) <= 1:
+            execute_from_command_line(sys.argv)
     except Exception as exception:
         run_in_safe_mode(exception)
 
 
 def run_in_safe_mode(exception):
     try:
+        if int(os.environ.get("SAFE_MODE_DEPTH", 0)) >= 1:
+            return
+
         import traceback
 
         traceback.print_exc()
@@ -36,6 +40,13 @@ def run_in_safe_mode(exception):
             + "\x1b[0m"
         )
         set_env("SAFE_MODE", True, sys_env=True, dot_env=False)
+
+        set_env(
+            "SAFE_MODE_DEPTH",
+            int(os.environ.get("SAFE_MODE_DEPTH", 0)) + 1,
+            sys_env=True,
+            dot_env=False,
+        )
         get_safe_mode.cache_clear()
         start_command = f"{sys.executable} {' '.join(arg for arg in sys.argv)}"
         subprocess.run(start_command, check=True)
