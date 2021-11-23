@@ -1,66 +1,50 @@
-from secrets import token_hex
-
+from django.conf import settings
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.cache import cache
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
+from django.utils import timezone
 
+from conreq import config
+from conreq.app import register
 from conreq.internal.sign_up.forms import UserForm
-from conreq.utils.profiling import metrics
+from conreq.internal.sign_up.models import InviteCode
 
-# Days, Hours, Minutes, Seconds
-INVITE_CODE_DURATION = 7 * 24 * 60 * 60
+LOGIN_REDIRECT_URL = getattr(settings, "LOGIN_REDIRECT_URL")
 
 
-@metrics()
-def sign_up(request):
-    # TODO: Rewrite this. Store keys in DB.
+@register.sign_up_view()
+def sign_up_with_invite(request, invite_code):
+    # Check if the invite code is valid
+    try:
+        code: InviteCode = InviteCode.objects.get(code=invite_code)
+        print(code.is_expired, code.is_used, code.is_valid)
+        if not code.is_valid:
+            return redirect("landing")
+    except (InviteCode.DoesNotExist, InviteCode.MultipleObjectsReturned):
+        return redirect("landing")
+
     # User submitted the registration form
-    invite_code = request.GET.get("invite_code", "")
-    invite_key = "invite_code" + invite_code
-
     if request.method == "POST":
-        # Check if the invite code was valid
-        if not cache.get(invite_key):
-            return redirect("landing:landing")
-
         # Check if form submission is clean
         form = UserForm(request.POST)
-        if form.is_valid():
-            # Remove the invite code, then create & login the user
-            cache.delete(invite_key)
-            form.save()
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect("landing:landing")
 
         # Submission wasn't valid, so return the error codes
-        template = loader.get_template("registration/sign_up.html")
-        return HttpResponse(template.render({"form": form}, request))
+        if not form.is_valid():
+            template = loader.get_template(config.sign_up_template)
+            return HttpResponse(template.render({"form": form}, request))
 
-    # User needs to fill out registration form, so check if the invite code exists
-    if cache.get(invite_key):
-        template = loader.get_template("registration/sign_up.html")
-        return HttpResponse(template.render({}, request))
+        # Create and login the user
+        form.save()
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password1")
+        user = authenticate(username=username, password=password)
+        code.used_by = user
+        code.used_at = timezone.now()
+        code.save()
+        login(request, user)
+        return redirect(LOGIN_REDIRECT_URL)
 
-    # User tried to use an invalid invite code!
-    return redirect("landing:landing")
-
-
-@login_required
-@user_passes_test(lambda u: u.is_staff)
-@metrics()
-def generate_invite_code(request):
-    # Create an invite code that doesn't already exist
-    while True:
-        invite_code = token_hex(12)
-        cache_key = "invite_code" + invite_code
-        if cache.get(cache_key) is None:
-            cache.set(cache_key, True, INVITE_CODE_DURATION)
-            break
-
-    return JsonResponse({"invite_code": invite_code})
+    # User needs to fill out registration form
+    template = loader.get_template(config.sign_up_template)
+    return HttpResponse(template.render({}, request))

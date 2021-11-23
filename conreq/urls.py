@@ -17,7 +17,7 @@ urlpatterns = [
     path("", config.landing_view, name="landing"),
     path(HOME_URL, config.home_view, name="home"),
     path("sign_in", config.sign_in_view, name="sign_in"),
-    path("sign_up", config.sign_up_view, name="sign_up"),
+    path("sign_up/<invite_code>", config.sign_up_view, name="sign_up"),
     path("sign_out", auth_views.logout_then_login, name="sign_out"),
 ]
 
