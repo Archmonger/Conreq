@@ -27,6 +27,9 @@ def main():
 
 def run_in_safe_mode(exception):
     try:
+        import traceback
+
+        traceback.print_exc()
         print(
             "\x1b[91m"
             + "Conreq has crashed, attempting to restart in safe mode..."

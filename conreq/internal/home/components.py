@@ -5,9 +5,10 @@ from idom.html import button, div, i, nav, span
 import conreq
 from conreq.app.selectors import Modal, Viewport
 from conreq.utils.components import authenticated
-from conreq.utils.environment import get_debug
+from conreq.utils.environment import get_debug, get_safe_mode
 
 DEBUG = get_debug()
+SAFE_MODE = get_safe_mode()
 
 # Sidebar
 SIDEBAR = {
@@ -92,6 +93,20 @@ MODAL_CLOSE_BTN = i(
         "className": "fas fa-window-close clickable",
     }
 )
+SIDEBAR_SAFE_MODE = div(
+    {
+        "style": {
+            "display": "flex",
+            "align-items": "center",
+            "justify-content": "center",
+            "padding": "10px",
+            "background": "red",
+            "color": "#FFF",
+            "font-weight": "700",
+        }
+    },
+    "SAFE MODE",
+)
 
 # TODO: Add the following react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
 
@@ -131,6 +146,7 @@ def sidebar(websocket, state, set_state):
 
     return nav(
         SIDEBAR,
+        *([SIDEBAR_SAFE_MODE] if SAFE_MODE else []),
         div(
             SIDEBAR_USER,
             div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
