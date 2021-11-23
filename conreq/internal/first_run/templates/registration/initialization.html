@@ -19,7 +19,7 @@
                 <img src="{% static 'images/conreq_logo.png' %}" class="logo">
             </div>
 
-            <form id="initialization-form" method="post" action="{% url 'landing:landing' %}">
+            <form id="initialization-form" method="post" action="{% url 'landing' %}">
                 {% csrf_token %}
                 <h1>FIRST TIME SETUP</h1>
                 <h2>Create your admin account</h2>

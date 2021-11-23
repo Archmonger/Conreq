@@ -48,4 +48,4 @@ def _first_run_setup(form, request, server_config):
     server_config.save()
     if get_env("COMPRESS_RESPONSES", return_type=bool) is None:
         set_env("COMPRESS_RESPONSES", "true")
-    return redirect("landing:landing")
+    return redirect("landing")

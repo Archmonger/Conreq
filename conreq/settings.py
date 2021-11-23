@@ -255,7 +255,6 @@ MIDDLEWARE = [
 
 # URL Routing and Page Rendering
 ROOT_URLCONF = "conreq.urls"
-APPEND_SLASH = False
 ASGI_APPLICATION = "conreq.asgi.application"
 TEMPLATES = [
     {
@@ -304,7 +303,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
-LOGIN_REDIRECT_URL = "landing:landing"
+LOGIN_REDIRECT_URL = "landing"
 LOGIN_URL = "sign_in"
 
 
