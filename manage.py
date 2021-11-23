@@ -1,6 +1,6 @@
 """Django's command-line utility for administrative tasks."""
-import importlib
 import os
+import subprocess
 import sys
 
 from conreq.utils.environment import get_safe_mode, set_env
@@ -21,24 +21,23 @@ def main():
     # Run Django
     try:
         execute_from_command_line(sys.argv)
+    except Exception as exception:
+        run_in_safe_mode(exception)
+
+
+def run_in_safe_mode(exception):
+    try:
+        print(
+            "\x1b[91m"
+            + "Conreq has crashed, attempting to restart in safe mode..."
+            + "\x1b[0m"
+        )
+        set_env("SAFE_MODE", True, sys_env=True, dot_env=False)
+        get_safe_mode.cache_clear()
+        start_command = f"{sys.executable} {' '.join(arg for arg in sys.argv)}"
+        subprocess.run(start_command)
     except Exception:
-        run_in_safe_mode()
-
-
-def run_in_safe_mode():
-    from django.core import management
-
-    importlib.reload(management)
-
-    print(
-        "\x1b[91m"
-        + "Conreq has crashed, attempting to restart in safe mode..."
-        + "\x1b[0m"
-    )
-
-    set_env("SAFE_MODE", True, sys_env=True, dot_env=False)
-    get_safe_mode.cache_clear()
-    management.execute_from_command_line(sys.argv)
+        raise exception
 
 
 if __name__ == "__main__":
