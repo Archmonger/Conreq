@@ -14,7 +14,7 @@ def _expiration():
 
 class InviteCode(models.Model):
     def __str__(self):
-        return self.code
+        return str(self.code)
 
     code = models.CharField(
         default=uuid.uuid4, editable=False, unique=True, max_length=30
