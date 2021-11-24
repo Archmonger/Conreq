@@ -1,3 +1,24 @@
 .sign-in-form {
 	margin-top: 35px;
 }
+
+.forgot-password {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.forgot-password a {
+	transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+	color: #fff;
+}
+
+@media only screen and (max-width: 800px) {
+	.forgot-password {
+		margin-top: 20px;
+		justify-content: center;
+	}
+}
