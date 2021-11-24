@@ -14,9 +14,9 @@ class _Config:
         home,
         landing,
         password_reset,
+        password_reset_done,
         sign_in,
         sign_up,
-        password_reset_done,
     )
 
     # Startup

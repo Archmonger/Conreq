@@ -1,5 +1,4 @@
 from functools import wraps
-from inspect import isclass
 from typing import Any, Callable, Union
 
 from django.urls import path, re_path
