@@ -6,12 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('email', '0005_emailconfig_enabled'),
+        ("email", "0005_emailconfig_enabled"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='emailconfig',
-            options={'verbose_name': 'Email settings', 'verbose_name_plural': 'Email settings'},
+            name="emailconfig",
+            options={
+                "verbose_name": "Email settings",
+                "verbose_name_plural": "Email settings",
+            },
         ),
     ]

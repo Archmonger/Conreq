@@ -6,12 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0023_alter_serverconfig_options'),
+        ("server_settings", "0023_alter_serverconfig_options"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='serverconfig',
-            options={'verbose_name': 'Server settings', 'verbose_name_plural': 'Server settings'},
+            name="serverconfig",
+            options={
+                "verbose_name": "Server settings",
+                "verbose_name_plural": "Server settings",
+            },
         ),
     ]
