@@ -16,6 +16,7 @@ class _Config:
         password_reset,
         sign_in,
         sign_up,
+        password_reset_done,
     )
 
     # Startup
@@ -27,14 +28,16 @@ class _Config:
     home_view: Callable = home
     sign_up_view: Callable = sign_up
     sign_in_view: Callable = sign_in
-    password_reset_view: Callable = password_reset  # TODO: Implement this
+    password_reset_view: Callable = password_reset
+    password_reset_done_view: Callable = password_reset_done
 
     # Templates
     landing_template: str = ""
     home_template: str = "homepage/home.html"
     sign_up_template: str = "registration/sign_up.html"
     sign_in_template: str = "registration/sign_in.html"
-    password_reset_template: str = ""  # TODO: Implement this
+    password_reset_template: str = "registration/password_reset.html"
+    password_reset_done_template: str = "registration/password_reset_done.html"
 
     # IDOM Components
     # TODO: Implement these

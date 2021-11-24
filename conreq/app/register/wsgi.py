@@ -6,6 +6,7 @@ from django.urls import path, re_path
 from django.views.generic import View
 
 from conreq.utils.environment import get_base_url
+from conreq.utils.profiling import profiled_view
 
 # pylint: disable=import-outside-toplevel
 
@@ -27,15 +28,7 @@ def url(
     # with large numbers of registered URLs.
 
     def decorator(new_path: Any):
-
-        from conreq.utils.profiling import metrics
-
-        if not callable(new_path):
-            view = new_path
-        elif isclass(new_path):
-            view = metrics()(new_path.as_view())
-        else:
-            view = metrics()(new_path)
+        view = profiled_view(new_path)
 
         if not use_regex:
             urlpatterns.append(path(BASE_URL + pattern, view, name=name))
@@ -58,15 +51,7 @@ def api(
     from conreq.urls import urlpatterns
 
     def decorator(new_path: Any):
-
-        from conreq.utils.profiling import metrics
-
-        if not callable(new_path):
-            view = new_path
-        elif isclass(new_path):
-            view = metrics()(new_path.as_view())
-        else:
-            view = metrics()(new_path)
+        view = profiled_view(new_path)
 
         if not use_regex:
             urlpatterns.append(path(f"{BASE_URL}/v{version}/{pattern}", view))

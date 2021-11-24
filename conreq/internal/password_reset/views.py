@@ -1,12 +1,14 @@
 from django.contrib.auth import views as auth_views
 
+from conreq import config
 from conreq.app import register
 from conreq.internal.password_reset.forms import PasswordResetForm
 
 
-@register.url("password_reset", name="password_reset")
+@register.password_reset_view()
 class PasswordResetView(auth_views.PasswordResetView):
     form_class = PasswordResetForm
+    template_name = config.password_reset_template
 
 
 register.url("password_reset/done", name="password_reset_done")(

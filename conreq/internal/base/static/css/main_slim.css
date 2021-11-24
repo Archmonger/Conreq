@@ -149,13 +149,13 @@ a {
 /* Info text */
 h1 {
 	font-size: 16px;
-	font-weight: 300;
+	font-weight: 700;
 }
 
 h2 {
 	margin: 0;
 	margin-bottom: 35px;
-	font-weight: 700;
+	font-weight: 300;
 }
 
 /* Error lists */

@@ -12,7 +12,9 @@ class PasswordResetForm(_PasswordResetForm):
     email = CharField(
         label=_("Email"),
         max_length=254,
-        widget=TextInput(attrs={"autocomplete": "email"}),
+        widget=TextInput(
+            attrs={"autocomplete": "email", "placeholder": "Email or Username"}
+        ),
     )
 
     def get_users(self, username_or_email):
