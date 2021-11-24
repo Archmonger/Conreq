@@ -16,7 +16,8 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 
 -   Installable Apps
 -   Behaves as a Progressive Web App (PWA)
--   Customization for All Core Webpages
+-   Customizable Core Webpages (Landing, Home, Sign In, Sign Up, Password Reset)
+-   Graphical Database Administration
 -   MySQL and SQLite Databases
 -   Customizable Base URL
 -   [Interactive HTML via ReactJS in Python](https://github.com/idom-team/django-idom)
