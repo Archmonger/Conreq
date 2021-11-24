@@ -21,7 +21,7 @@
                 <img src="{% static 'images/conreq_logo.png' %}" class="logo">
             </div>
 
-            <form method="post" action="{{ request.path }}">
+            <form id="sign-up-form" method="post" action="">
                 {% csrf_token %}
                 <h1>REGISTRATION</h1>
                 <h2>Create your new {% server_name %} account!</h2>

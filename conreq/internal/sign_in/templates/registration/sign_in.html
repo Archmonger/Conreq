@@ -19,7 +19,7 @@
                 <img src="{% static 'images/conreq_logo.png' %}" class="logo">
             </div>
 
-            <form method="post" action="{% url 'sign_in' %}" class="sign-in-form">
+            <form id="sign-in-form" method="post" action="">
                 {% csrf_token %}
 
                 {{ form.non_field_errors }}
