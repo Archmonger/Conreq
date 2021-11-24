@@ -2,11 +2,12 @@
 Tools for sending email.
 """
 from dataclasses import dataclass
-from typing import Iterable, Union
+from typing import Iterable, Sequence, Union
 
 from django.core.mail import EmailMultiAlternatives
 from django.core.mail import send_mail as django_send_mail
-from django.core.mail.backends.smtp import EmailBackend
+from django.core.mail.backends import smtp
+from django.core.mail.message import EmailMessage
 from huey.contrib.djhuey import db_task
 
 from conreq.internal.email.models import AuthEncryption, EmailConfig
@@ -25,7 +26,7 @@ def get_mail_backend(config: EmailConfig = None):
     if not config:
         config = EmailConfig.get_solo()
 
-    backend = EmailBackend(
+    backend = smtp.EmailBackend(
         host=config.server,
         port=config.port,
         username=config.username,
@@ -38,6 +39,24 @@ def get_mail_backend(config: EmailConfig = None):
     # since threading.rlock is not serializable by Huey
     backend._lock = DoNothingWith()  # pylint: disable=protected-access
     return backend
+
+
+class EmailBackend(smtp.EmailBackend):
+    """Email backend to be used for Django reverse compatibility."""
+
+    def configure(self):
+        config: EmailConfig = EmailConfig.get_solo()
+        self.host = config.server
+        self.port = config.port
+        self.username = config.username
+        self.password = config.password
+        self.use_tls = config.auth_encryption == AuthEncryption.TLS
+        self.use_ssl = config.auth_encryption == AuthEncryption.SSL
+        self.timeout = config.timeout
+
+    def send_messages(self, email_messages: Sequence[EmailMessage]) -> int:
+        self.configure()
+        return super().send_messages(email_messages)
 
 
 def get_from_name(config: EmailConfig = None):
@@ -94,7 +113,7 @@ def send_mass_mail(
 
 
 def _send_mass_email(
-    connection: EmailBackend, emails: Iterable[Email], config: EmailConfig
+    connection: smtp.EmailBackend, emails: Iterable[Email], config: EmailConfig
 ):
     messages = []
     for email in emails:

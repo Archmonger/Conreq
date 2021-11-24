@@ -333,6 +333,11 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = "media/"
 
 
+# Email
+EMAIL_BACKEND = "conreq.app.services.email.EmailBackend"
+EMAIL_SUBJECT_PREFIX = ""
+
+
 # Conreq Apps
 # Add packages folder to Python's path
 sys.path.append(str(PACKAGES_DEV_DIR))

@@ -18,7 +18,6 @@ class DebugConfig(AppConfig):
 
         performance_profiling()
         admin_panel()
-        password_reset()
         api_docs()
 
 
@@ -29,23 +28,6 @@ def performance_profiling():
 def admin_panel():
     register.url("admin/docs/")(include("django.contrib.admindocs.urls"))
     register.url("admin/")(admin.site.urls)
-
-
-def password_reset():
-    from django.contrib.auth import views as auth_views
-
-    register.url("password_reset", name="password_reset_done")(
-        auth_views.PasswordResetView
-    )
-    register.url("password_reset/done", name="password_reset_done")(
-        auth_views.PasswordResetDoneView
-    )
-    register.url("reset/<uidb64>/<token>", name="password_reset_confirm")(
-        auth_views.PasswordResetConfirmView
-    )
-    register.url("reset/done", name="password_reset_complete")(
-        auth_views.PasswordResetCompleteView
-    )
 
 
 def api_docs():
