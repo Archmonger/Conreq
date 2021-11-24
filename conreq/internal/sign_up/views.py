@@ -18,7 +18,6 @@ def sign_up_with_invite(request, invite_code):
     # Check if the invite code is valid
     try:
         code: InviteCode = InviteCode.objects.get(code=invite_code)
-        print(code.is_expired, code.is_used, code.is_valid)
         if not code.is_valid:
             return redirect("landing")
     except (InviteCode.DoesNotExist, InviteCode.MultipleObjectsReturned):
