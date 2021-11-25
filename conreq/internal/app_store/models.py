@@ -51,7 +51,7 @@ class Category(models.Model):
 
     # Basic Info
     name = models.CharField(max_length=50)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True)
 
 
 class Subcategory(models.Model):
@@ -69,7 +69,7 @@ class Subcategory(models.Model):
 
     # Basic Info
     name = models.CharField(max_length=50)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
@@ -85,7 +85,7 @@ class AppPackage(models.Model):
     # Basic Info
     package_name = models.CharField(max_length=100, help_text="Must be snake_case.")
     verbose_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True)
     long_description = models.FileField(upload_to="app_store/readme/")
     long_description_type = models.CharField(
         max_length=20,
@@ -94,19 +94,19 @@ class AppPackage(models.Model):
     )
     subcategories = models.ManyToManyField(Subcategory)
     development_stage = models.CharField(
-        max_length=21, choices=DevelopmentStage.choices, blank=True, null=True
+        max_length=21, choices=DevelopmentStage.choices, blank=True
     )
     version = VersionField()
-    banner_message = models.TextField(blank=True, null=True)
+    banner_message = models.TextField(blank=True)
 
     # Ownership Info
     author = models.CharField(max_length=50)
-    author_email = models.EmailField(blank=True, null=True)
+    author_email = models.EmailField(blank=True)
     repository_url = models.URLField()
-    homepage_url = models.URLField(blank=True, null=True)
-    support_url = models.URLField(blank=True, null=True)
-    donation_url = models.URLField(blank=True, null=True)
-    pypi_url = models.URLField(blank=True, null=True)
+    homepage_url = models.URLField(blank=True)
+    support_url = models.URLField(blank=True)
+    donation_url = models.URLField(blank=True)
+    pypi_url = models.URLField(blank=True)
     license_type = models.CharField(max_length=100, default="GPLv3")
 
     # Environment
@@ -142,8 +142,8 @@ class EnvironmentVariable(models.Model):
     tracker = FieldTracker()
 
     name = models.CharField(max_length=50)
-    default = models.CharField(max_length=255, blank=True, null=True)
-    example = models.CharField(max_length=255, blank=True, null=True)
+    default = models.CharField(max_length=255, blank=True)
+    example = models.CharField(max_length=255, blank=True)
     required = models.BooleanField(default=False, blank=True, null=True)
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
 
@@ -158,7 +158,7 @@ class Screenshot(models.Model):
     tracker = FieldTracker()
 
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to="app_store/screenshot/")
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
 
@@ -173,6 +173,6 @@ class NoticeMessage(models.Model):
     tracker = FieldTracker()
 
     title = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True)
     mark_read = models.BooleanField(default=False, blank=True, null=True)
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
