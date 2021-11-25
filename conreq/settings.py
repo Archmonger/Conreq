@@ -213,6 +213,8 @@ if not SECRET_KEY:
 
 # Django Apps & Middleware
 INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.admindocs",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -363,8 +365,6 @@ if DEBUG:
     INSTALLED_APPS.append("silk")
     # API docs generator
     INSTALLED_APPS.append("drf_yasg")
-    INSTALLED_APPS.append("django.contrib.admin")
-    INSTALLED_APPS.append("django.contrib.admindocs")
 else:
     # Automatically delete dangling files
     INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
