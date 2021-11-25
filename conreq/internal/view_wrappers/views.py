@@ -59,7 +59,17 @@ async def password_reset(request, *args, **kwargs):
 async def password_reset_sent(request, *args, **kwargs):
     """Wrapper for the configurable password reset view."""
     view = conreq.config.password_reset_sent_view
-    if view is password_reset:
+    if view is password_reset_sent:
+        return stub(request)
+    if iscoroutinefunction(view):
+        return await view(request, *args, **kwargs)
+    return await convert_to_async(view)(request, *args, **kwargs)
+
+
+async def password_reset_confirm(request, *args, **kwargs):
+    """Wrapper for the configurable password reset view."""
+    view = conreq.config.password_reset_sent_view
+    if view is password_reset_confirm:
         return stub(request)
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)

@@ -83,10 +83,25 @@ def password_reset_view() -> None:
 
 
 def password_reset_sent_view() -> None:
-    """Changes the password reset view."""
+    """Changes the password reset sent view."""
 
     def decorator(func):
         conreq.config.password_reset_sent_view = profiled_view(func)
+
+        @wraps(func)
+        def _wrapped_func(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return _wrapped_func
+
+    return decorator
+
+
+def password_reset_confirm_view() -> None:
+    """Changes the password reset confirm view."""
+
+    def decorator(func):
+        conreq.config.password_reset_confirm_view = profiled_view(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

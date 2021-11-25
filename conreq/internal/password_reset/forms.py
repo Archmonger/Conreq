@@ -1,5 +1,7 @@
-from django.contrib.auth import get_user_model
+from django import forms
+from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.forms import PasswordResetForm as _PasswordResetForm
+from django.contrib.auth.forms import SetPasswordForm as _SetPasswordForm
 from django.contrib.auth.forms import _unicode_ci_compare
 from django.db.models import Q
 from django.forms import CharField, TextInput
@@ -38,3 +40,24 @@ class PasswordResetForm(_PasswordResetForm):
                 or _unicode_ci_compare(username_or_email, getattr(u, "username")),
             )
         )
+
+
+class SetPasswordForm(_SetPasswordForm):
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(
+            attrs={"autocomplete": "new-password", "placeholder": "New Password"}
+        ),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "autocomplete": "new-password",
+                "placeholder": "Confirm New Password",
+            }
+        ),
+    )

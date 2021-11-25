@@ -8,10 +8,12 @@
     <img src="{% static 'images/conreq_logo.png' %}" class="logo">
 </div>
 
+
+<h1 class="centered">FIRST TIME SETUP</h1>
+<h2 class="centered">Create your admin account.</h2>
+
 <form id="initialization-form" method="post" action="">
     {% csrf_token %}
-    <h1>FIRST TIME SETUP</h1>
-    <h2>Create your admin account.</h2>
 
     {{ form.email.errors }}
     <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off" autocapitalize="off"

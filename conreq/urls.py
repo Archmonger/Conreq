@@ -25,6 +25,11 @@ urlpatterns = [
         config.password_reset_sent_view,
         name="password_reset_sent",
     ),
+    path(
+        "password_reset/<uidb64>/<token>",
+        config.password_reset_confirm_view,
+        name="password_reset_confirm",
+    ),
 ]
 
 # Wrap the urlpatterns in BASE_URL if required
