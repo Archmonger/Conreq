@@ -55,8 +55,10 @@ class EmailBackend(smtp.EmailBackend):
         self.timeout = config.timeout
 
     def send_messages(self, email_messages: Sequence[EmailMessage]) -> int:
-        self.configure()
-        return super().send_messages(email_messages)
+        config: EmailConfig = EmailConfig.get_solo()
+        if config.enabled:
+            return super().send_messages(email_messages)
+        return 0
 
 
 def get_from_name(config: EmailConfig = None):
@@ -81,18 +83,20 @@ def send_mail(
     Sends a single message to list of recipients. All members of the list
     will see the other recipients in the 'To' field.
     """
-    config = EmailConfig.get_solo()
+    config: EmailConfig = EmailConfig.get_solo()
     backend = get_mail_backend(config)
-    return db_task(
-        retries=retries, retry_delay=retry_delay, priority=priority, expires=expires
-    )(django_send_mail)(
-        email.subject,
-        email.message,
-        get_from_name(config),
-        email.recipient_list,
-        html_message=email.html_message,
-        connection=backend,
-    )
+
+    if config.enabled:
+        return db_task(
+            retries=retries, retry_delay=retry_delay, priority=priority, expires=expires
+        )(django_send_mail)(
+            email.subject,
+            email.message,
+            get_from_name(config),
+            email.recipient_list,
+            html_message=email.html_message,
+            connection=backend,
+        )
 
 
 def send_mass_mail(
@@ -105,11 +109,12 @@ def send_mass_mail(
     """
     Sends out multiple emails while reusing one SMTP connection.
     """
-    config = EmailConfig.get_solo()
+    config: EmailConfig = EmailConfig.get_solo()
     backend = get_mail_backend(config)
-    return db_task(
-        retries=retries, retry_delay=retry_delay, priority=priority, expires=expires
-    )(_send_mass_email)(connection=backend, emails=emails, config=config)
+    if config.enabled:
+        return db_task(
+            retries=retries, retry_delay=retry_delay, priority=priority, expires=expires
+        )(_send_mass_email)(connection=backend, emails=emails, config=config)
 
 
 def _send_mass_email(
