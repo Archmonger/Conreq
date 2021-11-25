@@ -1,14 +1,15 @@
 .viewport-container {
-	position: absolute;
+	position: relative;
 	left: var(--sidebar-width);
-	height: calc(100% - var(--navbar-height));
+	height: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
 	overflow-y: overlay;
 	width: calc(100vw - var(--viewport-left));
 	padding: var(--viewport-padding);
 	padding-bottom: 0;
-	display: inline-block;
+	display: flex;
+	flex-direction: column;
 	color: rgb(255 255 255 / 0.75);
 }
 

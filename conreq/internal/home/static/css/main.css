@@ -34,7 +34,7 @@ body {
 		var(--body-bg);
 	margin: 0px;
 	padding: 0px;
-	overflow-y: scroll;
+	overflow-y: hidden;
 	box-sizing: content-box;
 	position: relative;
 	line-height: 1;
@@ -199,4 +199,12 @@ html * {
 	-ms-overflow-style: none;
 	/* Firefox 64+ */
 	scrollbar-width: none;
+}
+
+.homepage {
+	height: 100%;
+}
+
+.homepage > div {
+	height: 100%;
 }
