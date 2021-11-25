@@ -20,6 +20,11 @@ urlpatterns = [
     path("sign_up/<invite_code>", config.sign_up_view, name="sign_up"),
     path("sign_out", auth_views.logout_then_login, name="sign_out"),
     path("password_reset", config.password_reset_view, name="password_reset"),
+    path(
+        "password_reset/done",
+        config.password_reset_done_view,
+        name="password_reset_done",
+    ),
 ]
 
 # Wrap the urlpatterns in BASE_URL if required

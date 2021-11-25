@@ -213,8 +213,6 @@ if not SECRET_KEY:
 
 # Django Apps & Middleware
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.admindocs",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -344,7 +342,7 @@ sys.path.append(str(PACKAGES_DEV_DIR))
 sys.path.append(str(PACKAGES_DIR))
 
 if not get_safe_mode():
-    INSTALLED_APPS.extend(find_apps())
+    INSTALLED_APPS = list(find_apps()) + INSTALLED_APPS
 
 # Run startup.py
 packages = find_packages()
@@ -365,6 +363,8 @@ if DEBUG:
     INSTALLED_APPS.append("silk")
     # API docs generator
     INSTALLED_APPS.append("drf_yasg")
+    INSTALLED_APPS.append("django.contrib.admin")
+    INSTALLED_APPS.append("django.contrib.admindocs")
 else:
     # Automatically delete dangling files
     INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
