@@ -3,6 +3,7 @@
 from inspect import isclass
 from typing import Any
 
+from conreq.utils.environment import get_debug
 from conreq.utils.generic import DoNothingDecorator
 
 # pylint: disable=invalid-name,too-few-public-methods,unused-import
@@ -10,11 +11,11 @@ from conreq.utils.generic import DoNothingDecorator
 metrics = DoNothingDecorator
 
 # Set performance profiling capabilities depending on whether DEBUG=True
-# TODO: Fix django silk periodically breaking
-# if get_debug():
-#     from silk.profiling.profiler import silk_profile as metrics
-# else:
-#     metrics = DoNothingDecorator
+
+if get_debug():
+    from silk.profiling.profiler import silk_profile as metrics
+else:
+    metrics = DoNothingDecorator
 
 
 def profiled_view(view: Any):

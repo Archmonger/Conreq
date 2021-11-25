@@ -5,7 +5,6 @@ from django.urls import path, re_path
 from django.views.generic import View
 
 from conreq.utils.environment import get_base_url
-from conreq.utils.profiling import profiled_view
 
 # pylint: disable=import-outside-toplevel
 
@@ -22,11 +21,9 @@ def url(
     """Decorates a Django view function or view class."""
     from conreq.urls import urlpatterns
 
-    # TODO: Split URLs at every slash and create nested URLpatterns for every registered URL.
-    # Would improve performance of the Django URL router significantly for configurations
-    # with large numbers of registered URLs.
-
     def decorator(new_path: Any):
+        from conreq.utils.profiling import profiled_view
+
         view = profiled_view(new_path)
 
         if not use_regex:
@@ -50,6 +47,8 @@ def api(
     from conreq.urls import urlpatterns
 
     def decorator(new_path: Any):
+        from conreq.utils.profiling import profiled_view
+
         view = profiled_view(new_path)
 
         if not use_regex:
