@@ -43,7 +43,7 @@ def api_docs():
             title="Conreq API Endpoints",
             default_version="v1",
             description="""
-            This page contains a lost of all endpoints available within this Conreq instance.
+            This page displays all endpoints available within this Conreq instance.
 
             Endpoints require an API key either in **HTTP Header (Authorization: Api-Key)** or in the **URL Parameter (apikey)**.
 
