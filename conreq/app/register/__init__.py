@@ -14,7 +14,7 @@ from .views import (
     home_view,
     landing_view,
     password_reset_view,
-    password_reset_done_view,
+    password_reset_sent_view,
     sign_in_view,
     sign_up_view,
 )
@@ -39,7 +39,7 @@ __all__ = [
     "home_view",
     "landing_view",
     "password_reset_view",
-    "password_reset_done_view",
+    "password_reset_sent_view",
     "sign_in_view",
     "sign_up_view",
 ]

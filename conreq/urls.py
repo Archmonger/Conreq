@@ -21,9 +21,9 @@ urlpatterns = [
     path("sign_out", auth_views.logout_then_login, name="sign_out"),
     path("password_reset", config.password_reset_view, name="password_reset"),
     path(
-        "password_reset/done",
-        config.password_reset_done_view,
-        name="password_reset_done",
+        "password_reset/sent",
+        config.password_reset_sent_view,
+        name="password_reset_sent",
     ),
 ]
 
