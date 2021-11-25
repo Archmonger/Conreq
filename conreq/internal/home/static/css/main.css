@@ -178,12 +178,6 @@ a:hover {
 	background-color: var(--accent-color);
 }
 
-::-webkit-scrollbar {
-	width: 7px;
-	height: 7px;
-	background: transparent;
-}
-
 .sidebar::-webkit-scrollbar {
 	display: none;
 }
