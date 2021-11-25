@@ -1,53 +1,36 @@
+{% extends 'centered_page.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    {% include "head/initialization.html" %}
-</head>
+{% block title %}First Time Setup{% endblock %}
 
-<body>
-    <!-- Wave Animation -->
-    <div class="ocean">
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
+{% block content %}
+<div class="default-box-header">
+    <img src="{% static 'images/conreq_logo.png' %}" class="logo">
+</div>
 
-    <div class="main">
-        <div class="default-box" data-aos="zoom-in" data-aos-duration="1000">
-            <div class="default-box-header">
-                <img src="{% static 'images/conreq_logo.png' %}" class="logo">
-            </div>
+<form id="initialization-form" method="post" action="">
+    {% csrf_token %}
+    <h1>FIRST TIME SETUP</h1>
+    <h2>Create your admin account.</h2>
 
-            <form id="initialization-form" method="post" action="">
-                {% csrf_token %}
-                <h1>FIRST TIME SETUP</h1>
-                <h2>Create your admin account.</h2>
+    {{ form.email.errors }}
+    <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off" autocapitalize="off"
+        spellcheck="false" type="email" required="" name="email" value="{{ form.data.email }}">
 
-                {{ form.email.errors }}
-                <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                    autocapitalize="off" spellcheck="false" type="email" required="" name="email"
-                    value="{{ form.data.email }}">
+    {{ form.username.errors }}
+    <input placeholder="Username" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+        autocapitalize="off" spellcheck="false" type="text" required="" name="username" autocomplete="username"
+        maxlength="150" value="{{ form.data.username }}">
 
-                {{ form.username.errors }}
-                <input placeholder="Username" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                    autocapitalize="off" spellcheck="false" type="text" required="" name="username"
-                    autocomplete="username" maxlength="150" value="{{ form.data.username }}">
+    {{ form.password2.errors }}
+    <input placeholder="Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+        autocapitalize="off" spellcheck="false" type="password" required="" name="password1"
+        autocomplete="current-password" id="password" value="{{ form.data.password1 }}">
 
-                {{ form.password2.errors }}
-                <input placeholder="Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                    autocapitalize="off" spellcheck="false" type="password" required="" name="password1"
-                    autocomplete="current-password" id="password" value="{{ form.data.password1 }}">
+    <input placeholder="Confirm Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
+        autocapitalize="off" spellcheck="false" type="password" required="" id="confirm_password" name="password2"
+        value="{{ form.data.password2 }}">
 
-                <input placeholder="Confirm Password" oninput="this.className = ''" autocomplete="off" autocorrect="off"
-                    autocapitalize="off" spellcheck="false" type="password" required="" id="confirm_password"
-                    name="password2" value="{{ form.data.password2 }}">
-
-                <input type="submit" value="Submit">
-            </form>
-
-        </div>
-    </div>
-</body>
-
-</html>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
