@@ -14,8 +14,8 @@ class _Config:
         home,
         landing,
         password_reset,
-        password_reset_sent,
         password_reset_confirm,
+        password_reset_sent,
         sign_in,
         sign_up,
     )
