@@ -213,8 +213,9 @@ if not SECRET_KEY:
 
 # Django Apps & Middleware
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.admindocs",
+    *({"jazzmin"} if DEBUG else {}),
+    *({"django.contrib.admin"} if DEBUG else {}),
+    *({"django.contrib.admindocs"} if DEBUG else {}),
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
