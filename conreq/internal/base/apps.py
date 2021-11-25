@@ -1,6 +1,8 @@
 import idom
 from channels.auth import logout
 from django.apps import AppConfig
+from django.urls.base import reverse
+from idom.core.vdom import make_vdom_constructor
 from idom.html import div, i, p
 
 import conreq
@@ -55,21 +57,24 @@ def system_settings(websocket, state, set_state):
     return p("system settings")
 
 
-@register.nav_tab("Performance", "Debug")
+iframe = make_vdom_constructor("iframe")
+
+
+@register.nav_tab("Performance", "Debug", padding=False)
 def performance(websocket, state, set_state):
-    return p("performance")
+    return iframe({"src": reverse("silk:summary")})
 
 
-@register.nav_tab("Database", "Debug")
+@register.nav_tab("Database", "Debug", padding=False, viewport=Viewport.secondary)
 def database(websocket, state, set_state):
-    return p("database")
+    return iframe({"src": reverse("admin:index")})
 
 
-@register.nav_tab("Code Outline", "Debug")
+@register.nav_tab("Code Outline", "Debug", padding=False)
 def code_outline(websocket, state, set_state):
-    return p("code outline")
+    return iframe({"src": reverse("django-admindocs-docroot")})
 
 
-@register.nav_tab("API Docs", "Debug")
+@register.nav_tab("API Docs", "Debug", padding=False)
 def api_docs(websocket, state, set_state):
-    return p("api docs")
+    return iframe({"src": reverse("swagger_ui")})

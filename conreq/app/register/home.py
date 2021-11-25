@@ -15,6 +15,7 @@ def nav_tab(
     viewport: Viewport = Viewport.primary,
     on_click: Callable = None,  # Args = websocket, state, set_state, tab
     auth_level: AuthLevel = AuthLevel.user,
+    padding: bool = True,
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked.
     By default, the function decorated will be rendered to the viewport. The `on_click` event
@@ -32,6 +33,7 @@ def nav_tab(
             {
                 "name": tab_name,
                 "viewport": viewport,
+                "viewport_padding": padding,
                 "on_click": on_click,
                 "auth": auth_level,
                 "icon": tab_icon,

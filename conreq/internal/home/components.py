@@ -118,6 +118,7 @@ def homepage(websocket):
         {
             "page_title": "Loading...",
             "viewport": Viewport.loading,
+            "viewport_padding": True,
             "viewport_primary": None,
             "viewport_secondary": None,
             "modal": Modal.loading,
@@ -200,6 +201,7 @@ def sidebar_tab(websocket, state, set_state, tab):
                 | {
                     "viewport": tab["viewport"],
                     f'viewport_{tab["viewport"]}': tab["component"],
+                    "viewport_padding": tab["viewport_padding"],
                 }
             )
             if not tab["on_click"]
@@ -252,7 +254,12 @@ def viewport_primary(websocket, state, set_state):
     # pylint: disable=unused-argument
     return div(
         VIEWPORT_CONTAINER_PRIMARY
-        | ({} if state["viewport"] == Viewport.primary else HIDDEN),
+        | ({} if state["viewport"] == Viewport.primary else HIDDEN)
+        | (
+            {}
+            if state["viewport_padding"] and state["viewport"] == Viewport.primary
+            else {"className": VIEWPORT_CONTAINER_PRIMARY["className"] + " no-padding"}
+        ),
         *(
             [state["viewport_primary"](websocket, state, set_state)]
             if state["viewport_primary"]
@@ -266,7 +273,14 @@ def viewport_secondary(websocket, state, set_state):
     # pylint: disable=unused-argument
     return div(
         VIEWPORT_CONTAINER_SECONDARY
-        | ({} if state["viewport"] == Viewport.secondary else HIDDEN),
+        | ({} if state["viewport"] == Viewport.secondary else HIDDEN)
+        | (
+            {}
+            if state["viewport_padding"] and state["viewport"] == Viewport.secondary
+            else {
+                "className": VIEWPORT_CONTAINER_SECONDARY["className"] + " no-padding"
+            }
+        ),
         *(
             [state["viewport_secondary"](websocket, state, set_state)]
             if state["viewport_secondary"]
