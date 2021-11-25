@@ -63,10 +63,10 @@ def api(
     return decorator
 
 
-def middleware(
+def wsgi_middleware(
     dotted_path: str,
     positioning_element: str = None,
     positioning: str = "before",
 ) -> None:
-    """Shortcut to add middleware to Django."""
+    """Shortcut to add WSGI middleware to Django."""
     # TODO: Implement this

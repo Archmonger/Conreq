@@ -27,3 +27,12 @@ def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
             return _wrapped_class(*args, **kwargs)
 
     return decorator
+
+
+def asgi_middleware(
+    dotted_path: str,
+    positioning_element: str = None,
+    positioning: str = "before",
+) -> None:
+    """Shortcut to add ASGI middleware to Django."""
+    # TODO: Implement this
