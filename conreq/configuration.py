@@ -47,8 +47,9 @@ class _Config:
     manage_users_component: Callable = None
     server_settings_component: Callable = None
     user_settings_component: Callable = None
-    user_setting_sections: list[Callable] = field(default_factory=list)
-    server_setting_tabs: list[dict] = field(default_factory=list)
+    app_store_component: Callable = None
+    user_setting_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
+    server_setting_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
     nav_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
 
     # IDOM VDOMs
