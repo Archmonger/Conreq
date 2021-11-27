@@ -52,9 +52,9 @@ def app_store(websocket, state, set_state):
     return p("app store")
 
 
-@register.nav_tab("System Settings", "Admin")
+@register.nav_tab("Server Settings", "Admin")
 def system_settings(websocket, state, set_state):
-    return p("system settings")
+    return p("server settings")
 
 
 iframe = make_vdom_constructor("iframe")
