@@ -1,5 +1,5 @@
 channels==3.0.4
-diskcache==5.2.1
+diskcache==5.3
 django==3.2.9
 django-cleanup==5.2.0
 django-compression-middleware==0.4.1
@@ -8,7 +8,7 @@ django-dbbackup==3.3.0
 django-jazzmin==2.4.8
 django-model-utils==4.2.0
 django-multiselectfield==0.1.12
-django-project-version==0.15.1
+django-project-version==0.16
 django-searchable-encrypted-fields==0.1.9
 django-silk==4.2.0
 django-solo==1.2.0
@@ -17,12 +17,12 @@ django-url-or-relative-url-field==0.1.2
 django-versionfield==1.0.2
 djangorestframework==3.12.4
 djangorestframework-api-key==2.1.0
-docutils==0.18
+docutils==0.18.1
 drf-yasg==1.20.0
 git+https://github.com/idom-team/django-idom.git
-huey==2.4.1
+huey==2.4.2
 hypercorn[h3]==0.12.0
-markdown==3.3.5
+markdown==3.3.6
 pillow==8.3.2
 pymysql==1.0.2
 python-dotenv==0.19.2
