@@ -15,7 +15,7 @@ djangorestframework==3.12.4
 djangorestframework-api-key==2.1.0
 docutils==0.18
 drf-yasg==1.20.0
-huey==2.4.1
+huey==2.4.2
 hypercorn[h3]==0.12.0
 jsonfield==3.1.0
 markdown==3.3.6
