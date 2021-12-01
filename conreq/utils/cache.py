@@ -83,8 +83,9 @@ def get_or_set(
             _logger.info("%s - %s()", cache_name, function.__name__)
             return function_results
 
-        if cached_results is None:
-            _logger.info("%s - Cache key %s was empty!", cache_name, cache_key)
+        _logger.debug(
+            "%s - Cache key %s contains %s!", cache_name, cache_key, str(cached_results)
+        )
 
         # If a value was in cache and not expired, return that value
         return cached_results
