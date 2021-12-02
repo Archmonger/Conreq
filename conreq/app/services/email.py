@@ -22,7 +22,7 @@ class Email:
     html_message: Union[str, None] = None
 
 
-def get_mail_backend(config: EmailConfig = None):
+def _get_mail_backend(config: EmailConfig = None):
     if not config:
         config = EmailConfig.get_solo()
 
@@ -86,7 +86,7 @@ def send_mail(
     will see the other recipients in the 'To' field.
     """
     config: EmailConfig = EmailConfig.get_solo()
-    backend = get_mail_backend(config)
+    backend = _get_mail_backend(config)
 
     if config.enabled:
         return db_task(
@@ -112,7 +112,7 @@ def send_mass_mail(
     Sends out multiple emails while reusing one SMTP connection.
     """
     config: EmailConfig = EmailConfig.get_solo()
-    backend = get_mail_backend(config)
+    backend = _get_mail_backend(config)
     if config.enabled:
         return db_task(
             retries=retries, retry_delay=retry_delay, priority=priority, expires=expires
