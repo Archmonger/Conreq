@@ -21,7 +21,7 @@ from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 from split_settings.tools import include
-from tzlocal import get_localzone
+from tzlocal import get_localzone_name
 
 import conreq
 from conreq.utils.environment import (
@@ -312,10 +312,7 @@ LOGIN_URL = "sign_in"
 
 # Internationalization
 LANGUAGE_CODE = "en-US"
-TIME_ZONE = get_localzone().key
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
+TIME_ZONE = get_localzone_name()
 
 
 # Static Files (CSS, JavaScript, Images)
