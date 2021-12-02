@@ -7,7 +7,7 @@ from solo.models import SingletonModel
 class AuthEncryption(models.TextChoices):
     TLS = "TLS", "TLS (Default)"
     SSL = "SSL", "SSL"
-    MARKDOWN = "OFF", "Off"
+    OFF = "OFF", "Off"
 
 
 class EmailConfig(SingletonModel):
