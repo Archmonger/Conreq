@@ -4,7 +4,7 @@
 [![GitHub Discussions](https://img.shields.io/badge/-View-purple?style=flat-square&label=GitHub%20Discussions&logo=github)](https://github.com/Archmonger/Conreq/discussions)
 [![Reddit](https://img.shields.io/badge/-View-red?style=flat-square&label=Reddit&logo=reddit)](https://www.reddit.com/r/conreq)
 
-Conreq bundles together the best open source technologies to create a web development platform. Key features include a full-stack framework (ReactJS in Python), web server, database ORM, and background task queue. Creations made by developers can be shared with others through our app store.
+Conreq bundles together the best open source technologies to create a web development platform. Key features include a full-stack framework (ReactJS in Python), deployment ready web server, database ORM, and background task queue. Creations made by developers can be shared with others through our app store.
 
 Designed as a passion project to push the limits of web development in cross-platform **pure Python**.
 
