@@ -48,7 +48,7 @@ BACKUP_DIR = DATA_DIR / "backup"
 TEMP_DIR = DATA_DIR / "temp"
 USER_STATICFILES_DIR = DATA_DIR / "static"
 LOG_DIR = DATA_DIR / "logs"
-MAKE_DIRS = [
+MAKE_DIRS: list[Path] = [
     DATA_DIR,
     PACKAGES_DIR,
     PACKAGES_DEV_DIR,
@@ -75,7 +75,7 @@ APP_SLIM_TEMPLATE = APP_TEMPLATE_DIR / "app_slim"
 
 
 # Environment Variables
-DOTENV_FILE = DATA_DIR / "settings.env"
+DOTENV_FILE: Path = DATA_DIR / "settings.env"
 if not DOTENV_FILE.exists():
     with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
         pass
