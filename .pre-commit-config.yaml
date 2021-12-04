@@ -65,10 +65,6 @@ repos:
           - id: rst-linter
             files: >-
                 ^[^/]+[.]rst$
-    - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-      rev: 0.1.0
-      hooks:
-          - id: yamlfmt
     - repo: https://github.com/adrienverge/yamllint
       rev: v1.26.3
       hooks:
