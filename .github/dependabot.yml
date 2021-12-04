@@ -1,8 +1,9 @@
+---
 version: 2
 updates:
-    - package-ecosystem: "pip"
-      directory: "/requirements/"
+    - package-ecosystem: pip
+      directory: /requirements/
       schedule:
-          interval: "daily"
-      target-branch: "develop"
+          interval: daily
+      target-branch: develop
       open-pull-requests-limit: 20
