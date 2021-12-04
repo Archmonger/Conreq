@@ -36,8 +36,8 @@ markdown_extensions:
     - toc:
           permalink: true
     - pymdownx.emoji:
-          emoji_index: !!python/name:materialx.emoji.twemoji
-          emoji_generator: !!python/name:materialx.emoji.to_svg
+          emoji_index: !%21python/name:materialx.emoji.twemoji
+          emoji_generator: !%21python/name:materialx.emoji.to_svg
     - pymdownx.highlight
     - pymdownx.superfences
     - attr_list
