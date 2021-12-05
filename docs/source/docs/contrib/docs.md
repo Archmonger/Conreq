@@ -25,7 +25,7 @@ For more information beyond what is in this guide, check out the [MkDocs](https:
 
 1. Create a new markdown file within `Conreq/docs/source/`, or edit an existing markdown file within this folder.
 2. Fill in this file with any markdown text you want!
-3. _If you made a new file,_ add this docs page to the navigation by editing `Conreq/docs/source/mkdocs.yml`.
+3. _If you made a new file:_ add this docs page to the navigation by editing `Conreq/docs/source/mkdocs.yml`.
 4. Commit your changes to your GitHub branch.
 5. Submit a GitHub pull request to `Archmonger/Conreq:develop`.
 
