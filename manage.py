@@ -55,4 +55,7 @@ def run_in_safe_mode(exception):
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
