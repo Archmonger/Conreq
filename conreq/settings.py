@@ -128,7 +128,6 @@ FILE_UPLOAD_TEMP_DIR = TEMP_DIR
 CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
 ACCESS_LOG_FILE = LOG_DIR / "access.log"
 LOG_LEVEL = get_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
-
 LOGGING_INITIAL = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -239,7 +238,6 @@ INSTALLED_APPS = [
     "compressor",  # Minifies CSS/JS files
     "dbbackup",  # Convenient database backup API
 ]
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
@@ -335,13 +333,12 @@ EMAIL_BACKEND = "conreq.app.services.email.EmailBackend"
 EMAIL_SUBJECT_PREFIX = ""
 
 
-# Conreq Apps
 # Add packages folder to Python's path
 sys.path.append(str(PACKAGES_DEV_DIR))
 sys.path.append(str(PACKAGES_DIR))
-
 if not get_safe_mode():
     INSTALLED_APPS = list(find_apps()) + INSTALLED_APPS
+
 
 # Run startup.py
 packages = find_packages()
@@ -353,8 +350,10 @@ for package in packages:
     except Exception as exception:
         _logger.error('%s startup script has failed due to "%s"!', package, exception)
 
+
 # Execute settings scripts from Conreq Apps
 include(*conreq.config.setting_scripts)
+
 
 # Add conditional apps
 if DEBUG:
@@ -365,6 +364,7 @@ if DEBUG:
 else:
     # Automatically delete dangling files
     INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
+
 
 # Ensure Conreq app loader comes last
 INSTALLED_APPS.remove("conreq.internal.app_loader")
