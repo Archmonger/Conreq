@@ -8,7 +8,6 @@ django-dbbackup==3.3.0
 django-jazzmin==2.4.8
 django-model-utils==4.2.0
 django-multiselectfield==0.1.12
-django-project-version==0.16.0
 django-searchable-encrypted-fields==0.1.9
 django-silk==4.2.0
 django-solo==1.2.0
