@@ -16,15 +16,15 @@
 
 <!-- Android and iOS icons -->
 {% for icon in pwa.app_icons_apple %}
-<link rel="apple-touch-icon" href="{{ icon.src }}" sizes="{{ icon.sizes }}">
+    <link rel="apple-touch-icon" href="{{ icon.src }}" sizes="{{ icon.sizes }}">
 {% endfor %}
 {% for icon in pwa.app_icons %}
-<link rel="icon" href="{{ icon.src }}" sizes="{{ icon.sizes }}" purpose="{{ icon.purpose }}">
+    <link rel="icon" href="{{ icon.src }}" sizes="{{ icon.sizes }}" purpose="{{ icon.purpose }}">
 {% endfor %}
 
 <!-- Splash screen icons -->
 {% for splash in pwa.app_splash_screen %}
-<link href="{{ splash.src }}" media="{{ splash.media }}" rel="apple-touch-startup-image" />
+    <link href="{{ splash.src }}" media="{{ splash.media }}" rel="apple-touch-startup-image" />
 {% endfor %}
 
 <!-- Tile for Win8 -->
@@ -40,12 +40,12 @@
         }).then(function (registration) {
             // Registration successful
             {% if pwa.app_debug_mode %}
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
             {% endif %}
         }, function (err) {
             // Registration failed
             {% if pwa.app_debug_mode %}
-            console.log('ServiceWorker registration failed: ', err);
+                console.log('ServiceWorker registration failed: ', err);
             {% endif %}
         });
     }

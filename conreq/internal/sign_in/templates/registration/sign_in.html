@@ -4,26 +4,26 @@
 {% block title %}Sign In{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/sign_in.css' %}" crossorigin="anonymous">
-<div class="default-box-header">
-    <img src="{% static 'images/conreq_logo.png' %}" class="logo">
-</div>
+    <link rel="stylesheet" href="{% static 'css/sign_in.css' %}" crossorigin="anonymous">
+    <div class="default-box-header">
+        <img src="{% static 'images/conreq_logo.png' %}" class="logo">
+    </div>
 
-<form id="sign-in-form" method="post" action="">
-    {% csrf_token %}
+    <form id="sign-in-form" method="post" action="">
+        {% csrf_token %}
 
-    {{ form.non_field_errors }}
-    <input placeholder="Username" autocapitalize="none" autocomplete="username" autofocus="" id="id_username"
-        maxlength="150" name="username" required="" type="text" value="{{ form.data.username }}">
+        {{ form.non_field_errors }}
+        <input placeholder="Username" autocapitalize="none" autocomplete="username" autofocus="" id="id_username"
+            maxlength="150" name="username" required="" type="text" value="{{ form.data.username }}">
 
-    <input placeholder="Password" autocapitalize="none" autocomplete="current-password" id="id_password" name="password"
-        required="" type="password" value="{{ form.data.password }}">
+        <input placeholder="Password" autocapitalize="none" autocomplete="current-password" id="id_password" name="password"
+            required="" type="password" value="{{ form.data.password }}">
 
-    <input type="submit" value="Sign In">
-    <input type="hidden" name="next" value="{{ next }}">
-</form>
+        <input type="submit" value="Sign In">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
 
-<div class="forgot-password">
-    <a href="{% url 'password_reset' %}">Forgot Password</a>
-</div>
+    <div class="forgot-password">
+        <a href="{% url 'password_reset' %}">Forgot Password</a>
+    </div>
 {% endblock %}
