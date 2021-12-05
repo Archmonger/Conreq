@@ -1,4 +1,4 @@
-This guide is intended to help developers gain an understanding of how the code in Conreq works together to make a functional application.
+This guide is intended to help developers gain an understanding of how Conreq was developed.
 
 ---
 

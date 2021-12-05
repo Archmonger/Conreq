@@ -8,12 +8,15 @@ nav:
           - Environment Variables: configure/env_vars.md
           - Built-in Webserver: configure/webserver.md
           - Custom CSS/JS: configure/static_files.md
-          - Organizr Authentication: configure/organizr.md
-          - MySQL Database: configure/mysql.md
     - Development:
-          - Running Conreq Manually: develop/run_conreq.md
+          - Running Conreq: develop/run_conreq.md
+          - Command Line Interface: develop/cli.md
           - Our Code Explained: develop/code_tldr.md
-          - Creating Custom Apps: develop/creating_apps.md
+          - Create a New Conreq App:
+                - Getting Started: develop/apps/getting_started.md
+                - Python API: develop/apps/api.md
+                - App File Structure: develop/apps/file_structure.md
+                - Creating Hello World: develop/apps/hello_world.md
     - Contribute:
           - Updating the Docs: contrib/docs.md
           - Listing an App: contrib/apps.md

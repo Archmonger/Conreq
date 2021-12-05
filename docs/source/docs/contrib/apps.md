@@ -1,4 +1,4 @@
-Work in Progress, Conreq app framework is not yet in place.
+Work in Progress.
 
 ---
 
