@@ -142,12 +142,12 @@ LOGGING_INITIAL = {
     },
     "handlers": {
         "console": {
-            "level": "INFO",
+            "level": LOG_LEVEL,
             "class": "logging.StreamHandler",
             "formatter": "minimal",
         },
         "conreq_logs": {
-            "level": "INFO",
+            "level": LOG_LEVEL,
             "formatter": "default",
             "encoding": "utf-8",
             "filename": CONREQ_LOG_FILE,

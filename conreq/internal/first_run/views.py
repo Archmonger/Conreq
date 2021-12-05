@@ -4,7 +4,6 @@ from django.shortcuts import redirect
 from django.template import loader
 
 from conreq.internal.server_settings.models import ServerConfig
-from conreq.utils.environment import get_env, set_env
 
 from .forms import InitializationForm
 
@@ -46,6 +45,4 @@ def _first_run_setup(form, request, server_config):
     login(request, user)
     server_config.initialized = True
     server_config.save()
-    if get_env("COMPRESS_RESPONSES", return_type=bool) is None:
-        set_env("COMPRESS_RESPONSES", "true")
     return redirect("landing")
