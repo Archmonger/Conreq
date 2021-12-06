@@ -4,7 +4,7 @@ from typing import Callable
 
 from conreq.app.selectors import AuthLevel, Viewport
 
-# TODO: Create these functions
+# TODO: Create viewport render functions
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass
 
 

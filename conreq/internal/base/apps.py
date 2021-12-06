@@ -20,7 +20,7 @@ class BaseConfig(AppConfig):
         conreq.config.websockets.append(IDOM_WEBSOCKET_PATH)
 
 
-# TODO: Remove this later
+# TODO: Move this navbar registration stuff somewhere else later
 # pylint: disable=unused-argument
 register.nav_group("User", i({"className": "fas fa-users icon-left"}))
 register.nav_group("Admin", i({"className": "fas fa-cogs icon-left"}))

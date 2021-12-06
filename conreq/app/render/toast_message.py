@@ -1,6 +1,6 @@
 """Helpers to render IDOM elements on the page"""
 
-# TODO: Create these functions
+# TODO: Create toast message render function
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass
 
 

@@ -1,7 +1,7 @@
 """Helpers to render IDOM elements on the page"""
 from functools import wraps
 
-# TODO: Create these functions
+# TODO: Create modal render functions
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass
 
 

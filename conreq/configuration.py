@@ -43,7 +43,7 @@ class _Config:
     password_reset_confirm_template: str = "registration/password_reset_confirm.html"
 
     # IDOM Components
-    # TODO: Implement these
+    # TODO: Implement these components
     manage_users_component: Callable = None
     server_settings_component: Callable = None
     user_settings_component: Callable = None
@@ -61,14 +61,16 @@ class _Config:
     )
 
     # WSGI
-    wsgi_middleware: set[dict] = field(default_factory=set)  # TODO: Implement this
+    # TODO: Implement WSGI middleware
+    wsgi_middleware: set[dict] = field(default_factory=set)
 
     # ASGI
     websockets: list[Callable] = field(default_factory=list)
-    asgi_middleware: set[dict] = field(default_factory=set)  # TODO: Implement this
+    # TODO: Implement ASGI middleware
+    asgi_middleware: set[dict] = field(default_factory=set)
 
     # HTML Head
-    # TODO: Implement these
+    # TODO: Implement CSS and JS registration
     home_local_stylesheets: list[dict] = field(default_factory=list)
     home_remote_stylesheets: list[dict] = field(default_factory=list)
     home_scss_stylesheets: list[dict] = field(default_factory=list)

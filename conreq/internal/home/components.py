@@ -108,7 +108,7 @@ SIDEBAR_SAFE_MODE = div(
     "SAFE MODE",
 )
 
-# TODO: Add the following react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
+# TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
 
 
 @idom.component
