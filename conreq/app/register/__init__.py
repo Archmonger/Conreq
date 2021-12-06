@@ -1,6 +1,6 @@
 from .asgi import websocket
 from .components import manage_users_component, server_settings_component
-from .home import nav_group, nav_tab, system_setting
+from .home import nav_group, nav_tab, server_settings
 from .templates import (
     home_template,
     landing_template,
@@ -27,7 +27,7 @@ __all__ = [
     "api",
     "nav_group",
     "nav_tab",
-    "system_setting",
+    "server_settings",
     "user_setting",
     "manage_users_component",
     "server_settings_component",
