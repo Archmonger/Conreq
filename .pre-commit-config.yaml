@@ -69,3 +69,8 @@ repos:
       rev: v1.26.3
       hooks:
           - id: yamllint
+    - repo: https://github.com/thibaudcolas/curlylint
+      rev: v0.13.0
+      hooks:
+          - id: curlylint
+          args: ['conreq/']
