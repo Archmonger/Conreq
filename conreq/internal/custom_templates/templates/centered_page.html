@@ -4,28 +4,28 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        {% block head %}
-            <title>{% block title %}{% server_name %}{% endblock %} | {% server_name %}</title>
-            <meta name="Description" content="{% block description %}{% app_description %}{% endblock %}">
-            {% include "head/minimal.html" %}
-        {% endblock %}
-    </head>
+<head>
+    {% block head %}
+    <title>{% block title %}{% server_name %}{% endblock %} | {% server_name %}</title>
+    <meta name="Description" content="{% block description %}{% app_description %}{% endblock %}">
+    {% include "head/minimal.html" %}
+    {% endblock %}
+</head>
 
-    <body>
-        <!-- Wave Animation -->
-        {% block body %}
-            <div class="ocean">
-                <div class="wave"></div>
-                <div class="wave"></div>
-            </div>
+<body>
+    <!-- Wave Animation -->
+    {% block body %}
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 
-            <div class="main">
-                <div class="default-box" data-aos="zoom-in" data-aos-duration="1000">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
-        {% endblock %}
-    </body>
+    <div class="main">
+        <div class="default-box" data-aos="zoom-in" data-aos-duration="1000">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
 
 </html>
