@@ -15,7 +15,7 @@ class PasswordResetForm(_PasswordResetForm):
         label=_("Email"),
         max_length=254,
         widget=TextInput(
-            attrs={"autocomplete": "email", "placeholder": "Email or Username"}
+            attrs={"autocomplete": "email", "placeholder": "Username or Email"}
         ),
     )
 
