@@ -18,11 +18,11 @@ else:
     metrics = DoNothingDecorator
 
 
-def profiled_view(view: Any):
+def profiled_view(view: Any, name=None):
     """Helper utility to add performance profiling to a view class or function, if possible."""
 
     if not callable(view):
         return view
-    elif isclass(view):
-        return metrics()(view.as_view())
-    return metrics()(view)
+    if isclass(view):
+        return metrics(name=name)(view.as_view())
+    return metrics(name=name)(view)
