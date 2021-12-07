@@ -1,21 +1,11 @@
 from functools import wraps
 from typing import Callable
 
-from django.urls import path
-from django.urls.base import reverse
-from idom.core.vdom import make_vdom_constructor
-
 import conreq
 from conreq.app.components.icon import Icon
-from conreq.utils.environment import get_base_url
+from conreq.utils.components import django_to_idom
 
 from ..selectors import AuthLevel, Viewport, ViewType
-
-# pylint: disable=import-outside-toplevel
-BASE_URL = get_base_url(append_slash=False, prepend_slash=False)
-if BASE_URL:
-    BASE_URL = BASE_URL + "/"
-iframe = make_vdom_constructor("iframe")
 
 
 def nav_tab(
@@ -38,16 +28,7 @@ def nav_tab(
         if view_type == ViewType.idom:
             component = func
         elif view_type == ViewType.django:
-            from conreq.urls import urlpatterns
-            from conreq.utils.profiling import profiled_view
-
-            # Add a /viewport/path.to.component URL
-            view = profiled_view(func)
-            view_name = func.__qualname__
-            urlpatterns.append(path(BASE_URL + view_name, view))
-
-            # Create an iframe with src=/viewport/path.to.component
-            component = iframe({"src": reverse(view_name)})
+            component = django_to_idom(func)
         else:
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
 
