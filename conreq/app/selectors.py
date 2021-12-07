@@ -2,6 +2,12 @@ from dataclasses import dataclass
 
 
 @dataclass
+class ViewType:
+    django: str = "django"
+    idom: str = "idom"
+
+
+@dataclass
 class AuthLevel:
     anonymous: str = "anonymous"
     user: str = "user"
