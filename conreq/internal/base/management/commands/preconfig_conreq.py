@@ -38,6 +38,7 @@ class Command(BaseCommand):
         # Delete temp files
         if TEMP_DIR.exists():
             shutil.rmtree(TEMP_DIR)
+            os.makedirs(TEMP_DIR)
 
         # Django database
         if get_database_type() == "SQLITE3":
