@@ -114,6 +114,7 @@ HUEY = {
     },
 }
 IDOM_BASE_URL = BASE_URL[1:] + "idom/"
+os.environ["IDOM_DEBUG_MODE"] = str(int(DEBUG))
 DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
 DBBACKUP_STORAGE_OPTIONS = {"location": BACKUP_DIR}
 DBBACKUP_TMP_DIR = TEMP_DIR
