@@ -1,6 +1,7 @@
 from functools import wraps
 from typing import Callable
 
+import idom
 from django.urls import path
 from idom.core.proto import VdomDict
 from idom.core.vdom import make_vdom_constructor
@@ -35,8 +36,8 @@ def authenticated(
 
 def django_to_idom(func: Callable) -> VdomDict:
     """Converts a Django view function/class into an IDOM component
-    by turning it into an iframe. Since this is an iframe, you'll
-    need to handle all styling on your own."""
+    by turning it into an idom component in an iframe. Since this is
+    an iframe, you'll need to handle all styling on your own."""
     # pylint: disable=import-outside-toplevel
     from conreq.urls import urlpatterns
     from conreq.utils.profiling import profiled_view
@@ -48,6 +49,7 @@ def django_to_idom(func: Callable) -> VdomDict:
     urlpatterns.append(path(url, view))
 
     # Create an iframe with src=/viewport/path.to.component
+    @idom.component
     def idom_component(*args, **kwargs):
         return iframe({"src": url})
 
