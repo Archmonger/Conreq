@@ -23,7 +23,7 @@ USER_PIC_PLACEHOLDER = {"className": "fas fa-user"}
 USERNAME_CONTAINER = {"className": "username-container"}
 USERNAME = {"className": "username ellipsis"}
 NAVIGATION = {"id": "navigation"}
-NAVGROUP = {
+NAV_GROUP = {
     "className": "nav-group clickable",
     "data-bs-toggle": "collapse",
     "aria-expanded": "true",
@@ -214,14 +214,14 @@ def sidebar_tab(websocket, state, set_state, tab):
 def sidebar_group(websocket, state, set_state, group_name, group_values):
     icon = group_values["icon"]
     tabs = group_values["tabs"]
-    group_id = f"{slugify(group_name)}-tabs"
+    tabs_id = f"{slugify(group_name)}-tabs"
 
     return (
         div(
-            NAVGROUP
+            NAV_GROUP
             | {
-                "data-bs-target": f"#{group_id}",
-                "aria-controls": group_id,
+                "data-bs-target": f"#{tabs_id}",
+                "aria-controls": tabs_id,
                 "title": group_name,
             },
             div(
@@ -232,7 +232,7 @@ def sidebar_group(websocket, state, set_state, group_name, group_values):
             i(GROUP_CARET | {"title": f'Collapse the "{group_name}" group.'}),
         ),
         div(
-            TABS_COLLAPSE | {"id": group_id},
+            TABS_COLLAPSE | {"id": tabs_id},
             div(TABS_INDICATOR),
             div(TABS, *(sidebar_tab(websocket, state, set_state, tab) for tab in tabs)),
         ),
