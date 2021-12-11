@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app_store', '0001_initial'),
+        ("app_store", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='apppackage',
-            name='incompatible_apps',
-            field=models.ManyToManyField(blank=True, to='app_store.AppPackage'),
+            model_name="apppackage",
+            name="incompatible_apps",
+            field=models.ManyToManyField(blank=True, to="app_store.AppPackage"),
         ),
         migrations.AlterField(
-            model_name='apppackage',
-            name='optional_apps',
-            field=models.ManyToManyField(blank=True, to='app_store.AppPackage'),
+            model_name="apppackage",
+            name="optional_apps",
+            field=models.ManyToManyField(blank=True, to="app_store.AppPackage"),
         ),
         migrations.AlterField(
-            model_name='apppackage',
-            name='required_apps',
-            field=models.ManyToManyField(blank=True, to='app_store.AppPackage'),
+            model_name="apppackage",
+            name="required_apps",
+            field=models.ManyToManyField(blank=True, to="app_store.AppPackage"),
         ),
     ]
