@@ -1,3 +1,4 @@
+pip==21.3.1
 channels==3.0.4
 diskcache==5.3.0
 django==3.2.9
