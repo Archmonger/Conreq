@@ -1,7 +1,7 @@
 from django.db import models
+from django.db.models.fields import URLField
 from model_utils import FieldTracker
 from solo.models import SingletonModel
-from url_or_relative_url_field.fields import URLOrRelativeURLField
 
 from conreq.utils.fields import HostnameOrURLField
 
@@ -16,8 +16,8 @@ class ServerConfig(SingletonModel):
         verbose_name_plural = verbose_name
 
     # Basic settings
-    custom_css_url = URLOrRelativeURLField(default="", blank=True)
-    custom_js_url = URLOrRelativeURLField(default="", blank=True)
+    custom_css_url = URLField(default="", blank=True)
+    custom_js_url = URLField(default="", blank=True)
     custom_js = models.TextField(default="", blank=True)
     custom_css = models.TextField(default="", blank=True)
     app_store_url = HostnameOrURLField(default="", blank=True)
