@@ -8,7 +8,7 @@ from . import forms, validators
 class HostnameOrURLField(URLField):
     """URL field that supports hostnames (ex. https://sonarr:8000)"""
 
-    default_validators = [validators.ExtendedURLValidator()]
+    default_validators = [validators.HostnameOrURLValidator()]
 
     def formfield(self, **kwargs):
         # As with CharField, this will cause URL validation to be performed twice.

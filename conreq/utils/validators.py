@@ -6,8 +6,9 @@ from django.utils.regex_helper import _lazy_re_compile
 
 
 @deconstructible
-class ExtendedURLValidator(URLValidator):
-    """URL validator that supports hostnames (ex. https://sonarr:8000)"""
+class HostnameOrURLValidator(URLValidator):
+    """URL validator that supports hostnames (ex. https://sonarr:8000)
+    as well as normal URLs"""
 
     # pylint: disable=too-few-public-methods
     ul = URLValidator.ul
