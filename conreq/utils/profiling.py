@@ -20,7 +20,6 @@ else:
 
 def profiled_view(view: Any, name=None):
     """Helper utility to add performance profiling to a view class or function, if possible."""
-
     if not callable(view):
         return view
     if isclass(view):
