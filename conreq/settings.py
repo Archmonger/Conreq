@@ -226,7 +226,6 @@ INSTALLED_APPS = [
     # Database Fields
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
-    "url_or_relative_url_field",  # Validates relative URLs
     # ASGI
     "channels",  # Websocket library
     "django_idom",  # React JS for Python
