@@ -27,7 +27,7 @@ class BaseConfig(AppConfig):
 
         @register.nav_tab("Settings", "User")
         def settings(websocket, state, set_state):
-            return p("settings")
+            return p("This is a temporary stub for the settings tab.")
 
         @register.nav_tab("Sign Out", "User")
         @idom.component
@@ -40,15 +40,15 @@ class BaseConfig(AppConfig):
 
         @register.nav_tab("Manage Users", "Admin")
         def manage_users(websocket, state, set_state, viewport=Viewport.secondary):
-            return p("manage users")
+            return p("This is a temporary stub for the manage users tab.")
 
         @register.nav_tab("App Store", "Admin")
         def app_store(websocket, state, set_state):
-            return p("app store")
+            return p("This is a temporary stub for the app store tab.")
 
         @register.nav_tab("Server Settings", "Admin")
         def system_settings(websocket, state, set_state):
-            return p("server settings")
+            return p("This is a temporary stub for the server settings tab.")
 
         iframe = make_vdom_constructor("iframe")
 
@@ -56,9 +56,7 @@ class BaseConfig(AppConfig):
         def performance(websocket, state, set_state):
             return iframe({"src": reverse("silk:summary")})
 
-        @register.nav_tab(
-            "Database", "Debug", padding=False, viewport=Viewport.secondary
-        )
+        @register.nav_tab("Database", "Debug", padding=False)
         def database(websocket, state, set_state):
             return iframe({"src": reverse("admin:index")})
 
