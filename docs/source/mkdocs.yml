@@ -57,3 +57,4 @@ repo_url: https://github.com/Archmonger/Conreq/
 site_url: https://archmonger.github.io/Conreq/
 repo_name: Archmonger/Conreq
 edit_uri: edit/docs/source/docs
+docs_dir: src

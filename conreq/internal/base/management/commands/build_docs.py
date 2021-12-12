@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         run(
-            ["mkdocs", "build", "-d", DOCS_DIR / "deploy"],
+            ["mkdocs", "build", "-d", DOCS_DIR / "output"],
             cwd=DOCS_DIR / "source",
             check=True,
         )
