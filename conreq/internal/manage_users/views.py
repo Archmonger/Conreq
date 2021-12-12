@@ -8,8 +8,14 @@ User = get_user_model()
 
 
 class UsersTable(tables.Table):
-    delete = tables.TemplateColumn(template_name="manage_users/delete_btn.html")
-    edit = tables.TemplateColumn(template_name="manage_users/edit_btn.html")
+    delete = tables.TemplateColumn(
+        template_name="manage_users/delete_btn.html",
+        orderable=False,
+    )
+    edit = tables.TemplateColumn(
+        template_name="manage_users/edit_btn.html",
+        orderable=False,
+    )
 
     class Meta:
         model = User
@@ -33,9 +39,6 @@ def manage_users(request):
         return render(request, "manage_users/delete_user.html", {})
 
     table = UsersTable(User.objects.all())
-    table.paginate(
-        page=request.GET.get("page", 1),
-        per_page=request.GET.get("per_page", 25),
-    )
+    tables.RequestConfig(request, paginate={"per_page": 25}).configure(table)
     context = {"table": table}
     return render(request, "manage_users/user_table.html", context)
