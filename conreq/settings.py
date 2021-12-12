@@ -128,10 +128,6 @@ DBBACKUP_CLEANUP_KEEP = 20
 DBBACKUP_CLEANUP_KEEP_MEDIA = 20
 DBBACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M%S"
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
-JAZZMIN_SETTINGS = {
-    "show_sidebar": False,
-    "navigation_expanded": False,
-}
 
 
 # Logging
