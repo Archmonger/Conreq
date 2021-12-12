@@ -24,6 +24,7 @@ from split_settings.tools import include
 from tzlocal import get_localzone_name
 
 import conreq
+from conreq.utils.apps import find_apps
 from conreq.utils.environment import (
     get_base_url,
     get_database_type,
@@ -32,7 +33,7 @@ from conreq.utils.environment import (
     get_safe_mode,
     set_env,
 )
-from conreq.utils.packages import find_apps, find_modules, find_packages
+from conreq.utils.packages import find_modules, find_packages
 
 _logger = logging.getLogger(__name__)
 
