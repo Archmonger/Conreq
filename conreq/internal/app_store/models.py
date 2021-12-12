@@ -83,10 +83,16 @@ class AppPackage(models.Model):
     tracker = FieldTracker()
 
     # Basic Info
-    package_name = models.CharField(max_length=100, help_text="Must be snake_case.")
+    package_name = models.CharField(
+        max_length=100,
+        help_text="Must be snake_case. Used for PyPI package installation, or folder naming on Git installations.",
+    )
     verbose_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=255, blank=True)
-    long_description = models.FileField(upload_to="app_store/readme/")
+    short_description = models.CharField(max_length=255, blank=True)
+    long_description = models.TextField(
+        blank=True,
+        help_text="This will be automatically fetched from PyPI or Git if left empty.",
+    )
     long_description_type = models.CharField(
         max_length=20,
         choices=DescriptionTypes.choices,
@@ -96,17 +102,26 @@ class AppPackage(models.Model):
     development_stage = models.CharField(
         max_length=21, choices=DevelopmentStage.choices, blank=True
     )
-    version = VersionField()
-    banner_message = models.TextField(blank=True)
+    min_version = VersionField(
+        help_text="Minimum PyPI version or Git tag that is compatible with Conreq.",
+        blank=True,
+    )
+    banner_message = models.TextField(
+        blank=True,
+        help_text="Optional text message banner shown this apps details page.",
+    )
 
     # Ownership Info
     author = models.CharField(max_length=50)
     author_email = models.EmailField(blank=True)
-    repository_url = models.URLField()
+    pypi_url = models.URLField(blank=True)
+    repository_url = models.URLField(
+        blank=True,
+        help_text="Must be a Git repository if not using PyPI.",
+    )
     homepage_url = models.URLField(blank=True)
     support_url = models.URLField(blank=True)
     donation_url = models.URLField(blank=True)
-    pypi_url = models.URLField(blank=True)
     license_type = models.CharField(max_length=100, default="GPLv3")
 
     # Environment
