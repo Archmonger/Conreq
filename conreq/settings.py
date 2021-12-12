@@ -85,8 +85,12 @@ DB_ENGINE = get_database_type()
 BASE_URL = get_base_url()
 
 
-# Python Packages
+# Basic Configuration
 CONREQ_VERSION = "0.20.30"
+APP_STORE_VERSION = get_env("APP_STORE_VERSION", "1")
+
+
+# Python Packages
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
