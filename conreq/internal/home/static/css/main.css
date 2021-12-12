@@ -42,6 +42,7 @@ body {
 	height: 100%;
 	z-index: 9999;
 	overflow-x: hidden;
+	color: rgba(255, 255, 255, 0.75);
 }
 
 a {

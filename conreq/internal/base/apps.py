@@ -7,7 +7,7 @@ from idom.html import div, i, p
 
 import conreq
 from conreq.app import register
-from conreq.app.selectors import Viewport
+from conreq.utils.components import django_to_idom
 
 
 class BaseConfig(AppConfig):
@@ -38,9 +38,9 @@ class BaseConfig(AppConfig):
 
             return div()
 
-        @register.nav_tab("Manage Users", "Admin")
-        def manage_users(websocket, state, set_state, viewport=Viewport.secondary):
-            return p("This is a temporary stub for the manage users tab.")
+        from conreq.internal.manage_users.views import manage_users
+
+        register.nav_tab("Manage Users", "Admin")(django_to_idom(manage_users))
 
         @register.nav_tab("App Store", "Admin")
         def app_store(websocket, state, set_state):

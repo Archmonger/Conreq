@@ -243,6 +243,7 @@ INSTALLED_APPS = [
     "rest_framework_api_key",  # API Key Manager
     "rest_framework.authtoken",  # API User Authentication
     # Miscellaneous
+    "django_tables2",  # Simplify generating HTML tables
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "dbbackup",  # Convenient database backup API

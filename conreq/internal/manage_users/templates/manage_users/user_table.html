@@ -1,0 +1,21 @@
+{% load static %}
+{% load render_table from django_tables2 %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="{% static 'css/main.css' %}" crossorigin="anonymous"> -->
+</head>
+
+<body>
+    {% render_table table %}
+</body>
+
+</html>
