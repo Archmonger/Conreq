@@ -39,6 +39,9 @@ def manage_users(request):
         return render(request, "manage_users/delete_user.html", {})
 
     table = UsersTable(User.objects.all())
-    tables.RequestConfig(request, paginate={"per_page": 25}).configure(table)
+    tables.RequestConfig(
+        request,
+        paginate={"per_page": request.GET.get("per_page", 25)},
+    ).configure(table)
     context = {"table": table}
     return render(request, "manage_users/user_table.html", context)

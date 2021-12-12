@@ -15,6 +15,24 @@
 
 <body>
     {% render_table table %}
+    Show <select id="select_per_page" onchange="perPageChange(this.value)">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="100">250</option>
+    </select> items
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        function perPageChange(perPage) {
+            // Set per_page in the URL
+            urlParams.set('per_page', perPage)
+            // Reload the page
+            location.href = "?" + urlParams.toString();
+        }
+        // Select the correct option in the select 
+        document.querySelector('#select_per_page').value = urlParams.get('per_page') || 25;
+    </script>
 </body>
 
 </html>
