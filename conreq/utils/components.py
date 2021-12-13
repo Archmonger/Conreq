@@ -51,6 +51,6 @@ def django_to_idom(func: Callable) -> VdomDict:
     # Create an iframe with src=/viewport/path.to.component
     @idom.component
     def idom_component(*args, **kwargs):
-        return iframe({"src": url})
+        return iframe({"src": url, "loading": "lazy"})
 
     return idom_component
