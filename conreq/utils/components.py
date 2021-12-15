@@ -42,13 +42,13 @@ def django_to_idom(func: Callable) -> VdomDict:
     from conreq.urls import urlpatterns
     from conreq.utils.profiling import profiled_view
 
-    # Add a /viewport/path.to.component URL
+    # Add a /iframe/path.to.component URL
     view = profiled_view(func)
     view_name = f"{func.__module__}.{func.__name__}"
-    url = (BASE_URL + "viewport/" + view_name).replace("<locals>", "locals")
+    url = (BASE_URL + "iframe/" + view_name).replace("<locals>", "locals")
     urlpatterns.append(path(url, view, name=view_name))
 
-    # Create an iframe with src=/viewport/path.to.component
+    # Create an iframe with src=/iframe/path.to.component
     @idom.component
     def idom_component(*args, **kwargs):
         return iframe({"src": url, "loading": "lazy"})
