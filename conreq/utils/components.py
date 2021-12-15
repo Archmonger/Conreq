@@ -46,7 +46,7 @@ def django_to_idom(func: Callable) -> VdomDict:
     view = profiled_view(func)
     view_name = f"{func.__module__}.{func.__name__}"
     url = (BASE_URL + "viewport/" + view_name).replace("<locals>", "locals")
-    urlpatterns.append(path(url, view))
+    urlpatterns.append(path(url, view, name=view_name))
 
     # Create an iframe with src=/viewport/path.to.component
     @idom.component
