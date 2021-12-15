@@ -44,7 +44,7 @@ def django_to_idom(func: Callable) -> VdomDict:
 
     # Add a /viewport/path.to.component URL
     view = profiled_view(func)
-    view_name = func.__qualname__
+    view_name = f"{func.__module__}.{func.__name__}"
     url = (BASE_URL + "viewport/" + view_name).replace("<locals>", "locals")
     urlpatterns.append(path(url, view))
 
