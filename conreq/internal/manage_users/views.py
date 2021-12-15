@@ -3,7 +3,7 @@ from crispy_forms.layout import Button, Submit
 from django.contrib.auth import get_user_model
 from django.forms import ModelForm
 from django.shortcuts import render
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig, Table, TemplateColumn
 
 User = get_user_model()
