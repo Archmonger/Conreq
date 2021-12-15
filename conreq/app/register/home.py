@@ -2,7 +2,7 @@ from functools import wraps
 from typing import Callable
 
 import conreq
-from conreq.app.components.icon import Icon
+from conreq.app.types import Icon
 from conreq.utils.components import django_to_idom
 
 from ..selectors import AuthLevel, Viewport, ViewType
