@@ -1,20 +1,19 @@
-import django_tables2 as tables
 from django.contrib.auth import get_user_model
-
-# from django_tables2 import SingleTableView
 from django.shortcuts import render
+from django_tables2 import RequestConfig, Table, TemplateColumn
 
 User = get_user_model()
 
 
-class UsersTable(tables.Table):
-    edit = tables.TemplateColumn(
+class UsersTable(Table):
+    edit = TemplateColumn(
         template_name="manage_users/edit_btn.html",
         orderable=False,
     )
 
     class Meta:
         model = User
+        # TODO: PR a template for Bootstrap 5
         template_name = "django_tables2/bootstrap-responsive.html"
         fields = (
             "username",
@@ -34,7 +33,7 @@ def manage_users(request):
         return render(request, "manage_users/delete_user.html", {})
 
     table = UsersTable(User.objects.all())
-    tables.RequestConfig(
+    RequestConfig(
         request,
         paginate={"per_page": request.GET.get("per_page", 25)},
     ).configure(table)
