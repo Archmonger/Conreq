@@ -16,6 +16,7 @@ class AuthLevel:
 
 @dataclass
 class Viewport:
+    initial: str = "initial"
     loading: str = "loading"
     primary: str = "primary"
     secondary: str = "secondary"

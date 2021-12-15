@@ -117,7 +117,7 @@ def homepage(websocket):
     state, set_state = idom.hooks.use_state(
         {
             "page_title": "Loading...",
-            "viewport": Viewport.loading,
+            "viewport": Viewport.initial,
             "viewport_padding": True,
             "viewport_primary": None,
             "viewport_secondary": None,
@@ -128,6 +128,7 @@ def homepage(websocket):
             "modal_footer": None,
         }
     )
+
     return div(
         navbar(websocket, state, set_state),
         modal(websocket, state, set_state),
@@ -144,6 +145,24 @@ def sidebar(websocket, state, set_state):
         return None
 
     all_tabs = conreq.config.nav_tabs.items()
+
+    @idom.hooks.use_effect
+    async def set_default_tab():
+        if state["viewport"] != Viewport.initial:
+            return None
+
+        # pylint: disable=unused-variable
+        for group_name, group_values in all_tabs:
+            tab = group_values["tabs"][0]
+            set_state(
+                state
+                | {
+                    "viewport": tab["viewport"],
+                    f'viewport_{tab["viewport"]}': tab["component"],
+                    "viewport_padding": tab["viewport_padding"],
+                }
+            )
+            return None
 
     return nav(
         SIDEBAR,
@@ -185,7 +204,7 @@ def sidebar(websocket, state, set_state):
 def nav_tab_properties(websocket, state, set_state, tab):
     # pylint: disable=unused-argument
     if (
-        state["viewport"] is not Viewport.loading
+        state["viewport"] not in {Viewport.loading, Viewport.initial}
         and tab["component"] is state[f'viewport_{state["viewport"]}']
     ):
         return NAV_TAB_ACTIVE
