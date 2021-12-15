@@ -1,5 +1,9 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Button, Submit
 from django.contrib.auth import get_user_model
+from django.forms import ModelForm
 from django.shortcuts import render
+from django.views.generic.edit import UpdateView
 from django_tables2 import RequestConfig, Table, TemplateColumn
 
 User = get_user_model()
@@ -26,11 +30,45 @@ class UsersTable(Table):
         order_by = "date_joined"
 
 
+class UserEditForm(ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("submit", "Save"))
+        self.helper.add_input(Button("delete", "Delete"))
+        self.helper.add_input(Button("reset-password", "Reset Password"))
+        self.helper.add_input(Button("back", "Back", onclick="history.back()"))
+
+
+class UserEditView(UpdateView):
+    template_name = "manage_users/edit_user.html"
+    form_class = UserEditForm
+    model = User
+
+    def form_valid(self, *args, **kwargs) -> None:
+        self.success_url = self.request.path
+        return super().form_valid(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return self.model.objects.get(id=self.request.GET["user"])
+
+
 def manage_users(request):
     if request.GET.get("edit"):
-        return render(request, "manage_users/edit_user.html", {})
+        return UserEditView.as_view()(request)
+
     if request.GET.get("delete"):
-        return render(request, "manage_users/delete_user.html", {})
+        return render(request, "manage_users/delete_user_confirm.html", {})
 
     table = UsersTable(User.objects.all())
     RequestConfig(

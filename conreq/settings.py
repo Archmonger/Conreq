@@ -128,6 +128,7 @@ DBBACKUP_CLEANUP_KEEP = 20
 DBBACKUP_CLEANUP_KEEP_MEDIA = 20
 DBBACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M%S"
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
 # Logging
@@ -239,6 +240,7 @@ INSTALLED_APPS = [
     "rest_framework_api_key",  # API Key Manager
     "rest_framework.authtoken",  # API User Authentication
     # Miscellaneous
+    "crispy_forms",  # Simplify generating HTML forms
     "django_tables2",  # Simplify generating HTML tables
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
