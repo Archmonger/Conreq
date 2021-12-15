@@ -64,9 +64,9 @@ class UserEditView(UpdateView):
     form_class = UserEditForm
     model = User
 
-    def form_valid(self, *args, **kwargs) -> None:
+    def get_success_url(self):
         self.success_url = self.request.path
-        return super().form_valid(*args, **kwargs)
+        return super().get_success_url()
 
     def get_object(self, queryset=None):
         return self.model.objects.get(id=self.request.GET["user"])
@@ -75,6 +75,10 @@ class UserEditView(UpdateView):
 class UserDeleteView(DeleteView):
     template_name = "manage_users/delete_user_confirm.html"
     model = User
+
+    def get_success_url(self):
+        self.success_url = self.request.path
+        return super().get_success_url()
 
     def get_object(self, queryset=None):
         return self.model.objects.get(id=self.request.GET["user"])
