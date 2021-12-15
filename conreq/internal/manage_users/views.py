@@ -8,10 +8,6 @@ User = get_user_model()
 
 
 class UsersTable(tables.Table):
-    delete = tables.TemplateColumn(
-        template_name="manage_users/delete_btn.html",
-        orderable=False,
-    )
     edit = tables.TemplateColumn(
         template_name="manage_users/edit_btn.html",
         orderable=False,
@@ -27,7 +23,6 @@ class UsersTable(tables.Table):
             "last_login",
             "is_staff",
             "edit",
-            "delete",
         )
         order_by = "date_joined"
 
