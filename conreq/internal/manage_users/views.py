@@ -46,7 +46,6 @@ class UserEditForm(ModelForm):
         self.helper.form_method = "post"
         self.helper.add_input(Submit("submit", "Save"))
         self.helper.add_input(Button("delete", "Delete"))
-        self.helper.add_input(Button("reset-password", "Reset Password"))
         self.helper.add_input(Button("back", "Back", onclick="history.back()"))
 
 
