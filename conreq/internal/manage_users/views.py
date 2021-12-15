@@ -9,6 +9,7 @@ from django_tables2 import RequestConfig, Table, TemplateColumn
 User = get_user_model()
 
 # TODO: Split up manage_users.css into a generic, reusable file(s)
+# TODO: Create SimpleTable and SimpleForm abstractions
 
 
 class UsersTable(Table):
