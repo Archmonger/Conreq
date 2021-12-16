@@ -230,6 +230,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     *find_modules(INTERNAL_DIR, prefix="conreq.internal."),
     # Database Fields
+    "colorfield",  # Allow for HEX colors in the DB
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
     # ASGI

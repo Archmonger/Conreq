@@ -46,9 +46,9 @@ class BaseConfig(AppConfig):
         def app_store(websocket, state, set_state):
             return p("This is a temporary stub for the app store tab.")
 
-        @register.nav_tab("Server Settings", "Admin")
-        def system_settings(websocket, state, set_state):
-            return p("This is a temporary stub for the server settings tab.")
+        from conreq.internal.server_settings.views import server_settings
+
+        register.nav_tab("Server Settings", "Admin")(django_to_idom(server_settings))
 
         iframe = make_vdom_constructor("iframe")
 
