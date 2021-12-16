@@ -5,7 +5,6 @@ django-cleanup==5.2.0
 django-compression-middleware==0.4.1
 django-compressor==3.0
 django-crispy-forms==1.13.0
-git+https://github.com/django-dbbackup/django-dbbackup.git@9d1909c30a3271c8c9c8450add30d6e0b996e145
 django-jazzmin==2.4.8
 django-model-utils==4.2.0
 django-multiselectfield==0.1.12
@@ -19,6 +18,7 @@ djangorestframework==3.13.0
 djangorestframework-api-key==2.1.0
 docutils==0.18.1
 drf-yasg==1.20.0
+git+https://github.com/django-dbbackup/django-dbbackup.git@9d1909c30a3271c8c9c8450add30d6e0b996e145
 git+https://github.com/idom-team/django-idom.git
 huey==2.4.2
 hypercorn[h3]==0.13.0
