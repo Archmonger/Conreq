@@ -103,8 +103,8 @@ class AppPackage(models.Model):
         max_length=21, choices=DevelopmentStage.choices, blank=True
     )
     min_version = VersionField(
+        default="0.0.0",
         help_text="Minimum PyPI version or Git tag that is compatible with Conreq.",
-        blank=True,
     )
     banner_message = models.TextField(
         blank=True,
@@ -130,9 +130,9 @@ class AppPackage(models.Model):
     # Compatibility
     touch_compatible = models.BooleanField()
     mobile_compatible = models.BooleanField()
-    minimum_conreq_version = VersionField()
-    tested_conreq_version = VersionField()
-    max_conreq_version = VersionField(blank=True, null=True)
+    conreq_minimum_version = VersionField()
+    conreq_tested_version = VersionField()
+    conreq_max_version = VersionField(blank=True, null=True)
     asynchronous = models.CharField(max_length=20, choices=AsyncCompatibility.choices)
 
     # App Dependencies
