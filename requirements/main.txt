@@ -14,7 +14,7 @@ django-solo==2.0.0
 django-split-settings==1.1.0
 django-tables2==2.4.1
 django-versionfield==1.0.2
-djangorestframework==3.13.0
+djangorestframework==3.13.1
 djangorestframework-api-key==2.1.0
 docutils==0.18.1
 drf-yasg==1.20.0
