@@ -6,28 +6,28 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0027_rename_serverconfig_generalsettings_and_more'),
+        ("server_settings", "0027_rename_serverconfig_generalsettings_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='generalsettings',
-            name='custom_css',
+            model_name="generalsettings",
+            name="custom_css",
         ),
         migrations.RemoveField(
-            model_name='generalsettings',
-            name='custom_css_url',
+            model_name="generalsettings",
+            name="custom_css_url",
         ),
         migrations.RemoveField(
-            model_name='generalsettings',
-            name='custom_js',
+            model_name="generalsettings",
+            name="custom_js",
         ),
         migrations.RemoveField(
-            model_name='generalsettings',
-            name='custom_js_url',
+            model_name="generalsettings",
+            name="custom_js_url",
         ),
         migrations.RemoveField(
-            model_name='generalsettings',
-            name='rotate_secret_key',
+            model_name="generalsettings",
+            name="rotate_secret_key",
         ),
     ]

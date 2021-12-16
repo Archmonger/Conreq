@@ -6,34 +6,56 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0028_remove_generalsettings_custom_css_and_more'),
+        ("server_settings", "0028_remove_generalsettings_custom_css_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='StylingSettings',
+            name="StylingSettings",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('custom_css_url', models.URLField(blank=True, default='')),
-                ('custom_js_url', models.URLField(blank=True, default='')),
-                ('custom_js', models.TextField(blank=True, default='')),
-                ('custom_css', models.TextField(blank=True, default='')),
-                ('initialized', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("custom_css_url", models.URLField(blank=True, default="")),
+                ("custom_js_url", models.URLField(blank=True, default="")),
+                ("custom_js", models.TextField(blank=True, default="")),
+                ("custom_css", models.TextField(blank=True, default="")),
+                ("initialized", models.BooleanField(default=False)),
             ],
             options={
-                'verbose_name': 'Styling settings',
-                'verbose_name_plural': 'Styling settings',
+                "verbose_name": "Styling settings",
+                "verbose_name_plural": "Styling settings",
             },
         ),
         migrations.CreateModel(
-            name='WebserverSettings',
+            name="WebserverSettings",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('rotate_secret_key', models.BooleanField(default=False, help_text='Invalidates all active web sessions upon server restart.')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "rotate_secret_key",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Invalidates all active web sessions upon server restart.",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Webserver settings',
-                'verbose_name_plural': 'Webserver settings',
+                "verbose_name": "Webserver settings",
+                "verbose_name_plural": "Webserver settings",
             },
         ),
     ]

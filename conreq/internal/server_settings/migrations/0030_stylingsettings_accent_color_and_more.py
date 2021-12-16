@@ -7,18 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0029_stylingsettings_webserversettings'),
+        ("server_settings", "0029_stylingsettings_webserversettings"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='stylingsettings',
-            name='accent_color',
-            field=colorfield.fields.ColorField(default='#FF0000', max_length=18, samples=None),
+            model_name="stylingsettings",
+            name="accent_color",
+            field=colorfield.fields.ColorField(
+                default="#FF0000", max_length=18, samples=None
+            ),
         ),
         migrations.AlterField(
-            model_name='generalsettings',
-            name='server_name',
-            field=models.URLField(default='Conreq', help_text='This will be shown on the page title, search results, and in hyperlink previews.'),
+            model_name="generalsettings",
+            name="server_name",
+            field=models.URLField(
+                default="Conreq",
+                help_text="This will be shown on the page title, search results, and in hyperlink previews.",
+            ),
         ),
     ]

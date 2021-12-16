@@ -6,16 +6,19 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0026_serverconfig_server_description_and_more'),
+        ("server_settings", "0026_serverconfig_server_description_and_more"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='ServerConfig',
-            new_name='GeneralSettings',
+            old_name="ServerConfig",
+            new_name="GeneralSettings",
         ),
         migrations.AlterModelOptions(
-            name='generalsettings',
-            options={'verbose_name': 'General settings', 'verbose_name_plural': 'General settings'},
+            name="generalsettings",
+            options={
+                "verbose_name": "General settings",
+                "verbose_name_plural": "General settings",
+            },
         ),
     ]

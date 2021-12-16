@@ -1,6 +1,6 @@
 from colorfield.fields import ColorField
 from django.db import models
-from django.db.models.fields import URLField, CharField
+from django.db.models.fields import CharField, URLField
 from model_utils import FieldTracker
 from solo.models import SingletonModel
 

@@ -6,18 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0025_serverconfig_rotate_secret_key'),
+        ("server_settings", "0025_serverconfig_rotate_secret_key"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='serverconfig',
-            name='server_description',
-            field=models.URLField(blank=True, help_text='This will be shown on search results and in hyperlink previews.'),
+            model_name="serverconfig",
+            name="server_description",
+            field=models.URLField(
+                blank=True,
+                help_text="This will be shown on search results and in hyperlink previews.",
+            ),
         ),
         migrations.AddField(
-            model_name='serverconfig',
-            name='server_name',
-            field=models.URLField(default='Conreq'),
+            model_name="serverconfig",
+            name="server_name",
+            field=models.URLField(default="Conreq"),
         ),
     ]

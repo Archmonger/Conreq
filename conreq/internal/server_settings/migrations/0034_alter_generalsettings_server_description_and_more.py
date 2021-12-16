@@ -6,18 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0033_alter_generalsettings_app_store_url'),
+        ("server_settings", "0033_alter_generalsettings_app_store_url"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='generalsettings',
-            name='server_description',
-            field=models.CharField(blank=True, help_text='This will be shown on search results and in hyperlink previews.', max_length=70),
+            model_name="generalsettings",
+            name="server_description",
+            field=models.CharField(
+                blank=True,
+                help_text="This will be shown on search results and in hyperlink previews.",
+                max_length=70,
+            ),
         ),
         migrations.AlterField(
-            model_name='generalsettings',
-            name='server_name',
-            field=models.CharField(default='Conreq', help_text='This will be shown on the page title, search results, and in hyperlink previews.', max_length=60),
+            model_name="generalsettings",
+            name="server_name",
+            field=models.CharField(
+                default="Conreq",
+                help_text="This will be shown on the page title, search results, and in hyperlink previews.",
+                max_length=60,
+            ),
         ),
     ]
