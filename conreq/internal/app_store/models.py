@@ -1,7 +1,6 @@
 import uuid
 
 from django.db import models
-from model_utils import FieldTracker
 from multiselectfield import MultiSelectField
 from versionfield import VersionField
 
@@ -47,7 +46,6 @@ class Category(models.Model):
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
-    tracker = FieldTracker()
 
     # Basic Info
     name = models.CharField(max_length=50)
@@ -65,7 +63,6 @@ class Subcategory(models.Model):
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
-    tracker = FieldTracker()
 
     # Basic Info
     name = models.CharField(max_length=50)
@@ -80,7 +77,6 @@ class AppPackage(models.Model):
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
-    tracker = FieldTracker()
 
     # Basic Info
     package_name = models.CharField(
@@ -151,7 +147,6 @@ class EnvironmentVariable(models.Model):
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
-    tracker = FieldTracker()
 
     name = models.CharField(max_length=50)
     default = models.CharField(max_length=255, blank=True)
@@ -167,7 +162,6 @@ class Screenshot(models.Model):
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
-    tracker = FieldTracker()
 
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True)
@@ -182,7 +176,6 @@ class NoticeMessage(models.Model):
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
-    tracker = FieldTracker()
 
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)

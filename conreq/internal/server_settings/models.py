@@ -1,7 +1,6 @@
 from colorfield.fields import ColorField
 from django.db import models
 from django.db.models.fields import CharField, URLField
-from model_utils import FieldTracker
 from solo.models import SingletonModel
 
 from conreq.utils.fields import HostnameOrURLField
@@ -32,9 +31,6 @@ class GeneralSettings(SingletonModel):
     )
     initialized = models.BooleanField(default=False)
 
-    # Field Tracker
-    tracker = FieldTracker()
-
 
 class StylingSettings(SingletonModel):
     def __str__(self):
@@ -50,9 +46,6 @@ class StylingSettings(SingletonModel):
     custom_js = models.TextField(default="", blank=True)
     custom_css = models.TextField(default="", blank=True)
 
-    # Field Tracker
-    tracker = FieldTracker()
-
 
 class WebserverSettings(SingletonModel):
     def __str__(self):
@@ -66,6 +59,3 @@ class WebserverSettings(SingletonModel):
         default=False,
         help_text="Invalidates all active web sessions upon server restart.",
     )
-
-    # Field Tracker
-    tracker = FieldTracker()

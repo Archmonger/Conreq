@@ -1,6 +1,5 @@
 from django.db import models
 from encrypted_fields.fields import EncryptedCharField
-from model_utils import FieldTracker
 from solo.models import SingletonModel
 
 
@@ -30,5 +29,3 @@ class EmailConfig(SingletonModel):
     password = EncryptedCharField(max_length=255, default="", blank=True)
     sender_name = models.CharField(max_length=50, default="", blank=True)
     enabled = models.BooleanField(default=False)
-
-    tracker = FieldTracker()
