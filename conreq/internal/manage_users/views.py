@@ -14,7 +14,7 @@ User = get_user_model()
 
 class UsersTable(Table):
     edit = TemplateColumn(
-        template_name="manage_users/edit_btn.html",
+        template_name="conreq/manage_users/edit_btn.html",
         orderable=False,
     )
 
@@ -60,7 +60,7 @@ class UserEditForm(ModelForm):
 
 
 class UserEditView(UpdateView):
-    template_name = "manage_users/edit_user.html"
+    template_name = "conreq/manage_users/edit_user.html"
     form_class = UserEditForm
     model = User
 
@@ -73,7 +73,7 @@ class UserEditView(UpdateView):
 
 
 class UserDeleteView(DeleteView):
-    template_name = "manage_users/delete_user_confirm.html"
+    template_name = "conreq/manage_users/delete_user_confirm.html"
     model = User
 
     def get_success_url(self):
@@ -97,4 +97,4 @@ def manage_users(request):
         paginate={"per_page": request.GET.get("per_page", 25)},
     ).configure(table)
     context = {"table": table}
-    return render(request, "manage_users/user_table.html", context)
+    return render(request, "conreq/manage_users/user_table.html", context)

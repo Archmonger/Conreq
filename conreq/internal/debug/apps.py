@@ -69,4 +69,4 @@ def api_docs():
 def health_checks():
     @register.url("health_check", name="health_check")
     class StyledHealthCheck(HealthCheckView):
-        template_name = "health_check/styled_health_check.html"
+        template_name = "conreq/health_check/table.html"

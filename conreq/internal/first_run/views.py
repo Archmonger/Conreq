@@ -25,11 +25,11 @@ def initialize(request):
             return _first_run_setup(form, request, general_settings)
 
         # Form data wasn't valid, so return the error codes
-        template = loader.get_template("registration/initialization.html")
+        template = loader.get_template("conreq/registration/initialization.html")
         return HttpResponse(template.render({"form": form}, request))
 
     # User needs to fill out the first time setup
-    template = loader.get_template("registration/initialization.html")
+    template = loader.get_template("conreq/registration/initialization.html")
     return HttpResponse(template.render({}, request))
 
 

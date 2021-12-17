@@ -35,12 +35,14 @@ class _Config:
 
     # Templates
     landing_template: str = ""
-    home_template: str = "homepage/home.html"
-    sign_up_template: str = "registration/sign_up.html"
-    sign_in_template: str = "registration/sign_in.html"
-    password_reset_template: str = "registration/password_reset.html"
-    password_reset_sent_template: str = "registration/password_reset_sent.html"
-    password_reset_confirm_template: str = "registration/password_reset_confirm.html"
+    home_template: str = "conreq/homepage/home.html"
+    sign_up_template: str = "conreq/registration/sign_up.html"
+    sign_in_template: str = "conreq/registration/sign_in.html"
+    password_reset_template: str = "conreq/registration/password_reset.html"
+    password_reset_sent_template: str = "conreq/registration/password_reset_sent.html"
+    password_reset_confirm_template: str = (
+        "conreq/registration/password_reset_confirm.html"
+    )
 
     # IDOM Components
     # TODO: Implement these components
