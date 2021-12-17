@@ -49,7 +49,6 @@ class StylingSettings(SingletonModel):
     custom_js_url = URLField(default="", blank=True)
     custom_js = models.TextField(default="", blank=True)
     custom_css = models.TextField(default="", blank=True)
-    initialized = models.BooleanField(default=False)
 
     # Field Tracker
     tracker = FieldTracker()
