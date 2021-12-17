@@ -6,12 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app_store', '0004_rename_max_conreq_version_apppackage_conreq_max_version_and_more'),
+        (
+            "app_store",
+            "0004_rename_max_conreq_version_apppackage_conreq_max_version_and_more",
+        ),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='apppackage',
-            name='incompatible_categories',
+            model_name="apppackage",
+            name="incompatible_categories",
         ),
     ]
