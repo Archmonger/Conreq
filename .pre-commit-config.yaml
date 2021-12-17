@@ -74,3 +74,8 @@ repos:
       hooks:
           - id: curlylint
             args: ["conreq/"]
+    - repo: https://github.com/adamchainz/django-upgrade
+      rev: "1.4.0"
+      hooks:
+          - id: django-upgrade
+            args: [--target-version, "4.0"]
