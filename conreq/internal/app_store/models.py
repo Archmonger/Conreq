@@ -139,9 +139,6 @@ class AppPackage(models.Model):
     required_apps = models.ManyToManyField("self", blank=True)
     optional_apps = models.ManyToManyField("self", blank=True)
     incompatible_apps = models.ManyToManyField("self", blank=True)
-    incompatible_categories = models.ManyToManyField(
-        Category, related_name="incompatible_categories", blank=True
-    )
     incompatible_subcategories = models.ManyToManyField(
         Subcategory, related_name="incompatible_subcategories", blank=True
     )
