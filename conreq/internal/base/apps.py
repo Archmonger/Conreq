@@ -56,6 +56,10 @@ class BaseConfig(AppConfig):
         def performance(websocket, state, set_state):
             return iframe({"src": reverse("silk:summary")})
 
+        @register.nav_tab("Health Check", "Debug", padding=False)
+        def health_check(websocket, state, set_state):
+            return iframe({"src": reverse("health_check")})
+
         @register.nav_tab("Database", "Debug", padding=False)
         def database(websocket, state, set_state):
             return iframe({"src": reverse("admin:index")})

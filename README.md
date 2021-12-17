@@ -36,6 +36,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
 -   [Automatic SQLite Database Optimization](https://www.sqlite.org/lang_vacuum.html)
 -   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
+-   [Automatic Health Checks](https://github.com/KristianOellegaard/django-health-check)
 
 ## Coming Soon
 

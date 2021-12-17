@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 from django.contrib import admin
 from django.urls import include
+from health_check.views import MainView as HealthCheckView
 
 from conreq.app import register
 from conreq.utils.environment import get_debug
@@ -19,6 +20,7 @@ class DebugConfig(AppConfig):
         performance_profiling()
         admin_panel()
         api_docs()
+        health_checks()
 
 
 def performance_profiling():
@@ -62,3 +64,9 @@ def api_docs():
     register.url(r"^swagger$", name="swagger_ui", use_regex=True)(
         SchemaView.with_ui("swagger", cache_timeout=0)
     )
+
+
+def health_checks():
+    @register.url("health_check", name="health_check")
+    class StyledHealthCheck(HealthCheckView):
+        template_name = "health_check/styled_health_check.html"
