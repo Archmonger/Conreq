@@ -13,20 +13,14 @@ DEBUG = get_debug()
 @register.landing_view()
 def landing(request):
     """Renders the landing page (if available)."""
-
-    initialization_needed = initialize(request)
-    landing_template = conreq.config.landing_template
-
-    if initialization_needed:
-        return initialization_needed
-
-    if not landing_template:
+    # Redirect if a landing page doesn't exist
+    if not conreq.config.landing_template:
         return redirect("home")
 
     # Render the landing page
-    return render(
+    return initialize(request) or render(
         request,
-        landing_template,
+        conreq.config.landing_template,
         {
             "base_url": BASE_URL,
             "home_url": HOME_URL,

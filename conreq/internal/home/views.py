@@ -14,17 +14,10 @@ DEBUG = get_debug()
 @register.home_view()
 def home(request):
     """Renders the homepage."""
-
-    initialization_needed = initialize(request)
-    home_template = conreq.config.home_template
-
-    if initialization_needed:
-        return initialization_needed
-
     # Render the home page
-    return login_required(render)(
+    return initialize(request) or login_required(render)(
         request,
-        home_template,
+        conreq.config.home_template,
         {
             "base_url": BASE_URL,
             "home_url": HOME_URL,

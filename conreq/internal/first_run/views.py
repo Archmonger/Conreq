@@ -12,12 +12,11 @@ def initialize(request):
     general_settings = GeneralSettings.get_solo()
 
     # Run the first time initialization if needed
-    if general_settings.initialized is True:
+    if general_settings.initialized:
         return False
 
     # User submitted the first time setup form
     if request.method == "POST":
-
         form = InitializationForm(request.POST)
 
         # Create the superuser and set up the database if the form is valid
