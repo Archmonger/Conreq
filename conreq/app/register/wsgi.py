@@ -6,6 +6,7 @@ from django.views.generic import View
 
 from conreq.utils.environment import get_base_url
 
+# TODO: Use Django resolve and raise an exception if registering something that already exists
 # pylint: disable=import-outside-toplevel
 
 BASE_URL = get_base_url(append_slash=False, prepend_slash=False)

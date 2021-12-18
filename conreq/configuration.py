@@ -25,6 +25,7 @@ class _Config:
     setting_scripts: set[str] = field(default_factory=set)
 
     # Views
+    # TODO: Don't use the app.register API for pre-configuring the base views here
     landing_view: Callable = landing
     home_view: Callable = home
     sign_up_view: Callable = sign_up

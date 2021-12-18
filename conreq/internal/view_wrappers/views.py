@@ -5,6 +5,8 @@ from channels.db import database_sync_to_async as convert_to_async
 import conreq
 from conreq.utils.views import stub
 
+# TODO: Add warnings for sync code
+
 
 async def landing(request, *args, **kwargs):
     """Configurable landing view."""
