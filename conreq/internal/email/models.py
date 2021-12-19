@@ -2,6 +2,8 @@ from django.db import models
 from encrypted_fields.fields import EncryptedCharField
 from solo.models import SingletonModel
 
+from conreq.utils.fields import PasswordField
+
 
 class AuthEncryption(models.TextChoices):
     TLS = "TLS", "TLS (Default)"
@@ -26,6 +28,6 @@ class EmailConfig(SingletonModel):
     )
     timeout = models.PositiveIntegerField(default=60)
     username = EncryptedCharField(max_length=255, default="", blank=True)
-    password = EncryptedCharField(max_length=255, default="", blank=True)
+    password = PasswordField(max_length=255, default="", blank=True)
     sender_name = models.CharField(max_length=50, default="", blank=True)
     enabled = models.BooleanField(default=False)

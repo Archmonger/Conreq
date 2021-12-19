@@ -1,8 +1,15 @@
 from django.db.models import OneToOneField, URLField
 from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor
 from django.db.transaction import atomic
+from encrypted_fields.fields import EncryptedCharField
 
 from . import forms, validators
+
+
+class PasswordField(EncryptedCharField):
+    def formfield(self, **kwargs):
+        kwargs["widget"] = kwargs["widget"](attrs={"type": "password"})
+        return super().formfield(**kwargs)
 
 
 class HostnameOrURLField(URLField):
