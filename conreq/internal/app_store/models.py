@@ -5,7 +5,6 @@ from multiselectfield import MultiSelectField
 from versionfield import VersionField
 
 
-# Create your models here.
 class DevelopmentStage(models.TextChoices):
     PLANNING = "1 - Planning", "Planning"
     PREALPHA = "2 - Pre-Alpha", "Pre-Alpha"
@@ -22,7 +21,7 @@ class AsyncCompatibility(models.TextChoices):
     FULL = "FULL", "Fully Async"
 
 
-class SysPlatforms(models.TextChoices):
+class SysPlatform(models.TextChoices):
     AIX = "AIX", "Aix"
     LINUX = "LINUX", "Linux"
     WINDOWS = "WINDOWS", "Windows"
@@ -30,7 +29,7 @@ class SysPlatforms(models.TextChoices):
     MACOS = "MACOS", "Darwin"
 
 
-class DescriptionTypes(models.TextChoices):
+class DescriptionType(models.TextChoices):
     PLAIN = "text/plain", "Plain Text (.txt)"
     RST = "text/x-rst", "reStructuredText (.rst)"
     MARKDOWN = "text/markdown", "Markdown (.md)"
@@ -91,8 +90,8 @@ class AppPackage(models.Model):
     )
     long_description_type = models.CharField(
         max_length=20,
-        choices=DescriptionTypes.choices,
-        default=DescriptionTypes.MARKDOWN,
+        choices=DescriptionType.choices,
+        default=DescriptionType.MARKDOWN,
     )
     subcategories = models.ManyToManyField(Subcategory)
     development_stage = models.CharField(
@@ -121,7 +120,7 @@ class AppPackage(models.Model):
     license_type = models.CharField(max_length=100, default="GPLv3")
 
     # Environment
-    sys_platforms = MultiSelectField(choices=SysPlatforms.choices, max_length=10)
+    sys_platforms = MultiSelectField(choices=SysPlatform.choices, max_length=10)
 
     # Compatibility
     touch_compatible = models.BooleanField()
