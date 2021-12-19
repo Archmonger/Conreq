@@ -222,14 +222,14 @@ INSTALLED_APPS = [
     *(
         {
             "jazzmin",
-            "django.contrib.admin",
-            "django.contrib.admindocs",
             "health_check",
             "health_check.db",
             "health_check.cache",
             "health_check.storage",
             "health_check.contrib.migrations",
             "health_check.contrib.psutil",
+            "django.contrib.admin",
+            "django.contrib.admindocs",
         }
         if DEBUG
         else {}
