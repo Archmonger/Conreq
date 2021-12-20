@@ -125,7 +125,7 @@ class AppPackage(models.Model):
     # Compatibility
     touch_compatible = models.BooleanField()
     mobile_compatible = models.BooleanField()
-    conreq_minimum_version = VersionField()
+    conreq_min_version = VersionField(default="0.0.0")
     conreq_tested_version = VersionField()
     conreq_max_version = VersionField(blank=True, null=True)
     asynchronous = models.CharField(max_length=20, choices=AsyncCompatibility.choices)
