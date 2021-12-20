@@ -220,19 +220,19 @@ if not SECRET_KEY:
 # Django Apps & Middleware
 INSTALLED_APPS = [
     *(
-        {
+        [
             "jazzmin",
+            "django.contrib.admin",
+            "django.contrib.admindocs",
             "health_check",
             "health_check.db",
             "health_check.cache",
             "health_check.storage",
             "health_check.contrib.migrations",
             "health_check.contrib.psutil",
-            "django.contrib.admin",
-            "django.contrib.admindocs",
-        }
+        ]
         if DEBUG
-        else {}
+        else []
     ),
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -263,7 +263,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
     "compression_middleware.middleware.CompressionMiddleware",
-    *({"silk.middleware.SilkyMiddleware"} if DEBUG else {}),
+    *(["silk.middleware.SilkyMiddleware"] if DEBUG else []),
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
