@@ -244,7 +244,8 @@ INSTALLED_APPS = [
     # Database Fields
     "colorfield",  # Allow for HEX colors in the DB
     "encrypted_fields",  # Allow for encrypted text in the DB
-    "solo",  # Allow for single-row fields in the DB
+    "solo",  # Allow for single-row models in the DB
+    "versionfield",  # Allow for version numbers in the DB
     # ASGI
     "channels",  # Websocket library
     "django_idom",  # React JS for Python
