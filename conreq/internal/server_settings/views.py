@@ -10,30 +10,20 @@ from conreq.internal.server_settings.models import (
     StylingSettings,
     WebserverSettings,
 )
+from conreq.utils.views import SingletonUpdateView
 
 
-class SettingsViewMixin:
-    template_name = "conreq/simple_form.html"
-
-    def get_success_url(self):
-        self.success_url = self.request.path
-        return super().get_success_url()
-
-    def get_object(self, queryset=None):
-        return self.model.get_solo()
-
-
-class GeneralSettingsView(SettingsViewMixin, UpdateView):
+class GeneralSettingsView(SingletonUpdateView):
     form_class = GeneralSettingsForm
     model = GeneralSettings
 
 
-class StylingSettingsView(SettingsViewMixin, UpdateView):
+class StylingSettingsView(SingletonUpdateView):
     form_class = StylingSettingsForm
     model = StylingSettings
 
 
-class WebserverSettingsView(SettingsViewMixin, UpdateView):
+class WebserverSettingsView(SingletonUpdateView):
     form_class = WebserverSettingsForm
     model = WebserverSettings
 
