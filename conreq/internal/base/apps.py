@@ -25,9 +25,9 @@ class BaseConfig(AppConfig):
         register.nav_group("Admin", i({"className": "fas fa-cogs icon-left"}))
         register.nav_group("Debug", i({"className": "fas fa-spider icon-left"}))
 
-        @register.nav_tab("Settings", "User")
-        def settings(websocket, state, set_state):
-            return p("This is a temporary stub for the settings tab.")
+        from conreq.internal.user_settings.views import user_settings
+
+        register.nav_tab("Settings", "User")(django_to_idom(user_settings))
 
         @register.nav_tab("Sign Out", "User")
         @idom.component
