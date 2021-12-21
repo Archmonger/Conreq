@@ -6,7 +6,6 @@ django-colorfield==0.5.0
 django-compression-middleware==0.4.1
 django-compressor==3.1
 django-crispy-forms==1.13.0
-django-downloadview==2.1.1
 django-health-check==3.16.5
 django-jazzmin==2.4.8
 django-multiselectfield==0.1.12
