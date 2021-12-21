@@ -5,6 +5,7 @@ from django_tables2 import RequestConfig
 
 from conreq.internal.manage_users.forms import UserEditForm
 from conreq.internal.manage_users.tables import UsersTable
+from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
 User = get_user_model()
 
@@ -12,29 +13,15 @@ User = get_user_model()
 # TODO: Create SimpleTable and SimpleForm abstractions
 
 
-class UserEditView(UpdateView):
+class UserEditView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
     template_name = "conreq/manage_users/edit_user.html"
     form_class = UserEditForm
     model = User
 
-    def get_success_url(self):
-        self.success_url = self.request.path
-        return super().get_success_url()
 
-    def get_object(self, queryset=None):
-        return self.model.objects.get(id=self.request.GET["user"])
-
-
-class UserDeleteView(DeleteView):
+class UserDeleteView(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
     template_name = "conreq/manage_users/delete_user_confirm.html"
     model = User
-
-    def get_success_url(self):
-        self.success_url = self.request.path
-        return super().get_success_url()
-
-    def get_object(self, queryset=None):
-        return self.model.objects.get(id=self.request.GET["user"])
 
 
 def manage_users(request):
