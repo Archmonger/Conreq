@@ -1,10 +1,7 @@
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Button, Submit
 from django.contrib.auth import get_user_model
-from django.forms import ModelForm
 from django.shortcuts import render
 from django.views.generic.edit import DeleteView, UpdateView
-from django_tables2 import RequestConfig, Table, TemplateColumn
+from django_tables2 import RequestConfig
 
 from conreq.internal.manage_users.forms import UserEditForm
 from conreq.internal.manage_users.tables import UsersTable
