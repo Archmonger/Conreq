@@ -7,19 +7,26 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Initialization',
+            name="Initialization",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('initialized', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("initialized", models.BooleanField(default=False)),
             ],
             options={
-                'verbose_name': 'Initialization',
-                'verbose_name_plural': 'Initialization',
+                "verbose_name": "Initialization",
+                "verbose_name_plural": "Initialization",
             },
         ),
     ]
