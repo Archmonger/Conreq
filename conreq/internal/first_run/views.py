@@ -3,16 +3,16 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
 
-from conreq.internal.server_settings.models import GeneralSettings
+from conreq.internal.first_run.models import Initialization
 
 from .forms import InitializationForm
 
 
 def initialize(request):
-    general_settings = GeneralSettings.get_solo()
+    initialization = Initialization.get_solo()
 
     # Run the first time initialization if needed
-    if general_settings.initialized:
+    if initialization.initialized:
         return False
 
     # User submitted the first time setup form
@@ -21,7 +21,7 @@ def initialize(request):
 
         # Create the superuser and set up the database if the form is valid
         if form.is_valid():
-            return _first_run_setup(form, request, general_settings)
+            return _first_run_setup(form, request, initialization)
 
         # Form data wasn't valid, so return the error codes
         template = loader.get_template("conreq/registration/initialization.html")

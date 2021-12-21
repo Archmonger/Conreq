@@ -14,7 +14,6 @@ class GeneralSettings(SingletonModel):
         verbose_name = "General settings"
         verbose_name_plural = verbose_name
 
-    # Basic settings
     server_name = CharField(
         default="Conreq",
         max_length=60,
@@ -29,7 +28,6 @@ class GeneralSettings(SingletonModel):
         blank=True,
         help_text="Changes automatically on Conreq updates.",
     )
-    initialized = models.BooleanField(default=False)
 
 
 class StylingSettings(SingletonModel):
