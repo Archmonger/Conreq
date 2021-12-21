@@ -6,57 +6,13 @@ from django.shortcuts import render
 from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig, Table, TemplateColumn
 
+from conreq.internal.manage_users.forms import UserEditForm
+from conreq.internal.manage_users.tables import UsersTable
+
 User = get_user_model()
 
 # TODO: Split up manage_users.css into a generic, reusable file(s)
 # TODO: Create SimpleTable and SimpleForm abstractions
-
-
-class UsersTable(Table):
-    edit = TemplateColumn(
-        template_name="conreq/manage_users/edit_btn.html",
-        orderable=False,
-    )
-
-    class Meta:
-        model = User
-        # TODO: PR a template for Bootstrap 5
-        template_name = "django_tables2/bootstrap-responsive.html"
-        fields = (
-            "username",
-            "email",
-            "date_joined",
-            "last_login",
-            "is_staff",
-            "edit",
-        )
-        order_by = "date_joined"
-
-
-class UserEditForm(ModelForm):
-    class Meta:
-        model = User
-        fields = (
-            "username",
-            "email",
-            "first_name",
-            "last_name",
-        )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_method = "post"
-        self.helper.add_input(Submit("submit", "Save"))
-        self.helper.add_input(
-            Button(
-                "delete",
-                "Delete",
-                css_class="btn-danger",
-                onclick="window.location.href = window.location.href.replace('edit','delete');",
-            )
-        )
-        self.helper.add_input(Button("back", "Back", onclick="history.back()"))
 
 
 class UserEditView(UpdateView):
