@@ -26,6 +26,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [Async and Websockets (ASGI)](https://github.com/django/channels)
 -   [REST API Framework](https://github.com/encode/django-rest-framework)
 -   [Static File Server](https://github.com/evansd/whitenoise)
+-   [Media File Server](https://github.com/jazzband/django-downloadview)
 -   [Database Field Encryption](https://gitlab.com/guywillett/django-searchable-encrypted-fields)
 -   [High Performance Webserver](https://github.com/pgjones/hypercorn)
 -   [High Performance Caching](https://github.com/grantjenks/python-diskcache)

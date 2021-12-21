@@ -2,8 +2,9 @@
 
 
 from django.contrib.auth import views as auth_views
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
+from django_downloadview import StorageDownloadView
 from django_idom import IDOM_WEB_MODULES_PATH
 
 from conreq import config
@@ -16,6 +17,11 @@ urlpatterns = [
     path("", include("conreq.internal.pwa.urls")),
     path("", config.landing_view, name="landing"),
     path(HOME_URL, config.home_view, name="home"),
+    re_path(
+        r"^media/(?P<path>[a-zA-Z0-9_-]+\.[a-zA-Z0-9]{1,4})$",
+        StorageDownloadView.as_view(),
+        name="media",
+    ),
     path("sign_in", config.sign_in_view, name="sign_in"),
     path("sign_up/<invite_code>", config.sign_up_view, name="sign_up"),
     path("sign_out", auth_views.logout_then_login, name="sign_out"),
