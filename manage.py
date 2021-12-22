@@ -49,7 +49,7 @@ def run_in_safe_mode(exception):
         )
         get_safe_mode.cache_clear()
         start_command = f'{sys.executable} {" ".join(sys.argv)}'
-        subprocess.run(start_command, check=True)
+        subprocess.run(start_command.split(" "), check=True)
     except Exception as exception_2:
         raise exception from exception_2
 
