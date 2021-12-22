@@ -1,0 +1,13 @@
+"""
+Forms for {{ verbose_name }}.
+
+Typically used with forms.ModelForm to edit database entries.
+
+See more information in the Django Forms docs.
+"""
+
+from crispy_forms.helper import FormHelper
+from django import forms
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from conreq.utils.components import django_to_idom
