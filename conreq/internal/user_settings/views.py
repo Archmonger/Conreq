@@ -4,6 +4,9 @@ from conreq.internal.user_settings.forms import UserSettingsForm
 from conreq.utils.views import SuccessCurrentUrlMixin
 
 
+# TODO: Tabs for general, delete user, and change password
+
+
 def change_password(request):
     pass
 

@@ -11,6 +11,7 @@ User = get_user_model()
 
 # TODO: Split up manage_users.css into a generic, reusable file(s)
 # TODO: Create SimpleTable and SimpleForm abstractions
+# TODO: Figure out some way to integrate user invites into this
 
 
 class UserEditView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
