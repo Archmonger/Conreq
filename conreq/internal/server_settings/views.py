@@ -10,7 +10,6 @@ from conreq.internal.server_settings.models import (
 )
 from conreq.utils.views import SingletonUpdateView
 
-
 # TODO: Tabs for general, styling, webserver, and email
 
 
