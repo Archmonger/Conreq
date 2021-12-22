@@ -34,6 +34,7 @@ def authenticated(
     return decorator
 
 
+# TODO: Turn this into a more traditional decorator and allow URL declaration
 def django_to_idom(func: Callable) -> VdomDict:
     """Converts a Django view function/class into an IDOM component
     by turning it into an idom component in an iframe. Since this is
@@ -48,7 +49,7 @@ def django_to_idom(func: Callable) -> VdomDict:
     url = (BASE_URL + "iframe/" + view_name).replace("<locals>", "locals")
     urlpatterns.append(path(url, view, name=view_name))
 
-    # Create an iframe with src=/iframe/path.to.component
+    # Create an iframe with src=...
     @idom.component
     def idom_component(*args, **kwargs):
         return iframe({"src": url, "loading": "lazy"})
