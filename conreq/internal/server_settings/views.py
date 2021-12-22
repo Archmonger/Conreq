@@ -1,5 +1,3 @@
-from django.views.generic.edit import UpdateView
-
 from conreq.internal.server_settings.forms import (
     GeneralSettingsForm,
     StylingSettingsForm,
