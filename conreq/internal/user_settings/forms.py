@@ -25,9 +25,8 @@ class UserSettingsForm(ModelForm):
         self.helper.add_input(
             Button(
                 "delete",
-                "Delete",
+                "Delete My Account",
                 css_class="btn-danger",
                 onclick="window.location.href = window.location.href.replace('edit','delete');",
             )
         )
-        self.helper.add_input(Button("change-password", "Change Password"))
