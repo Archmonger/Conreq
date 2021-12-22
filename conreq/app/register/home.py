@@ -8,6 +8,7 @@ from conreq.utils.components import django_to_idom
 from ..selectors import AuthLevel, Viewport, ViewType
 
 
+# TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.
 def nav_tab(
     tab_name: str,
     group_name: str,
@@ -17,6 +18,9 @@ def nav_tab(
     viewport: Viewport = Viewport.primary,
     auth_level: AuthLevel = AuthLevel.user,
     view_type: ViewType = ViewType.idom,
+    url_pattern: str = None,
+    name: str = None,
+    use_regex: bool = False,
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked.
     By default, the function decorated will be rendered to the viewport. The `on_click` event
@@ -28,7 +32,9 @@ def nav_tab(
         if view_type == ViewType.idom:
             component = func
         elif view_type == ViewType.django:
-            component = django_to_idom(func)
+            component = django_to_idom(
+                url_pattern=url_pattern, name=name, use_regex=use_regex
+            )(func)
         else:
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
 

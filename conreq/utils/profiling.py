@@ -20,8 +20,13 @@ else:
 
 def profiled_view(view: Any, name=None):
     """Helper utility to add performance profiling to a view class or function, if possible."""
+    # Something that isn't a view function, such as a list of urlpatterns
     if not callable(view):
         return view
+
+    # Class view
     if isclass(view):
         return metrics(name=name)(view.as_view())
+
+    # Function view
     return metrics(name=name)(view)

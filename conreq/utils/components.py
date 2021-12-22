@@ -2,7 +2,7 @@ from functools import wraps
 from typing import Callable
 
 import idom
-from django.urls import path
+from django.urls import path, re_path
 from idom.core.proto import VdomDict
 from idom.core.vdom import make_vdom_constructor
 from idom.html import div
@@ -34,24 +34,38 @@ def authenticated(
     return decorator
 
 
-# TODO: Turn this into a more traditional decorator and allow URL declaration
-def django_to_idom(func: Callable) -> VdomDict:
+# TODO: Use Django resolve and raise an exception if registering something that already exists
+def django_to_idom(
+    url_pattern: str = None,
+    name: str = None,
+    use_regex: bool = False,
+) -> VdomDict:
     """Converts a Django view function/class into an IDOM component
-    by turning it into an idom component in an iframe. Since this is
-    an iframe, you'll need to handle all styling on your own."""
-    # pylint: disable=import-outside-toplevel
-    from conreq.urls import urlpatterns
-    from conreq.utils.profiling import profiled_view
+    by turning it into an idom component in an iframe."""
 
-    # Add a /iframe/path.to.component URL
-    view = profiled_view(func)
-    view_name = f"{func.__module__}.{func.__name__}"
-    url = (BASE_URL + "iframe/" + view_name).replace("<locals>", "locals")
-    urlpatterns.append(path(url, view, name=view_name))
+    def decorator(func: Callable):
+        # pylint: disable=import-outside-toplevel
+        from conreq.urls import urlpatterns
+        from conreq.utils.profiling import profiled_view
 
-    # Create an iframe with src=...
-    @idom.component
-    def idom_component(*args, **kwargs):
-        return iframe({"src": url, "loading": "lazy"})
+        # Register a new URL path
+        view = profiled_view(func)
+        dotted_path = f"{func.__module__}.{func.__name__}"
+        view_name = name or dotted_path
+        src_url = url_pattern or f"{BASE_URL}iframe/{dotted_path}".replace(
+            "<", ""
+        ).replace(">", "")
 
-    return idom_component
+        if use_regex:
+            urlpatterns.append(re_path(src_url, view, name=view_name))
+        else:
+            urlpatterns.append(path(src_url, view, name=view_name))
+
+        # Create an iframe with src=...
+        @idom.component
+        def idom_component(*args, **kwargs):
+            return iframe({"src": src_url, "loading": "lazy"})
+
+        return idom_component
+
+    return decorator

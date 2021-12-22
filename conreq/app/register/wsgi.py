@@ -15,22 +15,22 @@ if BASE_URL:
 
 
 def url(
-    pattern: str,
+    url_pattern: str,
     name: str = None,
     use_regex: bool = False,
 ) -> Union[Callable, View]:
     """Decorates a Django view function or view class."""
-    from conreq.urls import urlpatterns
 
     def decorator(new_path: Any):
+        from conreq.urls import urlpatterns
         from conreq.utils.profiling import profiled_view
 
         view = profiled_view(new_path)
 
-        if not use_regex:
-            urlpatterns.append(path(BASE_URL + pattern, view, name=name))
+        if use_regex:
+            urlpatterns.append(re_path(BASE_URL + url_pattern, view, name=name))
         else:
-            urlpatterns.append(re_path(BASE_URL + pattern, view, name=name))
+            urlpatterns.append(path(BASE_URL + url_pattern, view, name=name))
 
         @wraps(view)
         def _wrapped_view(*args, **kwargs):
@@ -40,22 +40,22 @@ def url(
 
 
 def api(
-    pattern: str,
+    url_pattern: str,
     version: int,
     use_regex: bool = False,
 ) -> View:
     """Decorates a DRF view function or view class."""
-    from conreq.urls import urlpatterns
 
     def decorator(new_path: Any):
+        from conreq.urls import urlpatterns
         from conreq.utils.profiling import profiled_view
 
         view = profiled_view(new_path)
 
-        if not use_regex:
-            urlpatterns.append(path(f"{BASE_URL}/v{version}/{pattern}", view))
+        if use_regex:
+            urlpatterns.append(re_path(f"{BASE_URL}/v{version}/{url_pattern}", view))
         else:
-            urlpatterns.append(re_path(f"{BASE_URL}/v{version}/{pattern}", view))
+            urlpatterns.append(path(f"{BASE_URL}/v{version}/{url_pattern}", view))
 
         @wraps(view)
         def _wrapped_view(*args, **kwargs):

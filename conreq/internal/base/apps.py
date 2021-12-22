@@ -27,7 +27,7 @@ class BaseConfig(AppConfig):
 
         from conreq.internal.user_settings.views import user_settings
 
-        register.nav_tab("Settings", "User")(django_to_idom(user_settings))
+        register.nav_tab("Settings", "User")(django_to_idom()(user_settings))
 
         @register.nav_tab("Sign Out", "User")
         @idom.component
@@ -40,7 +40,7 @@ class BaseConfig(AppConfig):
 
         from conreq.internal.manage_users.views import manage_users
 
-        register.nav_tab("Manage Users", "Admin")(django_to_idom(manage_users))
+        register.nav_tab("Manage Users", "Admin")(django_to_idom()(manage_users))
 
         @register.nav_tab("App Store", "Admin")
         def app_store(websocket, state, set_state):
@@ -48,7 +48,7 @@ class BaseConfig(AppConfig):
 
         from conreq.internal.server_settings.views import server_settings
 
-        register.nav_tab("Server Settings", "Admin")(django_to_idom(server_settings))
+        register.nav_tab("Server Settings", "Admin")(django_to_idom()(server_settings))
 
         iframe = make_vdom_constructor("iframe")
 
