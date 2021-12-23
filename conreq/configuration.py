@@ -7,6 +7,7 @@ from idom.core.proto import VdomDict
 from idom.html import div, span
 
 
+# TODO: Break this apart into multiple smaller configs
 @dataclass
 class _Config:
     # pylint: disable=too-many-instance-attributes, import-outside-toplevel
