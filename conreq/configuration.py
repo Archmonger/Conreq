@@ -6,20 +6,21 @@ from typing import Callable
 from idom.core.proto import VdomDict
 from idom.html import div, span
 
+from conreq.internal.view_wrappers.views import (
+    home,
+    landing,
+    password_reset,
+    password_reset_confirm,
+    password_reset_sent,
+    sign_in,
+    sign_up,
+)
+
 
 # TODO: Break this apart into multiple smaller configs
 @dataclass
 class _Config:
-    # pylint: disable=too-many-instance-attributes, import-outside-toplevel
-    from conreq.internal.view_wrappers.views import (
-        home,
-        landing,
-        password_reset,
-        password_reset_confirm,
-        password_reset_sent,
-        sign_in,
-        sign_up,
-    )
+    # pylint: disable=too-many-instance-attributes
 
     # Startup
     pre_run: set[Callable] = field(default_factory=set)
@@ -55,8 +56,6 @@ class _Config:
     user_setting_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
     server_setting_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
     nav_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
-
-    # IDOM VDOMs
     loading_animation_vdom: VdomDict = field(
         default_factory=lambda: div(
             {"className": "spinner-border loading-animation", "role": "status"},
