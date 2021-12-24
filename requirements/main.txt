@@ -23,7 +23,7 @@ git+https://github.com/django-dbbackup/django-dbbackup.git@9d1909c30a3271c8c9c84
 git+https://github.com/idom-team/django-idom.git
 git+https://github.com/tari/django-downloadview.git@1858355d580a18899aed5c71375d69a3f6d9ede7
 huey==2.4.2
-hypercorn[h3]==0.13.1
+hypercorn[h3]==0.13.2
 markdown==3.3.6
 pillow==8.3.2
 psutil==5.8.0
