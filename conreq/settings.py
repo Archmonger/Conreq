@@ -238,7 +238,8 @@ INSTALLED_APPS = [
     "colorfield",  # Allow for HEX colors in the DB
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row models in the DB
-    "versionfield",  # Allow for version numbers in the DB
+    # FIXME: When DEBUG is false.... 'django-versionfield/fonts/glyphicons-halflings-regular.eot' could not be found
+    # "versionfield",  # Allow for version numbers in the DB
     # ASGI
     "channels",  # Websocket library
     "django_idom",  # React JS for Python

@@ -49,7 +49,10 @@ class DoNothingDecorator:
     """Decorator that does nothing."""
 
     # pylint: disable=too-few-public-methods
-    def __call__(self, target):
+    def __init__(self, *args, **kwargs) -> None:
+        pass
+
+    def __call__(self, target, *args, **kwargs):
         return target
 
 
