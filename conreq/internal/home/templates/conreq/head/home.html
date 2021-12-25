@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://stackpath.bootstrapcdn.com">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
+<!-- TODO: Host remote stuff locally within Conreq via NPM -->
 <!-- Font (Roboto) -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
     crossorigin="anonymous">
@@ -48,16 +49,16 @@
 
 <!-- Local CSS -->
 {% compress css %}
-<link rel="stylesheet" href="{% static 'css/main.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/buttons.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/sidebar.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/viewport.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/modal.css' %}" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/server_settings.css' %}" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<link rel="stylesheet" href="{% static 'css/viewport.css' %}">
+<link rel="stylesheet" href="{% static 'css/modal.css' %}">
+<link rel="stylesheet" href="{% static 'css/server_settings.css' %}">
 {% endcompress %}
 
 <!-- Local JS -->
 {% compress js %}
-<script src="{% static 'js/aos-init.js' %}" crossorigin="anonymous"></script>
+<script src="{% static 'js/aos-init.js' %}"></script>
 {% endcompress %}
