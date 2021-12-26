@@ -12,8 +12,11 @@ from conreq.internal.home.components.viewport import (
 )
 from conreq.utils.components import authenticated
 
-
+# TODO: Change state from a dict to a dataclass
+# TODO: Allow components to add a viewport class
 # TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
+
+
 @idom.component
 @authenticated()
 def homepage(websocket):
@@ -32,6 +35,7 @@ def homepage(websocket):
         }
     )
 
+    # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/538
     return div(
         navbar(websocket, state, set_state),
         modal(websocket, state, set_state),
