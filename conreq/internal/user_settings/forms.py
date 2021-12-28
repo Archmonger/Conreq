@@ -22,11 +22,3 @@ class UserSettingsForm(ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method = "post"
         self.helper.add_input(Submit("submit", "Save"))
-        self.helper.add_input(
-            Button(
-                "delete",
-                "Delete My Account",
-                css_class="btn-danger",
-                onclick="window.location.href = window.location.href.replace('edit','delete');",
-            )
-        )

@@ -5,7 +5,7 @@ import idom
 from django.urls import path, re_path
 from idom.core.proto import VdomDict
 from idom.core.vdom import make_vdom_constructor
-from idom.html import div
+from idom.html import div, li, ul
 
 from conreq.utils.environment import get_base_url
 
@@ -69,3 +69,38 @@ def django_to_idom(
         return idom_component
 
     return decorator
+
+
+@idom.component
+def tabbed_viewport(websocket, tabs):
+    current_tab, set_current_tab = idom.hooks.use_state(None)
+
+    # Set the default tab
+    # TODO: This should be done in hooks.use_state, but that requires `sortedcontainers`.
+    if not current_tab:
+        first_tab = next(iter(tabs))
+        current_tab = tabs[first_tab]["component"]
+
+    return div(
+        {"className": "tabbed-viewport-container"},
+        div(
+            {"className": "tabbed-viewport"},
+            current_tab(websocket, current_tab, set_current_tab),
+        ),
+        ul(
+            {"className": "tabbed-viewport-selector list-group"},
+            *_tabbed_viewport_tabs(tabs, current_tab, set_current_tab),
+        ),
+    )
+
+
+def _tabbed_viewport_tabs(tabs: dict, current_tab, set_current_tab):
+    return [
+        li(
+            {
+                "className": f"list-group-item clickable{' active' if current_tab is tab_properties['component'] else ''}"
+            },
+            tab_name,
+        )
+        for tab_name, tab_properties in tabs.items()
+    ]

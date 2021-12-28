@@ -27,7 +27,7 @@ class BaseConfig(AppConfig):
 
         from conreq.internal.user_settings.views import user_settings
 
-        register.nav_tab("Settings", "User")(django_to_idom()(user_settings))
+        register.nav_tab("Settings", "User")(user_settings)
 
         @register.nav_tab("Sign Out", "User")
         @idom.component

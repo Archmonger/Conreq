@@ -67,6 +67,7 @@ def sidebar(websocket, state, set_state):
             return None
 
         # pylint: disable=unused-variable
+        # TODO: This should be done in hooks.use_state, but that requires `sortedcontainers`.
         for group_name, group_values in all_tabs:
             tab = group_values["tabs"][0]
             set_state(
