@@ -53,9 +53,13 @@ class _Config:
     server_settings_component: Callable = None
     user_settings_component: Callable = None
     app_store_component: Callable = None
-    user_setting_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
-    server_setting_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
+
     nav_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
+    user_settings_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
+    manage_users_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
+    app_store_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
+    server_settings_tabs: dict[str, dict[str, Callable]] = field(default_factory=dict)
+
     loading_animation_vdom: VdomDict = field(
         default_factory=lambda: div(
             {"className": "spinner-border loading-animation", "role": "status"},
