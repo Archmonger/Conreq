@@ -1,6 +1,7 @@
 from .asgi import websocket
 from .components import manage_users_component, server_settings_component
 from .home import nav_group, nav_tab, server_settings
+from .tabs import user_setting
 from .templates import (
     home_template,
     landing_template,
@@ -8,7 +9,6 @@ from .templates import (
     sign_in_template,
     sign_up_template,
 )
-from .tabs import user_setting
 from .views import (
     home_view,
     landing_view,

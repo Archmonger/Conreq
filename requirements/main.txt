@@ -6,6 +6,7 @@ django-colorfield==0.5.0
 django-compression-middleware==0.4.1
 django-compressor==3.1
 django-crispy-forms==1.13.0
+django-dbbackup==4.0.0b0
 django-health-check==3.16.5
 django-jazzmin==2.4.8
 django-multiselectfield==0.1.12
@@ -19,7 +20,6 @@ djangorestframework==3.13.1
 djangorestframework-api-key==2.1.0
 docutils==0.18.1
 drf-yasg==1.20.0
-django-dbbackup==4.0.0b0
 git+https://github.com/idom-team/django-idom.git
 git+https://github.com/tari/django-downloadview.git@1858355d580a18899aed5c71375d69a3f6d9ede7
 huey==2.4.2
