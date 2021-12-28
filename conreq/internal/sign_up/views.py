@@ -30,7 +30,7 @@ def sign_up_with_invite(request, invite_code):
 
         # Submission wasn't valid, so return the error codes
         if not form.is_valid():
-            template = loader.get_template(config.sign_up_template)
+            template = loader.get_template(config.templates.sign_up)
             return HttpResponse(template.render({"form": form}, request))
 
         # Create and login the user
@@ -45,5 +45,5 @@ def sign_up_with_invite(request, invite_code):
         return redirect(LOGIN_REDIRECT_URL)
 
     # User needs to fill out registration form
-    template = loader.get_template(config.sign_up_template)
+    template = loader.get_template(config.templates.sign_up)
     return HttpResponse(template.render({}, request))

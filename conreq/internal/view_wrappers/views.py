@@ -2,7 +2,7 @@ from inspect import iscoroutinefunction
 
 from channels.db import database_sync_to_async as convert_to_async
 
-import conreq
+from conreq import config
 from conreq.utils.views import stub
 
 # TODO: Add warnings for sync code
@@ -10,7 +10,7 @@ from conreq.utils.views import stub
 
 async def landing(request, *args, **kwargs):
     """Configurable landing view."""
-    view = conreq.config.landing_view
+    view = config.views.landing
     if view is landing:
         return stub(request)
     if iscoroutinefunction(view):
@@ -20,7 +20,7 @@ async def landing(request, *args, **kwargs):
 
 async def home(request, *args, **kwargs):
     """Configurable home view."""
-    view = conreq.config.home_view
+    view = config.views.home
     if view is home:
         return stub(request)
     if iscoroutinefunction(view):
@@ -30,7 +30,7 @@ async def home(request, *args, **kwargs):
 
 async def sign_up(request, *args, **kwargs):
     """Configurable sign up view."""
-    view = conreq.config.sign_up_view
+    view = config.views.sign_up
     if view is sign_up:
         return stub(request)
     if iscoroutinefunction(view):
@@ -40,7 +40,7 @@ async def sign_up(request, *args, **kwargs):
 
 async def sign_in(request, *args, **kwargs):
     """Configurable sign in view."""
-    view = conreq.config.sign_in_view
+    view = config.views.sign_in
     if view is sign_in:
         return stub(request)
     if iscoroutinefunction(view):
@@ -50,7 +50,7 @@ async def sign_in(request, *args, **kwargs):
 
 async def password_reset(request, *args, **kwargs):
     """Configurable password reset view."""
-    view = conreq.config.password_reset_view
+    view = config.views.password_reset
     if view is password_reset:
         return stub(request)
     if iscoroutinefunction(view):
@@ -60,7 +60,7 @@ async def password_reset(request, *args, **kwargs):
 
 async def password_reset_sent(request, *args, **kwargs):
     """Configurable password reset sent view."""
-    view = conreq.config.password_reset_sent_view
+    view = config.views.password_reset_sent
     if view is password_reset_sent:
         return stub(request)
     if iscoroutinefunction(view):
@@ -70,7 +70,7 @@ async def password_reset_sent(request, *args, **kwargs):
 
 async def password_reset_confirm(request, *args, **kwargs):
     """Configurable password reset confirmation view."""
-    view = conreq.config.password_reset_sent_view
+    view = config.views.password_reset_confirm
     if view is password_reset_confirm:
         return stub(request)
     if iscoroutinefunction(view):

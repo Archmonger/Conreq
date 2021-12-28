@@ -1,7 +1,7 @@
 import idom
 from idom.html import div, i
 
-import conreq
+from conreq import config
 from conreq.app.selectors import Modal
 
 MODAL_CONTAINER = {
@@ -68,7 +68,7 @@ def modal_body(websocket, state, set_state):
         return state["modal_body"]
     return div(
         MODAL_BODY,
-        div({"className": "loading"}, conreq.config.loading_animation_vdom),
+        div({"className": "loading"}, config.components.loading_animation),
     )
 
 

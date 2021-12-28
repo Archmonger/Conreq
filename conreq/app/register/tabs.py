@@ -1,17 +1,19 @@
 from functools import wraps
 from typing import Callable
 
-import conreq
+from conreq import config
 
 
+# TODO: Add the other tabs to here.
 def user_setting() -> Callable:
     """Decorates an IDOM component. Component is injected into the user settings modal.
     Settings component will be provided the websocket scope.
     """
+    # TODO: Implement user settings tab registration
 
     def decorator(func):
 
-        conreq.config.user_setting_sections.append(func)
+        config.tabs.user_settings.append(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

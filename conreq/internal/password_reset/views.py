@@ -9,13 +9,13 @@ from conreq.internal.password_reset.forms import PasswordResetForm, SetPasswordF
 @register.password_reset_view()
 class PasswordResetView(auth_views.PasswordResetView):
     success_url = reverse_lazy("password_reset_sent")
-    template_name = config.password_reset_template
+    template_name = config.templates.password_reset
     form_class = PasswordResetForm
 
 
 @register.password_reset_sent_view()
 class PassWordResetDoneView(auth_views.PasswordResetDoneView):
-    template_name = config.password_reset_sent_template
+    template_name = config.templates.password_reset_sent
 
 
 @register.password_reset_confirm_view()

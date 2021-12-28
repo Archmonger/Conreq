@@ -2,7 +2,7 @@ import idom
 from django.utils.text import slugify
 from idom.html import div, i, nav
 
-import conreq
+from conreq import config
 from conreq.app.selectors import Viewport
 from conreq.utils.environment import get_debug, get_safe_mode
 
@@ -59,7 +59,7 @@ def sidebar(websocket, state, set_state):
     if not websocket.scope["user"].is_authenticated:
         return None
 
-    all_tabs = conreq.config.nav_tabs.items()
+    all_tabs = config.tabs.navbar.items()
 
     @idom.hooks.use_effect
     async def set_default_tab():

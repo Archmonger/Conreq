@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Callable
 
-import conreq
+from conreq import config
 from conreq.app.types import Icon
 from conreq.utils.components import django_to_idom
 
@@ -38,7 +38,7 @@ def nav_tab(
         else:
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
 
-        group = conreq.config.nav_tabs.setdefault(
+        group = config.tabs.navbar.setdefault(
             group_name, {"icon": group_icon, "tabs": []}
         )
         group["tabs"].append(
@@ -66,21 +66,21 @@ def nav_group(
     group_icon: Icon = None,
 ):
     """Creates a nav group and/or sets the group icon."""
-    nav_tabs = conreq.config.nav_tabs
-    group = nav_tabs.get(group_name)
+    navbar = config.tabs.navbar
+    group = navbar.get(group_name)
 
     if not group:
-        nav_tabs[group_name] = {"icon": group_icon, "tabs": []}
+        navbar[group_name] = {"icon": group_icon, "tabs": []}
 
     else:
-        nav_tabs[group_name].update("icon", group_icon)
+        navbar[group_name].update("icon", group_icon)
 
 
 def server_settings(page_name: str) -> Callable:
     """Decorates an IDOM component. Creates a settings page."""
 
     def decorator(func):
-        conreq.config.server_setting_tabs[page_name] = {"component": func}
+        config.tabs.server_settings[page_name] = {"component": func}
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

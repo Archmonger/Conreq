@@ -3,7 +3,7 @@
 from functools import wraps
 from typing import Callable
 
-import conreq
+from conreq import config
 
 
 def pre_run() -> Callable:
@@ -11,7 +11,7 @@ def pre_run() -> Callable:
 
     def decorator(func):
 
-        conreq.config.pre_run.add(func)
+        config.startup.pre_run.add(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -27,9 +27,9 @@ def setting_script(dotted_path: str) -> None:
     Runs a file within settings.py. Wildcards are accepted.
     See django-split-settings docs for more details.
     """
-    conreq.config.setting_scripts.add(dotted_path)
+    config.startup.setting_scripts.add(dotted_path)
 
 
 def installed_app(dotted_path: str) -> None:
     """Shortcut to add an installed app to Django."""
-    conreq.config.installed_apps.add(dotted_path)
+    config.startup.installed_apps.add(dotted_path)

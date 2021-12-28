@@ -22,18 +22,18 @@ class Email:
     html_message: Union[str, None] = None
 
 
-def _get_mail_backend(config: EmailConfig = None):
-    if not config:
-        config = EmailConfig.get_solo()
+def _get_mail_backend(email_config: EmailConfig = None):
+    if not email_config:
+        email_config = EmailConfig.get_solo()
 
     backend = smtp.EmailBackend(
-        host=config.server,
-        port=config.port,
-        username=config.username,
-        password=config.password,
-        use_tls=config.auth_encryption == AuthEncryption.TLS,
-        use_ssl=config.auth_encryption == AuthEncryption.SSL,
-        timeout=config.timeout,
+        host=email_config.server,
+        port=email_config.port,
+        username=email_config.username,
+        password=email_config.password,
+        use_tls=email_config.auth_encryption == AuthEncryption.TLS,
+        use_ssl=email_config.auth_encryption == AuthEncryption.SSL,
+        timeout=email_config.timeout,
     )
     # Note: A new backend connection needs to be formed every task run
     # since threading.rlock is not serializable by Huey
@@ -44,33 +44,33 @@ def _get_mail_backend(config: EmailConfig = None):
 class EmailBackend(smtp.EmailBackend):
     """Email backend to be used for Django reverse compatibility."""
 
-    def configure(self, config=None):
-        if not config:
-            config: EmailConfig = EmailConfig.get_solo()
-        self.host = config.server
-        self.port = config.port
-        self.username = config.username
-        self.password = config.password
-        self.use_tls = config.auth_encryption == AuthEncryption.TLS
-        self.use_ssl = config.auth_encryption == AuthEncryption.SSL
-        self.timeout = config.timeout
+    def configure(self, email_config=None):
+        if not email_config:
+            email_config: EmailConfig = EmailConfig.get_solo()
+        self.host = email_config.server
+        self.port = email_config.port
+        self.username = email_config.username
+        self.password = email_config.password
+        self.use_tls = email_config.auth_encryption == AuthEncryption.TLS
+        self.use_ssl = email_config.auth_encryption == AuthEncryption.SSL
+        self.timeout = email_config.timeout
 
     def send_messages(self, email_messages: Sequence[EmailMessage]) -> int:
-        config: EmailConfig = EmailConfig.get_solo()
-        if config.enabled:
-            self.configure(config)
+        email_config: EmailConfig = EmailConfig.get_solo()
+        if email_config.enabled:
+            self.configure(email_config)
             return super().send_messages(email_messages)
         return 0
 
 
-def get_from_name(config: EmailConfig = None):
-    if not config:
-        config = EmailConfig.get_solo()
+def get_from_name(email_config: EmailConfig = None):
+    if not email_config:
+        email_config = EmailConfig.get_solo()
 
     return (
-        f"{config.sender_name} <{config.username}>"
-        if config.sender_name
-        else config.username
+        f"{email_config.sender_name} <{email_config.username}>"
+        if email_config.sender_name
+        else email_config.username
     )
 
 
@@ -85,16 +85,16 @@ def send_mail(
     Sends a single message to list of recipients. All members of the list
     will see the other recipients in the 'To' field.
     """
-    config: EmailConfig = EmailConfig.get_solo()
-    backend = _get_mail_backend(config)
+    email_config: EmailConfig = EmailConfig.get_solo()
+    backend = _get_mail_backend(email_config)
 
-    if config.enabled:
+    if email_config.enabled:
         return db_task(
             retries=retries, retry_delay=retry_delay, priority=priority, expires=expires
         )(django_send_mail)(
             email.subject,
             email.message,
-            get_from_name(config),
+            get_from_name(email_config),
             email.recipient_list,
             html_message=email.html_message,
             connection=backend,
@@ -111,21 +111,24 @@ def send_mass_mail(
     """
     Sends out multiple emails while reusing one SMTP connection.
     """
-    config: EmailConfig = EmailConfig.get_solo()
-    backend = _get_mail_backend(config)
-    if config.enabled:
+    email_config: EmailConfig = EmailConfig.get_solo()
+    backend = _get_mail_backend(email_config)
+    if email_config.enabled:
         return db_task(
             retries=retries, retry_delay=retry_delay, priority=priority, expires=expires
-        )(_send_mass_email)(connection=backend, emails=emails, config=config)
+        )(_send_mass_email)(connection=backend, emails=emails, config=email_config)
 
 
 def _send_mass_email(
-    connection: smtp.EmailBackend, emails: Iterable[Email], config: EmailConfig
+    connection: smtp.EmailBackend, emails: Iterable[Email], email_config: EmailConfig
 ):
     messages = []
     for email in emails:
         message = EmailMultiAlternatives(
-            email.subject, email.message, get_from_name(config), email.recipient_list
+            email.subject,
+            email.message,
+            get_from_name(email_config),
+            email.recipient_list,
         )
         if email.html_message:
             message.attach_alternative(email.html_message, "text/html")

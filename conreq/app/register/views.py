@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Any
 
-import conreq
+from conreq import config
 
 # pylint: disable=import-outside-toplevel
 
@@ -12,7 +12,7 @@ def landing_view() -> None:
     def decorator(func):
         from conreq.utils.profiling import profiled_view
 
-        conreq.config.landing_view = profiled_view(func)
+        config.views.landing = profiled_view(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -29,7 +29,7 @@ def home_view() -> None:
     def decorator(func):
         from conreq.utils.profiling import profiled_view
 
-        conreq.config.home_view = profiled_view(func)
+        config.views.home = profiled_view(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -46,7 +46,7 @@ def sign_up_view() -> None:
     def decorator(func):
         from conreq.utils.profiling import profiled_view
 
-        conreq.config.sign_up_view = profiled_view(func)
+        config.views.sign_up = profiled_view(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -63,7 +63,7 @@ def sign_in_view() -> None:
     def decorator(func):
         from conreq.utils.profiling import profiled_view
 
-        conreq.config.sign_in_view = profiled_view(func)
+        config.views.sign_in = profiled_view(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -80,7 +80,7 @@ def password_reset_view() -> None:
     def decorator(func: Any):
         from conreq.utils.profiling import profiled_view
 
-        conreq.config.password_reset_view = profiled_view(func)
+        config.views.password_reset = profiled_view(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -97,7 +97,7 @@ def password_reset_sent_view() -> None:
     def decorator(func):
         from conreq.utils.profiling import profiled_view
 
-        conreq.config.password_reset_sent_view = profiled_view(func)
+        config.views.password_reset_sent = profiled_view(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -114,7 +114,7 @@ def password_reset_confirm_view() -> None:
     def decorator(func):
         from conreq.utils.profiling import profiled_view
 
-        conreq.config.password_reset_confirm_view = profiled_view(func)
+        config.views.password_reset_confirm = profiled_view(func)
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

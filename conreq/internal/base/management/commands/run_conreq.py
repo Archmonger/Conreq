@@ -74,19 +74,19 @@ class Command(BaseCommand):
 
     @staticmethod
     def _run_hypercorn(port):
-        config = HypercornConfig()
-        config.bind = f"0.0.0.0:{port}"
-        config.websocket_ping_interval = 20
-        config.workers = 3
-        config.application_path = "conreq.asgi:application"
-        config.accesslog = ACCESS_LOG_FILE
+        hypercorn_config = HypercornConfig()
+        hypercorn_config.bind = f"0.0.0.0:{port}"
+        hypercorn_config.websocket_ping_interval = 20
+        hypercorn_config.workers = 3
+        hypercorn_config.application_path = "conreq.asgi:application"
+        hypercorn_config.accesslog = ACCESS_LOG_FILE
 
         # Additonal webserver configuration
         if HYPERCORN_TOML.exists():
-            config.from_toml(HYPERCORN_TOML)
+            hypercorn_config.from_toml(HYPERCORN_TOML)
 
         # Run the webserver
-        run_hypercorn(config)
+        run_hypercorn(hypercorn_config)
 
     def add_arguments(self, parser):
         parser.add_argument(

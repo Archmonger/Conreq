@@ -19,7 +19,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter  # noqa: E402
 from channels.security.websocket import AllowedHostsOriginValidator  # noqa: E402
 from channels.sessions import SessionMiddlewareStack  # noqa: E402
 
-import conreq  # noqa: E402
+from conreq import config  # noqa: E402
 
 
 class LifespanApp:
@@ -52,7 +52,7 @@ application = ProtocolTypeRouter(
         "http": django_asgi_app,
         "websocket": AllowedHostsOriginValidator(
             SessionMiddlewareStack(
-                AuthMiddlewareStack(URLRouter(conreq.config.websockets))
+                AuthMiddlewareStack(URLRouter(config.asgi.websockets))
             )
         ),
         "lifespan": LifespanApp,

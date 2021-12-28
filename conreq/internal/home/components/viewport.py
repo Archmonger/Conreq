@@ -1,7 +1,7 @@
 import idom
 from idom.html import div
 
-import conreq
+from conreq import config
 from conreq.app.selectors import Viewport
 
 VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
@@ -16,7 +16,7 @@ def viewport_loading(websocket, state, set_state):
     return div(
         VIEWPORT_CONTAINER_LOADING
         | ({} if state["viewport"] == Viewport.loading else HIDDEN),
-        conreq.config.loading_animation_vdom,
+        config.components.loading_animation,
     )
 
 

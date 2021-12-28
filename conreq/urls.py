@@ -15,25 +15,25 @@ HOME_URL = get_home_url(append_slash=False, prepend_slash=False)
 
 urlpatterns = [
     path("", include("conreq.internal.pwa.urls")),
-    path("", config.landing_view, name="landing"),
-    path(HOME_URL, config.home_view, name="home"),
+    path("", config.views.landing, name="landing"),
+    path(HOME_URL, config.views.home, name="home"),
     re_path(
         r"^media/(?P<path>[a-zA-Z0-9_-]+\.[a-zA-Z0-9]{1,4})$",
         StorageDownloadView.as_view(),
         name="media",
     ),
-    path("sign_in", config.sign_in_view, name="sign_in"),
-    path("sign_up/<invite_code>", config.sign_up_view, name="sign_up"),
+    path("sign_in", config.views.sign_in, name="sign_in"),
+    path("sign_up/<invite_code>", config.views.sign_up, name="sign_up"),
     path("sign_out", auth_views.logout_then_login, name="sign_out"),
-    path("password_reset", config.password_reset_view, name="password_reset"),
+    path("password_reset", config.views.password_reset, name="password_reset"),
     path(
         "password_reset/sent",
-        config.password_reset_sent_view,
+        config.views.password_reset_sent,
         name="password_reset_sent",
     ),
     path(
         "password_reset/<uidb64>/<token>",
-        config.password_reset_confirm_view,
+        config.views.password_reset_confirm,
         name="password_reset_confirm",
     ),
 ]

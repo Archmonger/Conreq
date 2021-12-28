@@ -5,7 +5,7 @@ from django.urls.base import reverse
 from idom.core.vdom import make_vdom_constructor
 from idom.html import div, i, p
 
-import conreq
+from conreq import config
 from conreq.app import register
 from conreq.utils.components import django_to_idom
 
@@ -17,7 +17,7 @@ class BaseConfig(AppConfig):
         # pylint: disable=import-outside-toplevel
         from django_idom import IDOM_WEBSOCKET_PATH
 
-        conreq.config.websockets.append(IDOM_WEBSOCKET_PATH)
+        config.asgi.websockets.append(IDOM_WEBSOCKET_PATH)
 
         # TODO: Move this navbar registration stuff somewhere else later
         # pylint: disable=unused-argument

@@ -1,31 +1,36 @@
-import conreq
+from conreq import config
 
 
 def landing_template(template: str) -> None:
     """Changes the landing page variable."""
-    conreq.config.landing_template = template
+    config.templates.landing = template
 
 
 def home_template(template: str) -> None:
     """Changes the home page variable."""
-    conreq.config.home_template = template
+    config.templates.home = template
 
 
 def sign_up_template(template: str) -> None:
     """Changes the sign up page variable."""
-    conreq.config.sign_up_template = template
+    config.templates.sign_up = template
 
 
 def sign_in_template(template: str) -> None:
     """Changes the sign in page variable."""
-    conreq.config.sign_in_template = template
+    config.templates.sign_in = template
 
 
 def password_reset_template(template: str) -> None:
     """Changes the password reset page variable."""
-    conreq.config.password_reset_template = template
+    config.templates.password_reset = template
 
 
-def loading_animation_template(template: str) -> None:
-    """Changes the loading animation template variable."""
-    conreq.config.loading_animation_template = template
+def password_reset_sent_template(template: str) -> None:
+    """Changes the password reset page variable."""
+    config.templates.password_reset_sent = template
+
+
+def password_reset_confirm_template(template: str) -> None:
+    """Changes the password reset page variable."""
+    config.templates.password_reset_confirm = template

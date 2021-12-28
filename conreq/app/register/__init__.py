@@ -4,12 +4,11 @@ from .home import nav_group, nav_tab, server_settings
 from .templates import (
     home_template,
     landing_template,
-    loading_animation_template,
     password_reset_template,
     sign_in_template,
     sign_up_template,
 )
-from .user import user_setting
+from .tabs import user_setting
 from .views import (
     home_view,
     landing_view,
@@ -33,7 +32,6 @@ __all__ = [
     "server_settings_component",
     "home_template",
     "landing_template",
-    "loading_animation_template",
     "password_reset_template",
     "sign_in_template",
     "sign_up_template",

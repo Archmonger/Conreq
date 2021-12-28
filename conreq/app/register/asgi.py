@@ -3,7 +3,7 @@ from functools import wraps
 from channels.consumer import AsyncConsumer
 from django import urls
 
-import conreq
+from conreq import config
 from conreq.utils.environment import get_base_url
 
 BASE_URL = get_base_url(append_slash=False, prepend_slash=False)
@@ -16,7 +16,7 @@ def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
 
     def decorator(class_: AsyncConsumer):
 
-        websockets = conreq.config.websockets
+        websockets = config.asgi.websockets
         if not use_regex:
             websockets.append(urls.path(BASE_URL + path, class_.as_asgi()))
         else:

@@ -1,14 +1,15 @@
 from functools import wraps
 
-import conreq
+from conreq import config
 
 
+# TODO: Add all the other component types in here
 def manage_users_component() -> None:
     """Changes the manage users component."""
 
     def decorator(func):
 
-        conreq.config.manage_users_component = func
+        config.components.manage_users = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
@@ -24,7 +25,7 @@ def server_settings_component() -> None:
 
     def decorator(func):
 
-        conreq.config.server_settings_component = func
+        config.components.server_settings = func
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):
