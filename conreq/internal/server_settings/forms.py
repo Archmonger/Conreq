@@ -1,6 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Submit
-from django.forms import ModelForm, CharField
+from django.forms import CharField, ModelForm
 
 from conreq.internal.email.models import EmailSettings
 from conreq.internal.server_settings.models import (
