@@ -22,11 +22,7 @@ def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
         else:
             websockets.append(urls.re_path(BASE_URL + path, class_.as_asgi()))
 
-        @wraps(class_)
-        def _wrapped_class(*args, **kwargs):
-            return _wrapped_class(*args, **kwargs)
-
-        return _wrapped_class
+        return class_
 
     return decorator
 

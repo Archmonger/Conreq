@@ -15,11 +15,7 @@ def viewport(
     """Decorates an IDOM component. Forcibly changes the viewport content."""
 
     def decorator(func):
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 

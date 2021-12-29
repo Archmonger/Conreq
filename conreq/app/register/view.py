@@ -14,11 +14,7 @@ def landing() -> None:
 
         config.views.landing = profiled_view(func)
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -31,11 +27,7 @@ def home() -> None:
 
         config.views.home = profiled_view(func)
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -48,11 +40,7 @@ def sign_up() -> None:
 
         config.views.sign_up = profiled_view(func)
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -65,11 +53,7 @@ def sign_in() -> None:
 
         config.views.sign_in = profiled_view(func)
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -82,11 +66,7 @@ def password_reset() -> None:
 
         config.views.password_reset = profiled_view(func)
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -99,11 +79,7 @@ def password_reset_sent() -> None:
 
         config.views.password_reset_sent = profiled_view(func)
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -116,10 +92,6 @@ def password_reset_confirm() -> None:
 
         config.views.password_reset_confirm = profiled_view(func)
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator

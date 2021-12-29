@@ -10,11 +10,7 @@ def manage_users() -> None:
 
         config.components.manage_users = func
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -26,11 +22,7 @@ def server_settings() -> None:
 
         config.components.server_settings = func
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -42,11 +34,7 @@ def user_settings() -> None:
 
         config.components.user_settings = func
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -58,11 +46,7 @@ def app_store() -> None:
 
         config.components.app_store = func
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -74,10 +58,6 @@ def loading_animation() -> None:
 
         config.components.loading_animation = func
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator

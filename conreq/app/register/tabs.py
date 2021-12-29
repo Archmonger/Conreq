@@ -11,11 +11,7 @@ def user_settings(tab_name: str) -> Callable:
 
         config.tabs.user_settings[tab_name] = {"component": func}
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -27,11 +23,7 @@ def manage_users(tab_name: str) -> Callable:
 
         config.tabs.manage_users[tab_name] = {"component": func}
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -43,11 +35,7 @@ def app_store(tab_name: str) -> Callable:
 
         config.tabs.app_store[tab_name] = {"component": func}
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -58,10 +46,6 @@ def server_settings(tab_name: str) -> Callable:
     def decorator(func):
         config.tabs.server_settings[tab_name] = {"component": func}
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
