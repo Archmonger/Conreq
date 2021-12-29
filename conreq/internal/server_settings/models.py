@@ -53,6 +53,11 @@ class WebserverSettings(SingletonModel):
         verbose_name = "Webserver settings"
         verbose_name_plural = verbose_name
 
+    base_url = CharField(
+        blank=True,
+        max_length=255,
+        help_text="Appears in all links (ex. example.com/base-url).",
+    )
     rotate_secret_key = models.BooleanField(
         default=False,
         help_text="Invalidates all active web sessions upon server restart.",
