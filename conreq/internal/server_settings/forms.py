@@ -1,6 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Submit
-from django.forms import ModelForm
+from django.forms import ModelForm, CharField
 
 from conreq.internal.email.models import EmailSettings
 from conreq.internal.server_settings.models import (
@@ -36,9 +36,15 @@ class StylingSettingsForm(ModelForm):
 
 
 class WebserverSettingsForm(ModelForm):
+    base_url = CharField(
+        required=False,
+        max_length=255,
+        help_text="Appears in all links (ex. example.com/base-url).",
+    )
+
     class Meta:
         model = WebserverSettings
-        fields = "__all__"
+        fields = ["base_url", "rotate_secret_key"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
