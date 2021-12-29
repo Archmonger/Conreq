@@ -2,6 +2,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.contrib.auth import get_user_model
 from django.forms import ModelForm
+from django.contrib.auth.forms import PasswordChangeForm
 
 User = get_user_model()
 
@@ -17,6 +18,14 @@ class UserSettingsForm(ModelForm):
             # TODO: Fetch more settings via conreq.config object
         )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("submit", "Save"))
+
+
+class ChangePasswordForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
