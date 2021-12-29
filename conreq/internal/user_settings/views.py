@@ -1,11 +1,10 @@
 from django.views.generic.edit import UpdateView
 
-from conreq.app import register
 from conreq import config
+from conreq.app import register
 from conreq.internal.user_settings.forms import UserSettingsForm
 from conreq.utils.components import django_to_idom, tabbed_viewport
 from conreq.utils.views import SuccessCurrentUrlMixin
-
 
 # TODO: Tabs for general, delete user, and change password
 

@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('email', '0007_alter_emailconfig_password'),
+        ("email", "0007_alter_emailconfig_password"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='EmailConfig',
-            new_name='EmailSettings',
+            old_name="EmailConfig",
+            new_name="EmailSettings",
         ),
     ]
