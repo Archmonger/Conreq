@@ -5,7 +5,7 @@ from conreq.app.types import Icon
 from conreq.utils.components import django_to_idom
 
 from ..selectors import AuthLevel, Viewport, ViewType
-
+from sortedcontainers import SortedList
 
 # TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.
 def nav_tab(
@@ -38,9 +38,10 @@ def nav_tab(
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
 
         group = config.homepage.nav_tab.setdefault(
-            group_name, {"icon": group_icon, "tabs": []}
+            group_name,
+            {"icon": group_icon, "tabs": SortedList([], key=lambda x: x["name"])},
         )
-        group["tabs"].append(
+        group["tabs"].add(
             {
                 "name": tab_name,
                 "viewport": viewport,
@@ -65,7 +66,10 @@ def nav_group(
     group = navbar.get(group_name)
 
     if not group:
-        navbar[group_name] = {"icon": group_icon, "tabs": []}
+        navbar[group_name] = {
+            "icon": group_icon,
+            "tabs": SortedList([], key=lambda x: x["name"]),
+        }
 
     else:
         navbar[group_name]["icon"] = group_icon

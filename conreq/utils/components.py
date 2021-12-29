@@ -72,7 +72,7 @@ def django_to_idom(
 
 
 @idom.component
-def tabbed_viewport(websocket, tabs):
+def tabbed_viewport(websocket, tabs: dict):
     """Generates a viewport with the provided tabs. Viewport functions should accept
     `websocket, state, set_state` as arguements."""
     state, set_state = idom.hooks.use_state(

@@ -5,6 +5,7 @@ from typing import Callable
 
 from idom.core.proto import VdomDict
 from idom.html import div, span
+from sortedcontainers import SortedDict
 
 from conreq.internal.view_wrappers import views
 
@@ -59,10 +60,16 @@ class ComponentConfig:
 class TabConfig:
     # TODO: Redo this as objects instead of dicts
     # TODO: Implement these tabs
-    user_settings: dict[str, dict[str, Callable]] = field(default_factory=dict)
-    manage_users: dict[str, dict[str, Callable]] = field(default_factory=dict)
-    app_store: dict[str, dict[str, Callable]] = field(default_factory=dict)
-    server_settings: dict[str, dict[str, Callable]] = field(default_factory=dict)
+    user_settings: SortedDict[str, dict[str, Callable]] = field(
+        default_factory=SortedDict
+    )
+    manage_users: SortedDict[str, dict[str, Callable]] = field(
+        default_factory=SortedDict
+    )
+    app_store: SortedDict[str, dict[str, Callable]] = field(default_factory=SortedDict)
+    server_settings: SortedDict[str, dict[str, Callable]] = field(
+        default_factory=SortedDict
+    )
 
 
 @dataclass
@@ -80,7 +87,7 @@ class AsgiConfig:
 
 @dataclass
 class HomepageConfig:
-    nav_tab: dict[str, dict[str, Callable]] = field(default_factory=dict)
+    nav_tab: SortedDict[str, dict[str, Callable]] = field(default_factory=SortedDict)
     # TODO: Implement CSS and JS registration
     local_stylesheets: list[dict] = field(default_factory=list)
     remote_stylesheets: list[dict] = field(default_factory=list)
