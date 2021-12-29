@@ -26,6 +26,7 @@ def nav_tab(
     By default, the function decorated will be rendered to the viewport. The `on_click` event
     can be overridden to change this behavior."""
     # TODO: Implement auth level
+    # TODO: URL support (Requires IDOM to support URL routing)
 
     def decorator(func):
 
