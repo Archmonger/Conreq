@@ -10,7 +10,7 @@ from django.core.mail.backends import smtp
 from django.core.mail.message import EmailMessage
 from huey.contrib.djhuey import db_task
 
-from conreq.internal.email.models import AuthEncryption, EmailConfig
+from conreq.internal.email.models import AuthEncryption, EmailSettings
 from conreq.utils.generic import DoNothingWith
 
 
@@ -22,9 +22,9 @@ class Email:
     html_message: Union[str, None] = None
 
 
-def _get_mail_backend(email_config: EmailConfig = None):
+def _get_mail_backend(email_config: EmailSettings = None):
     if not email_config:
-        email_config = EmailConfig.get_solo()
+        email_config = EmailSettings.get_solo()
 
     backend = smtp.EmailBackend(
         host=email_config.server,
@@ -46,7 +46,7 @@ class EmailBackend(smtp.EmailBackend):
 
     def configure(self, email_config=None):
         if not email_config:
-            email_config: EmailConfig = EmailConfig.get_solo()
+            email_config: EmailSettings = EmailSettings.get_solo()
         self.host = email_config.server
         self.port = email_config.port
         self.username = email_config.username
@@ -56,16 +56,16 @@ class EmailBackend(smtp.EmailBackend):
         self.timeout = email_config.timeout
 
     def send_messages(self, email_messages: Sequence[EmailMessage]) -> int:
-        email_config: EmailConfig = EmailConfig.get_solo()
+        email_config: EmailSettings = EmailSettings.get_solo()
         if email_config.enabled:
             self.configure(email_config)
             return super().send_messages(email_messages)
         return 0
 
 
-def get_from_name(email_config: EmailConfig = None):
+def get_from_name(email_config: EmailSettings = None):
     if not email_config:
-        email_config = EmailConfig.get_solo()
+        email_config = EmailSettings.get_solo()
 
     return (
         f"{email_config.sender_name} <{email_config.username}>"
@@ -85,7 +85,7 @@ def send_mail(
     Sends a single message to list of recipients. All members of the list
     will see the other recipients in the 'To' field.
     """
-    email_config: EmailConfig = EmailConfig.get_solo()
+    email_config: EmailSettings = EmailSettings.get_solo()
     backend = _get_mail_backend(email_config)
 
     if email_config.enabled:
@@ -111,7 +111,7 @@ def send_mass_mail(
     """
     Sends out multiple emails while reusing one SMTP connection.
     """
-    email_config: EmailConfig = EmailConfig.get_solo()
+    email_config: EmailSettings = EmailSettings.get_solo()
     backend = _get_mail_backend(email_config)
     if email_config.enabled:
         return db_task(
@@ -120,7 +120,7 @@ def send_mass_mail(
 
 
 def _send_mass_email(
-    connection: smtp.EmailBackend, emails: Iterable[Email], email_config: EmailConfig
+    connection: smtp.EmailBackend, emails: Iterable[Email], email_config: EmailSettings
 ):
     messages = []
     for email in emails:

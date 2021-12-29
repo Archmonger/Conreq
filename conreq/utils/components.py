@@ -75,7 +75,6 @@ def django_to_idom(
 def tabbed_viewport(websocket, tabs):
     """Generates a viewport with the provided tabs. Viewport functions should accept
     `websocket, state, set_state` as arguements."""
-    # TODO: This should be done in hooks.use_state, but that requires `sortedcontainers`.
     state, set_state = idom.hooks.use_state(
         {"current_tab": tabs[next(iter(tabs))]["component"]}
     )

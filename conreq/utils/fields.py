@@ -8,7 +8,8 @@ from . import forms, validators
 
 class PasswordField(EncryptedCharField):
     def formfield(self, **kwargs):
-        kwargs["widget"] = kwargs["widget"](attrs={"type": "password"})
+        if kwargs.get("widget"):
+            kwargs["widget"] = kwargs["widget"](attrs={"type": "password"})
         return super().formfield(**kwargs)
 
 

@@ -11,7 +11,7 @@ class AuthEncryption(models.TextChoices):
     OFF = "OFF", "Off"
 
 
-class EmailConfig(SingletonModel):
+class EmailSettings(SingletonModel):
     def __str__(self):
         return "Email settings"
 

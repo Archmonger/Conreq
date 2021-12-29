@@ -52,9 +52,7 @@ class BaseConfig(AppConfig):
 
         from conreq.internal.server_settings.views import server_settings
 
-        register.homepage.nav_tab("Server Settings", "Admin")(
-            django_to_idom()(server_settings)
-        )
+        register.homepage.nav_tab("Server Settings", "Admin")(server_settings)
 
         iframe = make_vdom_constructor("iframe")
 

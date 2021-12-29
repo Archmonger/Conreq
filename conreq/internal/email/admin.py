@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import EmailConfig
+from .models import EmailSettings
 
 
-@admin.register(EmailConfig)
-class EmailSettings(admin.ModelAdmin):
+@admin.register(EmailSettings)
+class AdminEmailSettings(admin.ModelAdmin):
     pass

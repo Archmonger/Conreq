@@ -20,6 +20,7 @@
 .list-group-item {
 	display: inline-block;
 	white-space: nowrap;
+	min-width: 200px;
 }
 
 .list-group-item.active {
