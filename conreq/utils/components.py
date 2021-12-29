@@ -50,11 +50,11 @@ def django_to_idom(
 
         # Register a new URL path
         view = profiled_view(func)
-        dotted_path = f"{func.__module__}.{func.__name__}"
+        dotted_path = f"{func.__module__}.{func.__name__}".replace("<", "").replace(
+            ">", ""
+        )
         view_name = name or dotted_path
-        src_url = url_pattern or f"{BASE_URL}iframe/{dotted_path}".replace(
-            "<", ""
-        ).replace(">", "")
+        src_url = url_pattern or f"{BASE_URL}iframe/{dotted_path}"
 
         if use_regex:
             urlpatterns.append(re_path(src_url, view, name=view_name))
