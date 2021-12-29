@@ -1,6 +1,7 @@
 from django.db.models import OneToOneField, URLField
 from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor
 from django.db.transaction import atomic
+from django.forms import PasswordInput
 from encrypted_fields.fields import EncryptedCharField
 
 from . import forms, validators
@@ -10,6 +11,8 @@ class PasswordField(EncryptedCharField):
     def formfield(self, **kwargs):
         if kwargs.get("widget"):
             kwargs["widget"] = kwargs["widget"](attrs={"type": "password"})
+        else:
+            kwargs["widget"] = PasswordInput(render_value=True)
         return super().formfield(**kwargs)
 
 
