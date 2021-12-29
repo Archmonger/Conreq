@@ -4,7 +4,7 @@ from conreq import config
 from conreq.app import register
 from conreq.internal.user_settings.forms import UserSettingsForm
 from conreq.utils.components import django_to_idom, tabbed_viewport
-from conreq.utils.views import SuccessCurrentUrlMixin
+from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 
 # TODO: Tabs for delete user and change password
 
@@ -19,12 +19,9 @@ def delete_my_account(request):
 
 @register.tabs.user_settings("General")
 @django_to_idom()
-class UserSettingsView(SuccessCurrentUrlMixin, UpdateView):
+class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
     template_name = "conreq/simple_form.html"
     form_class = UserSettingsForm
-
-    def get_object(self, queryset=None):
-        return self.request.user
 
 
 def user_settings(websocket, viewport_state, set_viewport_state):

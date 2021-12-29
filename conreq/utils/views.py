@@ -14,11 +14,20 @@ class SuccessCurrentUrlMixin:
         return super().get_success_url()
 
 
+class CurrentUserMixin:
+    """Mixin for UpdateView to utilize the current user as the object."""
+
+    def get_object(self, queryset=None):
+        # pylint: disable=unused-argument
+        return self.request.user
+
+
 class ObjectInParamsMixin:
     """Mixin for any Django view to get an object by ID in the
     URL params."""
 
     def get_object(self, queryset=None):
+        # pylint: disable=unused-argument
         return self.model.objects.get(id=self.request.GET["id"])
 
 
