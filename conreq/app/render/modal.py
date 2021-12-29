@@ -7,11 +7,7 @@ from functools import wraps
 
 def modal() -> object:
     """Decorates a Modal class (not yet created)."""
-
-    def decorator(class_: object):
-        @wraps(class_)
-        def _wrapped_class(*args, **kwargs):
-            return _wrapped_class(*args, **kwargs)
+    pass
 
 
 def modal_close() -> None:

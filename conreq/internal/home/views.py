@@ -11,7 +11,7 @@ HOME_URL = get_home_url()
 DEBUG = get_debug()
 
 
-@register.home_view()
+@register.view.home()
 def home(request):
     """Renders the homepage."""
     # Render the home page

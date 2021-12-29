@@ -11,10 +11,10 @@ from conreq.internal.view_wrappers import views
 
 @dataclass
 class StartupConfig:
-    # TODO: Implement startup configuration
+    setting_scripts: set[str] = field(default_factory=set)
+    # TODO: Implement these startup configurations
     pre_run: set[Callable] = field(default_factory=set)
     installed_apps: set[str] = field(default_factory=set)
-    setting_scripts: set[str] = field(default_factory=set)
 
 
 @dataclass
@@ -59,7 +59,6 @@ class ComponentConfig:
 class TabConfig:
     # TODO: Redo this as objects instead of dicts
     # TODO: Implement these tabs
-    navbar: dict[str, dict[str, Callable]] = field(default_factory=dict)
     user_settings: dict[str, dict[str, Callable]] = field(default_factory=dict)
     manage_users: dict[str, dict[str, Callable]] = field(default_factory=dict)
     app_store: dict[str, dict[str, Callable]] = field(default_factory=dict)
@@ -69,18 +68,19 @@ class TabConfig:
 @dataclass
 class WsgiConfig:
     # TODO: Implement WSGI middleware
-    wsgi_middleware: set[dict] = field(default_factory=set)
+    middleware: set[dict] = field(default_factory=set)
 
 
 @dataclass
 class AsgiConfig:
     websockets: list[Callable] = field(default_factory=list)
     # TODO: Implement ASGI middleware
-    asgi_middleware: set[dict] = field(default_factory=set)
+    middleware: set[dict] = field(default_factory=set)
 
 
 @dataclass
 class HomepageConfig:
+    nav_tab: dict[str, dict[str, Callable]] = field(default_factory=dict)
     # TODO: Implement CSS and JS registration
     local_stylesheets: list[dict] = field(default_factory=list)
     remote_stylesheets: list[dict] = field(default_factory=list)

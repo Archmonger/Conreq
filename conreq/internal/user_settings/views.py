@@ -18,7 +18,7 @@ def delete_my_account(request):
     pass
 
 
-@register.user_setting("Basic Settings")
+@register.tabs.user_settings("Basic Settings")
 @django_to_idom()
 class UserSettingsView(SuccessCurrentUrlMixin, UpdateView):
     template_name = "conreq/simple_form.html"

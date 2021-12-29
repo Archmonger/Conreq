@@ -6,19 +6,19 @@ from conreq.app import register
 from conreq.internal.password_reset.forms import PasswordResetForm, SetPasswordForm
 
 
-@register.password_reset_view()
+@register.view.password_reset()
 class PasswordResetView(auth_views.PasswordResetView):
     success_url = reverse_lazy("password_reset_sent")
     template_name = config.templates.password_reset
     form_class = PasswordResetForm
 
 
-@register.password_reset_sent_view()
+@register.view.password_reset_sent()
 class PassWordResetDoneView(auth_views.PasswordResetDoneView):
     template_name = config.templates.password_reset_sent
 
 
-@register.password_reset_confirm_view()
+@register.view.password_reset_confirm()
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     success_url = reverse_lazy("home")
     post_reset_login = True

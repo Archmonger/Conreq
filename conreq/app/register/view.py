@@ -6,7 +6,7 @@ from conreq import config
 # pylint: disable=import-outside-toplevel
 
 
-def landing_view() -> None:
+def landing() -> None:
     """Changes the home view."""
 
     def decorator(func):
@@ -23,7 +23,7 @@ def landing_view() -> None:
     return decorator
 
 
-def home_view() -> None:
+def home() -> None:
     """Changes the home view."""
 
     def decorator(func):
@@ -40,7 +40,7 @@ def home_view() -> None:
     return decorator
 
 
-def sign_up_view() -> None:
+def sign_up() -> None:
     """Changes the sign up view."""
 
     def decorator(func):
@@ -57,7 +57,7 @@ def sign_up_view() -> None:
     return decorator
 
 
-def sign_in_view() -> None:
+def sign_in() -> None:
     """Changes the sign in view."""
 
     def decorator(func):
@@ -74,7 +74,7 @@ def sign_in_view() -> None:
     return decorator
 
 
-def password_reset_view() -> None:
+def password_reset() -> None:
     """Changes the password reset view."""
 
     def decorator(func: Any):
@@ -91,7 +91,7 @@ def password_reset_view() -> None:
     return decorator
 
 
-def password_reset_sent_view() -> None:
+def password_reset_sent() -> None:
     """Changes the password reset sent view."""
 
     def decorator(func):
@@ -108,7 +108,7 @@ def password_reset_sent_view() -> None:
     return decorator
 
 
-def password_reset_confirm_view() -> None:
+def password_reset_confirm() -> None:
     """Changes the password reset confirm view."""
 
     def decorator(func):

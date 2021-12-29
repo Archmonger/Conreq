@@ -10,7 +10,7 @@ HOME_URL = get_home_url()
 DEBUG = get_debug()
 
 
-@register.landing_view()
+@register.view.landing()
 def landing(request):
     """Renders the landing page (if available)."""
     # Redirect if a landing page doesn't exist

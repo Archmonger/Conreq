@@ -26,10 +26,12 @@ def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
         def _wrapped_class(*args, **kwargs):
             return _wrapped_class(*args, **kwargs)
 
+        return _wrapped_class
+
     return decorator
 
 
-def asgi_middleware(
+def middleware(
     dotted_path: str,
     positioning_element: str = None,
     positioning: str = "before",

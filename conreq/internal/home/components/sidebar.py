@@ -59,7 +59,7 @@ def sidebar(websocket, state, set_state):
     if not websocket.scope["user"].is_authenticated:
         return None
 
-    all_tabs = config.tabs.navbar.items()
+    all_tabs = config.homepage.nav_tab.items()
 
     @idom.hooks.use_effect
     async def set_default_tab():

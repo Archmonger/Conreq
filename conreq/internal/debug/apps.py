@@ -24,14 +24,14 @@ class DebugConfig(AppConfig):
 
 
 def performance_profiling():
-    register.url("silk/", name="silk")(include("silk.urls", namespace="silk"))
+    register.wsgi.url("silk/", name="silk")(include("silk.urls", namespace="silk"))
 
 
 def admin_panel():
-    register.url("admin/docs/", name="admindocs")(
+    register.wsgi.url("admin/docs/", name="admindocs")(
         include("django.contrib.admindocs.urls")
     )
-    register.url("admin/")(admin.site.urls)
+    register.wsgi.url("admin/")(admin.site.urls)
 
 
 def api_docs():
@@ -58,15 +58,15 @@ def api_docs():
         permission_classes=[permissions.AllowAny],
     )
 
-    register.url(
+    register.wsgi.url(
         r"^swagger(?P<format>\.json|\.yaml)$", name="swagger_json", use_regex=True
     )(SchemaView.without_ui(cache_timeout=0))
-    register.url(r"^swagger$", name="swagger_ui", use_regex=True)(
+    register.wsgi.url(r"^swagger$", name="swagger_ui", use_regex=True)(
         SchemaView.with_ui("swagger", cache_timeout=0)
     )
 
 
 def health_checks():
-    @register.url("health_check", name="health_check")
+    @register.wsgi.url("health_check", name="health_check")
     class StyledHealthCheck(HealthCheckView):
         template_name = "conreq/health_check/table.html"

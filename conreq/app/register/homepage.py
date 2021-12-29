@@ -39,7 +39,7 @@ def nav_tab(
         else:
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
 
-        group = config.tabs.navbar.setdefault(
+        group = config.homepage.nav_tab.setdefault(
             group_name, {"icon": group_icon, "tabs": []}
         )
         group["tabs"].append(
@@ -67,7 +67,7 @@ def nav_group(
     group_icon: Icon = None,
 ):
     """Creates a nav group and/or sets the group icon."""
-    navbar = config.tabs.navbar
+    navbar = config.homepage.nav_tab
     group = navbar.get(group_name)
 
     if not group:
@@ -77,16 +77,44 @@ def nav_group(
         navbar[group_name].update("icon", group_icon)
 
 
-def server_settings(page_name: str) -> Callable:
-    """Decorates an IDOM component. Creates a settings page."""
+def css(reverse_path: str, attributes: dict = None, local=True) -> None:
+    if local:
+        config.homepage.local_stylesheets.append(
+            {"path": reverse_path, "attributes": attributes}
+        )
+    else:
+        config.homepage.remote_stylesheets.append(
+            {"path": reverse_path, "attributes": attributes}
+        )
 
-    def decorator(func):
-        config.tabs.server_settings[page_name] = {"component": func}
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
+def scss(reverse_path: str, attributes: list[tuple] = None):
+    config.homepage.scss_stylesheets.append(
+        {"path": reverse_path, "attributes": attributes}
+    )
 
-        return _wrapped_func
 
-    return decorator
+def javascript(reverse_path: str, attributes: list[tuple] = None, local=True) -> None:
+    if local:
+        config.homepage.local_scripts.append(
+            {"path": reverse_path, "attributes": attributes}
+        )
+    else:
+        config.homepage.remote_scripts.append(
+            {"path": reverse_path, "attributes": attributes}
+        )
+
+
+def font(reverse_path: str, attributes: list[tuple] = None, local=True) -> None:
+    if local:
+        config.homepage.local_stylesheets.append(
+            {"path": reverse_path, "attributes": attributes}
+        )
+    else:
+        config.homepage.remote_stylesheets.append(
+            {"path": reverse_path, "attributes": attributes}
+        )
+
+
+def head_content(template: str) -> None:
+    config.homepage.head_content.append(template)

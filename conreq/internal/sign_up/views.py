@@ -13,7 +13,7 @@ from conreq.internal.sign_up.models import InviteCode
 LOGIN_REDIRECT_URL = getattr(settings, "LOGIN_REDIRECT_URL")
 
 
-@register.sign_up_view()
+@register.view.sign_up()
 def sign_up_with_invite(request, invite_code):
     # Check if the invite code is valid
     try:
