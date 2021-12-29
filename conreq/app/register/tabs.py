@@ -5,7 +5,7 @@ from conreq import config
 
 
 # TODO: Add the other tabs to here.
-def user_setting() -> Callable:
+def user_setting(tab_name: str) -> Callable:
     """Decorates an IDOM component. Component is injected into the user settings modal.
     Settings component will be provided the websocket scope.
     """
@@ -13,7 +13,7 @@ def user_setting() -> Callable:
 
     def decorator(func):
 
-        config.tabs.user_settings.append(func)
+        config.tabs.user_settings[tab_name] = {"component": func}
 
         @wraps(func)
         def _wrapped_func(*args, **kwargs):

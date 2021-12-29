@@ -73,34 +73,40 @@ def django_to_idom(
 
 @idom.component
 def tabbed_viewport(websocket, tabs):
-    current_tab, set_current_tab = idom.hooks.use_state(None)
-
-    # Set the default tab
+    """Generates a viewport with the provided tabs. Viewport functions should accept
+    `websocket, state, set_state` as arguements."""
     # TODO: This should be done in hooks.use_state, but that requires `sortedcontainers`.
-    if not current_tab:
-        first_tab = next(iter(tabs))
-        current_tab = tabs[first_tab]["component"]
+    state, set_state = idom.hooks.use_state(
+        {"current_tab": tabs[next(iter(tabs))]["component"]}
+    )
 
     return div(
         {"className": "tabbed-viewport-container"},
         div(
             {"className": "tabbed-viewport"},
-            current_tab(websocket, current_tab, set_current_tab),
+            state["current_tab"](websocket, state, set_state),
         ),
         ul(
             {"className": "tabbed-viewport-selector list-group"},
-            *_tabbed_viewport_tabs(tabs, current_tab, set_current_tab),
+            *_tabbed_viewport_tabs(tabs, state, set_state),
         ),
     )
 
 
-def _tabbed_viewport_tabs(tabs: dict, current_tab, set_current_tab):
+def _tabbed_viewport_tabs(tabs: dict, state, set_state):
     return [
         li(
-            {
-                "className": f"list-group-item clickable{' active' if current_tab is tab_properties['component'] else ''}"
-            },
+            _tabbed_viewport_tabs_values(tab_properties, state, set_state),
             tab_name,
         )
         for tab_name, tab_properties in tabs.items()
     ]
+
+
+def _tabbed_viewport_tabs_values(tab_properties, state, set_state):
+    return {
+        "className": f"list-group-item clickable{' active' if state['current_tab'] is tab_properties['component'] else ''}",
+        "onClick": lambda x: set_state(
+            state | {"current_tab": tab_properties["component"]}
+        ),
+    }
