@@ -117,8 +117,7 @@ def sidebar(websocket, state, set_state):
     )
 
 
-def nav_tab_properties(websocket, state, set_state, tab):
-    # pylint: disable=unused-argument
+def nav_tab_class(state, tab):
     if (
         state["viewport"] not in {Viewport.loading, Viewport.initial}
         and tab["component"] is state[f'viewport_{state["viewport"]}']
@@ -129,7 +128,7 @@ def nav_tab_properties(websocket, state, set_state, tab):
 
 def sidebar_tab(websocket, state, set_state, tab):
     return div(
-        nav_tab_properties(websocket, state, set_state, tab)
+        nav_tab_class(state, tab)
         | {
             "onClick": lambda x: set_state(
                 state
