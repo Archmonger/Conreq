@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-8">
-                <h1 class="mt-2">{% block form_title %}{% firstof object form_name %}{% endblock %}</h1>
+                <h1 class="mt-2">{% block form_title %}{% firstof form_name object %}{% endblock %}</h1>
                 <hr class="mt-0 mb-4">
                 {% block form_content %}
                 {% crispy form %}
