@@ -1,6 +1,5 @@
 """Modifies the start behavior of Conreq, primarily related to conreq/settings.py."""
 
-from functools import wraps
 from typing import Callable
 
 from conreq import config

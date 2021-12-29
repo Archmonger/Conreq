@@ -1,5 +1,3 @@
-from functools import wraps
-
 from channels.consumer import AsyncConsumer
 from django import urls
 

@@ -1,5 +1,4 @@
 """Helpers to render IDOM elements on the page"""
-from functools import wraps
 from typing import Callable
 
 from conreq.app.selectors import AuthLevel, Viewport
@@ -22,4 +21,3 @@ def viewport(
 
 def background(css_string: str):
     """Changes the homescreen's background to a specific CSS string."""
-    pass

@@ -1,4 +1,3 @@
-from functools import wraps
 from typing import Callable
 
 from conreq import config
