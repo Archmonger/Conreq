@@ -25,8 +25,9 @@ def profiled_view(view: Any, name=None):
         return view
 
     # Class view
+    dotted_path = f"{view.__module__}.{view.__qualname__}"
     if isclass(view):
-        return metrics(name=name)(view.as_view())
+        return metrics(name=name or dotted_path)(view.as_view())
 
     # Function view
-    return metrics(name=name)(view)
+    return metrics(name=name or dotted_path)(view)
