@@ -13,7 +13,7 @@ class AuthEncryption(models.TextChoices):
 
 class EmailSettings(SingletonModel):
     def __str__(self):
-        return "Email settings"
+        return "Email Settings"
 
     class Meta:
         verbose_name = "Email settings"
