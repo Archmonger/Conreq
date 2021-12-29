@@ -84,7 +84,16 @@ def sidebar(websocket, state, set_state):
         SIDEBAR,
         *([SIDEBAR_SAFE_MODE] if SAFE_MODE else []),
         div(
-            SIDEBAR_USER,
+            SIDEBAR_USER
+            | {
+                "onClick": lambda x: set_state(
+                    state
+                    | {
+                        "viewport": Viewport.primary,
+                        "viewport_primary": config.components.user_settings,
+                    }
+                )
+            },
             div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
             div(
                 USERNAME_CONTAINER,

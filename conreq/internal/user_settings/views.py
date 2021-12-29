@@ -34,6 +34,8 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
         context["form_name"] = "Change Password"
         return context
 
+
+@register.component.user_settings()
 def user_settings(websocket, viewport_state, set_viewport_state):
     # TODO: Create some way for `tabbed_viewport` to access the viewport state
     return tabbed_viewport(websocket, config.tabs.user_settings)
