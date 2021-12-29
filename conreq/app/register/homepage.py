@@ -29,7 +29,6 @@ def nav_tab(
     # TODO: URL support (Requires IDOM to support URL routing)
 
     def decorator(func):
-
         if view_type == ViewType.idom:
             component = func
         elif view_type == ViewType.django:
@@ -53,11 +52,7 @@ def nav_tab(
             }
         )
 
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 

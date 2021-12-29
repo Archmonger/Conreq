@@ -13,12 +13,7 @@ def landing() -> None:
         from conreq.utils.profiling import profiled_view
 
         config.views.landing = profiled_view(func)
-
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -30,12 +25,7 @@ def home() -> None:
         from conreq.utils.profiling import profiled_view
 
         config.views.home = profiled_view(func)
-
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -47,12 +37,7 @@ def sign_up() -> None:
         from conreq.utils.profiling import profiled_view
 
         config.views.sign_up = profiled_view(func)
-
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -64,12 +49,7 @@ def sign_in() -> None:
         from conreq.utils.profiling import profiled_view
 
         config.views.sign_in = profiled_view(func)
-
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -81,12 +61,7 @@ def password_reset() -> None:
         from conreq.utils.profiling import profiled_view
 
         config.views.password_reset = profiled_view(func)
-
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -98,12 +73,7 @@ def password_reset_sent() -> None:
         from conreq.utils.profiling import profiled_view
 
         config.views.password_reset_sent = profiled_view(func)
-
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator
 
@@ -115,11 +85,6 @@ def password_reset_confirm() -> None:
         from conreq.utils.profiling import profiled_view
 
         config.views.password_reset_confirm = profiled_view(func)
-
-        @wraps(func)
-        def _wrapped_func(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return _wrapped_func
+        return func
 
     return decorator

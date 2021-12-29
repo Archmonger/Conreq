@@ -57,9 +57,7 @@ def api(
         else:
             urlpatterns.append(path(f"{BASE_URL}/v{version}/{url_pattern}", view))
 
-        @wraps(view)
-        def _wrapped_view(*args, **kwargs):
-            return _wrapped_view(*args, **kwargs)
+        return view
 
     return decorator
 
