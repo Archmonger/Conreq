@@ -91,6 +91,7 @@ def sidebar(websocket, state, set_state):
                     | {
                         "viewport": Viewport.primary,
                         "viewport_primary": config.components.user_settings,
+                        "viewport_padding": True,
                     }
                 )
             },
