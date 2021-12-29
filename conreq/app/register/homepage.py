@@ -68,7 +68,7 @@ def nav_group(
         navbar[group_name] = {"icon": group_icon, "tabs": []}
 
     else:
-        navbar[group_name].update("icon", group_icon)
+        navbar[group_name]["icon"] = group_icon
 
 
 def css(reverse_path: str, attributes: dict = None, local=True) -> None:

@@ -2,9 +2,11 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig
+from conreq.app import register
 
 from conreq.internal.manage_users.forms import UserEditForm
 from conreq.internal.manage_users.tables import UsersTable
+from conreq.utils.components import django_to_idom
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
 User = get_user_model()
@@ -25,6 +27,9 @@ class UserDeleteView(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
     model = User
 
 
+@register.homepage.nav_tab("Manage Users", "Admin")
+@register.component.manage_users()
+@django_to_idom()
 def manage_users(request):
     if request.GET.get("edit"):
         return UserEditView.as_view()(request)

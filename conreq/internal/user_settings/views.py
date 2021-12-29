@@ -1,5 +1,8 @@
+import idom
+from channels.auth import logout
 from django.contrib.auth.views import PasswordChangeView
 from django.views.generic.edit import UpdateView
+from idom.html import div
 
 from conreq import config
 from conreq.app import register
@@ -35,7 +38,18 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
         return context
 
 
+@register.homepage.nav_tab("Settings", "User")
 @register.component.user_settings()
 def user_settings(websocket, viewport_state, set_viewport_state):
     # TODO: Create some way for `tabbed_viewport` to access the viewport state
     return tabbed_viewport(websocket, config.tabs.user_settings)
+
+
+@register.homepage.nav_tab("Sign Out", "User")
+@idom.component
+def sign_out(websocket, state, set_state):
+    @idom.hooks.use_effect
+    async def logout_user():
+        await logout(websocket.scope)
+
+    return div()

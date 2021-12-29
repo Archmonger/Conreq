@@ -44,5 +44,7 @@ class EmailSettingsView(SingletonUpdateView):
     model = EmailSettings
 
 
+@register.homepage.nav_tab("Server Settings", "Admin")
+@register.component.server_settings()
 def server_settings(websocket, viewport_state, set_viewport_state):
     return tabbed_viewport(websocket, config.tabs.server_settings)
