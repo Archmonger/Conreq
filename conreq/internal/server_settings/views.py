@@ -19,25 +19,25 @@ from conreq.utils.views import SingletonUpdateView
 
 
 @django_to_idom()
-class GeneralSettings(SingletonUpdateView):
+class GeneralSettingsView(SingletonUpdateView):
     form_class = GeneralSettingsForm
     model = GeneralSettings
 
 
 @django_to_idom()
-class StylingSettings(SingletonUpdateView):
+class StylingSettingsView(SingletonUpdateView):
     form_class = StylingSettingsForm
     model = StylingSettings
 
 
 @django_to_idom()
-class WebserverSettings(SingletonUpdateView):
+class WebserverSettingsView(SingletonUpdateView):
     form_class = WebserverSettingsForm
     model = WebserverSettings
 
 
 @django_to_idom()
-class EmailSettings(SingletonUpdateView):
+class EmailSettingsView(SingletonUpdateView):
     form_class = EmailSettingsForm
     model = EmailSettings
 
@@ -55,7 +55,7 @@ def server_settings(websocket, state, set_state):
 
 
 # Set the internal tabs
-config._tabs.server_settings["General"] = {"component": GeneralSettings}
-config._tabs.server_settings["Styling"] = {"component": StylingSettings}
-config._tabs.server_settings["Webserver"] = {"component": WebserverSettings}
-config._tabs.server_settings["Email"] = {"component": EmailSettings}
+config._tabs.server_settings["General"] = {"component": GeneralSettingsView}
+config._tabs.server_settings["Styling"] = {"component": StylingSettingsView}
+config._tabs.server_settings["Webserver"] = {"component": WebserverSettingsView}
+config._tabs.server_settings["Email"] = {"component": EmailSettingsView}

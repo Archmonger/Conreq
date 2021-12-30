@@ -15,7 +15,7 @@ from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin, stub
 
 
 @django_to_idom()
-class UserSettings(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
+class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
     template_name = "conreq/simple_form.html"
     form_class = UserSettingsForm
 
@@ -26,7 +26,7 @@ class UserSettings(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
 
 
 @django_to_idom()
-class ChangePassword(SuccessCurrentUrlMixin, PasswordChangeView):
+class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
     template_name = "conreq/simple_form.html"
     form_name = "Change Password"
     form_class = ChangePasswordForm
@@ -61,8 +61,8 @@ def sign_out(websocket, state, set_state):
 
 
 # Set the internal tabs
-config._tabs.user_settings_top["General"] = {"component": UserSettings}
-config._tabs.user_settings_top["Change Password"] = {"component": ChangePassword}
+config._tabs.user_settings_top["General"] = {"component": UserSettingsView}
+config._tabs.user_settings_top["Change Password"] = {"component": ChangePasswordView}
 config._tabs.user_settings_bottom["Delete My Account"] = {
     "component": django_to_idom()(stub)
 }

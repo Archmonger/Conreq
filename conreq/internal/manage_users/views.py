@@ -16,13 +16,13 @@ User = get_user_model()
 # TODO: Figure out some way to integrate user invites into this
 
 
-class EditUser(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
+class UserEditView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
     template_name = "conreq/manage_users/edit_user.html"
     form_class = UserEditForm
     model = User
 
 
-class DeleteUser(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
+class UserDeleteView(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
     template_name = "conreq/manage_users/delete_user_confirm.html"
     model = User
 
@@ -32,10 +32,10 @@ class DeleteUser(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
 @django_to_idom()
 def manage_users(request):
     if request.GET.get("edit"):
-        return EditUser.as_view()(request)
+        return UserEditView.as_view()(request)
 
     if request.GET.get("delete"):
-        return DeleteUser.as_view()(request)
+        return UserDeleteView.as_view()(request)
 
     table = UsersTable(User.objects.all())
     RequestConfig(
