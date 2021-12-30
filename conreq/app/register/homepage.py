@@ -39,7 +39,7 @@ def nav_tab(
         else:
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
 
-        group = config.homepage.nav_tab.setdefault(
+        group = config.homepage.nav_tabs.setdefault(
             group_name,
             {"icon": group_icon, "tabs": SortedList([], key=lambda x: x["name"])},
         )
@@ -64,7 +64,7 @@ def nav_group(
     group_icon: Icon = None,
 ):
     """Creates a nav group and/or sets the group icon."""
-    navbar = config.homepage.nav_tab
+    navbar = config.homepage.nav_tabs
     group = navbar.get(group_name)
 
     if not group:

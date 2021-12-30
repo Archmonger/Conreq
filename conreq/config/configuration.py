@@ -87,7 +87,7 @@ class AsgiConfig:
 
 @dataclass
 class HomepageConfig:
-    nav_tab: SortedDict[str, dict[str, Callable]] = field(default_factory=SortedDict)
+    nav_tabs: SortedDict[str, dict] = field(default_factory=SortedDict)
     # TODO: Implement CSS and JS registration
     local_stylesheets: list[dict] = field(default_factory=list)
     remote_stylesheets: list[dict] = field(default_factory=list)
