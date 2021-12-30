@@ -15,29 +15,27 @@ from conreq.internal.server_settings.models import (
 from conreq.utils.components import django_to_idom, tabbed_viewport
 from conreq.utils.views import SingletonUpdateView
 
+# pylint: disable=protected-access
 
-@register.tabs.server_settings("General")
+
 @django_to_idom()
 class GeneralSettingsView(SingletonUpdateView):
     form_class = GeneralSettingsForm
     model = GeneralSettings
 
 
-@register.tabs.server_settings("Styling")
 @django_to_idom()
 class StylingSettingsView(SingletonUpdateView):
     form_class = StylingSettingsForm
     model = StylingSettings
 
 
-@register.tabs.server_settings("Webserver")
 @django_to_idom()
 class WebserverSettingsView(SingletonUpdateView):
     form_class = WebserverSettingsForm
     model = WebserverSettings
 
 
-@register.tabs.server_settings("Email")
 @django_to_idom()
 class EmailSettingsView(SingletonUpdateView):
     form_class = EmailSettingsForm
@@ -46,5 +44,18 @@ class EmailSettingsView(SingletonUpdateView):
 
 @register.homepage.nav_tab("Server Settings", "Admin")
 @register.component.server_settings()
-def server_settings(websocket, viewport_state, set_viewport_state):
-    return tabbed_viewport(websocket, config.tabs.server_settings)
+def server_settings(websocket, state, set_state):
+    return tabbed_viewport(
+        websocket,
+        state,
+        set_state,
+        tabs=config.tabs.server_settings,
+        top_tabs=config._tabs.server_settings,
+    )
+
+
+# Set the internal tabs
+config._tabs.server_settings["General"] = {"component": GeneralSettingsView}
+config._tabs.server_settings["Styling"] = {"component": StylingSettingsView}
+config._tabs.server_settings["Webserver"] = {"component": WebserverSettingsView}
+config._tabs.server_settings["Email"] = {"component": EmailSettingsView}

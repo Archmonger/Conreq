@@ -8,12 +8,12 @@ from conreq import config
 from conreq.app import register
 from conreq.internal.user_settings.forms import ChangePasswordForm, UserSettingsForm
 from conreq.utils.components import django_to_idom, tabbed_viewport
-from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
+from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin, stub
 
+# pylint: disable=protected-access
 # TODO: Tabs for delete user
 
 
-@register.tabs.user_settings("General")
 @django_to_idom()
 class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
     template_name = "conreq/simple_form.html"
@@ -25,7 +25,6 @@ class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
         return context
 
 
-@register.tabs.user_settings("Change Password")
 @django_to_idom()
 class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
     template_name = "conreq/simple_form.html"
@@ -40,9 +39,15 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
 
 @register.homepage.nav_tab("Settings", "User")
 @register.component.user_settings()
-def user_settings(websocket, viewport_state, set_viewport_state):
-    # TODO: Create some way for `tabbed_viewport` to access the viewport state
-    return tabbed_viewport(websocket, config.tabs.user_settings)
+def user_settings(websocket, state, set_state):
+    return tabbed_viewport(
+        websocket,
+        state,
+        set_state,
+        tabs=config.tabs.user_settings,
+        top_tabs=config._tabs.user_settings_top,
+        bottom_tabs=config._tabs.user_settings_bottom,
+    )
 
 
 @register.homepage.nav_tab("Sign Out", "User")
@@ -53,3 +58,11 @@ def sign_out(websocket, state, set_state):
         await logout(websocket.scope)
 
     return div()
+
+
+# Set the internal tabs
+config._tabs.user_settings_top["General"] = {"component": UserSettingsView}
+config._tabs.user_settings_top["Change Password"] = {"component": ChangePasswordView}
+config._tabs.user_settings_bottom["Delete My Account"] = {
+    "component": django_to_idom()(stub)
+}

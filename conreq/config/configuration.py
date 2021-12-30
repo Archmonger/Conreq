@@ -60,16 +60,18 @@ class ComponentConfig:
 class TabConfig:
     # TODO: Redo this as objects instead of dicts
     # TODO: Implement these tabs
-    user_settings: SortedDict[str, dict[str, Callable]] = field(
-        default_factory=SortedDict
-    )
-    manage_users: SortedDict[str, dict[str, Callable]] = field(
-        default_factory=SortedDict
-    )
-    app_store: SortedDict[str, dict[str, Callable]] = field(default_factory=SortedDict)
-    server_settings: SortedDict[str, dict[str, Callable]] = field(
-        default_factory=SortedDict
-    )
+    user_settings: SortedDict[str, dict] = field(default_factory=SortedDict)
+    manage_users: SortedDict[str, dict] = field(default_factory=SortedDict)
+    app_store: SortedDict[str, dict] = field(default_factory=SortedDict)
+    server_settings: SortedDict[str, dict] = field(default_factory=SortedDict)
+
+
+@dataclass
+class _InternalTabConfig:
+    user_settings_top: dict = field(default_factory=dict)
+    user_settings_bottom: dict = field(default_factory=dict)
+    manage_users: dict = field(default_factory=dict)
+    server_settings: dict = field(default_factory=dict)
 
 
 @dataclass
