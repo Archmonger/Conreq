@@ -44,7 +44,7 @@ class TemplateConfig:
 
 @dataclass
 class ComponentConfig:
-    # TODO: Implement these components
+    # TODO: Implement these components (needs wrappers)
     manage_users: Callable = None
     server_settings: Callable = None
     user_settings: Callable = None
@@ -59,8 +59,6 @@ class ComponentConfig:
 
 @dataclass
 class TabConfig:
-    # TODO: Redo this as objects instead of dicts
-    # TODO: Implement these tabs
     user_settings: SortedDict[str, dict] = field(default_factory=SortedDict)
     manage_users: SortedDict[str, dict] = field(default_factory=SortedDict)
     app_store: SortedDict[str, dict] = field(default_factory=SortedDict)
