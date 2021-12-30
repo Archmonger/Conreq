@@ -7,9 +7,9 @@ from idom.html import div
 from conreq import config
 from conreq.app import register
 from conreq.internal.user_settings.forms import ChangePasswordForm, UserSettingsForm
+from conreq.internal.utils import tab_constructor
 from conreq.utils.components import django_to_idom, tabbed_viewport
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin, stub
-from conreq.internal.utils import tab_constructor
 
 # TODO: Tabs for delete user
 

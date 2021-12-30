@@ -1,7 +1,7 @@
 from idom.html import p
 
-from conreq.app import register
 from conreq import config
+from conreq.app import register
 from conreq.internal.utils import tab_constructor
 
 

@@ -4,7 +4,6 @@ from idom.core.vdom import make_vdom_constructor
 from conreq import config
 from conreq.internal.utils import tab_constructor
 
-
 iframe = make_vdom_constructor("iframe")
 
 
@@ -26,6 +25,7 @@ def code_outline(*_):
 
 def api_docs(*_):
     return iframe({"src": reverse("swagger_ui")})
+
 
 # pylint: disable=protected-access
 config._homepage.debug_nav_tabs.append(tab_constructor("Performance", performance))
