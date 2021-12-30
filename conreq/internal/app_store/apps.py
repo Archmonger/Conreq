@@ -12,4 +12,4 @@ class AppStoreConfig(AppConfig):
     verbose_name = "App Store"
 
     def ready(self) -> None:
-        load("views")
+        load("components")

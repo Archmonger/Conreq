@@ -9,8 +9,8 @@ from conreq.app import register
 from conreq.internal.user_settings.forms import ChangePasswordForm, UserSettingsForm
 from conreq.utils.components import django_to_idom, tabbed_viewport
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin, stub
+from conreq.internal.utils import tab_constructor
 
-# pylint: disable=protected-access
 # TODO: Tabs for delete user
 
 
@@ -37,7 +37,7 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
         return context
 
 
-@register.homepage.nav_tab("Settings", "User")
+# pylint: disable=protected-access
 @register.component.user_settings()
 def user_settings(websocket, state, set_state):
     return tabbed_viewport(
@@ -50,9 +50,8 @@ def user_settings(websocket, state, set_state):
     )
 
 
-@register.homepage.nav_tab("Sign Out", "User")
 @idom.component
-def sign_out(websocket, state, set_state):
+def sign_out(websocket, *_):
     @idom.hooks.use_effect
     async def logout_user():
         await logout(websocket.scope)
@@ -66,3 +65,5 @@ config._tabs.user_settings_top["Change Password"] = {"component": ChangePassword
 config._tabs.user_settings_bottom["Delete My Account"] = {
     "component": django_to_idom()(stub)
 }
+config._homepage.user_nav_tabs.append(tab_constructor("Settings", user_settings))
+config._homepage.user_nav_tabs.append(tab_constructor("Sign Out", sign_out))

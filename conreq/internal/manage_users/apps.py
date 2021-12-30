@@ -8,4 +8,4 @@ class ManageUsersConfig(AppConfig):
     verbose_name = "Manage Users"
 
     def ready(self) -> None:
-        load("views")
+        load("components")

@@ -8,4 +8,4 @@ class ServerSettingsConfig(AppConfig):
     verbose_name = "User Settings"
 
     def ready(self) -> None:
-        load("views")
+        load("components")

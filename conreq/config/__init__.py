@@ -7,12 +7,14 @@ from .configuration import (
     TemplateConfig,
     ViewConfig,
     WsgiConfig,
+    _InternalHomepageConfig,
     _InternalTabConfig,
 )
 
 asgi = AsgiConfig()
 components = ComponentConfig()
 homepage = HomepageConfig()
+_homepage = _InternalHomepageConfig()
 startup = StartupConfig()
 tabs = TabConfig()
 _tabs = _InternalTabConfig()
@@ -24,6 +26,7 @@ __all__ = [
     "asgi",
     "components",
     "homepage",
+    "_homepage",
     "startup",
     "tabs",
     "_tabs",

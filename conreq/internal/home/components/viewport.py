@@ -15,7 +15,7 @@ def viewport_loading(websocket, state, set_state):
     # pylint: disable=unused-argument
     return div(
         VIEWPORT_CONTAINER_LOADING
-        | ({} if state["viewport"] == Viewport.loading else HIDDEN),
+        | ({} if state["viewport"] in {Viewport.loading, Viewport.initial} else HIDDEN),
         config.components.loading_animation,
     )
 

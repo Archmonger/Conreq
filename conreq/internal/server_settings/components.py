@@ -12,10 +12,9 @@ from conreq.internal.server_settings.models import (
     StylingSettings,
     WebserverSettings,
 )
+from conreq.internal.utils import tab_constructor
 from conreq.utils.components import django_to_idom, tabbed_viewport
 from conreq.utils.views import SingletonUpdateView
-
-# pylint: disable=protected-access
 
 
 @django_to_idom()
@@ -42,7 +41,6 @@ class EmailSettingsView(SingletonUpdateView):
     model = EmailSettings
 
 
-@register.homepage.nav_tab("Server Settings", "Admin")
 @register.component.server_settings()
 def server_settings(websocket, state, set_state):
     return tabbed_viewport(
@@ -54,8 +52,10 @@ def server_settings(websocket, state, set_state):
     )
 
 
+# pylint: disable=protected-access
 # Set the internal tabs
 config._tabs.server_settings["General"] = {"component": GeneralSettingsView}
 config._tabs.server_settings["Styling"] = {"component": StylingSettingsView}
 config._tabs.server_settings["Webserver"] = {"component": WebserverSettingsView}
 config._tabs.server_settings["Email"] = {"component": EmailSettingsView}
+config._homepage.admin_nav_tabs[2] = tab_constructor("Server Settings", server_settings)

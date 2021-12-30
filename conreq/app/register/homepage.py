@@ -41,7 +41,7 @@ def nav_tab(
 
         group = config.homepage.nav_tabs.setdefault(
             group_name,
-            {"icon": group_icon, "tabs": SortedList([], key=lambda x: x["name"])},
+            {"icon": group_icon, "tabs": SortedList(key=lambda x: x["name"])},
         )
         group["tabs"].add(
             {
