@@ -2,6 +2,7 @@ from django.urls.base import reverse
 from idom.core.vdom import make_vdom_constructor
 
 from conreq import config
+from conreq.app.selectors import Viewport
 from conreq.internal.utils import tab_constructor
 
 iframe = make_vdom_constructor("iframe")
@@ -28,8 +29,42 @@ def api_docs(*_):
 
 
 # pylint: disable=protected-access
-config._homepage.debug_nav_tabs.append(tab_constructor("Performance", performance))
-config._homepage.debug_nav_tabs.append(tab_constructor("Health Check", health_check))
-config._homepage.debug_nav_tabs.append(tab_constructor("Database", database))
-config._homepage.debug_nav_tabs.append(tab_constructor("Code Outline", code_outline))
-config._homepage.debug_nav_tabs.append(tab_constructor("API Docs", api_docs))
+config._homepage.debug_nav_tabs.append(
+    tab_constructor(
+        "Performance",
+        performance,
+        padding=False,
+        viewport=Viewport.secondary,
+    )
+)
+config._homepage.debug_nav_tabs.append(
+    tab_constructor(
+        "Health Check",
+        health_check,
+        viewport=Viewport.secondary,
+    )
+)
+config._homepage.debug_nav_tabs.append(
+    tab_constructor(
+        "Database",
+        database,
+        padding=False,
+        viewport=Viewport.secondary,
+    )
+)
+config._homepage.debug_nav_tabs.append(
+    tab_constructor(
+        "Code Outline",
+        code_outline,
+        padding=False,
+        viewport=Viewport.secondary,
+    )
+)
+config._homepage.debug_nav_tabs.append(
+    tab_constructor(
+        "API Docs",
+        api_docs,
+        padding=False,
+        viewport=Viewport.secondary,
+    )
+)
