@@ -25,4 +25,4 @@ def setting_script(dotted_path: str) -> None:
 
 def installed_app(dotted_path: str) -> None:
     """Shortcut to add an installed app to Django."""
-    config.startup.installed_apps.add(dotted_path)
+    # TODO: Add apps to conreq.config.INSTALLED_APPS with positional awareness

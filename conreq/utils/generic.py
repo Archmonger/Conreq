@@ -17,12 +17,12 @@ def is_key_value_in_list(
 
 
 def replace_item_in_list(search_for, replace_with, search_list):
-    "Replaces matching items in a list with a replacement value"
+    """Replaces matching items in a list with a replacement value."""
     return [replace_with if x == search_for else x for x in search_list]
 
 
 def remove_duplicates_from_list(duplicate_list: list) -> list:
-    """Returns a list that contains no duplicate values"""
+    """Returns a list that contains no duplicate values."""
     return list(dict.fromkeys(duplicate_list))
 
 
@@ -33,7 +33,7 @@ def clean_string(
     lowercase: bool = True,
     spaces_replacement: str = "",
 ) -> str:
-    """Removes non-alphanumerics from a string"""
+    """Removes non-alphanumerics from a string."""
     new_string = string.encode("ascii", "ignore").decode()
     if not spaces:
         new_string = new_string.replace(" ", spaces_replacement)
@@ -43,6 +43,11 @@ def clean_string(
         new_string = new_string.lower()
     new_string = sub(r"  +", " ", new_string)
     return new_string
+
+
+def list_intersection(list_1: list, list_2: list) -> list:
+    """Returns the intersection of two lists."""
+    return [value for value in list_1 if value in list_2]
 
 
 class DoNothingDecorator:

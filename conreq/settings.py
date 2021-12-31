@@ -353,8 +353,7 @@ EMAIL_SUBJECT_PREFIX = ""
 sys.path.append(str(PACKAGES_DEV_DIR))
 sys.path.append(str(PACKAGES_DIR))
 if not get_safe_mode():
-    INSTALLED_APPS += list(find_apps())
-    INSTALLED_APPS += list(config.startup.installed_apps)
+    INSTALLED_APPS += find_apps()
 
 
 # Run startup.py

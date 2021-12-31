@@ -62,7 +62,7 @@ def api(
     return decorator
 
 
-def wsgi_middleware(
+def middleware(
     dotted_path: str,
     positioning_element: str = None,
     positioning: str = "before",

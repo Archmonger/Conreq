@@ -14,7 +14,6 @@ from conreq.utils.containers import FillList
 @dataclass
 class StartupConfig:
     setting_scripts: set[str] = field(default_factory=set)
-    installed_apps: set[str] = field(default_factory=set)
     # TODO: Implement pre_run scripts
     pre_run: set[Callable] = field(default_factory=set)
 

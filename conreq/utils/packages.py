@@ -1,9 +1,18 @@
 import functools
 import logging
 
+from conreq.utils.generic import list_intersection, remove_duplicates_from_list
 from conreq.utils.modules import find_modules
 
 _logger = logging.getLogger(__name__)
+
+
+def find_packages() -> list[str]:
+    """Returns all Conreq packages."""
+    packages = find_modules(_packages_dir())
+    packages_dev = find_modules(_packages_dev_dir())
+    _duplicate_package_check(packages, packages_dev)
+    return remove_duplicates_from_list(packages + packages_dev)
 
 
 @functools.cache
@@ -24,19 +33,11 @@ def _packages_dev_dir():
     return getattr(settings, "PACKAGES_DEV_DIR")
 
 
-def _duplicate_package_check(packages: set, packages_dev: set):
-    seen = packages.intersection(packages_dev)
+def _duplicate_package_check(packages: list, packages_dev: list):
+    seen = list_intersection(packages, packages_dev)
 
     for package in seen:
         _logger.warning(
             "\033[93mDuplicate package detected '%s'.\033[0m",
             package,
         )
-
-
-def find_packages() -> set[str]:
-    """Returns all Conreq packages."""
-    packages = find_modules(_packages_dir())
-    packages_dev = find_modules(_packages_dev_dir())
-    _duplicate_package_check(packages, packages_dev)
-    return packages | packages_dev
