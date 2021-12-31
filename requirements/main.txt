@@ -1,5 +1,5 @@
 channels==3.0.4
-diskcache==5.3.0
+diskcache==5.4.0
 django==4.0.0
 django-cleanup==5.2.0
 django-colorfield==0.5.0
@@ -22,7 +22,7 @@ docutils==0.18.1
 drf-yasg==1.20.0
 git+https://github.com/idom-team/django-idom.git
 git+https://github.com/tari/django-downloadview.git@1858355d580a18899aed5c71375d69a3f6d9ede7
-huey==2.4.2
+huey==2.4.3
 hypercorn[h3]==0.13.2
 markdown==3.3.6
 pillow==8.3.2
