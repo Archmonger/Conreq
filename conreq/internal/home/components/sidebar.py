@@ -52,6 +52,7 @@ SIDEBAR_SAFE_MODE = div(
     },
     "SAFE MODE",
 )
+USER_ADMIN_DEBUG = ("User", "Admin", "Debug")
 
 
 @idom.component
@@ -79,8 +80,8 @@ def sidebar(websocket, state, set_state):
             return None
 
         # Select the top most tab, if it exists
-        for _, group_values in all_tabs:
-            if not group_values["tabs"]:
+        for group_name, group_values in all_tabs:
+            if not group_values["tabs"] or group_name in USER_ADMIN_DEBUG:
                 continue
             tab = group_values["tabs"][0]
             set_state(
@@ -120,7 +121,7 @@ def sidebar(websocket, state, set_state):
             *(  # App tabs
                 sidebar_group(websocket, state, set_state, group_name, group_values)
                 for group_name, group_values in all_tabs
-                if group_name not in {"User", "Admin", "Debug"}
+                if group_name not in USER_ADMIN_DEBUG
             ),
             *(  # User tabs
                 sidebar_group(
