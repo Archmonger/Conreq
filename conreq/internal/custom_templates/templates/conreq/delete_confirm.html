@@ -1,0 +1,52 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/manage_users.css' %}" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                {% block form_title %}
+                <h1 class="mt-2">
+                    {% if form_title %}
+                    {{ form_title }}
+                    {% else %}
+                    Are you sure you want to delete "{% firstof object_name object %}"?
+                    {% endif %}
+                </h1>
+                {% endblock %}
+
+                {% block form_subtitle %}
+                <h5 class="mt-2">
+                    {% if form_subtitle %}
+                    {{ form_subtitle }}
+                    {% else %}
+                    This action can not be reversed.
+                    {% endif %}
+                </h5>
+                {% endblock %}
+
+                <hr class="mt-0 mb-4">
+
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Confirm" class="btn btn-danger">
+                    <input type="button" value="Back" class="btn" onclick="history.back()">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

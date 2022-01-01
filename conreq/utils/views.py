@@ -1,6 +1,6 @@
 """Any function that assists in views"""
 from django.http import HttpResponse
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import FormView, UpdateView
 
 
 class SuccessCurrentUrlMixin:
@@ -15,7 +15,14 @@ class SuccessCurrentUrlMixin:
 
 
 class CurrentUserMixin:
-    """Mixin for UpdateView to utilize the current user as the object."""
+    """Mixin for `FormView`, `UpdateView`, and `DeleteView` to utilize the current
+    user as the object. Forms utilized in these views must be a `ModelForm`."""
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if isinstance(self, FormView):
+            kwargs["instance"] = self.request.user
+        return kwargs
 
     def get_object(self, queryset=None):
         # pylint: disable=unused-argument

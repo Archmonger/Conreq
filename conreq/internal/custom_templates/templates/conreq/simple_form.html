@@ -18,13 +18,12 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-8">
-                <h1 class="mt-2">{% block form_title %}{% firstof form_name object %}{% endblock %}</h1>
+                <h1 class="mt-2">{% block form_title %}{% firstof form_title object %}{% endblock %}</h1>
+                <h5 class="mt-2">{{ form_subtitle}}</h5>
                 <hr class="mt-0 mb-4">
-                {% block form_content %}
-                {% crispy form %}
-                {% endblock %}
-                {% block form_bottom %}
-                {% endblock %}
+                {% block form_top %}{% endblock %}
+                {% block form_content %}{% crispy form %}{% endblock %}
+                {% block form_bottom %}{% endblock %}
             </div>
         </div>
     </div>

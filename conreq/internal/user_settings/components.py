@@ -1,17 +1,23 @@
 import idom
 from channels.auth import logout
+from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordChangeView
-from django.views.generic.edit import UpdateView
+from django.urls.base import reverse_lazy
+from django.views.generic.edit import DeleteView, FormView, UpdateView
 from idom.html import div
 
 from conreq import config
 from conreq.app import register
-from conreq.internal.user_settings.forms import ChangePasswordForm, UserSettingsForm
+from conreq.internal.user_settings.forms import (
+    ChangePasswordForm,
+    DeleteMyAccountForm,
+    UserSettingsForm,
+)
 from conreq.internal.utils import tab_constructor
 from conreq.utils.components import django_to_idom, tabbed_viewport
-from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin, stub
+from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 
-# TODO: Tabs for delete user
+User = get_user_model()
 
 
 @django_to_idom()
@@ -21,19 +27,41 @@ class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form_name"] = "General Settings"
+        context["form_title"] = "General Settings"
         return context
 
 
 @django_to_idom()
 class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
     template_name = "conreq/simple_form.html"
-    form_name = "Change Password"
     form_class = ChangePasswordForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form_name"] = "Change Password"
+        context["form_title"] = "Change Password"
+        return context
+
+
+@django_to_idom()
+class DeleteMyAccountView(CurrentUserMixin, FormView):
+    template_name = "conreq/simple_form.html"
+    form_class = DeleteMyAccountForm
+    success_url = reverse_lazy("delete_my_account_confirm")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form_title"] = "Delete My Account"
+        context["form_subtitle"] = "Confirm your password to delete your account."
+        return context
+
+
+@django_to_idom(name="delete_my_account_confirm")
+class DeleteMyAccountConfirmView(SuccessCurrentUrlMixin, CurrentUserMixin, DeleteView):
+    template_name = "conreq/delete_confirm.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form_title"] = "Are you sure you want to delete your account?"
         return context
 
 
@@ -63,7 +91,7 @@ def sign_out(websocket, *_):
 config._tabs.user_settings_top["General"] = {"component": UserSettingsView}
 config._tabs.user_settings_top["Change Password"] = {"component": ChangePasswordView}
 config._tabs.user_settings_bottom["Delete My Account"] = {
-    "component": django_to_idom()(stub)
+    "component": DeleteMyAccountView
 }
 config._homepage.user_nav_tabs.append(tab_constructor("Settings", user_settings))
 config._homepage.user_nav_tabs.append(tab_constructor("Sign Out", sign_out))
