@@ -18,5 +18,5 @@ class EditUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
 
 
 class DeleteUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
-    template_name = "conreq/manage_users/delete_user_confirm.html"
+    template_name = "conreq/delete_confirm.html"
     model = User
