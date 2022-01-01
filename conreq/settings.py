@@ -329,7 +329,7 @@ TIME_ZONE = get_localzone_name()
 
 
 # Static Files (CSS, JavaScript, Images)
-STATIC_ROOT = TEMP_DIR / "collect_static"
+STATIC_ROOT = DATA_DIR / "static_processed"
 STATIC_URL = BASE_URL + "static/"
 STATICFILES_DIRS = [
     USER_STATICFILES_DIR,
