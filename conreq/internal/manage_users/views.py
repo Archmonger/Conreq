@@ -7,7 +7,7 @@ from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 User = get_user_model()
 
 # TODO: Split up manage_users.css into a generic, reusable file(s)
-# TODO: Create SimpleTable and SimpleForm abstractions
+# TODO: Create SimpleTable and SimpleForm that use Conreq templates
 # TODO: Figure out some way to integrate user invites into this
 
 
