@@ -9,7 +9,7 @@ from conreq.app.selectors import AuthLevel
 from conreq.internal.manage_users.forms import UserEditForm
 from conreq.internal.manage_users.tables import UsersTable
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import django_to_idom, tabbed_viewport
+from conreq.utils.components import view_to_component, tabbed_viewport
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin, stub
 
 User = get_user_model()
@@ -20,21 +20,21 @@ User = get_user_model()
 # TODO: Protect all of these pages with auth level admin
 
 
-@django_to_idom(name="edit_user", auth_level=AuthLevel.admin)
+@view_to_component(name="edit_user", auth_level=AuthLevel.admin)
 class EditUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
     template_name = "conreq/manage_users/edit_user.html"
     form_class = UserEditForm
     model = User
 
 
-@django_to_idom(name="delete_user", auth_level=AuthLevel.admin)
+@view_to_component(name="delete_user", auth_level=AuthLevel.admin)
 class DeleteUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
     template_name = "conreq/delete_confirm.html"
     model = User
 
 
 @register.component.manage_users()
-@django_to_idom(name="manage_users", auth_level=AuthLevel.admin)
+@view_to_component(name="manage_users", auth_level=AuthLevel.admin)
 def manage_users_table(request):
     table = UsersTable(User.objects.all())
     RequestConfig(
@@ -58,4 +58,4 @@ def user_management(websocket, state, set_state):
 
 config._homepage.admin_nav_tabs[0] = tab_constructor("User Management", user_management)
 config._tabs.manage_users["Manage Users"] = {"component": manage_users_table}
-config._tabs.manage_users["Add Users"] = {"component": django_to_idom()(stub)}
+config._tabs.manage_users["Add Users"] = {"component": view_to_component()(stub)}

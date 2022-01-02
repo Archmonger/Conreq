@@ -4,7 +4,7 @@ from sortedcontainers import SortedList
 
 from conreq import config
 from conreq.app.types import Icon
-from conreq.utils.components import django_to_idom
+from conreq.utils.components import view_to_component
 
 from conreq.app.selectors import AuthLevel, Viewport, ViewType
 
@@ -33,7 +33,7 @@ def nav_tab(
         if view_type == ViewType.idom:
             component = func
         elif view_type == ViewType.django:
-            component = django_to_idom(
+            component = view_to_component(
                 url_pattern=url_pattern, name=name, use_regex=use_regex
             )(func)
         else:

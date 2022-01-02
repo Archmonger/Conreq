@@ -15,13 +15,13 @@ from conreq.internal.user_settings.forms import (
     UserSettingsForm,
 )
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import django_to_idom, tabbed_viewport
+from conreq.utils.components import view_to_component, tabbed_viewport
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 
 User = get_user_model()
 
 
-@django_to_idom(name="user_settings")
+@view_to_component(name="user_settings")
 class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
     template_name = "conreq/simple_form.html"
     form_class = UserSettingsForm
@@ -32,7 +32,7 @@ class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
         return context
 
 
-@django_to_idom(name="change_password")
+@view_to_component(name="change_password")
 class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
     template_name = "conreq/simple_form.html"
     form_class = ChangePasswordForm
@@ -43,7 +43,7 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
         return context
 
 
-@django_to_idom(name="delete_my_account")
+@view_to_component(name="delete_my_account")
 class DeleteMyAccountView(CurrentUserMixin, FormView):
     template_name = "conreq/simple_form.html"
     form_class = DeleteMyAccountForm
@@ -56,7 +56,7 @@ class DeleteMyAccountView(CurrentUserMixin, FormView):
         return context
 
 
-@django_to_idom(name="delete_my_account_confirm")
+@view_to_component(name="delete_my_account_confirm")
 class DeleteMyAccountConfirmView(CurrentUserMixin, DeleteView):
     template_name = "conreq/delete_confirm.html"
     success_url = reverse_lazy("conreq_delete_my_account_success")
@@ -67,7 +67,7 @@ class DeleteMyAccountConfirmView(CurrentUserMixin, DeleteView):
         return context
 
 
-@django_to_idom(name="delete_my_account_success")
+@view_to_component(name="delete_my_account_success")
 def delete_my_account_success(request):
     return render(request, "conreq/success_refresh.html")
 

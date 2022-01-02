@@ -37,7 +37,7 @@ def authenticated(
 
 
 # TODO: Use Django resolve and raise an exception if registering something that already exists
-def django_to_idom(
+def view_to_component(
     url_pattern: str = None,
     name: str = None,
     use_regex: bool = False,

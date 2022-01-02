@@ -14,29 +14,29 @@ from conreq.internal.server_settings.models import (
     WebserverSettings,
 )
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import django_to_idom, tabbed_viewport
+from conreq.utils.components import view_to_component, tabbed_viewport
 from conreq.utils.views import SingletonUpdateView
 
 
-@django_to_idom(name="general_settings", auth_level=AuthLevel.admin)
+@view_to_component(name="general_settings", auth_level=AuthLevel.admin)
 class GeneralSettingsView(SingletonUpdateView):
     form_class = GeneralSettingsForm
     model = GeneralSettings
 
 
-@django_to_idom(name="styling_settings", auth_level=AuthLevel.admin)
+@view_to_component(name="styling_settings", auth_level=AuthLevel.admin)
 class StylingSettingsView(SingletonUpdateView):
     form_class = StylingSettingsForm
     model = StylingSettings
 
 
-@django_to_idom(name="webserver_settings", auth_level=AuthLevel.admin)
+@view_to_component(name="webserver_settings", auth_level=AuthLevel.admin)
 class WebserverSettingsView(SingletonUpdateView):
     form_class = WebserverSettingsForm
     model = WebserverSettings
 
 
-@django_to_idom(name="email_settings", auth_level=AuthLevel.admin)
+@view_to_component(name="email_settings", auth_level=AuthLevel.admin)
 class EmailSettingsView(SingletonUpdateView):
     form_class = EmailSettingsForm
     model = EmailSettings
