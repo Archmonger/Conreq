@@ -17,7 +17,7 @@ class InviteCode(models.Model):
         return str(self.code)
 
     code = models.CharField(
-        default=uuid.uuid4, editable=False, unique=True, max_length=30
+        default=uuid.uuid4, editable=False, unique=True, max_length=50
     )
     username = models.CharField(max_length=100)
     email = models.EmailField()
