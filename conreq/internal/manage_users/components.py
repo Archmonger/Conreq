@@ -9,7 +9,7 @@ from conreq.app.selectors import AuthLevel
 from conreq.internal.manage_users.forms import UserEditForm
 from conreq.internal.manage_users.tables import UsersTable
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import view_to_component, tabbed_viewport
+from conreq.utils.components import tabbed_viewport, view_to_component
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin, stub
 
 User = get_user_model()

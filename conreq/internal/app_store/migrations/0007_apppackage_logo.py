@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app_store', '0006_remove_apppackage_conreq_minimum_version_and_more'),
+        ("app_store", "0006_remove_apppackage_conreq_minimum_version_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='apppackage',
-            name='logo',
-            field=models.ImageField(blank=True, height_field=250, upload_to='app_store/logos/', width_field=250),
+            model_name="apppackage",
+            name="logo",
+            field=models.ImageField(
+                blank=True,
+                height_field=250,
+                upload_to="app_store/logos/",
+                width_field=250,
+            ),
         ),
     ]
