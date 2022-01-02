@@ -94,7 +94,6 @@ def staff_required(view, login_url=None, redirect_field_name=None):
 
 
 def authenticated(view, auth_level: AuthLevel = AuthLevel.user):
-    # Function view
     if auth_level == AuthLevel.user:
         return login_required(view)
     if auth_level == AuthLevel.admin:

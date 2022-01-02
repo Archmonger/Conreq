@@ -1,9 +1,9 @@
 from functools import wraps
-from typing import Callable, Optional
+from typing import Callable, Optional, Union
 
 import idom
 from django.urls import path, re_path
-from idom.core.proto import VdomDict
+from idom.core.proto import ComponentType, VdomDict
 from idom.core.vdom import make_vdom_constructor
 from idom.html import div, li, ul
 
@@ -18,18 +18,27 @@ iframe = make_vdom_constructor("iframe")
 
 
 def authenticated(
-    fallback: str = None,
-) -> Callable:
+    fallback: Union[ComponentType, VdomDict] = None,
+    auth_level: AuthLevel = AuthLevel.user,
+) -> ComponentType:
     """Decorates an IDOM component."""
 
-    def decorator(func):
-        @wraps(func)
+    def decorator(component):
+        @wraps(component)
         def _wrapped_func(websocket, *args, **kwargs):
-            return (
-                func(websocket, *args, **kwargs)
-                if websocket.scope["user"].is_authenticated
-                else fallback or div()
-            )
+            if auth_level == AuthLevel.user:
+                return (
+                    component(websocket, *args, **kwargs)
+                    if websocket.scope["user"].is_authenticated
+                    else fallback or div()
+                )
+            if auth_level == AuthLevel.admin:
+                return (
+                    component(websocket, *args, **kwargs)
+                    if websocket.scope["user"].is_staff
+                    else fallback or div()
+                )
+            return component(websocket, *args, **kwargs)
 
         return _wrapped_func
 
@@ -42,7 +51,7 @@ def view_to_component(
     name: str = None,
     use_regex: bool = False,
     auth_level: AuthLevel = AuthLevel.user,
-) -> VdomDict:
+) -> ComponentType:
     """Converts a Django view function/class into an IDOM component
     by turning it into an idom component in an iframe."""
 
