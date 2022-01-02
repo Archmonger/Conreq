@@ -14,7 +14,7 @@ from conreq.internal.server_settings.models import (
     WebserverSettings,
 )
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import view_to_component, tabbed_viewport
+from conreq.utils.components import tabbed_viewport, view_to_component
 from conreq.utils.views import SingletonUpdateView
 
 
