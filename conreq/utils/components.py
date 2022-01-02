@@ -7,7 +7,9 @@ from idom.core.proto import VdomDict
 from idom.core.vdom import make_vdom_constructor
 from idom.html import div, li, ul
 
+from conreq.app.selectors import AuthLevel
 from conreq.utils.environment import get_base_url
+from conreq.utils.views import authenticated as authenticated_view
 
 BASE_URL = get_base_url(append_slash=False, prepend_slash=False)
 if BASE_URL:
@@ -39,6 +41,7 @@ def django_to_idom(
     url_pattern: str = None,
     name: str = None,
     use_regex: bool = False,
+    auth_level: AuthLevel = AuthLevel.user,
 ) -> VdomDict:
     """Converts a Django view function/class into an IDOM component
     by turning it into an idom component in an iframe."""
@@ -49,7 +52,7 @@ def django_to_idom(
         from conreq.utils.profiling import profiled_view
 
         # Register a new URL path
-        view = profiled_view(func)
+        view = profiled_view(authenticated_view(func, auth_level))
         dotted_path = f"{func.__module__}.{func.__name__}".replace("<", "").replace(
             ">", ""
         )

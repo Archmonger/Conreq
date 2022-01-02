@@ -6,7 +6,7 @@ from conreq import config
 from conreq.app.types import Icon
 from conreq.utils.components import django_to_idom
 
-from ..selectors import AuthLevel, Viewport, ViewType
+from conreq.app.selectors import AuthLevel, Viewport, ViewType
 
 
 # TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.

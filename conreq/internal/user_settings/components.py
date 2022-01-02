@@ -21,7 +21,7 @@ from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 User = get_user_model()
 
 
-@django_to_idom()
+@django_to_idom(name="user_settings")
 class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
     template_name = "conreq/simple_form.html"
     form_class = UserSettingsForm
@@ -32,7 +32,7 @@ class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
         return context
 
 
-@django_to_idom()
+@django_to_idom(name="change_password")
 class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
     template_name = "conreq/simple_form.html"
     form_class = ChangePasswordForm
@@ -43,11 +43,11 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
         return context
 
 
-@django_to_idom()
+@django_to_idom(name="delete_my_account")
 class DeleteMyAccountView(CurrentUserMixin, FormView):
     template_name = "conreq/simple_form.html"
     form_class = DeleteMyAccountForm
-    success_url = reverse_lazy("delete_my_account_confirm")
+    success_url = reverse_lazy("conreq_delete_my_account_confirm")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -59,12 +59,17 @@ class DeleteMyAccountView(CurrentUserMixin, FormView):
 @django_to_idom(name="delete_my_account_confirm")
 class DeleteMyAccountConfirmView(CurrentUserMixin, DeleteView):
     template_name = "conreq/delete_confirm.html"
-    success_url = reverse_lazy("delete_my_account_success")
+    success_url = reverse_lazy("conreq_delete_my_account_success")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form_title"] = "Are you sure you want to delete your account?"
         return context
+
+
+@django_to_idom(name="delete_my_account_success")
+def delete_my_account_success(request):
+    return render(request, "conreq/success_refresh.html")
 
 
 # pylint: disable=protected-access
@@ -87,11 +92,6 @@ def sign_out(websocket, *_):
         await logout(websocket.scope)
 
     return div()
-
-
-@django_to_idom(name="delete_my_account_success")
-def delete_my_account_success(request):
-    return render(request, "conreq/success_refresh.html")
 
 
 # Set the internal tabs

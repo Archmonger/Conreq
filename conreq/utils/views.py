@@ -1,6 +1,12 @@
 """Any function that assists in views"""
+from inspect import isclass
+
+from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView, UpdateView
+
+from conreq.app.selectors import AuthLevel
 
 
 class SuccessCurrentUrlMixin:
@@ -45,6 +51,55 @@ class SingletonUpdateView(SuccessCurrentUrlMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.model.get_solo()
+
+
+def login_required(view, login_url=None, redirect_field_name=None):
+    # Class view
+    if isclass(view):
+        return method_decorator(
+            user_passes_test(
+                lambda user: user.is_authenticated,
+                login_url=login_url,
+                redirect_field_name=redirect_field_name,
+            ),
+            name="dispatch",
+        )(view)
+
+    # Function view
+    return user_passes_test(
+        lambda user: user.is_authenticated,
+        login_url=login_url,
+        redirect_field_name=redirect_field_name,
+    )(view)
+
+
+def staff_required(view, login_url=None, redirect_field_name=None):
+    # Class view
+    if isclass(view):
+        return method_decorator(
+            user_passes_test(
+                lambda user: user.is_staff,
+                login_url=login_url,
+                redirect_field_name=redirect_field_name,
+            ),
+            name="dispatch",
+        )(view)
+
+    # Function view
+    return user_passes_test(
+        lambda user: user.is_staff,
+        login_url=login_url,
+        redirect_field_name=redirect_field_name,
+    )(view)
+
+
+def authenticated(view, auth_level: AuthLevel = AuthLevel.user):
+    # Function view
+    if auth_level == AuthLevel.user:
+        return login_required(view)
+    if auth_level == AuthLevel.admin:
+        return staff_required(view)
+    return view
 
 
 def stub(request, *args, **kwargs):
