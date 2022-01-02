@@ -27,7 +27,7 @@ class InviteCode(models.Model):
     used_at = models.DateTimeField(blank=True, null=True)
 
     used_by = models.OneToOneField(
-        User, on_delete=models.CASCADE, blank=True, null=True
+        User, on_delete=models.SET_NULL, blank=True, null=True
     )
 
     @property

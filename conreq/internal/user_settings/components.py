@@ -2,6 +2,7 @@ import idom
 from channels.auth import logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordChangeView
+from django.shortcuts import render
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import DeleteView, FormView, UpdateView
 from idom.html import div
@@ -56,8 +57,9 @@ class DeleteMyAccountView(CurrentUserMixin, FormView):
 
 
 @django_to_idom(name="delete_my_account_confirm")
-class DeleteMyAccountConfirmView(SuccessCurrentUrlMixin, CurrentUserMixin, DeleteView):
+class DeleteMyAccountConfirmView(CurrentUserMixin, DeleteView):
     template_name = "conreq/delete_confirm.html"
+    success_url = reverse_lazy("delete_my_account_success")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -85,6 +87,11 @@ def sign_out(websocket, *_):
         await logout(websocket.scope)
 
     return div()
+
+
+@django_to_idom(name="delete_my_account_success")
+def delete_my_account_success(request):
+    return render(request, "conreq/success_refresh.html")
 
 
 # Set the internal tabs
