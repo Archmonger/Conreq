@@ -18,7 +18,7 @@ else:
     metrics = DoNothingDecorator
 
 
-def profiled_view(view: Any, name=None):
+def profiled_view(view: Any, name=None, as_view=True):
     """Helper utility to add performance profiling to a view class or function, if possible."""
     # Something that isn't a view function, such as a list of urlpatterns
     if not callable(view):
@@ -27,7 +27,8 @@ def profiled_view(view: Any, name=None):
     # Class view
     dotted_path = f"{view.__module__}.{view.__qualname__}"
     if isclass(view):
-        return metrics(name=name or dotted_path)(view.as_view())
+        view.dispatch = metrics(name=name or dotted_path)(view.dispatch)
+        return view.as_view() if as_view else view
 
     # Function view
     return metrics(name=name or dotted_path)(view)
