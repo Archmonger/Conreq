@@ -83,6 +83,9 @@ class AppPackage(models.Model):
         help_text="Must be snake_case. Used for PyPI package installation, or folder naming on Git installations.",
     )
     verbose_name = models.CharField(max_length=100)
+    logo = models.ImageField(
+        upload_to="app_store/logos/", height_field=250, width_field=250, blank=True
+    )
     short_description = models.CharField(max_length=255, blank=True)
     long_description = models.TextField(
         blank=True,
