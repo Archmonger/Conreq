@@ -2,6 +2,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Submit
 from django.contrib.auth import get_user_model
 from django.forms import ModelForm
+from django.urls import reverse_lazy
 
 User = get_user_model()
 
@@ -27,7 +28,7 @@ class UserEditForm(ModelForm):
                 "delete",
                 "Delete",
                 css_class="btn-danger",
-                onclick="window.location.href = window.location.href.replace('edit','delete');",
+                onclick=f"location.href = '{reverse_lazy('delete_user')}?id=' + new URLSearchParams(window.location.search).get('id')",
             )
         )
         self.helper.add_input(Button("back", "Back", onclick="history.back()"))
