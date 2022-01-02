@@ -8,7 +8,8 @@ from conreq.app import register
 from conreq.internal.manage_users.forms import UserEditForm
 from conreq.internal.manage_users.tables import UsersTable
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import django_to_idom
+from conreq.utils.components import django_to_idom, tabbed_viewport
+from conreq.utils.views import stub
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
 User = get_user_model()
@@ -34,7 +35,7 @@ class DeleteUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
 
 @register.component.manage_users()
 @django_to_idom(name="manage_users")
-def manage_users(request):
+def manage_users_table(request):
     table = UsersTable(User.objects.all())
     RequestConfig(
         request,
@@ -45,4 +46,16 @@ def manage_users(request):
 
 
 # pylint: disable=protected-access
-config._homepage.admin_nav_tabs[0] = tab_constructor("Manage Users", manage_users)
+def user_management(websocket, state, set_state):
+    return tabbed_viewport(
+        websocket,
+        state,
+        set_state,
+        config.tabs.manage_users,
+        top_tabs=config._tabs.manage_users,
+    )
+
+
+config._homepage.admin_nav_tabs[0] = tab_constructor("User Management", user_management)
+config._tabs.manage_users["Manage Users"] = {"component": manage_users_table}
+config._tabs.manage_users["Add Users"] = {"component": django_to_idom()(stub)}
