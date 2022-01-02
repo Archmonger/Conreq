@@ -61,5 +61,4 @@ class DeleteMyAccountForm(ModelForm):
             self.add_error("confirm_password", "Password does not match.")
 
         if not check_password(password, self.instance.password):
-            print(password, self.instance.password, vars(self.instance))
             self.add_error("password", "Incorrect password.")
