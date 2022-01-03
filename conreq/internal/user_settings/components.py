@@ -1,5 +1,4 @@
 import idom
-from channels.auth import logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render
@@ -8,7 +7,7 @@ from django.views.generic.edit import DeleteView, FormView, UpdateView
 
 from conreq import config
 from conreq.app import register
-from conreq.app.components import logout_parent_frame
+from conreq.app.components import logout
 from conreq.app.selectors import AuthLevel
 from conreq.internal.user_settings.forms import (
     ChangePasswordForm,
@@ -87,8 +86,8 @@ def user_settings(websocket, state, set_state):
 
 
 @idom.component
-def sign_out(websocket, *_):
-    return logout_parent_frame()
+def sign_out(*_):
+    return logout()
 
 
 # Set the internal tabs

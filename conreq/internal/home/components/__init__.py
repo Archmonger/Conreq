@@ -11,7 +11,7 @@ from conreq.internal.home.components.viewport import (
     viewport_secondary,
 )
 from conreq.utils.components import authenticated
-from conreq.app.components import refresh_parent_frame
+from conreq.app.components import refresh
 
 # TODO: Change state from a dict to a dataclass
 # TODO: Allow components to add a viewport class
@@ -19,7 +19,7 @@ from conreq.app.components import refresh_parent_frame
 
 
 @idom.component
-@authenticated(fallback=refresh_parent_frame())
+@authenticated(fallback=refresh())
 def homepage(websocket):
     state, set_state = idom.hooks.use_state(
         {
