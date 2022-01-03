@@ -47,6 +47,7 @@
     integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
     crossorigin="anonymous"></script>
 
+<!-- TODO: Prefix all CSS and JS paths with conreq/ -->
 <!-- Local CSS -->
 {% compress css %}
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -60,4 +61,5 @@
 <!-- Local JS -->
 {% compress js %}
 <script src="{% static 'js/aos-init.js' %}"></script>
+<script src="{% static 'js/refresh_listener.js' %}"></script>
 {% endcompress %}

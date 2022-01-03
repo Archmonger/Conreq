@@ -5,10 +5,11 @@ from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import DeleteView, FormView, UpdateView
-from idom.html import div
 
 from conreq import config
 from conreq.app import register
+from conreq.app.components import logout_parent_frame
+from conreq.app.selectors import AuthLevel
 from conreq.internal.user_settings.forms import (
     ChangePasswordForm,
     DeleteMyAccountForm,
@@ -47,7 +48,7 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
 class DeleteMyAccountView(CurrentUserMixin, FormView):
     template_name = "conreq/simple_form.html"
     form_class = DeleteMyAccountForm
-    success_url = reverse_lazy("conreq_delete_my_account_confirm")
+    success_url = reverse_lazy("delete_my_account_confirm")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -59,7 +60,7 @@ class DeleteMyAccountView(CurrentUserMixin, FormView):
 @view_to_component(name="delete_my_account_confirm")
 class DeleteMyAccountConfirmView(CurrentUserMixin, DeleteView):
     template_name = "conreq/delete_confirm.html"
-    success_url = reverse_lazy("conreq_delete_my_account_success")
+    success_url = reverse_lazy("delete_my_account_success")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,9 +68,9 @@ class DeleteMyAccountConfirmView(CurrentUserMixin, DeleteView):
         return context
 
 
-@view_to_component(name="delete_my_account_success")
+@view_to_component(name="delete_my_account_success", auth_level=AuthLevel.anonymous)
 def delete_my_account_success(request):
-    return render(request, "conreq/success_refresh.html")
+    return render(request, "conreq/refresh_parent_frame.html")
 
 
 # pylint: disable=protected-access
@@ -87,11 +88,7 @@ def user_settings(websocket, state, set_state):
 
 @idom.component
 def sign_out(websocket, *_):
-    @idom.hooks.use_effect
-    async def logout_user():
-        await logout(websocket.scope)
-
-    return div()
+    return logout_parent_frame()
 
 
 # Set the internal tabs
