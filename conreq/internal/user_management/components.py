@@ -7,8 +7,8 @@ from idom.html import div
 from conreq import config
 from conreq.app import register
 from conreq.app.selectors import AuthLevel
-from conreq.internal.manage_users.forms import UserEditForm
-from conreq.internal.manage_users.tables import UsersTable
+from conreq.internal.user_management.forms import UserEditForm
+from conreq.internal.user_management.tables import UsersTable
 from conreq.internal.utils import tab_constructor
 from conreq.utils.components import tabbed_viewport, view_to_component
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
@@ -23,7 +23,7 @@ User = get_user_model()
 
 @view_to_component(name="edit_user", auth_level=AuthLevel.admin)
 class EditUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
-    template_name = "conreq/manage_users/edit_user.html"
+    template_name = "conreq/user_management/edit_user.html"
     form_class = UserEditForm
     model = User
 
@@ -43,7 +43,7 @@ def manage_users_table(request):
         paginate={"per_page": request.GET.get("per_page", 25)},
     ).configure(table)
     context = {"table": table}
-    return render(request, "conreq/manage_users/user_table.html", context)
+    return render(request, "conreq/user_management/user_table.html", context)
 
 
 def user_invites(websocket, state, set_state):

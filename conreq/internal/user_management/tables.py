@@ -6,7 +6,7 @@ User = get_user_model()
 
 class UsersTable(Table):
     edit = TemplateColumn(
-        template_name="conreq/manage_users/edit_btn.html",
+        template_name="conreq/user_management/edit_btn.html",
         orderable=False,
     )
 
