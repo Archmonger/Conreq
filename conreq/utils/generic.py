@@ -28,25 +28,30 @@ def remove_duplicates_from_list(duplicate_list: list) -> list:
 
 def clean_string(
     string: str,
-    spaces: bool = True,
-    special_chars: bool = True,
+    allow_ascii: bool = True,
+    rm_spaces: bool = True,
+    rm_repeated_spaces: bool = True,
+    rm_special_chars: bool = True,
     lowercase: bool = True,
-    spaces_replacement: str = "",
+    spaces: str = "-",
 ) -> str:
     """Removes non-alphanumerics from a string."""
-    new_string = string.encode("ascii", "ignore").decode()
-    if not spaces:
-        new_string = new_string.replace(" ", spaces_replacement)
-    if not special_chars:
+    new_string = string
+    if allow_ascii:
+        new_string = string.encode("ascii", "ignore").decode()
+    if rm_spaces:
+        new_string = new_string.replace(" ", spaces)
+    if rm_special_chars:
         new_string = sub(r"[^a-zA-Z0-9 ]+", "", new_string)
     if lowercase:
         new_string = new_string.lower()
-    new_string = sub(r"  +", " ", new_string)
+    if rm_repeated_spaces:
+        new_string = sub(r"  +", " ", new_string)
     return new_string
 
 
 def list_intersection(list_1: list, list_2: list) -> list:
-    """Returns the intersection of two lists."""
+    """Returns a new list that is the intersection of two lists."""
     return [value for value in list_1 if value in list_2]
 
 

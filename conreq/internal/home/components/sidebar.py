@@ -1,5 +1,5 @@
 import idom
-from django.utils.text import slugify
+from conreq.utils.generic import clean_string
 from idom.html import div, i, nav
 
 from conreq import config
@@ -204,12 +204,15 @@ def sidebar_group(
     tabs = group_values["tabs"]
     _top_tabs = top_tabs or []
     _bottom_tabs = bottom_tabs or []
-    tabs_id = f"{slugify(group_name)}-tabs"
+    group_name_clean = clean_string(group_name, lowercase=False)
+    group_id = f"{group_name_clean}-group"
+    tabs_id = f"{group_name_clean}-tabs"
 
     return (
         div(
             NAV_GROUP
             | {
+                "id": group_id,
                 "data-bs-target": f"#{tabs_id}",
                 "aria-controls": tabs_id,
                 "title": group_name,
@@ -220,9 +223,13 @@ def sidebar_group(
                 group_name,
             ),
             i(GROUP_CARET | {"title": f'Collapse the "{group_name}" group.'}),
+            key=group_id,
         ),
         div(
-            TABS_COLLAPSE | {"id": tabs_id},
+            TABS_COLLAPSE
+            | {
+                "id": tabs_id,
+            },
             div(TABS_INDICATOR),
             div(
                 TABS,
@@ -233,5 +240,6 @@ def sidebar_group(
                     for tab in _bottom_tabs
                 ),
             ),
+            key=tabs_id,
         ),
     )
