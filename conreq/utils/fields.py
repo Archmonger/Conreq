@@ -8,6 +8,8 @@ from . import forms, validators
 
 
 class PasswordField(EncryptedCharField):
+    """Encrypted character field that hides the user's input within the browser."""
+
     def formfield(self, **kwargs):
         if kwargs.get("widget"):
             kwargs["widget"] = kwargs["widget"](attrs={"type": "password"})
