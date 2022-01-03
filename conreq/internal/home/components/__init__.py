@@ -1,6 +1,7 @@
 import idom
 from idom.html import div
 
+from conreq.app.components import refresh
 from conreq.app.selectors import Modal, Viewport
 from conreq.internal.home.components.modal import modal
 from conreq.internal.home.components.navbar import navbar
@@ -11,7 +12,6 @@ from conreq.internal.home.components.viewport import (
     viewport_secondary,
 )
 from conreq.utils.components import authenticated
-from conreq.app.components import refresh
 
 # TODO: Change state from a dict to a dataclass
 # TODO: Allow components to add a viewport class
