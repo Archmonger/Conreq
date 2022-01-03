@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig
+from idom.html import div
 
 from conreq import config
 from conreq.app import register
@@ -10,7 +11,7 @@ from conreq.internal.manage_users.forms import UserEditForm
 from conreq.internal.manage_users.tables import UsersTable
 from conreq.internal.utils import tab_constructor
 from conreq.utils.components import tabbed_viewport, view_to_component
-from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin, stub
+from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
 User = get_user_model()
 
@@ -45,6 +46,10 @@ def manage_users_table(request):
     return render(request, "conreq/manage_users/user_table.html", context)
 
 
+def user_invites(websocket, state, set_state):
+    return div("This is a temporary stub for the user invites tab.")
+
+
 # pylint: disable=protected-access
 def user_management(websocket, state, set_state):
     return tabbed_viewport(
@@ -58,4 +63,4 @@ def user_management(websocket, state, set_state):
 
 config._homepage.admin_nav_tabs[0] = tab_constructor("User Management", user_management)
 config._tabs.manage_users["Manage Users"] = {"component": manage_users_table}
-config._tabs.manage_users["User Invites"] = {"component": view_to_component()(stub)}
+config._tabs.manage_users["User Invites"] = {"component": user_invites}
