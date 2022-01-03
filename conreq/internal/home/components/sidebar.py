@@ -1,10 +1,10 @@
 import idom
-from conreq.utils.generic import clean_string
 from idom.html import div, i, nav
 
 from conreq import config
 from conreq.app.selectors import Viewport
 from conreq.utils.environment import get_debug, get_safe_mode
+from conreq.utils.generic import clean_string
 
 DEBUG = get_debug()
 SAFE_MODE = get_safe_mode()
