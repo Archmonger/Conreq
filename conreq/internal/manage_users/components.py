@@ -58,4 +58,4 @@ def user_management(websocket, state, set_state):
 
 config._homepage.admin_nav_tabs[0] = tab_constructor("User Management", user_management)
 config._tabs.manage_users["Manage Users"] = {"component": manage_users_table}
-config._tabs.manage_users["Add Users"] = {"component": view_to_component()(stub)}
+config._tabs.manage_users["User Invites"] = {"component": view_to_component()(stub)}
