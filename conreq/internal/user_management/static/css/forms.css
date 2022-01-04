@@ -1,0 +1,18 @@
+body {
+	background: transparent;
+	color: rgba(255, 255, 255, 0.75);
+}
+
+select {
+	color: #000;
+}
+
+a {
+	color: #4499e3;
+	text-decoration: none !important;
+}
+
+a:hover,
+a:focus {
+	color: #44a9ff;
+}

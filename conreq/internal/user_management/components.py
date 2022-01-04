@@ -15,10 +15,8 @@ from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
 User = get_user_model()
 
-# TODO: Split up manage_users.css into a generic, reusable file(s)
 # TODO: Create SimpleTable and SimpleForm that use Conreq templates
 # TODO: Figure out some way to integrate user invites into this
-# TODO: Protect all of these pages with auth level admin
 
 
 @view_to_component(name="edit_user", auth_level=AuthLevel.admin)
