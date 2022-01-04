@@ -1,3 +1,4 @@
+from copy import copy
 from functools import wraps
 from typing import Callable, Optional, Union
 
@@ -8,6 +9,7 @@ from idom.core.vdom import make_vdom_constructor
 from idom.html import div, li, ul
 
 from conreq.app.selectors import AuthLevel
+from conreq import HomepageState, TabbedViewportState
 from conreq.utils.environment import get_base_url
 from conreq.utils.views import authenticated as authenticated_view
 
@@ -86,7 +88,7 @@ def view_to_component(
 @idom.component
 def tabbed_viewport(
     websocket,
-    state,
+    state: HomepageState,
     set_state,
     tabs: dict,
     top_tabs: Optional[dict] = None,
@@ -96,18 +98,16 @@ def tabbed_viewport(
     """Generates a viewport with the provided tabs. Viewport functions should accept
     `websocket, state, set_state` as arguements."""
     tab_state, set_tab_state = idom.hooks.use_state(
-        {
-            "current_tab": _default_tab(
-                top_tabs, tabs, bottom_tabs, default_tab=default_tab
-            )
-        }
+        TabbedViewportState(
+            _default_tab(top_tabs, tabs, bottom_tabs, default_tab=default_tab)
+        )
     )
 
     return div(
         {"className": "tabbed-viewport-container"},
         div(
             {"className": "tabbed-viewport"},
-            tab_state["current_tab"](websocket, state, set_state),
+            tab_state.current_tab(websocket, state, set_state),
         ),
         ul(
             {"className": "tabbed-viewport-selector list-group"},
@@ -129,7 +129,7 @@ def _default_tab(*tab_groups, default_tab=None):
     return None
 
 
-def _tabbed_viewport_tabs(tabs: dict, tab_state, set_tab_state):
+def _tabbed_viewport_tabs(tabs: dict, tab_state: TabbedViewportState, set_tab_state):
     if not tabs:
         return []
 
@@ -142,10 +142,14 @@ def _tabbed_viewport_tabs(tabs: dict, tab_state, set_tab_state):
     ]
 
 
-def _tabbed_viewport_tabs_values(tab_properties, tab_state, set_tab_state):
+def _tabbed_viewport_tabs_values(
+    tab_properties, tab_state: TabbedViewportState, set_tab_state
+):
+    async def on_click(*_):
+        tab_state.current_tab = tab_properties["component"]
+        set_tab_state(copy(tab_state))
+
     return {
-        "className": f"list-group-item clickable{' active' if tab_state['current_tab'] is tab_properties['component'] else ''}",
-        "onClick": lambda x: set_tab_state(
-            {"current_tab": tab_properties["component"]}
-        ),
+        "className": f"list-group-item clickable{' active' if tab_state.current_tab is tab_properties['component'] else ''}",
+        "onClick": on_click,
     }

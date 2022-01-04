@@ -1,6 +1,8 @@
 import idom
 from idom.html import button, div, span
 
+from conreq import HomepageState
+
 NAVBAR = {"className": "navbar navbar-expand-md navbar-dark", "data-aos": "fade-down"}
 NAVBAR_TOGGLER = {
     "className": "navbar-toggler",
@@ -13,7 +15,7 @@ NAVBAR_BRAND = {"className": "navbar-brand ellipsis"}
 
 
 @idom.component
-def navbar(websocket, state, set_state):
+def navbar(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
     return div(
         NAVBAR,
@@ -21,5 +23,5 @@ def navbar(websocket, state, set_state):
             NAVBAR_TOGGLER,
             span(NAVBAR_TOGGLER_ICON),
         ),
-        div(NAVBAR_BRAND, state["page_title"]),
+        div(NAVBAR_BRAND, state.page_title),
     )
