@@ -1,6 +1,15 @@
 {% extends 'conreq/centered_box.html' %}
 {% load static %}
 
+{% block extend_head %}
+<script>
+    // Don't load if inside an iFrame
+    if (window.frameElement) {
+        window.stop();
+    }
+</script>
+{% endblock %}
+
 {% block title %}Sign In{% endblock %}
 
 {% block content %}
