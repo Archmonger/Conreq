@@ -24,19 +24,19 @@ class PwaConfig(AppConfig):
     app_status_bar_color = "default"
     app_icons = [
         {
-            "src": settings.BASE_URL + "static/icons/standard.png",
+            "src": settings.BASE_URL + "static/conreq/icons/standard.png",
             "sizes": "512x512",
             "purpose": "any",
         },
         {
-            "src": settings.BASE_URL + "static/icons/maskable.png",
+            "src": settings.BASE_URL + "static/conreq/icons/maskable.png",
             "sizes": "512x512",
             "purpose": "maskable",
         },
     ]
     app_icons_apple = [
         {
-            "src": settings.BASE_URL + "static/icons/apple-touch-icon.png",
+            "src": settings.BASE_URL + "static/conreq/icons/apple-touch-icon.png",
             "sizes": "180x180",
         }
     ]

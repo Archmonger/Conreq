@@ -3,9 +3,9 @@
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
 	"{{ base_url|escapejs }}offline",
-	"{% static 'css/main_slim.css' %}",
-	"{% static 'css/offline.css' %}",
-	"{% static 'js/aos-init.js' %}",
+	"{% static 'conreq/main_slim.css' %}",
+	"{% static 'conreq/offline.css' %}",
+	"{% static 'conreq/aos-init.js' %}",
 ];
 
 // Cache on install
