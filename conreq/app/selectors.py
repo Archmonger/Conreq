@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 @dataclass
 class ViewType:
-    django: str = "django"
-    idom: str = "idom"
+    view: str = "django"
+    component: str = "idom"
 
 
 @dataclass

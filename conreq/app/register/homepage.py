@@ -17,10 +17,10 @@ def nav_tab(
     padding: bool = True,
     viewport: Viewport = Viewport.primary,
     auth_level: AuthLevel = AuthLevel.user,
-    view_type: ViewType = ViewType.idom,
-    url_pattern: str = None,
-    name: str = None,
-    use_regex: bool = False,
+    view_type: ViewType = ViewType.component,
+    url_pattern: str = None,  # For Django only (as of now)
+    url_name: str = None,  # For Django only (as of now)
+    url_regex: bool = False,  # For Django only (as of now)
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked.
     By default, the function decorated will be rendered to the viewport. The `on_click` event
@@ -29,11 +29,11 @@ def nav_tab(
     # TODO: URL support (Requires IDOM to support URL routing)
 
     def decorator(func):
-        if view_type == ViewType.idom:
+        if view_type == ViewType.component:
             component = func
-        elif view_type == ViewType.django:
+        elif view_type == ViewType.view:
             component = view_to_component(
-                url_pattern=url_pattern, name=name, use_regex=use_regex
+                url_pattern=url_pattern, name=url_name, use_regex=url_regex
             )(func)
         else:
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
