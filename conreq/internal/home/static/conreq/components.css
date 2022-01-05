@@ -10,6 +10,9 @@
 	width: auto;
 	margin-top: 100px;
 	margin-left: 20px;
+	max-height: calc(100% - 100px);
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .tabbed-viewport {
