@@ -1,5 +1,8 @@
+from platform import platform
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Submit
+from django.conf import settings
 from django.forms import CharField, ModelForm
 
 from conreq.internal.email.models import EmailSettings
@@ -11,6 +14,11 @@ from conreq.internal.server_settings.models import (
 
 
 class GeneralSettingsForm(ModelForm):
+    conreq_version = CharField(
+        initial=settings.CONREQ_VERSION, disabled=True, required=False
+    )
+    system_platform = CharField(initial=platform(), disabled=True, required=False)
+
     class Meta:
         model = GeneralSettings
         fields = ("server_name", "server_description", "app_store_url")
