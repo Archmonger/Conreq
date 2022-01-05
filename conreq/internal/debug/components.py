@@ -1,8 +1,7 @@
 from django.urls.base import reverse
 from idom.core.vdom import make_vdom_constructor
 
-from conreq import config
-from conreq import Viewport
+from conreq import Viewport, config
 from conreq.internal.utils import tab_constructor
 
 iframe = make_vdom_constructor("iframe")

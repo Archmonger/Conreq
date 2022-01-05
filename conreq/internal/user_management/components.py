@@ -4,9 +4,8 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig
 from idom.html import div
 
-from conreq import config
+from conreq import AuthLevel, config
 from conreq.app import register
-from conreq import AuthLevel
 from conreq.internal.user_management.forms import UserEditForm
 from conreq.internal.user_management.tables import UsersTable
 from conreq.internal.utils import tab_constructor

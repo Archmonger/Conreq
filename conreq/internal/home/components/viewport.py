@@ -1,9 +1,7 @@
 import idom
 from idom.html import div
 
-from conreq import config
-from conreq import Viewport
-from conreq import HomepageState
+from conreq import HomepageState, Viewport, config
 
 VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
 VIEWPORT_CONTAINER_SECONDARY = {"className": "viewport-container secondary"}
