@@ -79,7 +79,7 @@ BASE_URL = get_base_url()
 
 
 # Basic Configuration
-CONREQ_VERSION = "0.20.30"
+CONREQ_VERSION = "0.20.32"
 APP_STORE_VERSION = get_env("APP_STORE_VERSION", "1")
 
 
