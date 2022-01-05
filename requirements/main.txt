@@ -2,7 +2,7 @@ channels==3.0.4
 diskcache==5.4.0
 django==4.0.1
 django-cleanup==5.2.0
-django-colorfield==0.5.0
+django-colorfield==0.6.3
 django-compression-middleware==0.4.1
 django-compressor==3.1
 django-crispy-forms==1.13.0
@@ -25,7 +25,7 @@ git+https://github.com/tari/django-downloadview.git@1858355d580a18899aed5c71375d
 huey==2.4.3
 hypercorn[h3]==0.13.2
 markdown==3.3.6
-pillow==8.3.2
+pillow==9.0.0
 psutil==5.8.0
 pymysql==1.0.2
 python-dotenv==0.19.2
