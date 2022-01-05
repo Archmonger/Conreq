@@ -88,12 +88,9 @@ class Command(BaseCommand):
             vprint("> Creating database", verbosity)
         with sqlite3.connect(path) as cursor:
             vprint("> Vacuuming database", verbosity)
-            cursor.execute("VACUUM")
-            vprint("> Optimizing database", verbosity)
-            cursor.execute("PRAGMA journal_mode=WAL")
-            cursor.execute("PRAGMA synchronous=NORMAL")
-            cursor.execute("PRAGMA temp_store=MEMORY")
-            cursor.execute("PRAGMA optimize")
+            cursor.execute("VACUUM;")
+            vprint("> Configuring database", verbosity)
+            cursor.execute("PRAGMA journal_mode = WAL;")
         if not no_perms and (uid != -1 or gid != -1) and sys.platform == "linux":
             # pylint: disable=no-member
             print("> Applying permissions")

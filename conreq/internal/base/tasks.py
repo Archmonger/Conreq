@@ -17,8 +17,22 @@ HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 def clean_bg_task_db():
     """Periodically performs a SQLITE vacuum on the background task database."""
     with sqlite3.connect(HUEY_FILENAME) as cursor:
+        cursor.execute(
+            # Only keep the 1000 latest tasks
+            """DELETE FROM task
+            WHERE id NOT IN (
+            SELECT id
+            FROM (
+                SELECT id
+                FROM task
+                ORDER BY id DESC
+                LIMIT 1000
+            ) foo
+            );
+            """
+        )
+    with sqlite3.connect(HUEY_FILENAME) as cursor:
         cursor.execute("VACUUM")
-        cursor.execute("PRAGMA optimize")
 
 
 if DB_ENGINE == "SQLITE3":
@@ -28,7 +42,6 @@ if DB_ENGINE == "SQLITE3":
         """Periodically performs any cleanup tasks needed for the default database."""
         with connection.cursor() as cursor:
             cursor.execute("VACUUM")
-            cursor.execute("PRAGMA optimize")
 
 
 @db_periodic_task(Seconds.day)
