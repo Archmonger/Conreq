@@ -4,7 +4,7 @@ import idom
 from idom.html import div, i, nav
 
 from conreq import config
-from conreq.app.selectors import Viewport
+from conreq import Viewport
 from conreq import HomepageState
 from conreq.utils.environment import get_debug, get_safe_mode
 from conreq.utils.generic import clean_string

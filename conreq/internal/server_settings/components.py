@@ -1,6 +1,6 @@
 from conreq import config
 from conreq.app import register
-from conreq.app.selectors import AuthLevel
+from conreq import AuthLevel
 from conreq.internal.email.models import EmailSettings
 from conreq.internal.server_settings.forms import (
     EmailSettingsForm,

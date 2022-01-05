@@ -6,7 +6,7 @@ from idom.html import div
 
 from conreq import config
 from conreq.app import register
-from conreq.app.selectors import AuthLevel
+from conreq import AuthLevel
 from conreq.internal.user_management.forms import UserEditForm
 from conreq.internal.user_management.tables import UsersTable
 from conreq.internal.utils import tab_constructor

@@ -1,7 +1,7 @@
 """Helpers to render IDOM elements on the page"""
 from typing import Callable
 
-from conreq.app.selectors import AuthLevel, Viewport
+from conreq import AuthLevel, Viewport
 
 # TODO: Create viewport render functions
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass

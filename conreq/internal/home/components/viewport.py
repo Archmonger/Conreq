@@ -2,7 +2,7 @@ import idom
 from idom.html import div
 
 from conreq import config
-from conreq.app.selectors import Viewport
+from conreq import Viewport
 from conreq import HomepageState
 
 VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}

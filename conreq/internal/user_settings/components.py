@@ -8,7 +8,7 @@ from django.views.generic.edit import DeleteView, FormView, UpdateView
 from conreq import config
 from conreq.app import register
 from conreq.app.components import logout
-from conreq.app.selectors import AuthLevel
+from conreq import AuthLevel
 from conreq.internal.user_settings.forms import (
     ChangePasswordForm,
     DeleteMyAccountForm,

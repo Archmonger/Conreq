@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView, UpdateView
 
-from conreq.app.selectors import AuthLevel
+from conreq.utils.types import AuthLevel
 
 
 class SuccessCurrentUrlMixin:

@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.shortcuts import render
 
-from conreq.app.selectors import AuthLevel
+from conreq import AuthLevel
 from conreq.utils.components import view_to_component
 
 

@@ -2,7 +2,7 @@ import idom
 from idom.html import div, i
 
 from conreq import config
-from conreq.app.selectors import Modal
+from conreq import Modal
 from conreq import HomepageState
 
 MODAL_CONTAINER = {
