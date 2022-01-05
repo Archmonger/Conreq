@@ -108,6 +108,8 @@ class AppPackage(models.Model):
         blank=True,
         help_text="Optional text message banner shown this apps details page.",
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
 
     # Ownership Info
     author = models.CharField(max_length=50)
