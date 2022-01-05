@@ -8,8 +8,7 @@ from idom.core.proto import ComponentType, VdomDict
 from idom.core.vdom import make_vdom_constructor
 from idom.html import div, li, ul
 
-from conreq import AuthLevel
-from conreq import HomepageState, TabbedViewportState
+from conreq import AuthLevel, HomepageState, TabbedViewportState
 from conreq.utils.environment import get_base_url
 from conreq.utils.views import authenticated as authenticated_view
 

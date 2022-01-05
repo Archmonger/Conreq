@@ -5,10 +5,9 @@ from django.shortcuts import render
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import DeleteView, FormView, UpdateView
 
-from conreq import config
+from conreq import AuthLevel, config
 from conreq.app import register
 from conreq.app.components import logout
-from conreq import AuthLevel
 from conreq.internal.user_settings.forms import (
     ChangePasswordForm,
     DeleteMyAccountForm,

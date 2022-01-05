@@ -1,9 +1,7 @@
 import idom
 from idom.html import div, i
 
-from conreq import config
-from conreq import Modal
-from conreq import HomepageState
+from conreq import HomepageState, Modal, config
 
 MODAL_CONTAINER = {
     "id": "modal-container",
