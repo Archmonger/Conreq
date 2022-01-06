@@ -77,7 +77,7 @@ def view_to_component(
         # Create an iframe with src=...
         @idom.component
         def idom_component(*args, **kwargs):
-            return iframe({"src": src_url, "loading": "lazy"})
+            return iframe({"src": f"/{src_url}", "loading": "lazy"})
 
         return idom_component
 
