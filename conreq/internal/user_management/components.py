@@ -19,7 +19,7 @@ from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
 @view_to_component(name="edit_user", auth_level=AuthLevel.admin)
 class EditUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
-    template_name = "conreq/simple_form.html"
+    template_name = "conreq/form.html"
     form_class = UserEditForm
     model = get_user_model()
 
@@ -44,7 +44,7 @@ def manage_users_table(request):
         paginate={"per_page": request.GET.get("per_page", 25)},
     ).configure(table)
     context = {"table": table}
-    return render(request, "conreq/user_management/user_table.html", context)
+    return render(request, "conreq/table.html", context)
 
 
 def user_invites(websocket, state, set_state):

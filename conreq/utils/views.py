@@ -47,7 +47,7 @@ class ObjectInParamsMixin:
 class SingletonUpdateView(SuccessCurrentUrlMixin, UpdateView):
     """Update view intended for `SingletonModel`."""
 
-    template_name = "conreq/simple_form.html"
+    template_name = "conreq/form.html"
 
     def get_object(self, queryset=None):
         return self.model.get_solo()

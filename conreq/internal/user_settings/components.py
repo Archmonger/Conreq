@@ -19,7 +19,7 @@ from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 
 @view_to_component(name="user_settings")
 class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
-    template_name = "conreq/simple_form.html"
+    template_name = "conreq/form.html"
     form_class = UserSettingsForm
 
     def get_context_data(self, **kwargs):
@@ -30,7 +30,7 @@ class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
 
 @view_to_component(name="change_password")
 class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
-    template_name = "conreq/simple_form.html"
+    template_name = "conreq/form.html"
     form_class = ChangePasswordForm
 
     def get_context_data(self, **kwargs):
@@ -41,7 +41,7 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
 
 @view_to_component(name="delete_my_account")
 class DeleteMyAccountView(CurrentUserMixin, FormView):
-    template_name = "conreq/simple_form.html"
+    template_name = "conreq/form.html"
     form_class = DeleteMyAccountForm
     success_url = reverse_lazy("delete_my_account_confirm")
 
