@@ -96,21 +96,17 @@ def sidebar(websocket, state: HomepageState, set_state):
             )
             return None
 
+    async def username_on_click(_):
+        state.viewport = Viewport.primary
+        state.viewport_primary = config.components.user_settings
+        state.viewport_padding = True
+        set_state(copy(state))
+
     return nav(
         SIDEBAR,
         *([SIDEBAR_SAFE_MODE] if SAFE_MODE else []),
         div(
-            SIDEBAR_USER
-            | {
-                "onClick": lambda x: set_state(
-                    state
-                    | {
-                        "viewport": Viewport.primary,
-                        "viewport_primary": config.components.user_settings,
-                        "viewport_padding": True,
-                    }
-                )
-            },
+            SIDEBAR_USER | {"onClick": username_on_click},
             div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
             div(
                 USERNAME_CONTAINER,
@@ -174,7 +170,7 @@ def nav_tab_class(state: HomepageState, tab):
 
 
 def sidebar_tab(websocket, state: HomepageState, set_state, tab):
-    async def on_click(*_):
+    async def on_click(_):
         state.viewport = tab["viewport"]
         if tab["viewport"] == Viewport.primary:
             state.viewport_primary = tab["component"]

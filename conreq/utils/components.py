@@ -144,7 +144,7 @@ def _tabbed_viewport_tabs(tabs: dict, tab_state: TabbedViewportState, set_tab_st
 def _tabbed_viewport_tabs_values(
     tab_properties, tab_state: TabbedViewportState, set_tab_state
 ):
-    async def on_click(*_):
+    async def on_click(_):
         tab_state.current_tab = tab_properties["component"]
         set_tab_state(copy(tab_state))
 
