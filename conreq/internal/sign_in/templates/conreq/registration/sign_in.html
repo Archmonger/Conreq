@@ -5,6 +5,13 @@
 <script>
     // Don't load if inside an iFrame
     if (window.frameElement) {
+        window.parent.document.dispatchEvent(new CustomEvent('warning-toast', {
+            "detail": {
+                title: "Authentication Required",
+                message: "You do not have permission to access this page.",
+                timeout: 15000,
+            }
+        }))
         window.stop();
     }
 </script>

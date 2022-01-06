@@ -27,6 +27,19 @@
             </div>
         </div>
     </div>
+
+    {% if request.GET.success %}
+    <script>
+        if (window.frameElement) {
+            window.parent.document.dispatchEvent(new CustomEvent('success-toast', {
+                "detail": {
+                    title: "Saved"
+                }
+            }))
+            window.stop();
+        }
+    </script>
+    {% endif %}
 </body>
 
 </html>

@@ -47,6 +47,10 @@
     integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
     crossorigin="anonymous"></script>
 
+<!-- Notification Popups (izi Toast) -->
+<script src="{% static 'conreq/izi_toast_1.4.0.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'conreq/izi_toast_1.4.0.min.css' %}">
+
 <!-- TODO: Prefix all CSS and JS paths with conreq/ -->
 <!-- Local CSS -->
 {% compress css %}
@@ -61,5 +65,5 @@
 <!-- Local JS -->
 {% compress js %}
 <script src="{% static 'conreq/aos-init.js' %}"></script>
-<script src="{% static 'conreq/refresh_listener.js' %}"></script>
+<script src="{% static 'conreq/iframe_events.js' %}"></script>
 {% endcompress %}
