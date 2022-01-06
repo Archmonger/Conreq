@@ -1,5 +1,4 @@
 import idom
-from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render
 from django.urls.base import reverse_lazy
@@ -16,8 +15,6 @@ from conreq.internal.user_settings.forms import (
 from conreq.internal.utils import tab_constructor
 from conreq.utils.components import tabbed_viewport, view_to_component
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
-
-User = get_user_model()
 
 
 @view_to_component(name="user_settings")

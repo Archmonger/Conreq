@@ -5,8 +5,6 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
-User = get_user_model()
-
 
 def _expiration():
     return timezone.now() + timedelta(weeks=2)
@@ -27,7 +25,7 @@ class InviteCode(models.Model):
     used_at = models.DateTimeField(blank=True, null=True)
 
     used_by = models.OneToOneField(
-        User, on_delete=models.SET_NULL, blank=True, null=True
+        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True
     )
 
     @property

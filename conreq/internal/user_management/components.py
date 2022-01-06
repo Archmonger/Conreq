@@ -12,7 +12,6 @@ from conreq.internal.utils import tab_constructor
 from conreq.utils.components import tabbed_viewport, view_to_component
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
-User = get_user_model()
 
 # TODO: Create SimpleTable and SimpleForm that use Conreq templates
 # TODO: Figure out some way to integrate user invites into this
@@ -22,7 +21,7 @@ User = get_user_model()
 class EditUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
     template_name = "conreq/simple_form.html"
     form_class = UserEditForm
-    model = User
+    model = get_user_model()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -33,13 +32,13 @@ class EditUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
 @view_to_component(name="delete_user", auth_level=AuthLevel.admin)
 class DeleteUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
     template_name = "conreq/delete_confirm.html"
-    model = User
+    model = get_user_model()
 
 
 @register.component.manage_users()
 @view_to_component(name="manage_users", auth_level=AuthLevel.admin)
 def manage_users_table(request):
-    table = UsersTable(User.objects.all())
+    table = UsersTable(get_user_model().objects.all())
     RequestConfig(
         request,
         paginate={"per_page": request.GET.get("per_page", 25)},

@@ -7,8 +7,6 @@ from django.db.models import Q
 from django.forms import CharField, TextInput
 from django.utils.translation import gettext_lazy as _
 
-User = get_user_model()
-
 
 class PasswordResetForm(_PasswordResetForm):
     email = CharField(
@@ -27,7 +25,7 @@ class PasswordResetForm(_PasswordResetForm):
         resetting their password.
         """
         # pylint: disable=arguments-renamed, protected-access
-        active_users = User.objects.filter(
+        active_users = get_user_model().objects.filter(
             Q(email__iexact=username_or_email) | Q(username__iexact=username_or_email),
             is_active=True,
         )

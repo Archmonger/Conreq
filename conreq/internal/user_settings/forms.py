@@ -6,12 +6,10 @@ from django.contrib.auth.hashers import check_password
 from django.forms import CharField, ModelForm, PasswordInput
 from django.urls import reverse_lazy
 
-User = get_user_model()
-
 
 class UserSettingsForm(ModelForm):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = (
             "username",
             "email",
@@ -41,7 +39,7 @@ class DeleteMyAccountForm(ModelForm):
     success_url = reverse_lazy("delete_my_account_confirm")
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ("password",)
 
     def __init__(self, *args, **kwargs):

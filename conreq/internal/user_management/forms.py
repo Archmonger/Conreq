@@ -4,12 +4,10 @@ from django.contrib.auth import get_user_model
 from django.forms import ModelForm
 from django.urls import reverse_lazy
 
-User = get_user_model()
-
 
 class UserEditForm(ModelForm):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = (
             "username",
             "email",

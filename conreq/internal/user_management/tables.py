@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from django_tables2 import Table, TemplateColumn
 
-User = get_user_model()
-
 
 class UsersTable(Table):
     edit = TemplateColumn(
@@ -11,7 +9,7 @@ class UsersTable(Table):
     )
 
     class Meta:
-        model = User
+        model = get_user_model()
         # TODO: PR a template for Bootstrap 5
         template_name = "django_tables2/bootstrap-responsive.html"
         fields = (
