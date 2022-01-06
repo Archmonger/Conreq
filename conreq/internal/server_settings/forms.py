@@ -11,6 +11,7 @@ from conreq.internal.server_settings.models import (
     StylingSettings,
     WebserverSettings,
 )
+from conreq.utils.forms import EnvCharField, EnvFormMixin
 
 
 class GeneralSettingsForm(ModelForm):
@@ -43,8 +44,9 @@ class StylingSettingsForm(ModelForm):
         self.helper.add_input(Submit("submit", "Save"))
 
 
-class WebserverSettingsForm(ModelForm):
-    base_url = CharField(
+class WebserverSettingsForm(EnvFormMixin, ModelForm):
+    base_url = EnvCharField(
+        "BASE_URL",
         required=False,
         max_length=255,
         help_text="Appears in all links (ex. example.com/base-url).",

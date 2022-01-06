@@ -2,7 +2,7 @@ import functools
 import json
 import os
 from distutils.util import strtobool
-from typing import Any, Callable, Optional
+from typing import Any, Callable
 
 import dotenv
 from dotenv import dotenv_values
@@ -22,7 +22,7 @@ def dotenv_path() -> str:
 
 
 def _parse_env_value(value: Any, default_value: Any, return_type: Callable) -> Any:
-    """Returns a value based"""
+    """Returns a value based on the return type."""
     if not value:
         return default_value
     if return_type is bool and isinstance(value, str):
@@ -66,7 +66,7 @@ def get_safe_mode() -> bool:
 
 @functools.cache
 def get_base_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
-    """Obtains the base URL from the environment variables"""
+    """Obtains the BASE_URL from the environment variables"""
     base_url = get_env("BASE_URL", "")
     if base_url:
         base_url = base_url.replace("/", "").replace("\\", "")
@@ -80,7 +80,7 @@ def get_base_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
 
 @functools.cache
 def get_home_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
-    """Obtains the base URL from the environment variables"""
+    """Obtains the HOME_URL from the environment variables"""
     home_url = get_env("HOME_URL", "home")
     if home_url:
         home_url = home_url.replace("/", "").replace("\\", "")
@@ -101,13 +101,14 @@ def get_database_type() -> str:
     return "SQLITE3"
 
 
-def set_env(name: str, value: str, sys_env=False, dot_env=True) -> Optional[str]:
+def set_env(name: str, value: str, sys_env=False, dot_env=True, remove=True) -> None:
     """Sets a value in either the system environment, and/or the .env file."""
     if sys_env:
         os.environ[ENV_PREFIX + name.upper()] = str(value)
-    if dot_env:
+    if dot_env and not value and remove:
+        dotenv.unset_key(dotenv_path(), name.upper())
+    elif dot_env:
         dotenv.set_key(dotenv_path(), name.upper(), str(value))
-    return (name, value)
 
 
 def remove_env(name: str, sys_env=False, dot_env=True) -> None:
