@@ -6,11 +6,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0036_remove_generalsettings_initialized'),
+        ("server_settings", "0036_remove_generalsettings_initialized"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='WebserverSettings',
+            name="WebserverSettings",
         ),
     ]
