@@ -20,9 +20,14 @@ User = get_user_model()
 
 @view_to_component(name="edit_user", auth_level=AuthLevel.admin)
 class EditUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, UpdateView):
-    template_name = "conreq/user_management/edit_user.html"
+    template_name = "conreq/simple_form.html"
     form_class = UserEditForm
     model = User
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form_title"] = "Edit User"
+        return context
 
 
 @view_to_component(name="delete_user", auth_level=AuthLevel.admin)

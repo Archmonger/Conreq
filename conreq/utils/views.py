@@ -14,9 +14,9 @@ class SuccessCurrentUrlMixin:
     a success_url is not set."""
 
     def get_success_url(self):
-        self.success_url = (
-            getattr(self, "success_url", None) or self.request.path + "?success=true"
-        )
+        params = self.request.GET.copy()
+        params["success"] = True
+        self.success_url = self.request.path + f"?{params.urlencode()}"
         return super().get_success_url()
 
 
