@@ -12,7 +12,6 @@ from conreq.internal.utils import tab_constructor
 from conreq.utils.components import tabbed_viewport, view_to_component
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
-
 # TODO: Create SimpleTable and SimpleForm that use Conreq templates
 # TODO: Figure out some way to integrate user invites into this
 
