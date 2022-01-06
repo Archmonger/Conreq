@@ -43,17 +43,3 @@ class StylingSettings(SingletonModel):
     custom_js_url = URLField(default="", blank=True)
     custom_js = models.TextField(default="", blank=True)
     custom_css = models.TextField(default="", blank=True)
-
-
-class WebserverSettings(SingletonModel):
-    def __str__(self):
-        return "Webserver Settings"
-
-    class Meta:
-        verbose_name = "Webserver settings"
-        verbose_name_plural = verbose_name
-
-    rotate_secret_key = models.BooleanField(
-        default=False,
-        help_text="Invalidates all active web sessions upon server restart.",
-    )

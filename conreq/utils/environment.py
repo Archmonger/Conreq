@@ -101,8 +101,10 @@ def get_database_type() -> str:
     return "SQLITE3"
 
 
-def set_env(name: str, value: str, sys_env=False, dot_env=True, remove=True) -> None:
+def set_env(name: str, value: str, sys_env=False, dot_env=True, remove=False) -> None:
     """Sets a value in either the system environment, and/or the .env file."""
+    if value is None:
+        value = ""
     if sys_env:
         os.environ[ENV_PREFIX + name.upper()] = str(value)
     if dot_env and not value and remove:

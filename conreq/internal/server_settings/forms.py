@@ -3,15 +3,11 @@ from platform import platform
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Submit
 from django.conf import settings
-from django.forms import CharField, ModelForm
+from django.forms import CharField, Form, ModelForm
 
 from conreq.internal.email.models import EmailSettings
-from conreq.internal.server_settings.models import (
-    GeneralSettings,
-    StylingSettings,
-    WebserverSettings,
-)
-from conreq.utils.forms import EnvCharField, EnvFormMixin
+from conreq.internal.server_settings.models import GeneralSettings, StylingSettings
+from conreq.utils.forms import EnvBooleanField, EnvCharField, EnvFormMixin
 
 
 class GeneralSettingsForm(ModelForm):
@@ -44,7 +40,7 @@ class StylingSettingsForm(ModelForm):
         self.helper.add_input(Submit("submit", "Save"))
 
 
-class WebserverSettingsForm(EnvFormMixin, ModelForm):
+class WebserverSettingsForm(EnvFormMixin, Form):
     base_url = EnvCharField(
         "BASE_URL",
         required=False,
@@ -52,8 +48,14 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
         help_text="Appears in all links (ex. example.com/base-url).",
     )
 
+    rotate_secret_key = EnvBooleanField(
+        "ROTATE_SECRET_KEY",
+        required=False,
+        initial=False,
+        help_text="Invalidates all active web sessions upon server restart.",
+    )
+
     class Meta:
-        model = WebserverSettings
         fields = ["base_url", "rotate_secret_key"]
 
     def __init__(self, *args, **kwargs):

@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from conreq.internal.server_settings.models import (
-    GeneralSettings,
-    StylingSettings,
-    WebserverSettings,
-)
+from conreq.internal.server_settings.models import GeneralSettings, StylingSettings
 
 
 # Register your models here.
@@ -15,9 +11,4 @@ class GeneralSettingsAdmin(admin.ModelAdmin):
 
 @admin.register(StylingSettings)
 class StylingSettingsAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(WebserverSettings)
-class WebserverSettingsAdmin(admin.ModelAdmin):
     pass

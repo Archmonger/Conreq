@@ -44,6 +44,17 @@ class ObjectInParamsMixin:
         return self.model.objects.get(id=self.request.GET["id"])
 
 
+class SaveFormViewMixin:
+    """Adds a `save()` action to a `FormView`'s post behavior."""
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if not form.is_valid():
+            return self.form_invalid(form)
+        form.save()
+        return self.form_valid(form)
+
+
 class SingletonUpdateView(SuccessCurrentUrlMixin, UpdateView):
     """Update view intended for `SingletonModel`."""
 
