@@ -22,21 +22,11 @@ class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
     template_name = "conreq/form.html"
     form_class = UserSettingsForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["form_title"] = "General Settings"
-        return context
-
 
 @view_to_component(name="change_password")
 class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
     template_name = "conreq/form.html"
     form_class = ChangePasswordForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["form_title"] = "Change Password"
-        return context
 
 
 @view_to_component(name="delete_my_account")
@@ -47,7 +37,6 @@ class DeleteMyAccountView(CurrentUserMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form_title"] = "Delete My Account"
         context["form_subtitle"] = "Confirm your password to delete your account."
         return context
 
