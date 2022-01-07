@@ -24,6 +24,11 @@ class GeneralSettings(SingletonModel):
         max_length=70,
         help_text="This will be shown on search results and in hyperlink previews.",
     )
+    public_url = URLField(
+        help_text="Can be used by apps to construct meaningful URLs, such as in emails.",
+        verbose_name="Public URL",
+        blank=True,
+    )
     app_store_url = HostnameOrURLField(
         blank=True,
         verbose_name="App store URL",

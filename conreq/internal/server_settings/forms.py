@@ -43,7 +43,7 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
 
     class Meta:
         model = GeneralSettings
-        fields = ("server_name", "server_description", "app_store_url")
+        fields = ("server_name", "server_description", "public_url", "app_store_url")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
