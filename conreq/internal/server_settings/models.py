@@ -26,6 +26,7 @@ class GeneralSettings(SingletonModel):
     )
     app_store_url = HostnameOrURLField(
         blank=True,
+        verbose_name="App store URL",
         help_text="Changes automatically on Conreq updates.",
     )
 
@@ -39,7 +40,23 @@ class StylingSettings(SingletonModel):
         verbose_name_plural = verbose_name
 
     accent_color = ColorField(default="258a6d")
-    custom_css_url = URLField(default="", blank=True)
-    custom_js_url = URLField(default="", blank=True)
-    custom_js = models.TextField(default="", blank=True)
-    custom_css = models.TextField(default="", blank=True)
+    custom_css_url = URLField(
+        default="",
+        verbose_name="Custom CSS URL",
+        blank=True,
+    )
+    custom_js_url = URLField(
+        default="",
+        verbose_name="Custom JavaScript URL",
+        blank=True,
+    )
+    custom_js = models.TextField(
+        default="",
+        verbose_name="Custom CSS",
+        blank=True,
+    )
+    custom_css = models.TextField(
+        default="",
+        verbose_name="Custom JavaScript",
+        blank=True,
+    )

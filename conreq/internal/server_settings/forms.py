@@ -50,7 +50,7 @@ class WebserverSettingsForm(EnvFormMixin, Form):
         env_name="BASE_URL",
         label="Base URL",
         max_length=255,
-        help_text="Appears in all links (ex. example.com/base-url).",
+        help_text="Appears in all links. A value of 'my-base-url' will result in example.com/my-base-url.",
     )
     host_ip_address = EnvCharField(
         env_name="WEBSERVER_HOST",
