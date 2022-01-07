@@ -11,7 +11,7 @@ class AppCategories(admin.ModelAdmin):
 
 @admin.register(models.Subcategory)
 class AppSubCategories(admin.ModelAdmin):
-    pass
+    list_display = ("name", "category")
 
 
 @admin.register(models.AppPackage)
@@ -21,11 +21,6 @@ class Apps(admin.ModelAdmin):
 
 @admin.register(models.Screenshot)
 class Screenshots(admin.ModelAdmin):
-    pass
-
-
-@admin.register(models.EnvironmentVariable)
-class EnvironmentVariables(admin.ModelAdmin):
     pass
 
 

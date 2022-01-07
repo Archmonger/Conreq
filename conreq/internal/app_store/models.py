@@ -47,8 +47,7 @@ class Category(models.Model):
     )
 
     # Basic Info
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
+    name = models.CharField(max_length=50, unique=True)
 
 
 class Subcategory(models.Model):
@@ -58,6 +57,7 @@ class Subcategory(models.Model):
     class Meta:
         verbose_name = "Subcategory"
         verbose_name_plural = "Subcategories"
+        unique_together = ["name", "category"]
 
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
@@ -65,7 +65,6 @@ class Subcategory(models.Model):
 
     # Basic Info
     name = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
@@ -144,21 +143,6 @@ class AppPackage(models.Model):
     )
 
 
-class EnvironmentVariable(models.Model):
-    def __str__(self):
-        return self.name + ' = "' + str(self.default) + '"'
-
-    uuid = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False, unique=True
-    )
-
-    name = models.CharField(max_length=50)
-    default = models.CharField(max_length=255, blank=True)
-    example = models.CharField(max_length=255, blank=True)
-    required = models.BooleanField(default=False, blank=True, null=True)
-    app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
-
-
 class Screenshot(models.Model):
     def __str__(self):
         return self.title
@@ -183,5 +167,4 @@ class NoticeMessage(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    mark_read = models.BooleanField(default=False, blank=True, null=True)
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
