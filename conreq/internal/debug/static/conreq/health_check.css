@@ -1,0 +1,18 @@
+body {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.w3-blue,
+.w3-hover-blue:hover {
+	background: #258a6d !important;
+}
+
+table {
+	border-radius: 10px;
+	overflow: hidden;
+}
+th {
+	padding-top: 13px !important;
+	padding-bottom: 13px !important;
+	padding-right: 13px !important;
+}

@@ -6,7 +6,7 @@ from conreq.app import register
 
 
 class HealthCheck(HealthCheckView):
-    template_name = "conreq/health_check/table.html"
+    template_name = "conreq/health_check.html"
 
 
 def performance_profiling():
