@@ -79,7 +79,7 @@ class Command(BaseCommand):
         hypercorn_config = HypercornConfig()
         hypercorn_config.bind = f"0.0.0.0:{port}"
         hypercorn_config.websocket_ping_interval = 20
-        hypercorn_config.workers = 3
+        hypercorn_config.workers = settings.WEBSERVER_WORKERS
         hypercorn_config.application_path = "conreq.asgi:application"
         hypercorn_config.accesslog = ACCESS_LOG_FILE
 
