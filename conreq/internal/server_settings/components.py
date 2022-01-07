@@ -17,6 +17,7 @@ from conreq.utils.components import tabbed_viewport, view_to_component
 from conreq.utils.views import SingletonUpdateView
 
 
+# TODO: Create generic notification agent API.
 @view_to_component(name="general_settings", auth_level=AuthLevel.admin)
 class GeneralSettingsView(SingletonUpdateView):
     form_class = GeneralSettingsForm
