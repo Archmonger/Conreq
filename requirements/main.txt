@@ -21,7 +21,7 @@ djangorestframework-api-key==2.1.0
 docutils==0.18.1
 drf-yasg==1.20.0
 git+https://github.com/idom-team/django-idom.git
-git+https://github.com/tari/django-downloadview.git@1858355d580a18899aed5c71375d69a3f6d9ede7
+git+https://github.com/jazzband/django-downloadview.git
 huey==2.4.3
 hypercorn[h3]==0.13.2
 markdown==3.3.6
