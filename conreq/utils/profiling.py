@@ -1,6 +1,6 @@
 """Capabilities used while in DEBUG, that turn off in production environments."""
 
-from inspect import isclass
+from inspect import isclass, iscoroutinefunction
 from typing import Any
 
 from conreq.utils.environment import get_debug
@@ -29,6 +29,10 @@ def profiled_view(view: Any, name=None, as_view=True):
     if isclass(view):
         view.dispatch = metrics(name=name or dotted_path)(view.dispatch)
         return view.as_view() if as_view else view
+
+    # FIXME: Async views currently not supported by django-silk
+    if iscoroutinefunction(view):
+        return view
 
     # Function view
     return metrics(name=name or dotted_path)(view)
