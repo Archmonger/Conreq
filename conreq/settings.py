@@ -39,7 +39,7 @@ PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
 PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
 MEDIA_DIR = DATA_DIR / "media"
 MEDIA_SERVE_DIR = MEDIA_DIR / "serve"
-METRICS_DIR = DATA_DIR / "metrics"
+METRICS_DIR = MEDIA_DIR / "metrics"
 BACKUP_DIR = DATA_DIR / "backup"
 TEMP_DIR = DATA_DIR / "temp"
 USER_STATICFILES_DIR = DATA_DIR / "static"
@@ -382,9 +382,9 @@ if DEBUG:
     INSTALLED_APPS.append("silk")
     # API docs generator
     INSTALLED_APPS.append("drf_yasg")
-else:
-    # Automatically delete dangling files
-    INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
+
+# Automatically delete dangling files
+INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
 
 
 # Ensure Conreq app loader comes last

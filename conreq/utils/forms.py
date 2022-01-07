@@ -47,8 +47,10 @@ class EnvIntegerField(EnvFieldMixin, IntegerField):
 
 
 class EnvFormMixin:
-    """Allows custom EnvFields for any `ModelForm` or `Form`. `Form` will require
-    calling `is_valid()` then `save()` to commit changes."""
+    """Allows custom EnvFields for any `ModelForm` or `Form`.
+
+    `Form` will require calling `is_valid()` then `save()` to commit changes. This is
+    done automatically if using `SaveFormViewMixin`."""
 
     def save(self, commit: bool = True):
         super_class = super()

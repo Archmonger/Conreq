@@ -60,3 +60,25 @@ class StylingSettings(SingletonModel):
         verbose_name="Custom JavaScript",
         blank=True,
     )
+
+
+class WebserverSettings(SingletonModel):
+    def __str__(self):
+        return "Webserver Settings"
+
+    class Meta:
+        verbose_name = "Webserver settings"
+        verbose_name_plural = verbose_name
+
+    ssl_ca_certificate = models.FileField(
+        verbose_name="SSL CA certificate",
+        blank=True,
+    )
+    ssl_certificate = models.FileField(
+        verbose_name="SSL certificate",
+        blank=True,
+    )
+    ssl_key = models.FileField(
+        verbose_name="SSL key",
+        blank=True,
+    )

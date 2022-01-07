@@ -42,3 +42,14 @@ a:focus {
 		no-repeat right 0.75rem center;
 	background-size: 8px 10px;
 }
+
+.custom-file-label {
+	background: transparent;
+	border: none;
+}
+
+.input-group-text {
+	background: rgba(255, 255, 255, 0.15);
+	color: #fff;
+	border: none;
+}

@@ -1,5 +1,3 @@
-from django.views.generic import FormView
-
 from conreq import AuthLevel, config
 from conreq.app import register
 from conreq.internal.email.models import EmailSettings
@@ -9,14 +7,14 @@ from conreq.internal.server_settings.forms import (
     StylingSettingsForm,
     WebserverSettingsForm,
 )
-from conreq.internal.server_settings.models import GeneralSettings, StylingSettings
+from conreq.internal.server_settings.models import (
+    GeneralSettings,
+    StylingSettings,
+    WebserverSettings,
+)
 from conreq.internal.utils import tab_constructor
 from conreq.utils.components import tabbed_viewport, view_to_component
-from conreq.utils.views import (
-    SaveFormViewMixin,
-    SingletonUpdateView,
-    SuccessCurrentUrlMixin,
-)
+from conreq.utils.views import SingletonUpdateView
 
 
 @view_to_component(name="general_settings", auth_level=AuthLevel.admin)
@@ -32,9 +30,9 @@ class StylingSettingsView(SingletonUpdateView):
 
 
 @view_to_component(name="webserver_settings", auth_level=AuthLevel.admin)
-class WebserverSettingsView(SuccessCurrentUrlMixin, SaveFormViewMixin, FormView):
-    template_name = "conreq/form.html"
+class WebserverSettingsView(SingletonUpdateView):
     form_class = WebserverSettingsForm
+    model = WebserverSettings
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

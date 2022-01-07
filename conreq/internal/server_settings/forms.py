@@ -4,10 +4,14 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Submit
 from django.conf import settings
 from django.db.models import TextChoices
-from django.forms import CharField, Form, ModelForm
+from django.forms import CharField, ModelForm
 
 from conreq.internal.email.models import EmailSettings
-from conreq.internal.server_settings.models import GeneralSettings, StylingSettings
+from conreq.internal.server_settings.models import (
+    GeneralSettings,
+    StylingSettings,
+    WebserverSettings,
+)
 from conreq.utils.environment import get_home_url
 from conreq.utils.forms import (
     EnvBooleanField,
@@ -68,7 +72,7 @@ class ReferrerPolicy(TextChoices):
 
 
 # TODO: Set these initial values based on settings.py
-class WebserverSettingsForm(EnvFormMixin, Form):
+class WebserverSettingsForm(EnvFormMixin, ModelForm):
     base_url = EnvCharField(
         label="Base URL",
         help_text="Appears in all links. A value of 'base-url' will result in example.com/base-url.",
@@ -88,53 +92,38 @@ class WebserverSettingsForm(EnvFormMixin, Form):
             initial=settings.ALLOWED_HOSTS[0],
             help_text="IP Address or web domain the webserver is allowed to serve. For all hosts, use asterisk (*).",
         )
-    host_ip_address = EnvCharField(
+    rotate_secret_key = EnvBooleanField(
+        env_name="ROTATE_SECRET_KEY",
+        help_text="Invalidates user sessions upon server restart.",
+    )
+    host_ip = EnvCharField(
         env_name="WEBSERVER_HOST",
         label="Host IP",
         initial="0.0.0.0",
         help_text="Networking address to bind to. For all hosts, use 0.0.0.0.",
     )
-    port = EnvIntegerField(
+    host_port = EnvIntegerField(
         env_name="WEBSERVER_PORT",
         initial=8000,
         max_value=65535,
         help_text="Port number to bind to.",
     )
-    rotate_secret_key = EnvBooleanField(
-        env_name="ROTATE_SECRET_KEY",
-        help_text="Invalidates user sessions upon server restart.",
-    )
-    workers = EnvIntegerField(
-        env_name="WEBSERVER_WORKERS",
-        initial=3,
-        help_text="Number of worker processes for the webserver to use. Each worker uses additional memory.",
-    )
-    ssl_ca_certificate = EnvCharField(
-        env_name="WEBSERVER_CA_CERTFILE",
-        label="SSL CA certificate",
-        help_text="Path to the SSL CA certificate file.",
-    )
-    ssl_certificate = EnvCharField(
-        env_name="WEBSERVER_CERTFILE",
-        label="SSL certificate",
-        help_text="Path to the SSL certificate file.",
-    )
-    ssl_key = EnvCharField(
-        env_name="WEBSERVER_KEYFILE",
-        label="SSL key",
-        help_text="Path to the SSL key file.",
-    )
-    quic_host_ip_address = EnvCharField(
+    quic_host_ip = EnvCharField(
         env_name="WEBSERVER_QUIC_HOST",
         label="QUIC host IP address",
         initial="",
         help_text="Host address to bind QUIC to. '0.0.0.0' is all hosts.",
     )
-    quic_port = EnvIntegerField(
+    quic_host_port = EnvIntegerField(
         env_name="WEBSERVER_QUIC_PORT",
         label="QUIC port",
         max_value=65535,
         help_text="Port number to bind QUIC to.",
+    )
+    workers = EnvIntegerField(
+        env_name="WEBSERVER_WORKERS",
+        initial=3,
+        help_text="Number of worker processes for the webserver to use. Each worker uses additional memory.",
     )
     webserver_debug = EnvBooleanField(
         env_name="WEBSERVER_DEBUG",
@@ -142,7 +131,23 @@ class WebserverSettingsForm(EnvFormMixin, Form):
     )
 
     class Meta:
-        fields = ["base_url", "rotate_secret_key"]
+        model = WebserverSettings
+        fields = [
+            "base_url",
+            "home_url",
+            "secure_referrer_policy",
+            "allowed_domain",
+            "rotate_secret_key",
+            "host_ip",
+            "host_port",
+            "quic_host_ip",
+            "quic_host_port",
+            "workers",
+            "ssl_ca_certificate",
+            "ssl_certificate",
+            "ssl_key",
+            "webserver_debug",
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
