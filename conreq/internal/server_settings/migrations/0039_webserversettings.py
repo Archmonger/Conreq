@@ -6,21 +6,42 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0038_alter_generalsettings_app_store_url_and_more'),
+        ("server_settings", "0038_alter_generalsettings_app_store_url_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='WebserverSettings',
+            name="WebserverSettings",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('ssl_ca_certificate', models.FileField(blank=True, upload_to='', verbose_name='SSL CA certificate')),
-                ('ssl_certificate', models.FileField(blank=True, upload_to='', verbose_name='SSL certificate')),
-                ('ssl_key', models.FileField(blank=True, upload_to='', verbose_name='SSL key')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "ssl_ca_certificate",
+                    models.FileField(
+                        blank=True, upload_to="", verbose_name="SSL CA certificate"
+                    ),
+                ),
+                (
+                    "ssl_certificate",
+                    models.FileField(
+                        blank=True, upload_to="", verbose_name="SSL certificate"
+                    ),
+                ),
+                (
+                    "ssl_key",
+                    models.FileField(blank=True, upload_to="", verbose_name="SSL key"),
+                ),
             ],
             options={
-                'verbose_name': 'Webserver settings',
-                'verbose_name_plural': 'Webserver settings',
+                "verbose_name": "Webserver settings",
+                "verbose_name_plural": "Webserver settings",
             },
         ),
     ]
