@@ -36,7 +36,8 @@
         if (window.frameElement) {
             window.parent.document.dispatchEvent(new CustomEvent('success-toast', {
                 "detail": {
-                    title: "Saved"
+                    title: "{% firstof success_title 'Saved' %}",
+                    message: "{{ success_message }}"
                 }
             }))
             window.stop();

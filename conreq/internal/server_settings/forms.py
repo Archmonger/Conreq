@@ -7,7 +7,12 @@ from django.forms import CharField, Form, ModelForm
 
 from conreq.internal.email.models import EmailSettings
 from conreq.internal.server_settings.models import GeneralSettings, StylingSettings
-from conreq.utils.forms import EnvBooleanField, EnvCharField, EnvFormMixin
+from conreq.utils.forms import (
+    EnvBooleanField,
+    EnvCharField,
+    EnvFormMixin,
+    EnvIntegerField,
+)
 
 
 class GeneralSettingsForm(ModelForm):
@@ -42,17 +47,61 @@ class StylingSettingsForm(ModelForm):
 
 class WebserverSettingsForm(EnvFormMixin, Form):
     base_url = EnvCharField(
-        "BASE_URL",
-        required=False,
+        env_name="BASE_URL",
+        label="Base URL",
         max_length=255,
         help_text="Appears in all links (ex. example.com/base-url).",
     )
-
+    host_ip_address = EnvCharField(
+        env_name="WEBSERVER_HOST",
+        label="Host IP",
+        initial="0.0.0.0",
+        help_text="Host address to bind to. '0.0.0.0' is all hosts.",
+    )
+    port = EnvIntegerField(
+        env_name="WEBSERVER_PORT",
+        initial=8000,
+        help_text="Port number to bind to.",
+    )
     rotate_secret_key = EnvBooleanField(
-        "ROTATE_SECRET_KEY",
-        required=False,
+        env_name="ROTATE_SECRET_KEY",
         initial=False,
-        help_text="Invalidates all active web sessions upon server restart.",
+        help_text="Invalidates user sessions upon server restart.",
+    )
+    workers = EnvIntegerField(
+        env_name="WEBSERVER_WORKERS",
+        initial=3,
+        help_text="Number of worker processes for the webserver to use.",
+    )
+    ssl_ca_certificate = EnvCharField(
+        env_name="WEBSERVER_CA_CERTS",
+        label="SSL CA certificate",
+        help_text="Path to the SSL CA certificate file.",
+    )
+    ssl_certificate = EnvCharField(
+        env_name="WEBSERVER_CERTFILE",
+        label="SSL certificate",
+        help_text="Path to the SSL certificate file.",
+    )
+    ssl_key = EnvCharField(
+        env_name="WEBSERVER_KEYFILE",
+        label="SSL key",
+        help_text="Path to the SSL key file.",
+    )
+    quic_host_ip_address = EnvCharField(
+        env_name="WEBSERVER_QUIC_HOST",
+        label="QUIC host IP address",
+        initial="",
+        help_text="Host address to bind QUIC to. '0.0.0.0' is all hosts.",
+    )
+    quic_port = EnvIntegerField(
+        env_name="WEBSERVER_QUIC_PORT",
+        label="QUIC port",
+        help_text="Port number to bind QUIC to.",
+    )
+    debug = EnvBooleanField(
+        env_name="WEBSERVER_DEBUG",
+        help_text="Enable extra webserver logging and checks.",
     )
 
     class Meta:

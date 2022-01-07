@@ -1,4 +1,4 @@
-from django.forms import BooleanField, CharField, URLField
+from django.forms import BooleanField, CharField, IntegerField, URLField
 
 from conreq.utils.environment import get_env, set_env
 
@@ -11,25 +11,35 @@ class HostnameOrURLField(URLField):
     default_validators = [HostnameOrURLValidator()]
 
 
-class EnvField:
+class EnvFieldMixin:
     """Generic field to read/write dot env values within a HTML form."""
 
     env_type = str
 
-    def __init__(self, env_name, **kwargs) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, *, env_name=None, required=False, **kwargs) -> None:
+        super().__init__(required=required, **kwargs)
         self.env_name = env_name
 
     def prepare_value(self, _):
-        return get_env(self.env_name, return_type=self.env_type)
+        return get_env(
+            self.env_name, default_value=self.initial, return_type=self.env_type
+        )
 
 
-class EnvCharField(EnvField, CharField):
+class EnvCharField(EnvFieldMixin, CharField):
     """A character field that utilizes the env file, instead of the database."""
 
 
-class EnvBooleanField(EnvField, BooleanField):
+class EnvBooleanField(EnvFieldMixin, BooleanField):
     """A boolean field that utilizes the env file, instead of the database."""
+
+    env_type = bool
+
+
+class EnvIntegerField(EnvFieldMixin, IntegerField):
+    """An integer field that utilizes the env file, instead of the database."""
+
+    env_type = int
 
 
 class EnvFormMixin:
@@ -45,7 +55,7 @@ class EnvFormMixin:
             return saved
 
         for name, field in self.base_fields.items():
-            if isinstance(field, EnvField):
-                set_env(name, self.cleaned_data.get(name))
+            if isinstance(field, EnvFieldMixin):
+                set_env(field.env_name or name, self.cleaned_data.get(name))
 
         return saved

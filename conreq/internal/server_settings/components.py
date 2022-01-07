@@ -36,6 +36,11 @@ class WebserverSettingsView(SuccessCurrentUrlMixin, SaveFormViewMixin, FormView)
     template_name = "conreq/form.html"
     form_class = WebserverSettingsForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["success_message"] = "Restart for changes to take effect."
+        return context
+
 
 @view_to_component(name="email_settings", auth_level=AuthLevel.admin)
 class EmailSettingsView(SingletonUpdateView):
