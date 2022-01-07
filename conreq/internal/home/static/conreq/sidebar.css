@@ -156,12 +156,6 @@
 	:root {
 		--sidebar-width: 100%;
 	}
-	.searchbar {
-		width: auto;
-		margin-bottom: 15px;
-		margin-left: 10px;
-		margin-right: 10px;
-	}
 	.sidebar {
 		z-index: 99;
 		transition: height 0.4s ease-in;

@@ -1,13 +1,12 @@
 .viewport-container {
 	position: relative;
 	left: var(--sidebar-width);
-	height: 100%;
+	height: calc(100% - var(--navbar-height));
 	overflow-x: hidden;
 	overflow-y: auto;
 	overflow-y: overlay;
 	width: calc(100vw - var(--viewport-left));
-	padding: var(--viewport-padding);
-	padding-bottom: 0;
+	padding: 0 var(--viewport-padding);
 	display: flex;
 	flex-direction: column;
 	color: rgb(255 255 255 / 0.75);

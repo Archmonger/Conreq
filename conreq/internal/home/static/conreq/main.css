@@ -92,33 +92,8 @@ a:hover {
 	color: var(--accent-color);
 }
 
-/* Webkit Scrollbar Styling */
-
-.simplebar-scrollbar::before {
-	background-color: var(--accent-color);
-}
-
 .sidebar::-webkit-scrollbar {
 	display: none;
-}
-
-::-webkit-scrollbar-thumb {
-	border-radius: 3px;
-	background: rgb(65 146 123 / 0.6);
-}
-
-::-webkit-scrollbar-track,
-::-webkit-scrollbar-corner {
-	display: none;
-}
-
-/* Hide scrollbars for non-webkit browsers */
-
-html * {
-	/* IE 11+ */
-	-ms-overflow-style: none;
-	/* Firefox 64+ */
-	scrollbar-width: none;
 }
 
 .homepage {
