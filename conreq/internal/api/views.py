@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from .serializers import UserSerializer
 
 
+# TODO: Create some API views.
 class LocalAuthentication(APIView):
     """Sign in to an account."""
 
