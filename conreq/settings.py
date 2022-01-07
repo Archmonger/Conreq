@@ -81,6 +81,7 @@ SAFE_MODE = get_safe_mode()
 DB_ENGINE = get_database_type()
 BASE_URL = get_base_url()
 HOME_URL = get_home_url()
+WEBSERVER_WORKERS = get_env("WEBSERVER_WORKERS", 3, return_type=int)
 
 
 # Basic Configuration
@@ -308,8 +309,8 @@ CACHES = {
         "BACKEND": "diskcache.DjangoCache",
         "LOCATION": DATA_DIR / "cache",
         "TIMEOUT": 300,  # Default timeout of each key
-        "SHARDS": 8,  # Number of cache DBs to create
-        "DATABASE_TIMEOUT": 0.1,  # 100 milliseconds query timeout
+        "SHARDS": min(WEBSERVER_WORKERS, 10),  # Number of cache DBs to create
+        "DATABASE_TIMEOUT": 0.1,  # 100ms query timeout
         "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte max cache size
     }
 }

@@ -87,10 +87,10 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
         choices=ReferrerPolicy.choices,
         help_text="The HTTP referrer policy to apply.",
     )
-    if len(settings.ALLOWED_HOSTS) <= 1:
+    if len(settings.ALLOWED_HOSTS) == 1:
         allowed_domain = EnvCharField(
             initial=settings.ALLOWED_HOSTS[0],
-            help_text="IP Address or web domain the webserver is allowed to serve. For all hosts, use asterisk (*).",
+            help_text="The IP Address or web domain the webserver is allowed to serve (ex. example.com). To allow all, use an asterisk (*).",
         )
     rotate_secret_key = EnvBooleanField(
         env_name="ROTATE_SECRET_KEY",
@@ -122,7 +122,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
     )
     workers = EnvIntegerField(
         env_name="WEBSERVER_WORKERS",
-        initial=3,
+        initial=settings.WEBSERVER_WORKERS,
         help_text="Number of worker processes for the webserver to use. Each worker uses additional memory.",
     )
     webserver_debug = EnvBooleanField(
