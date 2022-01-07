@@ -85,7 +85,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
     home_url = EnvCharField(
         label="Home URL",
         initial=get_home_url(False, False),
-        help_text="A value of 'my-home-url' will result in example.com/base-url/home-url.",
+        help_text="A value of 'home-url' will result in example.com/base-url/home-url.",
     )
     secure_referrer_policy = EnvChoiceField(
         initial=ReferrerPolicy.NO_REFERRER,
