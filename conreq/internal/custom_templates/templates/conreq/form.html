@@ -17,10 +17,13 @@
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8">
-                <h1 class="mt-2">{% block form_title %}{{ form_title }}{% endblock %}</h1>
+            <div class="{% firstof column_class 'col-12' %}">
+                {% block form_title %}
+                <h1 class="mt-2">{{ form_title }}</h1>
                 <h5 class="mt-2">{{ form_subtitle}}</h5>
                 <div class="mt-0 mb-4"></div>
+                {% endblock %}
+
                 {% block form_top %}{% endblock %}
                 {% block form_content %}{% crispy form %}{% endblock %}
                 {% block form_bottom %}{% endblock %}
