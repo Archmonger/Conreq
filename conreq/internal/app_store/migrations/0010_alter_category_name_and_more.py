@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app_store', '0009_remove_category_description_and_more'),
+        ("app_store", "0009_remove_category_description_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='category',
-            name='name',
+            model_name="category",
+            name="name",
             field=models.CharField(max_length=50, unique=True),
         ),
         migrations.AlterUniqueTogether(
-            name='subcategory',
-            unique_together={('name', 'category')},
+            name="subcategory",
+            unique_together={("name", "category")},
         ),
     ]
