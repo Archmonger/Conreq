@@ -1,7 +1,9 @@
 """Conreq URL Configuration"""
 
 
+from django.conf import settings
 from django.contrib.auth import views as auth_views
+from django.core.files.storage import FileSystemStorage
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 from django_downloadview import StorageDownloadView
@@ -18,8 +20,10 @@ urlpatterns = [
     path("", config.views.landing, name="landing"),
     path(HOME_URL, config.views.home, name="home"),
     re_path(
-        r"^media/(?P<path>[a-zA-Z0-9_-]+\.[a-zA-Z0-9]{1,4})$",
-        StorageDownloadView.as_view(),
+        r"^media/serve/(?P<path>[a-zA-Z0-9_-]+\.[a-zA-Z0-9]{1,4})$",
+        StorageDownloadView.as_view(
+            storage=FileSystemStorage(settings.MEDIA_SERVE_DIR)
+        ),
         name="media",
     ),
     path("sign_in", config.views.sign_in, name="sign_in"),

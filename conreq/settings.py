@@ -38,6 +38,7 @@ DATA_DIR = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False)
 PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
 PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
 MEDIA_DIR = DATA_DIR / "media"
+MEDIA_SERVE_DIR = MEDIA_DIR / "serve"
 METRICS_DIR = DATA_DIR / "metrics"
 BACKUP_DIR = DATA_DIR / "backup"
 TEMP_DIR = DATA_DIR / "temp"
@@ -48,6 +49,7 @@ MAKE_DIRS: list[Path] = [
     PACKAGES_DIR,
     PACKAGES_DEV_DIR,
     MEDIA_DIR,
+    MEDIA_SERVE_DIR,
     METRICS_DIR,
     BACKUP_DIR,
     TEMP_DIR,
