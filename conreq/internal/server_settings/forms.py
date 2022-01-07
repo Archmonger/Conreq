@@ -8,6 +8,7 @@ from django.forms import CharField, Form, ModelForm
 
 from conreq.internal.email.models import EmailSettings
 from conreq.internal.server_settings.models import GeneralSettings, StylingSettings
+from conreq.utils.environment import get_home_url
 from conreq.utils.forms import (
     EnvBooleanField,
     EnvCharField,
@@ -15,7 +16,6 @@ from conreq.utils.forms import (
     EnvFormMixin,
     EnvIntegerField,
 )
-from conreq.utils.environment import get_home_url
 
 
 class GeneralSettingsForm(EnvFormMixin, ModelForm):
