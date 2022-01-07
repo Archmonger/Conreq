@@ -1,3 +1,5 @@
+from typing import Union
+
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -7,13 +9,21 @@ from conreq.internal.first_run.models import Initialization
 
 from .forms import InitializationForm
 
+INITIALIZED = False
 
-def initialize(request):
-    initialization = Initialization.get_solo()
+
+def initialize(request) -> Union[None, HttpResponse]:
+    # pylint: disable=global-statement
+    # Check cached value if we've already initialized
+    global INITIALIZED
+    if INITIALIZED:
+        return None
 
     # Run the first time initialization if needed
+    initialization = Initialization.get_solo()
     if initialization.initialized:
-        return False
+        INITIALIZED = True
+        return None
 
     # User submitted the first time setup form
     if request.method == "POST":
