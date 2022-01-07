@@ -110,7 +110,7 @@ class WebserverSettingsForm(EnvFormMixin, Form):
         help_text="Number of worker processes for the webserver to use. Each worker uses additional memory.",
     )
     ssl_ca_certificate = EnvCharField(
-        env_name="WEBSERVER_CA_CERTS",
+        env_name="WEBSERVER_CA_CERTFILE",
         label="SSL CA certificate",
         help_text="Path to the SSL CA certificate file.",
     )
