@@ -1,4 +1,4 @@
-from django.forms import BooleanField, CharField, IntegerField, URLField
+from django.forms import BooleanField, CharField, ChoiceField, IntegerField, URLField
 
 from conreq.utils.environment import get_env, set_env
 
@@ -16,7 +16,7 @@ class EnvFieldMixin:
 
     env_type = str
 
-    def __init__(self, *, env_name=None, required=False, **kwargs) -> None:
+    def __init__(self, *, env_name="", required=False, **kwargs) -> None:
         super().__init__(required=required, **kwargs)
         self.env_name = env_name
 
@@ -28,6 +28,10 @@ class EnvFieldMixin:
 
 class EnvCharField(EnvFieldMixin, CharField):
     """A character field that utilizes the env file, instead of the database."""
+
+
+class EnvChoiceField(EnvFieldMixin, ChoiceField):
+    """A choice field that utilizes the env file, instead of the database."""
 
 
 class EnvBooleanField(EnvFieldMixin, BooleanField):

@@ -23,6 +23,7 @@ from conreq.utils.environment import (
     get_database_type,
     get_debug,
     get_env,
+    get_home_url,
     get_safe_mode,
     set_env,
 )
@@ -74,8 +75,10 @@ if not DOTENV_FILE.exists():
     with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
         pass
 DEBUG = get_debug()
+SAFE_MODE = get_safe_mode()
 DB_ENGINE = get_database_type()
 BASE_URL = get_base_url()
+HOME_URL = get_home_url()
 
 
 # Basic Configuration
@@ -352,7 +355,7 @@ EMAIL_SUBJECT_PREFIX = ""
 # Add packages folder to Python's path
 sys.path.append(str(PACKAGES_DEV_DIR))
 sys.path.append(str(PACKAGES_DIR))
-if not get_safe_mode():
+if not SAFE_MODE:
     INSTALLED_APPS += find_apps()
 
 
@@ -384,5 +387,5 @@ else:
 
 # Ensure Conreq app loader comes last
 INSTALLED_APPS.remove("conreq.internal.app_loader")
-if not get_safe_mode():
+if not SAFE_MODE:
     INSTALLED_APPS.append("conreq.internal.app_loader")

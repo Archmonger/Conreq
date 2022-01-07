@@ -2,7 +2,7 @@ import functools
 import json
 import os
 from distutils.util import strtobool
-from typing import Any, Callable
+from typing import Any, Callable, Tuple
 
 import dotenv
 from dotenv import dotenv_values
@@ -55,7 +55,7 @@ def get_env(
 @functools.cache
 def get_debug() -> bool:
     """Shortcut to obtain DEBUG from environment variables"""
-    return get_env("DEBUG", True, return_type=bool)
+    return get_env("DEBUG_MODE", True, return_type=bool)
 
 
 @functools.cache
@@ -101,7 +101,9 @@ def get_database_type() -> str:
     return "SQLITE3"
 
 
-def set_env(name: str, value: str, sys_env=False, dot_env=True, remove=False) -> None:
+def set_env(
+    name: str, value: str, sys_env=False, dot_env=True, remove=False
+) -> Tuple[str, str]:
     """Sets a value in either the system environment, and/or the .env file."""
     if value is None:
         value = ""
@@ -111,6 +113,7 @@ def set_env(name: str, value: str, sys_env=False, dot_env=True, remove=False) ->
         dotenv.unset_key(dotenv_path(), name.upper())
     elif dot_env:
         dotenv.set_key(dotenv_path(), name.upper(), str(value))
+    return (name, value)
 
 
 def remove_env(name: str, sys_env=False, dot_env=True) -> None:
