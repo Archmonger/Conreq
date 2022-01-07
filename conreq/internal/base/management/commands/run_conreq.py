@@ -66,14 +66,16 @@ class Command(BaseCommand):
 
         # Run the production webserver
         if not DEBUG:
-            self._run_hypercorn(port)
+            self._run_webserver(port)
 
         # Run the development webserver
         if DEBUG:
             call_command("runserver", f"0.0.0.0:{port}")
 
     @staticmethod
-    def _run_hypercorn(port):
+    def _run_webserver(port):
+        # TODO: Switch to Uvicorn when this is resolved
+        # https://github.com/encode/uvicorn/issues/342
         hypercorn_config = HypercornConfig()
         hypercorn_config.bind = f"0.0.0.0:{port}"
         hypercorn_config.websocket_ping_interval = 20
