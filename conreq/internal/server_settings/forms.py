@@ -23,13 +23,18 @@ from conreq.utils.forms import (
 
 
 class GeneralSettingsForm(EnvFormMixin, ModelForm):
+    session_max_age = EnvIntegerField(
+        env_name="SESSION_COOKIE_AGE",
+        initial=settings.SESSION_COOKIE_AGE,
+        help_text="Maximum time in seconds for a user session to last. <b>Restart for this change to take effect.</b>",
+    )
     debug_mode = EnvBooleanField(
         initial=settings.DEBUG,
-        help_text="Disables security features and adds debugging tools. Restart for this change to take effect.",
+        help_text="Disables security features and adds debugging tools. <b>Restart for this change to take effect.</b>",
     )
     safe_mode = EnvBooleanField(
         initial=settings.SAFE_MODE,
-        help_text="Disables all installed apps. Restart for this change to take effect.",
+        help_text="Disables all installed apps. <b>Restart for this change to take effect.</b>",
     )
     conreq_version = CharField(
         initial=settings.CONREQ_VERSION, disabled=True, required=False

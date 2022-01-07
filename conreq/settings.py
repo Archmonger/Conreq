@@ -28,6 +28,7 @@ from conreq.utils.environment import (
     set_env,
 )
 from conreq.utils.packages import find_modules, find_packages
+from conreq.utils.time import Seconds
 
 _logger = logging.getLogger(__name__)
 
@@ -186,6 +187,7 @@ logging_config(LOGGING)
 
 
 # Security Settings
+SESSION_COOKIE_AGE = get_env("SESSION_COOKIE_AGE", Seconds.month * 3, return_type=int)
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = get_env("SECURE_REFERRER_POLICY", "no-referrer")
 ALLOWED_HOSTS = get_env("ALLOWED_HOSTS", return_type=list) or [
