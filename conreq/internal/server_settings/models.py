@@ -55,14 +55,8 @@ class StylingSettings(SingletonModel):
         verbose_name="Custom JavaScript URL",
         blank=True,
     )
-    custom_js = models.TextField(
-        default="",
-        verbose_name="Custom CSS",
-        blank=True,
-    )
-    custom_css = models.TextField(
-        default="",
-        verbose_name="Custom JavaScript",
+    custom_html = models.TextField(
+        verbose_name="Custom HTML (head)",
         blank=True,
     )
 

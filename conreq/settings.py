@@ -246,6 +246,7 @@ INSTALLED_APPS = [
     "colorfield",  # HEX colors in the DB
     "encrypted_fields",  # Encrypted text in the DB
     "solo",  # Single-row models in the DB
+    "django_ace",  # Code hightlighted form fields
     # FIXME: When DEBUG is false.... 'django-versionfield/fonts/glyphicons-halflings-regular.eot' could not be found
     # "versionfield",  # Allow for version numbers in the DB
     # ASGI

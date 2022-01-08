@@ -5,6 +5,7 @@ from crispy_forms.layout import Button, Submit
 from django.conf import settings
 from django.db.models import TextChoices
 from django.forms import CharField, ModelForm
+from django_ace import AceWidget
 
 from conreq.internal.email.models import EmailSettings
 from conreq.internal.server_settings.models import (
@@ -56,6 +57,17 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
 
 
 class StylingSettingsForm(ModelForm):
+    custom_html = CharField(
+        widget=AceWidget(
+            mode="html",
+            theme="twilight",
+            width="100%",
+            toolbar=False,
+            showprintmargin=False,
+        ),
+        label="Custom HTML (head)",
+    )
+
     class Meta:
         model = StylingSettings
         fields = "__all__"
