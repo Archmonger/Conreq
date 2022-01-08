@@ -6,23 +6,23 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app_store', '0008_apppackage_created_at_apppackage_modified_at'),
+        ("app_store", "0008_apppackage_created_at_apppackage_modified_at"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='category',
-            name='description',
+            model_name="category",
+            name="description",
         ),
         migrations.RemoveField(
-            model_name='noticemessage',
-            name='mark_read',
+            model_name="noticemessage",
+            name="mark_read",
         ),
         migrations.RemoveField(
-            model_name='subcategory',
-            name='description',
+            model_name="subcategory",
+            name="description",
         ),
         migrations.DeleteModel(
-            name='EnvironmentVariable',
+            name="EnvironmentVariable",
         ),
     ]
