@@ -38,7 +38,7 @@ INTERNAL_DIR = ROOT_DIR / "conreq" / "internal"
 DATA_DIR = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False)
 PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
 PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
-MEDIA_DIR = DATA_DIR / "media"
+MEDIA_DIR = DATA_DIR / "files"
 MEDIA_SERVE_DIR = MEDIA_DIR / "serve"
 METRICS_DIR = MEDIA_DIR / "metrics"
 BACKUP_DIR = DATA_DIR / "backup"
@@ -349,7 +349,9 @@ STATICFILES_FINDERS = [
 ]
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = "media/"
+MEDIA_URL = "files/"
+if get_base_url(append_slash=False, prepend_slash=False):
+    MEDIA_URL = get_base_url(append_slash=False) + MEDIA_URL
 
 
 # Email

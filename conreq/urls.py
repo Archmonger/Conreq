@@ -20,7 +20,7 @@ urlpatterns = [
     path("", config.views.landing, name="landing"),
     path(HOME_URL, config.views.home, name="home"),
     re_path(
-        r"^media/serve/(?P<path>[a-zA-Z0-9_-]+\.[a-zA-Z0-9]{1,4})$",
+        r"^files/serve/(?P<path>[a-zA-Z0-9_-]+\.[a-zA-Z0-9]{1,4})$",
         StorageDownloadView.as_view(
             storage=FileSystemStorage(settings.MEDIA_SERVE_DIR)
         ),
