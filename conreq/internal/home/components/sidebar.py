@@ -57,6 +57,7 @@ USER_ADMIN_DEBUG = ("User", "Admin", "Debug")
 
 
 # TODO: Add event history tab. Admin group. Database backed.
+# TODO: Add DB backup, media backup, and clear cache somewhere in the admin group
 @idom.component
 def sidebar(websocket, state: HomepageState, set_state):
     if not websocket.scope["user"].is_authenticated:
