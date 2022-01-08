@@ -57,7 +57,7 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
 
 
 class StylingSettingsForm(ModelForm):
-    custom_html = CharField(
+    head_html = CharField(
         widget=AceWidget(
             mode="html",
             theme="twilight",
