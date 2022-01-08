@@ -120,13 +120,6 @@ HUEY = {
 }
 IDOM_BASE_URL = BASE_URL[1:] + "idom/"
 os.environ["IDOM_DEBUG_MODE"] = str(int(DEBUG))
-DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
-DBBACKUP_STORAGE_OPTIONS = {"location": BACKUP_DIR}
-DBBACKUP_TMP_DIR = TEMP_DIR
-DBBACKUP_FILENAME_TEMPLATE = "{datetime}.{extension}"
-DBBACKUP_CLEANUP_KEEP = 20
-DBBACKUP_CLEANUP_KEEP_MEDIA = 20
-DBBACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M%S"
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
@@ -261,7 +254,6 @@ INSTALLED_APPS = [
     "django_tables2",  # Simplify generating HTML tables
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
-    "dbbackup",  # Convenient database backup API
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -317,6 +309,9 @@ CACHES = {
         "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte max cache size
     }
 }
+BACKUP_KEEP_MAX = 20
+BACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M%S"
+BACKUP_COMPRESSION = "xz"
 
 
 # User Authentication
