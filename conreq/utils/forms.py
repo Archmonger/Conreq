@@ -1,14 +1,34 @@
 from django.forms import BooleanField, CharField, ChoiceField, IntegerField, URLField
 
+
 from conreq.utils.environment import get_env, set_env
 
-from .validators import HostnameOrURLValidator
+from . import validators, widgets
 
 
 class HostnameOrURLField(URLField):
     """URL field that supports hostnames (ex. https://sonarr:8000)"""
 
-    default_validators = [HostnameOrURLValidator()]
+    default_validators = [validators.HostnameOrURLValidator()]
+
+
+class URLOrRelativeURLField(URLField):
+    """URL field that supports relative or absolute URLs
+    (ex. /my/url/path or https://mydomain.com)"""
+
+    widget = widgets.URLOrRelativeURLInput
+    default_validators = [validators.url_or_relative_url_validator]
+
+    def to_python(self, value):
+        value = super().to_python(value)
+        if value and value.startswith("http:///"):
+            # If value starts with ``http:///`` (followed by 3 slashes)
+            # that means user provided a relative url and a parent ``URLField`` class
+            # has appended a ``http://`` to it.
+            # We need to strip it out and convert to correct relative url
+            # before we pass it down the line.
+            value = value[7:]
+        return value
 
 
 class EnvFieldMixin:

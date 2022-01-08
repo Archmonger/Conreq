@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.fields import CharField, URLField
 from solo.models import SingletonModel
 
-from conreq.utils.fields import HostnameOrURLField
+from conreq.utils.fields import HostnameOrURLField, URLOrRelativeURLField
 
 
 class GeneralSettings(SingletonModel):
@@ -45,12 +45,12 @@ class StylingSettings(SingletonModel):
         verbose_name_plural = verbose_name
 
     accent_color = ColorField(default="258a6d")
-    custom_css_url = URLField(
+    custom_css_url = URLOrRelativeURLField(
         default="",
         verbose_name="Custom CSS URL",
         blank=True,
     )
-    custom_js_url = URLField(
+    custom_js_url = URLOrRelativeURLField(
         default="",
         verbose_name="Custom JavaScript URL",
         blank=True,

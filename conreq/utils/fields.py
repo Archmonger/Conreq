@@ -33,6 +33,22 @@ class HostnameOrURLField(URLField):
         )
 
 
+class URLOrRelativeURLField(URLField):
+    """URL field that supports relative or absolute URLs
+    (ex. /my/url/path or https://mydomain.com)"""
+
+    default_validators = [validators.url_or_relative_url_validator]
+
+    def formfield(self, **kwargs):
+        # As with CharField, this will cause URL validation to be performed twice.
+        return super().formfield(
+            **{
+                "form_class": forms.URLOrRelativeURLField,
+                **kwargs,
+            }
+        )
+
+
 class AutoOneToOneField(OneToOneField):
     """
     OneToOneField creates related object on first call if it doesnt exist yet.
