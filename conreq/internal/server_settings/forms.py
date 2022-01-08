@@ -113,22 +113,10 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
         max_value=65535,
         help_text="Port number to bind to.",
     )
-    quic_host_ip = EnvCharField(
-        env_name="WEBSERVER_QUIC_HOST",
-        label="QUIC host IP address",
-        initial="",
-        help_text="Host address to bind QUIC to. '0.0.0.0' is all hosts.",
-    )
-    quic_host_port = EnvIntegerField(
-        env_name="WEBSERVER_QUIC_PORT",
-        label="QUIC port",
-        max_value=65535,
-        help_text="Port number to bind QUIC to.",
-    )
-    workers = EnvIntegerField(
+    worker_processes = EnvIntegerField(
         env_name="WEBSERVER_WORKERS",
         initial=settings.WEBSERVER_WORKERS,
-        help_text="Number of worker processes for the webserver to use. Each worker uses additional memory.",
+        help_text="Number of separate worker processes for the webserver to use. <b>Each worker uses additional memory.</b>",
     )
     webserver_debug = EnvBooleanField(
         env_name="WEBSERVER_DEBUG",
@@ -145,9 +133,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
             "rotate_secret_key",
             "host_ip",
             "host_port",
-            "quic_host_ip",
-            "quic_host_port",
-            "workers",
+            "worker_processes",
             "ssl_ca_certificate",
             "ssl_certificate",
             "ssl_key",
