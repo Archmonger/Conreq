@@ -3,7 +3,7 @@ from typing import Callable
 from sortedcontainers import SortedList
 
 from conreq import AuthLevel, Viewport, ViewType, config
-from conreq.app.types import Icon
+from conreq.utils.types import Icon
 from conreq.utils.components import view_to_component
 
 
