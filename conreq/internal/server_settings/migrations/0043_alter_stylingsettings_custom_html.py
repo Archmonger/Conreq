@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0042_remove_stylingsettings_custom_css_and_more'),
+        ("server_settings", "0042_remove_stylingsettings_custom_css_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='stylingsettings',
-            name='custom_html',
-            field=models.TextField(blank=True, verbose_name='Custom HTML (head)'),
+            model_name="stylingsettings",
+            name="custom_html",
+            field=models.TextField(blank=True, verbose_name="Custom HTML (head)"),
         ),
     ]

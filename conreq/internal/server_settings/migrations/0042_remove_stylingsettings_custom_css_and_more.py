@@ -6,21 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0041_alter_stylingsettings_custom_css_url_and_more'),
+        ("server_settings", "0041_alter_stylingsettings_custom_css_url_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='stylingsettings',
-            name='custom_css',
+            model_name="stylingsettings",
+            name="custom_css",
         ),
         migrations.RemoveField(
-            model_name='stylingsettings',
-            name='custom_js',
+            model_name="stylingsettings",
+            name="custom_js",
         ),
         migrations.AddField(
-            model_name='stylingsettings',
-            name='custom_html',
-            field=models.TextField(blank=True, help_text='Contents within this textbox are put into the HTML Head.', verbose_name='Custom HTML'),
+            model_name="stylingsettings",
+            name="custom_html",
+            field=models.TextField(
+                blank=True,
+                help_text="Contents within this textbox are put into the HTML Head.",
+                verbose_name="Custom HTML",
+            ),
         ),
     ]

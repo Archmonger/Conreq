@@ -7,31 +7,45 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0043_alter_stylingsettings_custom_html'),
+        ("server_settings", "0043_alter_stylingsettings_custom_html"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='stylingsettings',
-            name='custom_css_url',
+            model_name="stylingsettings",
+            name="custom_css_url",
         ),
         migrations.RemoveField(
-            model_name='stylingsettings',
-            name='custom_js_url',
+            model_name="stylingsettings",
+            name="custom_js_url",
         ),
         migrations.AlterField(
-            model_name='generalsettings',
-            name='server_description',
-            field=models.CharField(blank=True, help_text='This will be shown on search results and hyperlink previews.', max_length=70),
+            model_name="generalsettings",
+            name="server_description",
+            field=models.CharField(
+                blank=True,
+                help_text="This will be shown on search results and hyperlink previews.",
+                max_length=70,
+            ),
         ),
         migrations.AlterField(
-            model_name='generalsettings',
-            name='server_name',
-            field=models.CharField(default='Conreq', help_text='This will be shown on the page title, search results, and hyperlink previews.', max_length=60),
+            model_name="generalsettings",
+            name="server_name",
+            field=models.CharField(
+                default="Conreq",
+                help_text="This will be shown on the page title, search results, and hyperlink previews.",
+                max_length=60,
+            ),
         ),
         migrations.AlterField(
-            model_name='stylingsettings',
-            name='accent_color',
-            field=colorfield.fields.ColorField(default='258a6d', help_text='Default: #258a6d', image_field=None, max_length=18, samples=None),
+            model_name="stylingsettings",
+            name="accent_color",
+            field=colorfield.fields.ColorField(
+                default="258a6d",
+                help_text="Default: #258a6d",
+                image_field=None,
+                max_length=18,
+                samples=None,
+            ),
         ),
     ]
