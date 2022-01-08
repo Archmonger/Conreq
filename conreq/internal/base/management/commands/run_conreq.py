@@ -6,24 +6,25 @@ from django.conf import settings
 from django.core.cache import cache
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
+from django.core.management.utils import get_random_secret_key
 from huey.contrib.djhuey import db_task
 from hypercorn.config import Config as HypercornConfig
 from hypercorn.run import run as run_hypercorn
 
 from conreq.utils.database import backup, backup_needed
-from conreq.utils.environment import get_debug
+from conreq.utils.environment import get_debug, get_env, set_env
 
 HYPERCORN_TOML = getattr(settings, "DATA_DIR") / "hypercorn.toml"
 DEBUG = get_debug()
-HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
-ACCESS_LOG_FILE = getattr(settings, "ACCESS_LOG_FILE")
 
 
 class Command(BaseCommand):
     help = "Runs all commands needed to safely start Conreq."
 
     def handle(self, *args, **options):
-        port = options["port"]
+        host = get_env("WEBSERVER_HOST", "0.0.0.0")
+        port = get_env("WEBSERVER_PORT", "8000")
+        bind = options["bind"] or f"{host}:{port}"
         verbosity = "-v 1" if DEBUG else "-v 0"
 
         # Run any preconfiguration tasks
@@ -60,43 +61,56 @@ class Command(BaseCommand):
             call_command("collectstatic", "--link", "--clear", "--noinput", verbosity)
             call_command("compress", "--force", verbosity)
 
+        # Rotate the secret key if needed
+        if get_env("ROTATE_SECRET_KEY", return_type=bool):
+            set_env("WEB_ENCRYPTION_KEY", get_random_secret_key())
+
         # Run background task management
         proc = Process(target=self.start_huey, daemon=True)
         proc.start()
 
         # Run the production webserver
         if not DEBUG:
-            self._run_webserver(port)
+            self._run_webserver(bind)
 
         # Run the development webserver
         if DEBUG:
-            call_command("runserver", f"0.0.0.0:{port}")
+            call_command("runserver", bind)
 
     @staticmethod
-    def _run_webserver(port):
+    def _run_webserver(bind):
+        # pylint: disable=import-outside-toplevel, invalid-name
+        from conreq.internal.server_settings.models import WebserverSettings
+
         # TODO: Switch to Uvicorn when this is resolved
         # https://github.com/encode/uvicorn/issues/342
-        hypercorn_config = HypercornConfig()
-        hypercorn_config.bind = f"0.0.0.0:{port}"
-        hypercorn_config.websocket_ping_interval = 20
-        hypercorn_config.workers = settings.WEBSERVER_WORKERS
-        hypercorn_config.application_path = "conreq.asgi:application"
-        hypercorn_config.accesslog = ACCESS_LOG_FILE
+        config = HypercornConfig()
+        config.bind = bind
+        config.websocket_ping_interval = 20
+        config.workers = settings.WEBSERVER_WORKERS
+        config.application_path = "conreq.asgi:application"
+        config.accesslog = settings.ACCESS_LOG_FILE
+        config.debug = get_env("WEBSERVER_DEBUG", return_type=bool)
+        config.include_server_header = False
+        x: WebserverSettings = WebserverSettings.get_solo()
+        config.ca_certs = x.ssl_ca_certificate.path if x.ssl_ca_certificate else None
+        config.certfile = x.ssl_certificate.path if x.ssl_certificate else None
+        config.keyfile = x.ssl_key.path if x.ssl_key else None
 
         # Additonal webserver configuration
         if HYPERCORN_TOML.exists():
-            hypercorn_config.from_toml(HYPERCORN_TOML)
+            config.from_toml(HYPERCORN_TOML)
 
         # Run the webserver
-        run_hypercorn(hypercorn_config)
+        run_hypercorn(config)
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "-p",
-            "--port",
-            help="Select the port number for Conreq to run on.",
-            default=8000,
-            type=int,
+            "-b",
+            "--bind",
+            help="Set the 'host_address:port' for Conreq to run on.",
+            default="0.0.0.0:8000",
+            type=str,
         )
         parser.add_argument(
             "--disable-preconfig",
