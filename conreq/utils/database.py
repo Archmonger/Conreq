@@ -22,20 +22,24 @@ def backup_needed() -> bool:
 
     backup_dir = getattr(settings, "BACKUP_DIR")
     dbbackup_date_format = getattr(settings, "DBBACKUP_DATE_FORMAT")
-    backup_files = sorted(glob(str(backup_dir / "*.dump")), reverse=True)
+    backup_files = sorted(glob(str(backup_dir / "*.*")), reverse=True)
 
     for file_path in backup_files:
         try:
-            file_name = Path(file_path).stem
+            file_name = Path(file_path).stem.rstrip(".dump")
             file_date = datetime.strptime(file_name, dbbackup_date_format)
             return datetime.now() - timedelta(weeks=1) > file_date
         except Exception:
             pass
 
-    # No backup files were found
+    # No backup files were found, or backup has expired
     return True
 
 
 def backup():
     """Creates a database backup."""
-    call_command("dbbackup", "--clean")
+    call_command(
+        "dbbackup",
+        "--clean",
+        "--compress",
+    )
