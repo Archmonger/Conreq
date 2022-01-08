@@ -1,10 +1,14 @@
+:root {
+	--accent-color: #258a6d;
+}
+
 body {
 	color: rgba(255, 255, 255, 0.75);
 }
 
 .w3-blue,
 .w3-hover-blue:hover {
-	background: #258a6d !important;
+	background: var(--accent-color) !important;
 }
 
 table {

@@ -1,3 +1,7 @@
+:root {
+	--accent-color: #258a6d;
+}
+
 body {
 	background: transparent;
 	color: rgba(255, 255, 255, 0.75);
@@ -18,7 +22,7 @@ a:focus {
 }
 
 thead {
-	background: #258a6d;
+	background: var(--accent-color);
 }
 
 thead a,
@@ -43,7 +47,7 @@ thead a:focus {
 .table {
 	margin-bottom: 0;
 	background: #fff;
-	border-bottom: 4px solid #258a6d;
+	border-bottom: 4px solid var(--accent-color);
 }
 
 .pagination {

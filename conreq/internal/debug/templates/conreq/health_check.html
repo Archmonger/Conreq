@@ -1,6 +1,11 @@
 {% extends "health_check/index.html" %}
-{% load static %}
 
 {% block extra_head %}
+{% load static %}
+{% load solo_tags %}
+{% get_solo 'server_settings.StylingSettings' as StylingSettings %}
 <link rel="stylesheet" href="{% static 'conreq/health_check.css' %}">
+<script>
+    document.documentElement.style.setProperty("--accent-color", "{{ StylingSettings.accent_color }}");
+</script>
 {% endblock extra_head %}

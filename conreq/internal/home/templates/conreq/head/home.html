@@ -2,6 +2,9 @@
 {% load static %}
 {% load pwa %}
 {% load conreq %}
+{% load solo_tags %}
+{% get_solo 'server_settings.StylingSettings' as StylingSettings %}
+
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>{% server_name %}</title>
@@ -67,3 +70,10 @@
 <script src="{% static 'conreq/aos-init.js' %}"></script>
 <script src="{% static 'conreq/iframe_events.js' %}"></script>
 {% endcompress %}
+
+<!-- User Configured Values -->
+<script>
+    document.documentElement.style.setProperty("--accent-color", "{{ StylingSettings.accent_color }}");
+</script>
+
+{{ StylingSettings.custom_html | safe }}

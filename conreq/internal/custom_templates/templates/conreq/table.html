@@ -1,5 +1,8 @@
 {% load static %}
 {% load render_table from django_tables2 %}
+{% load solo_tags %}
+{% get_solo 'server_settings.StylingSettings' as StylingSettings %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +13,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         crossorigin="anonymous" />
     <link rel="stylesheet" href="{% static 'conreq/table.css' %}">
+    <script>
+        document.documentElement.style.setProperty("--accent-color", "{{ StylingSettings.accent_color }}");
+    </script>
 </head>
 
 <body style="margin: 30px 0;">

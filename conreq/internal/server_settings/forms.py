@@ -66,6 +66,7 @@ class StylingSettingsForm(ModelForm):
             showprintmargin=False,
         ),
         label="Custom HTML (head)",
+        required=False,
     )
 
     class Meta:
