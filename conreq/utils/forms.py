@@ -16,7 +16,7 @@ class EnvFieldMixin:
 
     env_type = str
 
-    def __init__(self, *, env_name="", required=False, **kwargs) -> None:
+    def __init__(self, env_name, *, required=False, **kwargs) -> None:
         super().__init__(required=required, **kwargs)
         self.env_name = env_name
 

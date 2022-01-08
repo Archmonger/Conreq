@@ -29,10 +29,12 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
         help_text="Maximum time in seconds for a user session to last. <b>Restart for this change to take effect.</b>",
     )
     debug_mode = EnvBooleanField(
+        env_name="DEBUG_MODE",
         initial=settings.DEBUG,
         help_text="Disables security features and adds debugging tools. <b>Restart for this change to take effect.</b>",
     )
     safe_mode = EnvBooleanField(
+        env_name="SAFE_MODE",
         initial=settings.SAFE_MODE,
         help_text="Disables all installed apps. <b>Restart for this change to take effect.</b>",
     )
@@ -79,21 +81,25 @@ class ReferrerPolicy(TextChoices):
 # TODO: Set these initial values based on settings.py
 class WebserverSettingsForm(EnvFormMixin, ModelForm):
     base_url = EnvCharField(
+        env_name="BASE_URL",
         label="Base URL",
         help_text="Appears in all links. A value of 'base-url' will result in example.com/base-url.",
     )
     home_url = EnvCharField(
+        env_name="HOME_URL",
         label="Home URL",
         initial=get_home_url(False, False),
         help_text="A value of 'home-url' will result in example.com/base-url/home-url.",
     )
     secure_referrer_policy = EnvChoiceField(
+        env_name="SECURE_REFERRER_POLICY",
         initial=ReferrerPolicy.NO_REFERRER,
         choices=ReferrerPolicy.choices,
         help_text="The HTTP referrer policy to apply.",
     )
     if len(settings.ALLOWED_HOSTS) == 1:
         allowed_domain = EnvCharField(
+            env_name="ALLOWED_HOST",
             initial=settings.ALLOWED_HOSTS[0],
             help_text="The IP Address or web domain the webserver is allowed to serve (ex. example.com). To allow all, use an asterisk (*).",
         )
