@@ -1,6 +1,5 @@
 {% extends 'conreq/centered_box.html' %}
 {% load static %}
-{% load conreq %}
 
 {% block extend_head %}
 <script>
@@ -18,10 +17,12 @@
 </script>
 {% endblock %}
 
-{% block title %}Offline{% endblock %}
+{% block title %}
+<title>Offline | {{ GeneralSettings.server_name }}</title>
+{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'conreq/offline.css' %}">
-<p>Could not connect to {% server_name %}.</p>
+<p>Could not connect to {{ GeneralSettings.server_name }}.</p>
 <p>Check your network connection or try again later.</p>
 {% endblock %}

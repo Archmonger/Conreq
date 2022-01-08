@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.fields import CharField, URLField
 from solo.models import SingletonModel
 
-from conreq.utils.fields import HostnameOrURLField, URLOrRelativeURLField
+from conreq.utils.fields import HostnameOrURLField
 
 
 class GeneralSettings(SingletonModel):
@@ -17,12 +17,12 @@ class GeneralSettings(SingletonModel):
     server_name = CharField(
         default="Conreq",
         max_length=60,
-        help_text="This will be shown on the page title, search results, and in hyperlink previews.",
+        help_text="This will be shown on the page title, search results, and hyperlink previews.",
     )
     server_description = CharField(
         blank=True,
         max_length=70,
-        help_text="This will be shown on search results and in hyperlink previews.",
+        help_text="This will be shown on search results and hyperlink previews.",
     )
     public_url = URLField(
         help_text="Can be used by apps to construct meaningful URLs, such as in emails.",

@@ -1,16 +1,17 @@
 {% load static compress %}
 {% load static %}
-{% load conreq %}
+{% load solo_tags %}
+{% get_solo 'server_settings.GeneralSettings' as GeneralSettings %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    {% block head %}
-    <title>{% block title %}{% server_name %}{% endblock %} | {% server_name %}</title>
-    <meta name="Description" content="{% block description %}{% app_description %}{% endblock %}">
-    {% include "conreq/head/minimal.html" %}
-    {% endblock %}
-    {% block extend_head %}{% endblock %}
+    {% block title %}<title>{{ GeneralSettings.server_name }}</title>{% endblock title %}
+    {% block description %}
+    <meta name="Description" content="{{ GeneralSettings.server_description }}">
+    {% endblock description %}
+    {% block head %}{% include "conreq/head/minimal.html" %}{% endblock head %}
+    {% block extend_head %}{% endblock extend_head %}
 </head>
 
 <body>

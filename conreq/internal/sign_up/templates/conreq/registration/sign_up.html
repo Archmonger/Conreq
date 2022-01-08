@@ -1,8 +1,10 @@
 {% extends 'conreq/centered_box.html' %}
 {% load static %}
-{% load conreq %}
 
-{% block title %}Sign Up{% endblock %}
+
+{% block title %}
+<title>Sign Up | {{ GeneralSettings.server_name }}</title>
+{% endblock %}
 
 {% block content %}
 <div class="default-box-header">
@@ -11,7 +13,7 @@
 
 
 <h1 class="centered">REGISTRATION</h1>
-<h2 class="centered">Create your new {% server_name %} account!</h2>
+<h2 class="centered">Create your new {{ GeneralSettings.server_name }} account!</h2>
 
 <form id="sign-up-form" method="post" action="">
     {% csrf_token %}

@@ -17,7 +17,9 @@
 </script>
 {% endblock %}
 
-{% block title %}Sign In{% endblock %}
+{% block title %}
+<title>Sign In | {{ GeneralSettings.server_name }}</title>
+{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'conreq/sign_in.css' %}">
