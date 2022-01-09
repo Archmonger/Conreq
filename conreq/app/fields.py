@@ -1,7 +1,9 @@
-from django.db.models import OneToOneField, URLField
+from django.db.models import FileField, OneToOneField, URLField
 from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor
 from django.db.transaction import atomic
-from django.forms import PasswordInput
+from django.forms import PasswordInput, ValidationError
+from django.template.defaultfilters import filesizeformat
+from django.utils.translation import gettext_lazy
 from encrypted_fields.fields import EncryptedCharField
 
 from conreq.app import forms, validators
@@ -69,6 +71,53 @@ class AutoOneToOneField(OneToOneField):
             related.get_accessor_name(),
             _AutoSingleRelatedObjectDescriptor(related),
         )
+
+
+class RestrictedFileField(FileField):
+    """
+    A FileField that allows certain restrictions.
+
+        * content_types - List containing allowed content_types. Example: `['application/pdf', 'image/jpeg']`.
+            See https://www.geeksforgeeks.org/http-headers-content-type/ for all content types.
+
+        * max_upload_size - Number indicating the maximum bytes allowed for upload.
+            2.5MB  (2621440)
+            5MB    (5242880)
+            10MB   (10485760)
+            20MB   (20971520)
+            50MB   (5242880)
+            100M   (104857600)
+            250MB  (214958080)
+            500MB  (429916160)
+    """
+
+    def __init__(
+        self, *args, content_types: list[str] = None, max_upload_size: int = 0, **kwargs
+    ):
+        self.content_types = content_types
+        self.max_upload_size = max_upload_size
+        super().__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        data = super().clean(*args, **kwargs)
+        file = data.file
+
+        try:
+            if self.content_types and file.content_type not in self.content_types:
+                raise ValidationError(
+                    gettext_lazy("Filetype not supported. Allowed filetypes: %s")
+                    % ", ".join(map(str, self.content_types))
+                )
+            # pylint: disable=protected-access
+            if self.max_upload_size and file._size > self.max_upload_size:
+                raise ValidationError(
+                    gettext_lazy("File size %s is larger than the maximum %s.")
+                    % (filesizeformat(file._size), filesizeformat(self.max_upload_size))
+                )
+        except AttributeError:
+            pass
+
+        return data
 
 
 class _AutoSingleRelatedObjectDescriptor(ReverseOneToOneDescriptor):
