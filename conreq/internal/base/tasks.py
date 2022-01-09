@@ -13,7 +13,7 @@ DB_ENGINE = get_database_type()
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
-@db_periodic_task(crontab(minute="0", hour="0"))
+@db_periodic_task(crontab(minute="0", hour="0", day_of_week="1"))
 def clean_bg_task_db():
     """Periodically performs a SQLITE vacuum on the background task database."""
     with sqlite3.connect(HUEY_FILENAME) as cursor:
@@ -37,7 +37,7 @@ def clean_bg_task_db():
 
 if DB_ENGINE == "SQLITE3":
 
-    @db_periodic_task(crontab(minute="0", hour="0"))
+    @db_periodic_task(crontab(minute="0", hour="0", day_of_week="1"))
     def clean_conreq_db():
         """Periodically performs any cleanup tasks needed for the default database."""
         with connection.cursor() as cursor:
