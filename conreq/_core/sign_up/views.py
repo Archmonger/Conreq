@@ -6,9 +6,9 @@ from django.template import loader
 from django.utils import timezone
 
 from conreq import config
-from conreq.app import register
 from conreq._core.sign_up.forms import UserForm
 from conreq._core.sign_up.models import InviteCode
+from conreq.app import register
 
 LOGIN_REDIRECT_URL = getattr(settings, "LOGIN_REDIRECT_URL")
 

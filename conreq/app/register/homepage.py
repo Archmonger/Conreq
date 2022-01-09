@@ -3,8 +3,8 @@ from typing import Callable
 from sortedcontainers import SortedList
 
 from conreq import AuthLevel, Viewport, ViewType, config
-from conreq.utils.types import Icon
 from conreq.utils.components import view_to_component
+from conreq.utils.types import Icon
 
 
 # TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.

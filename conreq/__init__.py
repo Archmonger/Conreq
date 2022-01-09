@@ -3,10 +3,10 @@ from .utils.types import (
     AuthLevel,
     HomepageState,
     Modal,
+    Seconds,
     TabbedViewportState,
     Viewport,
     ViewType,
-    Seconds,
 )
 
 __all__ = [

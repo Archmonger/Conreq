@@ -13,7 +13,6 @@ from conreq._core.server_settings.models import (
     StylingSettings,
     WebserverSettings,
 )
-from conreq.utils.environment import get_home_url
 from conreq.app.forms import (
     EnvBooleanField,
     EnvCharField,
@@ -21,6 +20,7 @@ from conreq.app.forms import (
     EnvFormMixin,
     EnvIntegerField,
 )
+from conreq.utils.environment import get_home_url
 
 
 class GeneralSettingsForm(EnvFormMixin, ModelForm):

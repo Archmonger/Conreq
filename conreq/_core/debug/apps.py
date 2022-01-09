@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 from idom.html import i
 
-from conreq.app import register
 from conreq._core.debug import views
+from conreq.app import register
 from conreq.utils.environment import get_debug
 from conreq.utils.modules import load
 

@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from conreq import config
-from conreq.app import register
 from conreq._core.first_run.views import initialize
+from conreq.app import register
 from conreq.utils.environment import get_base_url, get_debug, get_home_url
 
 BASE_URL = get_base_url()

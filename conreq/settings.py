@@ -16,7 +16,7 @@ from django.core.management.utils import get_random_secret_key
 from split_settings.tools import include
 from tzlocal import get_localzone_name
 
-from conreq import config
+from conreq import Seconds, config
 from conreq.utils.apps import find_apps
 from conreq.utils.environment import (
     get_base_url,
@@ -27,8 +27,7 @@ from conreq.utils.environment import (
     get_safe_mode,
     set_env,
 )
-from conreq.utils.packages import find_modules, find_packages
-from conreq import Seconds
+from conreq.utils.packages import find_packages
 
 _logger = logging.getLogger(__name__)
 

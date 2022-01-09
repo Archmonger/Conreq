@@ -5,11 +5,11 @@ from django_tables2 import RequestConfig
 from idom.html import div
 
 from conreq import AuthLevel, config
-from conreq.app import register
-from conreq.app.components import tabbed_viewport
 from conreq._core.user_management.forms import UserEditForm
 from conreq._core.user_management.tables import UsersTable
 from conreq._core.utils import tab_constructor
+from conreq.app import register
+from conreq.app.components import tabbed_viewport
 from conreq.utils.components import view_to_component
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 

@@ -5,14 +5,14 @@ from django.urls.base import reverse_lazy
 from django.views.generic.edit import DeleteView, FormView, UpdateView
 
 from conreq import AuthLevel, config
-from conreq.app import register
-from conreq.app.components import logout, tabbed_viewport
 from conreq._core.user_settings.forms import (
     ChangePasswordForm,
     DeleteMyAccountForm,
     UserSettingsForm,
 )
 from conreq._core.utils import tab_constructor
+from conreq.app import register
+from conreq.app.components import logout, tabbed_viewport
 from conreq.utils.components import view_to_component
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 

@@ -1,8 +1,8 @@
 from idom.html import p
 
 from conreq import config
-from conreq.app import register
 from conreq._core.utils import tab_constructor
+from conreq.app import register
 
 
 @register.component.app_store()

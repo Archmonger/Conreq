@@ -1,7 +1,4 @@
 from conreq import AuthLevel, config
-from conreq.app import register
-from conreq.app.components import tabbed_viewport
-from conreq.app.views import SingletonUpdateView
 from conreq._core.email.models import EmailSettings
 from conreq._core.server_settings.forms import (
     EmailSettingsForm,
@@ -15,6 +12,9 @@ from conreq._core.server_settings.models import (
     WebserverSettings,
 )
 from conreq._core.utils import tab_constructor
+from conreq.app import register
+from conreq.app.components import tabbed_viewport
+from conreq.app.views import SingletonUpdateView
 from conreq.utils.components import view_to_component
 
 

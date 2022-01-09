@@ -2,8 +2,8 @@ from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 
 from conreq import config
-from conreq.app import register
 from conreq._core.password_reset.forms import PasswordResetForm, SetPasswordForm
+from conreq.app import register
 
 
 @register.view.password_reset()

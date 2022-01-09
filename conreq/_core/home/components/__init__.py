@@ -2,7 +2,6 @@ import idom
 from idom.html import div
 
 from conreq import HomepageState
-from conreq.app.components import refresh
 from conreq._core.home.components.modal import modal
 from conreq._core.home.components.navbar import navbar
 from conreq._core.home.components.sidebar import sidebar
@@ -11,6 +10,7 @@ from conreq._core.home.components.viewport import (
     viewport_primary,
     viewport_secondary,
 )
+from conreq.app.components import refresh
 from conreq.utils.components import authenticated
 
 
