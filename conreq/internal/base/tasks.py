@@ -5,7 +5,7 @@ from django.db import connection
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
-from conreq.utils.database import backup, backup_needed
+from conreq.utils.backup import backup_now, backup_needed
 from conreq.utils.environment import get_database_type
 from conreq.utils.time import Seconds
 
@@ -45,7 +45,7 @@ if DB_ENGINE == "SQLITE3":
 
 
 @db_periodic_task(Seconds.day)
-def backup_conreq_db():
+def backup_check():
     """Backup the database when needed."""
     if backup_needed():
-        backup()
+        backup_now()

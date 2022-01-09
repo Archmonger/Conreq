@@ -11,7 +11,7 @@ from huey.contrib.djhuey import db_task
 from hypercorn.config import Config as HypercornConfig
 from hypercorn.run import run as run_hypercorn
 
-from conreq.utils.database import backup, backup_needed
+from conreq.utils.backup import backup_now, backup_needed
 from conreq.utils.environment import get_debug, get_env, set_env
 
 HYPERCORN_TOML = getattr(settings, "DATA_DIR") / "hypercorn.toml"
@@ -45,7 +45,7 @@ class Command(BaseCommand):
             call_command("test", "--noinput", "--parallel", "--failfast")
 
         # Queue a task to backup the database if needed
-        backup_db()
+        backup_if_needed()
 
         # Perform any debug related clean-up
         if DEBUG:
@@ -153,7 +153,7 @@ class Command(BaseCommand):
 
 
 @db_task()
-def backup_db():
+def backup_if_needed():
     """Performs a backup if the last backup was longer than the threshold."""
     if backup_needed():
-        backup()
+        backup_now()
