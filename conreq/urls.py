@@ -4,7 +4,7 @@
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.core.files.storage import FileSystemStorage
-from django.urls import include, path, re_path
+from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django_downloadview import StorageDownloadView
 from django_idom import IDOM_WEB_MODULES_PATH
@@ -19,8 +19,8 @@ urlpatterns = [
     path("", include("conreq._core.pwa.urls")),
     path("", config.views.landing, name="landing"),
     path(HOME_URL, config.views.home, name="home"),
-    re_path(
-        r"^files/serve/(?P<path>[a-zA-Z0-9_-]+\.[a-zA-Z0-9]{1,4})$",
+    path(
+        "files/serve/<path:path>",
         StorageDownloadView.as_view(
             storage=FileSystemStorage(settings.MEDIA_SERVE_DIR)
         ),
