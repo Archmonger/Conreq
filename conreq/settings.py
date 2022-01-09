@@ -110,7 +110,7 @@ COMPRESS_FILTERS = {
 HUEY_FILENAME = DATA_DIR / "bg_tasks.sqlite3"
 HUEY = {
     "name": "huey",  # DB table name
-    "huey_class": "conreq.internal.bg_tasks.SqliteHuey",  # Huey implementation to use
+    "huey_class": "conreq._core.bg_tasks.SqliteHuey",  # Huey implementation to use
     "filename": HUEY_FILENAME,  # Sqlite filename
     "immediate": False,  # If True, run tasks synchronously
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
@@ -196,7 +196,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
-        "conreq.internal.api.permissions.HasAPIKey",
+        "conreq._core.api.permissions.HasAPIKey",
     ],
 }
 
@@ -234,7 +234,24 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
-    *find_modules(INTERNAL_DIR, prefix="conreq.internal."),
+    "conreq._core.api",
+    "conreq._core.app_store",
+    "conreq._core.base",
+    "conreq._core.bg_tasks",
+    "conreq._core.custom_templates",
+    "conreq._core.debug",
+    "conreq._core.email",
+    "conreq._core.first_run",
+    "conreq._core.home",
+    "conreq._core.landing",
+    "conreq._core.password_reset",
+    "conreq._core.pwa",
+    "conreq._core.server_settings",
+    "conreq._core.sign_in",
+    "conreq._core.sign_up",
+    "conreq._core.user_management",
+    "conreq._core.user_settings",
+    "conreq._core.view_wrappers",
     # Database Fields
     "colorfield",  # HEX colors in the DB
     "encrypted_fields",  # Encrypted text in the DB
@@ -389,6 +406,5 @@ INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
 
 
 # Ensure Conreq app loader comes last
-INSTALLED_APPS.remove("conreq.internal.app_loader")
 if not SAFE_MODE:
-    INSTALLED_APPS.append("conreq.internal.app_loader")
+    INSTALLED_APPS.append("conreq._core.app_loader")

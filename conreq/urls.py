@@ -16,7 +16,7 @@ BASE_URL = get_base_url(prepend_slash=False)
 HOME_URL = get_home_url(append_slash=False, prepend_slash=False)
 
 urlpatterns = [
-    path("", include("conreq.internal.pwa.urls")),
+    path("", include("conreq._core.pwa.urls")),
     path("", config.views.landing, name="landing"),
     path(HOME_URL, config.views.home, name="home"),
     re_path(
