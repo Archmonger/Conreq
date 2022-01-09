@@ -4,6 +4,8 @@ from django.db import models
 from multiselectfield import MultiSelectField
 from versionfield import VersionField
 
+from conreq.utils.models import UUIDFilePath
+
 
 class DevelopmentStage(models.TextChoices):
     PLANNING = "1 - Planning", "Planning"
@@ -83,9 +85,7 @@ class AppPackage(models.Model):
     )
     verbose_name = models.CharField(max_length=100)
     logo = models.ImageField(
-        upload_to="serve/app_store/logos/",
-        height_field=250,
-        width_field=250,
+        upload_to=UUIDFilePath("serve/app_store/logos/"),
         blank=True,
     )
     short_description = models.CharField(max_length=255, blank=True)
@@ -156,7 +156,7 @@ class Screenshot(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True)
-    image = models.ImageField(upload_to="serve/app_store/screenshot/")
+    image = models.ImageField(upload_to=UUIDFilePath("serve/app_store/screenshot/"))
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
 
 
