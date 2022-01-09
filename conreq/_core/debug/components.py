@@ -1,7 +1,7 @@
 from django.urls.base import reverse
 from idom.core.vdom import make_vdom_constructor
 
-from conreq import Viewport, config
+from conreq import ViewportState, config
 from conreq._core.utils import tab_constructor
 
 iframe = make_vdom_constructor("iframe")
@@ -33,14 +33,14 @@ config._homepage.debug_nav_tabs.append(
         "Performance",
         performance,
         padding=False,
-        viewport=Viewport.secondary,
+        viewport=ViewportState.secondary,
     )
 )
 config._homepage.debug_nav_tabs.append(
     tab_constructor(
         "Health Check",
         health_check,
-        viewport=Viewport.secondary,
+        viewport=ViewportState.secondary,
     )
 )
 config._homepage.debug_nav_tabs.append(
@@ -48,7 +48,7 @@ config._homepage.debug_nav_tabs.append(
         "Database",
         database,
         padding=False,
-        viewport=Viewport.secondary,
+        viewport=ViewportState.secondary,
     )
 )
 config._homepage.debug_nav_tabs.append(
@@ -56,7 +56,7 @@ config._homepage.debug_nav_tabs.append(
         "Code Outline",
         code_outline,
         padding=False,
-        viewport=Viewport.secondary,
+        viewport=ViewportState.secondary,
     )
 )
 config._homepage.debug_nav_tabs.append(
@@ -64,6 +64,6 @@ config._homepage.debug_nav_tabs.append(
         "API Docs",
         api_docs,
         padding=False,
-        viewport=Viewport.secondary,
+        viewport=ViewportState.secondary,
     )
 )

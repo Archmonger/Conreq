@@ -1,14 +1,14 @@
 """Helpers to render IDOM elements on the page"""
 from typing import Callable
 
-from conreq import AuthLevel, Viewport
+from conreq import AuthLevel, ViewportState
 
 # TODO: Create viewport render functions
 # pylint: disable=unused-argument,unused-variable,unnecessary-pass
 
 
 def viewport(
-    selector: Viewport = Viewport.primary,
+    selector: ViewportState = ViewportState.primary,
     auth_level: AuthLevel = AuthLevel.user,
 ) -> Callable:
     """Decorates an IDOM component. Forcibly changes the viewport content."""

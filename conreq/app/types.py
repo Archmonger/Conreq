@@ -22,7 +22,7 @@ class AuthLevel:
 
 
 @dataclass
-class Viewport:
+class ViewportState:
     initial: str = "initial"
     loading: str = "loading"
     primary: str = "primary"
@@ -30,7 +30,7 @@ class Viewport:
 
 
 @dataclass
-class Modal:
+class ModalState:
     loading: str = "loading"
     hidden: str = "hidden"
     show: str = "show"
@@ -39,11 +39,11 @@ class Modal:
 @dataclass
 class HomepageState:
     page_title: str = "Loading..."
-    viewport: Viewport = Viewport.initial
+    viewport: ViewportState = ViewportState.initial
     viewport_padding: bool = True
     viewport_primary: Callable = None
     viewport_secondary: Callable = None
-    modal: Modal = Modal.loading
+    modal: ModalState = ModalState.loading
     modal_title: str = "Loading..."
     modal_header: Callable = None
     modal_body: Callable = None

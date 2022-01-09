@@ -1,6 +1,6 @@
 from typing import Callable
 
-from conreq import AuthLevel, Viewport
+from conreq import AuthLevel, ViewportState
 
 
 def tab_constructor(
@@ -8,7 +8,7 @@ def tab_constructor(
     component: Callable,
     on_click: Callable = None,  # TODO: document args = websocket, state, set_state, tab
     padding: bool = True,
-    viewport: Viewport = Viewport.primary,
+    viewport: ViewportState = ViewportState.primary,
     auth_level: AuthLevel = AuthLevel.user,
 ):
     return {

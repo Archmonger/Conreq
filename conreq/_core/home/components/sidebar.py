@@ -3,7 +3,7 @@ from copy import copy
 import idom
 from idom.html import div, i, nav
 
-from conreq import HomepageState, Viewport, config
+from conreq import HomepageState, ViewportState, config
 from conreq.utils.environment import get_debug, get_safe_mode
 from conreq.utils.generic import clean_string
 
@@ -67,7 +67,7 @@ def sidebar(websocket, state: HomepageState, set_state):
 
     @idom.hooks.use_effect
     async def set_default_tab():
-        if state.viewport != Viewport.initial:
+        if state.viewport != ViewportState.initial:
             return None
 
         # Use the configured default tab, if it exists
@@ -75,7 +75,7 @@ def sidebar(websocket, state: HomepageState, set_state):
             set_state(
                 state
                 | {
-                    "viewport": Viewport.primary,
+                    "viewport": ViewportState.primary,
                     "viewport_primary": config.homepage.default_nav_tab,
                     "viewport_padding": True,
                 }
@@ -98,7 +98,7 @@ def sidebar(websocket, state: HomepageState, set_state):
             return None
 
     async def username_on_click(_):
-        state.viewport = Viewport.primary
+        state.viewport = ViewportState.primary
         state.viewport_primary = config.components.user_settings
         state.viewport_padding = True
         set_state(copy(state))
@@ -163,7 +163,7 @@ def sidebar(websocket, state: HomepageState, set_state):
 
 
 def nav_tab_class(state: HomepageState, tab):
-    if state.viewport not in {Viewport.loading, Viewport.initial} and tab[
+    if state.viewport not in {ViewportState.loading, ViewportState.initial} and tab[
         "component"
     ] is state.__getattribute__(f"viewport_{state.viewport}"):
         return NAV_TAB_ACTIVE
@@ -173,9 +173,9 @@ def nav_tab_class(state: HomepageState, tab):
 def sidebar_tab(websocket, state: HomepageState, set_state, tab):
     async def on_click(_):
         state.viewport = tab["viewport"]
-        if tab["viewport"] == Viewport.primary:
+        if tab["viewport"] == ViewportState.primary:
             state.viewport_primary = tab["component"]
-        if tab["viewport"] == Viewport.secondary:
+        if tab["viewport"] == ViewportState.secondary:
             state.viewport_secondary = tab["component"]
         state.viewport_padding = tab["viewport_padding"]
         set_state(copy(state))

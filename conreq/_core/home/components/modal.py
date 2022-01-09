@@ -1,7 +1,7 @@
 import idom
 from idom.html import div, i
 
-from conreq import HomepageState, Modal, config
+from conreq import HomepageState, ModalState, config
 
 MODAL_CONTAINER = {
     "id": "modal-container",
@@ -52,7 +52,7 @@ def modal(websocket, state: HomepageState, set_state):
 
 def modal_head(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
-    if state.modal == Modal.show and state.modal_header:
+    if state.modal == ModalState.show and state.modal_header:
         return state.modal_header
     return div(
         MODAL_HEADER,
@@ -63,7 +63,7 @@ def modal_head(websocket, state: HomepageState, set_state):
 
 def modal_body(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
-    if state.modal == Modal.show and state.modal_body:
+    if state.modal == ModalState.show and state.modal_body:
         return state.modal_body
     return div(
         MODAL_BODY,
@@ -73,6 +73,6 @@ def modal_body(websocket, state: HomepageState, set_state):
 
 def modal_footer(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
-    if state.modal == Modal.show and state.modal_footer:
+    if state.modal == ModalState.show and state.modal_footer:
         return state.modal_footer
     return div(MODAL_FOOTER)

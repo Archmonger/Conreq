@@ -1,13 +1,15 @@
-from . import app, config, utils
-from .utils.types import (
+from conreq.app.types import (
     AuthLevel,
     HomepageState,
-    Modal,
+    Icon,
+    ModalState,
     Seconds,
     TabbedViewportState,
-    Viewport,
+    ViewportState,
     ViewType,
 )
+
+from conreq import app, config, utils
 
 __all__ = [
     "app",
@@ -17,7 +19,8 @@ __all__ = [
     "TabbedViewportState",
     "ViewType",
     "AuthLevel",
-    "Viewport",
+    "ViewportState",
     "Seconds",
-    "Modal",
+    "ModalState",
+    "Icon",
 ]
