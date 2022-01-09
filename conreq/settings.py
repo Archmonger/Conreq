@@ -181,7 +181,7 @@ logging_config(LOGGING)
 # Security Settings
 SESSION_COOKIE_AGE = get_env("SESSION_COOKIE_AGE", Seconds.month * 3, return_type=int)
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_REFERRER_POLICY = get_env("SECURE_REFERRER_POLICY", "no-referrer")
+SECURE_REFERRER_POLICY = get_env("SECURE_REFERRER_POLICY", "")
 ALLOWED_HOSTS = get_env("ALLOWED_HOSTS", return_type=list) or [
     get_env("ALLOWED_HOST", "*")
 ]

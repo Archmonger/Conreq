@@ -81,6 +81,7 @@ class StylingSettingsForm(ModelForm):
 
 
 class ReferrerPolicy(TextChoices):
+    NONE = ""
     NO_REFERRER = "no-referrer"
     NO_REFERRER_WHEN_DOWNGRADE = "no-referrer-when-downgrade"
     ORIGIN = "origin"
@@ -106,7 +107,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
     )
     secure_referrer_policy = EnvChoiceField(
         env_name="SECURE_REFERRER_POLICY",
-        initial=ReferrerPolicy.NO_REFERRER,
+        initial=ReferrerPolicy.NONE,
         choices=ReferrerPolicy.choices,
         help_text="The HTTP referrer policy to apply.",
     )
