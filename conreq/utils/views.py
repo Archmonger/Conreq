@@ -4,7 +4,7 @@ from inspect import isclass
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView
 
 from conreq.utils.types import AuthLevel
 
@@ -53,15 +53,6 @@ class SaveFormViewMixin:
             return self.form_invalid(form)
         form.save()
         return self.form_valid(form)
-
-
-class SingletonUpdateView(SuccessCurrentUrlMixin, UpdateView):
-    """Update view intended for `SingletonModel`."""
-
-    template_name = "conreq/form.html"
-
-    def get_object(self, queryset=None):
-        return self.model.get_solo()
 
 
 def login_required(view, login_url=None, redirect_field_name=None):
