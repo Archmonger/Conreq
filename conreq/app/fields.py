@@ -4,7 +4,7 @@ from django.db.transaction import atomic
 from django.forms import PasswordInput
 from encrypted_fields.fields import EncryptedCharField
 
-from . import forms, validators
+from conreq.app import validators, forms
 
 
 class PasswordField(EncryptedCharField):

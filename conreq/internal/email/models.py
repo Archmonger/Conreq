@@ -2,7 +2,7 @@ from django.db import models
 from encrypted_fields.fields import EncryptedCharField
 from solo.models import SingletonModel
 
-from conreq.utils.fields import PasswordField
+from conreq.app.fields import PasswordField
 
 
 class AuthEncryption(models.TextChoices):

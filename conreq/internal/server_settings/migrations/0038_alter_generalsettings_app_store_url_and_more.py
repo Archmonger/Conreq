@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import conreq.utils.fields
+import conreq.app.fields
 
 
 class Migration(migrations.Migration):
@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="generalsettings",
             name="app_store_url",
-            field=conreq.utils.fields.HostnameOrURLField(
+            field=conreq.app.fields.HostnameOrURLField(
                 blank=True,
                 help_text="Changes automatically on Conreq updates.",
                 verbose_name="App store URL",

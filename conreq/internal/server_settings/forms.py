@@ -14,7 +14,7 @@ from conreq.internal.server_settings.models import (
     WebserverSettings,
 )
 from conreq.utils.environment import get_home_url
-from conreq.utils.forms import (
+from conreq.app.forms import (
     EnvBooleanField,
     EnvCharField,
     EnvChoiceField,
