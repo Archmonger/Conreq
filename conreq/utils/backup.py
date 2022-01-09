@@ -9,7 +9,7 @@ from django.core.management import call_command
 
 def backup_now():
     """Performs the backup process at the current timestamp."""
-    # TODO: Create an API for developers to add on their own backups during this step
+    # TODO: Create an API for developers to add on their own backup steps during this function call
     # pylint: disable=import-outside-toplevel
     from django.conf import settings
 
