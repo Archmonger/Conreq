@@ -1,5 +1,7 @@
 from conreq import AuthLevel, config
 from conreq.app import register
+from conreq.app.components import tabbed_viewport
+from conreq.app.views import SingletonUpdateView
 from conreq.internal.email.models import EmailSettings
 from conreq.internal.server_settings.forms import (
     EmailSettingsForm,
@@ -13,8 +15,7 @@ from conreq.internal.server_settings.models import (
     WebserverSettings,
 )
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import tabbed_viewport, view_to_component
-from conreq.app.views import SingletonUpdateView
+from conreq.utils.components import view_to_component
 
 
 # TODO: Create generic notification agent API.

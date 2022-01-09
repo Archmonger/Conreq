@@ -6,10 +6,11 @@ from idom.html import div
 
 from conreq import AuthLevel, config
 from conreq.app import register
+from conreq.app.components import tabbed_viewport
 from conreq.internal.user_management.forms import UserEditForm
 from conreq.internal.user_management.tables import UsersTable
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import tabbed_viewport, view_to_component
+from conreq.utils.components import view_to_component
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
 # TODO: Create SimpleTable and SimpleForm that use Conreq templates

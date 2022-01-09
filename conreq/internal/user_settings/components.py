@@ -6,14 +6,14 @@ from django.views.generic.edit import DeleteView, FormView, UpdateView
 
 from conreq import AuthLevel, config
 from conreq.app import register
-from conreq.app.components import logout
+from conreq.app.components import logout, tabbed_viewport
 from conreq.internal.user_settings.forms import (
     ChangePasswordForm,
     DeleteMyAccountForm,
     UserSettingsForm,
 )
 from conreq.internal.utils import tab_constructor
-from conreq.utils.components import tabbed_viewport, view_to_component
+from conreq.utils.components import view_to_component
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 
 
