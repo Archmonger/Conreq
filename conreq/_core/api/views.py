@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import UserSerializer
+from conreq._core.api.serializers import UserSerializer
 
 
 # TODO: Create some API views.

@@ -1,4 +1,4 @@
-from .configuration import (
+from conreq.config.configuration import (
     AsgiConfig,
     ComponentConfig,
     HomepageConfig,

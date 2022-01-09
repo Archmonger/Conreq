@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import EmailSettings
+from conreq._core.email.models import EmailSettings
 
 
 @admin.register(EmailSettings)

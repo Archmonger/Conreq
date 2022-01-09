@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 
 from conreq.utils.environment import get_base_url
 
-from ..apps import PwaConfig
+from conreq._core.pwa.apps import PwaConfig
 
 register = template.Library()
 

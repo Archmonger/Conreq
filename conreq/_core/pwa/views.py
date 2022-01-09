@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from conreq.utils.environment import get_base_url
 
-from .apps import PwaConfig
+from conreq._core.pwa.apps import PwaConfig
 
 BASE_URL = get_base_url()
 

@@ -7,7 +7,7 @@ from django.template import loader
 
 from conreq._core.first_run.models import Initialization
 
-from .forms import InitializationForm
+from conreq._core.first_run.forms import InitializationForm
 
 INITIALIZED = False
 

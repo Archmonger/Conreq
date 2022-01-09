@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import manifest, offline, service_worker
+from conreq._core.pwa.views import manifest, offline, service_worker
 
 app_name = "pwa"
 

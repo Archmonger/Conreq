@@ -1,4 +1,13 @@
-from . import asgi, component, homepage, startup, tabs, template, view, wsgi
+from conreq.app.register import (
+    asgi,
+    component,
+    homepage,
+    startup,
+    tabs,
+    template,
+    view,
+    wsgi,
+)
 
 __all__ = [
     "asgi",
