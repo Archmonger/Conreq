@@ -7,7 +7,7 @@ from huey.contrib.djhuey import db_periodic_task
 
 from conreq.utils.backup import backup_now, backup_needed
 from conreq.utils.environment import get_database_type
-from conreq.utils.time import Seconds
+from conreq import Seconds
 
 DB_ENGINE = get_database_type()
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")

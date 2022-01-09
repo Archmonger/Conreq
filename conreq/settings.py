@@ -28,7 +28,7 @@ from conreq.utils.environment import (
     set_env,
 )
 from conreq.utils.packages import find_modules, find_packages
-from conreq.utils.time import Seconds
+from conreq import Seconds
 
 _logger = logging.getLogger(__name__)
 

@@ -6,6 +6,7 @@ from .utils.types import (
     TabbedViewportState,
     Viewport,
     ViewType,
+    Seconds,
 )
 
 __all__ = [
@@ -17,5 +18,6 @@ __all__ = [
     "ViewType",
     "AuthLevel",
     "Viewport",
+    "Seconds",
     "Modal",
 ]
