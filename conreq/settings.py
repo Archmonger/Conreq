@@ -238,7 +238,6 @@ INSTALLED_APPS = [
     "conreq._core.app_store",
     "conreq._core.base",
     "conreq._core.bg_tasks",
-    "conreq._core.custom_templates",
     "conreq._core.debug",
     "conreq._core.email",
     "conreq._core.first_run",
