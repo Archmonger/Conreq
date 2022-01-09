@@ -83,7 +83,10 @@ class AppPackage(models.Model):
     )
     verbose_name = models.CharField(max_length=100)
     logo = models.ImageField(
-        upload_to="app_store/logos/", height_field=250, width_field=250, blank=True
+        upload_to="serve/app_store/logos/",
+        height_field=250,
+        width_field=250,
+        blank=True,
     )
     short_description = models.CharField(max_length=255, blank=True)
     long_description = models.TextField(
@@ -153,7 +156,7 @@ class Screenshot(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255, blank=True)
-    image = models.ImageField(upload_to="app_store/screenshot/")
+    image = models.ImageField(upload_to="serve/app_store/screenshot/")
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
 
 
