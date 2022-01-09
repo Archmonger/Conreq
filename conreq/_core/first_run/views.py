@@ -5,9 +5,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
 
-from conreq._core.first_run.models import Initialization
-
 from conreq._core.first_run.forms import InitializationForm
+from conreq._core.first_run.models import Initialization
 
 INITIALIZED = False
 

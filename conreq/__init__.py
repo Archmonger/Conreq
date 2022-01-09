@@ -1,3 +1,4 @@
+from conreq import app, config, utils
 from conreq.app.types import (
     AuthLevel,
     HomepageState,
@@ -8,8 +9,6 @@ from conreq.app.types import (
     ViewportState,
     ViewType,
 )
-
-from conreq import app, config, utils
 
 __all__ = [
     "app",

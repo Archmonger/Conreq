@@ -5,9 +5,8 @@ from django import template
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.safestring import mark_safe
 
-from conreq.utils.environment import get_base_url
-
 from conreq._core.pwa.apps import PwaConfig
+from conreq.utils.environment import get_base_url
 
 register = template.Library()
 
