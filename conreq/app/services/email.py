@@ -10,7 +10,7 @@ from django.core.mail.backends import smtp
 from django.core.mail.message import EmailMessage
 from huey.contrib.djhuey import db_task
 
-from conreq.internal.email.models import AuthEncryption, EmailSettings
+from conreq.app.models import AuthEncryption, EmailSettings
 from conreq.utils.generic import DoNothingWith
 
 

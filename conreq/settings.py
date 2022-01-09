@@ -251,7 +251,6 @@ INSTALLED_APPS = [
     "conreq._core.sign_up",
     "conreq._core.user_management",
     "conreq._core.user_settings",
-    "conreq._core.view_wrappers",
     # Database Fields
     "colorfield",  # HEX colors in the DB
     "encrypted_fields",  # Encrypted text in the DB

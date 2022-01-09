@@ -7,7 +7,7 @@ from idom.core.proto import VdomDict
 from idom.html import div, span
 from sortedcontainers import SortedDict
 
-from conreq.internal.view_wrappers import views
+from conreq.app import view_wrappers
 from conreq.utils.containers import FillList
 
 
@@ -21,13 +21,13 @@ class StartupConfig:
 @dataclass
 class ViewConfig:
     # TODO: Don't use the app.register API for pre-configuring the base views here
-    landing: Callable = views.landing
-    home: Callable = views.home
-    sign_up: Callable = views.sign_up
-    sign_in: Callable = views.sign_in
-    password_reset: Callable = views.password_reset
-    password_reset_sent: Callable = views.password_reset_sent
-    password_reset_confirm: Callable = views.password_reset_confirm
+    landing: Callable = view_wrappers.landing
+    home: Callable = view_wrappers.home
+    sign_up: Callable = view_wrappers.sign_up
+    sign_in: Callable = view_wrappers.sign_in
+    password_reset: Callable = view_wrappers.password_reset
+    password_reset_sent: Callable = view_wrappers.password_reset_sent
+    password_reset_confirm: Callable = view_wrappers.password_reset_confirm
 
 
 @dataclass
