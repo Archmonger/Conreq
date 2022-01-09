@@ -35,6 +35,7 @@ _logger = logging.getLogger(__name__)
 ROOT_DIR = Path(__file__).resolve().parent.parent
 INTERNAL_DIR = ROOT_DIR / "conreq" / "internal"
 DATA_DIR = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False)
+DATABASE_DIR = DATA_DIR / "database"
 PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
 PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
 MEDIA_DIR = DATA_DIR / "files"
@@ -46,6 +47,7 @@ USER_STATICFILES_DIR = DATA_DIR / "static"
 LOG_DIR = DATA_DIR / "logs"
 MAKE_DIRS: list[Path] = [
     DATA_DIR,
+    DATABASE_DIR,
     PACKAGES_DIR,
     PACKAGES_DEV_DIR,
     MEDIA_DIR,
@@ -106,10 +108,10 @@ COMPRESS_FILTERS = {
     "css": ["compressor.filters.cssmin.rCSSMinFilter"],
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
-HUEY_FILENAME = DATA_DIR / "bg_tasks.sqlite3"
+HUEY_FILENAME = DATABASE_DIR / "background_tasks.sqlite3"
 HUEY = {
     "name": "huey",  # DB table name
-    "huey_class": "conreq._core.bg_tasks.SqliteHuey",  # Huey implementation to use
+    "huey_class": "conreq._core.background_tasks.SqliteHuey",  # Huey implementation to use
     "filename": HUEY_FILENAME,  # Sqlite filename
     "immediate": False,  # If True, run tasks synchronously
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
@@ -236,7 +238,7 @@ INSTALLED_APPS = [
     "conreq._core.api",
     "conreq._core.app_store",
     "conreq._core.base",
-    "conreq._core.bg_tasks",
+    "conreq._core.background_tasks",
     "conreq._core.debug",
     "conreq._core.email",
     "conreq._core.first_run",
@@ -307,7 +309,7 @@ TEMPLATES = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": DATA_DIR / "db.sqlite3",
+        "NAME": DATABASE_DIR / "default.sqlite3",
         "OPTIONS": {
             "timeout": 3,  # 3 second query timeout
         },
