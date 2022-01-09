@@ -1,6 +1,14 @@
 """Any function that assists in multithreading or multiprocessing"""
+from dataclasses import dataclass, field
 from threading import Thread
-from typing import Any
+from typing import Any, Callable
+
+
+@dataclass
+class ThreadTask:
+    func: Callable
+    args: list = field(default_factory=list)
+    kwargs: dict = field(default_factory=dict)
 
 
 class ReturnThread(Thread):
@@ -8,7 +16,7 @@ class ReturnThread(Thread):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._return = None  # child class's variable, not available in parent.
+        self._return = None
 
     def run(self):
         """
@@ -28,46 +36,13 @@ class ReturnThread(Thread):
         return self._return
 
 
-def threaded_execution(function_list: list, args: list, **kwargs: dict) -> list[Any]:
-    """Threaded execution of function calls where all functions utilize the same args/kwargs."""
-    thread_list = []
-    for function in function_list:
-        thread = ReturnThread(target=function, args=args, kwargs=kwargs)
+def executor(thread_tasks: list[ThreadTask]) -> list[Any]:
+    """Threaded execution of a list of functions. Returns the results in the same
+    order that the functions were provided in."""
+    started_threads = []
+    for task in thread_tasks:
+        thread = ReturnThread(target=task.func, args=task.args, kwargs=task.kwargs)
         thread.start()
-        thread_list.append(thread)
+        started_threads.append(thread)
 
-    return [thread.join() for thread in thread_list]
-
-
-def threaded_execution_unique_args(functions: list[dict]) -> list[Any]:
-    """Executes functions with unique arguements. It will return all returned values as a list.
-    Functions must follow this format:
-
-        [{
-            "function": foobar,
-            "args": [],
-            "kwargs": {},
-            }, ...
-        ]
-    """
-    thread_list = []
-    for executable in functions:
-        thread = ReturnThread(
-            target=executable["function"],
-            args=executable.get("args", None),
-            kwargs=executable.get("kwargs", None),
-        )
-        thread.start()
-        thread_list.append(thread)
-
-    # Combine the results into one list
-    results = []
-    for index, thread in enumerate(thread_list):
-        result = None
-        try:
-            result = thread.join()
-        except Exception:
-            pass
-        results.insert(index, result)
-
-    return results
+    return [thread.join() for thread in started_threads]
