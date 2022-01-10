@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         host = get_env("WEBSERVER_HOST", "0.0.0.0")
-        port = get_env("WEBSERVER_PORT", "8000")
+        port = get_env("WEBSERVER_PORT", "7575")
         bind = options["bind"] or f"{host}:{port}"
         verbosity = "-v 1" if DEBUG else "-v 0"
 
@@ -112,7 +112,7 @@ class Command(BaseCommand):
             "-b",
             "--bind",
             help="Set the 'host_address:port' for Conreq to run on.",
-            default="0.0.0.0:8000",
+            default="0.0.0.0:7575",
             type=str,
         )
         parser.add_argument(
@@ -122,20 +122,20 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             "--uid",
-            help="User ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
+            help="User ID for files and sockets (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
             type=int,
             default=0,
         )
         parser.add_argument(
             "--gid",
-            help="Group ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
+            help="Group ID for files and sockets (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
             type=int,
             default=0,
         )
         parser.add_argument(
             "--set-perms",
             action="store_true",
-            help="Have Conreq set permissions during preconfig.",
+            help="Have Conreq set file permissions during preconfig.",
         )
         parser.add_argument(
             "--test",

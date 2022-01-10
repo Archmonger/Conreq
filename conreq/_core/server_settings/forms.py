@@ -129,7 +129,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
     )
     host_port = EnvIntegerField(
         env_name="WEBSERVER_PORT",
-        initial=8000,
+        initial=7575,
         max_value=65535,
         help_text="Port number to bind to.",
     )
