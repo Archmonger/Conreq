@@ -5,10 +5,10 @@ from typing import Callable
 
 from idom.core.proto import VdomDict
 from idom.html import div, span
-from sortedcontainers import SortedDict
+from sortedcontainers import SortedDict, SortedList
 
 from conreq.app import view_wrappers
-from conreq.app.types import NavTab
+from conreq.app.types import NavGroup, NavTab
 from conreq.utils.containers import FillList
 
 
@@ -88,7 +88,7 @@ class AsgiConfig:
 
 @dataclass
 class HomepageConfig:
-    nav_tabs: SortedDict[str, dict] = field(default_factory=SortedDict)
+    nav_tabs: SortedList[NavGroup] = field(default_factory=SortedList)
     default_nav_tab: NavTab = None
     # TODO: Implement CSS and JS registration
     local_stylesheets: list[dict] = field(default_factory=list)
@@ -101,6 +101,6 @@ class HomepageConfig:
 
 @dataclass
 class _InternalHomepageConfig:
-    user_nav_tabs: list[dict] = field(default_factory=list)
-    admin_nav_tabs: FillList[dict] = field(default_factory=FillList)
-    debug_nav_tabs: list[dict] = field(default_factory=list)
+    user_nav_tabs: list[NavTab] = field(default_factory=list)
+    admin_nav_tabs: FillList[NavTab] = field(default_factory=FillList)
+    debug_nav_tabs: list[NavTab] = field(default_factory=list)

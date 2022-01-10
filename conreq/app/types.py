@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import Callable
 
 from idom.core.proto import VdomDict
+from sortedcontainers import SortedSet
 
 
 class Icon(VdomDict):
@@ -37,18 +38,29 @@ class Viewport:
     auth: AuthLevel = AuthLevel.user
 
 
-@dataclass
+@dataclass(order=True)
 class NavTab:
     name: str
     viewport: Viewport = None
     on_click: Callable = None
     auth: AuthLevel = AuthLevel.user
 
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, str):
+            return self.name.lower() == __o.lower()
+        return self.name.lower() == __o.name.lower()
 
-@dataclass
+
+@dataclass(order=True)
 class NavGroup:
     name: str
-    tabs: list[NavTab] = field(default_factory=list)
+    icon: Icon = None
+    tabs: SortedSet[NavTab] = field(default_factory=SortedSet)
+
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, str):
+            return self.name.lower() == __o.lower()
+        return self.name.lower() == __o.name.lower()
 
 
 @dataclass

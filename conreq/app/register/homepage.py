@@ -1,9 +1,15 @@
 from typing import Callable
 
-from sortedcontainers import SortedList
-
-from conreq import AuthLevel, ViewportSelector, ViewType, config, NavTab, Viewport
-from conreq.app.types import Icon
+from conreq import config
+from conreq.app.types import (
+    AuthLevel,
+    Icon,
+    NavGroup,
+    NavTab,
+    Viewport,
+    ViewportSelector,
+    ViewType,
+)
 from conreq.utils.components import view_to_component
 
 
@@ -37,23 +43,25 @@ def nav_tab(
         else:
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
 
-        group = config.homepage.nav_tabs.setdefault(
-            group_name,
-            {"icon": group_icon, "tabs": SortedList(key=lambda x: x["name"])},
-        )
-        group["tabs"].add(
-            NavTab(
-                name=name,
-                viewport=Viewport(
-                    component=component,
-                    selector=selector,
-                    padding=padding,
-                    auth=auth,
-                ),
-                on_click=on_click,
-                auth=auth,
-            )
-        )
+        if group_name not in config.homepage.nav_tabs:
+            config.homepage.nav_tabs.append(NavGroup(name=group_name, icon=group_icon))
+
+        for group in config.homepage.nav_tabs:
+            if group_name == group:
+                group.tabs.add(
+                    NavTab(
+                        name=name,
+                        viewport=Viewport(
+                            component=component,
+                            selector=selector,
+                            padding=padding,
+                            auth=auth,
+                        ),
+                        on_click=on_click,
+                        auth=auth,
+                    )
+                )
+            break
 
         return func
 
@@ -61,21 +69,16 @@ def nav_tab(
 
 
 def nav_group(
-    group_name: str,
-    group_icon: Icon = None,
+    name: str,
+    icon: Icon = None,
 ):
     """Creates a nav group and/or sets the group icon."""
-    navbar = config.homepage.nav_tabs
-    group = navbar.get(group_name)
+    for group in config.homepage.nav_tabs:
+        if name == group:
+            group.icon = icon
+            return
 
-    if not group:
-        navbar[group_name] = {
-            "icon": group_icon,
-            "tabs": SortedList([], key=lambda x: x["name"]),
-        }
-
-    else:
-        navbar[group_name]["icon"] = group_icon
+    config.homepage.nav_tabs.add(NavGroup(name=name, icon=icon))
 
 
 def css(reverse_path: str, attributes: dict = None, local=True) -> None:

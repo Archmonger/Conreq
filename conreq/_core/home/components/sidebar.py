@@ -3,7 +3,7 @@ from copy import copy
 import idom
 from idom.html import div, i, nav
 
-from conreq import HomepageState, Viewport, ViewportSelector, config, NavTab
+from conreq import HomepageState, NavGroup, NavTab, Viewport, ViewportSelector, config
 from conreq.utils.environment import get_debug, get_safe_mode
 from conreq.utils.generic import clean_string
 
@@ -63,7 +63,7 @@ def sidebar(websocket, state: HomepageState, set_state):
     if not websocket.scope["user"].is_authenticated:
         return None
 
-    all_tabs = config.homepage.nav_tabs.items()
+    nav_tabs = config.homepage.nav_tabs
 
     @idom.hooks.use_effect
     async def set_default_tab():
@@ -78,10 +78,10 @@ def sidebar(websocket, state: HomepageState, set_state):
             return None
 
         # Select the top most tab, if it exists
-        for group_name, group_values in all_tabs:
-            if not group_values["tabs"] or group_name in USER_ADMIN_DEBUG:
+        for group in nav_tabs:
+            if not group.tabs or group in USER_ADMIN_DEBUG:
                 continue
-            tab: NavTab = group_values["tabs"][0]
+            tab: NavTab = group.tabs[0]
             state.viewport_selector = tab.viewport.selector
             if tab["viewport"] == ViewportSelector.primary:
                 state.viewport_primary = tab.viewport
@@ -110,45 +110,42 @@ def sidebar(websocket, state: HomepageState, set_state):
             # pylint: disable=protected-access
             NAVIGATION,
             *(  # App tabs
-                sidebar_group(websocket, state, set_state, group_name, group_values)
-                for group_name, group_values in all_tabs
-                if group_name not in USER_ADMIN_DEBUG
+                sidebar_group(websocket, state, set_state, group)
+                for group in nav_tabs
+                if group not in USER_ADMIN_DEBUG
             ),
             *(  # User tabs
                 sidebar_group(
                     websocket,
                     state,
                     set_state,
-                    group_name,
-                    group_values,
+                    group,
                     bottom_tabs=config._homepage.user_nav_tabs,
                 )
-                for group_name, group_values in all_tabs
-                if group_name == "User"
+                for group in nav_tabs
+                if group == "User"
             ),
             *(  # Admin tabs
                 sidebar_group(
                     websocket,
                     state,
                     set_state,
-                    group_name,
-                    group_values,
+                    group,
                     bottom_tabs=config._homepage.admin_nav_tabs,
                 )
-                for group_name, group_values in all_tabs
-                if group_name == "Admin" and websocket.scope["user"].is_staff
+                for group in nav_tabs
+                if group == "Admin" and websocket.scope["user"].is_staff
             ),
             *(  # Debug tabs
                 sidebar_group(
                     websocket,
                     state,
                     set_state,
-                    group_name,
-                    group_values,
+                    group,
                     top_tabs=config._homepage.debug_nav_tabs,
                 )
-                for group_name, group_values in all_tabs
-                if group_name == "Debug" and websocket.scope["user"].is_staff and DEBUG
+                for group in nav_tabs
+                if group == "Debug" and websocket.scope["user"].is_staff and DEBUG
             ),
         ),
     )
@@ -189,16 +186,13 @@ def sidebar_group(
     websocket,
     state: HomepageState,
     set_state,
-    group_name,
-    group_values,
+    group: NavGroup,
     top_tabs: list[NavTab] = None,
     bottom_tabs: list[NavTab] = None,
 ):
-    icon = group_values["icon"]
-    tabs = group_values["tabs"]
     _top_tabs = top_tabs or []
     _bottom_tabs = bottom_tabs or []
-    group_name_clean = clean_string(group_name, lowercase=False)
+    group_name_clean = clean_string(group.name, lowercase=False)
     group_id = f"{group_name_clean}-group"
     tabs_id = f"{group_name_clean}-tabs"
 
@@ -209,14 +203,16 @@ def sidebar_group(
                 "id": group_id,
                 "data-bs-target": f"#{tabs_id}",
                 "aria-controls": tabs_id,
-                "title": group_name,
+                "title": group.name,
             },
             div(
                 GROUP_NAME,
-                div(GROUP_ICON, DEFAULT_NAV_GROUP_ICON if not icon else icon),
-                group_name,
+                div(
+                    GROUP_ICON, DEFAULT_NAV_GROUP_ICON if not group.icon else group.icon
+                ),
+                group.name,
             ),
-            i(GROUP_CARET | {"title": f'Collapse the "{group_name}" group.'}),
+            i(GROUP_CARET | {"title": f'Collapse the "{group.name}" group.'}),
             key=group_id,
         ),
         div(
@@ -228,7 +224,7 @@ def sidebar_group(
             div(
                 TABS,
                 *(sidebar_tab(websocket, state, set_state, tab) for tab in _top_tabs),
-                *(sidebar_tab(websocket, state, set_state, tab) for tab in tabs),
+                *(sidebar_tab(websocket, state, set_state, tab) for tab in group.tabs),
                 *(
                     sidebar_tab(websocket, state, set_state, tab)
                     for tab in _bottom_tabs
