@@ -152,11 +152,14 @@ def sidebar(websocket, state: HomepageState, set_state):
 
 
 def nav_tab_class(state: HomepageState, tab: NavTab):
-    if state.viewport_selector not in {
-        ViewportSelector.loading,
-        ViewportSelector.initial,
-    } and tab.viewport.component is state.__getattribute__(
-        f"viewport_{state.viewport_selector}"
+    if (
+        state.viewport_selector
+        not in {
+            ViewportSelector.loading,
+            ViewportSelector.initial,
+        }
+        and tab.viewport
+        is state.__getattribute__(f"viewport_{state.viewport_selector}")
     ):
         return NAV_TAB_ACTIVE
     return NAV_TAB
