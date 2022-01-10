@@ -2,14 +2,13 @@
 	position: relative;
 	left: var(--sidebar-width);
 	height: calc(100% - var(--navbar-height));
-	overflow-x: hidden;
-	overflow-y: auto;
-	overflow-y: overlay;
+	overflow: hidden;
 	width: calc(100vw - var(--viewport-left));
 	padding: 0 var(--viewport-padding);
 	display: flex;
 	flex-direction: column;
 	color: rgb(255 255 255 / 0.75);
+	height: 100%;
 }
 
 .viewport-container > iframe {
