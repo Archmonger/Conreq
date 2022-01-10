@@ -1,22 +1,9 @@
+from copy import copy
 import idom
 from idom.html import div, i
 
-from conreq import HomepageState, ModalState, config
+from conreq import HomepageState, config
 
-MODAL_CONTAINER = {
-    "id": "modal-container",
-    "className": "modal fade",
-    "tabIndex": "-1",
-    "role": "dialog",
-    "style": {"display": "none"},
-    "aria-hidden": "true",
-}
-MODAL_DIALOG = {
-    "id": "modal-dialog",
-    "className": "modal-dialog modal-dialog-centered modal-lg",
-    "role": "document",
-}
-MODAL_CONTENT = {"id": "modal-content", "className": "modal-content"}
 MODAL_HEADER = {"className": "modal-header"}
 MODAL_HEADER_BTN_CONTAINER = {
     "className": "modal-header-btn-container",
@@ -26,45 +13,59 @@ MODAL_HEADER_BTN_CONTAINER = {
 MODAL_TITLE = {"className": "title"}
 MODAL_BODY = {"className": "modal-body loading"}
 MODAL_FOOTER = {"className": "modal-footer"}
-MODAL_CLOSE_BTN = i(
-    {
-        "title": "Close",
-        "className": "fas fa-window-close clickable",
-    }
+
+bootstrap = idom.web.module_from_template(
+    "react", "react-bootstrap", resolve_exports=True
 )
+bootstrap_modal = idom.web.export(bootstrap, "Modal", allow_children=True)
 
 
 @idom.component
 def modal(websocket, state: HomepageState, set_state):
-    return div(
-        MODAL_CONTAINER,
-        div(
-            MODAL_DIALOG,
-            div(
-                MODAL_CONTENT,
+    return bootstrap_modal(
+        {
+            "show": state.modal_state.show,
+            "centered": state.modal_state.centered,
+            "size": state.modal_state.size,
+            **state.modal_state.kwargs,
+        },
+        *(
+            [state.modal(websocket, state, set_state)]
+            if state.modal
+            else [
                 modal_head(websocket, state, set_state),
                 modal_body(websocket, state, set_state),
                 modal_footer(websocket, state, set_state),
-            ),
+            ]
         ),
     )
 
 
 def modal_head(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
-    if state.modal == ModalState.show and state.modal_header:
-        return state.modal_header
+
+    async def close_modal(_):
+        state.modal_state.show = False
+        set_state(copy(state))
+
     return div(
         MODAL_HEADER,
-        div(MODAL_HEADER_BTN_CONTAINER, MODAL_CLOSE_BTN),
-        div(MODAL_TITLE, state.modal_title),
+        div(
+            MODAL_HEADER_BTN_CONTAINER,
+            i(
+                {
+                    "title": "Close",
+                    "className": "fas fa-window-close clickable",
+                    "onClick": close_modal,
+                }
+            ),
+        ),
+        div(MODAL_TITLE, "Loading..."),
     )
 
 
 def modal_body(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
-    if state.modal == ModalState.show and state.modal_body:
-        return state.modal_body
     return div(
         MODAL_BODY,
         div({"className": "loading"}, config.components.loading_animation),
@@ -73,6 +74,4 @@ def modal_body(websocket, state: HomepageState, set_state):
 
 def modal_footer(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
-    if state.modal == ModalState.show and state.modal_footer:
-        return state.modal_footer
     return div(MODAL_FOOTER)

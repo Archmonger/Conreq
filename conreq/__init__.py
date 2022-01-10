@@ -6,7 +6,7 @@ from conreq.app.types import (
     ModalState,
     Seconds,
     TabbedViewportState,
-    ViewportState,
+    ViewportSelector,
     ViewType,
 )
 
@@ -18,7 +18,7 @@ __all__ = [
     "TabbedViewportState",
     "ViewType",
     "AuthLevel",
-    "ViewportState",
+    "ViewportSelector",
     "Seconds",
     "ModalState",
     "Icon",

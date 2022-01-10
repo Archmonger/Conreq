@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Callable
 
 from idom.core.proto import VdomDict
@@ -22,7 +22,7 @@ class AuthLevel:
 
 
 @dataclass
-class ViewportState:
+class ViewportSelector:
     initial: str = "initial"
     loading: str = "loading"
     primary: str = "primary"
@@ -31,23 +31,21 @@ class ViewportState:
 
 @dataclass
 class ModalState:
-    loading: str = "loading"
-    hidden: str = "hidden"
-    show: str = "show"
+    show: bool = False
+    size: str = "lg"
+    centered: bool = True
+    kwargs: dict = field(default_factory=dict)
 
 
 @dataclass
 class HomepageState:
     page_title: str = "Loading..."
-    viewport: ViewportState = ViewportState.initial
+    viewport_selector: ViewportSelector = ViewportSelector.initial
     viewport_padding: bool = True
     viewport_primary: Callable = None
     viewport_secondary: Callable = None
-    modal: ModalState = ModalState.loading
-    modal_title: str = "Loading..."
-    modal_header: Callable = None
-    modal_body: Callable = None
-    modal_footer: Callable = None
+    modal_state: ModalState = ModalState()
+    modal: Callable = None
 
 
 @dataclass

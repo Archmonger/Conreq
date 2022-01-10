@@ -2,7 +2,7 @@ from typing import Callable
 
 from sortedcontainers import SortedList
 
-from conreq import AuthLevel, ViewportState, ViewType, config
+from conreq import AuthLevel, ViewportSelector, ViewType, config
 from conreq.app.types import Icon
 from conreq.utils.components import view_to_component
 
@@ -14,7 +14,7 @@ def nav_tab(
     group_icon: Icon = None,
     on_click: Callable = None,  # TODO: document args = websocket, state, set_state, tab
     padding: bool = True,
-    viewport: ViewportState = ViewportState.primary,
+    viewport: ViewportSelector = ViewportSelector.primary,
     auth_level: AuthLevel = AuthLevel.user,
     view_type: ViewType = ViewType.component,
     url_pattern: str = None,  # For Django only (as of now)

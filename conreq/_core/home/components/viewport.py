@@ -1,7 +1,7 @@
 import idom
 from idom.html import div
 
-from conreq import HomepageState, ViewportState, config
+from conreq import HomepageState, ViewportSelector, config
 
 VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
 VIEWPORT_CONTAINER_SECONDARY = {"className": "viewport-container secondary"}
@@ -16,7 +16,8 @@ def viewport_loading(websocket, state: HomepageState, set_state):
         VIEWPORT_CONTAINER_LOADING
         | (
             {}
-            if state.viewport in {ViewportState.loading, ViewportState.initial}
+            if state.viewport_selector
+            in {ViewportSelector.loading, ViewportSelector.initial}
             else HIDDEN
         ),
         config.components.loading_animation,
@@ -27,10 +28,11 @@ def viewport_loading(websocket, state: HomepageState, set_state):
 def viewport_primary(websocket, state: HomepageState, set_state):
     return div(
         VIEWPORT_CONTAINER_PRIMARY
-        | ({} if state.viewport == ViewportState.primary else HIDDEN)
+        | ({} if state.viewport_selector == ViewportSelector.primary else HIDDEN)
         | (
             {}
-            if state.viewport_padding and state.viewport == ViewportState.primary
+            if state.viewport_padding
+            and state.viewport_selector == ViewportSelector.primary
             else {"className": VIEWPORT_CONTAINER_PRIMARY["className"] + " no-padding"}
         ),
         *(
@@ -45,10 +47,11 @@ def viewport_primary(websocket, state: HomepageState, set_state):
 def viewport_secondary(websocket, state: HomepageState, set_state):
     return div(
         VIEWPORT_CONTAINER_SECONDARY
-        | ({} if state.viewport == ViewportState.secondary else HIDDEN)
+        | ({} if state.viewport_selector == ViewportSelector.secondary else HIDDEN)
         | (
             {}
-            if state.viewport_padding and state.viewport == ViewportState.secondary
+            if state.viewport_padding
+            and state.viewport_selector == ViewportSelector.secondary
             else {
                 "className": VIEWPORT_CONTAINER_SECONDARY["className"] + " no-padding"
             }

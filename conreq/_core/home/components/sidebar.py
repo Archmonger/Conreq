@@ -3,7 +3,7 @@ from copy import copy
 import idom
 from idom.html import div, i, nav
 
-from conreq import HomepageState, ViewportState, config
+from conreq import HomepageState, ViewportSelector, config
 from conreq.utils.environment import get_debug, get_safe_mode
 from conreq.utils.generic import clean_string
 
@@ -67,15 +67,15 @@ def sidebar(websocket, state: HomepageState, set_state):
 
     @idom.hooks.use_effect
     async def set_default_tab():
-        if state.viewport != ViewportState.initial:
+        if state.viewport_selector != ViewportSelector.initial:
             return None
 
         # Use the configured default tab, if it exists
         if config.homepage.default_nav_tab:
             set_state(
                 state
-                | {
-                    "viewport": ViewportState.primary,
+                | {  # FIXME
+                    "viewport": ViewportSelector.primary,
                     "viewport_primary": config.homepage.default_nav_tab,
                     "viewport_padding": True,
                 }
@@ -89,7 +89,7 @@ def sidebar(websocket, state: HomepageState, set_state):
             tab = group_values["tabs"][0]
             set_state(
                 state
-                | {
+                | {  # FIXME
                     "viewport": tab["viewport"],
                     f'viewport_{tab["viewport"]}': tab["component"],
                     "viewport_padding": tab["viewport_padding"],
@@ -98,7 +98,7 @@ def sidebar(websocket, state: HomepageState, set_state):
             return None
 
     async def username_on_click(_):
-        state.viewport = ViewportState.primary
+        state.viewport_selector = ViewportSelector.primary
         state.viewport_primary = config.components.user_settings
         state.viewport_padding = True
         set_state(copy(state))
@@ -163,19 +163,25 @@ def sidebar(websocket, state: HomepageState, set_state):
 
 
 def nav_tab_class(state: HomepageState, tab):
-    if state.viewport not in {ViewportState.loading, ViewportState.initial} and tab[
-        "component"
-    ] is state.__getattribute__(f"viewport_{state.viewport}"):
+    if (
+        state.viewport_selector
+        not in {
+            ViewportSelector.loading,
+            ViewportSelector.initial,
+        }
+        and tab["component"]
+        is state.__getattribute__(f"viewport_{state.viewport_selector}")
+    ):
         return NAV_TAB_ACTIVE
     return NAV_TAB
 
 
 def sidebar_tab(websocket, state: HomepageState, set_state, tab):
     async def on_click(_):
-        state.viewport = tab["viewport"]
-        if tab["viewport"] == ViewportState.primary:
+        state.viewport_selector = tab["viewport"]
+        if tab["viewport"] == ViewportSelector.primary:
             state.viewport_primary = tab["component"]
-        if tab["viewport"] == ViewportState.secondary:
+        if tab["viewport"] == ViewportSelector.secondary:
             state.viewport_secondary = tab["component"]
         state.viewport_padding = tab["viewport_padding"]
         set_state(copy(state))
