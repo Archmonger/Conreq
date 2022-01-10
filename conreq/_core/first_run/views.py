@@ -41,7 +41,7 @@ def initialize(request) -> Union[None, HttpResponse]:
     return HttpResponse(template.render({}, request))
 
 
-def _first_run_setup(form, request, general_settings):
+def _first_run_setup(form, request, initialization):
     form.save()
     username = form.cleaned_data.get("username")
     password = form.cleaned_data.get("password1")
@@ -51,6 +51,6 @@ def _first_run_setup(form, request, general_settings):
     user.is_superuser = True
     user.save()
     login(request, user)
-    general_settings.initialized = True
-    general_settings.save()
+    initialization.initialized = True
+    initialization.save()
     return redirect("landing")
