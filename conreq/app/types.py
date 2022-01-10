@@ -30,6 +30,19 @@ class ViewportSelector:
 
 
 @dataclass
+class Viewport:
+    component: Callable
+    selector: ViewportSelector = ViewportSelector.primary
+    padding: bool = True
+
+
+@dataclass
+class NavTab:
+    viewport: Viewport = None
+    on_click: Callable = None
+
+
+@dataclass
 class ModalState:
     show: bool = False
     size: str = "lg"

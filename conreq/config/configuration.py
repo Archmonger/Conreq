@@ -8,6 +8,7 @@ from idom.html import div, span
 from sortedcontainers import SortedDict
 
 from conreq.app import view_wrappers
+from conreq.app.types import NavTab
 from conreq.utils.containers import FillList
 
 
@@ -88,7 +89,7 @@ class AsgiConfig:
 @dataclass
 class HomepageConfig:
     nav_tabs: SortedDict[str, dict] = field(default_factory=SortedDict)
-    default_nav_tab: Callable = None
+    default_nav_tab: NavTab = None
     # TODO: Implement CSS and JS registration
     local_stylesheets: list[dict] = field(default_factory=list)
     remote_stylesheets: list[dict] = field(default_factory=list)

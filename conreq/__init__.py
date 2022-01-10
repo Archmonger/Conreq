@@ -4,6 +4,7 @@ from conreq.app.types import (
     HomepageState,
     Icon,
     ModalState,
+    NavTab,
     Seconds,
     TabbedViewportState,
     ViewportSelector,
@@ -22,4 +23,5 @@ __all__ = [
     "Seconds",
     "ModalState",
     "Icon",
+    "NavTab",
 ]

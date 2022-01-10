@@ -72,14 +72,10 @@ def sidebar(websocket, state: HomepageState, set_state):
 
         # Use the configured default tab, if it exists
         if config.homepage.default_nav_tab:
-            set_state(
-                state
-                | {  # FIXME
-                    "viewport": ViewportSelector.primary,
-                    "viewport_primary": config.homepage.default_nav_tab,
-                    "viewport_padding": True,
-                }
-            )
+            state.viewport_selector = config.homepage.default_nav_tab.viewport.selector
+            state.viewport_primary = config.homepage.default_nav_tab.viewport.component
+            state.viewport_padding = config.homepage.default_nav_tab.viewport.padding
+            set_state(copy(state))
             return None
 
         # Select the top most tab, if it exists
