@@ -1,6 +1,6 @@
 from typing import Callable
 
-from conreq import AuthLevel, ViewportSelector, NavTab, Viewport
+from conreq import AuthLevel, NavTab, Viewport, ViewportSelector
 
 
 def tab_constructor(
