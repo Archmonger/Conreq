@@ -119,7 +119,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
         )
     rotate_secret_key = EnvBooleanField(
         env_name="ROTATE_SECRET_KEY",
-        help_text="Invalidates user sessions upon server restart.",
+        help_text="Invalidates user sessions upon every server restart.",
     )
     host_ip = EnvCharField(
         env_name="WEBSERVER_HOST",
