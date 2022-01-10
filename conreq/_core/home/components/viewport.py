@@ -26,17 +26,19 @@ def viewport_loading(websocket, state: HomepageState, set_state):
 
 @idom.component
 def viewport_primary(websocket, state: HomepageState, set_state):
+    if not state.viewport_primary:
+        return div(VIEWPORT_CONTAINER_PRIMARY | HIDDEN)
+
     return div(
         VIEWPORT_CONTAINER_PRIMARY
         | ({} if state.viewport_selector == ViewportSelector.primary else HIDDEN)
         | (
             {}
-            if state.viewport_padding
-            and state.viewport_selector == ViewportSelector.primary
+            if state.viewport_primary.padding
             else {"className": VIEWPORT_CONTAINER_PRIMARY["className"] + " no-padding"}
         ),
         *(
-            [state.viewport_primary(websocket, state, set_state)]
+            [state.viewport_primary.component(websocket, state, set_state)]
             if state.viewport_primary
             else []
         ),
@@ -45,19 +47,21 @@ def viewport_primary(websocket, state: HomepageState, set_state):
 
 @idom.component
 def viewport_secondary(websocket, state: HomepageState, set_state):
+    if not state.viewport_secondary:
+        return div(VIEWPORT_CONTAINER_SECONDARY | HIDDEN)
+
     return div(
         VIEWPORT_CONTAINER_SECONDARY
         | ({} if state.viewport_selector == ViewportSelector.secondary else HIDDEN)
         | (
             {}
-            if state.viewport_padding
-            and state.viewport_selector == ViewportSelector.secondary
+            if state.viewport_secondary.padding
             else {
                 "className": VIEWPORT_CONTAINER_SECONDARY["className"] + " no-padding"
             }
         ),
         *(
-            [state.viewport_secondary(websocket, state, set_state)]
+            [state.viewport_secondary.component(websocket, state, set_state)]
             if state.viewport_secondary
             else []
         ),

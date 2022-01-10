@@ -33,14 +33,14 @@ config._homepage.debug_nav_tabs.append(
         "Performance",
         performance,
         padding=False,
-        viewport=ViewportSelector.secondary,
+        selector=ViewportSelector.secondary,
     )
 )
 config._homepage.debug_nav_tabs.append(
     tab_constructor(
         "Health Check",
         health_check,
-        viewport=ViewportSelector.secondary,
+        selector=ViewportSelector.secondary,
     )
 )
 config._homepage.debug_nav_tabs.append(
@@ -48,7 +48,7 @@ config._homepage.debug_nav_tabs.append(
         "Database",
         database,
         padding=False,
-        viewport=ViewportSelector.secondary,
+        selector=ViewportSelector.secondary,
     )
 )
 config._homepage.debug_nav_tabs.append(
@@ -56,7 +56,7 @@ config._homepage.debug_nav_tabs.append(
         "Code Outline",
         code_outline,
         padding=False,
-        viewport=ViewportSelector.secondary,
+        selector=ViewportSelector.secondary,
     )
 )
 config._homepage.debug_nav_tabs.append(
@@ -64,6 +64,6 @@ config._homepage.debug_nav_tabs.append(
         "API Docs",
         api_docs,
         padding=False,
-        viewport=ViewportSelector.secondary,
+        selector=ViewportSelector.secondary,
     )
 )

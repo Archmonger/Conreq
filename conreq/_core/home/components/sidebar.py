@@ -3,7 +3,7 @@ from copy import copy
 import idom
 from idom.html import div, i, nav
 
-from conreq import HomepageState, ViewportSelector, config
+from conreq import HomepageState, Viewport, ViewportSelector, config, NavTab
 from conreq.utils.environment import get_debug, get_safe_mode
 from conreq.utils.generic import clean_string
 
@@ -73,8 +73,7 @@ def sidebar(websocket, state: HomepageState, set_state):
         # Use the configured default tab, if it exists
         if config.homepage.default_nav_tab:
             state.viewport_selector = config.homepage.default_nav_tab.viewport.selector
-            state.viewport_primary = config.homepage.default_nav_tab.viewport.component
-            state.viewport_padding = config.homepage.default_nav_tab.viewport.padding
+            state.viewport_primary = config.homepage.default_nav_tab.viewport
             set_state(copy(state))
             return None
 
@@ -82,21 +81,18 @@ def sidebar(websocket, state: HomepageState, set_state):
         for group_name, group_values in all_tabs:
             if not group_values["tabs"] or group_name in USER_ADMIN_DEBUG:
                 continue
-            tab = group_values["tabs"][0]
-            set_state(
-                state
-                | {  # FIXME
-                    "viewport": tab["viewport"],
-                    f'viewport_{tab["viewport"]}': tab["component"],
-                    "viewport_padding": tab["viewport_padding"],
-                }
-            )
+            tab: NavTab = group_values["tabs"][0]
+            state.viewport_selector = tab.viewport.selector
+            if tab["viewport"] == ViewportSelector.primary:
+                state.viewport_primary = tab.viewport
+            if tab.viewport.selector == ViewportSelector.secondary:
+                state.viewport_secondary = tab.viewport
+            set_state(copy(state))
             return None
 
     async def username_on_click(_):
         state.viewport_selector = ViewportSelector.primary
-        state.viewport_primary = config.components.user_settings
-        state.viewport_padding = True
+        state.viewport_primary = Viewport(config.components.user_settings)
         set_state(copy(state))
 
     return nav(
@@ -158,38 +154,34 @@ def sidebar(websocket, state: HomepageState, set_state):
     )
 
 
-def nav_tab_class(state: HomepageState, tab):
-    if (
-        state.viewport_selector
-        not in {
-            ViewportSelector.loading,
-            ViewportSelector.initial,
-        }
-        and tab["component"]
-        is state.__getattribute__(f"viewport_{state.viewport_selector}")
+def nav_tab_class(state: HomepageState, tab: NavTab):
+    if state.viewport_selector not in {
+        ViewportSelector.loading,
+        ViewportSelector.initial,
+    } and tab.viewport.component is state.__getattribute__(
+        f"viewport_{state.viewport_selector}"
     ):
         return NAV_TAB_ACTIVE
     return NAV_TAB
 
 
-def sidebar_tab(websocket, state: HomepageState, set_state, tab):
+def sidebar_tab(websocket, state: HomepageState, set_state, tab: NavTab):
     async def on_click(_):
-        state.viewport_selector = tab["viewport"]
-        if tab["viewport"] == ViewportSelector.primary:
-            state.viewport_primary = tab["component"]
-        if tab["viewport"] == ViewportSelector.secondary:
-            state.viewport_secondary = tab["component"]
-        state.viewport_padding = tab["viewport_padding"]
+        state.viewport_selector = tab.viewport.selector
+        if tab.viewport.selector == ViewportSelector.primary:
+            state.viewport_primary = tab.viewport
+        if tab.viewport.selector == ViewportSelector.secondary:
+            state.viewport_secondary = tab.viewport
         set_state(copy(state))
 
     return div(
         nav_tab_class(state, tab)
         | {
             "onClick": on_click
-            if not tab["on_click"]
-            else tab["on_click"](websocket, state, set_state, tab)
+            if not tab.on_click
+            else tab.on_click(websocket, state, set_state, tab)
         },
-        div(TAB_NAME, tab["name"]),
+        div(TAB_NAME, tab.name),
     )
 
 
@@ -199,8 +191,8 @@ def sidebar_group(
     set_state,
     group_name,
     group_values,
-    top_tabs=None,
-    bottom_tabs=None,
+    top_tabs: list[NavTab] = None,
+    bottom_tabs: list[NavTab] = None,
 ):
     icon = group_values["icon"]
     tabs = group_values["tabs"]

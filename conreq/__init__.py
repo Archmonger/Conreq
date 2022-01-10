@@ -7,6 +7,7 @@ from conreq.app.types import (
     NavTab,
     Seconds,
     TabbedViewportState,
+    Viewport,
     ViewportSelector,
     ViewType,
 )
@@ -24,4 +25,5 @@ __all__ = [
     "ModalState",
     "Icon",
     "NavTab",
+    "Viewport",
 ]

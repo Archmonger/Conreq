@@ -2,20 +2,20 @@ from typing import Callable
 
 from sortedcontainers import SortedList
 
-from conreq import AuthLevel, ViewportSelector, ViewType, config
+from conreq import AuthLevel, ViewportSelector, ViewType, config, NavTab, Viewport
 from conreq.app.types import Icon
 from conreq.utils.components import view_to_component
 
 
 # TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.
 def nav_tab(
-    tab_name: str,
+    name: str,
     group_name: str,
     group_icon: Icon = None,
     on_click: Callable = None,  # TODO: document args = websocket, state, set_state, tab
     padding: bool = True,
-    viewport: ViewportSelector = ViewportSelector.primary,
-    auth_level: AuthLevel = AuthLevel.user,
+    selector: ViewportSelector = ViewportSelector.primary,
+    auth: AuthLevel = AuthLevel.user,
     view_type: ViewType = ViewType.component,
     url_pattern: str = None,  # For Django only (as of now)
     url_name: str = None,  # For Django only (as of now)
@@ -42,14 +42,17 @@ def nav_tab(
             {"icon": group_icon, "tabs": SortedList(key=lambda x: x["name"])},
         )
         group["tabs"].add(
-            {
-                "name": tab_name,
-                "viewport": viewport,
-                "viewport_padding": padding,
-                "on_click": on_click,
-                "auth": auth_level,
-                "component": component,
-            }
+            NavTab(
+                name=name,
+                viewport=Viewport(
+                    component=component,
+                    selector=selector,
+                    padding=padding,
+                    auth=auth,
+                ),
+                on_click=on_click,
+                auth=auth,
+            )
         )
 
         return func

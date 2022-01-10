@@ -1,21 +1,24 @@
 from typing import Callable
 
-from conreq import AuthLevel, ViewportSelector
+from conreq import AuthLevel, ViewportSelector, NavTab, Viewport
 
 
 def tab_constructor(
-    tab_name: str,
+    name: str,
     component: Callable,
     on_click: Callable = None,  # TODO: document args = websocket, state, set_state, tab
     padding: bool = True,
-    viewport: ViewportSelector = ViewportSelector.primary,
-    auth_level: AuthLevel = AuthLevel.user,
+    selector: ViewportSelector = ViewportSelector.primary,
+    auth: AuthLevel = AuthLevel.user,
 ):
-    return {
-        "name": tab_name,
-        "viewport": viewport,
-        "viewport_padding": padding,
-        "on_click": on_click,
-        "auth": auth_level,
-        "component": component,
-    }
+    return NavTab(
+        name=name,
+        viewport=Viewport(
+            component=component,
+            selector=selector,
+            padding=padding,
+            auth=auth,
+        ),
+        on_click=on_click,
+        auth=auth,
+    )

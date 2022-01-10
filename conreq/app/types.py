@@ -34,12 +34,21 @@ class Viewport:
     component: Callable
     selector: ViewportSelector = ViewportSelector.primary
     padding: bool = True
+    auth: AuthLevel = AuthLevel.user
 
 
 @dataclass
 class NavTab:
+    name: str
     viewport: Viewport = None
     on_click: Callable = None
+    auth: AuthLevel = AuthLevel.user
+
+
+@dataclass
+class NavGroup:
+    name: str
+    tabs: list[NavTab] = field(default_factory=list)
 
 
 @dataclass
@@ -54,9 +63,8 @@ class ModalState:
 class HomepageState:
     page_title: str = "Loading..."
     viewport_selector: ViewportSelector = ViewportSelector.initial
-    viewport_padding: bool = True
-    viewport_primary: Callable = None
-    viewport_secondary: Callable = None
+    viewport_primary: Viewport = None
+    viewport_secondary: Viewport = None
     modal_state: ModalState = ModalState()
     modal: Callable = None
 
