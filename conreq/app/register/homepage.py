@@ -19,6 +19,7 @@ def nav_tab(
     group_name: str,
     group_icon: Icon = None,
     on_click: Callable = None,  # TODO: document args = websocket, state, set_state, tab
+    html_class: str = "",
     padding: bool = True,
     selector: ViewportSelector = ViewportSelector.primary,
     auth: AuthLevel = AuthLevel.user,
@@ -54,6 +55,7 @@ def nav_tab(
                         viewport=Viewport(
                             component=component,
                             selector=selector,
+                            html_class=html_class,
                             padding=padding,
                             auth=auth,
                         ),

@@ -34,6 +34,7 @@ class ViewportSelector:
 class Viewport:
     component: Callable
     selector: ViewportSelector = ViewportSelector.primary
+    html_class: str = ""
     padding: bool = True
     auth: AuthLevel = AuthLevel.user
 

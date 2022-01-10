@@ -2,6 +2,7 @@ import idom
 from idom.html import div
 
 from conreq import HomepageState, ViewportSelector, config
+from conreq.app.types import Viewport
 
 VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
 VIEWPORT_CONTAINER_SECONDARY = {"className": "viewport-container secondary"}
@@ -15,10 +16,10 @@ def viewport_loading(websocket, state: HomepageState, set_state):
     return div(
         VIEWPORT_CONTAINER_LOADING
         | (
-            {}
+            HIDDEN
             if state.viewport_selector
-            in {ViewportSelector.loading, ViewportSelector.initial}
-            else HIDDEN
+            not in {ViewportSelector.loading, ViewportSelector.initial}
+            else {}
         ),
         config.components.loading_animation,
     )
@@ -30,12 +31,11 @@ def viewport_primary(websocket, state: HomepageState, set_state):
         return div(VIEWPORT_CONTAINER_PRIMARY | HIDDEN)
 
     return div(
-        VIEWPORT_CONTAINER_PRIMARY
-        | ({} if state.viewport_selector == ViewportSelector.primary else HIDDEN)
-        | (
-            {}
-            if state.viewport_primary.padding
-            else {"className": VIEWPORT_CONTAINER_PRIMARY["className"] + " no-padding"}
+        viewport_class(
+            VIEWPORT_CONTAINER_PRIMARY,
+            state.viewport_selector,
+            ViewportSelector.primary,
+            state.viewport_primary,
         ),
         *(
             [state.viewport_primary.component(websocket, state, set_state)]
@@ -51,14 +51,11 @@ def viewport_secondary(websocket, state: HomepageState, set_state):
         return div(VIEWPORT_CONTAINER_SECONDARY | HIDDEN)
 
     return div(
-        VIEWPORT_CONTAINER_SECONDARY
-        | ({} if state.viewport_selector == ViewportSelector.secondary else HIDDEN)
-        | (
-            {}
-            if state.viewport_secondary.padding
-            else {
-                "className": VIEWPORT_CONTAINER_SECONDARY["className"] + " no-padding"
-            }
+        viewport_class(
+            VIEWPORT_CONTAINER_SECONDARY,
+            state.viewport_selector,
+            ViewportSelector.secondary,
+            state.viewport_secondary,
         ),
         *(
             [state.viewport_secondary.component(websocket, state, set_state)]
@@ -66,3 +63,18 @@ def viewport_secondary(websocket, state: HomepageState, set_state):
             else []
         ),
     )
+
+
+def viewport_class(original, viewport_selector, selector, viewport: Viewport):
+    # Ensure we are constructing a new class with the pipe operator
+    new_attrs = original
+    if viewport_selector != selector:
+        new_attrs = new_attrs | HIDDEN
+    else:
+        new_attrs = new_attrs | {}
+
+    if not viewport.padding:
+        new_attrs["className"] += " no-padding"
+    if viewport.html_class:
+        new_attrs["className"] += f" {viewport.html_class}"
+    return new_attrs
