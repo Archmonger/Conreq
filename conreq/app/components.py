@@ -126,6 +126,6 @@ def _tabbed_viewport_tabs_values(
         set_tab_state(copy(tab_state))
 
     return {
-        "className": f"list-group-item clickable{' active' if tab_state.current_tab.component is tab.component else ''}",
+        "className": f"list-group-item clickable{' active' if tab_state.current_tab is tab else ''}",
         "onClick": on_click,
     }
