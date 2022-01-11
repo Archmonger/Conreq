@@ -5,7 +5,7 @@ from typing import Callable
 
 from idom.core.proto import VdomDict
 from idom.html import div, span
-from sortedcontainers import SortedDict, SortedList
+from sortedcontainers import SortedList
 
 from conreq.app import view_wrappers
 from conreq.app.types import NavGroup, NavTab, Tab
