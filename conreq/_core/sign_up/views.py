@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-from django.shortcuts import redirect
-from django.template import loader
+from django.shortcuts import redirect, render
 from django.utils import timezone
 
 from conreq import config
@@ -30,8 +28,7 @@ def sign_up_with_invite(request, invite_code):
 
         # Submission wasn't valid, so return the error codes
         if not form.is_valid():
-            template = loader.get_template(config.templates.sign_up)
-            return HttpResponse(template.render({"form": form}, request))
+            return render(request, config.templates.sign_up, {"form": form})
 
         # Create and login the user
         form.save()
@@ -45,5 +42,4 @@ def sign_up_with_invite(request, invite_code):
         return redirect(LOGIN_REDIRECT_URL)
 
     # User needs to fill out registration form
-    template = loader.get_template(config.templates.sign_up)
-    return HttpResponse(template.render({}, request))
+    return render(request, config.templates.sign_up)

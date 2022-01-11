@@ -1,9 +1,5 @@
-from typing import Union
-
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-from django.shortcuts import redirect
-from django.template import loader
+from django.shortcuts import redirect, render
 
 from conreq._core.first_run.forms import InitializationForm
 from conreq._core.first_run.models import Initialization
@@ -11,7 +7,7 @@ from conreq._core.first_run.models import Initialization
 INITIALIZED = False
 
 
-def initialize(request) -> Union[None, HttpResponse]:
+def initialize(request):
     # pylint: disable=global-statement
     # Check cached value if we've already initialized
     global INITIALIZED
@@ -33,12 +29,12 @@ def initialize(request) -> Union[None, HttpResponse]:
             return _first_run_setup(form, request, initialization)
 
         # Form data wasn't valid, so return the error codes
-        template = loader.get_template("conreq/registration/initialization.html")
-        return HttpResponse(template.render({"form": form}, request))
+        return render(
+            request, "conreq/registration/initialization.html", {"form": form}
+        )
 
     # User needs to fill out the first time setup
-    template = loader.get_template("conreq/registration/initialization.html")
-    return HttpResponse(template.render({}, request))
+    return render(request, "conreq/registration/initialization.html")
 
 
 def _first_run_setup(form, request, initialization):

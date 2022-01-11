@@ -43,8 +43,7 @@ def manage_users_table(request):
         request,
         paginate={"per_page": request.GET.get("per_page", 25)},
     ).configure(table)
-    context = {"table": table}
-    return render(request, "conreq/table.html", context)
+    return render(request, "conreq/table.html", {"table": table})
 
 
 def user_invites(websocket, state, set_state):
