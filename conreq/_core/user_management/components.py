@@ -10,6 +10,7 @@ from conreq._core.user_management.tables import UsersTable
 from conreq._core.utils import tab_constructor
 from conreq.app import register
 from conreq.app.components import tabbed_viewport
+from conreq.app.types import Tab
 from conreq.utils.components import view_to_component
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
@@ -62,5 +63,5 @@ def user_management(websocket, state, set_state):
 
 
 config._homepage.admin_nav_tabs[0] = tab_constructor("User Management", user_management)
-config._tabs.manage_users["Manage Users"] = {"component": manage_users_table}
-config._tabs.manage_users["User Invites"] = {"component": user_invites}
+config._tabs.manage_users.append(Tab(name="Manage Users", component=manage_users_table))
+config._tabs.manage_users.append(Tab(name="User Invites", component=user_invites))

@@ -8,7 +8,7 @@ from idom.html import div, span
 from sortedcontainers import SortedDict, SortedList
 
 from conreq.app import view_wrappers
-from conreq.app.types import NavGroup, NavTab
+from conreq.app.types import NavGroup, NavTab, Tab
 from conreq.utils.containers import FillList
 
 
@@ -59,18 +59,18 @@ class ComponentConfig:
 
 @dataclass
 class TabConfig:
-    user_settings: SortedDict[str, dict] = field(default_factory=SortedDict)
-    manage_users: SortedDict[str, dict] = field(default_factory=SortedDict)
-    app_store: SortedDict[str, dict] = field(default_factory=SortedDict)
-    server_settings: SortedDict[str, dict] = field(default_factory=SortedDict)
+    user_settings: SortedList[Tab] = field(default_factory=SortedList)
+    manage_users: SortedList[Tab] = field(default_factory=SortedList)
+    app_store: SortedList[Tab] = field(default_factory=SortedList)
+    server_settings: SortedList[Tab] = field(default_factory=SortedList)
 
 
 @dataclass
 class _InternalTabConfig:
-    user_settings_top: dict = field(default_factory=dict)
-    user_settings_bottom: dict = field(default_factory=dict)
-    manage_users: dict = field(default_factory=dict)
-    server_settings: dict = field(default_factory=dict)
+    user_settings_top: list[Tab] = field(default_factory=list)
+    user_settings_bottom: list[Tab] = field(default_factory=list)
+    manage_users: list[Tab] = field(default_factory=list)
+    server_settings: list[Tab] = field(default_factory=list)
 
 
 @dataclass

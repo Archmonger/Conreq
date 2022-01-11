@@ -14,6 +14,7 @@ from conreq._core.server_settings.models import (
 from conreq._core.utils import tab_constructor
 from conreq.app import register
 from conreq.app.components import tabbed_viewport
+from conreq.app.types import Tab
 from conreq.app.views import SingletonUpdateView
 from conreq.utils.components import view_to_component
 
@@ -61,8 +62,10 @@ def server_settings(websocket, state, set_state):
 
 
 # Set the internal tabs
-config._tabs.server_settings["General"] = {"component": GeneralSettingsView}
-config._tabs.server_settings["Styling"] = {"component": StylingSettingsView}
-config._tabs.server_settings["Webserver"] = {"component": WebserverSettingsView}
-config._tabs.server_settings["Email"] = {"component": EmailSettingsView}
+config._tabs.server_settings.append(Tab(name="General", component=GeneralSettingsView))
+config._tabs.server_settings.append(Tab(name="Styling", component=StylingSettingsView))
+config._tabs.server_settings.append(
+    Tab(name="Webserver", component=WebserverSettingsView)
+)
+config._tabs.server_settings.append(Tab(name="Email", component=EmailSettingsView))
 config._homepage.admin_nav_tabs[2] = tab_constructor("Server Settings", server_settings)

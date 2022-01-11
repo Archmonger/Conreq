@@ -13,6 +13,7 @@ from conreq._core.user_settings.forms import (
 from conreq._core.utils import tab_constructor
 from conreq.app import register
 from conreq.app.components import logout, tabbed_viewport
+from conreq.app.types import Tab
 from conreq.utils.components import view_to_component
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 
@@ -76,10 +77,12 @@ def sign_out(*_):
 
 
 # Set the internal tabs
-config._tabs.user_settings_top["General"] = {"component": UserSettingsView}
-config._tabs.user_settings_top["Change Password"] = {"component": ChangePasswordView}
-config._tabs.user_settings_bottom["Delete My Account"] = {
-    "component": DeleteMyAccountView
-}
+config._tabs.user_settings_top.append(Tab(name="General", component=UserSettingsView))
+config._tabs.user_settings_top.append(
+    Tab(name="Change Password", component=ChangePasswordView)
+)
+config._tabs.user_settings_bottom.append(
+    Tab(name="Delete My Account", component=DeleteMyAccountView)
+)
 config._homepage.user_nav_tabs.append(tab_constructor("Settings", user_settings))
 config._homepage.user_nav_tabs.append(tab_constructor("Sign Out", sign_out))

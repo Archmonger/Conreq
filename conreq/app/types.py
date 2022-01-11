@@ -47,9 +47,20 @@ class NavTab:
     auth: AuthLevel = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
-        if isinstance(__o, str):
-            return self.name.lower() == __o.lower()
-        return self.name.lower() == __o.name.lower()
+        return _check_name(self, __o)
+
+
+@dataclass(order=True)
+class Tab:
+    name: str
+    component: Callable
+    html_class: str = ""
+    padding: bool = True
+    on_click: Callable = None
+    auth: AuthLevel = AuthLevel.user
+
+    def __eq__(self, __o: object) -> bool:
+        return _check_name(self, __o)
 
 
 @dataclass(order=True)
@@ -59,9 +70,7 @@ class NavGroup:
     tabs: SortedSet[NavTab] = field(default_factory=SortedSet)
 
     def __eq__(self, __o: object) -> bool:
-        if isinstance(__o, str):
-            return self.name.lower() == __o.lower()
-        return self.name.lower() == __o.name.lower()
+        return _check_name(self, __o)
 
 
 @dataclass
@@ -84,7 +93,7 @@ class HomepageState:
 
 @dataclass
 class TabbedViewportState:
-    current_tab: Callable
+    current_tab: Tab
 
 
 @dataclass
@@ -95,3 +104,9 @@ class Seconds:
     week: int = day * 7
     month: int = week * 4
     year: int = month * 12
+
+
+def _check_name(self, __o):
+    if isinstance(__o, str):
+        return self.name.lower() == __o.lower()
+    return self.name.lower() == __o.name.lower()
