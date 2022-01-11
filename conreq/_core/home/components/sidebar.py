@@ -166,7 +166,13 @@ def nav_tab_class(state: HomepageState, tab: NavTab):
 
 
 def sidebar_tab(websocket, state: HomepageState, set_state, tab: NavTab):
-    async def on_click(_):
+    async def on_click(event):
+        if tab.on_click:
+            tab.on_click(
+                event, websocket=websocket, state=state, set_state=set_state, tab=tab
+            )
+            return
+
         state.viewport_selector = tab.viewport.selector
         if tab.viewport.selector == ViewportSelector.primary:
             state.viewport_primary = tab.viewport
@@ -175,12 +181,7 @@ def sidebar_tab(websocket, state: HomepageState, set_state, tab: NavTab):
         set_state(copy(state))
 
     return div(
-        nav_tab_class(state, tab)
-        | {
-            "onClick": on_click
-            if not tab.on_click
-            else tab.on_click(websocket, state, set_state, tab)
-        },
+        nav_tab_class(state, tab) | {"onClick": on_click},
         div(TAB_NAME, tab.name),
     )
 
