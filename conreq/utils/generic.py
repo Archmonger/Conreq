@@ -3,14 +3,14 @@ from re import sub
 from typing import Any
 
 
-def is_key_value_in_list(
+def is_key_value_in_iter(
     key: Any, value: Any, search_list: list, return_item: bool = False
 ) -> bool:
-    """Iterate through a list of dicts to check if a specific key/value pair exists."""
-    if isinstance(search_list, list):
-        for item in search_list:
-            if item.__contains__(key) and item[key] == value:
-                return item if return_item else True
+    """Iterate through a iterable (list, tuple, etc) containing dicts to check if a
+    specific key/value pair exists."""
+    for item in search_list:
+        if item.__contains__(key) and item[key] == value:
+            return item if return_item else True
     return False
 
 
