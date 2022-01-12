@@ -6,7 +6,9 @@
 <html lang="en">
 
 <head>
-    {% block title %}<title>{{ GeneralSettings.server_name }}</title>{% endblock title %}
+    {% block title %}
+    <title>{{ GeneralSettings.server_name }}</title>
+    {% endblock title %}
     {% block description %}
     <meta name="Description" content="{{ GeneralSettings.server_description }}">
     {% endblock description %}
