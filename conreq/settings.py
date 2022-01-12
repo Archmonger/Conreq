@@ -241,7 +241,7 @@ INSTALLED_APPS = [
     "conreq._core.background_tasks",
     "conreq._core.debug",
     "conreq._core.email",
-    "conreq._core.first_run",
+    "conreq._core.initialization",
     "conreq._core.home",
     "conreq._core.landing",
     "conreq._core.password_reset",

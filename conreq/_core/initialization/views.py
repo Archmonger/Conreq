@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 
-from conreq._core.first_run.forms import InitializationForm
-from conreq._core.first_run.models import Initialization
+from conreq._core.initialization.forms import InitializationForm
+from conreq._core.initialization.models import Initialization
 
 INITIALIZED = False
 
@@ -26,7 +26,7 @@ def initialize(request):
 
         # Create the superuser and set up the database if the form is valid
         if form.is_valid():
-            return _first_run_setup(form, request, initialization)
+            return _display_initialization(form, request, initialization)
 
         # Form data wasn't valid, so return the error codes
         return render(
@@ -37,7 +37,7 @@ def initialize(request):
     return render(request, "conreq/registration/initialization.html")
 
 
-def _first_run_setup(form, request, initialization):
+def _display_initialization(form, request, initialization):
     form.save()
     username = form.cleaned_data.get("username")
     password = form.cleaned_data.get("password1")

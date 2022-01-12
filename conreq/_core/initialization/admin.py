@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from conreq._core.first_run.models import Initialization
+from conreq._core.initialization.models import Initialization
 
 
 @admin.register(Initialization)

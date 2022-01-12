@@ -10,7 +10,7 @@ from conreq._core.app_store.models import (
     SysPlatform,
 )
 from conreq._core.email.models import AuthEncryption, EmailSettings
-from conreq._core.first_run.models import Initialization
+from conreq._core.initialization.models import Initialization
 from conreq._core.server_settings.models import (
     GeneralSettings,
     StylingSettings,
