@@ -1,7 +1,7 @@
 from platform import platform
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Button, Submit
+from crispy_forms.layout import Submit
 from django.conf import settings
 from django.db.models import TextChoices
 from django.forms import CharField, ModelForm
