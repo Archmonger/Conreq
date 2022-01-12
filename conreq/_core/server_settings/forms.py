@@ -53,7 +53,6 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method = "post"
         self.helper.add_input(Submit("submit", "Save"))
-        self.helper.add_input(Button("clear-cache", "Clear Cache"))
 
 
 class StylingSettingsForm(ModelForm):
