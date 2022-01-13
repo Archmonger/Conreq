@@ -93,12 +93,11 @@ class Command(BaseCommand):
         config.debug = get_env("WEBSERVER_DEBUG", return_type=bool)
         config.include_server_header = False
         x: WebserverSettings = WebserverSettings.get_solo()
-        if (x.ssl_ca_certificate or x.ssl_certificate) and x.ssl_key:
+        if x.ssl_certificate and x.ssl_key:
+            config.certfile = x.ssl_certificate.path
+            config.keyfile = x.ssl_key.path
             if x.ssl_ca_certificate:
                 config.ca_certs = x.ssl_ca_certificate.path
-            else:
-                config.certfile = x.ssl_certificate.path
-            config.keyfile = x.ssl_key.path
 
         # Additonal webserver configuration
         if HYPERCORN_TOML.exists():
