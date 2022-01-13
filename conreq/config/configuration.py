@@ -7,7 +7,7 @@ from idom.core.proto import VdomDict
 from idom.html import div, span
 from sortedcontainers import SortedList
 
-from conreq.app import view_wrappers
+from conreq.config import view_wrappers
 from conreq.app.types import NavGroup, NavTab, Tab
 from conreq.utils.containers import FillList
 
