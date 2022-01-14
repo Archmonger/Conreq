@@ -23,6 +23,7 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'conreq/offline.css' %}">
-<p>Could not connect to {{ GeneralSettings.server_name }}.</p>
+<h1>Could not connect to {{ GeneralSettings.server_name }}.</h1>
 <p>Check your network connection or try again later.</p>
+<button onclick="location.reload()">Try Again</button>
 {% endblock %}
