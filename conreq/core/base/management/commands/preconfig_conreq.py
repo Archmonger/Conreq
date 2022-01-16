@@ -81,13 +81,14 @@ class Command(BaseCommand):
         with sqlite3.connect(path) as cursor:
             print("> Vacuuming database")
             cursor.execute("VACUUM")
-        if not no_perms and (uid != -1 or gid != -1):
-            if sys.platform == "linux":
-                # pylint: disable=no-member
-                print("> Applying permissions")
-                new_uid = uid if uid else os.getuid()
-                new_gid = gid if gid else os.getgid()
-                os.chown(path, new_uid, new_gid)
+            print("> Configuring database")
+            cursor.execute("PRAGMA journal_mode = WAL;")
+        if not no_perms and (uid != -1 or gid != -1) and sys.platform == "linux":
+            # pylint: disable=no-member
+            print("> Applying permissions")
+            new_uid = uid or os.getuid()
+            new_gid = gid or os.getgid()
+            os.chown(path, new_uid, new_gid)
         print("> Complete")
 
     @staticmethod
