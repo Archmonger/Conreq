@@ -27,7 +27,8 @@ urlpatterns = [
         name="media",
     ),
     path("sign_in", config.views.sign_in, name="sign_in"),
-    path("sign_up/<invite_code>", config.views.sign_up, name="sign_up"),
+    path("sign_up", config.views.sign_up, name="sign_up"),
+    path("sign_up/<invite_code>", config.views.sign_up, name="sign_up_invite"),
     path("sign_out", auth_views.logout_then_login, name="sign_out"),
     path("password_reset", config.views.password_reset, name="password_reset"),
     path(

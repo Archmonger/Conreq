@@ -12,7 +12,11 @@ LOGIN_REDIRECT_URL = getattr(settings, "LOGIN_REDIRECT_URL")
 
 
 @register.view.sign_up()
-def sign_up_with_invite(request, invite_code):
+def sign_up(request, invite_code=None):
+    # No invite code was provided
+    if not invite_code:
+        return redirect("landing")
+
     # Check if the invite code is valid
     try:
         code: InviteCode = InviteCode.objects.get(code=invite_code)
@@ -32,9 +36,10 @@ def sign_up_with_invite(request, invite_code):
 
         # Create and login the user
         form.save()
-        username = form.cleaned_data.get("username")
-        password = form.cleaned_data.get("password1")
-        user = authenticate(username=username, password=password)
+        user = authenticate(
+            username=form.cleaned_data.get("username"),
+            password=form.cleaned_data.get("password1"),
+        )
         code.used_by = user
         code.used_at = timezone.now()
         code.save()
