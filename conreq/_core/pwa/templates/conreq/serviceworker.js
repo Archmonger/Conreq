@@ -7,6 +7,12 @@ var filesToCache = [
 	"{% static 'conreq/main_slim.css' %}",
 	"{% static 'conreq/offline.css' %}",
 	"{% static 'conreq/aos-init.js' %}",
+	"{% static 'conreq/icons/favicon-32x32.png' %}",
+	"{% static 'conreq/icons/standard.png' %}",
+	"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js",
+	"https://unpkg.com/aos@2.3.4/dist/aos.js",
+	"https://unpkg.com/aos@2.3.4/dist/aos.css",
+	"https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap",
 ];
 
 // Cache on install

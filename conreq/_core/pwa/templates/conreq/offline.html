@@ -25,5 +25,11 @@
 <link rel="stylesheet" href="{% static 'conreq/offline.css' %}">
 <h1>Could not connect to {{ GeneralSettings.server_name }}.</h1>
 <p>Check your network connection or try again later.</p>
-<button onclick="location.reload()">Try Again</button>
+<div class="lds-ellipsis">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<button onclick="location.reload(); $('.lds-ellipsis').fadeIn();">Try Again</button>
 {% endblock %}
