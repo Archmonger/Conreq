@@ -1,6 +1,9 @@
+from django.conf import settings
 from django.shortcuts import render
 
+from conreq import config
 from conreq._core.pwa.apps import PwaConfig
+from conreq.app import register
 from conreq.utils.environment import get_base_url
 
 BASE_URL = get_base_url()
@@ -9,7 +12,7 @@ BASE_URL = get_base_url()
 def service_worker(request):
     return render(
         request,
-        "serviceworker.js",
+        "conreq/serviceworker.js",
         {"base_url": BASE_URL},
         content_type="application/javascript",
     )
@@ -18,11 +21,12 @@ def service_worker(request):
 def manifest(request):
     return render(
         request,
-        "site.webmanifest",
+        "conreq/site.webmanifest",
         {"pwa": PwaConfig.__dict__},
-        content_type="application/json",
+        content_type="application/manifest+json",
     )
 
 
+@register.view.offline()
 def offline(request):
-    return render(request, "offline.html")
+    return render(request, config.templates.offline)

@@ -3,6 +3,7 @@
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
 	"{{ base_url|escapejs }}offline",
+	"{{ base_url|escapejs }}site.webmanifest",
 	"{% static 'conreq/main_slim.css' %}",
 	"{% static 'conreq/offline.css' %}",
 	"{% static 'conreq/aos-init.js' %}",

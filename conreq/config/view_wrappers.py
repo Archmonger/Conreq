@@ -76,3 +76,13 @@ async def password_reset_confirm(request, *args, **kwargs):
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)
     return await convert_to_async(view)(request, *args, **kwargs)
+
+
+async def offline(request, *args, **kwargs):
+    """Configurable password reset confirmation view."""
+    view = config.views.offline
+    if view is offline:
+        return stub(request)
+    if iscoroutinefunction(view):
+        return await view(request, *args, **kwargs)
+    return await convert_to_async(view)(request, *args, **kwargs)

@@ -87,3 +87,15 @@ def password_reset_confirm() -> None:
         return func
 
     return decorator
+
+
+def offline() -> None:
+    """Changes the password reset confirm view."""
+
+    def decorator(func):
+        from conreq.utils.profiling import profiled_view
+
+        config.views.offline = profiled_view(func)
+        return func
+
+    return decorator

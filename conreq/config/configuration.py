@@ -21,7 +21,8 @@ class StartupConfig:
 
 @dataclass
 class ViewConfig:
-    # TODO: Don't use the app.register API for pre-configuring the base views here
+    # TODO: Don't use the app.register API for pre-configuring the base views...
+    # Instead, use some sort of private API and rely on view_wrappers
     landing: Callable = view_wrappers.landing
     home: Callable = view_wrappers.home
     sign_up: Callable = view_wrappers.sign_up
@@ -29,10 +30,12 @@ class ViewConfig:
     password_reset: Callable = view_wrappers.password_reset
     password_reset_sent: Callable = view_wrappers.password_reset_sent
     password_reset_confirm: Callable = view_wrappers.password_reset_confirm
+    offline: Callable = view_wrappers.offline
 
 
 @dataclass
 class TemplateConfig:
+    # FIXME: Some of these don't respect the settings change
     landing: str = ""
     home: str = "conreq/homepage/home.html"
     sign_up: str = "conreq/registration/sign_up.html"
@@ -40,6 +43,7 @@ class TemplateConfig:
     password_reset: str = "conreq/registration/password_reset.html"
     password_reset_sent: str = "conreq/registration/password_reset_sent.html"
     password_reset_confirm: str = "conreq/registration/password_reset_confirm.html"
+    offline: str = "conreq/offline.html"
 
 
 @dataclass

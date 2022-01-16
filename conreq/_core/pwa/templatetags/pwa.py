@@ -23,7 +23,7 @@ def jsonify(obj):
     return mark_safe(json_val)
 
 
-@register.inclusion_tag("pwa.html", takes_context=True)
+@register.inclusion_tag("conreq/pwa.html", takes_context=True)
 def pwa_head_content(context):
     # pylint: disable=unused-argument
     return {"pwa": PwaConfig.__dict__, "base_url": BASE_URL}
