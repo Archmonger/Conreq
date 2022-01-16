@@ -37,12 +37,12 @@ class ViewConfig:
 class TemplateConfig:
     # FIXME: Some of these don't respect the settings change
     landing: str = ""
-    home: str = "conreq/homepage/home.html"
-    sign_up: str = "conreq/registration/sign_up.html"
-    sign_in: str = "conreq/registration/sign_in.html"
-    password_reset: str = "conreq/registration/password_reset.html"
-    password_reset_sent: str = "conreq/registration/password_reset_sent.html"
-    password_reset_confirm: str = "conreq/registration/password_reset_confirm.html"
+    home: str = "conreq/home.html"
+    sign_up: str = "conreq/sign_up.html"
+    sign_in: str = "conreq/sign_in.html"
+    password_reset: str = "conreq/password_reset.html"
+    password_reset_sent: str = "conreq/password_reset_sent.html"
+    password_reset_confirm: str = "conreq/password_reset_confirm.html"
     offline: str = "conreq/offline.html"
 
 

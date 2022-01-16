@@ -29,12 +29,10 @@ def initialize(request):
             return _display_initialization(form, request, initialization)
 
         # Form data wasn't valid, so return the error codes
-        return render(
-            request, "conreq/registration/initialization.html", {"form": form}
-        )
+        return render(request, "conreq/initialization.html", {"form": form})
 
     # User needs to fill out the first time setup
-    return render(request, "conreq/registration/initialization.html")
+    return render(request, "conreq/initialization.html")
 
 
 def _display_initialization(form, request, initialization):
