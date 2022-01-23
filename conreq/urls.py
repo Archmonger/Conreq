@@ -7,7 +7,6 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django_downloadview import StorageDownloadView
-from django_idom import IDOM_WEB_MODULES_PATH
 
 from conreq import config
 from conreq.utils.environment import get_base_url, get_home_url
@@ -19,6 +18,7 @@ urlpatterns = [
     path("", include("conreq._core.pwa.urls")),
     path("", config.views.landing, name="landing"),
     path(HOME_URL, config.views.home, name="home"),
+    path("idom/", include("django_idom.http.urls")),
     path(
         "files/serve/<path:path>",
         StorageDownloadView.as_view(
@@ -49,6 +49,3 @@ if BASE_URL != "/":
         path("", RedirectView.as_view(url=BASE_URL)),
         path(BASE_URL, include(urlpatterns)),
     ]
-
-# Add IDOM web modules
-urlpatterns.append(IDOM_WEB_MODULES_PATH)
