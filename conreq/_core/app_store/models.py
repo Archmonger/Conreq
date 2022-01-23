@@ -70,6 +70,13 @@ class Subcategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
+class PackageVersion(models.Model):
+    def __str__(self):
+        return str(self.version)
+
+    version = VersionField(unique=True)
+
+
 class AppPackage(models.Model):
     def __str__(self):
         return self.verbose_name
@@ -110,8 +117,14 @@ class AppPackage(models.Model):
         blank=True,
         help_text="Optional text message banner shown this apps details page.",
     )
+    sync_with_pypi = models.BooleanField(
+        default=False,
+        help_text="Will automatically sync relevant information with the latest PyPI version.",
+        verbose_name="Sync with PyPI",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    versions = models.ManyToManyField(PackageVersion, blank=True)
 
     # Ownership Info
     author = models.CharField(max_length=50)
