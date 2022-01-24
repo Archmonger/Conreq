@@ -4,9 +4,7 @@ from django import urls
 from conreq import config
 from conreq.utils.environment import get_base_url
 
-BASE_URL = get_base_url(append_slash=False, prepend_slash=False)
-if BASE_URL:
-    BASE_URL = BASE_URL + "/"
+BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
 
 
 def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:

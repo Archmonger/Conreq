@@ -7,6 +7,8 @@ from typing import Any, Callable, Tuple
 import dotenv
 from dotenv import dotenv_values
 
+HOME_URL = None
+BASE_URL = None
 ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
 if ENV_PREFIX:
     ENV_PREFIX = ENV_PREFIX + "_"
@@ -67,12 +69,23 @@ def get_safe_mode() -> bool:
     return get_env("SAFE_MODE", False, return_type=bool)
 
 
-@functools.cache
-def get_base_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
+def get_base_url(
+    append_slash: bool = True, prepend_slash: bool = True, empty_if_unset: bool = False
+) -> str:
     """Obtains the BASE_URL from the environment variables"""
-    base_url = get_env("BASE_URL", "")
+    # pylint: disable=global-statement
+    global BASE_URL
+
+    if BASE_URL is None:
+        BASE_URL = get_env("BASE_URL", "")
+
+    base_url = BASE_URL
     if base_url:
         base_url = base_url.replace("/", "").replace("\\", "")
+
+    if empty_if_unset and not base_url:
+        return base_url
+
     if append_slash:
         base_url = base_url + "/"
     if prepend_slash:
@@ -81,12 +94,23 @@ def get_base_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
     return base_url
 
 
-@functools.cache
-def get_home_url(append_slash: bool = True, prepend_slash: bool = True) -> str:
+def get_home_url(
+    append_slash: bool = True, prepend_slash: bool = True, empty_if_unset: bool = False
+) -> str:
     """Obtains the HOME_URL from the environment variables"""
-    home_url = get_env("HOME_URL", "home")
+    # pylint: disable=global-statement
+    global HOME_URL
+
+    if HOME_URL is None:
+        HOME_URL = get_env("HOME_URL", "home")
+
+    home_url = HOME_URL
     if home_url:
         home_url = home_url.replace("/", "").replace("\\", "")
+
+    if empty_if_unset and not home_url:
+        return home_url
+
     if append_slash:
         home_url = home_url + "/"
     if prepend_slash:

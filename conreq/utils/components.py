@@ -11,9 +11,7 @@ from conreq import AuthLevel
 from conreq.utils.environment import get_base_url
 from conreq.utils.views import authenticated as authenticated_view
 
-BASE_URL = get_base_url(append_slash=False, prepend_slash=False)
-if BASE_URL:
-    BASE_URL = BASE_URL + "/"
+BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
 iframe = make_vdom_constructor("iframe")
 
 

@@ -11,8 +11,8 @@ from django_downloadview import StorageDownloadView
 from conreq import config
 from conreq.utils.environment import get_base_url, get_home_url
 
-BASE_URL = get_base_url(prepend_slash=False)
-HOME_URL = get_home_url(append_slash=False, prepend_slash=False)
+BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
+HOME_URL = get_home_url(prepend_slash=False)
 
 urlpatterns = [
     path("", include("conreq._core.pwa.urls")),
@@ -33,8 +33,8 @@ urlpatterns = [
 ]
 
 # Wrap the urlpatterns in BASE_URL if required
-if BASE_URL != "/":
+if BASE_URL:
     urlpatterns = [
-        path("", RedirectView.as_view(url=BASE_URL)),
         path(BASE_URL, include(urlpatterns)),
+        path("", RedirectView.as_view(url=BASE_URL)),
     ]

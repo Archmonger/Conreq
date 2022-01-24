@@ -9,9 +9,7 @@ from conreq.utils.environment import get_base_url
 # TODO: Use Django resolve and raise an exception if registering something that already exists
 # pylint: disable=import-outside-toplevel
 
-BASE_URL = get_base_url(append_slash=False, prepend_slash=False)
-if BASE_URL:
-    BASE_URL = BASE_URL + "/"
+BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
 
 
 def url(
