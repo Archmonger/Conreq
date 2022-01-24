@@ -3,7 +3,7 @@
 from inspect import isclass, iscoroutinefunction
 from typing import Any
 
-from conreq.utils.environment import get_debug
+from conreq.utils.environment import get_debug_mode
 from conreq.utils.generic import DoNothingDecorator
 
 # pylint: disable=invalid-name,too-few-public-methods,unused-import
@@ -12,7 +12,7 @@ metrics = DoNothingDecorator
 
 # Set performance profiling capabilities depending on whether DEBUG=True
 
-if get_debug():
+if get_debug_mode():
     from silk.profiling.profiler import silk_profile as metrics
 else:
     metrics = DoNothingDecorator

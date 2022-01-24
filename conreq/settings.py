@@ -21,7 +21,7 @@ from conreq.utils.apps import find_apps
 from conreq.utils.environment import (
     get_base_url,
     get_database_engine,
-    get_debug,
+    get_debug_mode,
     get_env,
     get_home_url,
     get_safe_mode,
@@ -78,7 +78,7 @@ DOTENV_FILE: Path = DATA_DIR / "settings.env"
 if not DOTENV_FILE.exists():
     with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
         pass
-DEBUG = get_debug()
+DEBUG = get_debug_mode()
 SAFE_MODE = get_safe_mode()
 DB_ENGINE = get_database_engine()
 BASE_URL = get_base_url()

@@ -6,9 +6,9 @@ import sys
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from conreq.utils.environment import get_database_engine, get_debug
+from conreq.utils.environment import get_database_engine, get_debug_mode
 
-DEBUG = get_debug()
+DEBUG = get_debug_mode()
 ROOT_DIR = getattr(settings, "ROOT_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 TEMP_DIR = getattr(settings, "TEMP_DIR")

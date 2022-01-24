@@ -4,10 +4,10 @@ import idom
 from idom.html import div, i, nav
 
 from conreq import HomepageState, NavGroup, NavTab, Viewport, ViewportSelector, config
-from conreq.utils.environment import get_debug, get_safe_mode
+from conreq.utils.environment import get_debug_mode, get_safe_mode
 from conreq.utils.generic import clean_string
 
-DEBUG = get_debug()
+DEBUG = get_debug_mode()
 SAFE_MODE = get_safe_mode()
 SIDEBAR = {
     "id": "sidebar",

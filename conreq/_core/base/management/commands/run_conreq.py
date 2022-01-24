@@ -12,10 +12,10 @@ from hypercorn.config import Config as HypercornConfig
 from hypercorn.run import run as run_hypercorn
 
 from conreq.utils.backup import backup_needed, backup_now
-from conreq.utils.environment import get_debug, get_env, set_env
+from conreq.utils.environment import get_debug_mode, get_env, set_env
 
 HYPERCORN_TOML = getattr(settings, "DATA_DIR") / "hypercorn.toml"
-DEBUG = get_debug()
+DEBUG = get_debug_mode()
 
 
 class Command(BaseCommand):

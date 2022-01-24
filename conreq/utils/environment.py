@@ -58,7 +58,7 @@ def get_env(
     return _parse_env_value(value, default_value, return_type)
 
 
-def get_debug() -> bool:
+def get_debug_mode() -> bool:
     """Shortcut to obtain DEBUG from environment variables"""
     # pylint: disable=global-statement
     global DEBUG_MODE
