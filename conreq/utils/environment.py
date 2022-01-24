@@ -6,11 +6,11 @@ from typing import Any, Callable, Tuple
 import dotenv
 from dotenv import dotenv_values
 
-HOME_URL = None
-BASE_URL = None
-SAFE_MODE = None
-DEBUG_MODE = None
-DB_ENGINE = None
+_HOME_URL = None
+_BASE_URL = None
+_SAFE_MODE = None
+_DEBUG_MODE = None
+_DB_ENGINE = None
 ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
 if ENV_PREFIX:
     ENV_PREFIX = ENV_PREFIX + "_"
@@ -61,23 +61,23 @@ def get_env(
 def get_debug_mode() -> bool:
     """Shortcut to obtain DEBUG from environment variables"""
     # pylint: disable=global-statement
-    global DEBUG_MODE
+    global _DEBUG_MODE
 
-    if DEBUG_MODE is None:
-        DEBUG_MODE = get_env("DEBUG_MODE", True, return_type=bool)
+    if _DEBUG_MODE is None:
+        _DEBUG_MODE = get_env("DEBUG_MODE", True, return_type=bool)
 
-    return DEBUG_MODE
+    return _DEBUG_MODE
 
 
 def get_safe_mode() -> bool:
     """Shortcut to obtain SAFE_MODE from environment variables"""
     # pylint: disable=global-statement
-    global SAFE_MODE
+    global _SAFE_MODE
 
-    if SAFE_MODE is None:
-        SAFE_MODE = get_env("SAFE_MODE", False, return_type=bool)
+    if _SAFE_MODE is None:
+        _SAFE_MODE = get_env("SAFE_MODE", False, return_type=bool)
 
-    return SAFE_MODE
+    return _SAFE_MODE
 
 
 def get_base_url(
@@ -85,12 +85,12 @@ def get_base_url(
 ) -> str:
     """Obtains the BASE_URL from the environment variables"""
     # pylint: disable=global-statement
-    global BASE_URL
+    global _BASE_URL
 
-    if BASE_URL is None:
-        BASE_URL = get_env("BASE_URL", "")
+    if _BASE_URL is None:
+        _BASE_URL = get_env("BASE_URL", "")
 
-    base_url = BASE_URL
+    base_url = _BASE_URL
     if base_url:
         base_url = base_url.replace("/", "").replace("\\", "")
 
@@ -110,12 +110,12 @@ def get_home_url(
 ) -> str:
     """Obtains the HOME_URL from the environment variables"""
     # pylint: disable=global-statement
-    global HOME_URL
+    global _HOME_URL
 
-    if HOME_URL is None:
-        HOME_URL = get_env("HOME_URL", "home")
+    if _HOME_URL is None:
+        _HOME_URL = get_env("HOME_URL", "home")
 
-    home_url = HOME_URL
+    home_url = _HOME_URL
     if home_url:
         home_url = home_url.replace("/", "").replace("\\", "")
 
@@ -133,13 +133,13 @@ def get_home_url(
 def get_database_engine() -> str:
     """Determines what type of database the current Conreq instance should be using. Ex) MYSQL, SQLITE, etc."""
     # pylint: disable=global-statement
-    global DB_ENGINE
+    global _DB_ENGINE
 
-    if DB_ENGINE is None:
-        DB_ENGINE = get_env("DB_ENGINE", "").upper()
+    if _DB_ENGINE is None:
+        _DB_ENGINE = get_env("DB_ENGINE", "").upper()
 
-    if DB_ENGINE in {"MYSQL"}:
-        return DB_ENGINE
+    if _DB_ENGINE in {"MYSQL"}:
+        return _DB_ENGINE
 
     return "SQLITE3"
 
