@@ -26,9 +26,9 @@ urlpatterns = [
         ),
         name="media",
     ),
-    path("sign_in", config.views.sign_in, name="sign_in"),
+    path("sign_in/", config.views.sign_in, name="sign_in"),
     path("sign_up/", include("conreq._core.sign_up.urls")),
-    path("sign_out", auth_views.logout_then_login, name="sign_out"),
+    path("sign_out/", auth_views.logout_then_login, name="sign_out"),
     path("password_reset/", include("conreq._core.password_reset.urls")),
 ]
 
