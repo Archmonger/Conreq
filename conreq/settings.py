@@ -316,13 +316,14 @@ DATABASES = {
         },
     }
 }
+CACHE_SHARDS = min(WEBSERVER_WORKERS, 10)
 CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
         "LOCATION": DATA_DIR / "cache",
         "TIMEOUT": 300,  # Default timeout of each key
-        "SHARDS": min(WEBSERVER_WORKERS, 10),  # Number of cache DBs to create
-        "DATABASE_TIMEOUT": 0.1,  # 100ms query timeout
+        "SHARDS": CACHE_SHARDS,  # Number of cache DBs to create
+        "DATABASE_TIMEOUT": 0.05 + (CACHE_SHARDS * 0.01),  # Query timeout
         "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte max cache size
     }
 }
