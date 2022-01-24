@@ -1,4 +1,3 @@
-import functools
 import json
 import os
 from distutils.util import strtobool
@@ -9,12 +8,14 @@ from dotenv import dotenv_values
 
 HOME_URL = None
 BASE_URL = None
+SAFE_MODE = None
+DEBUG_MODE = None
+DB_ENGINE = None
 ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
 if ENV_PREFIX:
     ENV_PREFIX = ENV_PREFIX + "_"
 
 
-@functools.cache
 def dotenv_path() -> str:
     """Load the .env path from a different context to avoid circular imports."""
     # pylint: disable=import-outside-toplevel
@@ -57,20 +58,30 @@ def get_env(
     return _parse_env_value(value, default_value, return_type)
 
 
-@functools.cache
 def get_debug() -> bool:
     """Shortcut to obtain DEBUG from environment variables"""
-    return get_env("DEBUG_MODE", True, return_type=bool)
+    # pylint: disable=global-statement
+    global DEBUG_MODE
+
+    if DEBUG_MODE is None:
+        DEBUG_MODE = get_env("DEBUG_MODE", True, return_type=bool)
+
+    return DEBUG_MODE
 
 
-@functools.cache
 def get_safe_mode() -> bool:
     """Shortcut to obtain SAFE_MODE from environment variables"""
-    return get_env("SAFE_MODE", False, return_type=bool)
+    # pylint: disable=global-statement
+    global SAFE_MODE
+
+    if SAFE_MODE is None:
+        SAFE_MODE = get_env("SAFE_MODE", False, return_type=bool)
+
+    return SAFE_MODE
 
 
 def get_base_url(
-    append_slash: bool = True, prepend_slash: bool = True, empty_if_unset: bool = False
+    prepend_slash: bool = True, append_slash: bool = True, empty_if_unset: bool = False
 ) -> str:
     """Obtains the BASE_URL from the environment variables"""
     # pylint: disable=global-statement
@@ -95,7 +106,7 @@ def get_base_url(
 
 
 def get_home_url(
-    append_slash: bool = True, prepend_slash: bool = True, empty_if_unset: bool = False
+    prepend_slash: bool = True, append_slash: bool = True, empty_if_unset: bool = False
 ) -> str:
     """Obtains the HOME_URL from the environment variables"""
     # pylint: disable=global-statement
@@ -119,12 +130,17 @@ def get_home_url(
     return home_url
 
 
-@functools.cache
-def get_database_type() -> str:
+def get_database_engine() -> str:
     """Determines what type of database the current Conreq instance should be using. Ex) MYSQL, SQLITE, etc."""
-    db_engine = get_env("DB_ENGINE", "")
-    if db_engine.upper() == "MYSQL":
-        return "MYSQL"
+    # pylint: disable=global-statement
+    global DB_ENGINE
+
+    if DB_ENGINE is None:
+        DB_ENGINE = get_env("DB_ENGINE", "").upper()
+
+    if DB_ENGINE in {"MYSQL"}:
+        return DB_ENGINE
+
     return "SQLITE3"
 
 

@@ -20,7 +20,7 @@ from conreq import Seconds, config
 from conreq.utils.apps import find_apps
 from conreq.utils.environment import (
     get_base_url,
-    get_database_type,
+    get_database_engine,
     get_debug,
     get_env,
     get_home_url,
@@ -80,7 +80,7 @@ if not DOTENV_FILE.exists():
         pass
 DEBUG = get_debug()
 SAFE_MODE = get_safe_mode()
-DB_ENGINE = get_database_type()
+DB_ENGINE = get_database_engine()
 BASE_URL = get_base_url()
 HOME_URL = get_home_url()
 WEBSERVER_WORKERS = get_env("WEBSERVER_WORKERS", 3, return_type=int)
@@ -362,7 +362,7 @@ STATICFILES_FINDERS = [
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = "files/"
-if get_base_url(append_slash=False, prepend_slash=False):
+if get_base_url(empty_if_unset=True):
     MEDIA_URL = get_base_url(append_slash=False) + MEDIA_URL
 
 

@@ -6,7 +6,7 @@ import sys
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from conreq.utils.environment import get_database_type, get_debug
+from conreq.utils.environment import get_database_engine, get_debug
 
 DEBUG = get_debug()
 ROOT_DIR = getattr(settings, "ROOT_DIR")
@@ -41,7 +41,7 @@ class Command(BaseCommand):
             os.makedirs(TEMP_DIR)
 
         # Django database
-        if get_database_type() == "SQLITE3":
+        if get_database_engine() == "SQLITE3":
             database = DATABASES["default"]["NAME"]
             self.setup_sqlite_database(
                 database, "Conreq", uid, gid, no_perms, verbosity
