@@ -48,7 +48,7 @@ def api_docs():
     register.wsgi.url(
         r"^swagger(?P<format>\.json|\.yaml)$", name="swagger_json", use_regex=True
     )(SchemaView.without_ui(cache_timeout=0))
-    register.wsgi.url(r"^swagger$", name="swagger_ui", use_regex=True)(
+    register.wsgi.url("swagger", name="swagger_ui")(
         SchemaView.with_ui("swagger", cache_timeout=0)
     )
 
