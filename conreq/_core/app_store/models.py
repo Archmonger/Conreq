@@ -111,7 +111,7 @@ class AppPackage(models.Model):
     )
     min_version = VersionField(
         default="0.0.0",
-        help_text="Minimum PyPI version or Git tag that is compatible with Conreq.",
+        help_text="Minimum PyPI version or Git tag for this package that is compatible with Conreq.",
     )
     banner_message = models.TextField(
         blank=True,
