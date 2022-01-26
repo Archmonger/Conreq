@@ -1,5 +1,6 @@
 from copy import copy
 from typing import Callable
+from uuid import uuid4
 
 import idom
 from django.contrib import auth
@@ -55,13 +56,13 @@ def tabbed_viewport(
         ),
         ul(
             {"className": "tabbed-viewport-selector list-group"},
-            *_tabbed_viewport_tabs(
+            _tabbed_viewport_tabs(
                 websocket, state, set_state, tab_state, set_tab_state, top_tabs
             ),
-            *_tabbed_viewport_tabs(
+            _tabbed_viewport_tabs(
                 websocket, state, set_state, tab_state, set_tab_state, tabs
             ),
-            *_tabbed_viewport_tabs(
+            _tabbed_viewport_tabs(
                 websocket, state, set_state, tab_state, set_tab_state, bottom_tabs
             ),
         ),
@@ -96,6 +97,7 @@ def _tabbed_viewport_tabs(
                 websocket, state, set_state, tab_state, set_tab_state, tab
             ),
             tab.name,
+            key=str(uuid4()),
         )
         for tab in tabs
     ]

@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 import idom
 from idom.html import div
 
@@ -42,6 +44,7 @@ def viewport_primary(websocket, state: HomepageState, set_state):
             if state.viewport_primary
             else []
         ),
+        key=str(uuid4()),
     )
 
 
@@ -62,6 +65,7 @@ def viewport_secondary(websocket, state: HomepageState, set_state):
             if state.viewport_secondary
             else []
         ),
+        key=str(uuid4()),
     )
 
 

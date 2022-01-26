@@ -98,7 +98,7 @@ def sidebar(websocket, state: HomepageState, set_state):
 
     return nav(
         SIDEBAR,
-        *([SIDEBAR_SAFE_MODE] if SAFE_MODE else []),
+        SIDEBAR_SAFE_MODE if SAFE_MODE else div(),
         div(
             SIDEBAR_USER | {"onClick": username_on_click},
             div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
@@ -110,13 +110,13 @@ def sidebar(websocket, state: HomepageState, set_state):
         div(
             # pylint: disable=protected-access
             NAVIGATION,
-            *(  # App tabs
-                sidebar_group(websocket, state, set_state, group)
+            [  # App tabs
+                nav_group(websocket, state, set_state, group)
                 for group in nav_tabs
                 if group not in USER_ADMIN_DEBUG
-            ),
-            *(  # User tabs
-                sidebar_group(
+            ],
+            [  # User tabs
+                nav_group(
                     websocket,
                     state,
                     set_state,
@@ -125,9 +125,9 @@ def sidebar(websocket, state: HomepageState, set_state):
                 )
                 for group in nav_tabs
                 if group == "User"
-            ),
-            *(  # Admin tabs
-                sidebar_group(
+            ],
+            [  # Admin tabs
+                nav_group(
                     websocket,
                     state,
                     set_state,
@@ -136,9 +136,9 @@ def sidebar(websocket, state: HomepageState, set_state):
                 )
                 for group in nav_tabs
                 if group == "Admin" and websocket.scope["user"].is_staff
-            ),
-            *(  # Debug tabs
-                sidebar_group(
+            ],
+            [  # Debug tabs
+                nav_group(
                     websocket,
                     state,
                     set_state,
@@ -147,7 +147,7 @@ def sidebar(websocket, state: HomepageState, set_state):
                 )
                 for group in nav_tabs
                 if group == "Debug" and websocket.scope["user"].is_staff and DEBUG
-            ),
+            ],
         ),
     )
 
@@ -166,7 +166,7 @@ def nav_tab_class(state: HomepageState, tab: NavTab):
     return NAV_TAB
 
 
-def sidebar_tab(websocket, state: HomepageState, set_state, tab: NavTab):
+def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
     async def on_click(event):
         if tab.on_click:
             tab.on_click(
@@ -184,10 +184,11 @@ def sidebar_tab(websocket, state: HomepageState, set_state, tab: NavTab):
     return div(
         nav_tab_class(state, tab) | {"onClick": on_click},
         div(TAB_NAME, tab.name),
+        key=tab.name,
     )
 
 
-def sidebar_group(
+def nav_group(
     websocket,
     state: HomepageState,
     set_state,
@@ -201,7 +202,8 @@ def sidebar_group(
     group_id = f"{group_name_clean}-group"
     tabs_id = f"{group_name_clean}-tabs"
 
-    return (
+    # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/538
+    return div(
         div(
             NAV_GROUP
             | {
@@ -218,7 +220,6 @@ def sidebar_group(
                 group.name,
             ),
             i(GROUP_CARET | {"title": f'Collapse the "{group.name}" group.'}),
-            key=group_id,
         ),
         div(
             TABS_COLLAPSE
@@ -228,13 +229,10 @@ def sidebar_group(
             div(TABS_INDICATOR),
             div(
                 TABS,
-                *(sidebar_tab(websocket, state, set_state, tab) for tab in _top_tabs),
-                *(sidebar_tab(websocket, state, set_state, tab) for tab in group.tabs),
-                *(
-                    sidebar_tab(websocket, state, set_state, tab)
-                    for tab in _bottom_tabs
-                ),
+                [nav_tab(websocket, state, set_state, tab) for tab in _top_tabs],
+                [nav_tab(websocket, state, set_state, tab) for tab in group.tabs],
+                [nav_tab(websocket, state, set_state, tab) for tab in _bottom_tabs],
             ),
-            key=tabs_id,
         ),
+        key=group_id,
     )

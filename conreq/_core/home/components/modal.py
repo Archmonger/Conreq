@@ -1,4 +1,5 @@
 from copy import copy
+from uuid import uuid4
 
 import idom
 from idom.html import div, i
@@ -39,6 +40,7 @@ def modal(websocket, state: HomepageState, set_state):
                 modal_footer(websocket, state, set_state),
             ]
         ),
+        key=str(uuid4()),
     )
 
 
