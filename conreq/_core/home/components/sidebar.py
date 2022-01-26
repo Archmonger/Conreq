@@ -66,7 +66,8 @@ def sidebar(websocket, state: HomepageState, set_state):
     nav_tabs = config.homepage.nav_tabs
 
     @idom.hooks.use_effect
-    async def set_default_tab():
+    async def set_initial_tab():
+        # The initial tab has already been set
         if state.viewport_selector != ViewportSelector.initial:
             return None
 
