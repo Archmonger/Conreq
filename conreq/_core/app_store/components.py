@@ -1,3 +1,4 @@
+from idom import component
 from idom.html import p
 
 from conreq import config
@@ -6,6 +7,7 @@ from conreq.app import register
 
 
 @register.component.app_store()
+@component
 def app_store(websocket, state, set_state):
     return p("This is a temporary stub for the app store tab.")
 

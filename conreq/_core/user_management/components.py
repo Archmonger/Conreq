@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig
+from idom import component
 from idom.html import div
 
 from conreq import AuthLevel, config
@@ -47,6 +48,7 @@ def manage_users_table(request):
     return render(request, "conreq/table.html", {"table": table})
 
 
+@component
 def user_invites(websocket, state, set_state):
     return div("This is a temporary stub for the user invites tab.")
 
