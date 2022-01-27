@@ -121,7 +121,7 @@ HUEY = {
 }
 IDOM_BASE_URL = BASE_URL[1:] + "idom/"
 os.environ["IDOM_DEBUG_MODE"] = str(int(DEBUG))
-os.environ["IDOM_FEATURE_INDEX_AS_DEFAULT_KEY"] = str(0)
+# os.environ["IDOM_FEATURE_INDEX_AS_DEFAULT_KEY"] = str(0)
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
