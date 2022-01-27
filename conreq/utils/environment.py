@@ -11,8 +11,7 @@ _BASE_URL = None
 _SAFE_MODE = None
 _DEBUG_MODE = None
 _DB_ENGINE = None
-ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
-if ENV_PREFIX:
+if ENV_PREFIX := os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper():
     ENV_PREFIX = ENV_PREFIX + "_"
 
 
