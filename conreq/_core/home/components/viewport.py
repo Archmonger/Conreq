@@ -39,11 +39,9 @@ def viewport_primary(websocket, state: HomepageState, set_state):
             ViewportSelector.primary,
             state.viewport_primary,
         ),
-        *(
-            [state.viewport_primary.component(websocket, state, set_state)]
-            if state.viewport_primary
-            else []
-        ),
+        state.viewport_primary.component(websocket, state, set_state, key=str(uuid4()))
+        if state.viewport_primary
+        else "",
         key=str(uuid4()),
     )
 
@@ -60,11 +58,9 @@ def viewport_secondary(websocket, state: HomepageState, set_state):
             ViewportSelector.secondary,
             state.viewport_secondary,
         ),
-        *(
-            [state.viewport_secondary.component(websocket, state, set_state)]
-            if state.viewport_secondary
-            else []
-        ),
+        state.viewport_secondary.component(websocket, state, set_state)
+        if state.viewport_secondary
+        else "",
         key=str(uuid4()),
     )
 
