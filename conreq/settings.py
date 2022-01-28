@@ -87,7 +87,8 @@ WEBSERVER_WORKERS = get_env("WEBSERVER_WORKERS", 3, return_type=int)
 
 
 # Basic Configuration
-CONREQ_VERSION = "0.20.32"
+with (ROOT_DIR / ".version").open() as f:
+    CONREQ_VERSION = f.read().strip()
 APP_STORE_VERSION = get_env("APP_STORE_VERSION", "1")
 
 
