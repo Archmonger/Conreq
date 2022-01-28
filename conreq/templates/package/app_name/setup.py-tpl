@@ -5,20 +5,22 @@ from setuptools import find_packages, setup
 
 # Variables
 ROOT_DIR = Path(__file__).parent
+with (ROOT_DIR / "README.md").open() as f:
+    README = f.read().strip()
 
 
 # PyPi Information
 PACKAGE = {
-    "name": "",
+    "name": "{{ verbose_name }}",
     "version": "",
     "packages": find_packages(str(ROOT_DIR)),
     "description": "",
-    "long_description": "",
-    "long_description_content_type": "",
+    "long_description": README,
+    "long_description_content_type": "text/markdown",
     "author": "",
     "author_email": "",
     "url": "",
-    "license": "",
+    "license": "GPLv3",
     "include_package_data": True,
     "zip_safe": False,
     "classifiers": [
@@ -34,7 +36,7 @@ PACKAGE = {
 requirements = []
 with (ROOT_DIR / "requirements.txt").open() as f:
     for line in map(str.strip, f):
-        if not line.startswith("#"):
+        if not line.startswith("#") and not line.startswith("git+"):
             requirements.append(line)
 PACKAGE["install_requires"] = requirements
 
