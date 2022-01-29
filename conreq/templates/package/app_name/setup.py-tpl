@@ -11,7 +11,7 @@ with (ROOT_DIR / "README.md").open() as f:
 
 # PyPi Information
 PACKAGE = {
-    "name": "{{ verbose_name }}",
+    "name": "{{ package_name }}",
     "version": "",
     "packages": find_packages(str(ROOT_DIR)),
     "description": "",
