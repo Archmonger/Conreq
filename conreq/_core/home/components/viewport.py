@@ -42,7 +42,7 @@ def viewport_primary(websocket, state: HomepageState, set_state):
         state.viewport_primary.component(websocket, state, set_state)
         if state.viewport_primary
         else "",
-        key=str(uuid4()),
+        key=f"{state.viewport_primary.component.__module__}.{state.viewport_primary.component.__name__}",
     )
 
 
@@ -61,7 +61,7 @@ def viewport_secondary(websocket, state: HomepageState, set_state):
         state.viewport_secondary.component(websocket, state, set_state)
         if state.viewport_secondary
         else "",
-        key=str(uuid4()),
+        key=f"{state.viewport_secondary.component.__module__}.{state.viewport_secondary.component.__name__}",
     )
 
 
