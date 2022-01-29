@@ -40,7 +40,9 @@ def modal(websocket, state: HomepageState, set_state):
                 modal_footer(websocket, state, set_state),
             ]
         ),
-        key=str(uuid4()),
+        key=f"{state.modal.__module__}.{state.modal.__name__}"
+        if state.modal
+        else str(uuid4()),
     )
 
 
