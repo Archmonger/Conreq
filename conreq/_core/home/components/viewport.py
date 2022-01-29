@@ -39,7 +39,7 @@ def viewport_primary(websocket, state: HomepageState, set_state):
             ViewportSelector.primary,
             state.viewport_primary,
         ),
-        state.viewport_primary.component(websocket, state, set_state, key=str(uuid4()))
+        state.viewport_primary.component(websocket, state, set_state)
         if state.viewport_primary
         else "",
         key=str(uuid4()),
