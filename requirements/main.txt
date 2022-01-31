@@ -21,7 +21,7 @@ djangorestframework==3.13.1
 djangorestframework-api-key==2.1.0
 docutils==0.18.1
 drf-yasg==1.20.0
-git+https://github.com/idom-team/django-idom.git
+django-idom==0.0.2
 huey==2.4.3
 hypercorn[h3]==0.13.2
 markdown==3.3.6
