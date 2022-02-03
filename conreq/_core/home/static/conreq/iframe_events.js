@@ -1,7 +1,7 @@
 window.document.addEventListener(
 	"reload-page",
 	async function (event) {
-		location.reload();
+		window.location.reload();
 	},
 	false
 );
