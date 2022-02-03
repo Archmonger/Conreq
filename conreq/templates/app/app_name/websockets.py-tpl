@@ -1,0 +1,8 @@
+"""
+Websocket registration for {{ verbose_name }}.
+
+See more information in the Conreq ASGI docs.
+"""
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
+
+from conreq.app.register.websockets import websocket

@@ -1,5 +1,4 @@
 from conreq.app.register import (
-    asgi,
     component,
     homepage,
     http,
@@ -7,10 +6,11 @@ from conreq.app.register import (
     tabs,
     template,
     view,
+    websockets,
 )
 
 __all__ = [
-    "asgi",
+    "websockets",
     "component",
     "homepage",
     "startup",
