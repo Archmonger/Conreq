@@ -159,8 +159,8 @@ def nav_tab_class(state: HomepageState, tab: NavTab):
             ViewportSelector.loading,
             ViewportSelector.initial,
         }
-        and tab.viewport
-        is state.__getattribute__(f"viewport_{state.viewport_selector}")
+        and tab.viewport.component
+        is state.__getattribute__(f"viewport_{state.viewport_selector}").component
     ):
         return NAV_TAB_ACTIVE
     return NAV_TAB
