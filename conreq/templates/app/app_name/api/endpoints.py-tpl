@@ -8,6 +8,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from conreq.app import register
-from conreq.utils.api import api_docs
+from conreq.utils.api import APIDocs, documented_api
 
 from . import docs

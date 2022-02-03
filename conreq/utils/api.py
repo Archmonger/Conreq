@@ -46,8 +46,8 @@ def stub(request, *args, **kwargs):
     return Response({"error": "This endpoint is not yet developed."})
 
 
-def api_docs(docs: APIDocs):
-    """Applies a OpenAPI schema to an API method.
+def documented_api(docs: APIDocs):
+    """A decorator that applies a OpenAPI schema to an API method.
 
     For more information, see the drf-yasg `swagger-auto-schema` docs."""
 
