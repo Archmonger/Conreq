@@ -1,29 +1,13 @@
 from copy import copy
+from inspect import iscoroutinefunction
 from typing import Callable
 from uuid import uuid4
 
 import idom
-from django.contrib import auth
-from django.shortcuts import render
 from idom.core.proto import VdomDict
 from idom.html import div, li, ul
 
-from conreq.app.types import AuthLevel, HomepageState, Tab, TabbedViewportState
-from conreq.utils.components import view_to_component
-
-
-@view_to_component(name="logout_parent_frame", auth_level=AuthLevel.anonymous)
-def logout(request=None):
-    """Logs a user out, then triggers a `reload-page` event on the current page."""
-    auth.logout(request)
-    return render(request, "conreq/refresh_parent_frame.html")
-
-
-@view_to_component(name="refresh_parent_frame", auth_level=AuthLevel.anonymous)
-def refresh(request=None):
-    """Triggers a `reload-page` event on the current page."""
-    logout(request)
-    return render(request, "conreq/refresh_parent_frame.html")
+from conreq.app.types import HomepageState, Tab, TabbedViewportState
 
 
 @idom.component
