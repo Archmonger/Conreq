@@ -1,4 +1,5 @@
 from copy import copy
+from inspect import iscoroutinefunction
 
 import idom
 from idom.html import div, i, nav
@@ -169,11 +170,23 @@ def nav_tab_class(state: HomepageState, tab: NavTab):
 def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
     async def on_click(event):
         if tab.on_click:
-            tab.on_click(
-                event, websocket=websocket, state=state, set_state=set_state, tab=tab
-            )
+            if iscoroutinefunction(tab.on_click):
+                await tab.on_click(
+                    event,
+                    websocket=websocket,
+                    state=state,
+                    set_state=set_state,
+                    tab=tab,
+                )
+            else:
+                tab.on_click(
+                    event,
+                    websocket=websocket,
+                    state=state,
+                    set_state=set_state,
+                    tab=tab,
+                )
             return
-
         state.viewport_selector = tab.viewport.selector
         if tab.viewport.selector == ViewportSelector.primary:
             state.viewport_primary = tab.viewport

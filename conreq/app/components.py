@@ -113,15 +113,26 @@ def _tabbed_viewport_tabs_values(
 ) -> dict:
     async def on_click(event):
         if tab.on_click:
-            tab.on_click(
-                event,
-                state=state,
-                set_state=set_state,
-                websocket=websocket,
-                tab_state=tab_state,
-                set_tab_state=set_tab_state,
-                tab=tab,
-            )
+            if iscoroutinefunction(tab.on_click):
+                await tab.on_click(
+                    event,
+                    state=state,
+                    set_state=set_state,
+                    websocket=websocket,
+                    tab_state=tab_state,
+                    set_tab_state=set_tab_state,
+                    tab=tab,
+                )
+            else:
+                tab.on_click(
+                    event,
+                    state=state,
+                    set_state=set_state,
+                    websocket=websocket,
+                    tab_state=tab_state,
+                    set_tab_state=set_tab_state,
+                    tab=tab,
+                )
             return
 
         tab_state.current_tab = tab

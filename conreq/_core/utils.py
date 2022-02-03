@@ -6,7 +6,7 @@ from conreq import AuthLevel, NavTab, Viewport, ViewportSelector
 def tab_constructor(
     name: str,
     component: Callable,
-    on_click: Callable = None,  # TODO: document args = websocket, state, set_state, tab
+    on_click: Callable = None,  # TODO: document args = event, websocket, state, set_state, tab
     padding: bool = True,
     selector: ViewportSelector = ViewportSelector.primary,
     auth: AuthLevel = AuthLevel.user,
