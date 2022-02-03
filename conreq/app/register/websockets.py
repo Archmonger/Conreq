@@ -25,8 +25,9 @@ def websocket(path: str, use_regex: bool = False) -> AsyncConsumer:
 
 def middleware(
     dotted_path: str,
-    positioning_element: str = None,
+    positioning_elements: list[str] = None,
     positioning: str = "before",
+    reverse: bool = False,
 ) -> None:
     """Shortcut to add ASGI middleware to Django."""
     # TODO: Implement ASGI middleware
