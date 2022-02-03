@@ -75,6 +75,7 @@ class NavGroup:
 
 @dataclass
 class ModalState:
+    # TODO: Set as immutable and remove all copy() calls
     show: bool = False
     size: str = "lg"
     centered: bool = True
@@ -83,6 +84,7 @@ class ModalState:
 
 @dataclass
 class HomepageState:
+    # TODO: Set as immutable and remove all copy() calls
     page_title: str = "Loading..."
     viewport_selector: ViewportSelector = ViewportSelector.initial
     viewport_primary: Viewport = None

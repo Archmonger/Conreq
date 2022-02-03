@@ -10,6 +10,7 @@ from conreq.app import register
 @component
 def app_store(websocket, state, set_state):
     # TODO: Update app store entries every first load
+    # TODO: Remove this top level div
     return div(
         recently_added(),
         recently_updated(),
