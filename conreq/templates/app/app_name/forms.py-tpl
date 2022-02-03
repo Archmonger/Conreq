@@ -10,4 +10,4 @@ from crispy_forms.helper import FormHelper
 from django import forms
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from conreq.utils.components import django_to_idom
+from conreq.utils.components import view_to_component
