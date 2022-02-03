@@ -1,8 +1,8 @@
 """
 URL endpoint registration for {{ verbose_name }}.
 
-See more information in the Conreq Register URL docs.
+See more information in the Conreq URL docs.
 """
 from django.shortcuts import render
 
-from conreq.app.register import url
+from conreq.app.register.http import url

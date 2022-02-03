@@ -10,14 +10,14 @@ class HealthCheck(HealthCheckView):
 
 
 def performance_profiling():
-    register.wsgi.url("silk/", name="silk")(include("silk.urls", namespace="silk"))
+    register.http.url("silk/", name="silk")(include("silk.urls", namespace="silk"))
 
 
 def admin_panel():
-    register.wsgi.url("admin/docs/", name="admindocs")(
+    register.http.url("admin/docs/", name="admindocs")(
         include("django.contrib.admindocs.urls")
     )
-    register.wsgi.url("admin/")(admin.site.urls)
+    register.http.url("admin/")(admin.site.urls)
 
 
 def api_docs():
@@ -45,13 +45,13 @@ def api_docs():
         permission_classes=[permissions.AllowAny],
     )
 
-    register.wsgi.url(
+    register.http.url(
         r"^swagger(?P<format>\.json|\.yaml)$", name="swagger_json", use_regex=True
     )(SchemaView.without_ui(cache_timeout=0))
-    register.wsgi.url("swagger", name="swagger_ui")(
+    register.http.url("swagger", name="swagger_ui")(
         SchemaView.with_ui("swagger", cache_timeout=0)
     )
 
 
 def health_checks():
-    register.wsgi.url("health_check", name="health_check")(HealthCheck)
+    register.http.url("health_check", name="health_check")(HealthCheck)

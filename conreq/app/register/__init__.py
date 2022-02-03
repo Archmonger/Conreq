@@ -2,11 +2,11 @@ from conreq.app.register import (
     asgi,
     component,
     homepage,
+    http,
     startup,
     tabs,
     template,
     view,
-    wsgi,
 )
 
 __all__ = [
@@ -17,5 +17,5 @@ __all__ = [
     "tabs",
     "template",
     "view",
-    "wsgi",
+    "http",
 ]
