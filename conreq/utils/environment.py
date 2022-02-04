@@ -98,7 +98,7 @@ def get_base_url(
         return base_url
 
     if append_slash:
-        base_url = base_url + "/"
+        base_url = f'{base_url}/'
     if prepend_slash:
         base_url = f"/{base_url}"
     base_url = base_url.replace("//", "/")
@@ -123,7 +123,7 @@ def get_home_url(
         return home_url
 
     if append_slash:
-        home_url = home_url + "/"
+        home_url = f'{home_url}/'
     if prepend_slash:
         home_url = f"/{home_url}"
     home_url = home_url.replace("//", "/")
