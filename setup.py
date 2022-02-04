@@ -36,9 +36,12 @@ PACKAGE = {
 # Requirements
 requirements = []
 with (ROOT_DIR / "requirements" / "main.txt").open() as f:
-    for line in map(str.strip, f):
-        if not line.startswith("#") and not line.startswith("git+"):
-            requirements.append(line)
+    requirements.extend(
+        line
+        for line in map(str.strip, f)
+        if not line.startswith("#") and not line.startswith("git+")
+    )
+
 PACKAGE["install_requires"] = requirements
 
 

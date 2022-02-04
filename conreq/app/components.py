@@ -54,14 +54,7 @@ def tabbed_viewport(
 
 
 def _default_tab(*tab_groups: list[Tab], default_tab: Callable = None) -> Tab:
-    if default_tab:
-        return default_tab
-
-    for tabs in tab_groups:
-        if tabs:
-            return tabs[0]
-
-    return None
+    return default_tab or next((tabs[0] for tabs in tab_groups if tabs), None)
 
 
 def _tabbed_viewport_tabs(

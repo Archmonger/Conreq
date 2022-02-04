@@ -5,6 +5,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
+
 import logging
 import os
 import secrets
@@ -427,12 +428,7 @@ include(*config.startup.setting_scripts)
 
 # Add conditional apps
 if DEBUG:
-    # Performance analysis tools
-    INSTALLED_APPS.append("silk")
-    # API docs generator
-    INSTALLED_APPS.append("drf_spectacular")
-    INSTALLED_APPS.append("drf_spectacular_sidecar")
-
+    INSTALLED_APPS.extend(("silk", "drf_spectacular", "drf_spectacular_sidecar"))
 # Automatically delete dangling files
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
 
