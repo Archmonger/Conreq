@@ -8,10 +8,14 @@ def is_key_value_in_iter(
 ) -> bool:
     """Iterate through a iterable (list, tuple, etc) containing dicts to check if a
     specific key/value pair exists."""
-    for item in search_list:
-        if item.__contains__(key) and item[key] == value:
-            return item if return_item else True
-    return False
+    return next(
+        (
+            item if return_item else True
+            for item in search_list
+            if item.__contains__(key) and item[key] == value
+        ),
+        False,
+    )
 
 
 def replace_item_in_list(search_for, replace_with, search_list):
