@@ -13,7 +13,7 @@ from conreq.app import register
 
 class PlaceholderApp:
     id = 0
-    name = "Placeholder App"
+    name = "Placeholder App (Has a really long name)"
     description = "This is a placeholder description. This will be removed in the future. Please pay no attention to this text. But what if the text gets too long? Who knows what will happen, but I can probably guess that it'll be great!"
     author = "Placeholder Author"
     version = "1.0.0"
@@ -30,7 +30,7 @@ def app_store(websocket, state, set_state):
     async def _get_categories():
         if categories:
             return
-        print("CATEGORIES REFRESHED!")
+        print("Categories state is empty. Refreshing...")
         set_categories(await get_categories())
 
     # TODO: Update app store entries every first load

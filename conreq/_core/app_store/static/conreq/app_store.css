@@ -8,6 +8,8 @@
 }
 
 .viewport-container.app-store .nav-region {
+	min-width: -webkit-fit-content;
+	min-width: -moz-fit-content;
 	min-width: fit-content;
 }
 
@@ -51,6 +53,22 @@
 	grid-template-columns: auto 80px;
 }
 
+.spotlight > .card-stage > .card > .top > .text-region {
+	margin-right: 5px;
+}
+
+.spotlight > .card-stage > .card > .top > .text-region > * {
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	overflow: hidden;
+	padding-bottom: 2px;
+}
+
+.spotlight > .card-stage > .card > .top > .text-region > .card-title {
+	margin-bottom: 5px;
+}
+
 .spotlight > .card-stage > .card > .top > .image {
 	display: inline-block;
 	position: relative;
@@ -70,7 +88,6 @@
 .spotlight > .card-stage > .card > .description {
 	margin-top: 10px;
 	padding-bottom: 2px;
-	line-clamp: 4;
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 	display: -webkit-box;
