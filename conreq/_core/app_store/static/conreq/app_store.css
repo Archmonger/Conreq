@@ -20,7 +20,8 @@
 }
 
 .spotlight > .card-stage > .card {
-	color: black;
+	color: rgb(255 255 255 / 65%);
+	background: rgb(255 255 255 / 5%);
 	height: 260px;
 	width: 380px;
 	padding: 20px;
