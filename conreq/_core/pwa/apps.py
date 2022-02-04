@@ -1,4 +1,5 @@
 """ Settings required by django-app. """
+
 from django.apps import AppConfig
 from django.conf import settings
 from django.shortcuts import resolve_url as _resolve
@@ -6,6 +7,8 @@ from django.utils.functional import lazy
 
 # Lazy-evaluate URLs so including pwa.urls in root urlconf works
 resolve_url = lazy(_resolve, str)
+
+
 
 
 class PwaConfig(AppConfig):
@@ -29,11 +32,12 @@ class PwaConfig(AppConfig):
             "purpose": "any",
         },
         {
-            "src": settings.BASE_URL + "static/conreq/icons/maskable.png",
+            "src": f'{settings.BASE_URL}static/conreq/icons/maskable.png',
             "sizes": "512x512",
             "purpose": "maskable",
         },
     ]
+
     app_icons_apple = [
         {
             "src": settings.BASE_URL + "static/conreq/icons/apple-touch-icon.png",

@@ -16,7 +16,7 @@ class SuccessCurrentUrlMixin:
     def get_success_url(self):
         params = self.request.GET.copy()
         params["success"] = True
-        self.success_url = self.request.path + f"?{params.urlencode()}"
+        self.success_url = f'{self.request.path}?{params.urlencode()}'
         return super().get_success_url()
 
 
@@ -106,5 +106,5 @@ def authenticated(view, auth_level: AuthLevel = AuthLevel.user):
 def stub(request, *args, **kwargs):
     """Placeholder view function intended for debugging or development."""
     return HttpResponse(
-        __name__ + ": This is a stub for a view that has not yet been defined."
+        f'{__name__}: This is a stub for a view that has not yet been defined.'
     )
