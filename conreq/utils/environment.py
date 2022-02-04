@@ -13,7 +13,7 @@ _DEBUG_MODE = None
 _DB_ENGINE = None
 ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "").rstrip("_").upper()
 if ENV_PREFIX:
-    ENV_PREFIX = ENV_PREFIX + "_"
+    ENV_PREFIX = f"{ENV_PREFIX}_"
 
 
 def dotenv_path() -> str:
@@ -98,9 +98,9 @@ def get_base_url(
         return base_url
 
     if append_slash:
-        base_url = base_url + "/"
+        base_url = f"{base_url}/"
     if prepend_slash:
-        base_url = "/" + base_url
+        base_url = f"/{base_url}"
     base_url = base_url.replace("//", "/")
     return base_url
 
@@ -123,9 +123,9 @@ def get_home_url(
         return home_url
 
     if append_slash:
-        home_url = home_url + "/"
+        home_url = f"{home_url}/"
     if prepend_slash:
-        home_url = "/" + home_url
+        home_url = f"/{home_url}"
     home_url = home_url.replace("//", "/")
     return home_url
 

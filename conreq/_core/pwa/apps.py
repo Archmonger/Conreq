@@ -1,4 +1,6 @@
 """ Settings required by django-app. """
+
+
 from django.apps import AppConfig
 from django.conf import settings
 from django.shortcuts import resolve_url as _resolve
@@ -29,17 +31,19 @@ class PwaConfig(AppConfig):
             "purpose": "any",
         },
         {
-            "src": settings.BASE_URL + "static/conreq/icons/maskable.png",
+            "src": f"{settings.BASE_URL}static/conreq/icons/maskable.png",
             "sizes": "512x512",
             "purpose": "maskable",
         },
     ]
+
     app_icons_apple = [
         {
-            "src": settings.BASE_URL + "static/conreq/icons/apple-touch-icon.png",
+            "src": f"{settings.BASE_URL}static/conreq/icons/apple-touch-icon.png",
             "sizes": "180x180",
         }
     ]
+
     app_splash_screen = []
     app_dir = "auto"
     app_lang = "en-US"
