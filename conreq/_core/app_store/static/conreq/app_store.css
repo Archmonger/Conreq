@@ -1,0 +1,59 @@
+.viewport-container.app-store {
+	padding-top: 30px;
+}
+
+.spotlight {
+	margin-bottom: 35px;
+}
+
+.spotlight > .description {
+	margin-bottom: 20px;
+}
+
+.spotlight > .card-stage {
+	display: flex;
+	flex-flow: row wrap;
+	overflow: hidden;
+	height: 260px;
+	margin-bottom: 20px;
+	align-content: flex-start;
+}
+
+.spotlight > .card-stage > .card {
+	color: black;
+	height: 260px;
+	width: 380px;
+	padding: 20px;
+	margin-right: 20px;
+}
+
+.spotlight > .card-stage > .card > .top {
+	display: grid;
+	grid-template-columns: auto 80px;
+}
+
+.spotlight > .card-stage > .card > .top > .image {
+	display: inline-block;
+	position: relative;
+	height: 80px;
+	width: 80px;
+	background: #6c757d;
+}
+
+.spotlight > .card-stage > .card > .btn-container {
+	margin-bottom: 10px;
+}
+
+.spotlight > .card-stage > .card > .btn-container > .btn {
+	margin-right: 5px;
+}
+
+.spotlight > .card-stage > .card > .description {
+	margin-top: 10px;
+	padding-bottom: 2px;
+	line-clamp: 4;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	overflow: hidden;
+}

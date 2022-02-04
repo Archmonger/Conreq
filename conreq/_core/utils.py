@@ -10,12 +10,14 @@ def tab_constructor(
     padding: bool = True,
     selector: ViewportSelector = ViewportSelector.primary,
     auth: AuthLevel = AuthLevel.user,
+    html_class: str = "",
 ) -> NavTab:
     return NavTab(
         name=name,
         viewport=Viewport(
             component=component,
             selector=selector,
+            html_class=html_class,
             padding=padding,
             auth=auth,
         ),

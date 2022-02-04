@@ -1,0 +1,14 @@
+.btn {
+	text-transform: capitalize;
+	border: none;
+}
+
+.btn.btn-primary {
+	background: #258a6d;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:active,
+.btn.btn-primary:focus {
+	background: #249e7b;
+}
