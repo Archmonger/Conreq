@@ -46,7 +46,6 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
     },
-    "python.pythonPath": ".venv\\Scripts\\python.exe",
     "html.format.endWithNewline": true,
     "files.insertFinalNewline": true
 }
