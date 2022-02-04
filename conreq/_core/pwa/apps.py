@@ -9,8 +9,6 @@ from django.utils.functional import lazy
 resolve_url = lazy(_resolve, str)
 
 
-
-
 class PwaConfig(AppConfig):
     name = "conreq._core.pwa"
 
@@ -32,7 +30,7 @@ class PwaConfig(AppConfig):
             "purpose": "any",
         },
         {
-            "src": f'{settings.BASE_URL}static/conreq/icons/maskable.png',
+            "src": f"{settings.BASE_URL}static/conreq/icons/maskable.png",
             "sizes": "512x512",
             "purpose": "maskable",
         },

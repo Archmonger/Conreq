@@ -121,7 +121,7 @@ HUEY = {
         "workers": 20,
     },
 }
-IDOM_BASE_URL = f'{BASE_URL[1:]}idom/'
+IDOM_BASE_URL = f"{BASE_URL[1:]}idom/"
 os.environ["IDOM_DEBUG_MODE"] = str(int(DEBUG))
 # os.environ["IDOM_FEATURE_INDEX_AS_DEFAULT_KEY"] = str(0)
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
@@ -382,7 +382,7 @@ TIME_ZONE = get_localzone_name()
 
 # Static Files (CSS, JavaScript, Images)
 STATIC_ROOT = DATA_DIR / "static_processed"
-STATIC_URL = f'{BASE_URL}static/'
+STATIC_URL = f"{BASE_URL}static/"
 STATICFILES_DIRS = [
     USER_STATICFILES_DIR,
 ]
