@@ -1,6 +1,6 @@
 from django.templatetags.static import static
 from idom import component
-from idom.html import div, h4, h5, i, link, p
+from idom.html import div, h4, h5, link, p
 
 from conreq import config
 from conreq._core.utils import tab_constructor
