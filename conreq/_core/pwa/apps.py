@@ -26,7 +26,7 @@ class PwaConfig(AppConfig):
     app_status_bar_color = "default"
     app_icons = [
         {
-            "src": settings.BASE_URL + "static/conreq/icons/standard.png",
+            "src": f"{settings.BASE_URL}static/conreq/icons/standard.png",
             "sizes": "512x512",
             "purpose": "any",
         },
