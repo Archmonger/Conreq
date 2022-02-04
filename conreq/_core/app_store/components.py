@@ -24,6 +24,7 @@ class PlaceholderApp:
 @register.component.app_store()
 @component
 def app_store(websocket, state, set_state):
+    # pylint: disable=unused-argument
     categories, set_categories = hooks.use_state({})
 
     @hooks.use_effect
@@ -117,7 +118,6 @@ def random_selection():
 
 
 def spotlight(title, description, apps=None):
-    # https://stackoverflow.com/questions/43547430/how-can-i-completely-hide-elements-that-overflow-their-container-vertically
     return div(
         {"className": "spotlight"},
         h4({"className": "title"}, title),
@@ -152,7 +152,6 @@ def card(app: PlaceholderApp = PlaceholderApp()):
         div({"className": "version"}, f"Version: {app.version}"),
         div({"className": "downloads"}, f"Downloads: {app.downloads}"),
         div({"className": "description"}, app.description),
-        # TODO: Check if integer keys are broken in normal scenarios
         key=str(uuid4()),
     )
 
