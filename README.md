@@ -34,7 +34,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   [Automatic HTTP Compression](https://github.com/friedelwolff/django-compression-middleware)
 -   [Automatic Cache Busting](https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#django.contrib.staticfiles.storage.ManifestStaticFilesStorage)
 -   [Automatic Code Performance Graphs](https://github.com/jazzband/django-silk)
--   [Automatic API Docs Generation](https://github.com/axnsan12/drf-yasg)
+-   [Automatic API Docs Generation](https://github.com/tfranzel/drf-spectacular)
 -   [Automatic SQLite Database Optimization](https://www.sqlite.org/lang_vacuum.html)
 -   [Automatic Database Backups](https://github.com/django-dbbackup/django-dbbackup)
 -   [Automatic Health Checks](https://github.com/KristianOellegaard/django-health-check)

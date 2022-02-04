@@ -4,7 +4,7 @@ API documentation for {{ verbose_name }}.
 See more information in the Conreq API docs.
 """
 
-from drf_yasg import openapi
+from drf_spectacular.utils import OpenApiExample, OpenApiParameter, OpenApiResponse
 from rest_framework import status
 
 from conreq.utils.api import APIDocs

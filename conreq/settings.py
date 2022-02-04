@@ -195,11 +195,38 @@ SECURE_BROWSER_XSS_FILTER = True
 # API Settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "conreq._core.api.permissions.HasAPIKey",
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+SPECTACULAR_SETTINGS = {  # Use built-in Swagger UI
+    "TITLE": "Conreq API Endpoints",
+    "DESCRIPTION": "Outline for all endpoints available within this Conreq instance.",
+    "VERSION": CONREQ_VERSION,
+    "CONTACT": {
+        "name": "Conreq Team",
+        "email": "archiethemonger@gmail.com",
+    },
+    "LICENSE": {"name": "GPL-3.0 License"},
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
+    "SCHEMA_PATH_PREFIX": "/api",
+    "SCHEMA_PATH_PREFIX_TRIM": True,
+    "SERVERS": [
+        {
+            "url": "{protocol}://{host}:{port}/api",
+            "variables": {
+                "host": {"default": "127.0.0.1"},
+                "port": {"default": 7575},
+                "protocol": {"enum": ["http", "https"], "default": "http"},
+            },
+        }
     ],
 }
 
@@ -402,7 +429,8 @@ if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
     # API docs generator
-    INSTALLED_APPS.append("drf_yasg")
+    INSTALLED_APPS.append("drf_spectacular")
+    INSTALLED_APPS.append("drf_spectacular_sidecar")
 
 # Automatically delete dangling files
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")

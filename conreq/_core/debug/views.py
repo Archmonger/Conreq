@@ -22,34 +22,11 @@ def admin_panel():
 
 def api_docs():
     # pylint: disable=import-outside-toplevel
-    from drf_yasg import openapi
-    from drf_yasg.views import get_schema_view
-    from rest_framework import permissions
+    from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-    # Django Rest Framework documentation (Swagger and Redoc)
-    SchemaView = get_schema_view(
-        openapi.Info(
-            title="Conreq API Endpoints",
-            default_version="v1",
-            description="""
-            This page displays all endpoints available within this Conreq instance.
-
-            Endpoints require an API key either in **HTTP Header (Authorization: Api-Key)** or in the **URL Parameter (apikey)**.
-
-            Token Authentication is performed using **HTTP Header (Authorization: Token)**. Session Authentication can alternatively be performed.
-            """,
-            contact=openapi.Contact(email="archiethemonger@gmail.com"),
-            license=openapi.License(name="GPL-3.0 License"),
-        ),
-        public=True,
-        permission_classes=[permissions.AllowAny],
-    )
-
-    register.http.url(
-        r"^swagger(?P<format>\.json|\.yaml)$", name="swagger_json", use_regex=True
-    )(SchemaView.without_ui(cache_timeout=0))
-    register.http.url("swagger", name="swagger_ui")(
-        SchemaView.with_ui("swagger", cache_timeout=0)
+    register.http.url("api/schema/", name="schema")(SpectacularAPIView)
+    register.http.url("api/schema/swagger-ui/", name="swagger_ui")(
+        SpectacularSwaggerView
     )
 
 
