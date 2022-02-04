@@ -1,8 +1,12 @@
+from uuid import uuid4
+
+from channels.db import database_sync_to_async
 from django.templatetags.static import static
-from idom import component
-from idom.html import div, h4, h5, link, p
+from idom import component, hooks
+from idom.html import a, div, h4, h5, li, link, ol, p
 
 from conreq import config
+from conreq._core.app_store.models import Category, Subcategory
 from conreq._core.utils import tab_constructor
 from conreq.app import register
 
@@ -20,18 +24,68 @@ class PlaceholderApp:
 @register.component.app_store()
 @component
 def app_store(websocket, state, set_state):
+    categories, set_categories = hooks.use_state({})
+
+    @hooks.use_effect
+    async def _get_categories():
+        if categories:
+            return
+        print("CATEGORIES REFRESHED!")
+        set_categories(await get_categories())
+
     # TODO: Update app store entries every first load
     # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/538
     return div(
         link({"rel": "stylesheet", "href": static("conreq/app_store.css")}),
-        recently_added(),
-        recently_updated(),
-        most_popular(),
-        top_downloaded(),
-        our_favorites(),
-        essentials(),
-        random_selection(),
+        div(
+            {"className": "spotlight-region"},
+            recently_added(),
+            recently_updated(),
+            most_popular(),
+            top_downloaded(),
+            our_favorites(),
+            essentials(),
+            random_selection(),
+        ),
+        div({"className": "nav-region"}, nav_constructor(categories)),
     )
+
+
+@database_sync_to_async
+def get_categories() -> dict[Category, list[Subcategory]]:
+    query = Subcategory.objects.select_related("category").order_by("name").all()
+    categories = {}
+    for subcategory in query:
+        categories.setdefault(subcategory.category, []).append(subcategory)
+    return categories
+
+
+def nav_constructor(categories: dict[Category, list[Subcategory]]) -> list:
+    return [
+        div(
+            {"className": "nav-item"},
+            h5({"className": "nav-title"}, category.name),
+            ol(
+                {"className": "nav-sub"},
+                [
+                    li(
+                        {"className": "nav-sub-item"},
+                        a(
+                            {
+                                "className": "nav-sub-link",
+                                "href": f"#/app_store/category/{subcategory.uuid}",
+                            },
+                            subcategory.name,
+                        ),
+                        key=str(subcategory.uuid),
+                    )
+                    for subcategory in value
+                ],
+            ),
+            key=str(category.uuid),
+        )
+        for category, value in categories.items()
+    ]
 
 
 def recently_added():
@@ -99,7 +153,7 @@ def card(app: PlaceholderApp = PlaceholderApp()):
         div({"className": "downloads"}, f"Downloads: {app.downloads}"),
         div({"className": "description"}, app.description),
         # TODO: Check if integer keys are broken in normal scenarios
-        key=str(app.id),
+        key=str(uuid4()),
     )
 
 

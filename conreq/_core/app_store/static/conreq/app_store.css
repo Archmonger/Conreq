@@ -2,6 +2,24 @@
 	padding-top: 30px;
 }
 
+.viewport-container.app-store > div {
+	display: flex;
+	flex-direction: row;
+}
+
+.viewport-container.app-store .nav-region {
+	min-width: fit-content;
+}
+
+.viewport-container.app-store .nav-region ol {
+	padding-left: 0;
+}
+
+.viewport-container.app-store .nav-region li {
+	display: block;
+	margin-bottom: 8px;
+}
+
 .spotlight {
 	margin-bottom: 35px;
 }
