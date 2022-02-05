@@ -4,7 +4,7 @@
 	width: var(--sidebar-width);
 	position: absolute;
 	left: 0;
-	background: transparent;
+	background: rgb(255 255 255 / 2%);
 	overflow-x: hidden;
 	font-family: var(--global-font);
 	font-weight: 400;

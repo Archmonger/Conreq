@@ -65,7 +65,7 @@ def nav_constructor(categories: dict[Category, list[Subcategory]]) -> list:
     return [
         div(
             {"className": "nav-item"},
-            h5({"className": "nav-title"}, category.name),
+            a({"href": "#"}, h5({"className": "nav-title"}, category.name)),
             ol(
                 {"className": "nav-sub"},
                 [
@@ -120,13 +120,15 @@ def random_selection():
 def spotlight(title, description, apps=None):
     return div(
         {"className": "spotlight"},
-        h4({"className": "title"}, title),
-        p({"className": "description"}, description),
+        a(
+            {"href": "#"},
+            h4({"className": "title"}, title),
+            p({"className": "description"}, description),
+        ),
         div(
             {"className": "card-stage"},
             [card() for _ in range(8)],
         ),
-        div({"className": "btn btn-sm btn-primary show-more"}, "SHOW MORE"),
     )
 
 

@@ -18,7 +18,7 @@ a:focus {
 }
 
 .form-control {
-	background: rgb(255 255 255 / 0.08);
+	background: rgb(40 42 43);
 	border: none;
 	color: rgb(255 255 255 / 0.75);
 	transition: none;

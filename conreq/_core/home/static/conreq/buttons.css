@@ -1,5 +1,4 @@
 .btn {
-	text-transform: capitalize;
 	border: none;
 }
 
@@ -8,7 +7,10 @@
 }
 
 .btn.btn-primary:hover,
-.btn.btn-primary:active,
 .btn.btn-primary:focus {
 	background: #249e7b;
+}
+
+.btn.btn-primary:active {
+	background: #28b18b;
 }

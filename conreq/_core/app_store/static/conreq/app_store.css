@@ -22,6 +22,19 @@
 	margin-bottom: 8px;
 }
 
+.viewport-container.app-store a.nav-sub-link {
+	color: #878b8f;
+}
+
+.viewport-container.app-store a.nav-sub-link:hover,
+.viewport-container.app-store a.nav-sub-link:focus {
+	color: #a5a8ab;
+}
+
+.viewport-container.app-store a.nav-sub-link:active {
+	color: #b8bbbd;
+}
+
 .spotlight {
 	margin-bottom: 35px;
 }
@@ -41,7 +54,7 @@
 
 .spotlight > .card-stage > .card {
 	color: rgb(255 255 255 / 65%);
-	background: rgb(255 255 255 / 5%);
+	background: rgb(255 255 255 / 9%);
 	height: 260px;
 	width: 380px;
 	padding: 20px;
@@ -92,4 +105,5 @@
 	-webkit-box-orient: vertical;
 	display: -webkit-box;
 	overflow: hidden;
+	line-height: 1.1;
 }
