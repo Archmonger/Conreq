@@ -26,6 +26,6 @@ python-dotenv==0.19.2
 strsim==0.0.3
 titlecase==2.3
 tmdbsimple==2.8.1
-Twisted[tls,http2]==21.7.0
+Twisted[tls,http2]==22.1.0
 tzlocal==3.0
 whitenoise[brotli]==5.3.0
