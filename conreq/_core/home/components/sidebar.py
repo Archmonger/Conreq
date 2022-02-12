@@ -99,7 +99,7 @@ def sidebar(websocket, state: HomepageState, set_state):
 
     return nav(
         SIDEBAR,
-        SIDEBAR_SAFE_MODE if SAFE_MODE else div(),
+        SIDEBAR_SAFE_MODE if SAFE_MODE else "",
         div(
             SIDEBAR_USER | {"onClick": username_on_click},
             div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
