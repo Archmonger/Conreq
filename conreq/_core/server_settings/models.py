@@ -44,7 +44,7 @@ class StylingSettings(SingletonModel):
         verbose_name = "Styling settings"
         verbose_name_plural = verbose_name
 
-    accent_color = ColorField(default="258a6d", help_text="Default: #258a6d")
+    accent_color = ColorField(default="#258A6D", help_text="Default: #258a6d")
     head_html = models.TextField(
         verbose_name="Custom HTML (head)",
         blank=True,
