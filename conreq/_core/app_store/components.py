@@ -32,7 +32,9 @@ def app_store(websocket, state, set_state):
         if categories:
             return
         print("Categories state is empty. Refreshing...")
-        set_categories(await get_categories())
+        new_categories = await get_categories()
+        if new_categories:
+            set_categories(new_categories)
 
     # TODO: Update app store entries every first load
     # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/538
