@@ -7,13 +7,19 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('server_settings', '0045_rename_custom_html_stylingsettings_head_html'),
+        ("server_settings", "0045_rename_custom_html_stylingsettings_head_html"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='stylingsettings',
-            name='accent_color',
-            field=colorfield.fields.ColorField(default='#258A6D', help_text='Default: #258a6d', image_field=None, max_length=18, samples=None),
+            model_name="stylingsettings",
+            name="accent_color",
+            field=colorfield.fields.ColorField(
+                default="#258A6D",
+                help_text="Default: #258a6d",
+                image_field=None,
+                max_length=18,
+                samples=None,
+            ),
         ),
     ]
