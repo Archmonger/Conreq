@@ -11,3 +11,31 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav)
 .wrapper .content-wrapper {
 	margin-left: 0 !important;
 }
+
+.select2-container--default
+	.select2-selection--multiple
+	.select2-selection__choice {
+	background: #787474 !important;
+}
+
+.select2-container--default
+	.select2-selection--multiple
+	.select2-selection__choice__remove {
+	border: none !important;
+	color: rgb(218, 218, 218) !important;
+	transition: color 0.3s ease;
+}
+
+.select2-container--default
+	.select2-selection--multiple
+	.select2-selection__choice__remove:hover,
+.select2-container--default
+	.select2-selection--multiple
+	.select2-selection__choice__remove:focus {
+	background: transparent !important;
+	color: #fff !important;
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+	max-height: 400px !important;
+}
