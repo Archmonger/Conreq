@@ -24,6 +24,7 @@ class AsyncCompatibility(models.TextChoices):
 
 
 class SysPlatform(models.TextChoices):
+    ANY = "ANY", "Any"
     AIX = "AIX", "Aix"
     LINUX = "LINUX", "Linux"
     WINDOWS = "WINDOWS", "Windows"
@@ -32,9 +33,9 @@ class SysPlatform(models.TextChoices):
 
 
 class DescriptionType(models.TextChoices):
-    PLAIN = "text/plain", "Plain Text (.txt)"
+    TXT = "text/plain", "Plain Text (.txt)"
     RST = "text/x-rst", "reStructuredText (.rst)"
-    MARKDOWN = "text/markdown", "Markdown (.md)"
+    MD = "text/markdown", "Markdown (.md)"
 
 
 class Category(models.Model):
@@ -103,11 +104,14 @@ class AppPackage(models.Model):
     long_description_type = models.CharField(
         max_length=20,
         choices=DescriptionType.choices,
-        default=DescriptionType.MARKDOWN,
+        default=DescriptionType.TXT,
     )
     subcategories = models.ManyToManyField(Subcategory)
     development_stage = models.CharField(
-        max_length=21, choices=DevelopmentStage.choices, blank=True
+        max_length=21,
+        choices=DevelopmentStage.choices,
+        default=DevelopmentStage.PLANNING,
+        blank=True,
     )
     min_version = VersionField(
         default="0.0.0",
@@ -115,7 +119,8 @@ class AppPackage(models.Model):
     )
     banner_message = models.TextField(
         blank=True,
-        help_text="Optional text message banner shown this apps details page.",
+        help_text="Optional text message banner shown on the app info page.",
+        max_length=1000,
     )
     sync_with_pypi = models.BooleanField(
         default=False,
@@ -140,15 +145,24 @@ class AppPackage(models.Model):
     license_type = models.CharField(max_length=100, default="GPLv3")
 
     # Environment
-    sys_platforms = MultiSelectField(choices=SysPlatform.choices, max_length=10)
+    sys_platforms = MultiSelectField(
+        choices=SysPlatform.choices,
+        max_length=40,
+        verbose_name="Supported Platforms",
+        default=SysPlatform.ANY,
+    )
 
     # Compatibility
     touch_compatible = models.BooleanField()
     mobile_compatible = models.BooleanField()
     conreq_min_version = VersionField(default="0.0.0")
-    conreq_tested_version = VersionField()
+    conreq_tested_version = VersionField(blank=True, null=True)
     conreq_max_version = VersionField(blank=True, null=True)
-    asynchronous = models.CharField(max_length=20, choices=AsyncCompatibility.choices)
+    asynchronous = models.CharField(
+        max_length=20,
+        choices=AsyncCompatibility.choices,
+        default=AsyncCompatibility.NONE,
+    )
 
     # App Dependencies
     required_apps = models.ManyToManyField("self", blank=True)
