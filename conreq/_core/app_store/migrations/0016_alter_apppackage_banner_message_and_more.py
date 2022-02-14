@@ -6,18 +6,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app_store', '0015_alter_apppackage_asynchronous_and_more'),
+        ("app_store", "0015_alter_apppackage_asynchronous_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='apppackage',
-            name='banner_message',
-            field=models.TextField(blank=True, help_text='Optional text message banner shown on the app info page.', max_length=1000),
+            model_name="apppackage",
+            name="banner_message",
+            field=models.TextField(
+                blank=True,
+                help_text="Optional text message banner shown on the app info page.",
+                max_length=1000,
+            ),
         ),
         migrations.AlterField(
-            model_name='apppackage',
-            name='long_description_type',
-            field=models.CharField(choices=[('text/plain', 'Plain Text (.txt)'), ('text/x-rst', 'reStructuredText (.rst)'), ('text/markdown', 'Markdown (.md)')], default='text/plain', max_length=20),
+            model_name="apppackage",
+            name="long_description_type",
+            field=models.CharField(
+                choices=[
+                    ("text/plain", "Plain Text (.txt)"),
+                    ("text/x-rst", "reStructuredText (.rst)"),
+                    ("text/markdown", "Markdown (.md)"),
+                ],
+                default="text/plain",
+                max_length=20,
+            ),
         ),
     ]
