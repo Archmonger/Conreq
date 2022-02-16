@@ -12,13 +12,12 @@ from conreq.app import register
 
 
 class PlaceholderApp:
-    id = 0
-    name = "Placeholder App (Has a really long name)"
-    description = "This is a placeholder description. This will be removed in the future. Please pay no attention to this text. But what if the text gets too long? Who knows what will happen, but I can probably guess that it'll be great!"
-    author = "Placeholder Author"
-    version = "1.0.0"
-    downloads = "0"
-    category = "Placeholder Category"
+    uuid = 0
+    name = "My App Name"
+    short_description = "This is a placeholder description. This will be removed in the future. Please pay no attention to this text. But what if the text gets too long? Who knows what will happen, but I can probably guess that it'll be great! Or maybe it won't be, only time will tell."
+    author = "Author"
+    version = "0.0.0"
+    category = "Category"
 
 
 @register.component.app_store()
@@ -161,7 +160,7 @@ def card(set_tab, app: PlaceholderApp = PlaceholderApp()):
                 h5(
                     {"className": "card-title"},
                     a(
-                        {"href": f"#{app.id}", "onClick": lambda x: print("clicked")},
+                        {"href": f"#{app.uuid}", "onClick": lambda x: print("clicked")},
                         app.name,
                     ),
                 ),
@@ -187,9 +186,7 @@ def card(set_tab, app: PlaceholderApp = PlaceholderApp()):
             div({"className": "btn btn-sm btn-secondary"}, "Details"),
             div({"className": "btn btn-sm btn-primary"}, "Install"),
         ),
-        div({"className": "version"}, f"Version: {app.version}"),
-        div({"className": "downloads"}, f"Downloads: {app.downloads}"),
-        div({"className": "description"}, app.description),
+        div({"className": "description"}, app.short_description),
         key=str(uuid4()),
     )
 

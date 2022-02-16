@@ -80,27 +80,24 @@ class PackageVersion(models.Model):
 
 class AppPackage(models.Model):
     def __str__(self):
-        return self.verbose_name
+        return self.name
 
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
 
-    # Basic Info
-    package_name = models.CharField(
+    # General Info
+    pkg_name = models.CharField(
         max_length=100,
         help_text="Must be snake_case. Used for PyPI package installation, or folder naming on Git installations.",
     )
-    verbose_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     logo = models.ImageField(
         upload_to=UUIDFilePath("serve/app_store/logos/"),
         blank=True,
     )
     short_description = models.CharField(max_length=255, blank=True)
-    long_description = models.TextField(
-        blank=True,
-        help_text="This will be automatically fetched from PyPI or Git if left empty.",
-    )
+    long_description = models.TextField(blank=True)
     long_description_type = models.CharField(
         max_length=20,
         choices=DescriptionType.choices,
