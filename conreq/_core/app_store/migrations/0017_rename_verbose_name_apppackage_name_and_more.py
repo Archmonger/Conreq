@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app_store', '0016_alter_apppackage_banner_message_and_more'),
+        ("app_store", "0016_alter_apppackage_banner_message_and_more"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='apppackage',
-            old_name='verbose_name',
-            new_name='name',
+            model_name="apppackage",
+            old_name="verbose_name",
+            new_name="name",
         ),
         migrations.RenameField(
-            model_name='apppackage',
-            old_name='package_name',
-            new_name='pkg_name',
+            model_name="apppackage",
+            old_name="package_name",
+            new_name="pkg_name",
         ),
         migrations.AlterField(
-            model_name='apppackage',
-            name='long_description',
+            model_name="apppackage",
+            name="long_description",
             field=models.TextField(blank=True),
         ),
     ]
