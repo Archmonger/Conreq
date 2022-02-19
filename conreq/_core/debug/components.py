@@ -1,10 +1,8 @@
 from django.urls.base import reverse
-from idom.core.vdom import make_vdom_constructor
+from idom.html import iframe
 
 from conreq import ViewportSelector, config
 from conreq._core.utils import tab_constructor
-
-iframe = make_vdom_constructor("iframe")
 
 
 def performance(*_):

@@ -4,15 +4,13 @@ from typing import Callable, Union
 import idom
 from django.urls import path, re_path
 from idom.core.proto import ComponentType, VdomDict
-from idom.core.vdom import make_vdom_constructor
-from idom.html import div
+from idom.html import div, iframe
 
 from conreq import AuthLevel
 from conreq.utils.environment import get_base_url
 from conreq.utils.views import authenticated as authenticated_view
 
 BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
-iframe = make_vdom_constructor("iframe")
 
 
 def authenticated(
