@@ -1,8 +1,5 @@
 .viewport-container.app-store {
 	padding-top: 30px;
-}
-
-.viewport-container.app-store > div {
 	display: flex;
 	flex-direction: row;
 }

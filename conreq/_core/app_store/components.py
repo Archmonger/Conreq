@@ -3,7 +3,7 @@ from uuid import uuid4
 from channels.db import database_sync_to_async
 from django.templatetags.static import static
 from idom import component, hooks
-from idom.html import a, div, h4, h5, li, link, ol, p
+from idom.html import _, a, div, h4, h5, li, link, ol, p
 
 from conreq import config
 from conreq._core.app_store.models import Category, Subcategory
@@ -37,8 +37,7 @@ def app_store(websocket, state, set_state):
             set_categories(new_categories)
 
     # TODO: Update app store entries every first load
-    # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/538
-    return div(
+    return _(
         link({"rel": "stylesheet", "href": static("conreq/app_store.css")}),
         tab(key=tab.__name__)
         if tab

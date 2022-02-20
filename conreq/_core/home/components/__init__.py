@@ -1,5 +1,5 @@
 import idom
-from idom.html import div, script
+from idom.html import _, script
 
 from conreq import HomepageState
 from conreq._core.home.components.modal import modal
@@ -20,8 +20,8 @@ from conreq.utils.components import authenticated
 def homepage(websocket):
     state, set_state = idom.hooks.use_state(HomepageState())
 
-    # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/538
-    return div(
+    return _(
+        script("AOS.init();"),
         navbar(websocket, state, set_state),
         modal(websocket, state, set_state),
         sidebar(websocket, state, set_state),

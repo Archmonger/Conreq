@@ -215,7 +215,7 @@ def nav_group(
     group_id = f"{group_name_clean}-group"
     tabs_id = f"{group_name_clean}-tabs"
 
-    # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/538
+    # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/682
     return div(
         div(
             NAV_GROUP
