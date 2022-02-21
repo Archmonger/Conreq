@@ -144,17 +144,13 @@ def get_database_engine() -> str:
     return "SQLITE3"
 
 
-def set_env(
-    name: str, value: str, sys_env=False, dot_env=True, remove=False
-) -> Tuple[str, str]:
+def set_env(name: str, value: str, sys_env=False, dot_env=True) -> Tuple[str, str]:
     """Sets a value in either the system environment, and/or the .env file."""
     if value is None:
         value = ""
     if sys_env:
         os.environ[ENV_PREFIX + name.upper()] = str(value)
-    if dot_env and not value and remove:
-        dotenv.unset_key(dotenv_path(), name.upper())
-    elif dot_env:
+    if dot_env:
         dotenv.set_key(dotenv_path(), name.upper(), str(value))
     return (name, value)
 
