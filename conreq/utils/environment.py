@@ -155,7 +155,7 @@ def set_env(name: str, value: str, sys_env=False, dot_env=True) -> Tuple[str, st
     return (name, value)
 
 
-def remove_env(name: str, sys_env=False, dot_env=True) -> None:
+def delete_env(name: str, sys_env=False, dot_env=True) -> None:
     """Removes a value in either the system environment, and/or the .env file."""
     if sys_env and os.environ.get(ENV_PREFIX + name.upper()) is not None:
         del os.environ[ENV_PREFIX + name.upper()]
