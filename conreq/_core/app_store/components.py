@@ -3,7 +3,7 @@ from uuid import uuid4
 from channels.db import database_sync_to_async
 from django.templatetags.static import static
 from idom import component, hooks
-from idom.html import _, a, div, h4, h5, li, link, ol, p
+from idom.html import _, a, button, div, h4, h5, li, link, ol, p
 
 from conreq import config
 from conreq._core.app_store.models import Category, Subcategory
@@ -38,6 +38,7 @@ def app_store(websocket, state, set_state):
 
     # TODO: Update app store entries every first load
     return _(
+        link({"rel": "stylesheet", "href": static("conreq/buttons.css")}),
         link({"rel": "stylesheet", "href": static("conreq/app_store.css")}),
         tab(key=tab.__name__)
         if tab
@@ -182,8 +183,20 @@ def card(set_tab, app: PlaceholderApp = PlaceholderApp()):
         ),
         div(
             {"className": "btn-container"},
-            div({"className": "btn btn-sm btn-secondary"}, "Details"),
-            div({"className": "btn btn-sm btn-primary"}, "Install"),
+            button(
+                {
+                    "className": "btn btn-sm btn-secondary",
+                    "onClick": lambda x: print("clicked"),
+                },
+                "Details",
+            ),
+            button(
+                {
+                    "className": "btn btn-sm btn-primary",
+                    "onClick": lambda x: print("clicked"),
+                },
+                "Install",
+            ),
         ),
         div({"className": "description"}, app.short_description),
         key=str(uuid4()),
