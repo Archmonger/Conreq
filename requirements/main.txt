@@ -10,7 +10,7 @@ django-project-version==0.16.0
 django-searchable-encrypted-fields==0.1.9
 django-silk==4.3.0
 django-solo==2.0.0
-django-url-or-relative-url-field==0.1.2
+django-url-or-relative-url-field==0.2.0
 djangorestframework==3.13.1
 djangorestframework-api-key==2.1.0
 docutils==0.18.1
