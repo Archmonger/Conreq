@@ -31,6 +31,6 @@ pymysql==1.0.2
 python-dotenv==0.19.2
 requirements-parser==0.2.0
 sortedcontainers==2.4.0
-Twisted[tls,http2]==22.1.0
+Twisted[tls,http2]==22.2.0
 tzlocal==4.1
 whitenoise[brotli]==6.0.0
