@@ -16,7 +16,7 @@ import secrets
 import sys
 
 from django.core.management.utils import get_random_secret_key
-from tzlocal import get_localzone
+from tzlocal import get_localzone_name
 
 from conreq.utils.environment import (
     get_base_url,
@@ -391,7 +391,7 @@ if PWNED_VALIDATOR:
 
 # Internationalization
 LANGUAGE_CODE = "en-US"
-TIME_ZONE = get_localzone().key
+TIME_ZONE = get_localzone_name()
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
