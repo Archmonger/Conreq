@@ -356,7 +356,7 @@ CACHES = {
         "TIMEOUT": 300,  # Default timeout of each key
         "SHARDS": CACHE_SHARDS,  # Number of cache DBs to create
         "DATABASE_TIMEOUT": 0.05 + (CACHE_SHARDS * 0.01),  # Query timeout
-        "OPTIONS": {"size_limit": 2**30},  # 1 gigabyte max cache size
+        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte max cache size
     }
 }
 BACKUP_KEEP_MAX = 20
