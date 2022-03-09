@@ -149,9 +149,9 @@ def set_env(name: str, value: str, sys_env=False, dot_env=True) -> Tuple[str, st
     if value is None:
         value = ""
     if sys_env:
-        os.environ[ENV_PREFIX + name.upper()] = str(value)
+        os.environ[ENV_PREFIX + name.upper()] = value
     if dot_env:
-        dotenv.set_key(dotenv_path(), name.upper(), str(value))
+        dotenv.set_key(dotenv_path(), name.upper(), value)
     return (name, value)
 
 
