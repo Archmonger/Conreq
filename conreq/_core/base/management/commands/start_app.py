@@ -11,9 +11,10 @@ class Command(TemplateCommand):
 
     # pylint: disable=arguments-differ
     def handle(self, app_name: str, **options: dict):
-        package_name = options.get("package")
-        if not package_name:
-            package_name = input("Package Name: ").replace(" ", "_")
+        package_name = options.get("package") or input("Package Name: ").replace(
+            " ", "_"
+        )
+
         name = app_name
         app_or_project = "app"
         target = str(PACKAGES_DIR / package_name / "apps" / "")
