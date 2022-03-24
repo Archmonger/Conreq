@@ -148,25 +148,20 @@ class SonarrManager(ArrBase):
                 "episode_search_results": [],
             }
 
-            # Get the series
-            series = self.__sonarr.get_series(sonarr_id)
-
             # Set the series as monitored
+            series = self.__sonarr.get_series(sonarr_id)
             series["monitored"] = True
 
-            # Set specific seasons as monitored
-            if seasons:
-                for season in series["seasons"]:
-                    if season["seasonNumber"] in seasons:
-                        season["monitored"] = True
+            for season in series["seasons"]:
+                # Set specific seasons as monitored
+                if seasons and season["seasonNumber"] in seasons:
+                    season["monitored"] = True
 
-            # Set every season as monitored if no seasons were specified
-            else:
-                for season in series["seasons"]:
-                    if season["seasonNumber"] != 0:
-                        season["monitored"] = True
+                # Set every season as monitored if "select all" was used
+                elif not seasons and not episode_ids and season["seasonNumber"] != 0:
+                    season["monitored"] = True
 
-            # Save the changes to Sonarr
+            # Save the season changes to Sonarr
             response["season_update_results"] = self.__sonarr.upd_series(series)
 
             # Get the episodes
@@ -174,21 +169,25 @@ class SonarrManager(ArrBase):
             modified_episodes = []
             response["episode_update_results"] = []
 
-            # Set specific episodes as monitored
-            if episode_ids:
-                for episode in episodes:
-                    if episode["id"] in episode_ids:
-                        episode["monitored"] = True
-                        modified_episodes.append(episode)
-
-            # Set every episode as monitored if no episodes were specified
-            else:
-                for episode in episodes:
+            for episode in episodes:
+                # Set every episode as monitored if "select all" was used
+                if not episode_ids and not seasons:
                     if episode["seasonNumber"] != 0:
                         episode["monitored"] = True
                         modified_episodes.append(episode)
 
-            # Save the changes to Sonarr
+                # Set episodes as monitored if they are contained within a requested season
+                elif episode["seasonNumber"] in seasons:
+                    if episode["seasonNumber"] != 0:
+                        episode["monitored"] = True
+                        modified_episodes.append(episode)
+
+                # Set specific episodes as monitored
+                elif episode_ids and episode["id"] in episode_ids:
+                    episode["monitored"] = True
+                    modified_episodes.append(episode)
+
+            # Save the episode changes to Sonarr
             for episode in modified_episodes:
                 response["episode_update_results"].append(
                     self.__sonarr.upd_episode(episode)
