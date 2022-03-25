@@ -87,11 +87,11 @@ class AppPackage(models.Model):
     )
 
     # General Info
+    name = models.CharField(max_length=100)
     pkg_name = models.CharField(
         max_length=100,
         help_text="Must be snake_case. Used for PyPI package installation, or folder naming on Git installations.",
     )
-    name = models.CharField(max_length=100)
     logo = models.ImageField(
         upload_to=UUIDFilePath("serve/app_store/logos/"),
         blank=True,
