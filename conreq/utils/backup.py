@@ -1,3 +1,4 @@
+import contextlib
 import os
 import shutil
 from datetime import datetime, timedelta
@@ -39,14 +40,12 @@ def backup_folders() -> list[Path]:
     backup_dir_contents = sorted(glob(str(settings.BACKUP_DIR / "*")), reverse=True)
     folders = []
     for item in backup_dir_contents:
-        try:
+        with contextlib.suppress(ValueError):
             path = Path(item)
             name = path.name if path.is_dir() else ""
             # Only append folders that follow our format
             datetime.strptime(name, settings.BACKUP_DATE_FORMAT)
             folders.append(path)
-        except ValueError:
-            pass
     return folders
 
 

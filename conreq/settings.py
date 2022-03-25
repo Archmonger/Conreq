@@ -47,6 +47,7 @@ BACKUP_DIR = DATA_DIR / "backup"
 TEMP_DIR = DATA_DIR / "temp"
 USER_STATICFILES_DIR = DATA_DIR / "static"
 LOG_DIR = DATA_DIR / "logs"
+PID_DIR = DATA_DIR / "pids"
 MAKE_DIRS: list[Path] = [
     DATA_DIR,
     DATABASE_DIR,
@@ -59,6 +60,7 @@ MAKE_DIRS: list[Path] = [
     TEMP_DIR,
     USER_STATICFILES_DIR,
     LOG_DIR,
+    PID_DIR,
 ]
 if not DATA_DIR.parent.exists:
     raise OSError
@@ -103,7 +105,7 @@ SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
 SILKY_ANALYZE_QUERIES = DB_ENGINE != "SQLITE3"
 SILKY_MAX_RECORDED_REQUESTS = 1000
-WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
+WHITENOISE_MAX_AGE = 0 if DEBUG else 31536000
 COMPRESS_OUTPUT_DIR = "minified"
 COMPRESS_OFFLINE = True
 COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
@@ -356,7 +358,7 @@ CACHES = {
         "TIMEOUT": 300,  # Default timeout of each key
         "SHARDS": CACHE_SHARDS,  # Number of cache DBs to create
         "DATABASE_TIMEOUT": 0.05 + (CACHE_SHARDS * 0.01),  # Query timeout
-        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte max cache size
+        "OPTIONS": {"size_limit": 2**30},  # 1 gigabyte max cache size
     }
 }
 BACKUP_KEEP_MAX = 20

@@ -1,3 +1,6 @@
+import contextlib
+import os
+import signal
 from logging.config import dictConfig as logging_config
 from multiprocessing import Process
 
@@ -15,6 +18,7 @@ from conreq.utils.backup import backup_needed, backup_now
 from conreq.utils.environment import get_debug_mode, get_env, set_env
 
 HYPERCORN_TOML = getattr(settings, "DATA_DIR") / "hypercorn.toml"
+HUEY_PID_FILE = getattr(settings, "PID_DIR") / "huey.pid"
 DEBUG = get_debug_mode()
 
 
@@ -66,8 +70,11 @@ class Command(BaseCommand):
             set_env("WEB_ENCRYPTION_KEY", get_random_secret_key())
 
         # Run background task management
+        self.stop_huey()
         proc = Process(target=self.start_huey, daemon=True)
         proc.start()
+        with open(HUEY_PID_FILE, "w", encoding="utf-8") as huey_pid:
+            huey_pid.write(str(proc.pid))
 
         # Run the production webserver
         if not DEBUG:
@@ -152,6 +159,19 @@ class Command(BaseCommand):
             call_command("run_huey")
         else:
             call_command("run_huey", "--quiet")
+
+    @staticmethod
+    def stop_huey():
+        """Stops the Huey background task manager."""
+        if not HUEY_PID_FILE.exists():
+            return
+
+        with open(HUEY_PID_FILE, "r", encoding="utf-8") as huey_pid:
+            pid = int(huey_pid.read())
+            if not pid:
+                return
+            with contextlib.suppress(OSError):
+                os.kill(pid, signal.SIGTERM)
 
 
 @db_task()
