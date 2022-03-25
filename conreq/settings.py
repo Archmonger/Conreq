@@ -37,7 +37,7 @@ _logger = logging.getLogger(__name__)
 ROOT_DIR = Path(__file__).resolve().parent.parent
 INTERNAL_DIR = ROOT_DIR / "conreq" / "internal"
 DATA_DIR = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False)
-DATABASE_DIR = DATA_DIR / "database"
+DATABASE_DIR = DATA_DIR / "databases"
 PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
 PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
 MEDIA_DIR = DATA_DIR / "files"
