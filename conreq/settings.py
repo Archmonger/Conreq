@@ -93,7 +93,7 @@ WEBSERVER_WORKERS = get_env("WEBSERVER_WORKERS", 3, return_type=int)
 # Basic Configuration
 with (ROOT_DIR / ".version").open() as f:
     CONREQ_VERSION = f.read().strip()
-APP_STORE_VERSION = get_env("APP_STORE_VERSION", "1")
+APP_STORE_VERSION = get_env("APP_STORE_VERSION", 1, return_type=int)
 
 
 # Python Packages
