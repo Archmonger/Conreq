@@ -227,9 +227,7 @@ def nav_group(
             },
             div(
                 GROUP_NAME,
-                div(
-                    GROUP_ICON, DEFAULT_NAV_GROUP_ICON if not group.icon else group.icon
-                ),
+                div(GROUP_ICON, group.icon or DEFAULT_NAV_GROUP_ICON),
                 group.name,
             ),
             i(GROUP_CARET | {"title": f'Collapse the "{group.name}" group.'}),
