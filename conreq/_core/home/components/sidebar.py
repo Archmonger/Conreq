@@ -227,9 +227,7 @@ def nav_group(
             },
             div(
                 GROUP_NAME,
-                div(
-                    GROUP_ICON, DEFAULT_NAV_GROUP_ICON if not group.icon else group.icon
-                ),
+                div(GROUP_ICON, group.icon or DEFAULT_NAV_GROUP_ICON),
                 group.name,
             ),
             i(GROUP_CARET | {"title": f'Collapse the "{group.name}" group.'}),
@@ -242,9 +240,18 @@ def nav_group(
             div(TABS_INDICATOR),
             div(
                 TABS,
-                [nav_tab(websocket, state, set_state, tab) for tab in _top_tabs],
-                [nav_tab(websocket, state, set_state, tab) for tab in group.tabs],
-                [nav_tab(websocket, state, set_state, tab) for tab in _bottom_tabs],
+                [
+                    nav_tab(websocket, state, set_state, tab)
+                    for tab in _top_tabs
+                ],
+                [
+                    nav_tab(websocket, state, set_state, tab)
+                    for tab in group.tabs
+                ],
+                [
+                    nav_tab(websocket, state, set_state, tab)
+                    for tab in _bottom_tabs
+                ],
             ),
         ),
         key=group_id,
