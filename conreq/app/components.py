@@ -65,6 +65,7 @@ def _tabbed_viewport_tabs(
     set_tab_state,
     tabs: list[Tab],
 ) -> list[VdomDict]:
+    # sourcery skip: assign-if-exp
     if not tabs:
         return []
 
