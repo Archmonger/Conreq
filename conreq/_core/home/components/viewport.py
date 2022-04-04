@@ -27,6 +27,7 @@ def viewport_loading(websocket, state: HomepageState, set_state):
 
 @idom.component
 def viewport_primary(websocket, state: HomepageState, set_state):
+    # sourcery skip: assign-if-exp
     if not state.viewport_primary:
         return div(VIEWPORT_CONTAINER_PRIMARY | HIDDEN)
 
@@ -46,6 +47,7 @@ def viewport_primary(websocket, state: HomepageState, set_state):
 
 @idom.component
 def viewport_secondary(websocket, state: HomepageState, set_state):
+    # sourcery skip: assign-if-exp
     if not state.viewport_secondary:
         return div(VIEWPORT_CONTAINER_SECONDARY | HIDDEN)
 

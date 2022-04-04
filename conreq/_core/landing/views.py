@@ -13,6 +13,7 @@ DEBUG = get_debug_mode()
 @register.view.landing()
 def landing(request):
     """Renders the landing page (if available)."""
+    # sourcery skip: assign-if-exp
     # Redirect if a landing page doesn't exist
     if not config.templates.landing:
         return redirect("home")
