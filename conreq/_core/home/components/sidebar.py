@@ -240,18 +240,9 @@ def nav_group(
             div(TABS_INDICATOR),
             div(
                 TABS,
-                [
-                    nav_tab(websocket, state, set_state, tab)
-                    for tab in _top_tabs
-                ],
-                [
-                    nav_tab(websocket, state, set_state, tab)
-                    for tab in group.tabs
-                ],
-                [
-                    nav_tab(websocket, state, set_state, tab)
-                    for tab in _bottom_tabs
-                ],
+                [nav_tab(websocket, state, set_state, tab) for tab in _top_tabs],
+                [nav_tab(websocket, state, set_state, tab) for tab in group.tabs],
+                [nav_tab(websocket, state, set_state, tab) for tab in _bottom_tabs],
             ),
         ),
         key=group_id,
