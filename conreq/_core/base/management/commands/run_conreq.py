@@ -166,7 +166,7 @@ class Command(BaseCommand):
         if not HUEY_PID_FILE.exists():
             return
 
-        with open(HUEY_PID_FILE, "r", encoding="utf-8") as huey_pid:
+        with open(HUEY_PID_FILE, encoding="utf-8") as huey_pid:
             pid = int(huey_pid.read())
             if not pid:
                 return
