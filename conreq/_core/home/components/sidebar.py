@@ -2,7 +2,7 @@ from copy import copy
 from inspect import iscoroutinefunction
 
 import idom
-from idom.html import div, i, nav
+from idom.html import div, i, nav, _
 
 from conreq import HomepageState, NavGroup, NavTab, Viewport, ViewportSelector, config
 from conreq.utils.environment import get_debug_mode, get_safe_mode
@@ -215,8 +215,7 @@ def nav_group(
     group_id = f"{group_name_clean}-group"
     tabs_id = f"{group_name_clean}-tabs"
 
-    # TODO: Remove this top level div later https://github.com/idom-team/idom/issues/682
-    return div(
+    return _(
         div(
             NAV_GROUP
             | {
