@@ -5,25 +5,25 @@ repos:
       hooks:
           - id: check-merge-conflict
     - repo: https://github.com/hadialqattan/pycln
-      rev: v1.0.3
+      rev: "v1.2.5"
       hooks:
           - id: pycln
             args: [--all]
     - repo: https://github.com/asottile/yesqa
-      rev: v1.2.3
+      rev: "v1.3.0"
       hooks:
           - id: yesqa
     - repo: https://github.com/pycqa/isort
-      rev: 5.9.3
+      rev: "5.10.1"
       hooks:
           - id: isort
             args: [--profile, black]
     - repo: https://github.com/psf/black
-      rev: 21.9b0
+      rev: "22.3.0"
       hooks:
           - id: black
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v4.0.1
+      rev: "v4.1.0"
       hooks:
           - id: end-of-file-fixer
             exclude: >-
@@ -51,26 +51,26 @@ repos:
           - id: detect-private-key
             exclude: ^examples|(?:tests/ssl)/
     - repo: https://github.com/asottile/pyupgrade
-      rev: v2.28.0
+      rev: "v2.31.1"
       hooks:
           - id: pyupgrade
             args: [--py36-plus, --keep-mock]
     - repo: https://github.com/PyCQA/flake8
-      rev: 4.0.1
+      rev: "4.0.1"
       hooks:
           - id: flake8
     - repo: https://github.com/Lucas-C/pre-commit-hooks-markup
-      rev: v1.0.1
+      rev: "v1.0.1"
       hooks:
           - id: rst-linter
             files: >-
                 ^[^/]+[.]rst$
     - repo: https://github.com/adrienverge/yamllint
-      rev: v1.26.3
+      rev: "v1.26.3"
       hooks:
           - id: yamllint
     - repo: https://github.com/thibaudcolas/curlylint
-      rev: v0.13.0
+      rev: "v0.13.1"
       hooks:
           - id: curlylint
             args: ["conreq/"]
