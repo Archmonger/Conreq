@@ -2,7 +2,7 @@ from copy import copy
 from inspect import iscoroutinefunction
 
 import idom
-from idom.html import div, i, nav, _
+from idom.html import _, div, i, nav
 
 from conreq import HomepageState, NavGroup, NavTab, Viewport, ViewportSelector, config
 from conreq.utils.environment import get_debug_mode, get_safe_mode
