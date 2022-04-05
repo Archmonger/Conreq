@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
-from idom.core.proto import VdomDict
+from idom.core.types import VdomDict
 from sortedcontainers import SortedSet
 
 

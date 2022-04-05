@@ -4,7 +4,7 @@ from typing import Callable
 from uuid import uuid4
 
 import idom
-from idom.core.proto import VdomDict
+from idom.core.types import VdomDict
 from idom.html import div, li, ul
 
 from conreq.app.types import HomepageState, Tab, TabbedViewportState

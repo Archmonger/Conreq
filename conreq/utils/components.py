@@ -3,7 +3,7 @@ from typing import Callable, Union
 
 import idom
 from django.urls import path, re_path
-from idom.core.proto import ComponentType, VdomDict
+from idom.core.types import ComponentType, VdomDict
 from idom.html import div, iframe
 
 from conreq import AuthLevel

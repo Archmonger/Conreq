@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
-from idom.core.proto import VdomDict
+from idom.core.types import VdomDict
 from idom.html import div, span
 from sortedcontainers import SortedList
 

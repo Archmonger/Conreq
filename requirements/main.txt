@@ -9,7 +9,7 @@ django-compressor==3.1
 django-crispy-forms==1.14.0
 django-downloadview==2.3.0
 django-health-check==3.16.5
-django-idom==0.0.4
+django-idom==0.0.5
 django-jazzmin==2.4.9
 django-multiselectfield==0.1.12
 django-searchable-encrypted-fields==0.1.9
