@@ -10,9 +10,9 @@ django-project-version==0.16.0
 django-searchable-encrypted-fields==0.1.9
 django-silk==4.3.0
 django-solo==2.0.0
-django-url-or-relative-url-field==0.1.2
+django-url-or-relative-url-field==0.2.0
 djangorestframework==3.13.1
-djangorestframework-api-key==2.1.0
+djangorestframework-api-key==2.2.0
 docutils==0.18.1
 drf-yasg==1.20.0
 huey==2.4.3
@@ -22,10 +22,10 @@ markdown==3.3.6
 pwned-passwords-django==1.5
 pyarr==3.1.0
 pymysql==1.0.2
-python-dotenv==0.19.2
+python-dotenv==0.20.0
 strsim==0.0.3
 titlecase==2.3
 tmdbsimple==2.9.1
 Twisted[tls,http2]==22.2.0
-tzlocal==4.1
+tzlocal==4.2
 whitenoise[brotli]==6.0.0
