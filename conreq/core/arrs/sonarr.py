@@ -18,7 +18,7 @@ class SonarrManager(ArrBase):
 
         # Connections to Sonarr
         self.__sonarr = SonarrAPI(
-            self.conreq_config.sonarr_url, self.conreq_config.sonarr_api_key
+            self.conreq_config.sonarr_url.rstrip("/"), self.conreq_config.sonarr_api_key
         )
 
         # Set values if DB still contains default values

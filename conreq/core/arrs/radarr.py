@@ -18,7 +18,7 @@ class RadarrManager(ArrBase):
 
         # Connection to Radarr
         self.__radarr = RadarrAPI(
-            self.conreq_config.radarr_url, self.conreq_config.radarr_api_key
+            self.conreq_config.radarr_url.rstrip("/"), self.conreq_config.radarr_api_key
         )
 
         # Set values if DB still contains default values
