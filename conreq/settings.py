@@ -71,7 +71,7 @@ BASE_URL = get_base_url()
 
 
 # Python Packages
-DJVERSION_VERSION = "0.20.35"
+DJVERSION_VERSION = "0.20.36"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
@@ -355,7 +355,7 @@ CACHES = {
         "TIMEOUT": 300,  # Django setting for default timeout of each key.
         "SHARDS": 8,  # Number of "sharded" cache dbs to create
         "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds
-        "OPTIONS": {"size_limit": 2**30},  # 1 gigabyte
+        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte
     }
 }
 
