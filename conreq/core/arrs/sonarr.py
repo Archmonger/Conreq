@@ -319,7 +319,7 @@ class SonarrManager(ArrBase):
     def sonarr_quality_profiles(self):
         """Returns the quality profiles available within Sonarr"""
         try:
-            return self.__sonarr.get_quality_profiles()
+            return self.__sonarr.get_quality_profile()
 
         except Exception:
             log.handler(

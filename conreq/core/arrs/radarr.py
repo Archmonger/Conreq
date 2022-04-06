@@ -215,7 +215,7 @@ class RadarrManager(ArrBase):
     def radarr_quality_profiles(self):
         """Returns the quality profiles available within Radarr"""
         try:
-            return self.__radarr.get_quality_profiles()
+            return self.__radarr.get_quality_profile()
 
         except Exception:
             log.handler(
