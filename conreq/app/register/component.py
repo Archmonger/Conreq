@@ -11,6 +11,16 @@ def manage_users() -> None:
     return decorator
 
 
+def user_invites() -> None:
+    """Changes the manage users component."""
+
+    def decorator(func):
+        config.components.user_invites = func
+        return func
+
+    return decorator
+
+
 def server_settings() -> None:
     """Changes the server settings component."""
 

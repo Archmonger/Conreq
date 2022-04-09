@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django_tables2 import Table, TemplateColumn
+from conreq._core.sign_up.models import InviteCode
 
 
 class UsersTable(Table):
@@ -21,3 +22,19 @@ class UsersTable(Table):
             "edit",
         )
         order_by = "date_joined"
+
+
+class UserInviteTable(Table):
+    class Meta:
+        model = InviteCode
+        template_name = "django_tables2/bootstrap-responsive.html"
+        fields = (
+            "code",
+            "name",
+            "email",
+            "created_at",
+            "expires_at",
+            "used_at",
+            "used_by",
+        )
+        order_by = "created_at"

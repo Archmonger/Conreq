@@ -50,6 +50,7 @@ class TemplateConfig:
 class ComponentConfig:
     # TODO: Implement these components (needs wrappers)
     manage_users: Callable = None
+    user_invites: Callable = None
     server_settings: Callable = None
     user_settings: Callable = None
     app_store: Callable = None

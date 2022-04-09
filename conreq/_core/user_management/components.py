@@ -2,12 +2,11 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig
-from idom import component
-from idom.html import div
 
 from conreq import AuthLevel, config
+from conreq._core.sign_up.models import InviteCode
 from conreq._core.user_management.forms import UserEditForm
-from conreq._core.user_management.tables import UsersTable
+from conreq._core.user_management.tables import UserInviteTable, UsersTable
 from conreq._core.utils import tab_constructor
 from conreq.app import register
 from conreq.app.components import tabbed_viewport
@@ -48,9 +47,15 @@ def manage_users_table(request):
     return render(request, "conreq/table.html", {"table": table})
 
 
-@component
-def user_invites(websocket, state, set_state):
-    return div("This is a temporary stub for the user invites tab.")
+@register.component.user_invites()
+@view_to_component(name="user_invites", auth_level=AuthLevel.admin)
+def user_invites(request):
+    table = UserInviteTable(InviteCode.objects.all())
+    RequestConfig(
+        request,
+        paginate={"per_page": request.GET.get("per_page", 25)},
+    ).configure(table)
+    return render(request, "conreq/table.html", {"table": table})
 
 
 # pylint: disable=protected-access
