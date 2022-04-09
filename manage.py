@@ -1,11 +1,13 @@
 """Django's command-line utility for administrative tasks."""
+import contextlib
 import os
 import subprocess
 import sys
 
-from conreq.utils.environment import get_safe_mode, set_env
+from conreq.utils.environment import set_env
 
 
+# pylint: disable=import-outside-toplevel
 def main():
     # Check if Django is installed
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conreq.settings")
@@ -47,7 +49,6 @@ def run_in_safe_mode(exception):
             sys_env=True,
             dot_env=False,
         )
-        get_safe_mode.cache_clear()
         start_command = f'{sys.executable} {" ".join(sys.argv)}'
         subprocess.run(start_command.split(" "), check=True)
     except Exception as exception_2:
@@ -55,7 +56,5 @@ def run_in_safe_mode(exception):
 
 
 if __name__ == "__main__":
-    try:
+    with contextlib.suppress(KeyboardInterrupt):
         main()
-    except KeyboardInterrupt:
-        pass
