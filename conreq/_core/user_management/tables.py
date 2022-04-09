@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django_tables2 import Table, TemplateColumn
+
 from conreq._core.sign_up.models import InviteCode
 
 
