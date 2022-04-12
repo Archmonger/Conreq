@@ -1,6 +1,7 @@
 import json
 from platform import platform
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -20,7 +21,7 @@ _logger = log.get_logger(__name__)
 @performance_metrics()
 def server_settings(request):
     template = loader.get_template("viewport/server_settings.html")
-    context = {"os_platform": platform()}
+    context = {"os_platform": platform(), "version": settings.CONREQ_VERSION}
     return HttpResponse(template.render(context, request))
 
 

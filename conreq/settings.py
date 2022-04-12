@@ -14,6 +14,7 @@ import json
 import os
 import secrets
 import sys
+from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 from tzlocal import get_localzone_name
@@ -66,12 +67,15 @@ MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
 SSL_SECURITY = get_bool_from_env("SSL_SECURITY", False)
 PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
 X_FRAME_OPTIONS = get_str_from_env("X_FRAME_OPTIONS", "DENY")
-ALLOWED_HOST = get_str_from_env("ALLOWED_HOST", "*")
 BASE_URL = get_base_url()
 
 
+# Basic Configuration
+with (Path(BASE_DIR) / ".version").open() as f:
+    CONREQ_VERSION = f.read().strip()
+
+
 # Python Packages
-DJVERSION_VERSION = "0.20.37"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
@@ -194,7 +198,6 @@ for logger in LOGGING["loggers"]:
 # Security Settings
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "no-referrer"
-ALLOWED_HOSTS = [ALLOWED_HOST]
 SECURE_BROWSER_XSS_FILTER = True
 if SSL_SECURITY:
     SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
@@ -258,7 +261,6 @@ INSTALLED_APPS = [
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
-    "djversion",  # Obtains the git commit as a version number
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs

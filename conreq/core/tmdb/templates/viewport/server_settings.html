@@ -1,8 +1,6 @@
 {% load solo_tags %}
-{% load djversion_tags %}
 {% load static %}
 {% get_solo 'server_settings.ConreqConfig' as server_settings %}
-{% project_version as VERSION %}
 {% csrf_token %}
 {% include "primary/loading_animation_container.html" %}
 <input class="page-name" type="hidden" value="Server Settings">
@@ -179,7 +177,7 @@
             </div>
             <div class="settings-item-group info">
                 <div class="text-input-title info">Version</div>
-                <div class="settings-item-details info">{{ VERSION }}</div>
+                <div class="settings-item-details info">{{ version }}</div>
             </div>
         </div>
     </div>
