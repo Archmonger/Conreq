@@ -199,6 +199,7 @@ for logger in LOGGING["loggers"]:
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "no-referrer"
 SECURE_BROWSER_XSS_FILTER = True
+ALLOWED_HOSTS = ["*"]
 if SSL_SECURITY:
     SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
     SECURE_HSTS_PRELOAD = True  # Allow for HSTS preload
@@ -357,7 +358,7 @@ CACHES = {
         "TIMEOUT": 300,  # Django setting for default timeout of each key.
         "SHARDS": 8,  # Number of "sharded" cache dbs to create
         "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds
-        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte
+        "OPTIONS": {"size_limit": 2**30},  # 1 gigabyte
     }
 }
 
