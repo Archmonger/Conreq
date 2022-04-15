@@ -197,7 +197,6 @@ for logger in LOGGING["loggers"]:
 
 # Security Settings
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_REFERRER_POLICY = "no-referrer"
 SECURE_BROWSER_XSS_FILTER = True
 ALLOWED_HOSTS = [
     host.strip() for host in get_str_from_env("ALLOWED_HOSTS", "*").split(",")
