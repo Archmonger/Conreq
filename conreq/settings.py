@@ -204,7 +204,7 @@ ALLOWED_HOSTS = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
-    for origin in get_str_from_env("CSRF_TRUSTED_ORIGINS", "").split(",")
+    for origin in get_str_from_env("TRUSTED_ORIGINS", "").split(",")
     if origin
 ]
 if SSL_SECURITY:
