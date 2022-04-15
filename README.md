@@ -36,7 +36,8 @@ MYSQL_CONFIG_FILE = /config/mysql.cnf   # default: None
 SSL_SECURITY = True                     # default: False (True enables advanced SSL security features)
 PWNED_VALIDATOR = False                 # default: True (False disables checking for compromised passwords)
 X_FRAME_OPTIONS = SAMEORIGIN            # default: DENY (False disables X-Frame-Options)
-ALLOWED_HOST = 192.168.0.199            # default: * (Allows all hosts)
+ALLOWED_HOST = 192.168.0.199            # default: * (Comma separated list. Asterisk allows all hosts.)
+CSRF_TRUSTED_ORIGINS = https://*.example.com  # default: None (Comma separated list. Required to be set if using https.)
 DEBUG = False                           # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
 
 # Email
