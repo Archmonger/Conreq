@@ -191,9 +191,11 @@ logging_config(LOGGING)
 SESSION_COOKIE_AGE = get_env("SESSION_COOKIE_AGE", Seconds.month * 3, return_type=int)
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = get_env("SECURE_REFERRER_POLICY", "")
-ALLOWED_HOSTS = get_env("ALLOWED_HOSTS", return_type=list) or [
-    get_env("ALLOWED_HOST", "*")
+ALLOWED_HOSTS = [host.strip() for host in get_env("ALLOWED_HOSTS", "*").split(",")]
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip() for origin in get_env("TRUSTED_ORIGINS", "").split(",") if origin
 ]
+# TODO: Need a setting for origin/hosts in the UI
 SECURE_BROWSER_XSS_FILTER = True
 
 
