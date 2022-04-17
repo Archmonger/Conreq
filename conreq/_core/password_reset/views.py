@@ -20,6 +20,7 @@ class PassWordResetDoneView(auth_views.PasswordResetDoneView):
 
 @register.view.password_reset_confirm()
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = config.templates.password_reset_confirm
     success_url = reverse_lazy("home")
     post_reset_login = True
     form_class = SetPasswordForm
