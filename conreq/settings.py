@@ -107,13 +107,22 @@ HUEY = {
 
 
 # Email Settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = get_bool_from_env("EMAIL_USE_TLS", True)
-EMAIL_PORT = get_str_from_env("EMAIL_PORT", "")
-EMAIL_HOST = get_str_from_env("EMAIL_HOST", "")
-EMAIL_HOST_USER = get_str_from_env("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = get_str_from_env("EMAIL_HOST_PASSWORD", "")
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+if (
+    get_str_from_env("EMAIL_HOST")
+    and get_str_from_env("EMAIL_PORT")
+    and get_str_from_env("EMAIL_HOST_USER")
+    and get_str_from_env("EMAIL_HOST_PASSWORD")
+):
+    EMAIL_ENABLED = True
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_USE_TLS = get_bool_from_env("EMAIL_USE_TLS", True)
+    EMAIL_HOST = get_str_from_env("EMAIL_HOST")
+    EMAIL_PORT = get_str_from_env("EMAIL_PORT")
+    EMAIL_HOST_USER = get_str_from_env("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = get_str_from_env("EMAIL_HOST_PASSWORD")
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+else:
+    EMAIL_ENABLED = False
 
 
 # PWA

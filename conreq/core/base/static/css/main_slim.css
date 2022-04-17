@@ -319,3 +319,31 @@ ul.errorlist > li {
 		filter: hue-rotate(0deg) brightness(150%) saturate(300%);
 	}
 }
+
+.default-box .centered {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.forgot-password {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.forgot-password a {
+	transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+	color: #fff;
+}
+
+@media only screen and (max-width: 800px) {
+	.forgot-password {
+		margin-top: 20px;
+		justify-content: center;
+	}
+}

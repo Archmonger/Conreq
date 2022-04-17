@@ -38,3 +38,11 @@ def contains_valid_id(results):
             if isinstance(result, dict) and result.get("conreq_valid_id"):
                 return True
     return False
+
+
+@register.filter
+def email_enabled(_):
+    """Temporary hacky shortcut to determine if email is enabled."""
+    from django.conf import settings
+
+    return settings.EMAIL_ENABLED

@@ -1,4 +1,5 @@
 {% load static %}
+{% load conreq_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +34,12 @@
                 <input type="submit" value="Sign In">
                 <input type="hidden" name="next" value="{{ next }}">
             </form>
+
+            {% if ""|email_enabled %}
+            <div class="forgot-password">
+                <a href="{% url 'password_reset' %}">Forgot Password</a>
+            </div>
+            {% endif %}
 
         </div>
     </div>

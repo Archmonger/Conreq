@@ -40,7 +40,7 @@ ALLOWED_HOST = 192.168.0.199             # default: * (Comma separated list. Ast
 TRUSTED_ORIGINS = https://*.example.com  # default: None (Comma separated list. Required to be set if using https.)
 DEBUG = False                            # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
 
-# Email
+# Email (Required for password reset features)
 EMAIL_USE_TLS = False               # default: True
 EMAIL_PORT = 587                    # default: None
 EMAIL_HOST = smtp.gmail.com         # default: None
