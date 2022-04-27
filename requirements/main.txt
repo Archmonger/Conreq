@@ -34,3 +34,4 @@ sortedcontainers==2.4.0
 Twisted[tls,http2]==22.2.0
 tzlocal==4.2
 whitenoise[brotli]==6.0.0
+sarge==0.1.6
