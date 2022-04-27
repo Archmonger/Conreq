@@ -17,7 +17,6 @@ from hypercorn.run import run as run_hypercorn
 from conreq.utils.backup import backup_needed, backup_now
 from conreq.utils.environment import get_debug_mode, get_env, set_env
 
-HYPERCORN_TOML = getattr(settings, "DATA_DIR") / "hypercorn.toml"
 HUEY_PID_FILE = getattr(settings, "PID_DIR") / "huey.pid"
 DEBUG = get_debug_mode()
 
@@ -105,10 +104,6 @@ class Command(BaseCommand):
             config.keyfile = x.ssl_key.path
             if x.ssl_ca_certificate:
                 config.ca_certs = x.ssl_ca_certificate.path
-
-        # Additonal webserver configuration
-        if HYPERCORN_TOML.exists():
-            config.from_toml(HYPERCORN_TOML)
 
         # Run the webserver
         run_hypercorn(config)
