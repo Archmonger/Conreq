@@ -24,7 +24,7 @@ def homepage():
     return _(
         script("AOS.init();"),
         navbar(websocket, state, set_state),
-        modal(websocket, state, set_state),
+        # modal(websocket, state, set_state),
         sidebar(websocket, state, set_state),
         viewport_loading(websocket, state, set_state),
         viewport_primary(websocket, state, set_state),
