@@ -3,6 +3,7 @@ from typing import Callable, Union
 
 import idom
 from django.urls import path, re_path
+from django_idom.hooks import use_websocket
 from idom.core.types import ComponentType, VdomDict
 from idom.html import div, iframe
 
@@ -21,20 +22,24 @@ def authenticated(
 
     def decorator(component):
         @wraps(component)
-        def _wrapped_func(websocket, *args, **kwargs):
+        def _wrapped_func(*args, **kwargs):
+            websocket = use_websocket()
+
             if auth_level == AuthLevel.user:
                 return (
-                    component(websocket, *args, **kwargs)
+                    component(*args, **kwargs)
                     if websocket.scope["user"].is_authenticated
                     else fallback or div()
                 )
+
             if auth_level == AuthLevel.admin:
                 return (
-                    component(websocket, *args, **kwargs)
+                    component(*args, **kwargs)
                     if websocket.scope["user"].is_staff
                     else fallback or div()
                 )
-            return component(websocket, *args, **kwargs)
+
+            return component(*args, **kwargs)
 
         return _wrapped_func
 
