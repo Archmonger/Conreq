@@ -1,5 +1,3 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 __author__ = "Gina Häußge <osd@foosel.net>"
 __license__ = "GNU Affero General Public License http://www.gnu.org/licenses/agpl.html"
 __copyright__ = "Copyright (C) 2015 The OctoPrint Project - Released under terms of the AGPLv3 License"
@@ -78,7 +76,7 @@ class PipCaller(CommandlineCaller):
         # add --no-use-wheel for versions that otherwise break
         if pip_version in cls.no_use_wheel and "--no-use-wheel" not in args:
             logger.debug(
-                "Version {} needs --no-use-wheel to properly work.".format(pip_version)
+                f"Version {pip_version} needs --no-use-wheel to properly work."
             )
             args.append("--no-use-wheel")
 
@@ -358,7 +356,7 @@ class PipCaller(CommandlineCaller):
 
             if p.returncode != 0:
                 self._logger.warning(
-                    "Error while trying to run pip --version: {}".format(p.stderr.text)
+                    f"Error while trying to run pip --version: {p.stderr.text}"
                 )
                 return None, None
 
@@ -394,7 +392,7 @@ class PipCaller(CommandlineCaller):
                 )
                 return None, None
 
-            self._logger.info("Version of pip is {}".format(version_segment))
+            self._logger.info(f"Version of pip is {version_segment}")
 
             result = pip_version, version_segment
             _cache["version"][pip_command_str] = result
@@ -408,7 +406,7 @@ class PipCaller(CommandlineCaller):
         with _cache_mutex:
             if not self.ignore_cache and pip_command_str in _cache["setup"]:
                 self._logger.debug(
-                    "Using cached pip setup information for {}".format(pip_command_str)
+                    f"Using cached pip setup information for {pip_command_str}"
                 )
                 return _cache["setup"][pip_command_str]
 

@@ -1,5 +1,3 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 __author__ = "Gina Häußge <osd@foosel.net>"
 __license__ = "GNU Affero General Public License http://www.gnu.org/licenses/agpl.html"
 __copyright__ = "Copyright (C) 2015 The OctoPrint Project - Released under terms of the AGPLv3 License"
@@ -12,8 +10,8 @@ import time
 
 import sarge
 
-from .strings import to_native_str, to_unicode
 from .platform import CLOSE_FDS, get_os
+from .strings import to_native_str, to_unicode
 
 # These regexes are based on the colorama package
 # Author: Jonathan Hartley
@@ -61,7 +59,7 @@ class CommandlineError(Exception):
         self.stderr = stderr
 
 
-class CommandlineCaller(object):
+class CommandlineCaller:
     """
     The CommandlineCaller is a utility class that allows running command line commands while logging their stdout
     and stderr via configurable callback functions.
@@ -140,7 +138,7 @@ class CommandlineCaller(object):
             joined_command = " ".join(command)
         else:
             joined_command = command
-        self._logger.debug("Calling: {}".format(joined_command))
+        self._logger.debug(f"Calling: {joined_command}")
         self.on_log_call(joined_command)
 
         # if we are running under windows, make sure there are no unicode strings in the env
@@ -189,7 +187,7 @@ class CommandlineCaller(object):
         if not p.commands[0].process:
             # the process might have been set to None in case of any exception
             self._logger.error(
-                "Error while trying to run command {}".format(joined_command)
+                f"Error while trying to run command {joined_command}"
             )
             return None, [], []
 
