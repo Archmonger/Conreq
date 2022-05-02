@@ -186,9 +186,7 @@ class CommandlineCaller:
 
         if not p.commands[0].process:
             # the process might have been set to None in case of any exception
-            self._logger.error(
-                f"Error while trying to run command {joined_command}"
-            )
+            self._logger.error(f"Error while trying to run command {joined_command}")
             return None, [], []
 
         all_stdout = []
