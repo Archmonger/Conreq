@@ -364,13 +364,11 @@ class PipCaller(CommandlineCaller):
                     f"pip command returned unparseable output, can't determine version: {output}"
                 )
 
-
             split_output = list(map(lambda x: x.strip(), output.split()))
             if len(split_output) < 2:
                 self._logger.warning(
                     f"pip command returned unparseable output, can't determine version: {output}"
                 )
-
 
             version_segment = split_output[1]
 
