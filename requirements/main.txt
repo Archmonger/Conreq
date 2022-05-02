@@ -1,6 +1,6 @@
 channels==3.0.4
 diskcache==5.4.0
-django==4.0.3
+django==4.0.4
 django-ace==1.0.11
 django-cleanup==6.0.0
 django-colorfield==0.6.3
@@ -31,7 +31,7 @@ pymysql==1.0.2
 python-dotenv==0.20.0
 requirements-parser==0.5.0
 sortedcontainers==2.4.0
-Twisted[tls,http2]==22.2.0
+Twisted[tls,http2]==22.4.0
 tzlocal==4.2
 whitenoise[brotli]==6.0.0
 sarge==0.1.6
