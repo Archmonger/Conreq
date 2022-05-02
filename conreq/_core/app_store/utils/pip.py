@@ -46,19 +46,17 @@ class PipCaller(CommandlineCaller):
             and "--process-dependency-links" in args
         ):
             logger.debug(
-                "Found --process-dependency-links flag, version {} doesn't need that yet though, removing.".format(
-                    pip_version
-                )
+                f"Found --process-dependency-links flag, version {pip_version} doesn't need that yet though, removing."
             )
+
             args.remove("--process-dependency-links")
 
         # strip --no-cache-dir for versions that don't support it
         if pip_version not in cls.no_cache_dir and "--no-cache-dir" in args:
             logger.debug(
-                "Found --no-cache-dir flag, version {} doesn't support that yet though, removing.".format(
-                    pip_version
-                )
+                f"Found --no-cache-dir flag, version {pip_version} doesn't support that yet though, removing."
             )
+
             args.remove("--no-cache-dir")
 
         # strip --disable-pip-version-check for versions that don't support it
@@ -67,10 +65,9 @@ class PipCaller(CommandlineCaller):
             and "--disable-pip-version-check" in args
         ):
             logger.debug(
-                "Found --disable-pip-version-check flag, version {} doesn't support that yet though, removing.".format(
-                    pip_version
-                )
+                f"Found --disable-pip-version-check flag, version {pip_version} doesn't support that yet though, removing."
             )
+
             args.remove("--disable-pip-version-check")
 
         # add --no-use-wheel for versions that otherwise break
@@ -251,11 +248,9 @@ class PipCaller(CommandlineCaller):
         if not ok:
             if pip_install_dir:
                 self._logger.error(
-                    "Cannot use this pip install, can't write to the install dir and also can't use "
-                    "--user for installing. Check your setup and the permissions on {}.".format(
-                        pip_install_dir
-                    )
+                    f"Cannot use this pip install, can't write to the install dir and also can't use --user for installing. Check your setup and the permissions on {pip_install_dir}."
                 )
+
             else:
                 self._logger.error(
                     "Cannot use this pip install, something's wrong with the python environment. "
@@ -313,18 +308,16 @@ class PipCaller(CommandlineCaller):
             )
             if p.returncode == 0:
                 logging.getLogger(__name__).info(
-                    'Using "{}" as command to invoke pip'.format(" ".join(command))
+                    f'Using "{" ".join(command)}" as command to invoke pip'
                 )
+
                 return command
 
         return None
 
     @classmethod
     def to_sarge_command(cls, pip_command, *args):
-        if isinstance(pip_command, list):
-            sarge_command = pip_command
-        else:
-            sarge_command = [pip_command]
+        sarge_command = pip_command if isinstance(pip_command, list) else [pip_command]
         return sarge_command + list(args)
 
     def _get_pip_version(self, pip_command):
@@ -340,10 +333,9 @@ class PipCaller(CommandlineCaller):
         with _cache_mutex:
             if not self.ignore_cache and pip_command_str in _cache["version"]:
                 self._logger.debug(
-                    "Using cached pip version information for {}".format(
-                        pip_command_str
-                    )
+                    f"Using cached pip version information for {pip_command_str}"
                 )
+
                 return _cache["version"][pip_command_str]
 
             sarge_command = self.to_sarge_command(pip_command, "--version")
@@ -369,18 +361,16 @@ class PipCaller(CommandlineCaller):
 
             if not output.startswith("pip"):
                 self._logger.warning(
-                    "pip command returned unparseable output, can't determine version: {}".format(
-                        output
-                    )
+                    f"pip command returned unparseable output, can't determine version: {output}"
                 )
+
 
             split_output = list(map(lambda x: x.strip(), output.split()))
             if len(split_output) < 2:
                 self._logger.warning(
-                    "pip command returned unparseable output, can't determine version: {}".format(
-                        output
-                    )
+                    f"pip command returned unparseable output, can't determine version: {output}"
                 )
+
 
             version_segment = split_output[1]
 
@@ -459,9 +449,9 @@ class PipCaller(CommandlineCaller):
                     key, value = line.split("=", 2)
                     data[key.strip()] = value.strip()
 
-            install_dir_str = data.get("PIP_INSTALL_DIR", None)
-            virtual_env_str = data.get("PIP_VIRTUAL_ENV", None)
-            writable_str = data.get("PIP_WRITABLE", None)
+            install_dir_str = data.get("PIP_INSTALL_DIR")
+            virtual_env_str = data.get("PIP_VIRTUAL_ENV")
+            writable_str = data.get("PIP_WRITABLE")
 
             if (
                 install_dir_str is not None
@@ -478,15 +468,10 @@ class PipCaller(CommandlineCaller):
                 user_flag = not writable and can_use_user_flag
 
                 self._logger.info(
-                    "pip installs to {} (writable -> {}), --user flag needed -> {}, "
-                    "virtual env -> {}".format(
-                        install_dir,
-                        "yes" if writable else "no",
-                        "yes" if user_flag else "no",
-                        "yes" if virtual_env else "no",
-                    )
+                    f'pip installs to {install_dir} (writable -> {"yes" if writable else "no"}), --user flag needed -> {"yes" if user_flag else "no"}, virtual env -> {"yes" if virtual_env else "no"}'
                 )
-                self._logger.info("==> pip ok -> {}".format("yes" if ok else "NO!"))
+
+                self._logger.info(f'==> pip ok -> {"yes" if ok else "NO!"}')
 
                 # ok, enable user flag, virtual env yes/no, installation dir
                 result = ok, user_flag, virtual_env, install_dir
@@ -545,15 +530,10 @@ class LocalPipCaller(PipCaller):
         ok = writable or can_use_user_flag
 
         self._logger.info(
-            "pip installs to {} (writable -> {}), --user flag needed -> {}, "
-            "virtual env -> {}".format(
-                install_dir,
-                "yes" if writable else "no",
-                "yes" if user_flag else "no",
-                "yes" if virtual_env else "no",
-            )
+            f'pip installs to {install_dir} (writable -> {"yes" if writable else "no"}), --user flag needed -> {"yes" if user_flag else "no"}, virtual env -> {"yes" if virtual_env else "no"}'
         )
-        self._logger.info("==> pip ok -> {}".format("yes" if ok else "NO!"))
+
+        self._logger.info(f'==> pip ok -> {"yes" if ok else "NO!"}')
 
         return ok, user_flag, virtual_env, install_dir
 
