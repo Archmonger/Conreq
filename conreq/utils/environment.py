@@ -64,7 +64,7 @@ def get_debug_mode() -> bool:
     global _DEBUG_MODE
 
     if _DEBUG_MODE is None:
-        _DEBUG_MODE = get_env("DEBUG_MODE", True, return_type=bool)
+        _DEBUG_MODE = get_env("DEBUG_MODE", False, return_type=bool)
 
     return _DEBUG_MODE
 
