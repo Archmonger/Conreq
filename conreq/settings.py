@@ -190,7 +190,9 @@ logging_config(LOGGING)
 # Security Settings
 SESSION_COOKIE_AGE = get_env("SESSION_COOKIE_AGE", Seconds.month * 3, return_type=int)
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_REFERRER_POLICY = get_env("SECURE_REFERRER_POLICY", "strict-origin-when-cross-origin")
+SECURE_REFERRER_POLICY = get_env(
+    "SECURE_REFERRER_POLICY", "strict-origin-when-cross-origin"
+)
 ALLOWED_HOSTS = [host.strip() for host in get_env("ALLOWED_HOSTS", "*").split(",")]
 if get_env("CSRF_TRUSTED_ORIGINS", ""):
     CSRF_TRUSTED_ORIGINS = [
