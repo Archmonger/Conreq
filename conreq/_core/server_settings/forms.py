@@ -80,7 +80,6 @@ class StylingSettingsForm(ModelForm):
 
 
 class ReferrerPolicy(TextChoices):
-    NONE = ""
     NO_REFERRER = "no-referrer"
     NO_REFERRER_WHEN_DOWNGRADE = "no-referrer-when-downgrade"
     ORIGIN = "origin"
@@ -93,29 +92,39 @@ class ReferrerPolicy(TextChoices):
 
 # TODO: Set these initial values based on settings.py
 class WebserverSettingsForm(EnvFormMixin, ModelForm):
+    # Remember to change the default in settings.py if you change these defaults
     base_url = EnvCharField(
         env_name="BASE_URL",
         label="Base URL",
-        help_text="Appears in all links. A value of 'base-url' will result in example.com/base-url.",
+        help_text='Appears in all links. A value of "base-url" will result in example.com/base-url.',
     )
     home_url = EnvCharField(
         env_name="HOME_URL",
         label="Home URL",
         initial=get_home_url(False, False),
-        help_text="A value of 'home-url' will result in example.com/base-url/home-url.",
+        help_text='Appears in homepage links. A value of "home-url" will result in example.com/base-url/home-url.',
     )
     secure_referrer_policy = EnvChoiceField(
         env_name="SECURE_REFERRER_POLICY",
-        initial=ReferrerPolicy.NONE,
+        initial=ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN,
         choices=ReferrerPolicy.choices,
         help_text="The HTTP referrer policy to apply.",
     )
-    if len(settings.ALLOWED_HOSTS) == 1:
-        allowed_domain = EnvCharField(
-            env_name="ALLOWED_HOST",
-            initial=settings.ALLOWED_HOSTS[0],
-            help_text="The IP Address or web domain the webserver is allowed to serve (ex. example.com). To allow all, use an asterisk (*).",
-        )
+    allowed_domains = EnvCharField(
+        env_name="ALLOWED_HOSTS",
+        initial=",".join(settings.ALLOWED_HOSTS),
+        help_text="Comma separated list of IPs or domains the webserver is allowed to \
+            serve (ex. example.com, 127.0.0.1). Wildcards (*) are allowed within the URLs.",
+    )
+    csrf_trusted_origins = EnvCharField(
+        env_name="CSRF_TRUSTED_ORIGINS",
+        label="CSRF trusted origins",
+        initial=",".join(settings.CSRF_TRUSTED_ORIGINS),
+        help_text='Comma separated list of <b>qualified</b> URLs trusted for \
+            <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">\
+                CSRF protection</a> (ex. https://example.com). Wildcards (*) are allowed within the URLs. <br> If this field \
+                    is empty, URLs will be automatically generated based on "Allowed Domains".',
+    )
     rotate_secret_key = EnvBooleanField(
         env_name="ROTATE_SECRET_KEY",
         help_text="Invalidates user sessions upon every server restart.",
@@ -148,7 +157,8 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
             "base_url",
             "home_url",
             "secure_referrer_policy",
-            "allowed_domain",
+            "allowed_domains",
+            "csrf_trusted_origins",
             "rotate_secret_key",
             "host_ip",
             "host_port",

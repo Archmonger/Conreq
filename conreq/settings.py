@@ -87,7 +87,7 @@ SAFE_MODE = get_safe_mode()
 DB_ENGINE = get_database_engine()
 BASE_URL = get_base_url()
 HOME_URL = get_home_url()
-WEBSERVER_WORKERS = get_env("WEBSERVER_WORKERS", 3, return_type=int)
+WEBSERVER_WORKERS = get_env("WEBSERVER_WORKERS", 1, return_type=int)
 
 
 # Basic Configuration
@@ -190,12 +190,18 @@ logging_config(LOGGING)
 # Security Settings
 SESSION_COOKIE_AGE = get_env("SESSION_COOKIE_AGE", Seconds.month * 3, return_type=int)
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_REFERRER_POLICY = get_env("SECURE_REFERRER_POLICY", "")
+SECURE_REFERRER_POLICY = get_env("SECURE_REFERRER_POLICY", "strict-origin-when-cross-origin")
 ALLOWED_HOSTS = [host.strip() for host in get_env("ALLOWED_HOSTS", "*").split(",")]
-CSRF_TRUSTED_ORIGINS = [
-    origin.strip() for origin in get_env("TRUSTED_ORIGINS", "").split(",") if origin
-]
-# TODO: Need a setting for origin/hosts in the UI
+if get_env("CSRF_TRUSTED_ORIGINS", ""):
+    CSRF_TRUSTED_ORIGINS = [
+        origin.strip()
+        for origin in get_env("CSRF_TRUSTED_ORIGINS", "").split(",")
+        if origin
+    ]
+else:
+    CSRF_TRUSTED_ORIGINS = [
+        f"http://{origin.strip()}" for origin in ALLOWED_HOSTS if origin != "*"
+    ] + [f"https://{origin.strip()}" for origin in ALLOWED_HOSTS if origin != "*"]
 SECURE_BROWSER_XSS_FILTER = True
 
 
