@@ -204,7 +204,7 @@ else:
     CSRF_TRUSTED_ORIGINS = [
         f"http://{origin.strip()}" for origin in ALLOWED_HOSTS if origin != "*"
     ] + [f"https://{origin.strip()}" for origin in ALLOWED_HOSTS if origin != "*"]
-ALLOWED_HOSTS += [".localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS += ["localhost", "127.0.0.1", "[::1]"]
 SECURE_BROWSER_XSS_FILTER = True
 
 
