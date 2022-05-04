@@ -64,7 +64,7 @@ def get_int_from_env(
 @functools.cache
 def get_debug() -> bool:
     """Shortcut to obtain DEBUG from environment variables"""
-    return get_bool_from_env("DEBUG", True)
+    return get_bool_from_env("DEBUG", False)
 
 
 @functools.cache

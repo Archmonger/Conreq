@@ -38,7 +38,7 @@ PWNED_VALIDATOR = False                  # default: True (False disables checkin
 X_FRAME_OPTIONS = SAMEORIGIN             # default: DENY (False disables X-Frame-Options)
 ALLOWED_HOST = 192.168.0.199             # default: * (Comma separated list. Asterisk allows all hosts.)
 TRUSTED_ORIGINS = https://*.example.com  # default: None (Comma separated list. Required to be set if using https.)
-DEBUG = False                            # default: False (Disable security features, only enable this during development. Defaults to True outside of docker.)
+DEBUG = True                             # default: False (Only enable this during development or testing.)
 
 # Email (Required for password reset features)
 EMAIL_USE_TLS = False               # default: True
