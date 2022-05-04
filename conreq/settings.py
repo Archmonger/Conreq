@@ -71,7 +71,7 @@ BASE_URL = get_base_url()
 
 
 # Basic Configuration
-with (Path(BASE_DIR) / ".version").open() as f:
+with (Path(BASE_DIR) / "VERSION").open() as f:
     CONREQ_VERSION = f.read().strip()
 
 
