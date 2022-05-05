@@ -54,7 +54,10 @@ def backup_needed() -> bool:
     # pylint: disable=import-outside-toplevel
     from django.conf import settings
 
-    latest_backup = backup_folders()[0]
+    backups = backup_folders()
+    if not backups:
+        return True
+    latest_backup = backups[0]
     folder_name = latest_backup.name
     backup_date = datetime.strptime(folder_name, settings.BACKUP_DATE_FORMAT)
     return datetime.now() - timedelta(weeks=1) > backup_date

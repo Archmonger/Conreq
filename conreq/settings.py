@@ -373,7 +373,7 @@ CACHES = {
     }
 }
 BACKUP_KEEP_MAX = 20
-BACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M%S"
+BACKUP_DATE_FORMAT = "%Y-%m-%d@%H%M"
 BACKUP_COMPRESSION = "xz"
 
 
