@@ -13,7 +13,7 @@ _DEBUG_MODE = None
 _DB_ENGINE = None
 ENV_PREFIX = os.environ.get("CONREQ_ENV_PREFIX", "CONREQ").rstrip("_").upper()
 if ENV_PREFIX:
-    ENV_PREFIX = f"{ENV_PREFIX}_"
+    ENV_PREFIX += "_"
 
 
 def dotenv_path() -> str:
