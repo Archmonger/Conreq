@@ -24,6 +24,7 @@
     "prettier.tabWidth": 4,
     "prettier.useTabs": true,
     "prettier.endOfLine": "auto",
+    "prettier.proseWrap": "never",
     "autoprefixer.formatOnSave": true,
     "files.associations": {
         "**/requirements/*.txt": "pip-requirements",
