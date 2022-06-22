@@ -8,6 +8,8 @@ from conreq import HomepageState, NavGroup, NavTab, Viewport, ViewportSelector, 
 from conreq.utils.environment import get_debug_mode, get_safe_mode
 from conreq.utils.generic import clean_string
 
+# pylint: disable=protected-access
+
 DEBUG = get_debug_mode()
 SAFE_MODE = get_safe_mode()
 SIDEBAR = {
@@ -69,13 +71,13 @@ def sidebar(websocket, state: HomepageState, set_state):
     @idom.hooks.use_effect
     async def set_initial_tab():
         # The initial tab has already been set
-        if state.viewport_selector != ViewportSelector.initial:
+        if state._viewport_selector != ViewportSelector._initial:
             return None
 
         # Use the configured default tab, if it exists
         if config.homepage.default_nav_tab:
-            state.viewport_selector = config.homepage.default_nav_tab.viewport.selector
-            state.viewport_primary = config.homepage.default_nav_tab.viewport
+            state._viewport_selector = config.homepage.default_nav_tab.viewport.selector
+            state._viewport_primary = config.homepage.default_nav_tab.viewport
             set_state(copy(state))
             return None
 
@@ -84,17 +86,17 @@ def sidebar(websocket, state: HomepageState, set_state):
             if not group.tabs or group in USER_ADMIN_DEBUG:
                 continue
             tab: NavTab = group.tabs[0]
-            state.viewport_selector = tab.viewport.selector
+            state._viewport_selector = tab.viewport.selector
             if tab["viewport"] == ViewportSelector.primary:
-                state.viewport_primary = tab.viewport
+                state._viewport_primary = tab.viewport
             if tab.viewport.selector == ViewportSelector.secondary:
-                state.viewport_secondary = tab.viewport
+                state._viewport_secondary = tab.viewport
             set_state(copy(state))
             return None
 
     async def username_on_click(_):
-        state.viewport_selector = ViewportSelector.primary
-        state.viewport_primary = Viewport(config.components.user_settings)
+        state._viewport_selector = ViewportSelector.primary
+        state._viewport_primary = Viewport(config.components.user_settings)
         set_state(copy(state))
 
     return nav(
@@ -155,13 +157,13 @@ def sidebar(websocket, state: HomepageState, set_state):
 
 def nav_tab_class(state: HomepageState, tab: NavTab):
     if (
-        state.viewport_selector
+        state._viewport_selector
         not in {
-            ViewportSelector.loading,
-            ViewportSelector.initial,
+            ViewportSelector._loading,
+            ViewportSelector._initial,
         }
         and tab.viewport.component
-        is state.__getattribute__(f"viewport_{state.viewport_selector}").component
+        is state.__getattribute__(f"_viewport_{state._viewport_selector}").component
     ):
         return NAV_TAB_ACTIVE
     return NAV_TAB
@@ -187,11 +189,7 @@ def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
                     tab=tab,
                 )
             return
-        state.viewport_selector = tab.viewport.selector
-        if tab.viewport.selector == ViewportSelector.primary:
-            state.viewport_primary = tab.viewport
-        if tab.viewport.selector == ViewportSelector.secondary:
-            state.viewport_secondary = tab.viewport
+        state.set_viewport(tab.viewport)
         set_state(copy(state))
 
     return div(

@@ -4,6 +4,8 @@ from idom.html import div
 from conreq import HomepageState, ViewportSelector, config
 from conreq.app.types import Viewport
 
+# pylint: disable=protected-access
+
 VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
 VIEWPORT_CONTAINER_SECONDARY = {"className": "viewport-container secondary"}
 VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container loading"}
@@ -17,8 +19,8 @@ def viewport_loading(websocket, state: HomepageState, set_state):
         VIEWPORT_CONTAINER_LOADING
         | (
             HIDDEN
-            if state.viewport_selector
-            not in {ViewportSelector.loading, ViewportSelector.initial}
+            if state._viewport_selector
+            not in {ViewportSelector._loading, ViewportSelector._initial}
             else {}
         ),
         config.components.loading_animation,
@@ -28,40 +30,40 @@ def viewport_loading(websocket, state: HomepageState, set_state):
 @idom.component
 def viewport_primary(websocket, state: HomepageState, set_state):
     # sourcery skip: assign-if-exp
-    if not state.viewport_primary:
+    if not state._viewport_primary:
         return div(VIEWPORT_CONTAINER_PRIMARY | HIDDEN)
 
     return div(
         viewport_class(
             VIEWPORT_CONTAINER_PRIMARY,
-            state.viewport_selector,
+            state._viewport_selector,
             ViewportSelector.primary,
-            state.viewport_primary,
+            state._viewport_primary,
         ),
-        state.viewport_primary.component(websocket, state, set_state)
-        if state.viewport_primary
+        state._viewport_primary.component(websocket, state, set_state)
+        if state._viewport_primary
         else "",
-        key=f"{state.viewport_primary.component.__module__}.{state.viewport_primary.component.__name__}",
+        key=f"{state._viewport_primary.component.__module__}.{state._viewport_primary.component.__name__}",
     )
 
 
 @idom.component
 def viewport_secondary(websocket, state: HomepageState, set_state):
     # sourcery skip: assign-if-exp
-    if not state.viewport_secondary:
+    if not state._viewport_secondary:
         return div(VIEWPORT_CONTAINER_SECONDARY | HIDDEN)
 
     return div(
         viewport_class(
             VIEWPORT_CONTAINER_SECONDARY,
-            state.viewport_selector,
+            state._viewport_selector,
             ViewportSelector.secondary,
-            state.viewport_secondary,
+            state._viewport_secondary,
         ),
-        state.viewport_secondary.component(websocket, state, set_state)
-        if state.viewport_secondary
+        state._viewport_secondary.component(websocket, state, set_state)
+        if state._viewport_secondary
         else "",
-        key=f"{state.viewport_secondary.component.__module__}.{state.viewport_secondary.component.__name__}",
+        key=f"{state._viewport_secondary.component.__module__}.{state._viewport_secondary.component.__name__}",
     )
 
 

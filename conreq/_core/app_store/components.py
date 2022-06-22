@@ -31,7 +31,6 @@ def app_store(websocket, state, set_state):
     async def load_from_db():
         if categories:
             return
-        print("Categories state is empty. Refreshing...")
         new_categories = await get_categories()
         if new_categories:
             set_categories(new_categories)
@@ -59,6 +58,7 @@ def app_store(websocket, state, set_state):
 
 @database_sync_to_async
 def get_categories() -> dict[Category, list[Subcategory]]:
+    # FIXME: Django ORM currently does not conveniently support running within IDOM.
     query = Subcategory.objects.select_related("category").order_by("name").all()
     categories = {}
     for subcategory in query:

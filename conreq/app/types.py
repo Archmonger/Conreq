@@ -1,8 +1,11 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Callable
 
 from idom.core.types import VdomDict
 from sortedcontainers import SortedSet
+
+# pylint: disable=protected-access
 
 
 class Icon(VdomDict):
@@ -24,10 +27,17 @@ class AuthLevel:
 
 @dataclass
 class ViewportSelector:
-    initial: str = "initial"
-    loading: str = "loading"
+    _initial: str = "initial"
+    """Used internally by Conreq to denote the first page load."""
+    _loading: str = "loading"
+    """Used internally by Conreq to denote a page is being loaded."""
+
     primary: str = "primary"
+    """Selection of the primary viewport."""
     secondary: str = "secondary"
+    """Selection of the secondary viewport."""
+    auto: str = "auto"
+    """Automatically select the viewport based on the current viewport selector."""
 
 
 @dataclass
@@ -37,17 +47,19 @@ class Viewport:
     html_class: str = ""
     padding: bool = True
     auth: AuthLevel = AuthLevel.user
+    page_title: str | None = None
+    timestamp: datetime = field(default_factory=datetime.now)
 
 
 @dataclass(order=True)
 class NavTab:
     name: str
-    viewport: Viewport = None
-    on_click: Callable = None
+    viewport: Viewport | None = None
+    on_click: Callable | None = None
     auth: AuthLevel = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
-        return _check_name(self, __o)
+        return _compare_names(self, __o)
 
 
 @dataclass(order=True)
@@ -56,11 +68,11 @@ class Tab:
     component: Callable
     html_class: str = ""
     padding: bool = True
-    on_click: Callable = None
+    on_click: Callable | None = None
     auth: AuthLevel = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
-        return _check_name(self, __o)
+        return _compare_names(self, __o)
 
 
 @dataclass(order=True)
@@ -70,7 +82,7 @@ class NavGroup:
     tabs: SortedSet[NavTab] = field(default_factory=SortedSet)
 
     def __eq__(self, __o: object) -> bool:
-        return _check_name(self, __o)
+        return _compare_names(self, __o)
 
 
 @dataclass
@@ -85,12 +97,25 @@ class ModalState:
 @dataclass
 class HomepageState:
     # TODO: Set as immutable and remove all copy() calls
-    page_title: str = "Loading..."
-    viewport_selector: ViewportSelector = ViewportSelector.initial
-    viewport_primary: Viewport = None
-    viewport_secondary: Viewport = None
-    modal_state: ModalState = ModalState()
-    modal: Callable = None
+    _viewport_intent: Viewport | None = None
+    """The viewport that needs to be loaded."""
+    _viewport_selector: ViewportSelector = ViewportSelector._initial
+    """The currently visible viewport."""
+    _viewport_primary: Viewport | None = None
+    _viewport_secondary: Viewport | None = None
+
+    _modal_intent: Callable | None = None
+    """The modal that needs to be loaded."""
+    _modal: Callable | None = None
+    """The currently visible modal."""
+    _modal_state: ModalState = ModalState()
+
+    def set_viewport(self, viewport: Viewport):
+        self._viewport_selector = ViewportSelector._loading
+        self._viewport_intent = viewport
+
+    def set_modal(self, modal: Callable):
+        self._modal_intent = modal
 
 
 @dataclass
@@ -108,7 +133,7 @@ class Seconds:
     year: int = month * 12
 
 
-def _check_name(self, __o):
+def _compare_names(self, __o):
     if isinstance(__o, str):
         return self.name.lower() == __o.lower()
     return self.name.lower() == __o.name.lower()

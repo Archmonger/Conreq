@@ -79,7 +79,7 @@ async def sign_out_event(
     _, websocket: IdomWebsocket, state: HomepageState, set_state, tab
 ):
     await logout(websocket.scope)
-    state.viewport_secondary = Viewport(lambda *_: script("window.location.reload()"))
+    state._viewport_secondary = Viewport(lambda *_: script("window.location.reload()"))
     set_state(copy(state))
 
 

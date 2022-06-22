@@ -6,6 +6,8 @@ from idom.html import div, i
 
 from conreq import HomepageState, config
 
+# pylint: disable=protected-access
+
 MODAL_HEADER = {"className": "modal-header"}
 MODAL_HEADER_BTN_CONTAINER = {
     "className": "modal-header-btn-container",
@@ -26,22 +28,22 @@ bootstrap_modal = idom.web.export(bootstrap, "Modal", allow_children=True)
 def modal(websocket, state: HomepageState, set_state):
     return bootstrap_modal(
         {
-            "show": state.modal_state.show,
-            "centered": state.modal_state.centered,
-            "size": state.modal_state.size,
-            **state.modal_state.kwargs,
+            "show": state._modal_state.show,
+            "centered": state._modal_state.centered,
+            "size": state._modal_state.size,
+            **state._modal_state.kwargs,
         },
         *(
-            [state.modal(websocket, state, set_state)]
-            if state.modal
+            [state._modal(websocket, state, set_state)]
+            if state._modal
             else [
                 modal_head(websocket, state, set_state),
                 modal_body(websocket, state, set_state),
                 modal_footer(websocket, state, set_state),
             ]
         ),
-        key=f"{state.modal.__module__}.{state.modal.__name__}"
-        if state.modal
+        key=f"{state._modal.__module__}.{state._modal.__name__}"
+        if state._modal
         else str(uuid4()),
     )
 
@@ -50,7 +52,7 @@ def modal_head(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
 
     async def close_modal(_):
-        state.modal_state.show = False
+        state._modal_state.show = False
         set_state(copy(state))
 
     return div(
