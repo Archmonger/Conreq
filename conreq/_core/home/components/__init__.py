@@ -27,6 +27,7 @@ def homepage():
 
     @idom.hooks.use_effect
     async def set_viewport():
+        # sourcery skip:remove-redundant-if, merge-duplicate-blocks
         if not state._viewport_intent:
             return
 
