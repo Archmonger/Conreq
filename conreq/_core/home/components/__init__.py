@@ -39,7 +39,6 @@ def homepage():
         elif state._viewport_secondary is state._viewport_intent:
             state._viewport_selector = ViewportSelector.secondary
 
-        # Replace the selected viewport
         elif state._viewport_intent.selector == ViewportSelector.primary:
             state._viewport_selector = state._viewport_intent.selector
             state._viewport_primary = state._viewport_intent
@@ -47,25 +46,19 @@ def homepage():
             state._viewport_selector = state._viewport_intent.selector
             state._viewport_secondary = state._viewport_intent
 
-        # Automatically determine what viewport to use
         elif state._viewport_intent.selector == ViewportSelector.auto:
             # Use an unused viewport if it exists
-            if not state._viewport_primary:
-                state._viewport_selector = ViewportSelector.primary
-                state._viewport_primary = state._viewport_intent
-            elif not state._viewport_secondary:
-                state._viewport_selector = ViewportSelector.secondary
-                state._viewport_secondary = state._viewport_intent
-            # Replace the oldest viewport
-            elif (
-                state._viewport_primary.timestamp > state._viewport_secondary.timestamp
+            if (
+                not state._viewport_primary
+                or state._viewport_secondary
+                and state._viewport_primary.timestamp
+                > state._viewport_secondary.timestamp
             ):
                 state._viewport_selector = ViewportSelector.primary
                 state._viewport_primary = state._viewport_intent
             else:
                 state._viewport_selector = ViewportSelector.secondary
                 state._viewport_secondary = state._viewport_intent
-
         # Reset the intent
         state._viewport_intent = None
 
