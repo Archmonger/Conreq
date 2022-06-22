@@ -2,6 +2,7 @@ import inspect
 import os
 import pkgutil
 from importlib import import_module as _import_module
+from pathlib import Path
 from types import ModuleType
 from typing import Union
 
@@ -32,9 +33,11 @@ def load(module: str, fail_silently: bool = False) -> ModuleType:
     return import_module(".".join([parent_module, module]), fail_silently)
 
 
-def find_modules(folder_path: str, prefix: str = "") -> list[str]:
+def find_modules(folder_path: str | Path, prefix: str = "") -> list[str]:
     """Returns all modules in a path"""
-    return [name for _, name, _ in pkgutil.iter_modules([folder_path], prefix=prefix)]
+    return [
+        name for _, name, _ in pkgutil.iter_modules([str(folder_path)], prefix=prefix)
+    ]
 
 
 def find_modules_with(
