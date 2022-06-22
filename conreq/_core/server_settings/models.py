@@ -25,14 +25,14 @@ class GeneralSettings(SingletonModel):
         help_text="This will be shown on search results and hyperlink previews.",
     )
     public_url = URLField(
-        help_text="Can be used by apps to construct meaningful URLs, such as in emails.",
+        help_text="Can be used by apps to construct meaningful URLs, such as in emails or invite links.",
         verbose_name="Public URL",
         blank=True,
     )
     app_store_url = HostnameOrURLField(
         blank=True,
-        verbose_name="App store URL",
-        help_text="Changes automatically on Conreq updates.",
+        verbose_name="Custom app store URL",
+        help_text="Set this to override the default app store.",
     )
 
 
