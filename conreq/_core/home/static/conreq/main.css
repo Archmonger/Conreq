@@ -92,6 +92,12 @@ a:hover {
 	color: var(--accent-color);
 }
 
+.spinner-border.lg {
+	width: 4.5em;
+	height: 4.5em;
+	border-width: 0.68em;
+}
+
 .sidebar::-webkit-scrollbar {
 	display: none;
 }

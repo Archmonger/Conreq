@@ -8,7 +8,12 @@ from conreq.app.types import Viewport
 
 VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
 VIEWPORT_CONTAINER_SECONDARY = {"className": "viewport-container secondary"}
-VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container loading"}
+VIEWPORT_CONTAINER_LOADING = {
+    "className": "viewport-container loading",
+    "data-aos": "fade-in",
+    "data-aos-duration": "1000",
+    "data-aos-delay": "300",
+}
 HIDDEN = {"hidden": "hidden"}
 
 
@@ -23,7 +28,7 @@ def viewport_loading(websocket, state: HomepageState, set_state):
             not in {ViewportSelector._loading, ViewportSelector._initial}
             else {}
         ),
-        config.components.loading_animation,
+        config.components.loading_animation_large,
     )
 
 

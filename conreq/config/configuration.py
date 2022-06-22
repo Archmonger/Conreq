@@ -60,6 +60,12 @@ class ComponentConfig:
             span({"className": "sr-only"}, "Loading..."),
         ),
     )
+    loading_animation_large: VdomDict = field(
+        default_factory=lambda: div(
+            {"className": "spinner-border loading-animation lg", "role": "status"},
+            span({"className": "sr-only"}, "Loading..."),
+        ),
+    )
 
 
 @dataclass
