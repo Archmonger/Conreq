@@ -43,7 +43,7 @@ class ViewportSelector:
 @dataclass
 class Viewport:
     component: Callable
-    selector: ViewportSelector = ViewportSelector.primary
+    selector: ViewportSelector = ViewportSelector.auto
     html_class: str = ""
     padding: bool = True
     auth: AuthLevel = AuthLevel.user

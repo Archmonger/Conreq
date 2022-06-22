@@ -1,4 +1,6 @@
 from copy import copy
+from datetime import datetime
+
 import idom
 from django_idom.hooks import use_websocket
 from idom.html import _, script
@@ -16,7 +18,6 @@ from conreq.utils.components import authenticated
 # pylint: disable=protected-access
 
 
-# TODO: Allow components to add a viewport class
 # TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
 @idom.component
 @authenticated(fallback=script("window.location.reload()"))
@@ -29,17 +30,36 @@ def homepage():
         if not state._viewport_intent:
             return
 
+        # Set timestamp to the time of intent change
+        state._viewport_intent.timestamp = datetime.now()
+
+        # Switch to a cached viewport
+        if state._viewport_primary is state._viewport_intent:
+            state._viewport_selector = ViewportSelector.primary
+        elif state._viewport_secondary is state._viewport_intent:
+            state._viewport_selector = ViewportSelector.secondary
+
         # Replace the selected viewport
-        if state._viewport_intent.selector == ViewportSelector.primary:
+        elif state._viewport_intent.selector == ViewportSelector.primary:
             state._viewport_selector = state._viewport_intent.selector
             state._viewport_primary = state._viewport_intent
         elif state._viewport_intent.selector == ViewportSelector.secondary:
             state._viewport_selector = state._viewport_intent.selector
             state._viewport_secondary = state._viewport_intent
 
-        # Replace the oldest viewport
+        # Automatically determine what viewport to use
         elif state._viewport_intent.selector == ViewportSelector.auto:
-            if state._viewport_primary.timestamp > state._viewport_secondary.timestamp:
+            # Use an unused viewport if it exists
+            if not state._viewport_primary:
+                state._viewport_selector = ViewportSelector.primary
+                state._viewport_primary = state._viewport_intent
+            elif not state._viewport_secondary:
+                state._viewport_selector = ViewportSelector.secondary
+                state._viewport_secondary = state._viewport_intent
+            # Replace the oldest viewport
+            elif (
+                state._viewport_primary.timestamp > state._viewport_secondary.timestamp
+            ):
                 state._viewport_selector = ViewportSelector.primary
                 state._viewport_primary = state._viewport_intent
             else:

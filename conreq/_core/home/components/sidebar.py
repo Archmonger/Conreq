@@ -189,6 +189,17 @@ def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
                     tab=tab,
                 )
             return
+
+        # Don't reload if clicking the current tab
+        if state._viewport_selector not in {
+            ViewportSelector._loading,
+            ViewportSelector._initial,
+        } and tab.viewport is state.__getattribute__(
+            f"_viewport_{state._viewport_selector}"
+        ):
+            return
+
+        # Switch tabs
         state.set_viewport(tab.viewport)
         set_state(copy(state))
 

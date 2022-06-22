@@ -1,7 +1,7 @@
 from django.urls.base import reverse
 from idom.html import iframe
 
-from conreq import ViewportSelector, config
+from conreq import config
 from conreq._core.utils import tab_constructor
 
 
@@ -27,41 +27,15 @@ def api_docs(*_):
 
 # pylint: disable=protected-access
 config._homepage.debug_nav_tabs.append(
-    tab_constructor(
-        "Performance",
-        performance,
-        padding=False,
-        selector=ViewportSelector.secondary,
-    )
+    tab_constructor("Performance", performance, padding=False)
+)
+config._homepage.debug_nav_tabs.append(tab_constructor("Health Check", health_check))
+config._homepage.debug_nav_tabs.append(
+    tab_constructor("Database", database, padding=False)
 )
 config._homepage.debug_nav_tabs.append(
-    tab_constructor(
-        "Health Check",
-        health_check,
-        selector=ViewportSelector.secondary,
-    )
+    tab_constructor("Code Outline", code_outline, padding=False)
 )
 config._homepage.debug_nav_tabs.append(
-    tab_constructor(
-        "Database",
-        database,
-        padding=False,
-        selector=ViewportSelector.secondary,
-    )
-)
-config._homepage.debug_nav_tabs.append(
-    tab_constructor(
-        "Code Outline",
-        code_outline,
-        padding=False,
-        selector=ViewportSelector.secondary,
-    )
-)
-config._homepage.debug_nav_tabs.append(
-    tab_constructor(
-        "API Docs",
-        api_docs,
-        padding=False,
-        selector=ViewportSelector.secondary,
-    )
+    tab_constructor("API Docs", api_docs, padding=False)
 )
