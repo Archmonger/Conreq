@@ -59,7 +59,7 @@ def homepage():
                 state._viewport_secondary = state._viewport_intent
             # Replace the oldest viewport
             elif (
-                state._viewport_primary.timestamp > state._viewport_secondary.timestamp
+                state._viewport_primary.timestamp < state._viewport_secondary.timestamp
             ):
                 state._viewport_selector = ViewportSelector.primary
                 state._viewport_primary = state._viewport_intent
