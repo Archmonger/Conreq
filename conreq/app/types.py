@@ -29,9 +29,6 @@ class AuthLevel:
 class ViewportSelector:
     _initial: str = "initial"
     """Used internally by Conreq to denote the first page load."""
-    _loading: str = "loading"
-    """Used internally by Conreq to denote a page is being loaded."""
-
     primary: str = "primary"
     """Selection of the primary viewport."""
     secondary: str = "secondary"
@@ -111,7 +108,6 @@ class HomepageState:
     _modal_state: ModalState = ModalState()
 
     def set_viewport(self, viewport: Viewport):
-        self._viewport_selector = ViewportSelector._loading
         self._viewport_intent = viewport
 
     def set_modal(self, modal: Callable):

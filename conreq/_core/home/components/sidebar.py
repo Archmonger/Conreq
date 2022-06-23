@@ -157,11 +157,7 @@ def sidebar(websocket, state: HomepageState, set_state):
 
 def nav_tab_class(state: HomepageState, tab: NavTab):
     if (
-        state._viewport_selector
-        not in {
-            ViewportSelector._loading,
-            ViewportSelector._initial,
-        }
+        state._viewport_selector is not ViewportSelector._initial
         and tab.viewport.component
         is state.__getattribute__(f"_viewport_{state._viewport_selector}").component
     ):
@@ -191,11 +187,10 @@ def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
             return
 
         # Don't reload if clicking the current tab
-        if state._viewport_selector not in {
-            ViewportSelector._loading,
-            ViewportSelector._initial,
-        } and tab.viewport is state.__getattribute__(
-            f"_viewport_{state._viewport_selector}"
+        if (
+            state._viewport_selector is not ViewportSelector._initial
+            and tab.viewport
+            is state.__getattribute__(f"_viewport_{state._viewport_selector}")
         ):
             return
 

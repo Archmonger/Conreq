@@ -25,7 +25,8 @@ def viewport_loading(websocket, state: HomepageState, set_state):
         | (
             HIDDEN
             if state._viewport_selector
-            not in {ViewportSelector._loading, ViewportSelector._initial}
+            in {ViewportSelector.primary, ViewportSelector.secondary}
+            and not state._viewport_intent
             else {}
         ),
         config.components.loading_animation_large,
