@@ -8,12 +8,7 @@ from conreq.app.types import Viewport
 
 VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
 VIEWPORT_CONTAINER_SECONDARY = {"className": "viewport-container secondary"}
-VIEWPORT_CONTAINER_LOADING = {
-    "className": "viewport-container loading",
-    "data-aos": "fade-in",
-    "data-aos-duration": "1000",
-    "data-aos-delay": "300",
-}
+VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container loading"}
 HIDDEN = {"hidden": "hidden"}
 
 
@@ -23,7 +18,7 @@ def viewport_loading(websocket, state: HomepageState, set_state):
     return div(
         VIEWPORT_CONTAINER_LOADING
         | (
-            HIDDEN
+            {"className": VIEWPORT_CONTAINER_LOADING["className"] + " hidden"}
             if state._viewport_selector
             in {ViewportSelector.primary, ViewportSelector.secondary}
             and not state._viewport_intent
