@@ -73,7 +73,6 @@ def homepage():
         set_state(copy(state))
 
     return _(
-        script("AOS.init();"),
         navbar(websocket, state, set_state),
         # modal(websocket, state, set_state),
         sidebar(websocket, state, set_state),

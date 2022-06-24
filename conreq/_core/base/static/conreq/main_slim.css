@@ -56,6 +56,30 @@ body,
 	-webkit-backdrop-filter: blur(10px);
 	backdrop-filter: blur(10px);
 	z-index: 1;
+	-webkit-animation: zoom-in 1s ease;
+	animation: zoom-in 1s ease;
+}
+
+@-webkit-keyframes zoom-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes zoom-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 .default-box .centered {

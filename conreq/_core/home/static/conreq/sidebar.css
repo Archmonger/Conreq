@@ -1,5 +1,5 @@
 .sidebar {
-	z-index: 2;
+	z-index: 150;
 	height: calc(100% - var(--navbar-height));
 	width: var(--sidebar-width);
 	position: absolute;
@@ -13,6 +13,26 @@
 	overflow-y: overlay;
 	display: inline-block;
 	color: rgb(156 156 156);
+	-webkit-animation: fade-in 0.5s ease;
+	animation: fade-in 0.5s ease;
+}
+
+@-webkit-keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 .sidebar #navigation {

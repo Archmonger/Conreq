@@ -12,12 +12,7 @@ from conreq.utils.generic import clean_string
 
 DEBUG = get_debug_mode()
 SAFE_MODE = get_safe_mode()
-SIDEBAR = {
-    "id": "sidebar",
-    "className": "sidebar no-hightlighting collapsed",
-    "data-aos": "fade-right",
-    "data-aos-duration": "1000",
-}
+SIDEBAR = {"id": "sidebar", "className": "sidebar no-hightlighting collapsed"}
 SIDEBAR_USER = {"className": "sidebar-user clickable"}
 USER_PIC = {"className": "sidebar-profile-pic"}
 USER_PIC_PLACEHOLDER = {"className": "fas fa-user"}

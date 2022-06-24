@@ -5,7 +5,7 @@ from conreq import HomepageState, ViewportSelector
 
 # pylint: disable=protected-access
 
-NAVBAR = {"className": "navbar navbar-expand-md navbar-dark", "data-aos": "fade-down"}
+NAVBAR = {"className": "navbar navbar-expand-md navbar-dark"}
 NAVBAR_TOGGLER = {
     "className": "navbar-toggler",
     "type": "button",
