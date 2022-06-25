@@ -19,13 +19,15 @@ MODAL_BODY = {"className": "modal-body loading"}
 MODAL_FOOTER = {"className": "modal-footer"}
 
 bootstrap = idom.web.module_from_template(
-    "react", "react-bootstrap@2.1.2", resolve_exports=True
+    "react@18.1.0", "react-bootstrap@2.4.0", resolve_exports=True
 )
 bootstrap_modal = idom.web.export(bootstrap, "Modal", allow_children=True)
 
 
 @idom.component
 def modal(websocket, state: HomepageState, set_state):
+    return div()
+
     return bootstrap_modal(
         {
             "show": state._modal_state.show,

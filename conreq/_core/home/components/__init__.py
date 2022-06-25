@@ -6,6 +6,7 @@ from django_idom.hooks import use_websocket
 from idom.html import _, script
 
 from conreq import HomepageState, ViewportSelector
+from conreq._core.home.components.modal import modal
 from conreq._core.home.components.navbar import navbar
 from conreq._core.home.components.sidebar import sidebar
 from conreq._core.home.components.viewport import (
@@ -74,7 +75,7 @@ def homepage():
 
     return _(
         navbar(websocket, state, set_state),
-        # modal(websocket, state, set_state),
+        modal(websocket, state, set_state),
         sidebar(websocket, state, set_state),
         viewport_loading(websocket, state, set_state),
         viewport_primary(websocket, state, set_state),
