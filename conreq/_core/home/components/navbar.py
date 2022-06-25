@@ -2,6 +2,7 @@ import idom
 from idom.html import button, div, script, span
 
 from conreq import HomepageState, ViewportSelector
+from conreq._core.server_settings.models import GeneralSettings
 
 # pylint: disable=protected-access
 
@@ -39,7 +40,4 @@ def _get_page_title(state: HomepageState):
 
 
 def _default_page_title():
-    # FIXME: Django ORM currently does not conveniently support running within IDOM.
-    # return GeneralSettings.get_solo().server_name
-
-    return "Conreq"
+    return GeneralSettings.get_solo().server_name

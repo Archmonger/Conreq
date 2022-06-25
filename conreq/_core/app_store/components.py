@@ -1,6 +1,5 @@
 from uuid import uuid4
 
-from channels.db import database_sync_to_async
 from django_idom.components import static_css
 from idom import component, hooks
 from idom.html import _, a, button, div, h4, h5, li, ol, p
@@ -27,6 +26,13 @@ def app_store(websocket, state, set_state):
     tab, set_tab = hooks.use_state(None)
     categories, set_categories = hooks.use_state({})
     ready, set_ready = hooks.use_state(False)
+
+    if not categories:
+        query = Subcategory.objects.select_related("category").order_by("name").all()
+        categories = {}
+        for subcategory in query:
+            categories.setdefault(subcategory.category, []).append(subcategory)
+        set_categories(categories)
 
     @hooks.use_effect
     async def load_from_db():
@@ -55,16 +61,6 @@ def app_store(websocket, state, set_state):
         ),
         div({"className": "nav-region"}, nav_constructor(categories, set_tab)),
     )
-
-
-@database_sync_to_async
-def get_categories() -> dict[Category, list[Subcategory]]:
-    # FIXME: Django ORM currently does not conveniently support running within IDOM.
-    query = Subcategory.objects.select_related("category").order_by("name").all()
-    categories = {}
-    for subcategory in query:
-        categories.setdefault(subcategory.category, []).append(subcategory)
-    return categories
 
 
 def nav_constructor(categories: dict[Category, list[Subcategory]], set_tab) -> list:
