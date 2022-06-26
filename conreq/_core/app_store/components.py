@@ -35,12 +35,13 @@ def app_store(websocket, state, set_state):
         set_categories(categories)
 
     @hooks.use_effect
-    async def load_from_db():
-        if categories:
-            return
-        new_categories = await get_categories()
-        if new_categories:
-            set_categories(new_categories)
+    async def lag():
+        if not ready:
+            from random import randint
+            from time import sleep
+
+            sleep(randint(1, 3))
+            set_ready(True)
 
     # TODO: Update app store entries every first load
     return _(
