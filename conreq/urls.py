@@ -8,7 +8,7 @@ from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django_downloadview import StorageDownloadView
 
-from conreq import config
+from conreq.config import view_wrappers
 from conreq.utils.environment import get_base_url, get_home_url
 
 BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
@@ -16,8 +16,8 @@ HOME_URL = get_home_url(prepend_slash=False)
 
 urlpatterns = [
     path("", include("conreq._core.pwa.urls")),
-    path("", config.views.landing, name="landing"),
-    path(HOME_URL, config.views.home, name="home"),
+    path("", view_wrappers.landing, name="landing"),
+    path(HOME_URL, view_wrappers.home, name="home"),
     path("idom/", include("django_idom.http.urls")),
     path(
         "files/serve/<path:path>",
@@ -26,7 +26,7 @@ urlpatterns = [
         ),
         name="media",
     ),
-    path("sign_in/", config.views.sign_in, name="sign_in"),
+    path("sign_in/", view_wrappers.sign_in, name="sign_in"),
     path("sign_up/", include("conreq._core.sign_up.urls")),
     path("sign_out/", auth_views.logout_then_login, name="sign_out"),
     path("password_reset/", include("conreq._core.password_reset.urls")),

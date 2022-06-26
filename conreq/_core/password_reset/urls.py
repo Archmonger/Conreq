@@ -1,13 +1,13 @@
 from django.urls import path
 
-from conreq import config
+from conreq.config import view_wrappers
 
 urlpatterns = [
-    path("", config.views.password_reset, name="password_reset"),
-    path("sent", config.views.password_reset_sent, name="password_reset_sent"),
+    path("", view_wrappers.password_reset, name="password_reset"),
+    path("sent", view_wrappers.password_reset_sent, name="password_reset_sent"),
     path(
         "<uidb64>/<token>",
-        config.views.password_reset_confirm,
+        view_wrappers.password_reset_confirm,
         name="password_reset_confirm",
     ),
 ]

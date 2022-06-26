@@ -6,12 +6,11 @@ from django.utils import timezone
 from conreq import config
 from conreq._core.sign_up.forms import UserForm
 from conreq._core.sign_up.models import InviteCode
-from conreq.app import register
+
 
 LOGIN_REDIRECT_URL = getattr(settings, "LOGIN_REDIRECT_URL")
 
 
-@register.view.sign_up()
 def sign_up(request, invite_code=None):
     # No invite code was provided
     if not invite_code:

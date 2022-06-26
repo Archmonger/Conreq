@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 from conreq import config
 from conreq._core.pwa.apps import PwaConfig
-from conreq.app import register
 from conreq.utils.environment import get_base_url
 
 BASE_URL = get_base_url()
@@ -17,7 +16,7 @@ def service_worker(request):
     )
 
 
-def manifest(request):
+def web_manifest(request):
     return render(
         request,
         "conreq/site.webmanifest",
@@ -26,6 +25,5 @@ def manifest(request):
     )
 
 
-@register.view.offline()
 def offline(request):
     return render(request, config.templates.offline)

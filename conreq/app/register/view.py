@@ -90,12 +90,36 @@ def password_reset_confirm() -> None:
 
 
 def offline() -> None:
-    """Changes the password reset confirm view."""
+    """Changes the offline view."""
 
     def decorator(func):
         from conreq.utils.profiling import profiled_view
 
         config.views.offline = profiled_view(func)
+        return func
+
+    return decorator
+
+
+def service_worker() -> None:
+    """Changes the service worker view."""
+
+    def decorator(func):
+        from conreq.utils.profiling import profiled_view
+
+        config.views.service_worker = profiled_view(func)
+        return func
+
+    return decorator
+
+
+def web_manifest() -> None:
+    """Changes the webmanifest view."""
+
+    def decorator(func):
+        from conreq.utils.profiling import profiled_view
+
+        config.views.web_manifest = profiled_view(func)
         return func
 
     return decorator

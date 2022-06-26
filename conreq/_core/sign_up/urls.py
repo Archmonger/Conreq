@@ -1,8 +1,8 @@
 from django.urls import path
 
-from conreq import config
+from conreq.config import view_wrappers
 
 urlpatterns = [
-    path("", config.views.sign_up, name="sign_up"),
-    path("<invite_code>", config.views.sign_up, name="sign_up_invite"),
+    path("", view_wrappers.sign_up, name="sign_up"),
+    path("<invite_code>", view_wrappers.sign_up, name="sign_up_invite"),
 ]

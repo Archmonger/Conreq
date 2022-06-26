@@ -8,7 +8,6 @@ from idom.html import div, span
 from sortedcontainers import SortedList
 
 from conreq.app.types import NavGroup, NavTab, Tab
-from conreq.config import view_wrappers
 from conreq.utils.containers import FillList
 
 
@@ -21,16 +20,16 @@ class StartupConfig:
 
 @dataclass
 class ViewConfig:
-    # TODO: Don't use the app.register API for pre-configuring the base views...
-    # Instead, use some sort of private API and rely on view_wrappers
-    landing: Callable = view_wrappers.landing
-    home: Callable = view_wrappers.home
-    sign_up: Callable = view_wrappers.sign_up
-    sign_in: Callable = view_wrappers.sign_in
-    password_reset: Callable = view_wrappers.password_reset
-    password_reset_sent: Callable = view_wrappers.password_reset_sent
-    password_reset_confirm: Callable = view_wrappers.password_reset_confirm
-    offline: Callable = view_wrappers.offline
+    landing: Callable | None = None
+    home: Callable | None = None
+    sign_up: Callable | None = None
+    sign_in: Callable | None = None
+    password_reset: Callable | None = None
+    password_reset_sent: Callable | None = None
+    password_reset_confirm: Callable | None = None
+    offline: Callable | None = None
+    service_worker: Callable | None = None
+    web_manifest: Callable | None = None
 
 
 @dataclass
