@@ -24,15 +24,8 @@ class PlaceholderApp:
 def app_store(websocket, state, set_state):
     # pylint: disable=unused-argument
     tab, set_tab = hooks.use_state(None)
-    categories, set_categories = hooks.use_state({})
+    categories = hooks.use_state(get_categories)[0]
     ready, set_ready = hooks.use_state(False)
-
-    if not categories:
-        query = Subcategory.objects.select_related("category").order_by("name").all()
-        categories = {}
-        for subcategory in query:
-            categories.setdefault(subcategory.category, []).append(subcategory)
-        set_categories(categories)
 
     @hooks.use_effect
     async def lag():
@@ -62,6 +55,14 @@ def app_store(websocket, state, set_state):
         ),
         div({"className": "nav-region"}, nav_constructor(categories, set_tab)),
     )
+
+
+def get_categories():
+    query = Subcategory.objects.select_related("category").order_by("name").all()
+    categories = {}
+    for subcategory in query:
+        categories.setdefault(subcategory.category, []).append(subcategory)
+    return categories
 
 
 def nav_constructor(categories: dict[Category, list[Subcategory]], set_tab) -> list:
