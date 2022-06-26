@@ -1,7 +1,7 @@
 from typing import Callable
 
 from conreq import config
-from conreq.app.types import Tab
+from conreq.types import Tab
 
 
 def user_settings(name: str) -> Callable:

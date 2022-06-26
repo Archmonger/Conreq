@@ -7,7 +7,7 @@ import idom
 from idom.core.types import VdomDict
 from idom.html import div, li, ul
 
-from conreq.app.types import HomepageState, Tab, TabbedViewportState
+from conreq.types import HomepageState, Tab, TabbedViewportState
 
 
 @idom.component

@@ -7,7 +7,7 @@ from idom.core.types import VdomDict
 from idom.html import div, span
 from sortedcontainers import SortedList
 
-from conreq.app.types import NavGroup, NavTab, Tab
+from conreq.types import NavGroup, NavTab, Tab
 from conreq.utils.containers import FillList
 
 

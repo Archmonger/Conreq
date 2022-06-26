@@ -2,7 +2,7 @@ from django.apps import AppConfig
 from idom.html import i
 
 from conreq._core.debug import views
-from conreq.app import register
+from conreq.types import NavGroup
 from conreq.utils.environment import get_debug_mode
 from conreq.utils.modules import load
 

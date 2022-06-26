@@ -17,7 +17,7 @@ from conreq._core.user_settings.forms import (
 from conreq._core.utils import tab_constructor
 from conreq.app import register
 from conreq.app.components import tabbed_viewport
-from conreq.app.types import Tab
+from conreq.types import Tab
 from conreq.utils.components import view_to_component
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 

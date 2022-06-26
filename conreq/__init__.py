@@ -1,5 +1,5 @@
 from conreq import app, config, utils
-from conreq.app.types import (
+from conreq.types import (
     AuthLevel,
     HomepageState,
     Icon,

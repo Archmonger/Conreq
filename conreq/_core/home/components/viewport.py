@@ -2,7 +2,7 @@ import idom
 from idom.html import div
 
 from conreq import HomepageState, ViewportSelector, config
-from conreq.app.types import Viewport
+from conreq.types import Viewport
 
 # pylint: disable=protected-access
 

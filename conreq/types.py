@@ -45,6 +45,7 @@ class Viewport:
     padding: bool = True
     auth: AuthLevel = AuthLevel.user
     page_title: str | None = None
+    expires: bool = True
     timestamp: datetime = field(default_factory=datetime.now)
 
 

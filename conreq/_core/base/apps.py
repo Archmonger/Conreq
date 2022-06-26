@@ -5,7 +5,7 @@ from django.db.backends.signals import connection_created
 from idom.html import i
 
 from conreq import config
-from conreq.app import register
+from conreq.types import NavGroup
 
 
 class BaseConfig(AppConfig):
