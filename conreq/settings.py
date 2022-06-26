@@ -390,6 +390,12 @@ LOGIN_REDIRECT_URL = "landing"
 LOGIN_URL = "sign_in"
 
 
+# Cookie Names
+SESSION_COOKIE_NAME = "conreq_sessionidd"
+CSRF_COOKIE_NAME = "conreq_csrftoken"
+LANGUAGE_COOKIE_NAME = "conreq_language"
+
+
 # Internationalization
 LANGUAGE_CODE = "en-US"
 TIME_ZONE = get_localzone_name()
