@@ -1,5 +1,6 @@
+import asyncio
 from copy import copy
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import idom
 from django_idom.hooks import use_websocket
@@ -14,6 +15,7 @@ from conreq._core.home.components.viewport import (
     viewport_primary,
     viewport_secondary,
 )
+from conreq.types import Seconds
 from conreq.utils.components import authenticated
 
 # pylint: disable=protected-access
@@ -28,6 +30,7 @@ def homepage():
 
     @idom.hooks.use_effect
     async def set_viewport():
+        """Determine what viewport to set the viewport based on intent."""
         # sourcery skip:remove-redundant-if, merge-duplicate-blocks
         if not state._viewport_intent:
             return
@@ -72,6 +75,34 @@ def homepage():
         state._viewport_intent = None
 
         set_state(copy(state))
+
+    @idom.hooks.use_effect
+    async def viewport_expiration():
+        """If there are two viewports rendered, have the background viewport expire
+        after 3 minutes of inactivity."""
+        while True:
+            await asyncio.sleep(Seconds.minute)
+            if (
+                state._viewport_primary
+                and state._viewport_secondary
+                and datetime.now() - state._viewport_primary.timestamp
+                > timedelta(minutes=2.5)
+                and datetime.now() - state._viewport_secondary.timestamp
+                > timedelta(minutes=2.5)
+            ):
+                if (
+                    state._viewport_selector != ViewportSelector.primary
+                    and state._viewport_primary.expires
+                ):
+                    state._viewport_primary = None
+                    set_state(copy(state))
+
+                if (
+                    state._viewport_selector != ViewportSelector.secondary
+                    and state._viewport_secondary.expires
+                ):
+                    state._viewport_secondary = None
+                    set_state(copy(state))
 
     return _(
         navbar(websocket, state, set_state),
