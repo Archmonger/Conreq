@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.fields import CharField, URLField
 from solo.models import SingletonModel
 
-from conreq.app.fields import HostnameOrURLField
+from conreq._core.fields import HostnameOrURLField
 
 
 class GeneralSettings(SingletonModel):

@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import conreq.app.fields
+import conreq._core.fields
 
 
 class Migration(migrations.Migration):
@@ -20,11 +20,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="conreqconfig",
             name="radarr_url",
-            field=conreq.app.fields.HostnameOrURLField(blank=True, default=""),
+            field=conreq._core.fields.HostnameOrURLField(blank=True, default=""),
         ),
         migrations.AlterField(
             model_name="conreqconfig",
             name="sonarr_url",
-            field=conreq.app.fields.HostnameOrURLField(blank=True, default=""),
+            field=conreq._core.fields.HostnameOrURLField(blank=True, default=""),
         ),
     ]

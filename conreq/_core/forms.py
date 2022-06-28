@@ -1,6 +1,7 @@
 from django.forms import BooleanField, CharField, ChoiceField, IntegerField, URLField
+from conreq._core import widgets
 
-from conreq.app import validators, widgets
+from conreq._core import validators
 from conreq.utils.environment import set_env
 from conreq.utils.forms import EnvFieldMixin
 

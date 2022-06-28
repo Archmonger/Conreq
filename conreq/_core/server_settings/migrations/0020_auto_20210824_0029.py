@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import conreq.app.fields
+import conreq._core.fields
 
 
 class Migration(migrations.Migration):
@@ -130,7 +130,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="conreqconfig",
             name="app_store_url",
-            field=conreq.app.fields.HostnameOrURLField(blank=True, default=""),
+            field=conreq._core.fields.HostnameOrURLField(blank=True, default=""),
         ),
         migrations.AddField(
             model_name="conreqconfig",

@@ -2,7 +2,7 @@
 
 from django.db import migrations
 
-import conreq.app.fields
+import conreq._core.fields
 
 
 class Migration(migrations.Migration):
@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="emailconfig",
             name="password",
-            field=conreq.app.fields.PasswordField(
+            field=conreq._core.fields.PasswordField(
                 blank=True, default="", max_length=255
             ),
         ),

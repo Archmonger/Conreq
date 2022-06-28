@@ -8,17 +8,17 @@ from django.forms import CharField, ModelForm
 from django_ace import AceWidget
 
 from conreq._core.email.models import EmailSettings
-from conreq._core.server_settings.models import (
-    GeneralSettings,
-    StylingSettings,
-    WebserverSettings,
-)
-from conreq.app.forms import (
+from conreq._core.forms import (
     EnvBooleanField,
     EnvCharField,
     EnvChoiceField,
     EnvFormMixin,
     EnvIntegerField,
+)
+from conreq._core.server_settings.models import (
+    GeneralSettings,
+    StylingSettings,
+    WebserverSettings,
 )
 from conreq.utils.environment import get_home_url
 

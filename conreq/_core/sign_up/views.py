@@ -7,7 +7,6 @@ from conreq import config
 from conreq._core.sign_up.forms import UserForm
 from conreq._core.sign_up.models import InviteCode
 
-
 LOGIN_REDIRECT_URL = getattr(settings, "LOGIN_REDIRECT_URL")
 
 

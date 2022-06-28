@@ -3,7 +3,7 @@
 import encrypted_fields.fields
 from django.db import migrations, models
 
-import conreq.app.fields
+import conreq._core.fields
 
 
 class Migration(migrations.Migration):
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "smtp_server",
-                    conreq.app.fields.HostnameOrURLField(
+                    conreq._core.fields.HostnameOrURLField(
                         default="smtp.gmail.com", max_length=255
                     ),
                 ),

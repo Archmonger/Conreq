@@ -9,13 +9,13 @@ from django_idom import IdomWebsocket
 from idom.html import script
 
 from conreq import AuthLevel, HomepageState, Viewport, config
+from conreq._core.components import tabbed_viewport
 from conreq._core.user_settings.forms import (
     ChangePasswordForm,
     DeleteMyAccountForm,
     UserSettingsForm,
 )
 from conreq._core.utils import tab_constructor
-from conreq.app.components import tabbed_viewport
 from conreq.types import Tab
 from conreq.utils.components import view_to_component
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin

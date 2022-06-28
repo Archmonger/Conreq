@@ -4,11 +4,11 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig
 
 from conreq import AuthLevel, config
+from conreq._core.components import tabbed_viewport
 from conreq._core.sign_up.models import InviteCode
 from conreq._core.user_management.forms import UserEditForm
 from conreq._core.user_management.tables import UserInviteTable, UsersTable
 from conreq._core.utils import tab_constructor
-from conreq.app.components import tabbed_viewport
 from conreq.types import Tab
 from conreq.utils.components import view_to_component
 from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin

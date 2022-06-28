@@ -2,7 +2,7 @@
 
 from django.db import migrations
 
-import conreq.app.fields
+import conreq._core.fields
 
 
 class Migration(migrations.Migration):
@@ -15,14 +15,14 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="stylingsettings",
             name="custom_css_url",
-            field=conreq.app.fields.URLOrRelativeURLField(
+            field=conreq._core.fields.URLOrRelativeURLField(
                 blank=True, default="", verbose_name="Custom CSS URL"
             ),
         ),
         migrations.AlterField(
             model_name="stylingsettings",
             name="custom_js_url",
-            field=conreq.app.fields.URLOrRelativeURLField(
+            field=conreq._core.fields.URLOrRelativeURLField(
                 blank=True, default="", verbose_name="Custom JavaScript URL"
             ),
         ),
