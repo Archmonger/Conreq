@@ -1,6 +1,5 @@
 import json
 import os
-from distutils.util import strtobool
 from typing import Any, Callable, Tuple
 
 import dotenv
@@ -30,7 +29,7 @@ def _parse_env_value(value: Any, default_value: Any, return_type: Callable) -> A
         return default_value
     if return_type is bool and isinstance(value, str):
         try:
-            return bool(strtobool(value))
+            return _str_to_bool(value)
         except ValueError:
             return default_value
     if return_type in {list, dict} and isinstance(value, str):
@@ -161,3 +160,18 @@ def delete_env(name: str, sys_env=False, dot_env=True) -> None:
         del os.environ[ENV_PREFIX + name.upper()]
     if dot_env:
         dotenv.unset_key(dotenv_path(), name.upper())
+
+
+def _str_to_bool(val):
+    """Convert a string representation of truth to true (1) or false (0).
+
+    True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values
+    are 'n', 'no', 'f', 'false', 'off', and '0'.  Raises ValueError if
+    'val' is anything else.
+    """
+    val = val.lower()
+    if val in ("y", "yes", "t", "true", "on", "1"):
+        return True
+    if val in ("n", "no", "f", "false", "off", "0"):
+        return False
+    raise ValueError(f"invalid truth value {val}")

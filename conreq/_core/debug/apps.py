@@ -19,6 +19,7 @@ class DebugConfig(AppConfig):
         if not DEBUG:
             return
 
+        # pylint: disable=import-outside-toplevel
         from django.contrib import admin
         from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 

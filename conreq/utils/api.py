@@ -17,6 +17,8 @@ class APIDocs:
     """Information that can be passed into an `documented_api`.
     See drf-spectacular docs for more information."""
 
+    # pylint: disable=too-many-instance-attributes
+
     # TODO: Add docstrings to all of these fields.
     operation_id: Optional[str] = None
     """replaces the auto-generated operation_id. make sure there

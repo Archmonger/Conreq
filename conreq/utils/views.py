@@ -13,6 +13,8 @@ class SuccessCurrentUrlMixin:
     """Mixin for UpdateView to return success at the current URL, if
     a success_url is not set."""
 
+    # pylint: disable=too-few-public-methods
+
     def get_success_url(self):
         params = self.request.GET.copy()
         params["success"] = True
@@ -23,6 +25,8 @@ class SuccessCurrentUrlMixin:
 class CurrentUserMixin:
     """Mixin for `FormView`, `UpdateView`, and `DeleteView` to utilize the current
     user as the object. Forms utilized in these views must be a `ModelForm`."""
+
+    # pylint: disable=too-few-public-methods
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -39,6 +43,8 @@ class ObjectInParamsMixin:
     """Mixin for any Django view to get an object by ID in the
     URL params."""
 
+    # pylint: disable=too-few-public-methods
+
     def get_object(self, queryset=None):
         # pylint: disable=unused-argument
         return self.model.objects.get(id=self.request.GET["id"])
@@ -46,6 +52,8 @@ class ObjectInParamsMixin:
 
 class SaveFormViewMixin:
     """Adds a `save()` action to a `FormView`'s post behavior."""
+
+    # pylint: disable=too-few-public-methods
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()

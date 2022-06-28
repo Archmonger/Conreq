@@ -56,6 +56,8 @@ class EnvFormMixin:
     `Form` will require calling `is_valid()` then `save()` to commit changes. This is
     done automatically if using `SaveFormViewMixin`."""
 
+    # pylint: disable=too-few-public-methods
+
     def save(self, commit: bool = True):
         super_class = super()
         saved = (

@@ -22,21 +22,20 @@ elif sys.platform == "win32":
 
     def set_close_exec(handle):
         """Set ``close_exec`` flag on handle, if supported by the OS."""
+        # pylint: disable=import-outside-toplevel
         import ctypes
         import ctypes.wintypes
 
         # see https://msdn.microsoft.com/en-us/library/ms724935(v=vs.85).aspx
-        SetHandleInformation = ctypes.windll.kernel32.SetHandleInformation
-        SetHandleInformation.argtypes = (
+        set_handle_info = ctypes.windll.kernel32.SetHandleInformation
+        set_handle_info.argtypes = (
             ctypes.wintypes.HANDLE,
             ctypes.wintypes.DWORD,
             ctypes.wintypes.DWORD,
         )
-        SetHandleInformation.restype = ctypes.c_bool
-
-        HANDLE_FLAG_INHERIT = 0x00000001
-
-        result = SetHandleInformation(handle, HANDLE_FLAG_INHERIT, 0)
+        set_handle_info.restype = ctypes.c_bool
+        handle_flag_inherit = 0x00000001
+        result = set_handle_info(handle, handle_flag_inherit, 0)
         if not result:
             raise ctypes.GetLastError()
 

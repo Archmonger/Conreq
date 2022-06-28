@@ -10,6 +10,8 @@ from sortedcontainers import SortedList
 from conreq.types import NavGroup, NavTab, Tab
 from conreq.utils.containers import FillList
 
+# pylint: disable=too-many-instance-attributes
+
 
 @dataclass
 class StartupConfig:
