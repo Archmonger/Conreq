@@ -5,6 +5,8 @@ from channels.db import database_sync_to_async as convert_to_async
 from conreq import config
 
 # pylint: disable=import-outside-toplevel
+# TODO: All these views will eventually need to be made async, after more broad Django asyc support.
+# Specifically, Django support for async decorators, template rendering, and ORM queries.
 
 
 async def landing(request, *args, **kwargs):
