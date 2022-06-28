@@ -26,10 +26,10 @@ urlpatterns = [
         ),
         name="media",
     ),
-    path("sign_in/", view_wrappers.sign_in, name="sign_in"),
-    path("sign_up/", include("conreq._core.sign_up.urls")),
-    path("sign_out/", auth_views.logout_then_login, name="sign_out"),
-    path("password_reset/", include("conreq._core.password_reset.urls")),
+    path("sign-in/", view_wrappers.sign_in, name="sign_in"),
+    path("sign-up/", include("conreq._core.sign_up.urls")),
+    path("sign-out/", auth_views.logout_then_login, name="sign_out"),
+    path("password-reset/", include("conreq._core.password_reset.urls")),
 ]
 
 # Wrap the urlpatterns in BASE_URL if required

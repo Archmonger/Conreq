@@ -49,12 +49,12 @@ class DebugConfig(AppConfig):
                 path(
                     f"{BASE_URL}api/schema/swagger-ui/",
                     SpectacularSwaggerView.as_view(),
-                    name="swagger-ui",
+                    name="swagger_ui",
                 ),
                 path(
                     f"{BASE_URL}health-check/",
                     views.HealthCheck.as_view(),
-                    name="health-check",
+                    name="health_check",
                 ),
             ]
         )

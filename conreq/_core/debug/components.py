@@ -10,7 +10,7 @@ def performance(*_):
 
 
 def health_check(*_):
-    return iframe({"src": reverse("health-check")})
+    return iframe({"src": reverse("health_check")})
 
 
 def database(*_):
@@ -22,7 +22,7 @@ def code_outline(*_):
 
 
 def api_docs(*_):
-    return iframe({"src": reverse("swagger-ui")})
+    return iframe({"src": reverse("swagger_ui")})
 
 
 # pylint: disable=protected-access
