@@ -6,8 +6,7 @@ from django.template.defaultfilters import filesizeformat
 from django.utils.translation import gettext_lazy
 from encrypted_fields.fields import EncryptedCharField
 
-from conreq._core import forms
-from conreq._core import validators
+from conreq._core import forms, validators
 
 
 class PasswordField(EncryptedCharField):
