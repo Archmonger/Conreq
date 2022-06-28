@@ -8,7 +8,6 @@ from conreq._core.sign_up.models import InviteCode
 from conreq._core.user_management.forms import UserEditForm
 from conreq._core.user_management.tables import UserInviteTable, UsersTable
 from conreq._core.utils import tab_constructor
-from conreq.app import register
 from conreq.app.components import tabbed_viewport
 from conreq.types import Tab
 from conreq.utils.components import view_to_component
@@ -36,7 +35,6 @@ class DeleteUserView(SuccessCurrentUrlMixin, ObjectInParamsMixin, DeleteView):
     model = get_user_model()
 
 
-@register.component.manage_users()
 @view_to_component(name="manage_users", auth_level=AuthLevel.admin)
 def manage_users_table(request):
     table = UsersTable(get_user_model().objects.all())
@@ -47,7 +45,6 @@ def manage_users_table(request):
     return render(request, "conreq/table.html", {"table": table})
 
 
-@register.component.user_invites()
 @view_to_component(name="user_invites", auth_level=AuthLevel.admin)
 def user_invites(request):
     table = UserInviteTable(InviteCode.objects.all())

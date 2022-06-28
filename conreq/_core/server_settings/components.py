@@ -12,7 +12,6 @@ from conreq._core.server_settings.models import (
     WebserverSettings,
 )
 from conreq._core.utils import tab_constructor
-from conreq.app import register
 from conreq.app.components import tabbed_viewport
 from conreq.types import Tab
 from conreq.app.views import SingletonUpdateView
@@ -50,7 +49,6 @@ class EmailSettingsView(SingletonUpdateView):
 
 
 # pylint: disable=protected-access
-@register.component.server_settings()
 def server_settings(websocket, state, set_state):
     return tabbed_viewport(
         websocket,

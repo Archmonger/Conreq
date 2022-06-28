@@ -15,7 +15,6 @@ from conreq._core.user_settings.forms import (
     UserSettingsForm,
 )
 from conreq._core.utils import tab_constructor
-from conreq.app import register
 from conreq.app.components import tabbed_viewport
 from conreq.types import Tab
 from conreq.utils.components import view_to_component
@@ -63,7 +62,6 @@ def delete_my_account_success(request):
 
 
 # pylint: disable=protected-access
-@register.component.user_settings()
 def user_settings(websocket, state, set_state):
     return tabbed_viewport(
         websocket,

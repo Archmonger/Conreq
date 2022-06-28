@@ -7,7 +7,6 @@ from idom.html import _, a, button, div, h4, h5, li, ol, p
 from conreq import config
 from conreq._core.app_store.models import Category, Subcategory
 from conreq._core.utils import tab_constructor
-from conreq.app import register
 
 
 class PlaceholderApp:
@@ -19,7 +18,6 @@ class PlaceholderApp:
     category = "Category"
 
 
-@register.component.app_store()
 @component
 def app_store(websocket, state, set_state):
     # pylint: disable=unused-argument
