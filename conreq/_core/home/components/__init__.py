@@ -21,6 +21,7 @@ from conreq.utils.components import authenticated
 # pylint: disable=protected-access
 
 
+# TODO: Style viewports using Shadow DOM https://web.dev/shadowdom-v1/
 # TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
 @idom.component
 @authenticated(fallback=script("window.location.reload()"))
