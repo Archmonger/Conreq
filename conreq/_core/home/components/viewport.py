@@ -35,7 +35,7 @@ def viewport_primary(websocket, state: HomepageState, set_state):
         return div(VIEWPORT_CONTAINER_PRIMARY | HIDDEN)
 
     return div(
-        viewport_class(
+        _viewport_class(
             VIEWPORT_CONTAINER_PRIMARY,
             state._viewport_selector,
             ViewportSelector.primary,
@@ -55,7 +55,7 @@ def viewport_secondary(websocket, state: HomepageState, set_state):
         return div(VIEWPORT_CONTAINER_SECONDARY | HIDDEN)
 
     return div(
-        viewport_class(
+        _viewport_class(
             VIEWPORT_CONTAINER_SECONDARY,
             state._viewport_selector,
             ViewportSelector.secondary,
@@ -68,7 +68,7 @@ def viewport_secondary(websocket, state: HomepageState, set_state):
     )
 
 
-def viewport_class(original, viewport_selector, selector, viewport: Viewport):
+def _viewport_class(original, viewport_selector, selector, viewport: Viewport):
     # Ensure we are constructing a new class with the pipe operator
     new_attrs = original
     if viewport_selector != selector:
