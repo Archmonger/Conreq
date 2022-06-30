@@ -4,9 +4,7 @@ from django_idom.components import static_css
 from idom import component, hooks
 from idom.html import _, a, button, div, h4, h5, li, ol, p
 
-from conreq import config
 from conreq._core.app_store.models import Category, Subcategory
-from conreq._core.utils import tab_constructor
 
 
 class PlaceholderApp:
@@ -198,9 +196,3 @@ def card(set_tab, app: PlaceholderApp = PlaceholderApp()):
         div({"className": "description"}, app.short_description),
         key=str(uuid4()),
     )
-
-
-# pylint: disable=protected-access
-config._homepage.admin_nav_tabs[1] = tab_constructor(
-    "App Store", app_store, html_class="app-store"
-)

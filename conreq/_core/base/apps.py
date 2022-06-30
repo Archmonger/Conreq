@@ -6,6 +6,7 @@ from idom.html import i
 
 from conreq import config
 from conreq.types import NavGroup
+from conreq.utils.modules import import_module
 
 
 class BaseConfig(AppConfig):
@@ -22,6 +23,7 @@ class BaseConfig(AppConfig):
         config.homepage.nav_tabs.add(
             NavGroup(name="Admin", icon=i({"className": "fas fa-cogs icon-left"}))
         )
+        import_module("conreq.config.wrappers.components")
 
 
 # pylint: disable=unused-argument

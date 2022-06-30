@@ -8,4 +8,5 @@ class ManageUsersConfig(AppConfig):
     verbose_name = "User Management"
 
     def ready(self) -> None:
+        # TODO: Remove this after transitioning to VDOM based components
         load("components")

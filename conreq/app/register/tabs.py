@@ -18,7 +18,7 @@ def manage_users(name: str) -> Callable:
     """Decorates an IDOM component. Tabs are added to the manage users page."""
 
     def decorator(func):
-        config.tabs.manage_users.append(Tab(name=name, component=func))
+        config.tabs.user_management.append(Tab(name=name, component=func))
         return func
 
     return decorator

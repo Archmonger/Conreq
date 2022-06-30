@@ -14,9 +14,7 @@ from conreq._core.server_settings.models import (
     StylingSettings,
     WebserverSettings,
 )
-from conreq._core.utils import tab_constructor
 from conreq._core.views import SingletonUpdateView
-from conreq.types import Tab
 from conreq.utils.components import view_to_component
 
 
@@ -50,6 +48,10 @@ class EmailSettingsView(SingletonUpdateView):
     model = EmailSettings
 
 
+def system_info(websocket, state, set_state):
+    return html.div("Under Construction")
+
+
 # pylint: disable=protected-access
 def server_settings(websocket, state, set_state):
     return tabbed_viewport(
@@ -59,16 +61,3 @@ def server_settings(websocket, state, set_state):
         tabs=config.tabs.server_settings,
         top_tabs=config._tabs.server_settings,
     )
-
-
-# Set the internal tabs
-config._tabs.server_settings.append(Tab(name="General", component=GeneralSettingsView))
-config._tabs.server_settings.append(Tab(name="Styling", component=StylingSettingsView))
-config._tabs.server_settings.append(
-    Tab(name="Webserver", component=WebserverSettingsView)
-)
-config._tabs.server_settings.append(Tab(name="Email", component=EmailSettingsView))
-config._tabs.server_settings.append(
-    Tab(name="System Info", component=lambda x, y, z: html.div("Under Construction"))
-)
-config._homepage.admin_nav_tabs[2] = tab_constructor("Server Settings", server_settings)

@@ -15,8 +15,6 @@ from conreq._core.user_settings.forms import (
     DeleteMyAccountForm,
     UserSettingsForm,
 )
-from conreq._core.utils import tab_constructor
-from conreq.types import Tab
 from conreq.utils.components import view_to_component
 from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
 
@@ -77,19 +75,5 @@ async def sign_out_event(
     _, websocket: IdomWebsocket, state: HomepageState, set_state, tab
 ):
     await logout(websocket.scope)
-    state._viewport_secondary = Viewport(lambda *_: script("window.location.reload()"))
+    state._viewport_intent = Viewport(lambda *_: script("window.location.reload()"))
     set_state(copy(state))
-
-
-# Set the internal tabs
-config._tabs.user_settings_top.append(Tab(name="General", component=UserSettingsView))
-config._tabs.user_settings_top.append(
-    Tab(name="Change Password", component=ChangePasswordView)
-)
-config._tabs.user_settings_bottom.append(
-    Tab(name="Delete My Account", component=DeleteMyAccountView)
-)
-config._homepage.user_nav_tabs.append(tab_constructor("Settings", user_settings))
-config._homepage.user_nav_tabs.append(
-    tab_constructor("Sign Out", lambda *_: None, on_click=sign_out_event)
-)

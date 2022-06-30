@@ -48,13 +48,61 @@ class TemplateConfig:
 
 
 @dataclass
+class _UserSettingsComponents:
+    viewport: Callable | None = None
+    general: Callable | None = None
+    change_password: Callable | None = None
+    delete_account: Callable | None = None
+
+
+@dataclass
+class _SignOutComponents:
+    viewport: Callable | None = None
+    event: Callable | None = None
+
+
+@dataclass
+class _UserManagementComponents:
+    viewport: Callable | None = None
+    manage_users: Callable | None = None
+    manage_invites: Callable | None = None
+    create_invite: Callable | None = None
+
+
+@dataclass
+class _AppStoreComponents:
+    viewport: Callable | None = None
+
+
+@dataclass
+class _ServerSettingsComponents:
+    viewport: Callable | None = None
+    general: Callable | None = None
+    styling: Callable | None = None
+    webserver: Callable | None = None
+    email: Callable | None = None
+    system_info: Callable | None = None
+
+
+@dataclass
 class ComponentConfig:
-    # TODO: Implement these components (needs wrappers)
-    manage_users: Callable = None
-    user_invites: Callable = None
-    server_settings: Callable = None
-    user_settings: Callable = None
-    app_store: Callable = None
+    homepage: Callable | None = None
+    user_settings: _UserSettingsComponents = field(
+        default_factory=_UserSettingsComponents,
+    )
+    sign_out: _SignOutComponents = field(
+        default_factory=_SignOutComponents,
+    )
+    user_management: _UserManagementComponents = field(
+        default_factory=_UserManagementComponents,
+    )
+    app_store: _AppStoreComponents = field(
+        default_factory=_AppStoreComponents,
+    )
+    server_settings: _ServerSettingsComponents = field(
+        default_factory=_ServerSettingsComponents,
+    )
+
     loading_animation: VdomDict = field(
         default_factory=lambda: div(
             {"className": "spinner-border loading-animation", "role": "status"},
@@ -72,7 +120,7 @@ class ComponentConfig:
 @dataclass
 class TabConfig:
     user_settings: SortedList[Tab] = field(default_factory=SortedList)
-    manage_users: SortedList[Tab] = field(default_factory=SortedList)
+    user_management: SortedList[Tab] = field(default_factory=SortedList)
     app_store: SortedList[Tab] = field(default_factory=SortedList)
     server_settings: SortedList[Tab] = field(default_factory=SortedList)
 
@@ -81,7 +129,7 @@ class TabConfig:
 class _InternalTabConfig:
     user_settings_top: list[Tab] = field(default_factory=list)
     user_settings_bottom: list[Tab] = field(default_factory=list)
-    manage_users: list[Tab] = field(default_factory=list)
+    user_management: list[Tab] = field(default_factory=list)
     server_settings: list[Tab] = field(default_factory=list)
 
 

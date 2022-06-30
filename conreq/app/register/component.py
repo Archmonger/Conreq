@@ -5,7 +5,7 @@ def manage_users() -> None:
     """Changes the manage users component."""
 
     def decorator(func):
-        config.components.manage_users = func
+        config.components.user_management = func
         return func
 
     return decorator
