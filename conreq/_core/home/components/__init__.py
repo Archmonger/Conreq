@@ -3,6 +3,7 @@ from copy import copy
 from datetime import datetime, timedelta
 
 import idom
+from django.urls import reverse_lazy
 from django_idom.hooks import use_websocket
 from idom.html import _, script
 
@@ -24,7 +25,12 @@ from conreq.utils.components import authenticated
 # TODO: Style viewports using Shadow DOM https://web.dev/shadowdom-v1/
 # TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
 @idom.component
-@authenticated(fallback=script("window.location.reload()"))
+@authenticated(
+    fallback=script(
+        f"window.location.href = '{reverse_lazy('sign_in')}"
+        + "?next=' + window.location.pathname"
+    )
+)
 def homepage():
     state, set_state = idom.hooks.use_state(HomepageState())
     websocket = use_websocket()
