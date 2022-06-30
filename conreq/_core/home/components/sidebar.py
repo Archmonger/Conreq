@@ -5,6 +5,7 @@ import idom
 from idom.html import _, div, i, nav
 
 from conreq import HomepageState, NavGroup, NavTab, Viewport, ViewportSelector, config
+from conreq._core.home.components.welcome import welcome
 from conreq.utils.environment import get_debug_mode, get_safe_mode
 from conreq.utils.generic import clean_string
 
@@ -71,8 +72,7 @@ def sidebar(websocket, state: HomepageState, set_state):
 
         # Use the configured default tab, if it exists
         if config.homepage.default_nav_tab:
-            state._viewport_selector = config.homepage.default_nav_tab.viewport.selector
-            state._viewport_primary = config.homepage.default_nav_tab.viewport
+            state._viewport_intent = config.homepage.default_nav_tab.viewport
             set_state(copy(state))
             return None
 
@@ -81,17 +81,16 @@ def sidebar(websocket, state: HomepageState, set_state):
             if not group.tabs or group in USER_ADMIN_DEBUG:
                 continue
             tab: NavTab = group.tabs[0]
-            state._viewport_selector = tab.viewport.selector
-            if tab["viewport"] == ViewportSelector.primary:
-                state._viewport_primary = tab.viewport
-            if tab.viewport.selector == ViewportSelector.secondary:
-                state._viewport_secondary = tab.viewport
+            state._viewport_intent = tab.viewport
             set_state(copy(state))
             return None
 
+        # Tell the user to install some apps, if they don't have any
+        state._viewport_intent = Viewport(welcome)
+        set_state(copy(state))
+
     async def username_on_click(_):
-        state._viewport_selector = ViewportSelector.primary
-        state._viewport_primary = Viewport(config.components.user_settings)
+        state._viewport_intent = Viewport(config.components.user_settings)
         set_state(copy(state))
 
     return nav(
