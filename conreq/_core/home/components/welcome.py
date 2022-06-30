@@ -1,6 +1,6 @@
 from idom import component, html
 
-from conreq.types import HomepageState, Viewport
+from conreq.types import HomepageState
 
 
 @component
@@ -10,5 +10,3 @@ def welcome(websocket, state: HomepageState, set_state):
         html.p("Looks like you haven't installed any apps yet."),
         html.p("Head over to the App Store and install some!"),
     )
-
-

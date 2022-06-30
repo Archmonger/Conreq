@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 
-
 MODULE = __name__
 APP = MODULE[: MODULE.rfind(".")]
 
