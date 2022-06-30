@@ -14,7 +14,7 @@ from conreq.utils.environment import get_base_url, get_home_url
 BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
 HOME_URL = get_home_url(prepend_slash=False)
 
-urlpatterns = [
+conreq_urls = [
     path("", include("conreq._core.pwa.urls")),
     path("", view_wrappers.landing, name="landing"),
     path(HOME_URL, view_wrappers.home, name="home"),
@@ -32,9 +32,6 @@ urlpatterns = [
     path("password-reset/", include("conreq._core.password_reset.urls")),
 ]
 
-# Wrap the urlpatterns in BASE_URL if required
+urlpatterns = [path(BASE_URL, include(conreq_urls), name="base_url")]
 if BASE_URL:
-    urlpatterns = [
-        path(BASE_URL, include(urlpatterns)),
-        path("", RedirectView.as_view(url=BASE_URL)),
-    ]
+    urlpatterns.append(path("", RedirectView.as_view(url=BASE_URL)))

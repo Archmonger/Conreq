@@ -6,11 +6,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.safestring import mark_safe
 
 from conreq._core.pwa.apps import PwaConfig
-from conreq.utils.environment import get_base_url
 
 register = template.Library()
-
-BASE_URL = get_base_url()
 
 
 @register.filter(is_safe=True)
@@ -26,4 +23,4 @@ def jsonify(obj):
 @register.inclusion_tag("conreq/pwa.html", takes_context=True)
 def pwa_head_content(context):
     # pylint: disable=unused-argument
-    return {"pwa": PwaConfig.__dict__, "base_url": BASE_URL}
+    return {"pwa": PwaConfig.__dict__}

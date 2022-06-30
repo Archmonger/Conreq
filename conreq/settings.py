@@ -25,7 +25,6 @@ from conreq.utils.environment import (
     get_database_engine,
     get_debug_mode,
     get_env,
-    get_home_url,
     get_safe_mode,
     set_env,
 )
@@ -83,10 +82,6 @@ if not DOTENV_FILE.exists():
     with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
         pass
 DEBUG = get_debug_mode()
-SAFE_MODE = get_safe_mode()
-DB_ENGINE = get_database_engine()
-BASE_URL = get_base_url()
-HOME_URL = get_home_url()
 WEBSERVER_WORKERS = get_env("WEBSERVER_WORKERS", 1, return_type=int)
 
 
@@ -103,7 +98,7 @@ SILKY_AUTHORISATION = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
-SILKY_ANALYZE_QUERIES = DB_ENGINE != "SQLITE3"
+SILKY_ANALYZE_QUERIES = get_database_engine() != "SQLITE3"
 SILKY_MAX_RECORDED_REQUESTS = 1000
 WHITENOISE_MAX_AGE = 0 if DEBUG else 31536000
 COMPRESS_OUTPUT_DIR = "minified"
@@ -124,7 +119,7 @@ HUEY = {
         "workers": 20,
     },
 }
-IDOM_BASE_URL = f"{BASE_URL[1:]}idom/"
+IDOM_BASE_URL = f"{get_base_url()[1:]}idom/"
 os.environ["IDOM_DEBUG_MODE"] = str(int(DEBUG))
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
@@ -413,7 +408,7 @@ TIME_ZONE = get_localzone_name()
 
 # Static Files (CSS, JavaScript, Images)
 STATIC_ROOT = DATA_DIR / "static_processed"
-STATIC_URL = f"{BASE_URL}static/"
+STATIC_URL = f"{get_base_url()}static/"
 STATICFILES_DIRS = [
     USER_STATICFILES_DIR,
 ]
@@ -437,7 +432,7 @@ EMAIL_SUBJECT_PREFIX = ""
 # Add packages folder to Python's path
 sys.path.append(str(PACKAGES_DEV_DIR))
 sys.path.append(str(PACKAGES_DIR))
-if not SAFE_MODE:
+if not get_safe_mode():
     INSTALLED_APPS += find_apps()
 
 
@@ -464,5 +459,5 @@ INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
 
 
 # Ensure Conreq app loader comes last
-if not SAFE_MODE:
+if not get_safe_mode():
     INSTALLED_APPS.append("conreq._core.app_loader")

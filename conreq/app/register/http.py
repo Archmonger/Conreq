@@ -4,12 +4,8 @@ from typing import Any, Callable, Union
 from django.urls import path, re_path
 from django.views.generic import View
 
-from conreq.utils.environment import get_base_url
-
 # TODO: Use Django resolve and raise an exception if registering something that already exists
 # pylint: disable=import-outside-toplevel
-
-BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
 
 
 def url(
@@ -20,15 +16,15 @@ def url(
     """Decorates a Django view function or view class."""
 
     def decorator(new_path: Any):
-        from conreq.urls import urlpatterns
+        from conreq.urls import conreq_urls
         from conreq.utils.profiling import profiled_view
 
         view = profiled_view(new_path)
 
         if use_regex:
-            urlpatterns.append(re_path(BASE_URL + url_pattern, view, name=name))
+            conreq_urls.append(re_path(url_pattern, view, name=name))
         else:
-            urlpatterns.append(path(BASE_URL + url_pattern, view, name=name))
+            conreq_urls.append(path(url_pattern, view, name=name))
 
         @wraps(view)
         def _wrapped_view(*args, **kwargs):
@@ -45,15 +41,15 @@ def api(
     """Decorates a DRF view function or view class."""
 
     def decorator(new_path: Any):
-        from conreq.urls import urlpatterns
+        from conreq.urls import conreq_urls
         from conreq.utils.profiling import profiled_view
 
         view = profiled_view(new_path)
 
         if use_regex:
-            urlpatterns.append(re_path(f"{BASE_URL}/v{version}/{url_pattern}", view))
+            conreq_urls.append(re_path(f"v{version}/{url_pattern}", view))
         else:
-            urlpatterns.append(path(f"{BASE_URL}/v{version}/{url_pattern}", view))
+            conreq_urls.append(path(f"v{version}/{url_pattern}", view))
 
         return view
 

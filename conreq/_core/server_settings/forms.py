@@ -43,7 +43,6 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
     )
     safe_mode = EnvBooleanField(
         env_name="SAFE_MODE",
-        initial=settings.SAFE_MODE,
         help_text="Disables all installed apps.",
     )
     conreq_version = CharField(

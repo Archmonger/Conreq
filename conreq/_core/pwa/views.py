@@ -2,16 +2,12 @@ from django.shortcuts import render
 
 from conreq import config
 from conreq._core.pwa.apps import PwaConfig
-from conreq.utils.environment import get_base_url
-
-BASE_URL = get_base_url()
 
 
 def service_worker(request):
     return render(
         request,
         "conreq/serviceworker.js",
-        {"base_url": BASE_URL},
         content_type="application/javascript",
     )
 

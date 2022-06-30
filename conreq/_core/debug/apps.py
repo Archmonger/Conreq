@@ -5,11 +5,10 @@ from idom.html import i
 from conreq import config
 from conreq._core.debug import views
 from conreq.types import NavGroup
-from conreq.utils.environment import get_base_url, get_debug_mode
+from conreq.utils.environment import get_debug_mode
 from conreq.utils.modules import load
 
 DEBUG = get_debug_mode()
-BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
 
 
 class DebugConfig(AppConfig):
@@ -23,40 +22,24 @@ class DebugConfig(AppConfig):
         from django.contrib import admin
         from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-        from conreq.urls import urlpatterns
+        from conreq.urls import conreq_urls
 
-        urlpatterns.extend(
+        conreq_urls.extend(
             [
+                path("silk/", include("silk.urls", namespace="silk"), name="silk"),
                 path(
-                    f"{BASE_URL}silk/",
-                    include("silk.urls", namespace="silk"),
-                    name="silk",
-                ),
-                path(
-                    f"{BASE_URL}admin/docs/",
+                    "admin/docs/",
                     include("django.contrib.admindocs.urls"),
                     name="admin-docs",
                 ),
+                path("admin/", admin.site.urls, name="admin"),
+                path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
                 path(
-                    f"{BASE_URL}admin/",
-                    admin.site.urls,
-                    name="admin",
-                ),
-                path(
-                    f"{BASE_URL}api/schema/",
-                    SpectacularAPIView.as_view(),
-                    name="schema",
-                ),
-                path(
-                    f"{BASE_URL}api/schema/swagger-ui/",
+                    "api/schema/swagger-ui/",
                     SpectacularSwaggerView.as_view(),
                     name="swagger_ui",
                 ),
-                path(
-                    f"{BASE_URL}health-check/",
-                    views.HealthCheck.as_view(),
-                    name="health_check",
-                ),
+                path("health-check/", views.HealthCheck.as_view(), name="health_check"),
             ]
         )
 
