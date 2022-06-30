@@ -122,7 +122,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
     )
     allowed_domains = EnvCharField(
         env_name="ALLOWED_HOSTS",
-        initial=",".join(settings.ALLOWED_HOSTS),
+        initial=", ".join(settings.ALLOWED_HOSTS),
         required=True,
         help_text="Comma separated list of IPs or domains the webserver is allowed to \
             serve (ex. example.com, 127.0.0.1). Wildcards (*) are allowed within the URLs.",
@@ -130,7 +130,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
     csrf_trusted_origins = EnvCharField(
         env_name="CSRF_TRUSTED_ORIGINS",
         label="CSRF trusted origins",
-        initial=",".join(settings.CSRF_TRUSTED_ORIGINS),
+        initial=", ".join(settings.CSRF_TRUSTED_ORIGINS),
         help_text='Comma separated list of <b>qualified</b> URLs trusted for \
             <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">\
                 CSRF protection</a> (ex. https://example.com). Wildcards (*) are allowed within the URLs. <br> If this field \

@@ -193,7 +193,12 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = get_env(
     "SECURE_REFERRER_POLICY", "strict-origin-when-cross-origin"
 )
-ALLOWED_HOSTS = [host.strip() for host in get_env("ALLOWED_HOSTS", "*").split(",")]
+DEFAULT_HOSTS = ["*", "localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS = [
+    host.strip() for host in get_env("ALLOWED_HOSTS", "").split(",") if host
+]
+if not ALLOWED_HOSTS:
+    ALLOWED_HOSTS = DEFAULT_HOSTS
 if get_env("CSRF_TRUSTED_ORIGINS", ""):
     CSRF_TRUSTED_ORIGINS = [
         origin.strip()
@@ -202,9 +207,14 @@ if get_env("CSRF_TRUSTED_ORIGINS", ""):
     ]
 else:
     CSRF_TRUSTED_ORIGINS = [
-        f"http://{origin.strip()}" for origin in ALLOWED_HOSTS if origin != "*"
-    ] + [f"https://{origin.strip()}" for origin in ALLOWED_HOSTS if origin != "*"]
-ALLOWED_HOSTS += ["localhost", "127.0.0.1", "[::1]"]
+        f"http://{origin.strip()}"
+        for origin in ALLOWED_HOSTS
+        if origin not in DEFAULT_HOSTS
+    ] + [
+        f"https://{origin.strip()}"
+        for origin in ALLOWED_HOSTS
+        if origin not in DEFAULT_HOSTS
+    ]
 SECURE_BROWSER_XSS_FILTER = True
 
 
