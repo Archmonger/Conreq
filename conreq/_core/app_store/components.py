@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from django_idom.components import static_css
+from django_idom.components import DjangoCSS
 from idom import component, hooks
 from idom.html import _, a, button, div, h4, h5, li, ol, p
 
@@ -34,8 +34,8 @@ def app_store(websocket, state, set_state):
 
     # TODO: Update app store entries every first load
     return _(
-        static_css("conreq/app_store.css"),
-        static_css("conreq/buttons.css"),
+        DjangoCSS("conreq/app_store.css"),
+        DjangoCSS("conreq/buttons.css"),
         tab(key=tab.__name__)
         if tab
         else div(
