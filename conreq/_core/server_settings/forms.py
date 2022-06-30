@@ -45,10 +45,6 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
         env_name="SAFE_MODE",
         help_text="Disables all installed apps.",
     )
-    conreq_version = CharField(
-        initial=settings.CONREQ_VERSION, disabled=True, required=False
-    )
-    system_platform = CharField(initial=platform(), disabled=True, required=False)
 
     class Meta:
         model = GeneralSettings

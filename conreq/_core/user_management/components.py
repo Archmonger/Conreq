@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.views.generic.edit import DeleteView, UpdateView
 from django_tables2 import RequestConfig
+from idom import html
 
 from conreq import AuthLevel, config
 from conreq._core.components import tabbed_viewport
@@ -11,7 +12,7 @@ from conreq._core.user_management.tables import UserInviteTable, UsersTable
 from conreq._core.utils import tab_constructor
 from conreq.types import Tab
 from conreq.utils.components import view_to_component
-from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin, stub
+from conreq.utils.views import ObjectInParamsMixin, SuccessCurrentUrlMixin
 
 # TODO: Create SimpleTable and SimpleForm that use Conreq templates
 # TODO: Figure out some way to integrate user invites into this
@@ -69,4 +70,6 @@ def user_management(websocket, state, set_state):
 config._homepage.admin_nav_tabs[0] = tab_constructor("User Management", user_management)
 config._tabs.manage_users.append(Tab(name="Manage Users", component=manage_users_table))
 config._tabs.manage_users.append(Tab(name="Manage Invites", component=user_invites))
-config._tabs.manage_users.append(Tab(name="Create Invite", component=stub))
+config._tabs.manage_users.append(
+    Tab(name="Create Invite", component=lambda x, y, z: html.div("Under Construction"))
+)

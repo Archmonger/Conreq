@@ -1,3 +1,5 @@
+from idom import html
+
 from conreq import AuthLevel, config
 from conreq._core.components import tabbed_viewport
 from conreq._core.email.models import EmailSettings
@@ -66,4 +68,7 @@ config._tabs.server_settings.append(
     Tab(name="Webserver", component=WebserverSettingsView)
 )
 config._tabs.server_settings.append(Tab(name="Email", component=EmailSettingsView))
+config._tabs.server_settings.append(
+    Tab(name="System Info", component=lambda x, y, z: html.div("Under Construction"))
+)
 config._homepage.admin_nav_tabs[2] = tab_constructor("Server Settings", server_settings)
