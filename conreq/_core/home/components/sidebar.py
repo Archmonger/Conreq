@@ -107,9 +107,15 @@ def sidebar(websocket, state: HomepageState, set_state):
         ),
         div(
             # pylint: disable=protected-access
-            NAVIGATION,
+            NAVIGATION,  # TODO: Change these keys to be database IDs
             [  # App tabs
-                nav_group(websocket, state, set_state, group)
+                nav_group(
+                    websocket,
+                    state,
+                    set_state,
+                    group,
+                    key=group.name,
+                )
                 for group in nav_tabs
                 if group not in USER_ADMIN_DEBUG
             ],
@@ -120,6 +126,7 @@ def sidebar(websocket, state: HomepageState, set_state):
                     set_state,
                     group,
                     bottom_tabs=config._homepage.user_nav_tabs,
+                    key=group.name,
                 )
                 for group in nav_tabs
                 if group == "User"
@@ -131,6 +138,7 @@ def sidebar(websocket, state: HomepageState, set_state):
                     set_state,
                     group,
                     bottom_tabs=config._homepage.admin_nav_tabs,
+                    key=group.name,
                 )
                 for group in nav_tabs
                 if group == "Admin" and websocket.scope["user"].is_staff
@@ -142,6 +150,7 @@ def sidebar(websocket, state: HomepageState, set_state):
                     set_state,
                     group,
                     top_tabs=config._homepage.debug_nav_tabs,
+                    key=group.name,
                 )
                 for group in nav_tabs
                 if group == "Debug" and websocket.scope["user"].is_staff and DEBUG
@@ -150,7 +159,7 @@ def sidebar(websocket, state: HomepageState, set_state):
     )
 
 
-def nav_tab_class(state: HomepageState, tab: NavTab):
+def _nav_tab_class(state: HomepageState, tab: NavTab):
     if (
         state._viewport_selector is not ViewportSelector._initial
         and tab.viewport.component
@@ -160,6 +169,7 @@ def nav_tab_class(state: HomepageState, tab: NavTab):
     return NAV_TAB
 
 
+@idom.component
 def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
     async def on_click(event):
         if tab.on_click:
@@ -194,12 +204,13 @@ def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
         set_state(copy(state))
 
     return div(
-        nav_tab_class(state, tab) | {"onClick": on_click},
+        _nav_tab_class(state, tab) | {"onClick": on_click},
         div(TAB_NAME, tab.name),
         key=tab.name,
     )
 
 
+@idom.component
 def nav_group(
     websocket,
     state: HomepageState,
@@ -237,10 +248,19 @@ def nav_group(
             },
             div(TABS_INDICATOR),
             div(
-                TABS,
-                [nav_tab(websocket, state, set_state, tab) for tab in _top_tabs],
-                [nav_tab(websocket, state, set_state, tab) for tab in group.tabs],
-                [nav_tab(websocket, state, set_state, tab) for tab in _bottom_tabs],
+                TABS,  # TODO: Change these keys to be database IDs
+                [
+                    nav_tab(websocket, state, set_state, tab, key=tab.name)
+                    for tab in _top_tabs
+                ],
+                [
+                    nav_tab(websocket, state, set_state, tab, key=tab.name)
+                    for tab in group.tabs
+                ],
+                [
+                    nav_tab(websocket, state, set_state, tab, key=tab.name)
+                    for tab in _bottom_tabs
+                ],
             ),
         ),
         key=group_id,
