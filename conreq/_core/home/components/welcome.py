@@ -1,6 +1,6 @@
 from copy import copy
 
-from django_idom.components import DjangoCSS
+from django_idom.components import django_css
 from idom import component, html
 
 from conreq import config
@@ -16,8 +16,8 @@ def welcome(websocket, state: HomepageState, set_state):
 
     return html.div(
         {"className": "welcome"},
-        DjangoCSS("conreq/welcome.css"),
-        DjangoCSS("conreq/buttons.css"),
+        django_css("conreq/welcome.css"),
+        django_css("conreq/buttons.css"),
         html.h1("Welcome to Conreq"),
         html.p("Looks like you don't have any custom tabs yet."),
         html.p("Head over to the App Store and install some!"),

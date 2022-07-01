@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from django_idom.components import DjangoCSS
+from django_idom.components import django_css
 from idom import component, hooks
 from idom.html import _, a, button, div, h4, h5, li, ol, p
 
@@ -24,9 +24,9 @@ def app_store(websocket, state, set_state):
 
     # TODO: Update app store entries every first load
     return _(
-        DjangoCSS("conreq/app_store.css"),
-        DjangoCSS("conreq/buttons.css"),
-        DjangoCSS("conreq/scrollbar.css"),
+        django_css("conreq/app_store.css"),
+        django_css("conreq/buttons.css"),
+        django_css("conreq/scrollbar.css"),
         tab(key=tab.__name__)
         if tab
         else div(

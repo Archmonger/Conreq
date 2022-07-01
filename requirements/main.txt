@@ -21,7 +21,7 @@ djangorestframework==3.13.1
 djangorestframework-api-key==2.2.0
 docutils==0.18.1
 drf-spectacular[sidecar]==0.21.2
-git+https://github.com/archmonger/django-idom.git@static-css
+git+https://github.com/idom-team/django-idom.git
 huey==2.4.3
 hypercorn[h3]==0.13.2
 markdown==3.3.6
