@@ -1,5 +1,4 @@
 .viewport-container.app-store {
-	padding-top: 30px;
 	display: flex;
 	flex-direction: row;
 }
@@ -8,6 +7,8 @@
 	min-width: -webkit-fit-content;
 	min-width: -moz-fit-content;
 	min-width: fit-content;
+	padding-top: 30px;
+	padding-left: 30px;
 }
 
 .viewport-container.app-store .nav-region ol {
@@ -32,6 +33,11 @@
 	color: #b8bbbd;
 }
 
+.spotlight-region {
+	padding-top: 30px;
+	overflow-y: auto;
+}
+
 .spotlight {
 	margin-bottom: 35px;
 }
@@ -50,8 +56,14 @@
 }
 
 .spotlight > .card-stage > .card {
+	--border-radius: 8px;
+	--border-size: 1px;
+	--border-color: #606060;
+	--card-bg: rgb(31 33 36 / 96%);
 	color: rgb(255 255 255 / 65%);
-	background: rgb(255 255 255 / 9%);
+	background: var(--card-bg);
+	border-radius: var(--border-radius);
+	border: 1px solid var(--border-color);
 	height: 225px;
 	width: 380px;
 	padding: 20px;
@@ -102,4 +114,47 @@
 	display: -webkit-box;
 	overflow: hidden;
 	line-height: 1.2;
+}
+
+/* Spinny Colors */
+/* Credits: https://codepen.io/MauriciAbad/pen/WNrpmPr */
+@keyframes spin {
+	from {
+		transform: translate(-50%, -50%) rotate(0);
+	}
+
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
+}
+
+.spotlight > .card-stage > .card.special {
+	--border-bg: conic-gradient(var(--border-color), var(--accent-color));
+	background: transparent;
+	overflow: hidden;
+	border: none;
+}
+
+.spotlight > .card-stage > .card.special::before {
+	content: "";
+	display: block;
+	background: var(--border-bg);
+	width: calc(100% * 1.41421356237);
+	padding-bottom: calc(100% * 1.41421356237);
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 100%;
+	z-index: -2;
+	animation: spin 10s linear infinite;
+}
+
+.spotlight > .card-stage > .card.special::after {
+	content: "";
+	position: absolute;
+	inset: var(--border-size);
+	background: var(--card-bg);
+	z-index: -1;
+	border-radius: calc(var(--border-radius) - var(--border-size));
 }

@@ -21,30 +21,21 @@ def app_store(websocket, state, set_state):
     # pylint: disable=unused-argument
     tab, set_tab = hooks.use_state(None)
     categories = hooks.use_state(get_categories)[0]
-    ready, set_ready = hooks.use_state(False)
-
-    @hooks.use_effect
-    async def lag():
-        if not ready:
-            from random import randint
-            from time import sleep
-
-            sleep(randint(1, 3))
-            set_ready(True)
 
     # TODO: Update app store entries every first load
     return _(
         DjangoCSS("conreq/app_store.css"),
         DjangoCSS("conreq/buttons.css"),
+        DjangoCSS("conreq/scrollbar.css"),
         tab(key=tab.__name__)
         if tab
         else div(
             {"className": "spotlight-region"},
-            recently_added(set_tab),
-            recently_updated(set_tab),
-            most_popular(set_tab),
-            top_downloaded(set_tab),
             our_favorites(set_tab),
+            most_popular(set_tab),
+            recently_updated(set_tab),
+            top_downloaded(set_tab),
+            recently_added(set_tab),
             essentials(set_tab),
             random_selection(set_tab),
             key="spotlight-region",
@@ -117,7 +108,9 @@ def top_downloaded(set_tab):
 
 
 def our_favorites(set_tab):
-    return spotlight("Our Favorites", "A curated list of our favorites.", set_tab)
+    return spotlight(
+        "Our Favorites", "A curated list of our favorites.", set_tab, special=True
+    )
 
 
 def essentials(set_tab):
@@ -130,7 +123,7 @@ def random_selection(set_tab):
     return spotlight("Random Selection", "Are you feeling lucky today?", set_tab)
 
 
-def spotlight(title, description, set_tab, apps=None):
+def spotlight(title, description, set_tab, apps=None, special=False):
     return div(
         {"className": "spotlight"},
         a(
@@ -140,14 +133,14 @@ def spotlight(title, description, set_tab, apps=None):
         ),
         div(
             {"className": "card-stage"},
-            [card(set_tab) for _ in range(8)],
+            [card(set_tab, special) for _ in range(8)],
         ),
     )
 
 
-def card(set_tab, app: PlaceholderApp = PlaceholderApp()):
+def card(set_tab, special, app: PlaceholderApp = PlaceholderApp()):
     return div(
-        {"className": "card"},
+        {"className": "card" + (" special" if special else "")},
         div(
             {"className": "top"},
             div(
