@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+from channels.db import database_sync_to_async
 from django_idom.components import django_css
 from idom import component, hooks
 from idom.html import _, a, button, div, h4, h5, li, ol, p
@@ -20,7 +21,16 @@ class PlaceholderApp:
 def app_store(websocket, state, set_state):
     # pylint: disable=unused-argument
     tab, set_tab = hooks.use_state(None)
-    categories = hooks.use_state(get_categories)[0]
+    categories, set_categories = hooks.use_state({})
+    ready, set_ready = hooks.use_state(False)
+
+    @hooks.use_effect
+    async def load_from_db():
+        if categories:
+            return
+        new_categories = await get_categories()
+        if new_categories:
+            set_categories(new_categories)
 
     # TODO: Update app store entries every first load
     return _(
@@ -44,7 +54,8 @@ def app_store(websocket, state, set_state):
     )
 
 
-def get_categories():
+@database_sync_to_async
+def get_categories() -> dict[Category, list[Subcategory]]:
     query = Subcategory.objects.select_related("category").order_by("name").all()
     categories = {}
     for subcategory in query:

@@ -1,4 +1,5 @@
-import idom
+from channels.db import database_sync_to_async
+from idom import component, hooks
 from idom.html import button, div, script, span
 
 from conreq import HomepageState, ViewportSelector
@@ -17,17 +18,28 @@ NAVBAR_TOGGLER_ICON = {"className": "navbar-toggler-icon"}
 NAVBAR_BRAND = {"className": "navbar-brand ellipsis"}
 
 
-@idom.component
+@component
 def navbar(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
+    page_title, set_page_title = hooks.use_state("")
+
+    @database_sync_to_async
+    def _update_page_title():
+        new_page_title = _get_page_title(state)
+
+        if new_page_title != page_title:
+            set_page_title(_get_page_title(state))
+
+    hooks.use_effect(_update_page_title, dependencies=[state])
+
     return div(
         NAVBAR,
         button(
             NAVBAR_TOGGLER,
             span(NAVBAR_TOGGLER_ICON),
         ),
-        div(NAVBAR_BRAND, _get_page_title(state)),
-        script(f"document.title = '{_get_page_title(state)}'"),
+        div(NAVBAR_BRAND),  # TODO: Add logo support
+        script(f"if('{page_title}'){{document.title = '{page_title}'}}"),
     )
 
 

@@ -121,7 +121,6 @@ HUEY = {
 }
 IDOM_BASE_URL = f"{get_base_url()[1:]}idom/"
 os.environ["IDOM_DEBUG_MODE"] = str(int(DEBUG))
-os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 JAZZMIN_SETTINGS = {"custom_css": "conreq/jazzmin.css"}
