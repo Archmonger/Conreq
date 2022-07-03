@@ -28,27 +28,6 @@ bootstrap_modal = idom.web.export(bootstrap, "Modal", allow_children=True)
 def modal(websocket, state: HomepageState, set_state):
     return div()
 
-    return bootstrap_modal(
-        {
-            "show": state._modal_state.show,
-            "centered": state._modal_state.centered,
-            "size": state._modal_state.size,
-            **state._modal_state.kwargs,
-        },
-        *(
-            [state._modal(websocket, state, set_state)]
-            if state._modal
-            else [
-                modal_head(websocket, state, set_state),
-                modal_body(websocket, state, set_state),
-                modal_footer(websocket, state, set_state),
-            ]
-        ),
-        key=f"{state._modal.__module__}.{state._modal.__name__}"
-        if state._modal
-        else str(uuid4()),
-    )
-
 
 def modal_head(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
