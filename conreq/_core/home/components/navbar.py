@@ -23,14 +23,13 @@ def navbar(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
     page_title, set_page_title = hooks.use_state("")
 
+    @hooks.use_effect(dependencies=[state])
     @database_sync_to_async
     def _update_page_title():
         new_page_title = _get_page_title(state)
 
         if new_page_title != page_title:
             set_page_title(_get_page_title(state))
-
-    hooks.use_effect(_update_page_title, dependencies=[state])
 
     return div(
         NAVBAR,
