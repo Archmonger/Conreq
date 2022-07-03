@@ -35,6 +35,7 @@ def homepage():
     state, set_state = idom.hooks.use_state(HomepageState())
     websocket = use_websocket()
 
+    @idom.hooks.use_effect(dependencies=[state._viewport_intent])
     def set_viewport():
         """Determine what viewport to set the viewport based on intent."""
         # sourcery skip:remove-redundant-if, merge-duplicate-blocks
@@ -81,8 +82,6 @@ def homepage():
         state._viewport_intent = None
 
         set_state(copy(state))
-
-    idom.hooks.use_effect(set_viewport, dependencies=[state._viewport_intent])
 
     @idom.hooks.use_effect
     async def viewport_expiration():
