@@ -22,13 +22,16 @@ def app_store(websocket, state, set_state):
     # pylint: disable=unused-argument
     tab, set_tab = hooks.use_state(None)
     categories, set_categories = hooks.use_state({})
-    ready, set_ready = hooks.use_state(False)
 
     @hooks.use_effect
-    async def load_from_db():
+    @database_sync_to_async
+    def get_categories():
         if categories:
             return
-        new_categories = await get_categories()
+        query = Subcategory.objects.select_related("category").order_by("name").all()
+        new_categories = {}
+        for subcategory in query:
+            new_categories.setdefault(subcategory.category, []).append(subcategory)
         if new_categories:
             set_categories(new_categories)
 
@@ -52,15 +55,6 @@ def app_store(websocket, state, set_state):
         ),
         div({"className": "nav-region"}, nav_constructor(categories, set_tab)),
     )
-
-
-@database_sync_to_async
-def get_categories() -> dict[Category, list[Subcategory]]:
-    query = Subcategory.objects.select_related("category").order_by("name").all()
-    categories = {}
-    for subcategory in query:
-        categories.setdefault(subcategory.category, []).append(subcategory)
-    return categories
 
 
 def nav_constructor(categories: dict[Category, list[Subcategory]], set_tab) -> list:
