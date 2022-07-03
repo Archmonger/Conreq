@@ -2,6 +2,7 @@ import idom
 from idom.html import div
 
 from conreq import HomepageState, ViewportSelector, config
+from conreq._core.home.components.protocol import ConditionalRender
 from conreq.types import Viewport
 
 # pylint: disable=protected-access
@@ -41,7 +42,10 @@ def viewport_primary(websocket, state: HomepageState, set_state):
             ViewportSelector.primary,
             state._viewport_primary,
         ),
-        state._viewport_primary.component(websocket, state, set_state)
+        ConditionalRender(
+            state._viewport_primary.component(websocket, state, set_state),
+            state._viewport_selector == ViewportSelector.primary,
+        )
         if state._viewport_primary
         else "",
         key=f"{state._viewport_primary.component.__module__}.{state._viewport_primary.component.__name__}",
@@ -61,7 +65,10 @@ def viewport_secondary(websocket, state: HomepageState, set_state):
             ViewportSelector.secondary,
             state._viewport_secondary,
         ),
-        state._viewport_secondary.component(websocket, state, set_state)
+        ConditionalRender(
+            state._viewport_secondary.component(websocket, state, set_state),
+            state._viewport_selector == ViewportSelector.secondary,
+        )
         if state._viewport_secondary
         else "",
         key=f"{state._viewport_secondary.component.__module__}.{state._viewport_secondary.component.__name__}",
