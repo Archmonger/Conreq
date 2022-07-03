@@ -26,7 +26,10 @@ bootstrap_modal = idom.web.export(bootstrap, "Modal", allow_children=True)
 
 @idom.component
 def modal(websocket, state: HomepageState, set_state):
-    return div()
+
+    # Temporarily disable the modal until `module_from_template` is fixed
+    if state:
+        return div()
 
     return bootstrap_modal(
         {
