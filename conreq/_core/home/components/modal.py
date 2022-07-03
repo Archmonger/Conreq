@@ -1,5 +1,4 @@
 from copy import copy
-from uuid import uuid4
 
 import idom
 from idom.html import div, i
