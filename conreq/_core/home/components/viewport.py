@@ -7,14 +7,12 @@ from conreq.types import Viewport
 
 # pylint: disable=protected-access
 
-VIEWPORT_CONTAINER_PRIMARY = {"className": "viewport-container primary"}
-VIEWPORT_CONTAINER_SECONDARY = {"className": "viewport-container secondary"}
 VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container loading"}
 HIDDEN = {"hidden": "hidden"}
 
 
 @idom.component
-def viewport_loading(websocket, state: HomepageState, set_state):
+def viewport_loading_animation(websocket, state: HomepageState, set_state):
     # pylint: disable=unused-argument
     return div(
         VIEWPORT_CONTAINER_LOADING
@@ -30,61 +28,43 @@ def viewport_loading(websocket, state: HomepageState, set_state):
 
 
 @idom.component
-def viewport_primary(websocket, state: HomepageState, set_state):
+def viewport(websocket, state: HomepageState, set_state, viewport_name: str):
     # sourcery skip: assign-if-exp
-    if not state._viewport_primary:
-        return div(VIEWPORT_CONTAINER_PRIMARY | HIDDEN)
+    this_viewport: Viewport = getattr(state, f"_viewport_{viewport_name}")
+    base_attrs = {"className": f"viewport-container {viewport_name}"}
+
+    if not this_viewport:
+        return div(base_attrs | HIDDEN)
 
     return div(
-        _viewport_class(
-            VIEWPORT_CONTAINER_PRIMARY,
-            state._viewport_selector,
-            ViewportSelector.primary,
-            state._viewport_primary,
+        viewport_attrs(
+            base_attrs,
+            state,
+            viewport_name,
+            this_viewport,
         ),
         ConditionalRender(
-            state._viewport_primary.component(websocket, state, set_state),
-            state._viewport_selector == ViewportSelector.primary,
+            this_viewport.component(websocket, state, set_state),
+            state._viewport_selector == viewport_name,
         )
-        if state._viewport_primary
+        if getattr(state, f"_viewport_{viewport_name}")
         else "",
-        key=f"{state._viewport_primary.component.__module__}.{state._viewport_primary.component.__name__}",
+        key=f"{this_viewport.component.__module__}.{this_viewport.component.__name__}",
     )
 
 
-@idom.component
-def viewport_secondary(websocket, state: HomepageState, set_state):
-    # sourcery skip: assign-if-exp
-    if not state._viewport_secondary:
-        return div(VIEWPORT_CONTAINER_SECONDARY | HIDDEN)
-
-    return div(
-        _viewport_class(
-            VIEWPORT_CONTAINER_SECONDARY,
-            state._viewport_selector,
-            ViewportSelector.secondary,
-            state._viewport_secondary,
-        ),
-        ConditionalRender(
-            state._viewport_secondary.component(websocket, state, set_state),
-            state._viewport_selector == ViewportSelector.secondary,
-        )
-        if state._viewport_secondary
-        else "",
-        key=f"{state._viewport_secondary.component.__module__}.{state._viewport_secondary.component.__name__}",
-    )
-
-
-def _viewport_class(original, viewport_selector, selector, viewport: Viewport):
+def viewport_attrs(
+    base_attrs, state: HomepageState, viewport_name, _viewport: Viewport
+):
     # Ensure we are constructing a new class with the pipe operator
-    new_attrs = original
-    if viewport_selector != selector:
+    new_attrs = base_attrs
+    if state._viewport_selector != viewport_name:
         new_attrs = new_attrs | HIDDEN
     else:
         new_attrs = new_attrs | {}
 
-    if not viewport.padding:
+    if not _viewport.padding:
         new_attrs["className"] += " no-padding"
-    if viewport.html_class:
-        new_attrs["className"] += f" {viewport.html_class}"
+    if _viewport.html_class:
+        new_attrs["className"] += f" {_viewport.html_class}"
     return new_attrs

@@ -11,11 +11,7 @@ from conreq import HomepageState, ViewportSelector
 from conreq._core.home.components.modal import modal
 from conreq._core.home.components.navbar import navbar
 from conreq._core.home.components.sidebar import sidebar
-from conreq._core.home.components.viewport import (
-    viewport_loading,
-    viewport_primary,
-    viewport_secondary,
-)
+from conreq._core.home.components.viewport import viewport, viewport_loading_animation
 from conreq.types import Seconds
 from conreq.utils.components import authenticated
 
@@ -115,7 +111,7 @@ def homepage():
         navbar(websocket, state, set_state),
         modal(websocket, state, set_state),
         sidebar(websocket, state, set_state),
-        viewport_loading(websocket, state, set_state),
-        viewport_primary(websocket, state, set_state),
-        viewport_secondary(websocket, state, set_state),
+        viewport_loading_animation(websocket, state, set_state),
+        viewport(websocket, state, set_state, ViewportSelector.primary),
+        viewport(websocket, state, set_state, ViewportSelector.secondary),
     )
