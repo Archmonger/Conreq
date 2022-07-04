@@ -65,9 +65,9 @@ def user_settings(websocket, state, set_state):
         websocket,
         state,
         set_state,
-        tabs=config.tabs.user_settings,
-        top_tabs=config._tabs.user_settings_top,
-        bottom_tabs=config._tabs.user_settings_bottom,
+        tabs=config.tabs.user_settings.installed,
+        top_tabs=config._internal_tabs.user_settings_top,
+        bottom_tabs=config._internal_tabs.user_settings_bottom,
     )
 
 

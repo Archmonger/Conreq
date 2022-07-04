@@ -65,6 +65,6 @@ def user_management(websocket, state, set_state):
         websocket,
         state,
         set_state,
-        config.tabs.user_management,
-        top_tabs=config._tabs.user_management,
+        tabs=config.tabs.user_management.installed,
+        top_tabs=config._internal_tabs.user_management,
     )

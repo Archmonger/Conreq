@@ -58,6 +58,6 @@ def server_settings(websocket, state, set_state):
         websocket,
         state,
         set_state,
-        tabs=config.tabs.server_settings,
-        top_tabs=config._tabs.server_settings,
+        tabs=config.tabs.server_settings.installed,
+        top_tabs=config._internal_tabs.server_settings,
     )

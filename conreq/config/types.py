@@ -3,12 +3,11 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
-from idom.core.types import VdomDict
 from idom.html import div, span
+from idom.types import ComponentType, VdomDict
 from sortedcontainers import SortedList
 
 from conreq.types import NavGroup, NavTab, Tab
-from conreq.utils.containers import FillList
 
 # pylint: disable=too-many-instance-attributes
 
@@ -49,44 +48,106 @@ class TemplateConfig:
 
 @dataclass
 class _UserSettingsComponents:
-    viewport: Callable | None = None
-    general: Callable | None = None
-    change_password: Callable | None = None
-    delete_account: Callable | None = None
+    """Used to store user-defined components."""
+
+    main: ComponentType | None = None
+    general: ComponentType | None = None
+    change_password: ComponentType | None = None
+    delete_account: ComponentType | None = None
+
+
+@dataclass
+class _UserSettingsTabs:
+    """Used to store NavTab/Tab objects for the default sidebar categories."""
+
+    main: NavTab | None = None
+    general: Tab | None = None
+    change_password: Tab | None = None
+    delete_account: Tab | None = None
+
+    installed: SortedList[str] = field(default_factory=SortedList)
 
 
 @dataclass
 class _SignOutComponents:
-    viewport: Callable | None = None
+    """Used to store user-defined components."""
+
+    main: ComponentType | None = None
     event: Callable | None = None
 
 
 @dataclass
+class _SignOutTabs:
+    """Used to store NavTab/Tab objects for the default sidebar categories."""
+
+    main: NavTab | None = None
+
+
+@dataclass
 class _UserManagementComponents:
-    viewport: Callable | None = None
-    manage_users: Callable | None = None
-    manage_invites: Callable | None = None
-    create_invite: Callable | None = None
+    """Used to store user-defined components."""
+
+    main: ComponentType | None = None
+    manage_users: ComponentType | None = None
+    manage_invites: ComponentType | None = None
+    create_invite: ComponentType | None = None
+
+
+@dataclass
+class _UserManagementTabs:
+    """Used to store NavTab/Tab objects for the default sidebar categories."""
+
+    main: NavTab | None = None
+    manage_users: Tab | None = None
+    manage_invites: Tab | None = None
+    create_invite: Tab | None = None
+
+    installed: SortedList[str] = field(default_factory=SortedList)
 
 
 @dataclass
 class _AppStoreComponents:
-    viewport: Callable | None = None
+    """Used to store user-defined components."""
+
+    main: ComponentType | None = None
+
+
+@dataclass
+class _AppStoreTabs:
+    """Used to store NavTab/Tab objects for the default sidebar categories."""
+
+    main: NavTab | None = None
 
 
 @dataclass
 class _ServerSettingsComponents:
-    viewport: Callable | None = None
-    general: Callable | None = None
-    styling: Callable | None = None
-    webserver: Callable | None = None
-    email: Callable | None = None
-    system_info: Callable | None = None
+    """Used to store user-defined components."""
+
+    main: ComponentType | None = None
+    general: ComponentType | None = None
+    styling: ComponentType | None = None
+    webserver: ComponentType | None = None
+    email: ComponentType | None = None
+    system_info: ComponentType | None = None
+
+
+@dataclass
+class _ServerSettingsTabs:
+    """Used to store NavTab/Tab objects for the default sidebar categories."""
+
+    main: NavTab | None = None
+    general: Tab | None = None
+    styling: Tab | None = None
+    webserver: Tab | None = None
+    email: Tab | None = None
+    system_info: Tab | None = None
+
+    installed: SortedList[str] = field(default_factory=SortedList)
 
 
 @dataclass
 class ComponentConfig:
-    homepage: Callable | None = None
+    homepage: ComponentType | None = None
     user_settings: _UserSettingsComponents = field(
         default_factory=_UserSettingsComponents,
     )
@@ -119,10 +180,21 @@ class ComponentConfig:
 
 @dataclass
 class TabConfig:
-    user_settings: SortedList[Tab] = field(default_factory=SortedList)
-    user_management: SortedList[Tab] = field(default_factory=SortedList)
-    app_store: SortedList[Tab] = field(default_factory=SortedList)
-    server_settings: SortedList[Tab] = field(default_factory=SortedList)
+    user_settings: _UserSettingsTabs = field(
+        default_factory=_UserSettingsTabs,
+    )
+    sign_out: _SignOutTabs = field(
+        default_factory=_SignOutTabs,
+    )
+    user_management: _UserManagementTabs = field(
+        default_factory=_UserManagementTabs,
+    )
+    app_store: _AppStoreTabs = field(
+        default_factory=_AppStoreTabs,
+    )
+    server_settings: _ServerSettingsTabs = field(
+        default_factory=_ServerSettingsTabs,
+    )
 
 
 @dataclass
@@ -149,7 +221,7 @@ class AsgiConfig:
 @dataclass
 class HomepageConfig:
     nav_tabs: SortedList[NavGroup] = field(default_factory=SortedList)
-    default_nav_tab: NavTab = None
+    default_nav_tab: NavTab | None = None
     # TODO: Implement CSS and JS registration
     local_stylesheets: list[dict] = field(default_factory=list)
     remote_stylesheets: list[dict] = field(default_factory=list)
@@ -162,5 +234,5 @@ class HomepageConfig:
 @dataclass
 class _InternalHomepageConfig:
     user_nav_tabs: list[NavTab] = field(default_factory=list)
-    admin_nav_tabs: FillList[NavTab] = field(default_factory=FillList)
+    admin_nav_tabs: list[NavTab] = field(default_factory=list)
     debug_nav_tabs: list[NavTab] = field(default_factory=list)

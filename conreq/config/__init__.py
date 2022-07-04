@@ -17,7 +17,7 @@ homepage = HomepageConfig()
 _homepage = _InternalHomepageConfig()
 startup = StartupConfig()
 tabs = TabConfig()
-_tabs = _InternalTabConfig()
+_internal_tabs = _InternalTabConfig()
 templates = TemplateConfig()
 views = ViewConfig()
 wsgi = WsgiConfig()
@@ -29,8 +29,16 @@ __all__ = [
     "_homepage",
     "startup",
     "tabs",
-    "_tabs",
+    "_internal_tabs",
     "templates",
     "views",
     "wsgi",
 ]
+
+
+def load_default_tabs():
+    # pylint: disable=import-outside-toplevel, unused-import
+    from conreq.config import default_tabs  # noqa: F401
+
+
+load_default_tabs()

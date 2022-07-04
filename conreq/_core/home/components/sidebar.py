@@ -90,7 +90,7 @@ def sidebar(websocket, state: HomepageState, set_state):
         set_state(copy(state))
 
     async def username_on_click(_):
-        state._viewport_intent = Viewport(config.components.user_settings)
+        state._viewport_intent = config.tabs.user_settings.main.viewport
         set_state(copy(state))
 
     return nav(

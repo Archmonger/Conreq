@@ -2,7 +2,7 @@ from django.urls.base import reverse
 from idom.html import iframe
 
 from conreq import config
-from conreq._core.utils import tab_constructor
+from conreq.config.utils import tab_constructor
 
 
 def performance(*_):
