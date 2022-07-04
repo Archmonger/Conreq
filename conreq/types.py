@@ -40,10 +40,10 @@ class ViewportSelector:
 @dataclass
 class Viewport:
     component: Callable
-    selector: ViewportSelector = ViewportSelector.auto
+    selector: str = ViewportSelector.auto
     html_class: str = ""
     padding: bool = True
-    auth: AuthLevel = AuthLevel.user
+    auth: str = AuthLevel.user
     page_title: str | None = None
     expires: bool = True
     timestamp: datetime = field(default_factory=datetime.now)
@@ -54,7 +54,7 @@ class NavTab:
     name: str
     viewport: Viewport | None = None
     on_click: Callable | None = None
-    auth: AuthLevel = AuthLevel.user
+    auth: str = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
         return _compare_names(self, __o)
@@ -67,7 +67,7 @@ class Tab:
     html_class: str = ""
     padding: bool = True
     on_click: Callable | None = None
-    auth: AuthLevel = AuthLevel.user
+    auth: str = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
         return _compare_names(self, __o)
@@ -76,7 +76,7 @@ class Tab:
 @dataclass(order=True)
 class NavGroup:
     name: str
-    icon: Icon = None
+    icon: Icon | None = None
     tabs: SortedSet[NavTab] = field(default_factory=SortedSet)
 
     def __eq__(self, __o: object) -> bool:
@@ -97,7 +97,7 @@ class HomepageState:
     # TODO: Set as immutable and remove all copy() calls
     _viewport_intent: Viewport | None = None
     """The viewport that needs to be loaded."""
-    _viewport_selector: ViewportSelector = ViewportSelector._initial
+    _viewport_selector: str = ViewportSelector._initial
     """The currently visible viewport."""
     _viewport_primary: Viewport | None = None
     _viewport_secondary: Viewport | None = None

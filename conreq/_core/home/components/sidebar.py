@@ -161,6 +161,7 @@ def sidebar(websocket, state: HomepageState, set_state):
 def _nav_tab_class(state: HomepageState, tab: NavTab):
     if (
         state._viewport_selector is not ViewportSelector._initial
+        and tab.viewport
         and tab.viewport.component
         is state.__getattribute__(f"_viewport_{state._viewport_selector}").component
     ):
@@ -215,8 +216,8 @@ def nav_group(
     state: HomepageState,
     set_state,
     group: NavGroup,
-    top_tabs: list[NavTab] = None,
-    bottom_tabs: list[NavTab] = None,
+    top_tabs: list[NavTab] | None = None,
+    bottom_tabs: list[NavTab] | None = None,
 ):
     _top_tabs = top_tabs or []
     _bottom_tabs = bottom_tabs or []

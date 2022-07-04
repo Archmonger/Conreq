@@ -1,7 +1,7 @@
-from idom.core.types import ComponentType, VdomDict, _OwnType
+from idom.core.types import ComponentType, VdomDict
 
 
-class ConditionalRender:
+class ConditionalRender(ComponentType):
     def __init__(self, element: ComponentType, should_render: bool) -> None:
         self.key = None
         self.type = self.__class__
@@ -11,5 +11,5 @@ class ConditionalRender:
     def render(self) -> VdomDict | ComponentType | None:
         return self.element
 
-    def should_render(self, new_object: _OwnType) -> bool:
-        return new_object.render_flag
+    def should_render(self, new: "ConditionalRender") -> bool:
+        return new.render_flag

@@ -43,9 +43,12 @@ def navbar(websocket, state: HomepageState, set_state):
 
 
 def _get_page_title(state: HomepageState):
-    if state._viewport_selector == ViewportSelector.primary:
+    if state._viewport_primary and state._viewport_selector == ViewportSelector.primary:
         return state._viewport_primary.page_title or _default_page_title()
-    if state._viewport_selector == ViewportSelector.secondary:
+    if (
+        state._viewport_secondary
+        and state._viewport_selector == ViewportSelector.secondary
+    ):
         return state._viewport_secondary.page_title or _default_page_title()
     return _default_page_title()
 
