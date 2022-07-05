@@ -6,8 +6,16 @@ from django.views import View
 from conreq import config
 
 # pylint: disable=import-outside-toplevel
-# TODO: All these views will eventually need to be made async, after more broad Django asyc support.
+# TODO: All the default views in _core will need to be made async, after more broad Django async support.
 # Specifically, Django support for async decorators, template rendering, and ORM queries.
+
+
+async def render_view(view, request, *args, **kwargs):
+    if isinstance(view, View):
+        return await convert_to_async(view.as_view())(request, *args, **kwargs)
+    if iscoroutinefunction(view):
+        return await view(request, *args, **kwargs)
+    return await convert_to_async(view)(request, *args, **kwargs)
 
 
 async def landing(request, *args, **kwargs):
@@ -16,12 +24,8 @@ async def landing(request, *args, **kwargs):
     if view is None:
         from conreq._core.landing import views
 
-        return await convert_to_async(views.landing)(request, *args, **kwargs)
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.landing
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def home(request, *args, **kwargs):
@@ -30,12 +34,8 @@ async def home(request, *args, **kwargs):
     if view is None:
         from conreq._core.home import views
 
-        return await convert_to_async(views.home)(request, *args, **kwargs)
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.home
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def sign_up(request, *args, **kwargs):
@@ -44,12 +44,8 @@ async def sign_up(request, *args, **kwargs):
     if view is None:
         from conreq._core.sign_up import views
 
-        return await convert_to_async(views.sign_up)(request, *args, **kwargs)
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.sign_up
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def sign_in(request, *args, **kwargs):
@@ -58,12 +54,8 @@ async def sign_in(request, *args, **kwargs):
     if view is None:
         from conreq._core.sign_in import views
 
-        return await convert_to_async(views.sign_in)(request, *args, **kwargs)
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.sign_in
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def password_reset(request, *args, **kwargs):
@@ -72,14 +64,8 @@ async def password_reset(request, *args, **kwargs):
     if view is None:
         from conreq._core.password_reset import views
 
-        return await convert_to_async(views.PasswordResetView.as_view())(
-            request, *args, **kwargs
-        )
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.PasswordResetView.as_view()
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def password_reset_sent(request, *args, **kwargs):
@@ -88,14 +74,8 @@ async def password_reset_sent(request, *args, **kwargs):
     if view is None:
         from conreq._core.password_reset import views
 
-        return await convert_to_async(views.PassWordResetSentView.as_view())(
-            request, *args, **kwargs
-        )
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.PassWordResetSentView.as_view()
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def password_reset_confirm(request, *args, **kwargs):
@@ -104,14 +84,8 @@ async def password_reset_confirm(request, *args, **kwargs):
     if view is None:
         from conreq._core.password_reset import views
 
-        return await convert_to_async(views.PasswordResetConfirmView.as_view())(
-            request, *args, **kwargs
-        )
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.PasswordResetConfirmView.as_view()
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def offline(request, *args, **kwargs):
@@ -120,12 +94,8 @@ async def offline(request, *args, **kwargs):
     if view is None:
         from conreq._core.pwa import views
 
-        return await convert_to_async(views.offline)(request, *args, **kwargs)
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.offline
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def service_worker(request, *args, **kwargs):
@@ -134,12 +104,8 @@ async def service_worker(request, *args, **kwargs):
     if view is None:
         from conreq._core.pwa import views
 
-        return await convert_to_async(views.service_worker)(request, *args, **kwargs)
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.service_worker
+    return await render_view(view, request, *args, **kwargs)
 
 
 async def web_manifest(request, *args, **kwargs):
@@ -148,9 +114,5 @@ async def web_manifest(request, *args, **kwargs):
     if view is None:
         from conreq._core.pwa import views
 
-        return await convert_to_async(views.web_manifest)(request, *args, **kwargs)
-    if isinstance(view, View):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
-    if iscoroutinefunction(view):
-        return await view(request, *args, **kwargs)
-    return await convert_to_async(view)(request, *args, **kwargs)
+        view = views.web_manifest
+    return await render_view(view, request, *args, **kwargs)
