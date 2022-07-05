@@ -17,7 +17,7 @@ class Command(TemplateCommand):
         options["template"] = str(
             PACKAGE_SLIM_TEMPLATE if options.get("slim") else PACKAGE_TEMPLATE
         )
-        options["extensions"] = ["py"]
+        options["extensions"] = ["py", "txt"]
         options["files"] = []
         options["package_name"] = package_name
         options["verbose_name"] = package_name.replace("_", " ").title()
