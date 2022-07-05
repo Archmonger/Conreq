@@ -181,3 +181,13 @@ def server_settings_system_info(*args, **kwargs):
 
         return components.system_info(*args, **kwargs)
     return component(*args, **kwargs)
+
+
+@idom.component
+def server_settings_licenses(*args, **kwargs):
+    component = config.components.server_settings.system_info
+    if component is None:
+        from conreq._core.server_settings import components
+
+        return components.licenses(*args, **kwargs)
+    return component(*args, **kwargs)

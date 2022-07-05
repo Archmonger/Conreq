@@ -90,6 +90,8 @@ def sidebar(websocket, state: HomepageState, set_state):
         set_state(copy(state))
 
     async def username_on_click(_):
+        if not config.tabs.user_settings.main:
+            return
         state._viewport_intent = config.tabs.user_settings.main.viewport
         set_state(copy(state))
 
@@ -200,8 +202,9 @@ def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
             return
 
         # Switch tabs
-        state.set_viewport(tab.viewport)
-        set_state(copy(state))
+        if tab.viewport:
+            state.set_viewport(tab.viewport)
+            set_state(copy(state))
 
     return div(
         _nav_tab_class(state, tab) | {"onClick": on_click},

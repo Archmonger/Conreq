@@ -52,6 +52,10 @@ def system_info(websocket, state, set_state):
     return html.div("Under Construction")
 
 
+def licenses(websocket, state, set_state):
+    return html.div("Under Construction")
+
+
 # pylint: disable=protected-access
 def server_settings(websocket, state, set_state):
     return tabbed_viewport(

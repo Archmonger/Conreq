@@ -141,6 +141,7 @@ class _ServerSettingsTabs:
     webserver: Tab | None = None
     email: Tab | None = None
     system_info: Tab | None = None
+    licenses: Tab | None = None
 
     installed: SortedList[str] = field(default_factory=SortedList)
 
