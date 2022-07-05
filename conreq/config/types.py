@@ -22,16 +22,16 @@ class StartupConfig:
 
 @dataclass
 class ViewConfig:
-    landing: Callable | None = None
-    home: Callable | None = None
-    sign_up: Callable | None = None
-    sign_in: Callable | None = None
-    password_reset: Callable | None = None
-    password_reset_sent: Callable | None = None
-    password_reset_confirm: Callable | None = None
-    offline: Callable | None = None
-    service_worker: Callable | None = None
-    web_manifest: Callable | None = None
+    landing: Callable | View | None = None
+    home: Callable | View | None = None
+    sign_up: Callable | View | None = None
+    sign_in: Callable | View | None = None
+    password_reset: Callable | View | None = None
+    password_reset_sent: Callable | View | None = None
+    password_reset_confirm: Callable | View | None = None
+    offline: Callable | View | None = None
+    service_worker: Callable | View | None = None
+    web_manifest: Callable | View | None = None
 
 
 @dataclass
