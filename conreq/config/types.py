@@ -3,12 +3,12 @@
 from dataclasses import dataclass, field
 from typing import Callable
 
+from django.views import View
 from idom.html import div, span
 from idom.types import ComponentType, VdomDict
 from sortedcontainers import SortedList
 
 from conreq.types import NavGroup, SidebarTab, SubTab
-from django.views import View
 
 # pylint: disable=too-many-instance-attributes
 
