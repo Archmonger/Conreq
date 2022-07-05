@@ -1,13 +1,13 @@
-channels==3.0.4
+channels==3.0.5
 diskcache==5.4.0
-django==4.0.4
+django==4.0.6
 django-cleanup==5.2.0
 django-compression-middleware==0.4.1
-django-compressor==3.1
+django-compressor==4.0
 django-htmlmin==0.11.0
 django-model-utils==4.2.0
 django-searchable-encrypted-fields==0.1.9
-django-silk==4.3.0
+django-silk==5.0.1
 django-solo==2.0.0
 django-url-or-relative-url-field==0.2.0
 djangorestframework==3.13.1
@@ -17,8 +17,8 @@ drf-yasg==1.20.0
 huey==2.4.3
 hypercorn[h3]==0.13.2
 jsonfield==3.1.0
-markdown==3.3.6
-pwned-passwords-django==1.5
+markdown==3.3.7
+pwned-passwords-django==1.6
 pyarr==3.1.1
 pymysql==1.0.2
 python-dotenv==0.20.0
@@ -27,4 +27,4 @@ titlecase==2.3
 tmdbsimple==2.9.1
 Twisted[tls,http2]==22.4.0
 tzlocal==4.2
-whitenoise[brotli]==6.0.0
+whitenoise[brotli]==6.2.0
