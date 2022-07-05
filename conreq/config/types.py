@@ -7,7 +7,8 @@ from idom.html import div, span
 from idom.types import ComponentType, VdomDict
 from sortedcontainers import SortedList
 
-from conreq.types import NavGroup, NavTab, Tab
+from conreq.types import NavGroup, SidebarTab, SubTab
+from django.views import View
 
 # pylint: disable=too-many-instance-attributes
 
@@ -60,10 +61,10 @@ class _UserSettingsComponents:
 class _UserSettingsTabs:
     """Used to store NavTab/Tab objects for the default sidebar categories."""
 
-    main: NavTab | None = None
-    general: Tab | None = None
-    change_password: Tab | None = None
-    delete_account: Tab | None = None
+    main: SidebarTab | None = None
+    general: SubTab | None = None
+    change_password: SubTab | None = None
+    delete_account: SubTab | None = None
 
     installed: SortedList[str] = field(default_factory=SortedList)
 
@@ -80,7 +81,7 @@ class _SignOutComponents:
 class _SignOutTabs:
     """Used to store NavTab/Tab objects for the default sidebar categories."""
 
-    main: NavTab | None = None
+    main: SidebarTab | None = None
 
 
 @dataclass
@@ -97,10 +98,10 @@ class _UserManagementComponents:
 class _UserManagementTabs:
     """Used to store NavTab/Tab objects for the default sidebar categories."""
 
-    main: NavTab | None = None
-    manage_users: Tab | None = None
-    manage_invites: Tab | None = None
-    create_invite: Tab | None = None
+    main: SidebarTab | None = None
+    manage_users: SubTab | None = None
+    manage_invites: SubTab | None = None
+    create_invite: SubTab | None = None
 
     installed: SortedList[str] = field(default_factory=SortedList)
 
@@ -116,7 +117,7 @@ class _AppStoreComponents:
 class _AppStoreTabs:
     """Used to store NavTab/Tab objects for the default sidebar categories."""
 
-    main: NavTab | None = None
+    main: SidebarTab | None = None
 
 
 @dataclass
@@ -135,13 +136,13 @@ class _ServerSettingsComponents:
 class _ServerSettingsTabs:
     """Used to store NavTab/Tab objects for the default sidebar categories."""
 
-    main: NavTab | None = None
-    general: Tab | None = None
-    styling: Tab | None = None
-    webserver: Tab | None = None
-    email: Tab | None = None
-    system_info: Tab | None = None
-    licenses: Tab | None = None
+    main: SidebarTab | None = None
+    general: SubTab | None = None
+    styling: SubTab | None = None
+    webserver: SubTab | None = None
+    email: SubTab | None = None
+    system_info: SubTab | None = None
+    licenses: SubTab | None = None
 
     installed: SortedList[str] = field(default_factory=SortedList)
 
@@ -200,10 +201,10 @@ class TabConfig:
 
 @dataclass
 class _InternalTabConfig:
-    user_settings_top: list[Tab] = field(default_factory=list)
-    user_settings_bottom: list[Tab] = field(default_factory=list)
-    user_management: list[Tab] = field(default_factory=list)
-    server_settings: list[Tab] = field(default_factory=list)
+    user_settings_top: list[SubTab] = field(default_factory=list)
+    user_settings_bottom: list[SubTab] = field(default_factory=list)
+    user_management: list[SubTab] = field(default_factory=list)
+    server_settings: list[SubTab] = field(default_factory=list)
 
 
 @dataclass
@@ -221,8 +222,8 @@ class AsgiConfig:
 
 @dataclass
 class HomepageConfig:
-    nav_tabs: SortedList[NavGroup] = field(default_factory=SortedList)
-    default_nav_tab: NavTab | None = None
+    sidebar_tabs: SortedList[NavGroup] = field(default_factory=SortedList)
+    default_sidebar_tab: SidebarTab | None = None
     # TODO: Implement CSS and JS registration
     local_stylesheets: list[dict] = field(default_factory=list)
     remote_stylesheets: list[dict] = field(default_factory=list)
@@ -234,6 +235,6 @@ class HomepageConfig:
 
 @dataclass
 class _InternalHomepageConfig:
-    user_nav_tabs: list[NavTab] = field(default_factory=list)
-    admin_nav_tabs: list[NavTab] = field(default_factory=list)
-    debug_nav_tabs: list[NavTab] = field(default_factory=list)
+    user_sidebar_tabs: list[SidebarTab] = field(default_factory=list)
+    admin_sidebar_tabs: list[SidebarTab] = field(default_factory=list)
+    debug_sidebar_tabs: list[SidebarTab] = field(default_factory=list)

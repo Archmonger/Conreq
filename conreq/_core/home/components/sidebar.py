@@ -4,7 +4,14 @@ from inspect import iscoroutinefunction
 import idom
 from idom.html import _, div, i, nav
 
-from conreq import HomepageState, NavGroup, NavTab, Viewport, ViewportSelector, config
+from conreq import (
+    HomepageState,
+    NavGroup,
+    SidebarTab,
+    Viewport,
+    ViewportSelector,
+    config,
+)
 from conreq._core.home.components.welcome import welcome
 from conreq.utils.environment import get_debug_mode, get_safe_mode
 from conreq.utils.generic import clean_string
@@ -62,7 +69,7 @@ def sidebar(websocket, state: HomepageState, set_state):
     if not websocket.scope["user"].is_authenticated:
         return None
 
-    nav_tabs = config.homepage.nav_tabs
+    sidebar_tabs = config.homepage.sidebar_tabs
 
     @idom.hooks.use_effect
     async def set_initial_tab():
@@ -71,16 +78,16 @@ def sidebar(websocket, state: HomepageState, set_state):
             return None
 
         # Use the configured default tab, if it exists
-        if config.homepage.default_nav_tab:
-            state._viewport_intent = config.homepage.default_nav_tab.viewport
+        if config.homepage.default_sidebar_tab:
+            state._viewport_intent = config.homepage.default_sidebar_tab.viewport
             set_state(copy(state))
             return None
 
         # Select the top most tab, if it exists
-        for group in nav_tabs:
+        for group in sidebar_tabs:
             if not group.tabs or group in USER_ADMIN_DEBUG:
                 continue
-            tab: NavTab = group.tabs[0]
+            tab: SidebarTab = group.tabs[0]
             state._viewport_intent = tab.viewport
             set_state(copy(state))
             return None
@@ -110,57 +117,57 @@ def sidebar(websocket, state: HomepageState, set_state):
             # pylint: disable=protected-access
             NAVIGATION,  # TODO: Change these keys to be database IDs
             [  # App tabs
-                nav_group(
+                sidebar_group(
                     websocket,
                     state,
                     set_state,
                     group,
                     key=group.name,
                 )
-                for group in nav_tabs
+                for group in sidebar_tabs
                 if group not in USER_ADMIN_DEBUG
             ],
             [  # User tabs
-                nav_group(
+                sidebar_group(
                     websocket,
                     state,
                     set_state,
                     group,
-                    bottom_tabs=config._homepage.user_nav_tabs,
+                    bottom_tabs=config._homepage.user_sidebar_tabs,
                     key=group.name,
                 )
-                for group in nav_tabs
+                for group in sidebar_tabs
                 if group == "User"
             ],
             [  # Admin tabs
-                nav_group(
+                sidebar_group(
                     websocket,
                     state,
                     set_state,
                     group,
-                    bottom_tabs=config._homepage.admin_nav_tabs,
+                    bottom_tabs=config._homepage.admin_sidebar_tabs,
                     key=group.name,
                 )
-                for group in nav_tabs
+                for group in sidebar_tabs
                 if group == "Admin" and websocket.scope["user"].is_staff
             ],
             [  # Debug tabs
-                nav_group(
+                sidebar_group(
                     websocket,
                     state,
                     set_state,
                     group,
-                    top_tabs=config._homepage.debug_nav_tabs,
+                    top_tabs=config._homepage.debug_sidebar_tabs,
                     key=group.name,
                 )
-                for group in nav_tabs
+                for group in sidebar_tabs
                 if group == "Debug" and websocket.scope["user"].is_staff and DEBUG
             ],
         ),
     )
 
 
-def _nav_tab_class(state: HomepageState, tab: NavTab):
+def _sidebar_tab_class(state: HomepageState, tab: SidebarTab):
     if (
         state._viewport_selector is not ViewportSelector._initial
         and tab.viewport
@@ -172,7 +179,7 @@ def _nav_tab_class(state: HomepageState, tab: NavTab):
 
 
 @idom.component
-def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
+def sidebar_tab(websocket, state: HomepageState, set_state, tab: SidebarTab):
     async def on_click(event):
         if tab.on_click:
             if iscoroutinefunction(tab.on_click):
@@ -207,20 +214,20 @@ def nav_tab(websocket, state: HomepageState, set_state, tab: NavTab):
             set_state(copy(state))
 
     return div(
-        _nav_tab_class(state, tab) | {"onClick": on_click},
+        _sidebar_tab_class(state, tab) | {"onClick": on_click},
         div(TAB_NAME, tab.name),
         key=tab.name,
     )
 
 
 @idom.component
-def nav_group(
+def sidebar_group(
     websocket,
     state: HomepageState,
     set_state,
     group: NavGroup,
-    top_tabs: list[NavTab] | None = None,
-    bottom_tabs: list[NavTab] | None = None,
+    top_tabs: list[SidebarTab] | None = None,
+    bottom_tabs: list[SidebarTab] | None = None,
 ):
     _top_tabs = top_tabs or []
     _bottom_tabs = bottom_tabs or []
@@ -253,15 +260,15 @@ def nav_group(
             div(
                 TABS,  # TODO: Change these keys to be database IDs
                 [
-                    nav_tab(websocket, state, set_state, tab, key=tab.name)
+                    sidebar_tab(websocket, state, set_state, tab, key=tab.name)
                     for tab in _top_tabs
                 ],
                 [
-                    nav_tab(websocket, state, set_state, tab, key=tab.name)
+                    sidebar_tab(websocket, state, set_state, tab, key=tab.name)
                     for tab in group.tabs
                 ],
                 [
-                    nav_tab(websocket, state, set_state, tab, key=tab.name)
+                    sidebar_tab(websocket, state, set_state, tab, key=tab.name)
                     for tab in _bottom_tabs
                 ],
             ),

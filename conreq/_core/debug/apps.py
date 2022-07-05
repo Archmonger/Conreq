@@ -43,7 +43,7 @@ class DebugConfig(AppConfig):
             ]
         )
 
-        config.homepage.nav_tabs.add(
+        config.homepage.sidebar_tabs.add(
             NavGroup(name="Debug", icon=i({"className": "fas fa-spider icon-left"}))
         )
         load("components")

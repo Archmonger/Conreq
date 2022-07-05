@@ -17,10 +17,10 @@ class BaseConfig(AppConfig):
         from django_idom import IDOM_WEBSOCKET_PATH
 
         config.asgi.websockets.append(IDOM_WEBSOCKET_PATH)
-        config.homepage.nav_tabs.add(
+        config.homepage.sidebar_tabs.add(
             NavGroup(name="User", icon=i({"className": "fas fa-users icon-left"}))
         )
-        config.homepage.nav_tabs.add(
+        config.homepage.sidebar_tabs.add(
             NavGroup(name="Admin", icon=i({"className": "fas fa-cogs icon-left"}))
         )
         import_module("conreq.config.wrappers.components")

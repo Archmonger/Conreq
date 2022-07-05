@@ -5,7 +5,7 @@ from conreq.types import (
     Icon,
     ModalState,
     NavGroup,
-    NavTab,
+    SidebarTab,
     Seconds,
     TabbedViewportState,
     Viewport,
@@ -25,7 +25,7 @@ __all__ = [
     "Seconds",
     "ModalState",
     "Icon",
-    "NavTab",
+    "SidebarTab",
     "NavGroup",
     "Viewport",
 ]

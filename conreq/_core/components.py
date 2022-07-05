@@ -7,7 +7,7 @@ import idom
 from idom.core.types import VdomDict
 from idom.html import div, li, ul
 
-from conreq.types import HomepageState, Tab, TabbedViewportState
+from conreq.types import HomepageState, SubTab, TabbedViewportState
 
 
 @idom.component
@@ -15,10 +15,10 @@ def tabbed_viewport(
     websocket,
     state: HomepageState,
     set_state,
-    tabs: list[Tab],
-    top_tabs: list[Tab] = None,
-    bottom_tabs: list[Tab] = None,
-    default_tab: Tab = None,
+    tabs: list[SubTab],
+    top_tabs: list[SubTab] = None,
+    bottom_tabs: list[SubTab] = None,
+    default_tab: SubTab = None,
 ) -> VdomDict:
     """Generates a viewport with the provided tabs. Viewport functions should accept
     `websocket, state, set_state` as arguements."""
@@ -53,7 +53,7 @@ def tabbed_viewport(
     )
 
 
-def _default_tab(*tab_groups: list[Tab], default_tab: Callable = None) -> Tab:
+def _default_tab(*tab_groups: list[SubTab], default_tab: Callable = None) -> SubTab:
     return default_tab or next((tabs[0] for tabs in tab_groups if tabs), None)
 
 
@@ -63,7 +63,7 @@ def _tabbed_viewport_tabs(
     set_state,
     tab_state: TabbedViewportState,
     set_tab_state,
-    tabs: list[Tab],
+    tabs: list[SubTab],
 ) -> list[VdomDict]:
     # sourcery skip: assign-if-exp
     if not tabs:
@@ -87,7 +87,7 @@ def _tabbed_viewport_tabs_values(
     set_state,
     tab_state: TabbedViewportState,
     set_tab_state,
-    tab: Tab,
+    tab: SubTab,
 ) -> dict:
     async def on_click(event):
         if tab.on_click:

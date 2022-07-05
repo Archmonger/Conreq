@@ -5,7 +5,7 @@ from conreq.types import (
     AuthLevel,
     Icon,
     NavGroup,
-    NavTab,
+    SidebarTab,
     Viewport,
     ViewportSelector,
     ViewType,
@@ -14,7 +14,7 @@ from conreq.utils.components import view_to_component
 
 
 # TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.
-def nav_tab(
+def sidebar_tab(
     name: str,
     group_name: str,
     group_icon: Icon = None,
@@ -44,13 +44,15 @@ def nav_tab(
         else:
             raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
 
-        if group_name not in config.homepage.nav_tabs:
-            config.homepage.nav_tabs.append(NavGroup(name=group_name, icon=group_icon))
+        if group_name not in config.homepage.sidebar_tabs:
+            config.homepage.sidebar_tabs.append(
+                NavGroup(name=group_name, icon=group_icon)
+            )
 
-        for group in config.homepage.nav_tabs:
+        for group in config.homepage.sidebar_tabs:
             if group_name == group:
                 group.tabs.add(
-                    NavTab(
+                    SidebarTab(
                         name=name,
                         viewport=Viewport(
                             component=component,
@@ -70,17 +72,17 @@ def nav_tab(
     return decorator
 
 
-def nav_group(
+def sidebar_group(
     name: str,
     icon: Icon = None,
 ):
     """Creates a nav group and/or sets the group icon."""
-    for group in config.homepage.nav_tabs:
+    for group in config.homepage.sidebar_tabs:
         if name == group:
             group.icon = icon
             return
 
-    config.homepage.nav_tabs.add(NavGroup(name=name, icon=icon))
+    config.homepage.sidebar_tabs.add(NavGroup(name=name, icon=icon))
 
 
 def css(reverse_path: str, attributes: dict = None, local=True) -> None:

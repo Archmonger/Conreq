@@ -11,7 +11,7 @@ from conreq.types import HomepageState
 def welcome(websocket, state: HomepageState, set_state):
     async def on_click(_):
         # pylint: disable=protected-access
-        state._viewport_intent = config._homepage.admin_nav_tabs[1].viewport
+        state._viewport_intent = config._homepage.admin_sidebar_tabs[1].viewport
         set_state(copy(state))
 
     return html.div(

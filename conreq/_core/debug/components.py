@@ -26,16 +26,18 @@ def api_docs(*_):
 
 
 # pylint: disable=protected-access
-config._homepage.debug_nav_tabs.append(
+config._homepage.debug_sidebar_tabs.append(
     tab_constructor("Performance", performance, padding=False)
 )
-config._homepage.debug_nav_tabs.append(tab_constructor("Health Check", health_check))
-config._homepage.debug_nav_tabs.append(
+config._homepage.debug_sidebar_tabs.append(
+    tab_constructor("Health Check", health_check)
+)
+config._homepage.debug_sidebar_tabs.append(
     tab_constructor("Database", database, padding=False)
 )
-config._homepage.debug_nav_tabs.append(
+config._homepage.debug_sidebar_tabs.append(
     tab_constructor("Code Outline", code_outline, padding=False)
 )
-config._homepage.debug_nav_tabs.append(
+config._homepage.debug_sidebar_tabs.append(
     tab_constructor("API Docs", api_docs, padding=False)
 )

@@ -50,7 +50,7 @@ class Viewport:
 
 
 @dataclass(order=True)
-class NavTab:
+class SidebarTab:
     name: str
     viewport: Viewport | None = None
     on_click: Callable | None = None
@@ -61,7 +61,7 @@ class NavTab:
 
 
 @dataclass(order=True)
-class Tab:
+class SubTab:
     name: str
     component: Callable
     html_class: str = ""
@@ -77,7 +77,7 @@ class Tab:
 class NavGroup:
     name: str
     icon: Icon | None = None
-    tabs: SortedSet[NavTab] = field(default_factory=SortedSet)
+    tabs: SortedSet[SidebarTab] = field(default_factory=SortedSet)
 
     def __eq__(self, __o: object) -> bool:
         return _compare_names(self, __o)
@@ -117,7 +117,7 @@ class HomepageState:
 
 @dataclass
 class TabbedViewportState:
-    current_tab: Tab
+    current_tab: SubTab
 
 
 @dataclass

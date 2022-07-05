@@ -1,6 +1,6 @@
 from typing import Callable
 
-from conreq.types import AuthLevel, NavTab, Viewport, ViewportSelector
+from conreq.types import AuthLevel, SidebarTab, Viewport, ViewportSelector
 
 
 def tab_constructor(
@@ -12,8 +12,8 @@ def tab_constructor(
     selector: str = ViewportSelector.auto,
     auth: str = AuthLevel.user,
     html_class: str = "",
-) -> NavTab:
-    return NavTab(
+) -> SidebarTab:
+    return SidebarTab(
         name=name,
         viewport=Viewport(
             component=component,
