@@ -62,6 +62,7 @@ class Command(BaseCommand):
         if not DEBUG:
             # Collect static files
             call_command("collectstatic", "--link", "--clear", "--noinput", verbosity)
+            # TODO: Swap out django compressor with django-pipeline
             call_command("compress", "--force", verbosity)
 
         # Rotate the secret key if needed
