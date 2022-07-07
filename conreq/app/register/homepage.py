@@ -17,16 +17,16 @@ from conreq.utils.components import view_to_component
 def sidebar_tab(
     name: str,
     group_name: str,
-    group_icon: Icon = None,
-    on_click: Callable = None,  # TODO: document args = websocket, state, set_state, tab
+    group_icon: Icon | None = None,
+    on_click: Callable | None = None,
     html_class: str = "",
     padding: bool = True,
-    selector: ViewportSelector = ViewportSelector.primary,
-    auth: AuthLevel = AuthLevel.user,
-    view_type: ViewType = ViewType.component,
-    url_pattern: str = None,  # For Django only (as of now)
-    url_name: str = None,  # For Django only (as of now)
-    url_regex: bool = False,  # For Django only (as of now)
+    selector: str = ViewportSelector.primary,
+    auth: str = AuthLevel.user,
+    view_type: str = ViewType.component,
+    url_pattern: str | None = None,
+    url_name: str | None = None,
+    url_regex: bool = False,
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked.
     By default, the function decorated will be rendered to the viewport. The `on_click` event
@@ -74,7 +74,7 @@ def sidebar_tab(
 
 def sidebar_group(
     name: str,
-    icon: Icon = None,
+    icon: Icon | None = None,
 ):
     """Creates a nav group and/or sets the group icon."""
     for group in config.homepage.sidebar_tabs:
@@ -85,7 +85,7 @@ def sidebar_group(
     config.homepage.sidebar_tabs.add(NavGroup(name=name, icon=icon))
 
 
-def css(reverse_path: str, attributes: dict = None, local=True) -> None:
+def css(reverse_path: str, attributes: dict | None = None, local=True) -> None:
     if local:
         config.homepage.local_stylesheets.append(
             {"path": reverse_path, "attributes": attributes}
@@ -96,13 +96,15 @@ def css(reverse_path: str, attributes: dict = None, local=True) -> None:
         )
 
 
-def scss(reverse_path: str, attributes: list[tuple] = None):
+def scss(reverse_path: str, attributes: list[tuple] | None = None):
     config.homepage.scss_stylesheets.append(
         {"path": reverse_path, "attributes": attributes}
     )
 
 
-def javascript(reverse_path: str, attributes: list[tuple] = None, local=True) -> None:
+def javascript(
+    reverse_path: str, attributes: list[tuple] | None = None, local=True
+) -> None:
     if local:
         config.homepage.local_scripts.append(
             {"path": reverse_path, "attributes": attributes}
@@ -113,7 +115,7 @@ def javascript(reverse_path: str, attributes: list[tuple] = None, local=True) ->
         )
 
 
-def font(reverse_path: str, attributes: list[tuple] = None, local=True) -> None:
+def font(reverse_path: str, attributes: list[tuple] | None = None, local=True) -> None:
     if local:
         config.homepage.local_stylesheets.append(
             {"path": reverse_path, "attributes": attributes}

@@ -12,7 +12,7 @@ HIDDEN = {"hidden": "hidden"}
 
 
 @idom.component
-def viewport_loading_animation(websocket, state: HomepageState, set_state):
+def viewport_loading_animation(state: HomepageState, set_state):
     # pylint: disable=unused-argument
     return div(
         VIEWPORT_CONTAINER_LOADING
@@ -28,7 +28,7 @@ def viewport_loading_animation(websocket, state: HomepageState, set_state):
 
 
 @idom.component
-def viewport(websocket, state: HomepageState, set_state, viewport_name: str):
+def viewport(state: HomepageState, set_state, viewport_name: str):
     # sourcery skip: assign-if-exp
     this_viewport: Viewport = getattr(state, f"_viewport_{viewport_name}")
     base_attrs = {"className": f"viewport-container {viewport_name}"}
@@ -44,7 +44,7 @@ def viewport(websocket, state: HomepageState, set_state, viewport_name: str):
             this_viewport,
         ),
         ConditionalRender(
-            this_viewport.component(websocket, state, set_state),
+            this_viewport.component(state, set_state),
             state._viewport_selector == viewport_name,
         )
         if getattr(state, f"_viewport_{viewport_name}")

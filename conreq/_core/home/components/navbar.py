@@ -19,7 +19,7 @@ NAVBAR_BRAND = {"className": "navbar-brand ellipsis"}
 
 
 @component
-def navbar(websocket, state: HomepageState, set_state):
+def navbar(state: HomepageState, set_state):
     # pylint: disable=unused-argument
     page_title, set_page_title = hooks.use_state("")
 

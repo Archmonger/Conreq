@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import DeleteView, FormView, UpdateView
 from django_idom import IdomWebsocket
+from idom import component
 from idom.html import script
 
 from conreq import AuthLevel, HomepageState, Viewport, config
@@ -60,9 +61,9 @@ def delete_my_account_success(request):
 
 
 # pylint: disable=protected-access
-def user_settings(websocket, state, set_state):
+@component
+def user_settings(state, set_state):
     return tabbed_viewport(
-        websocket,
         state,
         set_state,
         tabs=config.tabs.user_settings.installed,

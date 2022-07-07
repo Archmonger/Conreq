@@ -15,8 +15,8 @@ BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
 
 
 def authenticated(
-    fallback: Union[ComponentType, VdomDict] = None,
-    auth_level: AuthLevel = AuthLevel.user,
+    fallback: Union[ComponentType, VdomDict] | None = None,
+    auth_level: str = AuthLevel.user,
 ) -> ComponentType:
     """Decorates an IDOM component."""
 
@@ -48,11 +48,11 @@ def authenticated(
 
 # TODO: Use Django resolve and raise an exception if registering something that already exists
 def view_to_component(
-    url_pattern: str = None,
-    name: str = None,
+    url_pattern: str | None = None,
+    name: str | None = None,
     use_regex: bool = False,
-    auth_level: AuthLevel = AuthLevel.user,
-) -> ComponentType:
+    auth_level: str = AuthLevel.user,
+) -> Callable:
     """Converts a Django view function/class into an IDOM component
     by turning it into an idom component in an iframe."""
 

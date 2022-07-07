@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 
 import idom
 from django.urls import reverse_lazy
-from django_idom.hooks import use_websocket
 from idom.html import _, script
 
 from conreq import HomepageState, ViewportSelector
@@ -29,7 +28,6 @@ from conreq.utils.components import authenticated
 )
 def homepage():
     state, set_state = idom.hooks.use_state(HomepageState())
-    websocket = use_websocket()
 
     @idom.hooks.use_effect(dependencies=[state._viewport_intent])
     def set_viewport():
@@ -108,10 +106,10 @@ def homepage():
                     set_state(copy(state))
 
     return _(
-        navbar(websocket, state, set_state),
-        modal(websocket, state, set_state),
-        sidebar(websocket, state, set_state),
-        viewport_loading_animation(websocket, state, set_state),
-        viewport(websocket, state, set_state, ViewportSelector.primary),
-        viewport(websocket, state, set_state, ViewportSelector.secondary),
+        navbar(state, set_state),
+        modal(state, set_state),
+        sidebar(state, set_state),
+        viewport_loading_animation(state, set_state),
+        viewport(state, set_state, ViewportSelector.primary),
+        viewport(state, set_state, ViewportSelector.secondary),
     )

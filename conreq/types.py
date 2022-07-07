@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Callable
+from typing import Any, Callable
 
 from idom.core.types import VdomDict
 from sortedcontainers import SortedSet
@@ -134,3 +134,23 @@ def _compare_names(self, __o):
     if isinstance(__o, str):
         return self.name.lower() == __o.lower()
     return self.name.lower() == __o.name.lower()
+
+
+@dataclass
+class SidebarTabEvent:
+    event: dict
+    tab: SidebarTab
+    websocket: Any
+    homepage_state: HomepageState
+    set_homepage_state: Callable
+
+
+@dataclass
+class SubTabEvent:
+    event: dict
+    tab: SubTab
+    websocket: Any
+    homepage_state: HomepageState
+    set_homepage_state: Callable
+    tabbed_viewport_state: TabbedViewportState
+    set_tabbed_viewport_state: Callable

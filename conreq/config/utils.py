@@ -6,8 +6,7 @@ from conreq.types import AuthLevel, SidebarTab, Viewport, ViewportSelector
 def tab_constructor(
     name: str,
     component: Callable,
-    on_click: Callable
-    | None = None,  # TODO: document args = event, websocket, state, set_state, tab
+    on_click: Callable | None = None,
     padding: bool = True,
     selector: str = ViewportSelector.auto,
     auth: str = AuthLevel.user,

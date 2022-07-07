@@ -25,7 +25,7 @@ bootstrap_modal = idom.web.export(bootstrap, "Modal", allow_children=True)
 
 
 @idom.component
-def modal(websocket, state: HomepageState, set_state):
+def modal(state: HomepageState, set_state):
 
     # Temporarily disable the modal until `module_from_template` is fixed
     if state:
@@ -39,12 +39,12 @@ def modal(websocket, state: HomepageState, set_state):
             **state._modal_state.kwargs,
         },
         *(
-            [state._modal(websocket, state, set_state)]
+            [state._modal(state, set_state)]
             if state._modal
             else [
-                modal_head(websocket, state, set_state),
-                modal_body(websocket, state, set_state),
-                modal_footer(websocket, state, set_state),
+                modal_head(state, set_state),
+                modal_body(state, set_state),
+                modal_footer(state, set_state),
             ]
         ),
         key=f"{state._modal.__module__}.{state._modal.__name__}"
@@ -53,7 +53,7 @@ def modal(websocket, state: HomepageState, set_state):
     )
 
 
-def modal_head(websocket, state: HomepageState, set_state):
+def modal_head(state: HomepageState, set_state):
     # pylint: disable=unused-argument
 
     async def close_modal(_):
@@ -76,7 +76,7 @@ def modal_head(websocket, state: HomepageState, set_state):
     )
 
 
-def modal_body(websocket, state: HomepageState, set_state):
+def modal_body(state: HomepageState, set_state):
     # pylint: disable=unused-argument
     return div(
         MODAL_BODY,
@@ -84,6 +84,6 @@ def modal_body(websocket, state: HomepageState, set_state):
     )
 
 
-def modal_footer(websocket, state: HomepageState, set_state):
+def modal_footer(state: HomepageState, set_state):
     # pylint: disable=unused-argument
     return div(MODAL_FOOTER)

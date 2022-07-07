@@ -55,14 +55,14 @@ def manage_invites(request):
 
 
 @component
-def create_invite(websocket, state, set_state):
+def create_invite(state, set_state):
     return html.div("Under Construction")
 
 
 # pylint: disable=protected-access
-def user_management(websocket, state, set_state):
+@component
+def user_management(state, set_state):
     return tabbed_viewport(
-        websocket,
         state,
         set_state,
         tabs=config.tabs.user_management.installed,

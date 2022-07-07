@@ -2,6 +2,7 @@ from copy import copy
 from inspect import iscoroutinefunction
 
 import idom
+from django_idom.hooks import use_websocket
 from idom.html import _, div, i, nav
 
 from conreq import (
@@ -13,6 +14,7 @@ from conreq import (
     config,
 )
 from conreq._core.home.components.welcome import welcome
+from conreq.types import SidebarTabEvent
 from conreq.utils.environment import get_debug_mode, get_safe_mode
 from conreq.utils.generic import clean_string
 
@@ -65,7 +67,8 @@ USER_ADMIN_DEBUG = ("User", "Admin", "Debug")
 # TODO: Add event history tab. Admin group. Database backed.
 # TODO: Add DB backup, media backup, and clear cache somewhere in the admin group
 @idom.component
-def sidebar(websocket, state: HomepageState, set_state):
+def sidebar(state: HomepageState, set_state):
+    websocket = use_websocket()
     if not websocket.scope["user"].is_authenticated:
         return None
 
@@ -118,7 +121,6 @@ def sidebar(websocket, state: HomepageState, set_state):
             NAVIGATION,  # TODO: Change these keys to be database IDs
             [  # App tabs
                 sidebar_group(
-                    websocket,
                     state,
                     set_state,
                     group,
@@ -129,7 +131,6 @@ def sidebar(websocket, state: HomepageState, set_state):
             ],
             [  # User tabs
                 sidebar_group(
-                    websocket,
                     state,
                     set_state,
                     group,
@@ -141,7 +142,6 @@ def sidebar(websocket, state: HomepageState, set_state):
             ],
             [  # Admin tabs
                 sidebar_group(
-                    websocket,
                     state,
                     set_state,
                     group,
@@ -153,7 +153,6 @@ def sidebar(websocket, state: HomepageState, set_state):
             ],
             [  # Debug tabs
                 sidebar_group(
-                    websocket,
                     state,
                     set_state,
                     group,
@@ -179,25 +178,22 @@ def _sidebar_tab_class(state: HomepageState, tab: SidebarTab):
 
 
 @idom.component
-def sidebar_tab(websocket, state: HomepageState, set_state, tab: SidebarTab):
+def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
+    websocket = use_websocket()
+
     async def on_click(event):
         if tab.on_click:
+            click_event = SidebarTabEvent(
+                event=event,
+                tab=tab,
+                websocket=websocket,
+                homepage_state=state,
+                set_homepage_state=set_state,
+            )
             if iscoroutinefunction(tab.on_click):
-                await tab.on_click(
-                    event,
-                    websocket=websocket,
-                    state=state,
-                    set_state=set_state,
-                    tab=tab,
-                )
+                await tab.on_click(click_event)
             else:
-                tab.on_click(
-                    event,
-                    websocket=websocket,
-                    state=state,
-                    set_state=set_state,
-                    tab=tab,
-                )
+                tab.on_click(click_event)
             return
 
         # Don't reload if clicking the current tab
@@ -222,7 +218,6 @@ def sidebar_tab(websocket, state: HomepageState, set_state, tab: SidebarTab):
 
 @idom.component
 def sidebar_group(
-    websocket,
     state: HomepageState,
     set_state,
     group: NavGroup,
@@ -259,16 +254,13 @@ def sidebar_group(
             div(TABS_INDICATOR),
             div(
                 TABS,  # TODO: Change these keys to be database IDs
+                [sidebar_tab(state, set_state, tab, key=tab.name) for tab in _top_tabs],
                 [
-                    sidebar_tab(websocket, state, set_state, tab, key=tab.name)
-                    for tab in _top_tabs
-                ],
-                [
-                    sidebar_tab(websocket, state, set_state, tab, key=tab.name)
+                    sidebar_tab(state, set_state, tab, key=tab.name)
                     for tab in group.tabs
                 ],
                 [
-                    sidebar_tab(websocket, state, set_state, tab, key=tab.name)
+                    sidebar_tab(state, set_state, tab, key=tab.name)
                     for tab in _bottom_tabs
                 ],
             ),

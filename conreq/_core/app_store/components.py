@@ -18,7 +18,7 @@ class PlaceholderApp:
 
 
 @component
-def app_store(websocket, state, set_state):
+def app_store(state, set_state):
     # pylint: disable=unused-argument
     tab, set_tab = hooks.use_state(None)
     categories, set_categories = hooks.use_state({})

@@ -1,4 +1,4 @@
-from idom import html
+from idom import component, html
 
 from conreq import AuthLevel, config
 from conreq._core.components import tabbed_viewport
@@ -48,18 +48,18 @@ class EmailSettingsView(SingletonUpdateView):
     model = EmailSettings
 
 
-def system_info(websocket, state, set_state):
+def system_info(state, set_state):
     return html.div("Under Construction")
 
 
-def licenses(websocket, state, set_state):
+def licenses(state, set_state):
     return html.div("Under Construction")
 
 
 # pylint: disable=protected-access
-def server_settings(websocket, state, set_state):
+@component
+def server_settings(state, set_state):
     return tabbed_viewport(
-        websocket,
         state,
         set_state,
         tabs=config.tabs.server_settings.installed,
