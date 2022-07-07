@@ -1,6 +1,11 @@
 import platform
 from os.path import relpath
+from uuid import uuid4
+import sys
 
+import channels
+import django
+from django.conf import settings
 from idom import component, html
 
 from conreq import AuthLevel, config
@@ -52,19 +57,31 @@ class EmailSettingsView(SingletonUpdateView):
 
 
 def system_info(state, set_state):
-    from django.conf import settings
+
+    settings_values = [
+        ("Conreq Version", settings.CONREQ_VERSION),
+        ("Configuration File", relpath(settings.DOTENV_FILE)),
+        ("Cache Directory", relpath(settings.CACHES["default"]["LOCATION"])),
+        ("Conreq Log File", relpath(settings.CONREQ_LOG_FILE)),
+        ("Webserver Log File", relpath(settings.ACCESS_LOG_FILE)),
+        ("Database File", relpath(settings.DATABASES["default"]["NAME"])),
+        ("Log Level", settings.LOG_LEVEL),
+        ("Platform", platform.platform()),
+        ("CPU Architecture", platform.machine()),
+        ("System Timezone", settings.TIME_ZONE),
+        ("Django Version", django.get_version()),
+        ("Channels Version", channels.__version__),
+        ("Python Version", platform.python_version()),
+        ("Python Arguments", " ".join(sys.argv)),
+    ]
 
     return html._(
-        html.div(f"Conreq Version: {settings.CONREQ_VERSION}"),
-        html.div(f"Configuration File: {relpath(settings.DOTENV_FILE)}"),
-        html.div(f"Conreq Log File: {relpath(settings.CONREQ_LOG_FILE)}"),
-        html.div(f"Webserver Log File: {relpath(settings.ACCESS_LOG_FILE)}"),
-        html.div(f"Database File: {relpath(settings.DATABASES['default']['NAME'])}"),
-        html.div(f"Cache Directory: {relpath(settings.CACHES['default']['LOCATION'])}"),
-        html.div(f"Platform: {platform.platform()}"),
-        html.div(f"CPU Architecture: {platform.machine()}"),
-        html.div(f"Python Version: {platform.python_version()}"),
-        html.div(f"System Timezone: {settings.TIME_ZONE}"),
+        html.table(
+            [
+                html.tr(html.td(f"{name}"), html.td(f"{value}"), key=uuid4().hex)
+                for name, value in settings_values
+            ]
+        ),
     )
 
 
