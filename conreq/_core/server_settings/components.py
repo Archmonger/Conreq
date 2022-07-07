@@ -1,3 +1,6 @@
+import platform
+from os.path import relpath
+
 from idom import component, html
 
 from conreq import AuthLevel, config
@@ -49,7 +52,20 @@ class EmailSettingsView(SingletonUpdateView):
 
 
 def system_info(state, set_state):
-    return html.div("Under Construction")
+    from django.conf import settings
+
+    return html._(
+        html.div(f"Conreq Version: {settings.CONREQ_VERSION}"),
+        html.div(f"Configuration File: {relpath(settings.DOTENV_FILE)}"),
+        html.div(f"Conreq Log File: {relpath(settings.CONREQ_LOG_FILE)}"),
+        html.div(f"Webserver Log File: {relpath(settings.ACCESS_LOG_FILE)}"),
+        html.div(f"Database File: {relpath(settings.DATABASES['default']['NAME'])}"),
+        html.div(f"Cache Directory: {relpath(settings.CACHES['default']['LOCATION'])}"),
+        html.div(f"Platform: {platform.platform()}"),
+        html.div(f"CPU Architecture: {platform.machine()}"),
+        html.div(f"Python Version: {platform.python_version()}"),
+        html.div(f"System Timezone: {settings.TIME_ZONE}"),
+    )
 
 
 def licenses(state, set_state):
