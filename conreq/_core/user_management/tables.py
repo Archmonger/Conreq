@@ -6,7 +6,7 @@ from conreq._core.sign_up.models import InviteCode
 
 class UsersTable(Table):
     edit = TemplateColumn(
-        template_name="conreq/user_management/edit_btn.html",
+        template_name="conreq/manage_users/edit_btn.html",
         orderable=False,
     )
 
@@ -26,6 +26,11 @@ class UsersTable(Table):
 
 
 class UserInviteTable(Table):
+    lock = TemplateColumn(
+        template_name="conreq/manage_invites/lock_btn.html",
+        orderable=False,
+    )
+
     class Meta:
         model = InviteCode
         template_name = "django_tables2/bootstrap-responsive.html"
@@ -37,5 +42,6 @@ class UserInviteTable(Table):
             "expires_at",
             "used_at",
             "used_by",
+            "lock",
         )
-        order_by = "created_at"
+        order_by = "-created_at"

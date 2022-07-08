@@ -23,6 +23,7 @@ class InviteCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(default=_expiration, null=True)
     used_at = models.DateTimeField(blank=True, null=True)
+    locked = models.BooleanField(default=False)
 
     used_by = models.OneToOneField(
         get_user_model(), on_delete=models.SET_NULL, blank=True, null=True
@@ -39,6 +40,11 @@ class InviteCode(models.Model):
         return self.used_by is not None or self.used_at is not None
 
     @property
+    def is_locked(self):
+        """Checks if the code has been used."""
+        return self.locked
+
+    @property
     def is_valid(self):
-        """Checks if the code is not used and not expired."""
-        return not self.is_expired and not self.is_used
+        """Checks if the code is not used, expired, or locked."""
+        return not self.is_expired and not self.is_used and not self.is_locked

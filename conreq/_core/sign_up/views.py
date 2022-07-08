@@ -19,6 +19,7 @@ def sign_up(request, invite_code=None):
     try:
         code: InviteCode = InviteCode.objects.get(code=invite_code)
         if not code.is_valid:
+            # TODO: This should give a meaningful error message
             return redirect("landing")
     except (InviteCode.DoesNotExist, InviteCode.MultipleObjectsReturned):
         return redirect("landing")
