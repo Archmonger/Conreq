@@ -1,10 +1,13 @@
 .sidebar {
-	z-index: 150;
+	z-index: 200;
 	height: calc(100% - var(--navbar-height));
 	width: var(--sidebar-width);
 	position: absolute;
 	left: 0;
-	background: rgb(255 255 255 / 2%);
+	background: rgb(0 0 0 / 07%);
+	border-color: #ffffff17;
+	border-width: 0 1px 0 0;
+	border-style: solid;
 	overflow-x: hidden;
 	font-family: var(--global-font);
 	font-weight: 400;
@@ -15,6 +18,10 @@
 	color: rgb(156 156 156);
 	-webkit-animation: fade-in 0.5s ease;
 	animation: fade-in 0.5s ease;
+}
+
+.sidebar::-webkit-scrollbar {
+	display: none;
 }
 
 @-webkit-keyframes fade-in {
@@ -177,7 +184,6 @@
 		--sidebar-width: 100%;
 	}
 	.sidebar {
-		z-index: 99;
 		transition: height 0.4s ease-in;
 		background: #1f1f1f;
 	}

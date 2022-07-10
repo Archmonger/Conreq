@@ -1,0 +1,58 @@
+.backdrop-container {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	--backdrop-height: 100vh;
+	opacity: 0.45;
+	-webkit-animation: backdrop-fadein 4s;
+	animation: backdrop-fadein 4s;
+}
+
+.backdrop-container > * {
+	-webkit-mask-image: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 1),
+		rgba(0, 0, 0, 0.35),
+		rgba(0, 0, 0, 0.1),
+		rgba(0, 0, 0, 0)
+	);
+	mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+.backdrop-container > .backdrop {
+	width: 100%;
+	height: var(--backdrop-height);
+	-o-object-fit: cover;
+	object-fit: cover;
+	position: absolute;
+	transition: all 2s ease;
+	z-index: 49;
+}
+
+.backdrop-container > .backdrop-tint {
+	background: black;
+	width: 100%;
+	height: var(--backdrop-height);
+	position: absolute;
+	opacity: 0.25;
+	z-index: 50;
+}
+
+@-webkit-keyframes backdrop-fadein {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0.45;
+	}
+}
+
+@keyframes backdrop-fadein {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0.45;
+	}
+}

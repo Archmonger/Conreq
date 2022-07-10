@@ -4,7 +4,7 @@
 	box-shadow: var(--box-shadow);
 	padding-left: 20px;
 	padding-right: 20px;
-	z-index: 3;
+	z-index: 300;
 	display: none;
 }
 
@@ -40,7 +40,6 @@
 		display: none;
 	}
 	.navbar {
-		z-index: 100;
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: flex-start;

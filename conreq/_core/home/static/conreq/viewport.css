@@ -5,6 +5,7 @@
 	width: calc(100vw - var(--viewport-left));
 	padding: 0 var(--viewport-padding);
 	overflow-y: auto;
+	z-index: 100;
 }
 
 .viewport-container > iframe {
@@ -21,7 +22,6 @@
 	position: absolute;
 	display: inline-flex;
 	background: rgb(0 0 0 / 25%);
-	z-index: 100;
 	visibility: visible;
 	opacity: 1;
 	transition-delay: 0.15s;
@@ -53,7 +53,6 @@
 		display: none;
 	}
 	.viewport-container {
-		z-index: 4;
 		width: 100vw;
 		left: 0px;
 	}

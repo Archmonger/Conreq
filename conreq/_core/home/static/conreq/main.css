@@ -7,6 +7,7 @@
 	--box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
 		0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 	--accent-color: #258a6d;
+	--blur-filter: blur(20px);
 	/* Sidebar */
 	--sidebar-width: 240px;
 	--navigation-btn-padding: 13px 15px;
@@ -87,7 +88,7 @@ a:hover {
 }
 
 .spinner-border {
-	z-index: 999;
+	z-index: 400;
 	margin: auto;
 	color: var(--accent-color);
 }
@@ -98,10 +99,11 @@ a:hover {
 	border-width: 0.68em;
 }
 
-.sidebar::-webkit-scrollbar {
-	display: none;
-}
-
 .homepage {
 	height: 100%;
+}
+
+.blur {
+	-webkit-backdrop-filter: var(--blur-filter);
+	backdrop-filter: var(--blur-filter);
 }

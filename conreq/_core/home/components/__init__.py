@@ -11,6 +11,7 @@ from conreq._core.home.components.modal import modal
 from conreq._core.home.components.navbar import navbar
 from conreq._core.home.components.sidebar import sidebar
 from conreq._core.home.components.viewport import viewport, viewport_loading_animation
+from conreq._core.home.components.backdrop import backdrop
 from conreq.types import Seconds
 from conreq.utils.components import authenticated
 
@@ -112,4 +113,5 @@ def homepage():
         viewport_loading_animation(state, set_state),
         viewport(state, set_state, ViewportSelector.primary),
         viewport(state, set_state, ViewportSelector.secondary),
+        backdrop(state, set_state),
     )

@@ -18,25 +18,26 @@ a:focus {
 }
 
 .form-control {
-	background: rgb(255 255 255 / 0.08);
-	border: none;
+	background: rgb(20 20 20);
 	color: rgb(255 255 255 / 0.75);
 	transition: none;
+	border-color: #ffffff3b;
 }
 
 .form-control:disabled,
 .form-control[readonly] {
-	background: rgb(255 255 255 / 0.08);
+	background: rgb(20 20 20);
+	border-color: #ffffff3b;
 	color: rgb(255 255 255 / 0.35);
 }
 
 .custom-select {
-	background: rgb(255 255 255 / 0.08)
+	background: rgb(20 20 20)
 		url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23ffffff' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
 		no-repeat right 0.75rem center;
 	background-size: 8px 10px;
 	color: rgb(255 255 255 / 0.75);
-	border: none;
+	border-color: #ffffff3b;
 }
 
 .custom-select:focus {
@@ -49,11 +50,11 @@ a:focus {
 
 .custom-file-label {
 	background: transparent;
-	border: none;
+	border-color: #ffffff3b;
 }
 
 .input-group-text {
 	background: rgba(255, 255, 255, 0.15);
 	color: #fff;
-	border: none;
+	border-color: #ffffff3b;
 }

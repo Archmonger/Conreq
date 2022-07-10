@@ -38,8 +38,6 @@ def app_store(state, set_state):
     # TODO: Update app store entries every first load
     return _(
         django_css("conreq/app_store.css"),
-        django_css("conreq/buttons.css"),
-        django_css("conreq/scrollbar.css"),
         tab(key=tab.__name__)
         if tab
         else div(

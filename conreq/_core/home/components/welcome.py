@@ -17,7 +17,6 @@ def welcome(state: HomepageState, set_state):
     return html.div(
         {"className": "welcome"},
         django_css("conreq/welcome.css"),
-        django_css("conreq/buttons.css"),
         html.h1("Welcome to Conreq"),
         html.p("Looks like you don't have any custom tabs yet."),
         html.p("Head over to the App Store and install some!"),
@@ -26,5 +25,4 @@ def welcome(state: HomepageState, set_state):
             "Go to App Store ",
             html.i({"className": "fas fa-arrow-right"}),
         ),
-        html.div({"id": "spinner-container"}, html.div({"id": "spinner"})),
     )
