@@ -10,6 +10,9 @@ from conreq.types import HomepageState
 def backdrop(state: HomepageState, set_state):
     # TODO: Jump between two images tags for rotating images
 
+    default_backdrop, set_default_backdrop = hooks.use_state(
+        f"conreq/backdrop ({randint(1, 200)}).jpg"
+    )
     backdrop_selector, set_backdrop_selector = hooks.use_state(1)
     prev_backdrop, set_prev_backdrop = hooks.use_state(None)
 
@@ -30,14 +33,14 @@ def backdrop(state: HomepageState, set_state):
         html.img(
             {
                 "className": f"backdrop {'opacity-0' if backdrop_selector != 1 else ''}",
-                "src": static(f"conreq/backdrop ({randint(1, 210)}).jpg"),
+                "src": static(default_backdrop),
                 "loading": "lazy",
             }
-        ),
+        )
         # html.img(
         #     {
         #         "className": f"backdrop {'opacity-0' if backdrop_selector == 2 else ''}",
-        #         "src": static(f"conreq/backdrop ({bg_num}).jpg"),
+        #         "src": prev_backdrop,
         #         "loading": "lazy",
         #     }
         # ),
