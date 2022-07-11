@@ -1,11 +1,14 @@
 .navbar {
-	background: rgba(255, 255, 255, 0.04);
+	background: rgb(0 0 0 / 07%);
 	height: var(--navbar-height);
 	box-shadow: var(--box-shadow);
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
 	z-index: 300;
 	display: none;
+	border-color: #ffffff17;
+	border-width: 0 0 1px 0;
+	border-style: solid;
 }
 
 .navbar-dark .navbar-brand {

@@ -1,4 +1,5 @@
 from channels.db import database_sync_to_async
+from django_idom.components import django_js
 from idom import component, hooks
 from idom.html import button, div, script, span
 
@@ -7,7 +8,7 @@ from conreq._core.server_settings.models import GeneralSettings
 
 # pylint: disable=protected-access
 
-NAVBAR = {"className": "navbar navbar-expand-md navbar-dark"}
+NAVBAR = {"className": "navbar navbar-expand-md navbar-dark blur"}
 NAVBAR_TOGGLER = {
     "className": "navbar-toggler",
     "type": "button",
@@ -21,6 +22,7 @@ NAVBAR_BRAND = {"className": "navbar-brand ellipsis"}
 @component
 def navbar(state: HomepageState, set_state):
     # pylint: disable=unused-argument
+    # TODO: Add script tag for toggling sidebar
     page_title, set_page_title = hooks.use_state("")
 
     @hooks.use_effect(dependencies=[state])
@@ -38,6 +40,7 @@ def navbar(state: HomepageState, set_state):
             span(NAVBAR_TOGGLER_ICON),
         ),
         div(NAVBAR_BRAND),  # TODO: Add logo support
+        django_js("conreq/navbar.js"),
         script(f"if('{page_title}'){{document.title = '{page_title}'}}"),
     )
 
