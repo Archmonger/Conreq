@@ -18,19 +18,22 @@ def import_module(
     except ModuleNotFoundError as err:
         if not fail_silently:
             raise ImportError(f"{dotted_path} doesn't exist!") from err
-        return None
 
 
-def load(module: str, fail_silently: bool = False) -> ModuleType:
+def load(module: str, fail_silently: bool = False) -> ModuleType | None:
     """
     Imports a module relative to the caller's parent module and returns
     the module reference. Raise ImportError if the import failed.
     """
     # pylint: disable=unused-variable
-    stack = inspect.stack()[1]
-    full_module_path = inspect.getmodule(stack[0]).__name__
-    parent_module, current_module = full_module_path.rsplit(".", 1)
-    return import_module(".".join([parent_module, module]), fail_silently)
+    try:
+        stack = inspect.stack()[1]
+        full_module_path = inspect.getmodule(stack[0]).__name__
+        parent_module, current_module = full_module_path.rsplit(".", 1)
+        return import_module(".".join([parent_module, module]), fail_silently)
+    except Exception as err:
+        if not fail_silently:
+            raise ImportError(f"{module} doesn't exist!") from err
 
 
 def find_modules(folder_path: str | Path, prefix: str = "") -> list[str]:
