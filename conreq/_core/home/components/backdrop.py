@@ -1,7 +1,7 @@
 from random import randint
 
 from django.templatetags.static import static
-from idom import component, html, hooks
+from idom import component, hooks, html
 
 from conreq.types import HomepageState
 

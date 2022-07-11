@@ -1,7 +1,7 @@
 import platform
+import sys
 from os.path import relpath
 from uuid import uuid4
-import sys
 
 import channels
 import django

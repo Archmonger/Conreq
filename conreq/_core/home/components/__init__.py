@@ -7,11 +7,11 @@ from django.urls import reverse_lazy
 from idom.html import _, script
 
 from conreq import HomepageState, ViewportSelector
+from conreq._core.home.components.backdrop import backdrop
 from conreq._core.home.components.modal import modal
 from conreq._core.home.components.navbar import navbar
 from conreq._core.home.components.sidebar import sidebar
 from conreq._core.home.components.viewport import viewport, viewport_loading_animation
-from conreq._core.home.components.backdrop import backdrop
 from conreq.types import Seconds
 from conreq.utils.components import authenticated
 

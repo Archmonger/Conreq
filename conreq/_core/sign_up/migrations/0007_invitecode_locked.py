@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sign_up', '0006_rename_username_invitecode_name'),
+        ("sign_up", "0006_rename_username_invitecode_name"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='invitecode',
-            name='locked',
+            model_name="invitecode",
+            name="locked",
             field=models.BooleanField(default=False),
         ),
     ]
