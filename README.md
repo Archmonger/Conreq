@@ -7,11 +7,13 @@
 
 ## Notice - July 11th, 2022
 
-Conreq is currently undergoing a architectural shift. The biggest change will be the addditional of an app store for adding/removing features to Conreq.
+Conreq is currently undergoing an architectural shift. The biggest change will be the addditional of an app store for adding/removing features to Conreq.
 
 Included in the box will only be basic features such as user authentication/management. Features such as content requesting will be installable as apps.
 
 As such, in the future Conreq will be designated as a web app platform.
+
+See the [app store PR](https://github.com/Archmonger/Conreq/pull/69) for more details.
 
 ---
 
