@@ -5,7 +5,15 @@
 [![Docker Hub](https://img.shields.io/badge/Open%20On-DockerHub-blue?style=flat-square)](https://hub.docker.com/r/roxedus/conreq)
 [![Discord](https://img.shields.io/discord/440067432552595457?style=flat-square&label=Discord&logo=discord)](https://discord.gg/gQhGZzEjmX "Chat with the community and get realtime support!")
 
-Conreq, a content requesting platform.
+## Notice - July 11th, 2022
+
+Conreq is currently undergoing a architectural shift. The biggest change will be the addditional of an app store for adding/removing features to Conreq.
+
+Included in the box will only be basic features such as user authentication/management. Features such as content requesting will be installable as apps.
+
+As such, in the future Conreq will be designated as a web app platform.
+
+---
 
 Want to join the community or have a question? Join us on [Discord](https://discord.gg/gQhGZzEjmX), discuss on [GitHub Discussions](https://github.com/Archmonger/Conreq/discussions), or see our planned features and roadmap on [GitHub Projects](https://github.com/Archmonger/Conreq/projects)!
 
