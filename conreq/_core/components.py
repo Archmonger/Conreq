@@ -26,7 +26,8 @@ def tabbed_viewport(
             _default_tab(top_tabs, tabs, bottom_tabs, default_tab=default_tab)
         )
     )
-    websocket = use_websocket()
+    # FIXME: use_websocket does not work here
+    websocket = True or use_websocket()
     html_class = tab_state.current_tab.html_class
 
     return div(
