@@ -7,6 +7,8 @@
 	opacity: 0.45;
 	-webkit-animation: backdrop-fadein 4s;
 	animation: backdrop-fadein 4s;
+	-webkit-filter: brightness(40%);
+	filter: brightness(40%);
 }
 
 .backdrop-container > * {

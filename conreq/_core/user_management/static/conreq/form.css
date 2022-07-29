@@ -58,3 +58,7 @@ a:focus {
 	color: #fff;
 	border-color: #ffffff3b;
 }
+
+.text-muted {
+	text-shadow: 0 0 2px #000000;
+}
