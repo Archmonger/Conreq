@@ -5,14 +5,14 @@ from logging.config import dictConfig as logging_config
 from multiprocessing import Process
 
 import django
+import uvicorn
+from uvicorn.config import LOGGING_CONFIG as UVICORN_LOGGING_CONFIG
 from django.conf import settings
 from django.core.cache import cache
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.core.management.utils import get_random_secret_key
 from huey.contrib.djhuey import db_task
-from hypercorn.config import Config as HypercornConfig
-from hypercorn.run import run as run_hypercorn
 
 from conreq.utils.backup import backup_needed, backup_now
 from conreq.utils.environment import get_debug_mode, get_env, set_env
@@ -25,9 +25,13 @@ class Command(BaseCommand):
     help = "Runs all commands needed to safely start Conreq."
 
     def handle(self, *args, **options):
-        host = get_env("WEBSERVER_HOST", "0.0.0.0")
-        port = get_env("WEBSERVER_PORT", "7575")
-        bind = options["bind"] or f"{host}:{port}"
+        # pylint: disable=attribute-defined-outside-init
+        self.bind = (
+            options["bind"]
+            or f"{get_env('HOST_IP', '0.0.0.0')}:{get_env('HOST_PORT', '7575')}"
+        )
+        self.host = self.bind.split(":")[0]
+        self.port = int(self.bind.split(":")[1])
         verbosity = "-v 1" if DEBUG else "-v 0"
 
         # Run any preconfiguration tasks
@@ -78,36 +82,36 @@ class Command(BaseCommand):
 
         # Run the production webserver
         if not DEBUG:
-            self._run_webserver(bind)
+            self._run_webserver()
 
         # Run the development webserver
         if DEBUG:
-            call_command("runserver", bind)
+            call_command("runserver", self.bind)
 
-    @staticmethod
-    def _run_webserver(bind):
-        # pylint: disable=import-outside-toplevel, invalid-name
+    def _run_webserver(self):
+        # pylint: disable=import-outside-toplevel
         from conreq._core.server_settings.models import WebserverSettings
 
-        # TODO: Switch to Uvicorn when this is resolved
-        # https://github.com/encode/uvicorn/issues/342
-        config = HypercornConfig()
-        config.bind = bind
-        config.websocket_ping_interval = 20
-        config.workers = settings.WEBSERVER_WORKERS
-        config.application_path = "conreq.asgi:application"
-        config.accesslog = settings.ACCESS_LOG_FILE
-        config.debug = get_env("WEBSERVER_DEBUG", return_type=bool)
-        config.include_server_header = False
-        x: WebserverSettings = WebserverSettings.get_solo()
-        if x.ssl_certificate and x.ssl_key:
-            config.certfile = x.ssl_certificate.path
-            config.keyfile = x.ssl_key.path
-            if x.ssl_ca_certificate:
-                config.ca_certs = x.ssl_ca_certificate.path
+        # TODO: Add in Uvicorn's reverse proxy stuff
+        db_conf: WebserverSettings = WebserverSettings.get_solo()
+        config_kwargs = {
+            "ssl_certfile": self._f_path(db_conf.ssl_certificate),
+            "ssl_keyfile": self._f_path(db_conf.ssl_key),
+            "ssl_ca_certs": self._f_path(db_conf.ssl_ca_certificate),
+        }
 
         # Run the webserver
-        run_hypercorn(config)
+        debug = get_env("WEBSERVER_DEBUG", return_type=bool)
+        uvicorn.run(
+            "conreq.asgi:application",
+            host=self.host,
+            port=self.port,
+            workers=settings.WEBSERVER_WORKERS,
+            log_config=UVICORN_LOGGING_CONFIG if debug else {"version": 1},
+            debug=debug,
+            server_header=False,
+            **config_kwargs,
+        )
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -168,6 +172,11 @@ class Command(BaseCommand):
                 return
             with contextlib.suppress(OSError):
                 os.kill(pid, signal.SIGTERM)
+
+    @staticmethod
+    def _f_path(model_obj):
+        if model_obj:
+            return model_obj.path
 
 
 @db_task()

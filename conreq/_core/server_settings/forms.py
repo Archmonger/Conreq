@@ -22,18 +22,6 @@ from conreq.utils.environment import get_home_url
 
 
 class GeneralSettingsForm(EnvFormMixin, ModelForm):
-    base_url = EnvCharField(
-        env_name="BASE_URL",
-        label="Base URL",
-        help_text='Appears in all links. A value of "base-url" will result in example.com/base-url.',
-    )
-    home_url = EnvCharField(
-        env_name="HOME_URL",
-        label="Home URL",
-        initial=get_home_url(False, False),
-        required=True,
-        help_text='Appears in homepage links. A value of "home-url" will result in example.com/base-url/home-url.',
-    )
     debug_mode = EnvBooleanField(
         env_name="DEBUG_MODE",
         initial=settings.DEBUG,
@@ -49,8 +37,6 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
         fields = (
             "server_name",
             "server_description",
-            "base_url",
-            "home_url",
             "public_url",
             "app_store_url",
         )
@@ -100,6 +86,18 @@ class ReferrerPolicy(TextChoices):
 # TODO: Set these initial values based on settings.py
 class WebserverSettingsForm(EnvFormMixin, ModelForm):
     # Remember to change the default in settings.py if you change these defaults
+    base_url = EnvCharField(
+        env_name="BASE_URL",
+        label="Base URL",
+        help_text='Appears in all links. A value of "base-url" will result in example.com/base-url.',
+    )
+    home_url = EnvCharField(
+        env_name="HOME_URL",
+        label="Home URL",
+        initial=get_home_url(False, False),
+        required=True,
+        help_text='Appears in homepage links. A value of "home-url" will result in example.com/base-url/home-url.',
+    )
     session_max_age = EnvIntegerField(
         env_name="SESSION_COOKIE_AGE",
         initial=settings.SESSION_COOKIE_AGE,
@@ -113,12 +111,20 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
         required=True,
         help_text="The HTTP referrer policy to apply.",
     )
-    allowed_domains = EnvCharField(
+    allowed_hosts = EnvCharField(
         env_name="ALLOWED_HOSTS",
         initial=", ".join(settings.ALLOWED_HOSTS),
         required=True,
         help_text="Comma separated list of IPs or domains the webserver is allowed to \
             serve (ex. example.com, 127.0.0.1). Wildcards (*) are allowed within the URLs.",
+    )
+    allowed_forwarding_ips = EnvCharField(
+        env_name="ALLOWED_FORWARDING_IPS",
+        label="Allowed forwarding IPs",
+        initial=", ".join(settings.ALLOWED_FORWARDING_IPS),
+        required=False,
+        help_text="Comma separated list of IPs to trust with reverse proxy headers \
+            (ex. 192.168.86.25, 10.0.0.51).",
     )
     csrf_trusted_origins = EnvCharField(
         env_name="CSRF_TRUSTED_ORIGINS",
@@ -134,14 +140,14 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
         help_text="Invalidates user sessions upon every server restart.",
     )
     host_ip = EnvCharField(
-        env_name="WEBSERVER_HOST",
+        env_name="HOST_IP",
         label="Host IP",
         initial="0.0.0.0",
         required=True,
-        help_text="Networking address to bind to. For all hosts, use 0.0.0.0.",
+        help_text="Networking address to bind to. For all hosts, use 0.0.0.0",
     )
     host_port = EnvIntegerField(
-        env_name="WEBSERVER_PORT",
+        env_name="HOST_PORT",
         initial=7575,
         max_value=65535,
         required=True,
@@ -161,17 +167,20 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
     class Meta:
         model = WebserverSettings
         fields = [
+            "base_url",
+            "home_url",
             "host_ip",
             "host_port",
             "session_max_age",
             "rotate_secret_key",
             "secure_referrer_policy",
-            "allowed_domains",
+            "allowed_hosts",
+            "allowed_forwarding_ips",
             "csrf_trusted_origins",
             "worker_processes",
-            "ssl_ca_certificate",
             "ssl_certificate",
             "ssl_key",
+            "ssl_ca_certificate",
             "webserver_debug",
         ]
 

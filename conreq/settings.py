@@ -191,6 +191,9 @@ DEFAULT_HOSTS = ["*", "localhost", "127.0.0.1", "[::1]"]
 ALLOWED_HOSTS = [
     host.strip() for host in get_env("ALLOWED_HOSTS", "").split(",") if host
 ]
+ALLOWED_FORWARDING_IPS = [
+    addr.strip() for addr in get_env("ALLOWED_FOWARDING_IPS", "").split(",") if addr
+]
 if not ALLOWED_HOSTS:
     ALLOWED_HOSTS = DEFAULT_HOSTS
 if get_env("CSRF_TRUSTED_ORIGINS", ""):
@@ -377,7 +380,7 @@ CACHES = {
     }
 }
 BACKUP_KEEP_MAX = 20
-BACKUP_DATE_FORMAT = "%Y-%m-%d@%H%M"
+BACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M"
 BACKUP_COMPRESSION = "xz"
 
 

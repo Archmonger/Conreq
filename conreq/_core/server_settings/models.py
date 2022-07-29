@@ -31,7 +31,7 @@ class GeneralSettings(SingletonModel):
     )
     app_store_url = HostnameOrURLField(
         blank=True,
-        verbose_name="Custom app store URL",
+        verbose_name="App store URL",
         help_text="Set this to override the default app store.",
     )
 
