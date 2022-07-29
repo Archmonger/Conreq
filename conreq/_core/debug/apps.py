@@ -14,7 +14,7 @@ DEBUG = get_debug_mode()
 class DebugConfig(AppConfig):
     name = "conreq._core.debug"
 
-    def ready(self) -> None:
+    def ready(self):
         if not DEBUG:
             return
 

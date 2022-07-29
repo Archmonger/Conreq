@@ -9,3 +9,4 @@ class SignUpConfig(AppConfig):
 
     def ready(self):
         load("views")
+        load("components")
