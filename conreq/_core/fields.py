@@ -1,3 +1,5 @@
+import contextlib
+
 from django.db.models import FileField, OneToOneField, URLField
 from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor
 from django.db.transaction import atomic
@@ -92,7 +94,11 @@ class RestrictedFileField(FileField):
     """
 
     def __init__(
-        self, *args, content_types: list[str] = None, max_upload_size: int = 0, **kwargs
+        self,
+        *args,
+        content_types: list[str] | None = None,
+        max_upload_size: int = 0,
+        **kwargs,
     ):
         self.content_types = content_types
         self.max_upload_size = max_upload_size
@@ -102,7 +108,7 @@ class RestrictedFileField(FileField):
         data = super().clean(*args, **kwargs)
         file = data.file
 
-        try:
+        with contextlib.suppress(AttributeError):
             if self.content_types and file.content_type not in self.content_types:
                 raise ValidationError(
                     gettext_lazy("Filetype not supported. Allowed filetypes: %s")
@@ -114,9 +120,6 @@ class RestrictedFileField(FileField):
                     gettext_lazy("File size %s is larger than the maximum %s.")
                     % (filesizeformat(file._size), filesizeformat(self.max_upload_size))
                 )
-        except AttributeError:
-            pass
-
         return data
 
 

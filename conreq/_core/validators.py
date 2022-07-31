@@ -26,7 +26,7 @@ class HostnameOrURLValidator(URLValidator):
         r"\.?"  # may have a trailing dot
     )
 
-    host_re = "(" + hostname_re + domain_re + tld_re + "|localhost)"
+    host_re = f"({hostname_re}{domain_re}{tld_re}|localhost)"
 
     regex = _lazy_re_compile(
         r"^(?:[a-z0-9.+-]*)://"  # scheme is validated separately
@@ -43,5 +43,5 @@ def url_or_relative_url_validator(value):
     if value.startswith("/"):
         # We transform a relative url into a fictitious absolute url
         # so we could use built-in url validator.
-        value = "http://example.com" + value
+        value = f"http://example.com{value}"
     return URLValidator()(value)

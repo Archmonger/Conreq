@@ -6,13 +6,13 @@ from multiprocessing import Process
 
 import django
 import uvicorn
-from uvicorn.config import LOGGING_CONFIG as UVICORN_LOGGING_CONFIG
 from django.conf import settings
 from django.core.cache import cache
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.core.management.utils import get_random_secret_key
 from huey.contrib.djhuey import db_task
+from uvicorn.config import LOGGING_CONFIG as UVICORN_LOGGING_CONFIG
 
 from conreq.utils.backup import backup_needed, backup_now
 from conreq.utils.environment import get_debug_mode, get_env, set_env
