@@ -5,8 +5,6 @@ from django.db import connection
 from huey import crontab
 from huey.contrib.djhuey import db_periodic_task
 
-from conreq import Seconds
-from conreq.utils.backup import backup_needed, backup_now
 from conreq.utils.environment import get_database_engine
 
 DB_ENGINE = get_database_engine()
@@ -42,10 +40,3 @@ if DB_ENGINE == "SQLITE3":
         """Periodically performs any cleanup tasks needed for the default database."""
         with connection.cursor() as cursor:
             cursor.execute("VACUUM")
-
-
-@db_periodic_task(Seconds.day)
-def backup_check():
-    """Backup the database when needed."""
-    if backup_needed():
-        backup_now()

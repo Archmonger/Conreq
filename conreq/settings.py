@@ -111,7 +111,7 @@ COMPRESS_FILTERS = {
 HUEY_FILENAME = DATABASE_DIR / "background_tasks.sqlite3"
 HUEY = {
     "name": "huey",  # DB table name
-    "huey_class": "conreq._core.background_tasks.SqliteHuey",  # Huey implementation to use
+    "huey_class": "conreq._core.database.SqliteHuey",  # Huey implementation to use
     "filename": HUEY_FILENAME,  # Sqlite filename
     "immediate": False,  # If True, run tasks synchronously
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
@@ -289,8 +289,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "conreq._core.api",
     "conreq._core.app_store",
+    "conreq._core.backup",
     "conreq._core.base",
-    "conreq._core.background_tasks",
+    "conreq._core.database",
     "conreq._core.debug",
     "conreq._core.email",
     "conreq._core.initialization",

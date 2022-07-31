@@ -7,7 +7,7 @@ from huey import crontab as _crontab
 from huey.api import PeriodicTask, TaskWrapper
 from huey.storage import SqliteStorage
 
-from conreq._core.background_tasks.consumer import FasterConsumer
+from conreq._core.database.consumer import FasterConsumer
 
 # Ensure strict Huey crontabs
 crontab = partial(_crontab, strict=True)
