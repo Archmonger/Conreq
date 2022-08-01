@@ -26,29 +26,6 @@ from channels.sessions import SessionMiddlewareStack  # noqa: E402
 from conreq import config  # noqa: E402
 
 
-class LifespanApp:
-    # pylint: disable=too-few-public-methods
-    """
-    Temporary shim for https://github.com/django/channels/issues/1216
-    Needed so that hypercorn doesn't display an error.
-    """
-
-    def __init__(self, scope):
-        self.scope = scope
-
-    async def __call__(self, receive, send):
-        if self.scope["type"] != "lifespan":
-            return
-
-        while True:
-            message = await receive()
-            if message["type"] == "lifespan.startup":
-                await send({"type": "lifespan.startup.complete"})
-            elif message["type"] == "lifespan.shutdown":
-                await send({"type": "lifespan.shutdown.complete"})
-                return
-
-
 application = ProtocolTypeRouter(
     {
         # ASGI app has concurrency problems, see
@@ -59,6 +36,5 @@ application = ProtocolTypeRouter(
                 AuthMiddlewareStack(URLRouter(config.asgi.websockets))
             )
         ),
-        "lifespan": LifespanApp,
     }
 )
