@@ -34,9 +34,7 @@ def _parse_env_value(value: Any, default_value: Any, return_type: Callable) -> A
             return default_value
     if return_type in {list, dict} and isinstance(value, str):
         return json.loads(value)
-    if not isinstance(value, return_type):
-        return return_type(value)
-    return value
+    return value if isinstance(value, return_type) else return_type(value)
 
 
 def get_env(
@@ -137,10 +135,7 @@ def get_database_engine() -> str:
     if _DB_ENGINE is None:
         _DB_ENGINE = get_env("DB_ENGINE", "").upper()
 
-    if _DB_ENGINE in {"MYSQL"}:
-        return _DB_ENGINE
-
-    return "SQLITE3"
+    return _DB_ENGINE if _DB_ENGINE in {"MYSQL"} else "SQLITE3"
 
 
 def set_env(name: str, value: Any, sys_env=False, dot_env=True) -> Tuple[str, str]:
