@@ -1,14 +1,18 @@
+:root {
+	--backdrop-opacity: 0.3;
+}
+
 .backdrop-container {
 	position: absolute;
 	left: 0px;
 	top: 0px;
 	width: 100%;
 	--backdrop-height: 100vh;
-	opacity: 0.45;
+	opacity: var(--backdrop-opacity);
 	-webkit-animation: backdrop-fadein 4s;
 	animation: backdrop-fadein 4s;
-	-webkit-filter: brightness(40%);
-	filter: brightness(40%);
+	-webkit-filter: brightness(60%);
+	filter: brightness(60%);
 }
 
 .backdrop-container > * {
@@ -46,7 +50,7 @@
 		opacity: 0;
 	}
 	to {
-		opacity: 0.45;
+		opacity: var(--backdrop-opacity);
 	}
 }
 
@@ -55,6 +59,6 @@
 		opacity: 0;
 	}
 	to {
-		opacity: 0.45;
+		opacity: var(--backdrop-opacity);
 	}
 }
