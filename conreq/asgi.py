@@ -25,7 +25,6 @@ from channels.sessions import SessionMiddlewareStack  # noqa: E402
 
 from conreq import config  # noqa: E402
 
-
 application = ProtocolTypeRouter(
     {
         # ASGI app has concurrency problems, see
