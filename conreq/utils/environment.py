@@ -157,7 +157,7 @@ def delete_env(name: str, sys_env=False, dot_env=True) -> None:
         dotenv.unset_key(dotenv_path(), name.upper())
 
 
-def _str_to_bool(val):
+def _str_to_bool(val: str):
     """Convert a string representation of truth to true (1) or false (0).
 
     True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values
@@ -165,8 +165,8 @@ def _str_to_bool(val):
     'val' is anything else.
     """
     val = val.lower()
-    if val in ("y", "yes", "t", "true", "on", "1"):
+    if val in {"y", "yes", "t", "true", "on", "1"}:
         return True
-    if val in ("n", "no", "f", "false", "off", "0"):
+    if val in {"n", "no", "f", "false", "off", "0"}:
         return False
     raise ValueError(f"invalid truth value {val}")
