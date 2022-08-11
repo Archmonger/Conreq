@@ -1,6 +1,7 @@
 import json
 import os
-from typing import Any, Callable, Tuple
+from pathlib import Path
+from typing import Any, Callable, Tuple, Type
 
 import dotenv
 from dotenv import dotenv_values
@@ -15,7 +16,7 @@ if ENV_PREFIX:
     ENV_PREFIX += "_"
 
 
-def dotenv_path() -> str:
+def dotenv_path() -> Path:
     """Load the .env path from a different context to avoid circular imports."""
     # pylint: disable=import-outside-toplevel
     from conreq.settings import DOTENV_FILE
@@ -23,7 +24,7 @@ def dotenv_path() -> str:
     return DOTENV_FILE
 
 
-def _parse_env_value(value: Any, default_value: Any, return_type: Callable) -> Any:
+def _parse_env_value(value: Any, default_value: Any, return_type: Type) -> Any:
     """Returns a value based on the return type."""
     if not value:
         return default_value
