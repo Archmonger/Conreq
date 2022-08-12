@@ -116,7 +116,7 @@ HUEY = {
     "immediate": False,  # If True, run tasks synchronously
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
     "consumer": {
-        "workers": 20,
+        "workers": WEBSERVER_WORKERS * 5,  # TODO: Add setting to configure this
     },
 }
 IDOM_BASE_URL = f"{get_base_url()[1:]}idom/"
