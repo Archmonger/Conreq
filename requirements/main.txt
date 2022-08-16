@@ -23,7 +23,7 @@ pyarr==3.1.1
 pymysql==1.0.2
 python-dotenv==0.20.0
 strsim==0.0.3
-titlecase==2.3
+titlecase==2.4
 tmdbsimple==2.9.1
 Twisted[tls,http2]==22.4.0
 tzlocal==4.2
