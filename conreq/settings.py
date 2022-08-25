@@ -134,9 +134,11 @@ LOGGING_INITIAL = {
     "disable_existing_loggers": False,
     "formatters": {
         "default": {
+            "class": "conreq.utils.logging.SensitiveFormatter",
             "format": "%(asctime)s %(levelname)s %(name)s: %(message)s",
         },
         "minimal": {
+            "class": "conreq.utils.logging.SensitiveFormatter",
             "format": "%(levelname)s %(name)s: %(message)s",
         },
     },
@@ -440,9 +442,7 @@ sys.path.append(str(PACKAGES_DIR))
 if not get_safe_mode():
     user_apps = find_apps()
     INSTALLED_APPS += user_apps
-    _logger.info(
-        "Starting Conreq with the following apps:\n+ " + "\n+ ".join(user_apps)
-    )
+    _logger.info("Booting with the following apps:\n+ " + "\n+ ".join(user_apps))
 
 # Run startup.py
 packages = find_packages()
