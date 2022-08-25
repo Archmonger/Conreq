@@ -30,8 +30,6 @@ from conreq.utils.environment import (
 )
 from conreq.utils.packages import find_packages
 
-_logger = logging.getLogger(__name__)
-
 # Project Directories
 ROOT_DIR = Path(__file__).resolve().parent.parent
 INTERNAL_DIR = ROOT_DIR / "conreq" / "internal"
@@ -127,6 +125,7 @@ JAZZMIN_SETTINGS = {"custom_css": "conreq/jazzmin.css"}
 
 
 # Logging
+_logger = logging.getLogger(__name__)
 CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
 ACCESS_LOG_FILE = LOG_DIR / "access.log"
 LOG_LEVEL = get_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
@@ -435,9 +434,15 @@ EMAIL_SUBJECT_PREFIX = ""
 # Add packages folder to Python's path
 sys.path.append(str(PACKAGES_DEV_DIR))
 sys.path.append(str(PACKAGES_DIR))
-if not get_safe_mode():
-    INSTALLED_APPS += find_apps()
 
+
+# Install user apps
+if not get_safe_mode():
+    user_apps = find_apps()
+    INSTALLED_APPS += user_apps
+    _logger.info(
+        "Starting Conreq with the following apps:\n+ " + "\n+ ".join(user_apps)
+    )
 
 # Run startup.py
 packages = find_packages()

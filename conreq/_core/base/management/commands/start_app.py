@@ -10,10 +10,10 @@ class Command(TemplateCommand):
     help = "Creates a Conreq app structure within a package."
 
     # pylint: disable=arguments-differ
-    def handle(self, app_name: str, **options: dict):
-        package_name = options.get("package") or input("Package Name: ").replace(
-            " ", "_"
-        )
+    def handle(self, app_name: str, **options):
+        package_name = options.get("package") or input(
+            "Name of the package this app will belong to: "
+        ).replace(" ", "_")
 
         name = app_name
         app_or_project = "app"

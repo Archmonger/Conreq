@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 import sqlite3
@@ -7,6 +8,8 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from conreq.utils.environment import get_database_engine, get_debug_mode
+
+_logger = logging.getLogger(__name__)
 
 DEBUG = get_debug_mode()
 ROOT_DIR = getattr(settings, "ROOT_DIR")
@@ -18,7 +21,7 @@ HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 def vprint(message, verbosity):
     if verbosity != 0:
-        print(message)
+        _logger.info(message)
 
 
 class Command(BaseCommand):
@@ -32,8 +35,6 @@ class Command(BaseCommand):
         gid = options["gid"]
         no_perms = options["no_perms"]
         verbosity = options["verbosity"]
-
-        vprint("Preconfiguring Conreq...", verbosity)
 
         # Delete temp files
         if TEMP_DIR.exists():
@@ -83,25 +84,24 @@ class Command(BaseCommand):
 
     @staticmethod
     def setup_sqlite_database(path, name, uid, gid, no_perms, verbosity):
-        vprint(name.rstrip(" ") + " Database", verbosity)
+        vprint("Preconfiguring " + name.rstrip(" ") + " Database", verbosity)
         if not path.exists():
-            vprint("> Creating database", verbosity)
+            vprint("[X] Creating database", verbosity)
         with sqlite3.connect(path) as cursor:
-            vprint("> Vacuuming database", verbosity)
+            vprint("[X] Vacuuming database", verbosity)
             cursor.execute("VACUUM;")
-            vprint("> Configuring database", verbosity)
+            vprint("[X] Configuring database", verbosity)
             cursor.execute("PRAGMA journal_mode = WAL;")
         if not no_perms and (uid != -1 or gid != -1) and sys.platform == "linux":
             # pylint: disable=no-member
-            print("> Applying permissions")
+            print("[X] Applying permissions")
             new_uid = uid or os.getuid()
             new_gid = gid or os.getgid()
             os.chown(path, new_uid, new_gid)
-        vprint("> Complete", verbosity)
 
     @staticmethod
     def recursive_chown(path, uid, gid, verbosity):
-        vprint('Recursively applying permissions to "' + path + '"', verbosity)
+        vprint('[X] Recursively applying permissions to "' + path + '"', verbosity)
         new_uid = uid if uid != -1 else None
         new_gid = gid if gid != -1 else None
         if uid != -1 or gid != -1:
