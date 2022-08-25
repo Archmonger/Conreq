@@ -4,5 +4,8 @@ URL endpoint registration for {{ verbose_name }}.
 See more information in the Conreq URL docs.
 """
 from django.shortcuts import render
+from django.views import View
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from conreq.app.register.http import url
+from conreq.app.register.http import api, url

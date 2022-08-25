@@ -14,6 +14,8 @@ from conreq.utils.environment import get_base_url, get_home_url
 BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
 HOME_URL = get_home_url(prepend_slash=False)
 
+
+api_urls = []
 conreq_urls = [
     path("", include("conreq._core.pwa.urls")),
     path("", views.landing, name="landing"),
@@ -26,6 +28,7 @@ conreq_urls = [
         ),
         name="media",
     ),
+    path("api/", include(api_urls)),
     path("sign-in/", views.sign_in, name="sign_in"),
     path("sign-up/", include("conreq._core.sign_up.urls")),
     path("sign-out/", auth_views.logout_then_login, name="sign_out"),

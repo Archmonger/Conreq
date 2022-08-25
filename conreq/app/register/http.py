@@ -1,66 +1,55 @@
-from functools import wraps
-from typing import Any, Callable, Union
-
 from django.urls import path, re_path
-from django.views.generic import View
 
 # TODO: Use Django resolve and raise an exception if registering something that already exists
+# TODO: Implement WSGI middleware register function, probably not here though
+# TODO: Have app API for conreq._core.api.permissions.HasAPIKey
 # pylint: disable=import-outside-toplevel
 
 
 def url(
     url_pattern: str,
-    name: str = None,
+    name: str | None = None,
     use_regex: bool = False,
-) -> Union[Callable, View]:
+):
     """Decorates a Django view function or view class."""
 
-    def decorator(new_path: Any):
+    def decorator(view):
         from conreq.urls import conreq_urls
-        from conreq.utils.profiling import profiled_view
 
-        view = profiled_view(new_path)
-
-        if use_regex:
-            conreq_urls.append(re_path(url_pattern, view, name=name))
-        else:
-            conreq_urls.append(path(url_pattern, view, name=name))
-
-        @wraps(view)
-        def _wrapped_view(*args, **kwargs):
-            return _wrapped_view(*args, **kwargs)
-
-    return decorator
-
-
-def api(
-    url_pattern: str,
-    version: int,
-    use_regex: bool = False,
-) -> View:
-    """Decorates a DRF view function or view class."""
-
-    def decorator(new_path: Any):
-        from conreq.urls import conreq_urls
-        from conreq.utils.profiling import profiled_view
-
-        view = profiled_view(new_path)
-
-        if use_regex:
-            conreq_urls.append(re_path(f"v{version}/{url_pattern}", view))
-        else:
-            conreq_urls.append(path(f"v{version}/{url_pattern}", view))
+        _register_view(view, url_pattern, conreq_urls, name, use_regex)
 
         return view
 
     return decorator
 
 
-def middleware(
-    dotted_path: str,
-    positioning_elements: list[str] = None,
-    positioning: str = "before",
-    reverse: bool = False,
-) -> None:
-    """Shortcut to add WSGI middleware to Django."""
-    # TODO: Implement WSGI middleware
+def api(
+    url_pattern: str,
+    version: int = 1,
+    name: str | None = None,
+    use_regex: bool = False,
+):
+    """Decorates a DRF view function or view class."""
+
+    def decorator(view):
+        from conreq.urls import api_urls
+
+        _register_view(view, f"v{version}/{url_pattern}", api_urls, name, use_regex)
+
+        return view
+
+    return decorator
+
+
+def _register_view(view, url_pattern, url_patterns, name, use_regex):
+    registered_view = view.as_view() if hasattr(view, "as_view") else view
+    dotted_path = f"{view.__module__}.{view.__name__}".replace("<", "").replace(">", "")
+
+    if use_regex:
+        url_patterns.append(
+            re_path(url_pattern, registered_view, name=name or dotted_path)
+        )
+    else:
+        url_patterns.append(
+            path(url_pattern, registered_view, name=name or dotted_path)
+        )

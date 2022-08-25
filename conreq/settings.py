@@ -226,12 +226,12 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
-SPECTACULAR_SETTINGS = {  # Use built-in Swagger UI
+SPECTACULAR_SETTINGS = {  # Use Swagger UI for API endpoints
     "TITLE": "Conreq API Endpoints",
     "DESCRIPTION": "Outline for all endpoints available within this Conreq instance.",
     "VERSION": CONREQ_VERSION,
     "CONTACT": {
-        "name": "Conreq Team",
+        "name": "Conreq's Developer",
         "email": "archiethemonger@gmail.com",
     },
     "LICENSE": {"name": "GPL-3.0 License"},
