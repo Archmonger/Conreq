@@ -47,6 +47,7 @@ class Viewport:
     page_title: str | None = None
     expires: bool = True
     timestamp: datetime = field(default_factory=datetime.now)
+    background: str | None = None  # TODO: Implement this
 
 
 @dataclass(order=True)
