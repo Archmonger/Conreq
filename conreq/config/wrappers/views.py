@@ -1,20 +1,25 @@
 from inspect import iscoroutinefunction
 
 from channels.db import database_sync_to_async as convert_to_async
-from django.views import View
 
 from conreq import config
 
 # pylint: disable=import-outside-toplevel
-# TODO: All the default views in _core will need to be made async, after more broad Django async support.
+# TODO: All the default views in core will need to be made async, after more broad Django async support.
 # Specifically, Django support for async decorators, template rendering, and ORM queries.
 
 
 async def render_view(view, request, *args, **kwargs):
-    if isinstance(view, View):
+    # Async Class View
+    if hasattr(view, "view_is_async"):
+        return await view.as_view()(request, *args, **kwargs)
+    # Sync Class View
+    if hasattr(view, "as_view"):
         return await convert_to_async(view.as_view())(request, *args, **kwargs)
+    # Async Function View
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)
+    # Sync Function View
     return await convert_to_async(view)(request, *args, **kwargs)
 
 
