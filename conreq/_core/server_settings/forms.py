@@ -39,9 +39,8 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
         env_name="SAFE_MODE",
         help_text="Disables all installed apps.",
     )
-    log_level = EnvChoiceField(
+    logging_level = EnvChoiceField(
         env_name="LOG_LEVEL",
-        help_text="Disables all installed apps.",
         initial=settings.LOG_LEVEL,
         choices=LogLevelChoices.choices,
     )
@@ -53,7 +52,7 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
             "server_description",
             "public_url",
             "app_store_url",
-            "log_level",
+            "logging_level",
         )
 
     def __init__(self, *args, **kwargs):
