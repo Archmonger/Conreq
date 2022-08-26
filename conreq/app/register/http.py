@@ -1,6 +1,5 @@
 from django.urls import path, re_path
 
-# TODO: Use Django resolve and raise an exception if registering something that already exists
 # TODO: Implement WSGI middleware register function, probably not here though
 # TODO: Have app API for conreq._core.api.permissions.HasAPIKey
 # pylint: disable=import-outside-toplevel
