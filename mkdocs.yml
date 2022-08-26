@@ -2,11 +2,11 @@
 nav:
     - Home: index.md
     - Install:
-          Operating System:
-              - Unraid: install/unraid.md
-              - Windows: install/windows.md
-              - Linux 🚧: install/linux.md
-              - MacOS 🚧: placeholder.md
+          - Operating System:
+                - Unraid: install/unraid.md
+                - Windows: install/windows.md
+                - Linux 🚧: install/linux.md
+                - MacOS 🚧: placeholder.md
     - User's Guide:
           - Installing Apps 🚧: users/install_apps.md
           - Configuring Conreq:

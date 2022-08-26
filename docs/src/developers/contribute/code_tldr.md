@@ -2,6 +2,10 @@ This guide is intended to help individuals gain an understanding of how Conreq w
 
 ---
 
+## Major Dependencies
+
+XYZ
+
 ## Repository File Structure
 
 | Path | Description |
