@@ -1,0 +1,7 @@
+.md-footer__inner {
+	display: none;
+}
+
+.md-typeset :is(.admonition, details) {
+	margin: 0.55em 0;
+}

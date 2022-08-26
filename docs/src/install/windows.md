@@ -1,17 +1,18 @@
-These instructions configure Non-Sucking Service Manager (NSSM) to automatically start Conreq as a Windows service.
+???+ Summary
 
-A traditional Windows installer is targeted for development within our roadmap, but is currently not available.
+    These instructions configure Non-Sucking Service Manager (NSSM) to automatically start Conreq as a Windows service.
+
+    A traditional Windows installer is targeted for development within our roadmap, but is currently not available.
 
 ---
 
 ## Software Required
 
--   Install [Python 3.9+](https://www.python.org/downloads/)
-    -   Make sure to select "Add Python 3.x to PATH" during installation.
-    -   Easiest if this is the only version of python on your computer
-    -   Steps below will not work with NSSM if using the "Windows App Store" version of Python.
--   Install [Visual Studio C++](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Within this installer, navigate to _C++ Build Tools_. Select _MSVC_ and _Windows 10 SDK_)
--   Download [NSSM](https://nssm.cc/download)
+??? warning "Warning for Windows users"
+
+    Steps below will not work with NSSM if using the "Windows App Store" version of Python.
+
+{% include-markdown "../../includes/requirements.md" start="<!-- conreq -->" end="<!-- conreq-end -->" trailing-newlines=false %}
 
 ## Installation
 
