@@ -21,6 +21,14 @@ from conreq._core.server_settings.models import (
 from conreq.utils.environment import get_home_url
 
 
+class LogLevelChoices(TextChoices):
+    DEBUG = "DEBUG"
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+    CRITICAL = "CRITICAL"
+
+
 class GeneralSettingsForm(EnvFormMixin, ModelForm):
     debug_mode = EnvBooleanField(
         env_name="DEBUG_MODE",
@@ -31,6 +39,12 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
         env_name="SAFE_MODE",
         help_text="Disables all installed apps.",
     )
+    log_level = EnvChoiceField(
+        env_name="LOG_LEVEL",
+        help_text="Disables all installed apps.",
+        initial=settings.LOG_LEVEL,
+        choices=LogLevelChoices.choices,
+    )
 
     class Meta:
         model = GeneralSettings
@@ -39,6 +53,7 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
             "server_description",
             "public_url",
             "app_store_url",
+            "log_level",
         )
 
     def __init__(self, *args, **kwargs):
