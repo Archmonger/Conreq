@@ -159,22 +159,15 @@ LOGGING_INITIAL = {
         },
     },
     "loggers": {
-        "django": {
-            "level": LOG_LEVEL,
-        },
-        "hypercorn": {
-            "level": LOG_LEVEL,
-        },
-        "conreq": {
-            "level": LOG_LEVEL,
-        },
-        "huey": {
-            "level": LOG_LEVEL,
-        },
+        "django": {},
+        "hypercorn": {},
+        "conreq": {},
+        "huey": {},
     },
 }
 for logger_name in LOGGING_INITIAL["loggers"]:
     LOGGING_INITIAL["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
+    LOGGING_INITIAL["loggers"][logger_name]["level"] = LOG_LEVEL
 if DEBUG and os.environ.get("RUN_MAIN", None) != "true":
     # Hack to avoid duplicate logging messages in DEBUG mode
     LOGGING = {"version": 1}
