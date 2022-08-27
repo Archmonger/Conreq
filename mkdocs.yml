@@ -50,7 +50,7 @@ nav:
                 - Creating "Hello World": developers/apps/hello_world.md
           - Contributing:
                 - Conreq Source Code Explained: developers/contribute/code_tldr.md
-                - Updating Conreq Source Code: develoeprs/contribute/source.md
+                - Updating Conreq Source Code: developers/contribute/source.md
                 - Updating Conreq Docs: developers/contribute/docs.md
                 - Listing an App: developers/contribute/apps.md
     - Changelog: changelog/index.md

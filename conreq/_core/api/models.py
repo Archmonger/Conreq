@@ -8,6 +8,6 @@ from rest_framework.authtoken.models import Token
 def create_auth_token(
     sender, instance=None, created=False, **kwargs
 ):  # pylint: disable=unused-argument
-    # Create the token if it doesn't exist
+    # Create an API AuthToken if it doesn't exist
     if not hasattr(instance, "auth_token"):
         Token.objects.create(user=instance)

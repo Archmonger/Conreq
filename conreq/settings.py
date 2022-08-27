@@ -214,15 +214,17 @@ SECURE_BROWSER_XSS_FILTER = True
 # API Settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.TokenAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "conreq._core.api.permissions.HasAPIKey",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+if DEBUG:
+    REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"].append(
+        "conreq._core.api.authentication.CsrfExemptSessionAuthentication",
+    )
 SPECTACULAR_SETTINGS = {  # Use Swagger UI for API endpoints
     "TITLE": "Conreq API Endpoints",
     "DESCRIPTION": "Outline for all endpoints available within this Conreq instance.",

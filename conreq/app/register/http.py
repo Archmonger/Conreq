@@ -31,9 +31,9 @@ def api(
     """Decorates a DRF view function or view class."""
 
     def decorator(view):
-        from conreq.urls import api_urls
+        from conreq._core.api.urls import urlpatterns
 
-        _register_view(view, f"v{version}/{url_pattern}", api_urls, name, use_regex)
+        _register_view(view, f"v{version}/{url_pattern}", urlpatterns, name, use_regex)
 
         return view
 
