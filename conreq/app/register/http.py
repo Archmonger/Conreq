@@ -40,6 +40,11 @@ def api(
     return decorator
 
 
+def csrf_origin(url: str):
+    # TODO:  Implement this later
+    return None
+
+
 def _register_view(view, url_pattern, url_patterns, name, use_regex):
     registered_view = view.as_view() if hasattr(view, "as_view") else view
     dotted_path = f"{view.__module__}.{view.__name__}".replace("<", "").replace(">", "")

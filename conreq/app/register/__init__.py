@@ -1,21 +1,21 @@
 from conreq.app.register import (
-    component,
+    components,
     homepage,
     http,
     startup,
     tabs,
-    template,
-    view,
+    templates,
+    views,
     websockets,
 )
 
 __all__ = [
     "websockets",
-    "component",
+    "components",
     "homepage",
     "startup",
     "tabs",
-    "template",
-    "view",
+    "templates",
+    "views",
     "http",
 ]

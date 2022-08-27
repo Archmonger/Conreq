@@ -7,6 +7,7 @@ from conreq._core.initialization.models import Initialization
 INITIALIZED = False
 
 
+# TODO: Have an "IMPORT BACKUP" button that will import a backup file, if one exists.
 def initialize(request):
     # pylint: disable=global-statement
     # Check cached value if we've already initialized

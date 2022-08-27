@@ -2,33 +2,58 @@
 nav:
     - Home: index.md
     - Install:
-          - Operating System:
-                - Unraid: install/unraid.md
-                - Windows: install/windows.md
-                - Linux 🚧: install/linux.md
-                - MacOS 🚧: placeholder.md
+          - Unraid: install/unraid.md
+          - Windows: install/windows.md
+          - Linux: install/linux.md
+          - MacOS: install/macos.md
+          - FreeBSD: install/freebsd.md
     - User's Guide:
-          - Installing Apps 🚧: users/install_apps.md
+          - Getting Started: users/getting_started.md
+          - Installing Apps: users/install_apps.md
+          - Reverse Proxy: users/reverse_proxy.md
+          - Optimizations: users/optimizations.md
           - Configuring Conreq:
                 - Server Settings Interface: users/configure/server_settings.md
                 - Settings Config File: users/configure/env_vars.md
-                - Custom CSS/JS 🚧: users/configure/static_files.md
+                - Custom CSS/JS: users/configure/static_files.md
     - Developer's Guide:
           - Setup a Conreq Enviroment:
                 - 1. Install Requirements: developers/setup/requirements.md
                 - 2. Run Conreq from Source: developers/setup/run.md
-          - Programmer's Interface:
-                - Command Line Interface 🚧: developers/interface/cli.md
-                - Python Interface 🚧: developers/interface/python.md
+          - Command Line Interface: developers/interface/cli.md
+          - Python Interface:
+                - Front-End:
+                      - components: developers/interface/python/components.md
+                      - views: developers/interface/python/views.md
+                - Database & Forms:
+                      - forms: developers/interface/python/forms.md
+                      - fields: developers/interface/python/fields.md
+                      - models: developers/interface/python/models.md
+                      - validators: developers/interface/python/validators.md
+                      - widgets: developers/interface/python/widgets.md
+                - Startup Registration:
+                      - backup: developers/interface/python/register/backup.md
+                      - components: developers/interface/python/register/components.md
+                      - homepage: developers/interface/python/register/homepage.md
+                      - http: developers/interface/python/register/http.md
+                      - notifications: developers/interface/python/register/notifications.md
+                      - startup: developers/interface/python/register/startup.md
+                      - tabs: developers/interface/python/register/tabs.md
+                      - templates: developers/interface/python/register/templates.md
+                      - views: developers/interface/python/register/views.md
+                      - websockets: developers/interface/python/register/websockets.md
+                - Services:
+                      - email: developers/interface/python/services/email.md
           - Creating Your First App:
-                - Getting Started 🚧: developers/apps/getting_started.md
-                - App File Structure 🚧: developers/apps/file_structure.md
-                - Creating "Hello World" 🚧: developers/apps/hello_world.md
+                - Getting Started: developers/apps/getting_started.md
+                - App File Structure: developers/apps/file_structure.md
+                - Creating "Hello World": developers/apps/hello_world.md
           - Contributing:
-                - Conreq Source Code Explained 🚧: developers/contribute/code_tldr.md
-                - Updating Conreq Source Code 🚧: placeholder.md
+                - Conreq Source Code Explained: developers/contribute/code_tldr.md
+                - Updating Conreq Source Code: develoeprs/contribute/source.md
                 - Updating Conreq Docs: developers/contribute/docs.md
-                - Listing an App 🚧: developers/contribute/apps.md
+                - Listing an App: developers/contribute/apps.md
+    - Changelog: changelog/index.md
 
 theme:
     name: material

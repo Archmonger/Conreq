@@ -171,7 +171,7 @@ class WebserverSettingsForm(EnvFormMixin, ModelForm):
         env_name="WEBSERVER_WORKERS",
         initial=settings.WEBSERVER_WORKERS,
         required=True,
-        help_text="Number of separate worker processes for the webserver to use. <b>Each worker uses additional memory.</b>",
+        help_text="Number of separate worker processes for the webserver to use. <b>Each worker uses approximately 80MB additional memory.</b>",
     )
     webserver_debug = EnvBooleanField(
         env_name="WEBSERVER_DEBUG",

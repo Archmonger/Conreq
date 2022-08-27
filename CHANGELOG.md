@@ -2,11 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-<!--attr-start-->
+<!-- attr -->
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-<!--attr-end-->
+<!-- attr-end -->
 
 <!--
 Using the following categories, list your changes in this order:
@@ -18,7 +18,7 @@ Using the following categories, list your changes in this order:
     - "Security" in case of vulnerabilities.
  -->
 
-<!--changelog-start-->
+<!-- changelog -->
 
 ## [Unreleased]
 
@@ -32,3 +32,5 @@ Using the following categories, list your changes in this order:
 
 [unreleased]: https://github.com/Archmonger/Conreq/compare/0.100.0...HEAD
 [0.100.0]: https://github.com/Archmonger/Conreq/releases/tag/0.100.0
+
+<!-- changelog-end -->
