@@ -176,9 +176,11 @@ LOGGING_INITIAL = {
 for logger_name in LOGGING_INITIAL["loggers"]:
     LOGGING_INITIAL["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
 if DEBUG and os.environ.get("RUN_MAIN", None) != "true":
+    # Hack to avoid duplicate logging messages in DEBUG mode
     LOGGING = {"version": 1}
 else:
     LOGGING = LOGGING_INITIAL
+    del LOGGING_INITIAL
 logging_config(LOGGING)
 
 

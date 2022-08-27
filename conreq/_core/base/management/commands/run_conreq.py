@@ -152,7 +152,7 @@ class Command(BaseCommand):
     @staticmethod
     def start_huey():
         """Starts the Huey background task manager."""
-        logging_initial = getattr(settings, "LOGGING_INITIAL")
+        logging_initial = getattr(settings, "LOGGING")
         logging_config(logging_initial)
         django.setup()
         if DEBUG:
