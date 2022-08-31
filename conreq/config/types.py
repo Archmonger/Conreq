@@ -18,6 +18,7 @@ class StartupConfig:
     setting_scripts: set[str] = field(default_factory=set)
     # TODO: Implement pre_run scripts
     pre_run: set[Callable] = field(default_factory=set)
+    processes: set[Callable] = field(default_factory=set)
 
 
 @dataclass

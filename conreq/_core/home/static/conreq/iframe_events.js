@@ -1,3 +1,5 @@
+// TODO: Delete this file after view_to_component is fleshed out
+
 window.document.addEventListener(
 	"reload-page",
 	async function (event) {

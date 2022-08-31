@@ -26,3 +26,16 @@ def setting_script(dotted_path: str) -> None:
 def installed_app(dotted_path: str) -> None:
     """Shortcut to add an installed app to Django."""
     # TODO: Add apps to conreq.config.INSTALLED_APPS with positional awareness
+
+
+def process(func: Callable) -> None:
+    """Decorates any function that needs to be run as a separate process during startup."""
+    config.startup.processes.add(func)
+
+
+def http_middleware(dotted_path: str) -> None:
+    """Shortcut to add an installed HTTP middleware to Django."""
+
+
+def asgi_middleware(dotted_path: str) -> None:
+    """Shortcut to add an installed ASGI middleware to Django."""
