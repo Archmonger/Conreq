@@ -1,9 +1,12 @@
 {
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
+    "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": true,
     "python.linting.pylintArgs": [],
+    "python.linting.mypyEnabled": true,
+    "python.analysis.typeCheckingMode": "off",
     "python.languageServer": "Pylance",
     "python.formatting.provider": "black",
     "python.sortImports.args": [
@@ -46,6 +49,5 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
     },
-    "html.format.endWithNewline": true,
     "files.insertFinalNewline": true
 }

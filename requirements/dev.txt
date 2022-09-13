@@ -5,3 +5,4 @@ pylint
 pylint_django
 rope
 twine
+django-stubs[compatible-mypy]
