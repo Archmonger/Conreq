@@ -2,7 +2,9 @@ black
 flake8
 flake8-django
 pylint
-pylint_django
+pylint-django
 rope
 twine
 django-stubs[compatible-mypy]
+types-requests
+types-tzlocal
