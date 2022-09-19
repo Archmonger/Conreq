@@ -23,27 +23,28 @@ nav:
           - Command Line Interface: developers/interface/cli.md
           - Python Interface:
                 - Front-End:
-                      - components: developers/interface/python/components.md
-                      - views: developers/interface/python/views.md
+                      - Components: developers/interface/python/components.md
+                      - Views: developers/interface/python/views.md
                 - Database & Forms:
-                      - forms: developers/interface/python/forms.md
-                      - fields: developers/interface/python/fields.md
-                      - models: developers/interface/python/models.md
-                      - validators: developers/interface/python/validators.md
-                      - widgets: developers/interface/python/widgets.md
+                      - Forms: developers/interface/python/forms.md
+                      - Fields: developers/interface/python/fields.md
+                      - Models: developers/interface/python/models.md
+                      - Validators: developers/interface/python/validators.md
+                      - Widgets: developers/interface/python/widgets.md
                 - Startup Registration:
-                      - backup: developers/interface/python/register/backup.md
-                      - components: developers/interface/python/register/components.md
-                      - homepage: developers/interface/python/register/homepage.md
-                      - http: developers/interface/python/register/http.md
-                      - notifications: developers/interface/python/register/notifications.md
-                      - startup: developers/interface/python/register/startup.md
-                      - tabs: developers/interface/python/register/tabs.md
-                      - templates: developers/interface/python/register/templates.md
-                      - views: developers/interface/python/register/views.md
-                      - websockets: developers/interface/python/register/websockets.md
+                      - Backup: developers/interface/python/register/backup.md
+                      - Components: developers/interface/python/register/components.md
+                      - Homepage: developers/interface/python/register/homepage.md
+                      - Http: developers/interface/python/register/http.md
+                      - Notifications: developers/interface/python/register/notifications.md
+                      - Startup: developers/interface/python/register/startup.md
+                      - Tabs: developers/interface/python/register/tabs.md
+                      - Templates: developers/interface/python/register/templates.md
+                      - Views: developers/interface/python/register/views.md
+                      - Websockets: developers/interface/python/register/websockets.md
                 - Services:
-                      - email: developers/interface/python/services/email.md
+                      - Email: developers/interface/python/services/email.md
+                - Background Tasks: developers/interface/python/processing/tasks.md
           - Creating Your First App:
                 - Getting Started: developers/apps/getting_started.md
                 - App File Structure: developers/apps/file_structure.md
@@ -53,6 +54,7 @@ nav:
                 - Updating Conreq Source Code: developers/contribute/source.md
                 - Updating Conreq Docs: developers/contribute/docs.md
                 - Listing an App: developers/contribute/apps.md
+          - Deployment Tips: developers/deploy_tips.md
     - Changelog: changelog/index.md
 
 theme:
@@ -76,7 +78,6 @@ theme:
         - navigation.instant
         - navigation.tracking
         - navigation.tabs
-        - toc.integrate
         - navigation.top
     icon:
         repo: fontawesome/brands/github
