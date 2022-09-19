@@ -5,3 +5,23 @@
 .md-typeset :is(.admonition, details) {
 	margin: 0.55em 0;
 }
+
+@media only screen and (min-width: 1220px) {
+	.md-content {
+		background: rgb(0 0 0 / 07%);
+		border: solid 1px #ffffff17;
+		box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+			0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+		-webkit-backdrop-filter: blur(20px);
+		backdrop-filter: blur(20px);
+	}
+
+	[data-md-color-scheme="default"] .md-content {
+		background: rgb(0 0 0 / 04%);
+		border: solid 1px rgb(0 0 0 / 14%);
+	}
+
+	.md-tabs {
+		border-radius: 0 0 10px 10px;
+	}
+}
