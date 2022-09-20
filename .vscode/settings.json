@@ -5,8 +5,7 @@
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": true,
     "python.linting.pylintArgs": [],
-    "python.linting.mypyEnabled": true,
-    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.typeCheckingMode": "basic",
     "python.languageServer": "Pylance",
     "python.formatting.provider": "black",
     "python.sortImports.args": [
