@@ -10,9 +10,12 @@ class DependencyConflict(Exception):
 def find_py_dependencies(ignore_conflicts: bool = False) -> set[str]:
     """Returns a set of all Python dependencies required by this Conreq instance."""
     with open("requirements.txt", encoding="utf-8") as req_file:
-        all_python_reqs = set()
+        all_python_reqs: set[str] = set()
         for req in requirements.parse(req_file):
             req_string = req.name or req.uri
+            if not req_string:
+                continue
+
             if req.specs:
                 req_string += ",".join(
                     [(operator + version) for operator, version in req.specs],

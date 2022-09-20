@@ -15,8 +15,8 @@ crontab.__doc__ = _crontab.__doc__
 huey.crontab = crontab
 
 # The time a task last ran
-seconds_tasks_last_run = {}
-crontab_tasks_last_run = {}
+seconds_tasks_last_run: dict[str, float] = {}
+crontab_tasks_last_run: dict[str, float] = {}
 
 
 def seconds_validator(crontab_or_seconds):

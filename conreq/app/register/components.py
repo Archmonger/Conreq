@@ -1,7 +1,7 @@
 from conreq import config
 
 
-def manage_users() -> None:
+def manage_users():
     """Changes the manage users component."""
 
     def decorator(func):
@@ -11,7 +11,7 @@ def manage_users() -> None:
     return decorator
 
 
-def user_invites() -> None:
+def user_invites():
     """Changes the manage users component."""
 
     def decorator(func):
@@ -21,7 +21,7 @@ def user_invites() -> None:
     return decorator
 
 
-def server_settings() -> None:
+def server_settings():
     """Changes the server settings component."""
 
     def decorator(func):
@@ -31,7 +31,7 @@ def server_settings() -> None:
     return decorator
 
 
-def user_settings() -> None:
+def user_settings():
     """Changes the user settings component."""
 
     def decorator(func):
@@ -41,7 +41,7 @@ def user_settings() -> None:
     return decorator
 
 
-def app_store() -> None:
+def app_store():
     """Changes the app store component."""
 
     def decorator(func):
@@ -51,7 +51,7 @@ def app_store() -> None:
     return decorator
 
 
-def loading_animation() -> None:
+def loading_animation():
     """Changes the default component loading animation."""
 
     def decorator(func):

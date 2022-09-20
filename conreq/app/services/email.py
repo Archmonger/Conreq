@@ -22,7 +22,7 @@ class Email:
     html_message: Union[str, None] = None
 
 
-def _get_mail_backend(email_config: EmailSettings = None):
+def _get_mail_backend(email_config: EmailSettings | None = None):
     if not email_config:
         email_config = EmailSettings.get_solo()
 

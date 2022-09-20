@@ -118,7 +118,7 @@ class HomepageState:
 
 @dataclass
 class TabbedViewportState:
-    current_tab: SubTab
+    current_tab: SubTab | None
 
 
 @dataclass

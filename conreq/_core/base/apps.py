@@ -30,7 +30,7 @@ class BaseConfig(AppConfig):
 @connection_created.connect
 def sqlite_connect(sender, connection: Connection, **kwargs):
     """Enable integrity constraint with sqlite."""
-    if connection.vendor == "sqlite":
+    if getattr(connection, "vendor", None) == "sqlite":
         cursor = connection.cursor()
         cursor.execute("PRAGMA journal_mode = WAL;")
         cursor.execute("PRAGMA synchronous = NORMAL;")
@@ -41,7 +41,7 @@ def sqlite_connect(sender, connection: Connection, **kwargs):
 @connection_created.disconnect
 def sqlite_disconnect(sender, connection: Connection, **kwargs):
     """Enable integrity constraint with sqlite."""
-    if connection.vendor == "sqlite":
+    if getattr(connection, "vendor", None) == "sqlite":
         cursor = connection.cursor()
         cursor.execute("PRAGMA analysis_limit = 400;")
         cursor.execute("PRAGMA optimize;")

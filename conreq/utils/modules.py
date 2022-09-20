@@ -4,12 +4,11 @@ import pkgutil
 from importlib import import_module as _import_module
 from pathlib import Path
 from types import ModuleType
-from typing import Union
 
 
 def import_module(
     dotted_path: str, *args, fail_silently: bool = False, **kwargs
-) -> Union[ModuleType, None]:
+) -> ModuleType | None:
     """
     Light wrapper for `importlib.import_module` that can fail silently.
     """
@@ -18,6 +17,8 @@ def import_module(
     except ModuleNotFoundError as err:
         if not fail_silently:
             raise ImportError(f"{dotted_path} doesn't exist!") from err
+
+    return None
 
 
 def load(module: str, fail_silently: bool = False) -> ModuleType | None:
@@ -28,12 +29,14 @@ def load(module: str, fail_silently: bool = False) -> ModuleType | None:
     # pylint: disable=unused-variable
     try:
         stack = inspect.stack()[1]
-        full_module_path = inspect.getmodule(stack[0]).__name__
+        full_module_path = getattr(inspect.getmodule(stack[0]), "__name__")
         parent_module, current_module = full_module_path.rsplit(".", 1)
         return import_module(".".join([parent_module, module]), fail_silently)
     except Exception as err:
         if not fail_silently:
             raise ImportError(f"{module} doesn't exist!") from err
+
+    return None
 
 
 def find_modules(folder_path: str | Path, prefix: str = "") -> list[str]:

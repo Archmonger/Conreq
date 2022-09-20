@@ -2,7 +2,7 @@
 
 import logging
 from collections.abc import Callable
-from typing import Any
+from typing import Any, Iterable
 
 from django.core.cache import cache as djcache
 from huey.contrib.djhuey import db_task
@@ -14,7 +14,7 @@ DEFAULT_CACHE_DURATION = 3600  # Time in seconds
 _logger = logging.getLogger(__name__)
 
 
-def create_cache_key(cache_name: str, args: list, kwargs: dict, key: str) -> str:
+def create_cache_key(cache_name: str, args: Iterable, kwargs: dict, key: str) -> str:
     """Generates a key to be used with django caching"""
     return clean_string(f"{cache_name}_args_{args}_kwargs_{kwargs}_key_{key}")
 
@@ -40,7 +40,7 @@ def get_or_set(
     cache_name: str,
     page_key: str = "",
     function: Callable = None,
-    args: list = (),
+    args: Iterable = (),
     kwargs: dict = None,
     duration: int = DEFAULT_CACHE_DURATION,
     force_update: bool = False,
@@ -102,10 +102,10 @@ def get_or_set(
 
 def get_or_set_many(
     cache_name: str,
-    functions: dict[dict],
+    functions: dict[str, dict[str, Any]],
     duration: int = DEFAULT_CACHE_DURATION,
     timeout: int = 5,
-) -> dict[dict]:
+) -> dict[str, Any] | None:
     """Retrieve, set, and potentially execute multiple cache functions at once.
     Functions must follow this format:
 

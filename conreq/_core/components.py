@@ -18,16 +18,22 @@ def tabbed_viewport(
     top_tabs: list[SubTab] | None = None,
     bottom_tabs: list[SubTab] | None = None,
     default_tab: SubTab | None = None,
-) -> VdomDict:
+):
     """Generates a viewport with the provided tabs. Viewport functions should accept
     `state, set_state` as arguements."""
     tab_state, set_tab_state = idom.hooks.use_state(
         TabbedViewportState(
-            _default_tab(top_tabs, tabs, bottom_tabs, default_tab=default_tab)
+            _default_tab(
+                top_tabs or [], tabs, bottom_tabs or [], default_tab=default_tab
+            )
         )
     )
     # FIXME: use_websocket does not work here
     websocket = True or use_websocket()
+
+    if not tab_state:
+        return
+
     html_class = tab_state.current_tab.html_class
 
     return div(

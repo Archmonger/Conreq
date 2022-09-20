@@ -5,7 +5,7 @@ from conreq import config
 # pylint: disable=import-outside-toplevel
 
 
-def landing() -> None:
+def landing():
     """Changes the home view."""
 
     def decorator(func):
@@ -17,7 +17,7 @@ def landing() -> None:
     return decorator
 
 
-def home() -> None:
+def home():
     """Changes the home view."""
 
     def decorator(func):
@@ -29,7 +29,7 @@ def home() -> None:
     return decorator
 
 
-def sign_up() -> None:
+def sign_up():
     """Changes the sign up view."""
 
     def decorator(func):
@@ -41,7 +41,7 @@ def sign_up() -> None:
     return decorator
 
 
-def sign_in() -> None:
+def sign_in():
     """Changes the sign in view."""
 
     def decorator(func):
@@ -53,7 +53,7 @@ def sign_in() -> None:
     return decorator
 
 
-def password_reset() -> None:
+def password_reset():
     """Changes the password reset view."""
 
     def decorator(func: Any):
@@ -65,7 +65,7 @@ def password_reset() -> None:
     return decorator
 
 
-def password_reset_sent() -> None:
+def password_reset_sent():
     """Changes the password reset sent view."""
 
     def decorator(func):
@@ -77,7 +77,7 @@ def password_reset_sent() -> None:
     return decorator
 
 
-def password_reset_confirm() -> None:
+def password_reset_confirm():
     """Changes the password reset confirm view."""
 
     def decorator(func):
@@ -89,7 +89,7 @@ def password_reset_confirm() -> None:
     return decorator
 
 
-def offline() -> None:
+def offline():
     """Changes the offline view."""
 
     def decorator(func):
@@ -101,7 +101,7 @@ def offline() -> None:
     return decorator
 
 
-def service_worker() -> None:
+def service_worker():
     """Changes the service worker view."""
 
     def decorator(func):
@@ -113,7 +113,7 @@ def service_worker() -> None:
     return decorator
 
 
-def web_manifest() -> None:
+def web_manifest():
     """Changes the webmanifest view."""
 
     def decorator(func):

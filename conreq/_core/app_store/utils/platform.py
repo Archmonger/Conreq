@@ -6,7 +6,7 @@ import sys
 try:
     import fcntl
 except ImportError:
-    fcntl = None
+    fcntl = None  # type: ignore
 
 # set_close_exec
 
