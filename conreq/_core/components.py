@@ -28,10 +28,10 @@ def tabbed_viewport(
             )
         )
     )
-    # FIXME: use_websocket does not work here
-    websocket = True or use_websocket()
 
-    if not tab_state:
+    websocket = use_websocket()
+
+    if not tab_state or not tab_state.current_tab:
         return
 
     html_class = tab_state.current_tab.html_class
