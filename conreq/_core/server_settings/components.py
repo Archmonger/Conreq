@@ -6,54 +6,39 @@ from uuid import uuid4
 import channels
 import django
 from django.conf import settings
+from django_idom.components import view_to_component
+from django_idom.decorators import auth_required
 from idom import component, html
 
-from conreq import AuthLevel, config
+from conreq import config
 from conreq._core.components import tabbed_viewport
-from conreq._core.email.models import EmailSettings
-from conreq._core.server_settings.forms import (
-    EmailSettingsForm,
-    GeneralSettingsForm,
-    StylingSettingsForm,
-    WebserverSettingsForm,
-)
-from conreq._core.server_settings.models import (
-    GeneralSettings,
-    StylingSettings,
-    WebserverSettings,
-)
-from conreq._core.views import SingletonUpdateView
-from conreq.utils.components import view_to_component
-
+from conreq._core.server_settings import views
 
 # TODO: Create generic notification agent API.
-@view_to_component(name="general_settings", auth_level=AuthLevel.admin)
-class GeneralSettingsView(SingletonUpdateView):
-    form_class = GeneralSettingsForm
-    model = GeneralSettings
 
 
-@view_to_component(name="styling_settings", auth_level=AuthLevel.admin)
-class StylingSettingsView(SingletonUpdateView):
-    form_class = StylingSettingsForm
-    model = StylingSettings
+@component
+@auth_required(auth_attribute="is_staff")
+def general_settings(state, set_state):
+    return view_to_component(views.GeneralSettingsView, compatibility=True)
 
 
-@view_to_component(name="webserver_settings", auth_level=AuthLevel.admin)
-class WebserverSettingsView(SingletonUpdateView):
-    form_class = WebserverSettingsForm
-    model = WebserverSettings
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["success_message"] = "Restart for changes to take effect."
-        return context
+@component
+@auth_required(auth_attribute="is_staff")
+def styling_settings(state, set_state):
+    return view_to_component(views.StylingSettingsView, compatibility=True)
 
 
-@view_to_component(name="email_settings", auth_level=AuthLevel.admin)
-class EmailSettingsView(SingletonUpdateView):
-    form_class = EmailSettingsForm
-    model = EmailSettings
+@component
+@auth_required(auth_attribute="is_staff")
+def webserver_settings(state, set_state):
+    return view_to_component(views.WebserverSettingsView, compatibility=True)
+
+
+@component
+@auth_required(auth_attribute="is_staff")
+def email_settings(state, set_state):
+    return view_to_component(views.EmailSettingsView, compatibility=True)
 
 
 def system_info(state, set_state):

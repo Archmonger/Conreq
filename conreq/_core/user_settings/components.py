@@ -1,63 +1,44 @@
 from copy import copy
 
 from channels.auth import logout
-from django.contrib.auth.views import PasswordChangeView
-from django.shortcuts import render
-from django.urls.base import reverse_lazy
-from django.views.generic.edit import DeleteView, FormView, UpdateView
 from django_idom import IdomWebsocket
+from django_idom.components import view_to_component
+from django_idom.decorators import auth_required
 from idom import component
 from idom.html import script
 
-from conreq import AuthLevel, HomepageState, Viewport, config
+from conreq import HomepageState, Viewport, config
 from conreq._core.components import tabbed_viewport
-from conreq._core.user_settings.forms import (
-    ChangePasswordForm,
-    DeleteMyAccountForm,
-    UserSettingsForm,
-)
-from conreq.utils.components import view_to_component
-from conreq.utils.views import CurrentUserMixin, SuccessCurrentUrlMixin
+from conreq._core.user_settings import views
 
 
-@view_to_component(name="user_settings")
-class UserSettingsView(CurrentUserMixin, SuccessCurrentUrlMixin, UpdateView):
-    template_name = "conreq/form.html"
-    form_class = UserSettingsForm
+@component
+@auth_required
+def general(state, set_state):
+    return view_to_component(views.UserSettingsView, compatibility=True)
 
 
-@view_to_component(name="change_password")
-class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
-    template_name = "conreq/form.html"
-    form_class = ChangePasswordForm
+@component
+@auth_required
+def change_password(state, set_state):
+    return view_to_component(views.ChangePasswordView, compatibility=True)
 
 
-@view_to_component(name="delete_my_account")
-class DeleteMyAccountView(CurrentUserMixin, FormView):
-    template_name = "conreq/form.html"
-    form_class = DeleteMyAccountForm
-    success_url = reverse_lazy("delete_my_account_confirm")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["form_subtitle"] = "Confirm your password to delete your account."
-        return context
+@component
+@auth_required
+def delete_my_account(state, set_state):
+    return view_to_component(views.DeleteMyAccountView, compatibility=True)
 
 
-@view_to_component(name="delete_my_account_confirm")
-class DeleteMyAccountConfirmView(CurrentUserMixin, DeleteView):
-    template_name = "conreq/delete_confirm.html"
-    success_url = reverse_lazy("delete_my_account_success")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["form_title"] = "Are you sure you want to delete your account?"
-        return context
+@component
+@auth_required
+def delete_my_account_confirm(state, set_state):
+    return view_to_component(views.DeleteMyAccountConfirmView, compatibility=True)
 
 
-@view_to_component(name="delete_my_account_success", auth_level=AuthLevel.anonymous)
-def delete_my_account_success(request):
-    return render(request, "conreq/refresh_parent_frame.html")
+@component
+def delete_my_account_success(state, set_state):
+    return view_to_component(views.delete_my_account_success, compatibility=True)
 
 
 # pylint: disable=protected-access

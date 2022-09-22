@@ -8,9 +8,7 @@ from conreq.types import (
     SidebarTab,
     Viewport,
     ViewportSelector,
-    ViewType,
 )
-from conreq.utils.components import view_to_component
 
 
 # TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.
@@ -23,10 +21,6 @@ def sidebar_tab(
     padding: bool = True,
     selector: str = ViewportSelector.primary,
     auth: str = AuthLevel.user,
-    view_type: str = ViewType.component,
-    url_pattern: str | None = None,
-    url_name: str | None = None,
-    url_regex: bool = False,
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked.
     By default, the function decorated will be rendered to the viewport. The `on_click` event
@@ -34,16 +28,7 @@ def sidebar_tab(
     # TODO: Implement auth level
     # TODO: URL support (Requires IDOM to support URL routing)
 
-    def decorator(func):
-        if view_type == ViewType.component:
-            component = func
-        elif view_type == ViewType.view:
-            component = view_to_component(
-                url_pattern=url_pattern, name=url_name, use_regex=url_regex
-            )(func)
-        else:
-            raise ValueError(f"Invalid nav tab view_type of '{view_type}'.")
-
+    def decorator(component):
         if group_name not in config.homepage.sidebar_tabs:
             config.homepage.sidebar_tabs.append(
                 NavGroup(name=group_name, icon=group_icon)
@@ -59,7 +44,6 @@ def sidebar_tab(
                             selector=selector,
                             html_class=html_class,
                             padding=padding,
-                            auth=auth,
                         ),
                         on_click=on_click,
                         auth=auth,
@@ -67,7 +51,7 @@ def sidebar_tab(
                 )
             break
 
-        return func
+        return component
 
     return decorator
 

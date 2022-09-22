@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 import idom
 from django.urls import reverse_lazy
+from django_idom.decorators import auth_required
 from idom.html import _, script
 
 from conreq import HomepageState, ViewportSelector
@@ -13,7 +14,6 @@ from conreq._core.home.components.navbar import navbar
 from conreq._core.home.components.sidebar import sidebar
 from conreq._core.home.components.viewport import viewport, viewport_loading_animation
 from conreq.types import Seconds
-from conreq.utils.components import authenticated
 
 # pylint: disable=protected-access
 
@@ -21,7 +21,7 @@ from conreq.utils.components import authenticated
 # TODO: Style viewports using Shadow DOM https://web.dev/shadowdom-v1/
 # TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
 @idom.component
-@authenticated(
+@auth_required(
     fallback=script(
         f"window.location.href = '{reverse_lazy('sign_in')}"
         + "?next=' + window.location.pathname"

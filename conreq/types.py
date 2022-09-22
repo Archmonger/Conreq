@@ -13,18 +13,13 @@ class Icon(VdomDict):
 
 
 @dataclass
-class ViewType:
-    view: str = "django"
-    component: str = "idom"
-
-
-@dataclass
 class AuthLevel:
     anonymous: str = "anonymous"
     user: str = "user"
     admin: str = "admin"
 
 
+# TODO: Remove this?
 @dataclass
 class ViewportSelector:
     _initial: str = "initial"
@@ -43,7 +38,6 @@ class Viewport:
     selector: str = ViewportSelector.auto
     html_class: str = ""
     padding: bool = True
-    auth: str = AuthLevel.user
     page_title: str | None = None
     expires: bool = True
     timestamp: datetime = field(default_factory=datetime.now)

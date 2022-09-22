@@ -19,7 +19,6 @@ def tab_constructor(
             selector=selector,
             html_class=html_class,
             padding=padding,
-            auth=auth,
         ),
         on_click=on_click,
         auth=auth,

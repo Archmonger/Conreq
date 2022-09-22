@@ -32,7 +32,7 @@ def user_settings_general(*args, **kwargs):
     if component is None:
         from conreq._core.user_settings import components
 
-        return components.UserSettingsView(*args, **kwargs)
+        return components.general(*args, **kwargs)
     return component(*args, **kwargs)
 
 
@@ -42,7 +42,7 @@ def user_settings_change_password(*args, **kwargs):
     if component is None:
         from conreq._core.user_settings import components
 
-        return components.ChangePasswordView(*args, **kwargs)
+        return components.change_password(*args, **kwargs)
     return component(*args, **kwargs)
 
 
@@ -52,7 +52,7 @@ def user_settings_delete_account(*args, **kwargs):
     if component is None:
         from conreq._core.user_settings import components
 
-        return components.DeleteMyAccountView(*args, **kwargs)
+        return components.delete_my_account(*args, **kwargs)
     return component(*args, **kwargs)
 
 
@@ -139,7 +139,7 @@ def server_settings_general(*args, **kwargs):
     if component is None:
         from conreq._core.server_settings import components
 
-        return components.GeneralSettingsView(*args, **kwargs)
+        return components.general_settings(*args, **kwargs)
     return component(*args, **kwargs)
 
 
@@ -149,7 +149,7 @@ def server_settings_styling(*args, **kwargs):
     if component is None:
         from conreq._core.server_settings import components
 
-        return components.StylingSettingsView(*args, **kwargs)
+        return components.styling_settings(*args, **kwargs)
     return component(*args, **kwargs)
 
 
@@ -159,7 +159,7 @@ def server_settings_webserver(*args, **kwargs):
     if component is None:
         from conreq._core.server_settings import components
 
-        return components.WebserverSettingsView(*args, **kwargs)
+        return components.webserver_settings(*args, **kwargs)
     return component(*args, **kwargs)
 
 
@@ -169,7 +169,7 @@ def server_settings_email(*args, **kwargs):
     if component is None:
         from conreq._core.server_settings import components
 
-        return components.EmailSettingsView(*args, **kwargs)
+        return components.email_settings(*args, **kwargs)
     return component(*args, **kwargs)
 
 
