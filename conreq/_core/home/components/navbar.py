@@ -40,7 +40,7 @@ def navbar(state: HomepageState, set_state):
             span(NAVBAR_TOGGLER_ICON),
         ),
         div(NAVBAR_BRAND),  # TODO: Add logo support
-        django_js("conreq/navbar.js"),
+        django_js("conreq/navbar.js"),  # type: ignore
         script(f"if('{page_title}'){{document.title = '{page_title}'}}"),
     )
 

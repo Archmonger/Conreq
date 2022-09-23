@@ -14,7 +14,7 @@ def welcome(state: HomepageState, set_state):
 
     return html.div(
         {"className": "welcome"},
-        django_css("conreq/welcome.css"),
+        django_css("conreq/welcome.css"),  # type: ignore
         html.h1("Welcome to Conreq"),
         html.p("Looks like you don't have any custom tabs yet."),
         html.p("Head over to the App Store and install some!"),

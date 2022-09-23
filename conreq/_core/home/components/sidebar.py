@@ -120,7 +120,7 @@ def sidebar(state: HomepageState, set_state):
                 )
                 for group in sidebar_tabs
                 if group not in USER_ADMIN_DEBUG
-            ],
+            ],  # type: ignore
             [  # User tabs
                 sidebar_group(
                     state,
@@ -131,7 +131,7 @@ def sidebar(state: HomepageState, set_state):
                 )
                 for group in sidebar_tabs
                 if group == "User"
-            ],
+            ],  # type: ignore
             [  # Admin tabs
                 sidebar_group(
                     state,
@@ -142,7 +142,7 @@ def sidebar(state: HomepageState, set_state):
                 )
                 for group in sidebar_tabs
                 if group == "Admin" and websocket.scope["user"].is_staff
-            ],
+            ],  # type: ignore
             [  # Debug tabs
                 sidebar_group(
                     state,
@@ -153,7 +153,7 @@ def sidebar(state: HomepageState, set_state):
                 )
                 for group in sidebar_tabs
                 if group == "Debug" and websocket.scope["user"].is_staff and DEBUG
-            ],
+            ],  # type: ignore
         ),
     )
 
@@ -241,15 +241,15 @@ def sidebar_group(
             div(TABS_INDICATOR),
             div(
                 TABS,  # TODO: Change these keys to be database IDs
-                [sidebar_tab(state, set_state, tab, key=tab.name) for tab in _top_tabs],
+                [sidebar_tab(state, set_state, tab, key=tab.name) for tab in _top_tabs],  # type: ignore
                 [
                     sidebar_tab(state, set_state, tab, key=tab.name)
                     for tab in group.tabs
-                ],
+                ],  # type: ignore
                 [
                     sidebar_tab(state, set_state, tab, key=tab.name)
                     for tab in _bottom_tabs
-                ],
+                ],  # type: ignore
             ),
         ),
         key=group_id,

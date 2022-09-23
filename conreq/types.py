@@ -66,10 +66,22 @@ class NavGroup:
 
 @dataclass
 class ModalState:
-    show: bool = False
-    size: str = "lg"
-    centered: bool = True
-    kwargs: dict = field(default_factory=dict)
+    _show: bool = False
+    _size: str = "lg"
+    _centered: bool = True
+    _kwargs: dict = field(default_factory=dict)
+
+    def set_show(self, show: bool):
+        self._show = show
+
+    def set_size(self, size: str):
+        self._size = size
+
+    def set_centered(self, centered: bool):
+        self._centered = centered
+
+    def set_kwargs(self, kwargs: dict):
+        self._kwargs = kwargs
 
 
 @dataclass
@@ -83,7 +95,7 @@ class HomepageState:
     """The modal that needs to be loaded."""
     _modal: Callable | None = None
     """The currently visible modal."""
-    _modal_state: ModalState = ModalState()
+    modal_state: ModalState = ModalState()
 
     def set_viewport(self, viewport: Viewport):
         self._viewport_intent = viewport
@@ -94,7 +106,10 @@ class HomepageState:
 
 @dataclass
 class TabbedViewportState:
-    current_tab: SubTab | None
+    _tab: SubTab | None
+
+    def set_tab(self, tab: SubTab):
+        self._tab = tab
 
 
 @dataclass(frozen=True)

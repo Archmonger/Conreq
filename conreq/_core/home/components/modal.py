@@ -56,7 +56,7 @@ def modal_head(state: HomepageState, set_state):
     # pylint: disable=unused-argument
 
     async def close_modal(_):
-        state._modal_state.show = False
+        state.modal_state.set_show(False)
         set_state(state)
 
     return div(
