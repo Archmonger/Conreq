@@ -5,14 +5,7 @@ import idom
 from django_idom.hooks import use_websocket
 from idom.html import _, div, i, nav
 
-from conreq import (
-    HomepageState,
-    NavGroup,
-    SidebarTab,
-    Viewport,
-    ViewportSelector,
-    config,
-)
+from conreq import HomepageState, NavGroup, SidebarTab, Viewport, config
 from conreq._core.home.components.welcome import welcome
 from conreq.types import SidebarTabEvent
 from conreq.utils.environment import get_debug_mode, get_safe_mode
@@ -74,10 +67,10 @@ def sidebar(state: HomepageState, set_state):
 
     sidebar_tabs = config.homepage.sidebar_tabs
 
-    @idom.hooks.use_effect
+    @idom.hooks.use_effect(dependencies=[])
     async def set_initial_tab():
         # The initial tab has already been set
-        if state._viewport_selector != ViewportSelector._initial:
+        if state._viewport or state._viewport_intent:
             return None
 
         # Use the configured default tab, if it exists
@@ -167,11 +160,8 @@ def sidebar(state: HomepageState, set_state):
 
 
 def _sidebar_tab_class(state: HomepageState, tab: SidebarTab):
-    if (
-        state._viewport_selector is not ViewportSelector._initial
-        and tab.viewport
-        and tab.viewport.component
-        is state.__getattribute__(f"_viewport_{state._viewport_selector}").component
+    if state._viewport and getattr(tab.viewport, "component", None) is getattr(
+        state._viewport, "component", None
     ):
         return NAV_TAB_ACTIVE
     return NAV_TAB
@@ -197,10 +187,8 @@ def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
             return
 
         # Don't reload if clicking the current tab
-        if (
-            state._viewport_selector is not ViewportSelector._initial
-            and tab.viewport
-            is state.__getattribute__(f"_viewport_{state._viewport_selector}")
+        if getattr(tab.viewport, "component", None) is getattr(
+            state._viewport, "component", None
         ):
             return
 

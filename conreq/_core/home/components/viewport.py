@@ -1,8 +1,7 @@
 import idom
 from idom.html import div
 
-from conreq import HomepageState, ViewportSelector, config
-from conreq._core.home.components.protocol import ConditionalRender
+from conreq import HomepageState, config
 from conreq.types import Viewport
 
 # pylint: disable=protected-access
@@ -15,23 +14,23 @@ HIDDEN = {"hidden": "hidden"}
 def viewport_loading_animation(state: HomepageState, set_state):
     # pylint: disable=unused-argument
     return div(
-        VIEWPORT_CONTAINER_LOADING
-        | (
-            {"className": VIEWPORT_CONTAINER_LOADING["className"] + " hidden"}
-            if state._viewport_selector
-            in {ViewportSelector.primary, ViewportSelector.secondary}
-            and not state._viewport_intent
-            else {}
+        (
+            VIEWPORT_CONTAINER_LOADING
+            | (
+                {}
+                if state._viewport_intent
+                else {"className": VIEWPORT_CONTAINER_LOADING["className"] + " hidden"}
+            )
         ),
         config.components.loading_animation_large,
     )
 
 
 @idom.component
-def viewport(state: HomepageState, set_state, viewport_name: str):
+def viewport(state: HomepageState, set_state):
     # sourcery skip: assign-if-exp
-    this_viewport: Viewport = getattr(state, f"_viewport_{viewport_name}")
-    base_attrs = {"className": f"viewport-container {viewport_name}"}
+    this_viewport = state._viewport
+    base_attrs = {"className": "viewport-container"}
 
     if not this_viewport:
         return div(base_attrs | HIDDEN)
@@ -40,29 +39,17 @@ def viewport(state: HomepageState, set_state, viewport_name: str):
         viewport_attrs(
             base_attrs,
             state,
-            viewport_name,
             this_viewport,
         ),
-        ConditionalRender(
-            this_viewport.component(state, set_state),
-            state._viewport_selector == viewport_name,
-        )
-        if getattr(state, f"_viewport_{viewport_name}")
-        else "",
+        this_viewport.component(state, set_state) if state._viewport else "",
         key=f"{this_viewport.component.__module__}.{this_viewport.component.__name__}",
     )
 
 
-def viewport_attrs(
-    base_attrs, state: HomepageState, viewport_name, _viewport: Viewport
-):
+def viewport_attrs(base_attrs, state: HomepageState, _viewport: Viewport):
     # Ensure we are constructing a new class with the pipe operator
     new_attrs = base_attrs
-    if state._viewport_selector != viewport_name:
-        new_attrs = new_attrs | HIDDEN
-    else:
-        new_attrs = new_attrs | {}
-
+    new_attrs = new_attrs | HIDDEN if state._viewport_intent else new_attrs | {}
     if not _viewport.padding:
         new_attrs["className"] += " no-padding"
     if _viewport.html_class:

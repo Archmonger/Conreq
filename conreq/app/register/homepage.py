@@ -1,14 +1,7 @@
 from typing import Callable
 
 from conreq import config
-from conreq.types import (
-    AuthLevel,
-    Icon,
-    NavGroup,
-    SidebarTab,
-    Viewport,
-    ViewportSelector,
-)
+from conreq.types import AuthLevel, Icon, NavGroup, SidebarTab, Viewport
 
 
 # TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.
@@ -19,7 +12,6 @@ def sidebar_tab(
     on_click: Callable | None = None,
     html_class: str = "",
     padding: bool = True,
-    selector: str = ViewportSelector.primary,
     auth: str = AuthLevel.user,
 ) -> Callable:
     """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked.
@@ -41,7 +33,6 @@ def sidebar_tab(
                         name=name,
                         viewport=Viewport(
                             component=component,
-                            selector=selector,
                             html_class=html_class,
                             padding=padding,
                         ),

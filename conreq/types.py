@@ -19,23 +19,9 @@ class AuthLevel:
     admin: str = "admin"
 
 
-# TODO: Remove this?
-@dataclass
-class ViewportSelector:
-    _initial: str = "initial"
-    """Used internally by Conreq to denote the first page load."""
-    primary: str = "primary"
-    """Selection of the primary viewport."""
-    secondary: str = "secondary"
-    """Selection of the secondary viewport."""
-    auto: str = "auto"
-    """Automatically select the viewport based on the current viewport selector."""
-
-
 @dataclass
 class Viewport:
     component: Callable
-    selector: str = ViewportSelector.auto
     html_class: str = ""
     padding: bool = True
     page_title: str | None = None
@@ -72,7 +58,7 @@ class SubTab:
 class NavGroup:
     name: str
     icon: Icon | None = None
-    tabs: SortedSet[SidebarTab] = field(default_factory=SortedSet)
+    tabs: SortedSet = field(default_factory=SortedSet)
 
     def __eq__(self, __o: object) -> bool:
         return _compare_names(self, __o)
@@ -92,10 +78,8 @@ class HomepageState:
     # TODO: Set as immutable and remove all copy() calls
     _viewport_intent: Viewport | None = None
     """The viewport that needs to be loaded."""
-    _viewport_selector: str = ViewportSelector._initial
     """The currently visible viewport."""
-    _viewport_primary: Viewport | None = None
-    _viewport_secondary: Viewport | None = None
+    _viewport: Viewport | None = None
 
     _modal_intent: Callable | None = None
     """The modal that needs to be loaded."""

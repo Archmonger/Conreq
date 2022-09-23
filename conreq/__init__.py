@@ -9,9 +9,7 @@ from conreq.types import (
     SidebarTab,
     TabbedViewportState,
     Viewport,
-    ViewportSelector,
 )
-
 
 __all__ = [
     "app",
@@ -20,7 +18,6 @@ __all__ = [
     "HomepageState",
     "TabbedViewportState",
     "AuthLevel",
-    "ViewportSelector",
     "Seconds",
     "ModalState",
     "Icon",

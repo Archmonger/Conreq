@@ -3,7 +3,7 @@ from django_idom.components import django_js
 from idom import component, hooks
 from idom.html import button, div, script, span
 
-from conreq import HomepageState, ViewportSelector
+from conreq import HomepageState
 from conreq._core.server_settings.models import GeneralSettings
 
 # pylint: disable=protected-access
@@ -46,14 +46,7 @@ def navbar(state: HomepageState, set_state):
 
 
 def _get_page_title(state: HomepageState):
-    if state._viewport_primary and state._viewport_selector == ViewportSelector.primary:
-        return state._viewport_primary.page_title or _default_page_title()
-    if (
-        state._viewport_secondary
-        and state._viewport_selector == ViewportSelector.secondary
-    ):
-        return state._viewport_secondary.page_title or _default_page_title()
-    return _default_page_title()
+    return getattr(state._viewport, "page_title", None) or _default_page_title()
 
 
 def _default_page_title():

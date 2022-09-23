@@ -1,6 +1,6 @@
 from typing import Callable
 
-from conreq.types import AuthLevel, SidebarTab, Viewport, ViewportSelector
+from conreq.types import AuthLevel, SidebarTab, Viewport
 
 
 def tab_constructor(
@@ -8,7 +8,6 @@ def tab_constructor(
     component: Callable,
     on_click: Callable | None = None,
     padding: bool = True,
-    selector: str = ViewportSelector.auto,
     auth: str = AuthLevel.user,
     html_class: str = "",
 ) -> SidebarTab:
@@ -16,7 +15,6 @@ def tab_constructor(
         name=name,
         viewport=Viewport(
             component=component,
-            selector=selector,
             html_class=html_class,
             padding=padding,
         ),
