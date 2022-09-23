@@ -5,7 +5,7 @@ from typing import Callable
 
 from django.views import View
 from idom.html import div, span
-from idom.types import ComponentType, VdomDict
+from idom.types import VdomDict
 from sortedcontainers import SortedList
 
 from conreq.types import NavGroup, SidebarTab, SubTab
@@ -52,10 +52,10 @@ class TemplateConfig:
 class _UserSettingsComponents:
     """Used to store user-defined components."""
 
-    main: ComponentType | None = None
-    general: ComponentType | None = None
-    change_password: ComponentType | None = None
-    delete_account: ComponentType | None = None
+    main: Callable | None = None
+    general: Callable | None = None
+    change_password: Callable | None = None
+    delete_account: Callable | None = None
 
 
 @dataclass
@@ -74,7 +74,7 @@ class _UserSettingsTabs:
 class _SignOutComponents:
     """Used to store user-defined components."""
 
-    main: ComponentType | None = None
+    main: Callable | None = None
     event: Callable | None = None
 
 
@@ -89,10 +89,10 @@ class _SignOutTabs:
 class _UserManagementComponents:
     """Used to store user-defined components."""
 
-    main: ComponentType | None = None
-    manage_users: ComponentType | None = None
-    manage_invites: ComponentType | None = None
-    create_invite: ComponentType | None = None
+    main: Callable | None = None
+    manage_users: Callable | None = None
+    manage_invites: Callable | None = None
+    create_invite: Callable | None = None
 
 
 @dataclass
@@ -111,7 +111,7 @@ class _UserManagementTabs:
 class _AppStoreComponents:
     """Used to store user-defined components."""
 
-    main: ComponentType | None = None
+    main: Callable | None = None
 
 
 @dataclass
@@ -125,12 +125,12 @@ class _AppStoreTabs:
 class _ServerSettingsComponents:
     """Used to store user-defined components."""
 
-    main: ComponentType | None = None
-    general: ComponentType | None = None
-    styling: ComponentType | None = None
-    webserver: ComponentType | None = None
-    email: ComponentType | None = None
-    system_info: ComponentType | None = None
+    main: Callable | None = None
+    general: Callable | None = None
+    styling: Callable | None = None
+    webserver: Callable | None = None
+    email: Callable | None = None
+    system_info: Callable | None = None
 
 
 @dataclass
@@ -150,7 +150,7 @@ class _ServerSettingsTabs:
 
 @dataclass
 class ComponentConfig:
-    homepage: ComponentType | None = None
+    homepage: Callable | None = None
     user_settings: _UserSettingsComponents = field(
         default_factory=_UserSettingsComponents,
     )
