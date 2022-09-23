@@ -12,7 +12,7 @@ class Icon(VdomDict):
     pass
 
 
-@dataclass
+@dataclass(frozen=True)
 class AuthLevel:
     anonymous: str = "anonymous"
     user: str = "user"
@@ -66,7 +66,6 @@ class NavGroup:
 
 @dataclass
 class ModalState:
-    # TODO: Set as immutable and remove all copy() calls
     show: bool = False
     size: str = "lg"
     centered: bool = True
@@ -75,7 +74,6 @@ class ModalState:
 
 @dataclass
 class HomepageState:
-    # TODO: Set as immutable and remove all copy() calls
     _viewport_intent: Viewport | None = None
     """The viewport that needs to be loaded."""
     """The currently visible viewport."""
@@ -99,7 +97,7 @@ class TabbedViewportState:
     current_tab: SubTab | None
 
 
-@dataclass
+@dataclass(frozen=True)
 class Seconds:
     minute: int = 60
     hour: int = minute * 60

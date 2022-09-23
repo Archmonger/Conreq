@@ -21,13 +21,17 @@ def tabbed_viewport(
 ):
     """Generates a viewport with the provided tabs. Viewport functions should accept
     `state, set_state` as arguements."""
-    tab_state, set_tab_state = idom.hooks.use_state(
+    tab_state, _set_tab_state = idom.hooks.use_state(
         TabbedViewportState(
             _default_tab(
                 top_tabs or [], tabs, bottom_tabs or [], default_tab=default_tab
             )
         )
     )
+
+    def set_tab_state(obj):
+        new_obj = copy(obj)
+        _set_tab_state(new_obj)
 
     websocket = use_websocket()
 
@@ -89,8 +93,8 @@ def _subtabs(
 def _subtab_attributes(
     state: HomepageState,
     set_state,
-    tabbed_viewport_state: TabbedViewportState,
-    set_tabbed_viewport_state,
+    tab_state: TabbedViewportState,
+    set_tab_state,
     tab: SubTab,
     websocket,
 ) -> dict:
@@ -102,8 +106,8 @@ def _subtab_attributes(
                 websocket=websocket,
                 homepage_state=state,
                 set_homepage_state=set_state,
-                tabbed_viewport_state=tabbed_viewport_state,
-                set_tabbed_viewport_state=set_tabbed_viewport_state,
+                tabbed_viewport_state=tab_state,
+                set_tabbed_viewport_state=set_tab_state,
             )
             if iscoroutinefunction(tab.on_click):
                 await tab.on_click(click_event)
@@ -111,10 +115,10 @@ def _subtab_attributes(
                 tab.on_click(click_event)
             return
 
-        tabbed_viewport_state.current_tab = tab
-        set_tabbed_viewport_state(copy(tabbed_viewport_state))
+        tab_state.current_tab = tab
+        set_tab_state(tab_state)
 
     return {
-        "className": f"list-group-item clickable{' active' if tabbed_viewport_state.current_tab is tab else ''}",
+        "className": f"list-group-item clickable{' active' if tab_state.current_tab is tab else ''}",
         "onClick": on_click,
     }

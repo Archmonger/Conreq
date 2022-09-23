@@ -25,7 +25,11 @@ from conreq._core.home.components.viewport import viewport, viewport_loading_ani
     )
 )
 def homepage():
-    state, set_state = idom.hooks.use_state(HomepageState())
+    state, _set_state = idom.hooks.use_state(HomepageState())
+
+    def set_state(obj):
+        new_obj = copy(obj)
+        _set_state(new_obj)
 
     @idom.hooks.use_effect(dependencies=[state._viewport_intent])
     def set_viewport():
@@ -39,7 +43,7 @@ def homepage():
         state._viewport.timestamp = datetime.now()
         state._viewport_intent = None
 
-        set_state(copy(state))
+        set_state(state)
 
     return _(
         navbar(state, set_state),

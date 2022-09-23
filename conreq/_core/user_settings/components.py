@@ -1,5 +1,3 @@
-from copy import copy
-
 from channels.auth import logout
 from django_idom import IdomWebsocket
 from django_idom.components import view_to_component
@@ -58,4 +56,4 @@ async def sign_out_event(
 ):
     await logout(websocket.scope)
     state._viewport_intent = Viewport(lambda *_: script("window.location.reload()"))
-    set_state(copy(state))
+    set_state(state)

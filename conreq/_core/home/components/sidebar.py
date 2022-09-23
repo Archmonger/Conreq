@@ -1,4 +1,3 @@
-from copy import copy
 from inspect import iscoroutinefunction
 
 import idom
@@ -76,7 +75,7 @@ def sidebar(state: HomepageState, set_state):
         # Use the configured default tab, if it exists
         if config.homepage.default_sidebar_tab:
             state._viewport_intent = config.homepage.default_sidebar_tab.viewport
-            set_state(copy(state))
+            set_state(state)
             return None
 
         # Select the top most tab, if it exists
@@ -85,18 +84,18 @@ def sidebar(state: HomepageState, set_state):
                 continue
             tab: SidebarTab = group.tabs[0]
             state._viewport_intent = tab.viewport
-            set_state(copy(state))
+            set_state(state)
             return None
 
         # Tell the user to install some apps, if they don't have any
         state._viewport_intent = Viewport(welcome)
-        set_state(copy(state))
+        set_state(state)
 
     async def username_on_click(_):
         if not config.tabs.user_settings.main:
             return
         state._viewport_intent = config.tabs.user_settings.main.viewport
-        set_state(copy(state))
+        set_state(state)
 
     return nav(
         SIDEBAR,
@@ -195,7 +194,7 @@ def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
         # Switch tabs
         if tab.viewport:
             state.set_viewport(tab.viewport)
-            set_state(copy(state))
+            set_state(state)
 
     return div(
         _sidebar_tab_class(state, tab) | {"onClick": on_click},

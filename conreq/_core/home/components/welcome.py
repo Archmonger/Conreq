@@ -1,5 +1,3 @@
-from copy import copy
-
 from django_idom.components import django_css
 from idom import component, html
 
@@ -12,7 +10,7 @@ def welcome(state: HomepageState, set_state):
     async def on_click(_):
         # pylint: disable=protected-access
         state._viewport_intent = config._homepage.admin_sidebar_tabs[1].viewport
-        set_state(copy(state))
+        set_state(state)
 
     return html.div(
         {"className": "welcome"},

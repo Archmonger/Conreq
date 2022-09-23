@@ -1,4 +1,3 @@
-from copy import copy
 from uuid import uuid4
 
 import idom
@@ -58,7 +57,7 @@ def modal_head(state: HomepageState, set_state):
 
     async def close_modal(_):
         state._modal_state.show = False
-        set_state(copy(state))
+        set_state(state)
 
     return div(
         MODAL_HEADER,
