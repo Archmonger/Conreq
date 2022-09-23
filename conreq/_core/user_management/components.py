@@ -13,25 +13,25 @@ from conreq._core.user_management import views
 @component
 @auth_required(auth_attribute="is_staff")
 def edit_user(state, set_state):
-    return view_to_component(views.EditUserView, compatibility=True)
+    return html._(view_to_component(views.EditUserView, compatibility=True))
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def delete_user(state, set_state):
-    return view_to_component(views.DeleteUserView, compatibility=True)
+    return html._(view_to_component(views.DeleteUserView, compatibility=True))
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def manage_users(state, set_state):
-    return view_to_component(views.manage_users, compatibility=True)
+    return html._(view_to_component(views.manage_users, compatibility=True))
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def manage_invites(state, set_state):
-    return view_to_component(views.manage_invites, compatibility=True)
+    return html._(view_to_component(views.manage_invites, compatibility=True))
 
 
 @component
@@ -44,9 +44,11 @@ def create_invite(state, set_state):
 @component
 @auth_required(auth_attribute="is_staff")
 def user_management(state, set_state):
-    return tabbed_viewport(
-        state,
-        set_state,
-        tabs=config.tabs.user_management.installed,
-        top_tabs=config._internal_tabs.user_management,
+    return html._(
+        tabbed_viewport(
+            state,
+            set_state,
+            tabs=config.tabs.user_management.installed,
+            top_tabs=config._internal_tabs.user_management,
+        )
     )
