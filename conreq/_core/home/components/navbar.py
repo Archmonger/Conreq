@@ -22,7 +22,6 @@ NAVBAR_BRAND = {"className": "navbar-brand ellipsis"}
 @component
 def navbar(state: HomepageState, set_state):
     # pylint: disable=unused-argument
-    # TODO: Add script tag for toggling sidebar
     page_title, set_page_title = hooks.use_state("")
 
     @hooks.use_effect(dependencies=[state])

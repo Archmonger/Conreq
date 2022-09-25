@@ -97,7 +97,6 @@ class ReferrerPolicy(TextChoices):
     UNSAFE_URL = "unsafe-url"
 
 
-# TODO: Set these initial values based on settings.py
 class WebserverSettingsForm(EnvFormMixin, ModelForm):
     # Remember to change the default in settings.py if you change these defaults
     base_url = EnvCharField(

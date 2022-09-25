@@ -8,7 +8,7 @@ from idom.html import div, span
 from idom.types import VdomDict
 from sortedcontainers import SortedList
 
-from conreq.types import NavGroup, SidebarTab, SubTab
+from conreq.types import SidebarTab, SubTab
 
 # pylint: disable=too-many-instance-attributes
 
@@ -67,7 +67,7 @@ class _UserSettingsTabs:
     change_password: SubTab | None = None
     delete_account: SubTab | None = None
 
-    installed: SortedList[str] = field(default_factory=SortedList)
+    installed: SortedList = field(default_factory=SortedList)
 
 
 @dataclass
@@ -104,7 +104,7 @@ class _UserManagementTabs:
     manage_invites: SubTab | None = None
     create_invite: SubTab | None = None
 
-    installed: SortedList[str] = field(default_factory=SortedList)
+    installed: SortedList = field(default_factory=SortedList)
 
 
 @dataclass
@@ -223,7 +223,7 @@ class AsgiConfig:
 
 @dataclass
 class HomepageConfig:
-    sidebar_tabs: SortedList[NavGroup] = field(default_factory=SortedList)
+    sidebar_tabs: SortedList = field(default_factory=SortedList)
     default_sidebar_tab: SidebarTab | None = None
     # TODO: Implement CSS and JS registration
     local_stylesheets: list[dict] = field(default_factory=list)

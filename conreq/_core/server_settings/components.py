@@ -20,25 +20,25 @@ from conreq._core.server_settings import views
 @component
 @auth_required(auth_attribute="is_staff")
 def general_settings(state, set_state):
-    return view_to_component(views.GeneralSettingsView, compatibility=True)
+    return html._(view_to_component(views.GeneralSettingsView, compatibility=True))
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def styling_settings(state, set_state):
-    return view_to_component(views.StylingSettingsView, compatibility=True)
+    return html._(view_to_component(views.StylingSettingsView, compatibility=True))
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def webserver_settings(state, set_state):
-    return view_to_component(views.WebserverSettingsView, compatibility=True)
+    return html._(view_to_component(views.WebserverSettingsView, compatibility=True))
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def email_settings(state, set_state):
-    return view_to_component(views.EmailSettingsView, compatibility=True)
+    return html._(view_to_component(views.EmailSettingsView, compatibility=True))
 
 
 def system_info(state, set_state):
@@ -60,7 +60,7 @@ def system_info(state, set_state):
         ("Python Arguments", " ".join(sys.argv)),
     ]
 
-    return html._(
+    return (
         html.table(
             [
                 html.tr(html.td(f"{name}"), html.td(f"{value}"), key=uuid4().hex)
@@ -77,9 +77,11 @@ def licenses(state, set_state):
 # pylint: disable=protected-access
 @component
 def server_settings(state, set_state):
-    return tabbed_viewport(
-        state,
-        set_state,
-        tabs=config.tabs.server_settings.installed,
-        top_tabs=config._internal_tabs.server_settings,
+    return html._(
+        tabbed_viewport(
+            state,
+            set_state,
+            tabs=config.tabs.server_settings.installed,
+            top_tabs=config._internal_tabs.server_settings,
+        )
     )

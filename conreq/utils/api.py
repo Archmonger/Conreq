@@ -19,7 +19,6 @@ class APIDocs:
 
     # pylint: disable=too-many-instance-attributes
 
-    # TODO: Add docstrings to all of these fields.
     operation_id: Optional[str] = None
     """replaces the auto-generated operation_id. make sure there
         are no naming collisions."""

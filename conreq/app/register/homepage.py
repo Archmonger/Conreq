@@ -4,7 +4,6 @@ from conreq import config
 from conreq.types import AuthLevel, Icon, NavGroup, SidebarTab, Viewport
 
 
-# TODO: Implement url_pattern for IDOM components. Needs react-router to be integrated into IDOM core.
 def sidebar_tab(
     name: str,
     group_name: str,

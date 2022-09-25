@@ -15,7 +15,6 @@ from conreq._core.home.components.viewport import viewport, viewport_loading_ani
 
 
 # pylint: disable=protected-access
-# TODO: Style viewports using Shadow DOM https://web.dev/shadowdom-v1/
 # TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
 @idom.component
 @auth_required(
