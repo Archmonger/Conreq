@@ -13,7 +13,16 @@ from huey.contrib.djhuey import db_task
 from conreq.app.models import AuthEncryption, EmailSettings
 from conreq.utils.generic import DoNothingWith
 
+__all__ = [
+    "Email",
+    "EmailBackend",
+    "get_from_name",
+    "send_mail",
+    "send_mass_mail",
+]
 
+
+@dataclass
 @dataclass
 class Email:
     subject: str
@@ -23,54 +32,50 @@ class Email:
 
 
 def _get_mail_backend(email_config: EmailSettings | None = None):
-    if not email_config:
-        email_config = EmailSettings.get_solo()
-
+    config: EmailSettings = email_config or EmailSettings.get_solo()  # type: ignore
     backend = smtp.EmailBackend(
-        host=email_config.server,
-        port=email_config.port,
-        username=email_config.username,
-        password=email_config.password,
-        use_tls=email_config.auth_encryption == AuthEncryption.TLS,
-        use_ssl=email_config.auth_encryption == AuthEncryption.SSL,
-        timeout=email_config.timeout,
+        host=config.server,
+        port=config.port,
+        username=config.username,
+        password=config.password,
+        use_tls=config.auth_encryption == AuthEncryption.TLS,
+        use_ssl=config.auth_encryption == AuthEncryption.SSL,
+        timeout=config.timeout,
     )
     # Note: A new backend connection needs to be formed every task run
     # since threading.rlock is not serializable by Huey
-    backend._lock = DoNothingWith()  # pylint: disable=protected-access
+    backend._lock = DoNothingWith()  # type: ignore  # pylint: disable=protected-access
     return backend
 
 
 class EmailBackend(smtp.EmailBackend):
     """Email backend to be used for Django reverse compatibility."""
 
-    def configure(self, email_config=None):
-        if not email_config:
-            email_config: EmailSettings = EmailSettings.get_solo()
-        self.host = email_config.server
-        self.port = email_config.port
-        self.username = email_config.username
-        self.password = email_config.password
-        self.use_tls = email_config.auth_encryption == AuthEncryption.TLS
-        self.use_ssl = email_config.auth_encryption == AuthEncryption.SSL
-        self.timeout = email_config.timeout
+    def configure(self, email_config: EmailSettings | None = None):
+        config: EmailSettings = email_config or EmailSettings.get_solo()  # type: ignore
+        self.host = config.server
+        self.port = config.port
+        self.username = config.username
+        self.password = config.password
+        self.use_tls = config.auth_encryption == AuthEncryption.TLS
+        self.use_ssl = config.auth_encryption == AuthEncryption.SSL
+        self.timeout = config.timeout
 
     def send_messages(self, email_messages: Sequence[EmailMessage]) -> int:
-        email_config: EmailSettings = EmailSettings.get_solo()
-        if email_config.enabled:
-            self.configure(email_config)
+        config: EmailSettings = EmailSettings.get_solo()  # type: ignore
+        if config.enabled:
+            self.configure(config)
             return super().send_messages(email_messages)
         return 0
 
 
-def get_from_name(email_config: EmailSettings = None):
-    if not email_config:
-        email_config = EmailSettings.get_solo()
+def get_from_name(email_config: EmailSettings | None = None):
+    config: EmailSettings = email_config or EmailSettings.get_solo()  # type: ignore
 
     return (
-        f"{email_config.sender_name} <{email_config.username}>"
-        if email_config.sender_name
-        else email_config.username
+        f"{config.sender_name} <{config.username}>"
+        if config.sender_name
+        else config.username
     )
 
 
@@ -78,14 +83,14 @@ def send_mail(
     email: Email,
     retries: int = 0,
     retry_delay: int = 0,
-    priority: int = None,
-    expires: int = None,
+    priority: int | None = None,
+    expires: int | None = None,
 ):
     """
     Sends a single message to list of recipients. All members of the list
     will see the other recipients in the 'To' field.
     """
-    email_config: EmailSettings = EmailSettings.get_solo()
+    email_config: EmailSettings = EmailSettings.get_solo()  # type: ignore
     backend = _get_mail_backend(email_config)
 
     if email_config.enabled:
@@ -105,13 +110,13 @@ def send_mass_mail(
     emails: Iterable[Email],
     retries: int = 0,
     retry_delay: int = 0,
-    priority: int = None,
-    expires: int = None,
+    priority: int | None = None,
+    expires: int | None = None,
 ):
     """
     Sends out multiple emails while reusing one SMTP connection.
     """
-    email_config: EmailSettings = EmailSettings.get_solo()
+    email_config: EmailSettings = EmailSettings.get_solo()  # type: ignore
     backend = _get_mail_backend(email_config)
     if email_config.enabled:
         return db_task(

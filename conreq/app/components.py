@@ -1,2 +1,5 @@
-# pylint: disable=wildcard-import, unused-wildcard-import
-from conreq._core.components import *  # noqa: F401, F403
+from conreq._core.components import tabbed_viewport
+
+__all__ = [
+    "tabbed_viewport",
+]
