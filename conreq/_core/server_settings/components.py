@@ -60,18 +60,20 @@ def system_info(state, set_state):
         ("Python Arguments", " ".join(sys.argv)),
     ]
 
-    return (
-        html.table(
-            [
-                html.tr(html.td(f"{name}"), html.td(f"{value}"), key=uuid4().hex)
-                for name, value in settings_values
-            ]
-        ),
+    return html.table(
+        {"style": {"marginTop": "20px"}},
+        [
+            html.tr(html.td(f"{name}"), html.td(f"{value}"), key=uuid4().hex)
+            for name, value in settings_values
+        ],
     )
 
 
 def licenses(state, set_state):
-    return html.div("Under Construction")
+    return html.div(
+        {"style": {"marginTop": "20px"}},
+        "This page is under construction, and will be developed in a later release.",
+    )
 
 
 # pylint: disable=protected-access
