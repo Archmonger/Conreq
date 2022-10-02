@@ -10,13 +10,14 @@ from conreq import config
 # Specifically, Django support for async decorators, template rendering, and ORM queries.
 
 
-async def render_view(view, request, *args, **kwargs):
+async def _render_view(view, request, *args, **kwargs):
     # Async Class View
-    if hasattr(view, "view_is_async"):
+    if getattr(view, "view_is_async", False):
         return await view.as_view()(request, *args, **kwargs)
     # Sync Class View
     if hasattr(view, "as_view"):
-        return await convert_to_async(view.as_view())(request, *args, **kwargs)
+        async_cbv = convert_to_async(view.as_view())
+        return await async_cbv(request, *args, **kwargs)
     # Async Function View
     if iscoroutinefunction(view):
         return await view(request, *args, **kwargs)
@@ -31,7 +32,7 @@ async def landing(request, *args, **kwargs):
         from conreq._core.landing import views
 
         view = views.landing
-    return await render_view(view, request, *args, **kwargs)
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def home(request, *args, **kwargs):
@@ -41,7 +42,7 @@ async def home(request, *args, **kwargs):
         from conreq._core.home import views
 
         view = views.home
-    return await render_view(view, request, *args, **kwargs)
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def sign_up(request, *args, **kwargs):
@@ -51,7 +52,7 @@ async def sign_up(request, *args, **kwargs):
         from conreq._core.sign_up import views
 
         view = views.sign_up
-    return await render_view(view, request, *args, **kwargs)
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def sign_in(request, *args, **kwargs):
@@ -61,7 +62,27 @@ async def sign_in(request, *args, **kwargs):
         from conreq._core.sign_in import views
 
         view = views.sign_in
-    return await render_view(view, request, *args, **kwargs)
+    return await _render_view(view, request, *args, **kwargs)
+
+
+async def edit_user(request, *args, **kwargs):
+    """Configurable edit user view."""
+    view = config.views.edit_user
+    if view is None:
+        from conreq._core.user_management import views
+
+        view = views.EditUserView
+    return await _render_view(view, request, *args, **kwargs)
+
+
+async def delete_user(request, *args, **kwargs):
+    """Configurable edit user view."""
+    view = config.views.delete_user
+    if view is None:
+        from conreq._core.user_management import views
+
+        view = views.DeleteUserView
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def password_reset(request, *args, **kwargs):
@@ -70,8 +91,8 @@ async def password_reset(request, *args, **kwargs):
     if view is None:
         from conreq._core.password_reset import views
 
-        view = views.PasswordResetView.as_view()
-    return await render_view(view, request, *args, **kwargs)
+        view = views.PasswordResetView
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def password_reset_sent(request, *args, **kwargs):
@@ -80,8 +101,8 @@ async def password_reset_sent(request, *args, **kwargs):
     if view is None:
         from conreq._core.password_reset import views
 
-        view = views.PassWordResetSentView.as_view()
-    return await render_view(view, request, *args, **kwargs)
+        view = views.PassWordResetSentView
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def password_reset_confirm(request, *args, **kwargs):
@@ -90,8 +111,8 @@ async def password_reset_confirm(request, *args, **kwargs):
     if view is None:
         from conreq._core.password_reset import views
 
-        view = views.PasswordResetConfirmView.as_view()
-    return await render_view(view, request, *args, **kwargs)
+        view = views.PasswordResetConfirmView
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def offline(request, *args, **kwargs):
@@ -101,7 +122,7 @@ async def offline(request, *args, **kwargs):
         from conreq._core.pwa import views
 
         view = views.offline
-    return await render_view(view, request, *args, **kwargs)
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def service_worker(request, *args, **kwargs):
@@ -111,7 +132,7 @@ async def service_worker(request, *args, **kwargs):
         from conreq._core.pwa import views
 
         view = views.service_worker
-    return await render_view(view, request, *args, **kwargs)
+    return await _render_view(view, request, *args, **kwargs)
 
 
 async def web_manifest(request, *args, **kwargs):
@@ -121,4 +142,4 @@ async def web_manifest(request, *args, **kwargs):
         from conreq._core.pwa import views
 
         view = views.web_manifest
-    return await render_view(view, request, *args, **kwargs)
+    return await _render_view(view, request, *args, **kwargs)

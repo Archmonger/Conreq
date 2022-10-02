@@ -93,6 +93,26 @@ def user_management_manage_users(*args, **kwargs):
 
 
 @component
+def user_management_edit_user(*args, **kwargs):
+    component = config.components.user_management.edit_user
+    if component is None:
+        from conreq._core.user_management import components
+
+        return html._(components.edit_user(*args, **kwargs))
+    return component(*args, **kwargs)
+
+
+@component
+def user_management_delete_user(*args, **kwargs):
+    component = config.components.user_management.delete_user
+    if component is None:
+        from conreq._core.user_management import components
+
+        return html._(components.delete_user(*args, **kwargs))
+    return component(*args, **kwargs)
+
+
+@component
 def user_management_manage_invites(*args, **kwargs):
     component = config.components.user_management.manage_invites
     if component is None:
@@ -178,7 +198,7 @@ def server_settings_system_info(*args, **kwargs):
     if component is None:
         from conreq._core.server_settings import components
 
-        return components.system_info(*args, **kwargs)
+        return html._(components.system_info(*args, **kwargs))
     return component(*args, **kwargs)
 
 
@@ -188,5 +208,5 @@ def server_settings_licenses(*args, **kwargs):
     if component is None:
         from conreq._core.server_settings import components
 
-        return components.licenses(*args, **kwargs)
+        return html._(components.licenses(*args, **kwargs))
     return component(*args, **kwargs)

@@ -31,9 +31,10 @@ conreq_urls = [
     path("sign-in/", views.sign_in, name="sign_in"),
     path("sign-up/", include("conreq._core.sign_up.urls")),
     path("sign-out/", auth_views.logout_then_login, name="sign_out"),
+    path("user-management/", include("conreq._core.user_management.urls")),
     path("password-reset/", include("conreq._core.password_reset.urls")),
 ]
 
 urlpatterns = [path(BASE_URL, include(conreq_urls), name="base_url")]
 if BASE_URL:
-    urlpatterns.append(path("", RedirectView.as_view(url=BASE_URL)))
+    urlpatterns.append(path("", RedirectView.as_view(url=BASE_URL)))  # type: ignore

@@ -9,8 +9,32 @@ from django.views.generic.edit import FormView
 from conreq.types import AuthLevel
 
 
+class CurrentUserOrAdminMixin:
+    """Mixin for any class based view to block access if the user is not the current
+    user or an admin.
+
+    User ID must be set using `self.user_id`, or you can set the user ID as a
+    URL parameter.
+
+    By default, the URL parameter is `id`, but can be configured by setting the
+    `user_id_param` attribute."""
+
+    user_id = None
+    user_id_param = "id"
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.user_id is None:
+            user_id_string = getattr(request, request.method).get(self.user_id_param)
+            self.user_id = int(user_id_string) if user_id_string.isnumeric() else None
+
+        if request.user.is_superuser or request.user.id == self.user_id:
+            return super().dispatch(request, *args, **kwargs)
+
+        return HttpResponse(status=403)
+
+
 class SuccessCurrentUrlMixin:
-    """Mixin for UpdateView to return success at the current URL, if
+    """Mixin for `UpdateView` to return success at the current URL, if
     a success_url is not set."""
 
     # pylint: disable=too-few-public-methods
@@ -40,7 +64,7 @@ class CurrentUserMixin:
 
 
 class ObjectInParamsMixin:
-    """Mixin for any Django view to get an object by ID in the
+    """Mixin for any Django class based view to get an object by ID in the
     URL params."""
 
     # pylint: disable=too-few-public-methods

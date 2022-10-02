@@ -27,6 +27,8 @@ class ViewConfig:
     home: Callable | View | None = None
     sign_up: Callable | View | None = None
     sign_in: Callable | View | None = None
+    edit_user: Callable | View | None = None
+    delete_user: Callable | View | None = None
     password_reset: Callable | View | None = None
     password_reset_sent: Callable | View | None = None
     password_reset_confirm: Callable | View | None = None
@@ -42,6 +44,8 @@ class TemplateConfig:
     home: str = "conreq/home.html"
     sign_up: str = "conreq/sign_up.html"
     sign_in: str = "conreq/sign_in.html"
+    edit_user: str = "conreq/form.html"
+    delete_user: str = "conreq/delete_confirm.html"
     password_reset: str = "conreq/password_reset.html"
     password_reset_sent: str = "conreq/password_reset_sent.html"
     password_reset_confirm: str = "conreq/password_reset_confirm.html"
@@ -91,6 +95,8 @@ class _UserManagementComponents:
 
     main: Callable | None = None
     manage_users: Callable | None = None
+    edit_user: Callable | None = None
+    delete_user: Callable | None = None
     manage_invites: Callable | None = None
     create_invite: Callable | None = None
 
