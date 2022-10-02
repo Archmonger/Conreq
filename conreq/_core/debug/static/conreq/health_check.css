@@ -3,18 +3,17 @@
 }
 
 body {
-	color: rgba(255, 255, 255, 0.75);
-}
-
-.w3-blue,
-.w3-hover-blue:hover {
-	background: var(--accent-color) !important;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
 }
 
 table {
-	border-radius: 10px;
+	border-radius: 10px 10px 0 0;
+	color: #333;
+	margin-bottom: 20px;
 	overflow: hidden;
 }
+
 th {
 	padding-top: 13px !important;
 	padding-bottom: 13px !important;

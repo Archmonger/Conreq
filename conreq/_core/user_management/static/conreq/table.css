@@ -21,20 +21,20 @@ a:focus {
 	color: #44a9ff;
 }
 
-thead {
+table > thead {
 	background: var(--accent-color);
 }
 
-thead a,
-thead th,
-thead td,
-thead th:hover,
-thead td:hover {
+table > thead a,
+table > thead th,
+table > thead td,
+table > thead th:hover,
+table > thead td:hover {
 	color: rgba(255, 255, 255, 0.85);
 }
 
-thead a:hover,
-thead a:focus {
+table > thead a:hover,
+table > thead a:focus {
 	color: #fff;
 }
 
@@ -44,7 +44,8 @@ thead a:focus {
 	margin-bottom: 20px;
 }
 
-.table {
+.table,
+table {
 	margin-bottom: 0;
 	background: #fff;
 	border-bottom: 4px solid var(--accent-color);
