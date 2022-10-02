@@ -145,7 +145,7 @@ class _ServerSettingsTabs:
     system_info: SubTab | None = None
     licenses: SubTab | None = None
 
-    installed: SortedList[str] = field(default_factory=SortedList)
+    installed: SortedList = field(default_factory=SortedList)
 
 
 @dataclass
