@@ -13,6 +13,16 @@ class Icon(VdomDict):
 
 
 @dataclass(frozen=True)
+class Seconds:
+    minute: int = 60
+    hour: int = minute * 60
+    day: int = hour * 24
+    week: int = day * 7
+    month: int = week * 4
+    year: int = month * 12
+
+
+@dataclass(frozen=True)
 class AuthLevel:
     anonymous: str = "anonymous"
     user: str = "user"
@@ -134,16 +144,6 @@ class TabbedViewportState:
 
     def set_tab(self, tab: SubTab):
         self._tab = tab
-
-
-@dataclass(frozen=True)
-class Seconds:
-    minute: int = 60
-    hour: int = minute * 60
-    day: int = hour * 24
-    week: int = day * 7
-    month: int = week * 4
-    year: int = month * 12
 
 
 @dataclass
