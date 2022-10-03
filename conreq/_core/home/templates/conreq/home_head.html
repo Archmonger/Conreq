@@ -57,12 +57,37 @@
 <link rel="stylesheet" href="{% static 'conreq/backdrop.css' %}">
 <link rel="stylesheet" href="{% static 'conreq/scrollbar.css' %}">
 <link rel="stylesheet" href="{% static 'conreq/buttons.css' %}">
+
+{% for stylesheet in home_config.local_stylesheets %}
+<link rel="stylesheet" href="{% static stylesheet.path %}">
+{% endfor %}
+
 {% endcompress %}
 
 <!-- Local JS -->
 {% compress js %}
 <script src="{% static 'conreq/iframe_events.js' %}"></script>
+
+{% for script in home_config.local_scripts %}
+<script src="{% static script.path %}"></script>
+{% endfor %}
+
 {% endcompress %}
+
+<!-- Remote CSS -->
+{% for stylesheet in home_config.remote_stylesheets %}
+<link rel="stylesheet" href="{{ stylesheet.path }}">
+{% endfor %}
+
+<!-- Remote JS -->
+{% for script in home_config.remote_scripts %}
+<script src="{{ script.path }}"></script>
+{% endfor %}
+
+<!-- App defined head content -->
+{% for template in home_config.head_content %}
+{% include template.path %}
+{% endfor %}
 
 <!-- User Configured Values -->
 <script>

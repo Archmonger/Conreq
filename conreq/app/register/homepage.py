@@ -1,5 +1,7 @@
 from typing import Callable
 
+from idom.core.component import Component
+
 from conreq import config
 from conreq.types import (
     CSS,
@@ -27,12 +29,12 @@ def sidebar_tab(
     # TODO: Implement auth level
     # TODO: URL support (Requires IDOM to support URL routing)
 
-    def decorator(component):
+    def decorator(component: Component):
         if group not in config.homepage.sidebar_tabs:
             config.homepage.sidebar_tabs.append(group)
 
         for nav_group in config.homepage.sidebar_tabs:
-            if group.name == nav_group:
+            if group == nav_group:
                 group.tabs.add(
                     SidebarTab(
                         name=name,

@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
-from datetime import datetime
 from typing import Any, Callable
 
+from idom.core.component import Component
 from idom.core.types import VdomDict
 from sortedcontainers import SortedSet
 
@@ -31,12 +31,10 @@ class AuthLevel:
 
 @dataclass
 class Viewport:
-    component: Callable
+    component: Component
     html_class: str = ""
     padding: bool = True
     page_title: str | None = None
-    expires: bool = True
-    timestamp: datetime = field(default_factory=datetime.now)
     background: str | None = None  # TODO: Implement this
 
 
@@ -54,7 +52,7 @@ class SidebarTab:
 @dataclass(order=True)
 class SubTab:
     name: str
-    component: Callable
+    component: Component
     html_class: str = ""
     padding: bool = True
     on_click: Callable | None = None
@@ -77,7 +75,7 @@ class NavGroup:
 @dataclass
 class FileLink:
     path: str
-    attributes: dict | None = None
+    attributes: dict[str, str | int] | None = None
     local: bool = True
 
 
@@ -89,11 +87,13 @@ class JavaScript(FileLink):
     ...
 
 
+@dataclass
 class SCSS:
     path: str
     attributes: dict | None = None
 
 
+@dataclass
 class HTMLTemplate:
     path: str
 

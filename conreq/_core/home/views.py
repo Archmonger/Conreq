@@ -8,4 +8,6 @@ from conreq._core.initialization.views import initialize
 def home(request):
     """Renders the homepage."""
     # Render the home page
-    return initialize(request) or login_required(render)(request, config.templates.home)
+    return initialize(request) or login_required(render)(
+        request, config.templates.home, {"home_config": config.homepage}
+    )
