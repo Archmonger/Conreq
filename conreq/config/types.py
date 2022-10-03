@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from typing import Callable
 
 from django.views import View
+from idom.core.component import Component
 from idom.html import div, span
 from idom.types import VdomDict
 from sortedcontainers import SortedList
@@ -56,10 +57,10 @@ class TemplateConfig:
 class _UserSettingsComponents:
     """Used to store user-defined components."""
 
-    main: Callable | None = None
-    general: Callable | None = None
-    change_password: Callable | None = None
-    delete_account: Callable | None = None
+    main: Component | None = None
+    general: Component | None = None
+    change_password: Component | None = None
+    delete_account: Component | None = None
 
 
 @dataclass
@@ -78,7 +79,7 @@ class _UserSettingsTabs:
 class _SignOutComponents:
     """Used to store user-defined components."""
 
-    main: Callable | None = None
+    main: Component | None = None
     event: Callable | None = None
 
 
@@ -93,12 +94,12 @@ class _SignOutTabs:
 class _UserManagementComponents:
     """Used to store user-defined components."""
 
-    main: Callable | None = None
-    manage_users: Callable | None = None
-    edit_user: Callable | None = None
-    delete_user: Callable | None = None
-    manage_invites: Callable | None = None
-    create_invite: Callable | None = None
+    main: Component | None = None
+    manage_users: Component | None = None
+    edit_user: Component | None = None
+    delete_user: Component | None = None
+    manage_invites: Component | None = None
+    create_invite: Component | None = None
 
 
 @dataclass
@@ -117,7 +118,7 @@ class _UserManagementTabs:
 class _AppStoreComponents:
     """Used to store user-defined components."""
 
-    main: Callable | None = None
+    main: Component | None = None
 
 
 @dataclass
@@ -131,12 +132,30 @@ class _AppStoreTabs:
 class _ServerSettingsComponents:
     """Used to store user-defined components."""
 
-    main: Callable | None = None
-    general: Callable | None = None
-    styling: Callable | None = None
-    webserver: Callable | None = None
-    email: Callable | None = None
-    system_info: Callable | None = None
+    main: Component | None = None
+    general: Component | None = None
+    styling: Component | None = None
+    webserver: Component | None = None
+    email: Component | None = None
+    system_info: Component | None = None
+
+
+@dataclass
+class _LoadingAnimationComponents:
+    """Used to store user-defined components."""
+
+    large: VdomDict = field(
+        default_factory=lambda: div(
+            {"className": "spinner-border loading-animation lg", "role": "status"},
+            span({"className": "sr-only"}, "Loading..."),
+        ),
+    )
+    small: Component | VdomDict = field(
+        default_factory=lambda: div(
+            {"className": "spinner-border loading-animation", "role": "status"},
+            span({"className": "sr-only"}, "Loading..."),
+        ),
+    )
 
 
 @dataclass
@@ -172,18 +191,8 @@ class ComponentConfig:
     server_settings: _ServerSettingsComponents = field(
         default_factory=_ServerSettingsComponents,
     )
-
-    loading_animation: VdomDict = field(
-        default_factory=lambda: div(
-            {"className": "spinner-border loading-animation", "role": "status"},
-            span({"className": "sr-only"}, "Loading..."),
-        ),
-    )
-    loading_animation_large: VdomDict = field(
-        default_factory=lambda: div(
-            {"className": "spinner-border loading-animation lg", "role": "status"},
-            span({"className": "sr-only"}, "Loading..."),
-        ),
+    loading_animation: _LoadingAnimationComponents = field(
+        default_factory=_LoadingAnimationComponents
     )
 
 

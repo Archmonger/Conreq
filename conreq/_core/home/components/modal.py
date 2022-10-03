@@ -79,7 +79,10 @@ def modal_body(state: HomepageState, set_state):
     # pylint: disable=unused-argument
     return div(
         MODAL_BODY,
-        div({"className": "loading"}, config.components.loading_animation),
+        div(
+            {"className": "loading"},
+            config.components.loading_animation.small,
+        ),
     )
 
 

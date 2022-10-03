@@ -1,51 +1,57 @@
+from typing import Literal
+
+from idom.core.component import Component
+
 from conreq import config
 
 
-def manage_users():
+def user_management(
+    component: Component | None = None,
+    selector: Literal[
+        "main",
+        "manage_users",
+        "edit_user",
+        "delete_user",
+        "manage_invites",
+        "create_invite",
+    ] = "main",
+):
     """Changes the manage users component."""
-
-    def decorator(func):
-        config.components.user_management = func
-        return func
-
-    return decorator
+    setattr(config.components.user_management, selector, component)
+    return component
 
 
-def server_settings():
+def server_settings(
+    component: Component | None = None,
+    selector: Literal[
+        "main", "general", "styling", "webserver", "email", "system_info"
+    ] = "main",
+):
     """Changes the server settings component."""
-
-    def decorator(func):
-        config.components.server_settings = func
-        return func
-
-    return decorator
+    setattr(config.components.server_settings, selector, component)
+    return component
 
 
-def user_settings():
+def user_settings(
+    component: Component | None = None,
+    selector: Literal["main", "general", "change_password", "delete_account"] = "main",
+):
     """Changes the user settings component."""
-
-    def decorator(func):
-        config.components.user_settings = func
-        return func
-
-    return decorator
+    setattr(config.components.user_settings, selector, component)
+    return component
 
 
-def app_store():
+def app_store(component: Component | None = None, selector: Literal["main"] = "main"):
     """Changes the app store component."""
-
-    def decorator(func):
-        config.components.app_store = func
-        return func
-
-    return decorator
+    # TODO: Add more selectors after fleshing out the app store tab
+    setattr(config.components.app_store, selector, component)
+    return component
 
 
-def loading_animation():
+def loading_animation(
+    component: Component | None = None, selector: Literal["small", "large"] = "large"
+):
     """Changes the default component loading animation."""
-
-    def decorator(func):
-        config.components.loading_animation = func
-        return func
-
-    return decorator
+    if component:
+        setattr(config.components.loading_animation, selector, component)
+    return component

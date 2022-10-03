@@ -22,7 +22,7 @@ def viewport_loading_animation(state: HomepageState, set_state):
                 else {"className": VIEWPORT_CONTAINER_LOADING["className"] + " hidden"}
             )
         ),
-        config.components.loading_animation_large,
+        config.components.loading_animation.large,
     )
 
 
