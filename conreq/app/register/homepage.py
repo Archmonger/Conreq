@@ -1,13 +1,21 @@
 from typing import Callable
 
 from conreq import config
-from conreq.types import AuthLevel, Icon, NavGroup, SidebarTab, Viewport
+from conreq.types import (
+    CSS,
+    SCSS,
+    AuthLevel,
+    HTMLTemplate,
+    JavaScript,
+    NavGroup,
+    SidebarTab,
+    Viewport,
+)
 
 
 def sidebar_tab(
     name: str,
-    group_name: str,
-    group_icon: Icon | None = None,
+    group: NavGroup,
     on_click: Callable | None = None,
     html_class: str = "",
     padding: bool = True,
@@ -20,13 +28,11 @@ def sidebar_tab(
     # TODO: URL support (Requires IDOM to support URL routing)
 
     def decorator(component):
-        if group_name not in config.homepage.sidebar_tabs:
-            config.homepage.sidebar_tabs.append(
-                NavGroup(name=group_name, icon=group_icon)
-            )
+        if group not in config.homepage.sidebar_tabs:
+            config.homepage.sidebar_tabs.append(group)
 
-        for group in config.homepage.sidebar_tabs:
-            if group_name == group:
+        for nav_group in config.homepage.sidebar_tabs:
+            if group.name == nav_group:
                 group.tabs.add(
                     SidebarTab(
                         name=name,
@@ -46,59 +52,33 @@ def sidebar_tab(
     return decorator
 
 
-def sidebar_group(
-    name: str,
-    icon: Icon | None = None,
-):
+def sidebar_group(group: NavGroup):
     """Creates a nav group and/or sets the group icon."""
-    for group in config.homepage.sidebar_tabs:
-        if name == group:
-            group.icon = icon
+    for nav_group in config.homepage.sidebar_tabs:
+        if group == nav_group:
+            nav_group.icon = group.icon
             return
 
-    config.homepage.sidebar_tabs.add(NavGroup(name=name, icon=icon))
+    config.homepage.sidebar_tabs.add(group)
 
 
-def css(reverse_path: str, attributes: dict | None = None, local=True) -> None:
-    if local:
-        config.homepage.local_stylesheets.append(
-            {"path": reverse_path, "attributes": attributes}
-        )
+def css(file_link: CSS):
+    if file_link.local:
+        config.homepage.local_stylesheets.append(file_link)
     else:
-        config.homepage.remote_stylesheets.append(
-            {"path": reverse_path, "attributes": attributes}
-        )
+        config.homepage.remote_stylesheets.append(file_link)
 
 
-def scss(reverse_path: str, attributes: list[tuple] | None = None):
-    config.homepage.scss_stylesheets.append(
-        {"path": reverse_path, "attributes": attributes}
-    )
+def scss(file_link: SCSS):
+    config.homepage.scss_stylesheets.append(file_link)
 
 
-def javascript(
-    reverse_path: str, attributes: list[tuple] | None = None, local=True
-) -> None:
-    if local:
-        config.homepage.local_scripts.append(
-            {"path": reverse_path, "attributes": attributes}
-        )
+def javascript(file_link: JavaScript):
+    if file_link.local:
+        config.homepage.local_scripts.append(file_link)
     else:
-        config.homepage.remote_scripts.append(
-            {"path": reverse_path, "attributes": attributes}
-        )
+        config.homepage.remote_scripts.append(file_link)
 
 
-def font(reverse_path: str, attributes: list[tuple] | None = None, local=True) -> None:
-    if local:
-        config.homepage.local_stylesheets.append(
-            {"path": reverse_path, "attributes": attributes}
-        )
-    else:
-        config.homepage.remote_stylesheets.append(
-            {"path": reverse_path, "attributes": attributes}
-        )
-
-
-def head_content(template: str) -> None:
+def head_content(template: HTMLTemplate) -> None:
     config.homepage.head_content.append(template)

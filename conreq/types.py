@@ -65,6 +65,30 @@ class NavGroup:
 
 
 @dataclass
+class FileLink:
+    path: str
+    attributes: dict | None = None
+    local: bool = True
+
+
+class CSS(FileLink):
+    ...
+
+
+class JavaScript(FileLink):
+    ...
+
+
+class SCSS:
+    path: str
+    attributes: dict | None = None
+
+
+class HTMLTemplate:
+    path: str
+
+
+@dataclass
 class ModalState:
     _show: bool = False
     _size: str = "lg"
@@ -122,12 +146,6 @@ class Seconds:
     year: int = month * 12
 
 
-def _compare_names(self, __o):
-    if isinstance(__o, str):
-        return self.name.lower() == __o.lower()
-    return self.name.lower() == __o.name.lower()
-
-
 @dataclass
 class SidebarTabEvent:
     event: dict
@@ -146,3 +164,9 @@ class SubTabEvent:
     set_homepage_state: Callable
     tabbed_viewport_state: TabbedViewportState
     set_tabbed_viewport_state: Callable
+
+
+def _compare_names(self, __o):
+    if isinstance(__o, str):
+        return self.name.lower() == __o.lower()
+    return self.name.lower() == __o.name.lower()

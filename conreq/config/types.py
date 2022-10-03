@@ -9,7 +9,7 @@ from idom.html import div, span
 from idom.types import VdomDict
 from sortedcontainers import SortedList
 
-from conreq.types import SidebarTab, SubTab
+from conreq.types import CSS, SCSS, HTMLTemplate, JavaScript, SidebarTab, SubTab
 
 # pylint: disable=too-many-instance-attributes
 
@@ -241,12 +241,12 @@ class HomepageConfig:
     sidebar_tabs: SortedList = field(default_factory=SortedList)
     default_sidebar_tab: SidebarTab | None = None
     # TODO: Implement CSS and JS registration
-    local_stylesheets: list[dict] = field(default_factory=list)
-    remote_stylesheets: list[dict] = field(default_factory=list)
-    scss_stylesheets: list[dict] = field(default_factory=list)
-    local_scripts: list[dict] = field(default_factory=list)
-    remote_scripts: list[dict] = field(default_factory=list)
-    head_content: list[str] = field(default_factory=list)
+    local_stylesheets: list[CSS] = field(default_factory=list)
+    remote_stylesheets: list[CSS] = field(default_factory=list)
+    scss_stylesheets: list[SCSS] = field(default_factory=list)
+    local_scripts: list[JavaScript] = field(default_factory=list)
+    remote_scripts: list[JavaScript] = field(default_factory=list)
+    head_content: list[HTMLTemplate] = field(default_factory=list)
 
 
 @dataclass
