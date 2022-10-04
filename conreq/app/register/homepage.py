@@ -82,5 +82,5 @@ def javascript(file_link: JavaScript):
         config.homepage.remote_scripts.append(file_link)
 
 
-def head_content(template: HTMLTemplate) -> None:
+def head_content(template: HTMLTemplate):
     config.homepage.head_content.append(template)

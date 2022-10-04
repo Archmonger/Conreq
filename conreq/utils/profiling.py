@@ -1,4 +1,4 @@
-"""Capabilities used while in DEBUG, that turn off in production environments."""
+"""Performing profiling capabilities."""
 
 from inspect import iscoroutinefunction
 from typing import Any, Callable
@@ -6,20 +6,15 @@ from typing import Any, Callable
 from conreq.utils.environment import get_debug_mode
 from conreq.utils.generic import DoNothingDecorator
 
-# pylint: disable=invalid-name,too-few-public-methods,unused-import
-
-metrics = DoNothingDecorator
-
-# Set performance profiling capabilities depending on whether DEBUG=True
-
-if get_debug_mode():
-    from silk.profiling.profiler import silk_profile as metrics
-else:
-    metrics = DoNothingDecorator
-
 
 def profiled_view(view: Any, name=None) -> Callable:
     """Helper utility to add performance profiling to a view class or function, if possible."""
+    # Set view profiling capabilities depending on whether DEBUG=True
+    if get_debug_mode():
+        from silk.profiling.profiler import silk_profile as metrics
+    else:
+        metrics = DoNothingDecorator
+
     # Something that isn't a view function, such as a list of urlpatterns
     if not callable(view):
         return view

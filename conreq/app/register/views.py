@@ -1,125 +1,76 @@
-from typing import Any
-
 from conreq import config
+from conreq.utils.profiling import profiled_view
 
 # pylint: disable=import-outside-toplevel
 
 
-def landing():
+def landing(view):
     """Changes the home view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.landing = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.landing = profiled_view(view)
+    return view
 
 
-def home():
+def home(view):
     """Changes the home view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.home = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.home = profiled_view(view)
+    return view
 
 
-def sign_up():
+def sign_up(view):
     """Changes the sign up view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.sign_up = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.sign_up = profiled_view(view)
+    return view
 
 
-def sign_in():
+def sign_in(view):
     """Changes the sign in view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.sign_in = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.sign_in = profiled_view(view)
+    return view
 
 
-def password_reset():
+def edit_user(view):
+    """Changes the delete user view."""
+    config.views.edit_user = profiled_view(view)
+    return view
+
+
+def delete_user(view):
+    """Changes the delete user view."""
+    config.views.delete_user = profiled_view(view)
+    return view
+
+
+def password_reset(view):
     """Changes the password reset view."""
-
-    def decorator(func: Any):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.password_reset = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.password_reset = profiled_view(view)
+    return view
 
 
-def password_reset_sent():
+def password_reset_sent(view):
     """Changes the password reset sent view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.password_reset_sent = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.password_reset_sent = profiled_view(view)
+    return view
 
 
-def password_reset_confirm():
+def password_reset_confirm(view):
     """Changes the password reset confirm view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.password_reset_confirm = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.password_reset_confirm = profiled_view(view)
+    return view
 
 
-def offline():
+def offline(view):
     """Changes the offline view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.offline = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.offline = profiled_view(view)
+    return view
 
 
-def service_worker():
+def service_worker(view):
     """Changes the service worker view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.service_worker = profiled_view(func)
-        return func
-
-    return decorator
+    config.views.service_worker = profiled_view(view)
+    return view
 
 
-def web_manifest():
-    """Changes the webmanifest view."""
-
-    def decorator(func):
-        from conreq.utils.profiling import profiled_view
-
-        config.views.web_manifest = profiled_view(func)
-        return func
-
-    return decorator
+def web_manifest(view):
+    """Changes the web manifest view."""
+    config.views.web_manifest = profiled_view(view)
+    return view
