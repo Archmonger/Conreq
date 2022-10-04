@@ -10,6 +10,7 @@ import logging
 import os
 import secrets
 import sys
+from glob import glob
 from importlib import import_module
 from logging.config import dictConfig as logging_config
 from pathlib import Path
@@ -18,7 +19,7 @@ from django.core.management.utils import get_random_secret_key
 from split_settings.tools import include
 from tzlocal import get_localzone_name
 
-from conreq import Seconds, config
+from conreq import Seconds
 from conreq.utils.apps import find_apps
 from conreq.utils.environment import (
     get_base_url,
@@ -33,7 +34,7 @@ from conreq.utils.packages import find_packages
 # Project Directories
 ROOT_DIR = Path(__file__).resolve().parent.parent
 INTERNAL_DIR = ROOT_DIR / "conreq" / "internal"
-DATA_DIR = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False)
+DATA_DIR: Path = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False, return_type=Path)
 DATABASE_DIR = DATA_DIR / "databases"
 PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
 PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
@@ -453,7 +454,10 @@ for package in packages:
 
 
 # Execute settings scripts from Conreq Apps
-include(*config.startup.setting_scripts)
+external_settings = list(glob(str(PACKAGES_DIR / "*" / "django-settings.py"))) + list(
+    glob(str(PACKAGES_DEV_DIR / "*" / "django-settings.py"), recursive=True)
+)
+include(*external_settings)
 
 
 # Add conditional apps

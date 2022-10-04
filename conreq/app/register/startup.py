@@ -1,41 +1,28 @@
 """Modifies the start behavior of Conreq, primarily related to conreq/settings.py."""
 
-from typing import Callable
+import logging
+from multiprocessing import Process
 
 from conreq import config
 
+_logger = logging.getLogger(__name__)
 
-def pre_run() -> Callable:
+
+def function(func):
     """Decorates any function that needs to be run prior to the webserver being up."""
-
-    def decorator(func):
-        config.startup.pre_run.add(func)
-        return func
-
-    return decorator
+    config.startup.functions.add(func)
+    return func
 
 
-def setting_script(dotted_path: str) -> None:
+def process(process: Process, no_warn: bool = False):
+    """Any `Process` that needs to be run separately from Conreq during startup.
+    Only one process will be created, regardless of how many webserver workers exist.
     """
-    Runs a file within settings.py. Wildcards are accepted.
-    See django-split-settings docs for more details.
-    """
-    config.startup.setting_scripts.add(dotted_path)
-
-
-def installed_app(dotted_path: str) -> None:
-    """Shortcut to add an installed app to Django."""
-    # TODO: Add apps to conreq.config.INSTALLED_APPS with positional awareness
-
-
-def process(func: Callable) -> None:
-    """Decorates any function that needs to be run as a separate process during startup."""
-    config.startup.processes.add(func)
-
-
-def http_middleware(dotted_path: str) -> None:
-    """Shortcut to add an installed HTTP middleware to Django."""
-
-
-def asgi_middleware(dotted_path: str) -> None:
-    """Shortcut to add an installed ASGI middleware to Django."""
+    if not process.daemon and not no_warn:
+        _logger.warning(
+            "\033[93m"
+            'Process "%s" is not a daemon, and thus may become a zombie if not properly handled.'
+            "\033[0m",
+            process.name,
+        )
+    config.startup.processes.add(process)

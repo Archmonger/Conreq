@@ -1,6 +1,7 @@
 """Conreq's configuration values."""
 
 from dataclasses import dataclass, field
+from multiprocessing import Process
 from typing import Callable
 
 from django.views import View
@@ -145,10 +146,8 @@ class _ServerSettingsTabs:
 
 @dataclass
 class StartupConfig:
-    setting_scripts: set[str] = field(default_factory=set)
-    # TODO: Implement pre_run scripts
-    pre_run: set[Callable] = field(default_factory=set)
-    processes: set[Callable] = field(default_factory=set)
+    functions: set[Callable[[], None]] = field(default_factory=set)
+    processes: set[Process] = field(default_factory=set)
 
 
 @dataclass

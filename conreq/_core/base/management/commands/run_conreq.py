@@ -14,6 +14,7 @@ from django.core.management.utils import get_random_secret_key
 from huey.contrib.djhuey import db_task
 from uvicorn.config import LOGGING_CONFIG as UVICORN_LOGGING_CONFIG
 
+from conreq import config
 from conreq.utils.backup import backup_needed, backup_now
 from conreq.utils.environment import get_debug_mode, get_env, set_env
 
@@ -80,6 +81,14 @@ class Command(BaseCommand):
         with open(HUEY_PID_FILE, "w", encoding="utf-8") as huey_pid:
             huey_pid.write(str(proc.pid))
 
+        # Run pre-run functions before starting the webserver
+        for script in config.startup.functions:
+            script()
+
+        # Run background processes before starting the webserver
+        for process in config.startup.processes:
+            process.start()
+
         # Run the production webserver
         if not DEBUG:
             self._run_webserver()
@@ -93,7 +102,7 @@ class Command(BaseCommand):
         from conreq._core.server_settings.models import WebserverSettings
 
         # TODO: Add in Uvicorn's reverse proxy stuff
-        db_conf: WebserverSettings = WebserverSettings.get_solo()
+        db_conf: WebserverSettings = WebserverSettings.get_solo()  # type: ignore
         config_kwargs = {
             "ssl_certfile": self._f_path(db_conf.ssl_certificate),
             "ssl_keyfile": self._f_path(db_conf.ssl_key),
