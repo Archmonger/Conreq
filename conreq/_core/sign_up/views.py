@@ -31,7 +31,11 @@ def sign_up(request, invite_code=None):
 
         # Submission wasn't valid, so return the error codes
         if not form.is_valid():
-            return render(request, config.templates.sign_up, {"form": form})
+            return render(
+                request,
+                config.templates.sign_up,
+                {"form": form, "initial_email": code.email},
+            )
 
         # Create and login the user
         form.save()
@@ -46,4 +50,4 @@ def sign_up(request, invite_code=None):
         return redirect(LOGIN_REDIRECT_URL)
 
     # User needs to fill out registration form
-    return render(request, config.templates.sign_up)
+    return render(request, config.templates.sign_up, {"initial_email": code.email})

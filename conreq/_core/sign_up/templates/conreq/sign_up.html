@@ -20,7 +20,7 @@
 
     {{ form.email.errors }}
     <input placeholder="Email" oninput="this.className = ''" autocomplete="off" autocorrect="off" autocapitalize="off"
-        spellcheck="false" type="email" required="" name="email" value="{{ form.data.email }}">
+        spellcheck="false" type="email" required="" name="email" value="{% firstof form.data.email initial_email %}">
 
     {{ form.username.errors }}
     <input placeholder="Username" oninput="this.className = ''" autocomplete="off" autocorrect="off"
