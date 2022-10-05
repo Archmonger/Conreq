@@ -5,7 +5,6 @@ from conreq import config
 from conreq.utils.environment import get_base_url
 
 BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
-# TODO: Implement ASGI middleware
 
 
 def websocket(path: str, use_regex: bool = False):
