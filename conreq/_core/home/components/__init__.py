@@ -1,5 +1,4 @@
 from copy import copy
-from datetime import datetime
 
 import idom
 from django.urls import reverse_lazy
@@ -39,8 +38,9 @@ def homepage():
 
         # Replace the selected viewport
         state._viewport = state._viewport_intent
-        state._viewport.timestamp = datetime.now()
         state._viewport_intent = None
+        state.modal_state.set_show(False)
+        state._modal = None
 
         set_state(state)
 

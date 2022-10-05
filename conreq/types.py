@@ -42,7 +42,7 @@ class Viewport:
 class SidebarTab:
     name: str
     viewport: Viewport | None = None
-    on_click: Callable | None = None
+    on_click: Callable[["SidebarTabEvent"], None] | None = None
     auth: str = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
@@ -55,7 +55,7 @@ class SubTab:
     component: Component
     html_class: str = ""
     padding: bool = True
-    on_click: Callable | None = None
+    on_click: Callable[["SubTabEvent"], None] | None = None
     auth: str = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
@@ -101,21 +101,24 @@ class HTMLTemplate:
 @dataclass
 class ModalState:
     _show: bool = False
-    _size: str = "lg"
-    _centered: bool = True
-    _kwargs: dict = field(default_factory=dict)
+    # FIXME: Some options are not available until IDOM supports react-bootstrap
+    # Solution: https://github.com/idom-team/idom/issues/786
+
+    # _size: str = "lg"
+    # _centered: bool = True
+    # _kwargs: dict = field(default_factory=dict)
 
     def set_show(self, show: bool):
         self._show = show
 
-    def set_size(self, size: str):
-        self._size = size
+    # def set_size(self, size: str):
+    #     self._size = size
 
-    def set_centered(self, centered: bool):
-        self._centered = centered
+    # def set_centered(self, centered: bool):
+    #     self._centered = centered
 
-    def set_kwargs(self, kwargs: dict):
-        self._kwargs = kwargs
+    # def set_kwargs(self, kwargs: dict):
+    #     self._kwargs = kwargs
 
 
 @dataclass
