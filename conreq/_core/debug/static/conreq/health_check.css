@@ -14,8 +14,10 @@ table {
 	overflow: hidden;
 }
 
-th {
+table > thead th {
 	padding-top: 13px !important;
 	padding-bottom: 13px !important;
 	padding-right: 13px !important;
+	font-size: 14px;
+	padding: 15px 15px;
 }
