@@ -13,8 +13,8 @@ class CurrentUserOrAdminMixin:
     """Mixin for any class based view to block access if the user is not the current
     user or an admin.
 
-    User ID must be set using `self.user_id`, or you can set the user ID as a
-    URL parameter.
+    To validate the user is modifying a page related to his user ID, you must set
+    `self.user_id`, or you can set the user ID as a URL parameter.
 
     By default, the URL parameter is `id`, but can be configured by setting the
     `user_id_param` attribute."""
@@ -25,7 +25,11 @@ class CurrentUserOrAdminMixin:
     def dispatch(self, request, *args, **kwargs):
         if self.user_id is None:
             user_id_string = getattr(request, request.method).get(self.user_id_param)
-            self.user_id = int(user_id_string) if user_id_string.isnumeric() else None
+            self.user_id = (
+                int(user_id_string)
+                if isinstance(user_id_string, str) and user_id_string.isnumeric()
+                else ""
+            )
 
         if request.user.is_superuser or request.user.id == self.user_id:
             return super().dispatch(request, *args, **kwargs)
