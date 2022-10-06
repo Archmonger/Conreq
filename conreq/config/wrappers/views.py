@@ -85,6 +85,16 @@ async def delete_user(request, *args, **kwargs):
     return await _render_view(view, request, *args, **kwargs)
 
 
+async def create_invite_success(request, *args, **kwargs):
+    """Configurable create invite success view."""
+    view = config.views.create_invite_success
+    if view is None:
+        from conreq._core.user_management import views
+
+        view = views.CreateInviteSuccess
+    return await _render_view(view, request, *args, **kwargs)
+
+
 async def password_reset(request, *args, **kwargs):
     """Configurable password reset view."""
     view = config.views.password_reset

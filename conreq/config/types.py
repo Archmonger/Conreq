@@ -158,6 +158,7 @@ class ViewConfig:
     sign_in: Callable | View | None = None
     edit_user: Callable | View | None = None
     delete_user: Callable | View | None = None
+    create_invite_success: Callable | View | None = None
     password_reset: Callable | View | None = None
     password_reset_sent: Callable | View | None = None
     password_reset_confirm: Callable | View | None = None
@@ -174,6 +175,8 @@ class TemplateConfig:
     sign_up: str = "conreq/sign_up.html"
     sign_in: str = "conreq/sign_in.html"
     edit_user: str = "conreq/form.html"
+    create_invite: str = "conreq/form.html"
+    create_invite_success: str = "conreq/create_invite_success.html"
     delete_user: str = "conreq/delete_confirm.html"
     password_reset: str = "conreq/password_reset.html"
     password_reset_sent: str = "conreq/password_reset_sent.html"

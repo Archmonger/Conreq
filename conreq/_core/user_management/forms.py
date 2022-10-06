@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.forms import ModelForm
 from django.urls import reverse_lazy
 
+from conreq._core.sign_up.models import InviteCode
+
 
 class UserEditForm(ModelForm):
     class Meta:
@@ -30,3 +32,15 @@ class UserEditForm(ModelForm):
             )
         )
         self.helper.add_input(Button("back", "Back", onclick="history.back()"))
+
+
+class CreateInviteForm(ModelForm):
+    class Meta:
+        model = InviteCode
+        fields = ("name", "email")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("submit", "Create Invite"))

@@ -2,8 +2,10 @@
 Tools for sending email.
 """
 
+import logging
 from typing import Iterable
 
+from django.core.exceptions import ImproperlyConfigured
 from django.core.mail import send_mail as django_send_email
 from django.core.mail.backends import smtp
 
@@ -21,6 +23,8 @@ __all__ = [
     "send_email",
     "send_mass_email",
 ]
+
+_logger = logging.getLogger(__name__)
 
 
 def _get_mail_backend(email_config: EmailSettings | None = None, lock: bool = False):
@@ -54,7 +58,11 @@ def send_email(
     email_config: EmailSettings = EmailSettings.get_solo()  # type: ignore
 
     if not email_config.enabled:
-        return
+        try:
+            raise ImproperlyConfigured("Email is not enabled.")
+        except Exception as exception:
+            _logger.exception("Email is not enabled.", stack_info=True)
+            raise exception
 
     return (
         django_send_email(
@@ -89,7 +97,11 @@ def send_mass_email(
     email_config: EmailSettings = EmailSettings.get_solo()  # type: ignore
 
     if not email_config.enabled:
-        return
+        try:
+            raise ImproperlyConfigured("Email is not enabled.")
+        except Exception as exception:
+            _logger.exception("Email is not enabled.", stack_info=True)
+            raise exception
 
     return (
         _send_mass_email(
