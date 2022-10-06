@@ -3,7 +3,6 @@ django-stubs[compatible-mypy]
 flake8
 flake8-django
 pylint
-pylint-django
 rope
 twine
 types-requests

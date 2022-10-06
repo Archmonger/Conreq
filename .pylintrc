@@ -1,7 +1,7 @@
 [MASTER]
 ignore=migrations
 disable=broad-except, fixme, missing-module-docstring, missing-class-docstring, missing-function-docstring
-load-plugins=pylint_django
-django-settings-module=conreq.settings
 [FORMAT]
 max-line-length=150
+[TYPECHECK]
+generated-members=REQUEST,acl_users,aq_parent,objects,_meta,id
