@@ -10,6 +10,7 @@ from conreq._core.sign_up.models import InviteCode
 LOGIN_REDIRECT_URL = getattr(settings, "LOGIN_REDIRECT_URL")
 
 
+# TODO: Add page for invalid invite codes
 def sign_up(request, invite_code=None):
     # No invite code was provided
     if not invite_code:
@@ -21,7 +22,10 @@ def sign_up(request, invite_code=None):
         if not code.is_valid:
             # TODO: This should give a meaningful error message
             return redirect("landing")
-    except (InviteCode.DoesNotExist, InviteCode.MultipleObjectsReturned):
+    except (
+        InviteCode.DoesNotExist,  # pylint: disable=no-member
+        InviteCode.MultipleObjectsReturned,  # pylint: disable=no-member
+    ):
         return redirect("landing")
 
     # User submitted the registration form
