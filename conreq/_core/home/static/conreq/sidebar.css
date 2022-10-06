@@ -8,10 +8,10 @@
 	border-color: #ffffff17;
 	border-width: 0 1px 0 0;
 	border-style: solid;
-	overflow-x: hidden;
 	font-family: var(--global-font);
 	font-weight: 400;
 	box-shadow: var(--box-shadow);
+	overflow-x: hidden;
 	overflow-y: auto;
 	overflow-y: overlay;
 	display: inline-block;

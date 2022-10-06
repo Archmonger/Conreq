@@ -1,14 +1,23 @@
 .viewport-container.app-store {
 	display: flex;
 	flex-direction: row;
+	padding-left: var(--viewport-padding);
 }
 
 .viewport-container.app-store .nav-region {
 	min-width: -webkit-fit-content;
 	min-width: -moz-fit-content;
 	min-width: fit-content;
-	padding-top: 30px;
-	padding-left: 30px;
+	padding: var(--viewport-padding);
+	background: rgb(0 0 0 / 07%);
+	border-color: #ffffff17;
+	border-width: 0 0 0 1px;
+	margin-left: 3px;
+	border-style: solid;
+	box-shadow: var(--box-shadow);
+	color: rgb(156 156 156);
+	-webkit-animation: fade-in 2s ease;
+	animation: fade-in 2s ease;
 }
 
 .viewport-container.app-store .nav-region ol {
@@ -34,7 +43,7 @@
 }
 
 .spotlight-region {
-	padding-top: 30px;
+	padding-top: var(--viewport-padding);
 	overflow-y: auto;
 }
 
@@ -118,6 +127,15 @@
 
 /* Spinny Colors */
 /* Credits: https://codepen.io/MauriciAbad/pen/WNrpmPr */
+@-webkit-keyframes spin {
+	from {
+		transform: translate(-50%, -50%) rotate(0);
+	}
+
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
+}
 @keyframes spin {
 	from {
 		transform: translate(-50%, -50%) rotate(0);
@@ -147,6 +165,7 @@
 	transform: translate(-50%, -50%);
 	border-radius: 100%;
 	z-index: -2;
+	-webkit-animation: spin 10s linear infinite;
 	animation: spin 10s linear infinite;
 }
 

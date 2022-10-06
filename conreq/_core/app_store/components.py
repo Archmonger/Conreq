@@ -51,7 +51,7 @@ def app_store(state, set_state):
             random_selection(set_tab),
             key="spotlight-region",
         ),
-        div({"className": "nav-region"}, nav_constructor(categories, set_tab)),
+        div({"className": "nav-region blur"}, nav_constructor(categories, set_tab)),
     )
 
 

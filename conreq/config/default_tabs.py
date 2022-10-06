@@ -40,7 +40,7 @@ config._homepage.admin_sidebar_tabs.append(config.tabs.user_management.main)
 
 
 config.tabs.app_store.main = tab_constructor(
-    "App Store", app_store, html_class="app-store"
+    "App Store", app_store, html_class="app-store", padding=False
 )
 config._homepage.admin_sidebar_tabs.append(config.tabs.app_store.main)
 
