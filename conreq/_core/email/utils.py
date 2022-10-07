@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Sequence
 
 from django.core.mail import EmailMultiAlternatives
 from django.core.mail.backends import smtp
@@ -18,7 +18,7 @@ def get_from_name(email_config: EmailSettings | None = None):
 
 
 def send_mass_email(
-    connection: smtp.EmailBackend, emails: Iterable[Email], email_config: EmailSettings
+    connection: smtp.EmailBackend, emails: Sequence[Email], email_config: EmailSettings
 ):
     messages = []
     for email in emails:

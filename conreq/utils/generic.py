@@ -6,7 +6,7 @@ from typing import Any
 def is_key_value_in_iter(
     key: Any, value: Any, search_list: list, return_item: bool = False
 ) -> bool:
-    """Iterate through a iterable (list, tuple, etc) containing dicts to check if a
+    """Iterate through a sequence (list, tuple, etc) containing dicts to check if a
     specific key/value pair exists."""
     return next(
         (

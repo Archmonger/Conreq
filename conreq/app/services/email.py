@@ -3,7 +3,7 @@ Tools for sending email.
 """
 
 import logging
-from typing import Iterable
+from typing import Sequence
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.mail import send_mail as django_send_email
@@ -86,7 +86,7 @@ def send_email(
 
 
 def send_mass_email(
-    emails: Iterable[Email],
+    emails: Sequence[Email],
     immediate: bool = False,
 ):
     """

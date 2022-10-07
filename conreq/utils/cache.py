@@ -2,7 +2,7 @@
 
 import logging
 from collections.abc import Callable
-from typing import Any, Iterable
+from typing import Any, Sequence
 
 from django.core.cache import cache as djcache
 from huey.contrib.djhuey import db_task
@@ -14,7 +14,7 @@ DEFAULT_CACHE_DURATION = 3600  # Time in seconds
 _logger = logging.getLogger(__name__)
 
 
-def create_cache_key(cache_name: str, args: Iterable, kwargs: dict, key: str) -> str:
+def create_cache_key(cache_name: str, args: Sequence, kwargs: dict, key: str) -> str:
     """Generates a key to be used with django caching"""
     return clean_string(f"{cache_name}_args_{args}_kwargs_{kwargs}_key_{key}")
 
@@ -39,9 +39,9 @@ def _lazy_set(cache_key, cache_value, duration):
 def get_or_set(
     cache_name: str,
     page_key: str = "",
-    function: Callable = None,
-    args: Iterable = (),
-    kwargs: dict = None,
+    function: Callable | None = None,
+    args: Sequence = (),
+    kwargs: dict | None = None,
     duration: int = DEFAULT_CACHE_DURATION,
     force_update: bool = False,
 ) -> Any:
