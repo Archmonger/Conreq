@@ -1,11 +1,12 @@
 from uuid import uuid4
 
-from channels.db import database_sync_to_async
 from django_idom.components import django_css
+from django_idom.hooks import use_query
 from idom import component, hooks
 from idom.html import _, a, button, div, h4, h5, li, ol, p
 
 from conreq._core.app_store.models import Category, Subcategory
+from conreq.types import HomepageState
 
 
 class PlaceholderApp:
@@ -17,23 +18,48 @@ class PlaceholderApp:
     category = "Category"
 
 
-@component
-def app_store(state, set_state):
-    # pylint: disable=unused-argument
-    tab, set_tab = hooks.use_state(None)
-    categories, set_categories = hooks.use_state({})
+def subcategories_to_dict(query) -> dict[str, dict[str, str]]:
+    new_categories = {}
+    for subcategory in query:
+        new_categories.setdefault(subcategory.category, []).append(subcategory)
+    return new_categories
 
-    @hooks.use_effect
-    @database_sync_to_async
-    def get_categories():
-        if categories:
-            return
-        query = Subcategory.objects.select_related("category").order_by("name").all()
-        new_categories = {}
-        for subcategory in query:
-            new_categories.setdefault(subcategory.category, []).append(subcategory)
-        if new_categories:
-            set_categories(new_categories)
+
+def get_categories():
+    return Subcategory.objects.select_related("category").order_by("name").all()
+
+
+@component
+def app_store(state: HomepageState, set_state):
+    # pylint: disable=unused-argument,protected-access
+    tab, set_tab = hooks.use_state(None)
+    category_query = use_query(get_categories)
+    categories, set_categories = hooks.use_state({})
+    loading_needed, set_loading_needed = hooks.use_state(True)
+
+    # Display loading animation until categories are loaded
+    if loading_needed and not categories:
+        state.set_loading(True)
+        set_loading_needed(False)
+        set_state(state)
+
+    # Hide loading animation once categories are loaded
+    if not loading_needed and categories:
+        state.set_loading(False)
+        set_loading_needed(True)
+        set_state(state)
+
+    # Convert categories to a dictionary for easier rendering
+    if not category_query.loading and not category_query.error:
+        set_categories(subcategories_to_dict(category_query.data))
+
+    # Don't render if there's an error loading categories
+    if category_query.error:
+        return _("Error!")
+
+    # Don't render if categories are still loading, or if they haven't been converted to a dict yet
+    if category_query.loading or not categories:
+        return _(None)
 
     # TODO: Update app store entries every first load
     return _(

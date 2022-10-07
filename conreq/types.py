@@ -123,16 +123,27 @@ class ModalState:
 
 @dataclass
 class HomepageState:
+    _viewport_loading: bool = False
+    """A toggle to manually set the viewport loading state. This is only used
+    by user defined viewport components."""
+
     _viewport_intent: Viewport | None = None
     """The viewport that needs to be loaded."""
-    """The currently visible viewport."""
+
     _viewport: Viewport | None = None
+    """The currently visible viewport."""
 
     _modal_intent: Callable | None = None
     """The modal that needs to be loaded."""
+
     _modal: Callable | None = None
     """The currently visible modal."""
+
     modal_state: ModalState = ModalState()
+    """The modal's current state object."""
+
+    def set_loading(self, loading: bool):
+        self._viewport_loading = loading
 
     def set_viewport(self, viewport: Viewport):
         self._viewport_intent = viewport

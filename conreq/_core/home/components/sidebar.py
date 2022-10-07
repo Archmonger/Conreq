@@ -193,6 +193,9 @@ def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
 
         # Switch tabs
         if tab.viewport:
+            # Reset loading state (only set by user defined viewports)
+            state._viewport_loading = False
+
             state.set_viewport(tab.viewport)
             set_state(state)
 

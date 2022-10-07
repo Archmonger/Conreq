@@ -18,7 +18,7 @@ def viewport_loading_animation(state: HomepageState, set_state):
             VIEWPORT_CONTAINER_LOADING
             | (
                 {}
-                if state._viewport_intent
+                if state._viewport_intent or state._viewport_loading
                 else {"className": VIEWPORT_CONTAINER_LOADING["className"] + " hidden"}
             )
         ),
@@ -49,7 +49,11 @@ def viewport(state: HomepageState, set_state):
 def viewport_attrs(base_attrs, state: HomepageState, _viewport: Viewport):
     # Ensure we are constructing a new class with the pipe operator
     new_attrs = base_attrs
-    new_attrs = new_attrs | HIDDEN if state._viewport_intent else new_attrs | {}
+    new_attrs = (
+        new_attrs | HIDDEN
+        if state._viewport_intent or state._viewport_loading
+        else new_attrs | {}
+    )
     if not _viewport.padding:
         new_attrs["className"] += " no-padding"
     if _viewport.html_class:
