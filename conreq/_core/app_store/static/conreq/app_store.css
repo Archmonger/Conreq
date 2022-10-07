@@ -79,6 +79,10 @@
 	margin-right: 20px;
 }
 
+.fade-in {
+	transition: opacity 1.25s ease;
+}
+
 .spotlight > .card-stage > .card > .top {
 	display: grid;
 	grid-template-columns: auto 80px;
