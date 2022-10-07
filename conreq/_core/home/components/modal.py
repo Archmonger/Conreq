@@ -44,9 +44,11 @@ def modal(state: HomepageState, set_state):
             "let conreq_modal = new bootstrap.Modal(document.getElementById('modal-container'), {backdrop: 'static', keyboard: false});"
             + (
                 "conreq_modal.show();"
-                if state.modal_state._show
+                if state.modal_state.show
                 else "conreq_modal.hide();"
-                + "if (document.querySelector('.modal-backdrop.show') && !document.querySelector('.modal.show')) {!document.querySelector('.modal-backdrop.show').remove();}"
+                + "if (document.querySelector('.modal-backdrop.show') &&"
+                "!document.querySelector('.modal.show'))"
+                "{!document.querySelector('.modal-backdrop.show').remove();}"
             )
         ),
     )
@@ -79,7 +81,7 @@ def modal_head(state: HomepageState, set_state):
     # pylint: disable=unused-argument
 
     async def close_modal(_):
-        state.modal_state.set_show(False)
+        state.modal_state.show = False
         set_state(state)
 
     return div(

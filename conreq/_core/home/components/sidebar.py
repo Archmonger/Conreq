@@ -69,12 +69,12 @@ def sidebar(state: HomepageState, set_state):
     @idom.hooks.use_effect(dependencies=[])
     async def set_initial_tab():
         # The initial tab has already been set
-        if state._viewport or state._viewport_intent:
+        if state._viewport or state.viewport_intent:
             return None
 
         # Use the configured default tab, if it exists
         if config.homepage.default_sidebar_tab:
-            state._viewport_intent = config.homepage.default_sidebar_tab.viewport
+            state.viewport_intent = config.homepage.default_sidebar_tab.viewport
             set_state(state)
             return None
 
@@ -83,18 +83,18 @@ def sidebar(state: HomepageState, set_state):
             if not group.tabs or group in USER_ADMIN_DEBUG:
                 continue
             tab: SidebarTab = group.tabs[0]
-            state._viewport_intent = tab.viewport
+            state.viewport_intent = tab.viewport
             set_state(state)
             return None
 
         # Tell the user to install some apps, if they don't have any
-        state._viewport_intent = Viewport(welcome)
+        state.viewport_intent = Viewport(welcome)
         set_state(state)
 
     async def username_on_click(_):
         if not config.tabs.user_settings.main:
             return
-        state._viewport_intent = config.tabs.user_settings.main.viewport
+        state.viewport_intent = config.tabs.user_settings.main.viewport
         set_state(state)
 
     return nav(
@@ -194,9 +194,9 @@ def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
         # Switch tabs
         if tab.viewport:
             # Reset loading state (only set by user defined viewports)
-            state._viewport_loading = False
+            state.viewport_loading = False
 
-            state.set_viewport(tab.viewport)
+            state.viewport_intent = tab.viewport
             set_state(state)
 
     return div(

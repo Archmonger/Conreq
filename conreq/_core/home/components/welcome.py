@@ -9,7 +9,7 @@ from conreq.types import HomepageState
 def welcome(state: HomepageState, set_state):
     async def on_click(_):
         # pylint: disable=protected-access
-        state._viewport_intent = config._homepage.admin_sidebar_tabs[1].viewport
+        state.viewport_intent = config._homepage.admin_sidebar_tabs[1].viewport
         set_state(state)
 
     return html.div(

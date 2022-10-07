@@ -9,6 +9,8 @@ from idom.html import _, a, button, div, h4, h5, li, ol, p
 from conreq._core.app_store.models import Category, Subcategory
 from conreq.types import HomepageState
 
+# pylint: disable=unused-argument
+
 
 class PlaceholderApp:
     uuid = 0
@@ -40,13 +42,13 @@ def app_store(state: HomepageState, set_state):
 
     # Display loading animation until categories are loaded
     if loading_needed and not categories:
-        state.set_loading(True)
+        state.viewport_loading = True
         set_loading_needed(False)
         set_state(state)
 
     # Hide loading animation once categories are loaded
     if not loading_needed and categories:
-        state.set_loading(False)
+        state.viewport_loading = False
         set_loading_needed(True)
         set_state(state)
 

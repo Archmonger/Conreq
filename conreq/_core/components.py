@@ -35,10 +35,10 @@ def tabbed_viewport(
 
     websocket = use_websocket()
 
-    if not tab_state or not tab_state._tab:
+    if not tab_state or not tab_state.tab:
         return
 
-    html_class = tab_state._tab.html_class
+    html_class = tab_state.tab.html_class
 
     return div(
         {
@@ -47,7 +47,7 @@ def tabbed_viewport(
         },
         div(
             {"className": "tabbed-viewport"},
-            tab_state._tab.component(state, set_state),
+            tab_state.tab.component(state, set_state),
         ),
         ul(
             {"className": "tabbed-viewport-selector list-group"},
@@ -115,10 +115,10 @@ def _subtab_attributes(
                 tab.on_click(click_event)
             return
 
-        tab_state.set_tab(tab)
+        tab_state.tab = tab
         set_tab_state(tab_state)
 
     return {
-        "className": f"list-group-item clickable{' active' if tab_state._tab is tab else ''}",
+        "className": f"list-group-item clickable{' active' if tab_state.tab is tab else ''}",
         "onClick": on_click,
     }

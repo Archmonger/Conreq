@@ -29,17 +29,17 @@ def homepage():
         new_obj = copy(obj)
         _set_state(new_obj)
 
-    @idom.hooks.use_effect(dependencies=[state._viewport_intent])
+    @idom.hooks.use_effect(dependencies=[state.viewport_intent])
     def set_viewport():
         """Determine what viewport to set the viewport based on intent."""
         # sourcery skip:remove-redundant-if, merge-duplicate-blocks
-        if not state._viewport_intent:
+        if not state.viewport_intent:
             return
 
         # Replace the selected viewport
-        state._viewport = state._viewport_intent
-        state._viewport_intent = None
-        state.modal_state.set_show(False)
+        state._viewport = state.viewport_intent
+        state.viewport_intent = None
+        state.modal_state.show = False
         state._modal = None
 
         set_state(state)

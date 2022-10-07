@@ -5,7 +5,7 @@ from idom.core.component import Component
 from idom.core.types import VdomDict
 from sortedcontainers import SortedSet
 
-# pylint: disable=protected-access
+# pylint: disable=protected-access, too-few-public-methods
 
 
 class Icon(VdomDict):
@@ -100,64 +100,40 @@ class HTMLTemplate:
 
 @dataclass
 class ModalState:
-    _show: bool = False
     # FIXME: Some options are not available until IDOM supports react-bootstrap
     # Solution: https://github.com/idom-team/idom/issues/786
 
-    # _size: str = "lg"
-    # _centered: bool = True
-    # _kwargs: dict = field(default_factory=dict)
-
-    def set_show(self, show: bool):
-        self._show = show
-
-    # def set_size(self, size: str):
-    #     self._size = size
-
-    # def set_centered(self, centered: bool):
-    #     self._centered = centered
-
-    # def set_kwargs(self, kwargs: dict):
-    #     self._kwargs = kwargs
+    show: bool = False
+    # size: str = "lg"
+    # centered: bool = True
+    # kwargs: dict = field(default_factory=dict)
 
 
 @dataclass
 class HomepageState:
-    _viewport_loading: bool = False
+    viewport_loading: bool = False
     """A toggle to manually set the viewport loading state. This is only used
     by user defined viewport components."""
 
-    _viewport_intent: Viewport | None = None
+    viewport_intent: Viewport | None = None
     """The viewport that needs to be loaded."""
 
     _viewport: Viewport | None = None
     """The currently visible viewport."""
 
-    _modal_intent: Callable | None = None
+    modal_intent: Callable | None = None
     """The modal that needs to be loaded."""
 
     _modal: Callable | None = None
     """The currently visible modal."""
 
-    modal_state: ModalState = ModalState()
+    modal_state: ModalState = field(default_factory=ModalState)
     """The modal's current state object."""
-
-    def set_loading(self, loading: bool):
-        self._viewport_loading = loading
-
-    def set_viewport(self, viewport: Viewport):
-        self._viewport_intent = viewport
-
-    def set_modal(self, modal: Callable):
-        self._modal_intent = modal
 
 
 @dataclass
 class TabbedViewportState:
-    _tab: SubTab | None
-
-    def set_tab(self, tab: SubTab):
-        self._tab = tab
+    tab: SubTab | None
 
 
 @dataclass

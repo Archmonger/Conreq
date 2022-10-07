@@ -9,6 +9,8 @@ from conreq import HomepageState, Viewport, config
 from conreq._core.components import tabbed_viewport
 from conreq._core.user_settings import views
 
+# pylint: disable=unused-argument
+
 
 @component
 @auth_required
@@ -55,5 +57,5 @@ async def sign_out_event(
     _, websocket: IdomWebsocket, state: HomepageState, set_state, tab
 ):
     await logout(websocket.scope)
-    state._viewport_intent = Viewport(lambda *_: script("window.location.reload()"))
+    state.viewport_intent = Viewport(lambda *_: script("window.location.reload()"))
     set_state(state)
