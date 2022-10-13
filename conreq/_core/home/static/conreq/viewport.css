@@ -4,8 +4,11 @@
 	height: calc(100% - var(--navbar-height));
 	width: calc(100vw - var(--viewport-left));
 	padding: 0 var(--viewport-padding);
+	opacity: 0;
 	overflow-y: auto;
 	z-index: 100;
+	-webkit-animation: fade-in 1s forwards;
+	animation: fade-in 1s forwards;
 }
 
 .viewport-container > iframe {
@@ -55,5 +58,17 @@
 	.viewport-container {
 		width: 100vw;
 		left: 0px;
+	}
+}
+
+@-webkit-keyframes fade-in {
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-in {
+	100% {
+		opacity: 1;
 	}
 }
