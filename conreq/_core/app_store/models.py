@@ -40,7 +40,7 @@ class DescriptionType(models.TextChoices):
 
 class Category(models.Model):
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -55,7 +55,7 @@ class Category(models.Model):
 
 class Subcategory(models.Model):
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     class Meta:
         verbose_name = "Subcategory"
@@ -80,7 +80,7 @@ class PackageVersion(models.Model):
 
 class AppPackage(models.Model):
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
@@ -173,7 +173,7 @@ class AppPackage(models.Model):
 
 class Screenshot(models.Model):
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
@@ -187,7 +187,7 @@ class Screenshot(models.Model):
 
 class NoticeMessage(models.Model):
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
