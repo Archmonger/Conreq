@@ -3,7 +3,8 @@
 	height: calc(100% - var(--navbar-height));
 	width: var(--sidebar-width);
 	position: absolute;
-	left: 0;
+	left: calc(var(--sidebar-width) * -1);
+	opacity: 0;
 	background: rgb(0 0 0 / 07%);
 	border-color: #ffffff17;
 	border-width: 0 1px 0 0;
@@ -16,28 +17,24 @@
 	overflow-y: overlay;
 	display: inline-block;
 	color: rgb(156 156 156);
-	-webkit-animation: fade-in 0.5s ease;
-	animation: fade-in 0.5s ease;
+	-webkit-animation: slide 1.25s forwards;
+	animation: slide 1.25s forwards;
 }
 
 .sidebar::-webkit-scrollbar {
 	display: none;
 }
 
-@-webkit-keyframes fade-in {
-	0% {
-		opacity: 0;
-	}
+@-webkit-keyframes slide {
 	100% {
+		left: 0;
 		opacity: 1;
 	}
 }
 
-@keyframes fade-in {
-	0% {
-		opacity: 0;
-	}
+@keyframes slide {
 	100% {
+		left: 0;
 		opacity: 1;
 	}
 }
