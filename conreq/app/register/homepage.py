@@ -30,12 +30,12 @@ def sidebar_tab(
     # TODO: URL support (Requires IDOM to support URL routing)
 
     def decorator(component: Component):
-        if group not in config.homepage.sidebar_tabs:
+        if config.homepage.sidebar_tabs and group not in config.homepage.sidebar_tabs:
             config.homepage.sidebar_tabs.add(group)
 
         for nav_group in config.homepage.sidebar_tabs:
             if group == nav_group:
-                group.tabs.add(
+                nav_group.tabs.add(
                     SidebarTab(
                         name=name,
                         viewport=Viewport(

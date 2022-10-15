@@ -29,7 +29,7 @@ class AuthLevel:
     admin: str = "admin"
 
 
-@dataclass
+@dataclass(frozen=True)
 class Viewport:
     component: Component
     html_class: str = ""
@@ -38,7 +38,7 @@ class Viewport:
     background: str | None = None  # TODO: Implement this
 
 
-@dataclass(order=True)
+@dataclass(frozen=True)
 class SidebarTab:
     name: str
     viewport: Viewport | None = None
@@ -48,11 +48,14 @@ class SidebarTab:
     def __eq__(self, __o: object) -> bool:
         return _compare_names(self, __o)
 
-    def __hash__(self) -> int:
-        return hash(self.name)
+    def __lt__(self, __o: object) -> bool:
+        return self.name < getattr(__o, "name", "")
+
+    def __gt__(self, __o: object) -> bool:
+        return self.name > getattr(__o, "name", "")
 
 
-@dataclass(order=True)
+@dataclass(frozen=True)
 class SubTab:
     name: str
     component: Component
@@ -64,8 +67,14 @@ class SubTab:
     def __eq__(self, __o: object) -> bool:
         return _compare_names(self, __o)
 
+    def __lt__(self, __o: object) -> bool:
+        return self.name < getattr(__o, "name", "")
 
-@dataclass(order=True)
+    def __gt__(self, __o: object) -> bool:
+        return self.name > getattr(__o, "name", "")
+
+
+@dataclass(frozen=True)
 class NavGroup:
     name: str
     icon: Icon | None = None
@@ -73,6 +82,12 @@ class NavGroup:
 
     def __eq__(self, __o: object) -> bool:
         return _compare_names(self, __o)
+
+    def __lt__(self, __o: object) -> bool:
+        return self.name < getattr(__o, "name", "")
+
+    def __gt__(self, __o: object) -> bool:
+        return self.name > getattr(__o, "name", "")
 
 
 @dataclass
