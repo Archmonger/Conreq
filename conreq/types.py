@@ -48,6 +48,9 @@ class SidebarTab:
     def __eq__(self, __o: object) -> bool:
         return _compare_names(self, __o)
 
+    def __hash__(self) -> int:
+        return hash(self.name)
+
 
 @dataclass(order=True)
 class SubTab:

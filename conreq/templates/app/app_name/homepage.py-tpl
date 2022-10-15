@@ -1,2 +1,4 @@
+from idom import component
+
 from conreq.app.register import homepage
 from conreq.types import CSS, SCSS, HTMLTemplate, JavaScript, NavGroup

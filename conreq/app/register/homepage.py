@@ -31,7 +31,7 @@ def sidebar_tab(
 
     def decorator(component: Component):
         if group not in config.homepage.sidebar_tabs:
-            config.homepage.sidebar_tabs.append(group)
+            config.homepage.sidebar_tabs.add(group)
 
         for nav_group in config.homepage.sidebar_tabs:
             if group == nav_group:
@@ -47,7 +47,7 @@ def sidebar_tab(
                         auth=auth,
                     )
                 )
-            break
+                break
 
         return component
 
