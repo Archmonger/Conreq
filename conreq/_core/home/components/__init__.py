@@ -31,8 +31,7 @@ def homepage():
 
     @idom.hooks.use_effect(dependencies=[state.viewport_intent])
     def set_viewport():
-        """Determine what viewport to set the viewport based on intent."""
-        # sourcery skip:remove-redundant-if, merge-duplicate-blocks
+        """Set the viewport based on intent."""
         if not state.viewport_intent:
             return
 
