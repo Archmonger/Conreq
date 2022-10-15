@@ -323,6 +323,7 @@ INSTALLED_APPS = [
     "django_tables2",  # Simplify generating HTML tables
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
+    "ordered_model",  # Ordered database models
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

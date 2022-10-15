@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from multiselectfield import MultiSelectField
+from ordered_model.models import OrderedModel
 from versionfield import VersionField
 
 from conreq.utils.models import UUIDFilePath
@@ -169,6 +170,35 @@ class AppPackage(models.Model):
     incompatible_subcategories = models.ManyToManyField(
         Subcategory, related_name="incompatible_subcategories", blank=True
     )
+
+
+class SpotlightCategory(OrderedModel):
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "Spotlight category"
+        verbose_name_plural = "Spotlight categories"
+
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True
+    )
+
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True)
+    apps = models.ManyToManyField(AppPackage, through="SpotlightApp")
+
+
+class SpotlightApp(OrderedModel):
+    """This model is used to create a many-to-many relationship between SpotlightCategory and AppPackage.
+    This allows for the ordering of apps within a spotlight category."""
+
+    category = models.ForeignKey(SpotlightCategory, on_delete=models.CASCADE)
+    app = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
+    order_with_respect_to = "category"
+
+    class Meta:
+        ordering = ("category", "order")
 
 
 class Screenshot(models.Model):
