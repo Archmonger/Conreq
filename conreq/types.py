@@ -93,7 +93,7 @@ class NavGroup:
 @dataclass
 class FileLink:
     path: str
-    attributes: dict[str, str | int] | None = None
+    attributes: dict[str, str | None] | None = None
     local: bool = True
 
 

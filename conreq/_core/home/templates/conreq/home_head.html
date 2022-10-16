@@ -46,7 +46,7 @@
 <script src="{% static 'conreq/izi_toast_1.4.0.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'conreq/izi_toast_1.4.0.min.css' %}">
 
-<!-- Local CSS -->
+<!-- CSS -->
 {% compress css %}
 <link rel="stylesheet" href="{% static 'conreq/main.css' %}">
 <link rel="stylesheet" href="{% static 'conreq/sidebar.css' %}">
@@ -57,31 +57,30 @@
 <link rel="stylesheet" href="{% static 'conreq/backdrop.css' %}">
 <link rel="stylesheet" href="{% static 'conreq/scrollbar.css' %}">
 <link rel="stylesheet" href="{% static 'conreq/buttons.css' %}">
-
+<link rel="stylesheet" href="{% static 'conreq/tiny-slider.css' %}">
 {% for stylesheet in home_config.local_stylesheets %}
-<link rel="stylesheet" href="{% static stylesheet.path %}">
+<link rel="stylesheet" href="{% static stylesheet.path %}" {% for key, value in stylesheet.attributes.items %}
+    {% if value %} {{key}}="{{value}}" {% else %} {{key}} {% endif %} {% endfor %}>
 {% endfor %}
-
 {% endcompress %}
 
-<!-- Local JS -->
+{% for stylesheet in home_config.remote_stylesheets %}
+<link rel="stylesheet" href="{{ stylesheet.path }}" {% for key, value in stylesheet.attributes.items %} {% if value %}
+    {{key}}="{{value}}" {% else %} {{key}} {% endif %} {% endfor %}>
+{% endfor %}
+
+<!-- JS -->
 {% compress js %}
 <script src="{% static 'conreq/iframe_events.js' %}"></script>
-
 {% for script in home_config.local_scripts %}
-<script src="{% static script.path %}"></script>
+<script src="{% static script.path %}" {% for key, value in script.attributes.items %} {% if value %}
+    {{key}}="{{value}}" {% else %} {{key}} {% endif %} {% endfor %}></script>
 {% endfor %}
-
 {% endcompress %}
 
-<!-- Remote CSS -->
-{% for stylesheet in home_config.remote_stylesheets %}
-<link rel="stylesheet" href="{{ stylesheet.path }}">
-{% endfor %}
-
-<!-- Remote JS -->
 {% for script in home_config.remote_scripts %}
-<script src="{{ script.path }}"></script>
+<script src="{{ script.path }}" {% for key, value in script.attributes.items %} {% if value %} {{key}}="{{value}}"
+    {% else %} {{key}} {% endif %} {% endfor %}></script>
 {% endfor %}
 
 <!-- App defined head content -->
