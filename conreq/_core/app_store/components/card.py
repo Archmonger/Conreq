@@ -5,7 +5,7 @@ from typing import Callable
 from idom import component, hooks
 from idom.html import a, button, div, h5
 
-from conreq._core.app_store.components.testing import PlaceholderApp
+from conreq._core.app_store.models import AppPackage
 from conreq.types import HomepageState
 
 # pylint: disable=unused-argument
@@ -17,7 +17,7 @@ def card(
     set_state: Callable[[HomepageState], None],
     set_tab,
     special,
-    app: PlaceholderApp = PlaceholderApp(),
+    app: AppPackage,
 ):
     opacity, set_opacity = hooks.use_state(0)
 
@@ -51,13 +51,6 @@ def card(
                     a(
                         {"href": "#", "onClick": lambda x: print("clicked")},
                         app.author,
-                    ),
-                ),
-                div(
-                    {"className": "card-category"},
-                    a(
-                        {"href": "#", "onClick": lambda x: print("clicked")},
-                        app.category,
                     ),
                 ),
             ),

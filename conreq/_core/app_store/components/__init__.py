@@ -1,6 +1,6 @@
 import asyncio
 import random
-from typing import Callable
+from typing import Callable, Iterable
 
 from django_idom.components import django_css
 from django_idom.hooks import use_query
@@ -9,42 +9,47 @@ from idom.html import _, a, div, h4, p
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.components.nav import app_store_nav
-from conreq._core.app_store.models import Subcategory
+from conreq._core.app_store.models import AppPackage, SpotlightCategory, Subcategory
 from conreq.types import HomepageState
 
 # pylint: disable=unused-argument
+# TODO: Handle situations where there are no spotlight apps or categories
 
 
 @component
 def app_store(state: HomepageState, set_state: Callable[[HomepageState], None]):
     # pylint: disable=unused-argument,protected-access
     tab, set_tab = hooks.use_state(None)
-    category_query = use_query(get_categories)
-    categories, set_categories = hooks.use_state({})
+    nav_category_query = use_query(get_nav_categories)
+    nav_categories, set_nav_categories = hooks.use_state({})
     loading_needed, set_loading_needed = hooks.use_state(True)
 
     # Display loading animation until categories are loaded
-    if loading_needed and not categories:
+    if loading_needed and not nav_categories:
         state.viewport_loading = True
         set_loading_needed(False)
         set_state(state)
 
     # Hide loading animation once categories are loaded
-    if not loading_needed and categories:
+    if not loading_needed and nav_categories:
         state.viewport_loading = False
         set_loading_needed(True)
         set_state(state)
 
     # Convert categories to a dictionary for easier rendering
-    if not category_query.loading and not category_query.error and not categories:
-        set_categories(subcategories_to_dict(category_query.data))
+    if (
+        not nav_category_query.loading
+        and not nav_category_query.error
+        and not nav_categories
+    ):
+        set_nav_categories(subcategories_to_dict(nav_category_query.data))
 
     # Don't render if there's an error loading categories
-    if category_query.error:
+    if nav_category_query.error:
         return _("Error!")
 
     # Don't render if categories are still loading, or if they haven't been converted to a dict yet
-    if category_query.loading or not categories:
+    if nav_category_query.loading or not nav_categories:
         return None
 
     # TODO: Update app store entries every first load
@@ -54,118 +59,37 @@ def app_store(state: HomepageState, set_state: Callable[[HomepageState], None]):
         if tab
         else div(
             {"className": "spotlight-region"},
-            _(
-                most_popular(state, set_state, set_tab),
-                recently_updated(state, set_state, set_tab),
-                our_favorites(state, set_state, set_tab),
-                top_downloaded(state, set_state, set_tab),
-                recently_added(state, set_state, set_tab),
-                essentials(state, set_state, set_tab),
-                random_selection(state, set_state, set_tab),
-            ),
+            _(all_spotlight(state, set_state, set_tab)),
             key="spotlight-region",
         ),
-        div({"className": "nav-region blur"}, app_store_nav(categories, set_tab)),
+        div({"className": "nav-region blur"}, app_store_nav(nav_categories, set_tab)),
     )
 
 
 @component
-def recently_added(
+def all_spotlight(
     state: HomepageState, set_state: Callable[[HomepageState], None], set_tab
 ):
+    spotlight_category_query = use_query(get_spotlight_categories)
+
+    if spotlight_category_query.loading or spotlight_category_query.error:
+        return
+
+    query_data: Iterable[SpotlightCategory] = spotlight_category_query.data  # type: ignore
+
     return _(
-        spotlight(
-            "Recently Added",
-            "The latest from our community.",
-            state,
-            set_state,
-            set_tab,
-        )
-    )
-
-
-@component
-def recently_updated(
-    state: HomepageState, set_state: Callable[[HomepageState], None], set_tab
-):
-    return _(
-        spotlight(
-            "Recently Updated",
-            "Actively maintained for all to enjoy.",
-            state,
-            set_state,
-            set_tab,
-        )
-    )
-
-
-@component
-def most_popular(
-    state: HomepageState, set_state: Callable[[HomepageState], None], set_tab
-):
-    return _(
-        spotlight(
-            "Most Popular",
-            "These have gained a serious amount lot of love.",
-            state,
-            set_state,
-            set_tab,
-        )
-    )
-
-
-@component
-def top_downloaded(
-    state: HomepageState, set_state: Callable[[HomepageState], None], set_tab
-):
-    return _(
-        spotlight("Top Downloaded", "Tons of downloads!", state, set_state, set_tab)
-    )
-
-
-@component
-def our_favorites(
-    state: HomepageState, set_state: Callable[[HomepageState], None], set_tab
-):
-    return _(
-        spotlight(
-            "Our Favorites",
-            "A curated list of our favorites.",
-            state,
-            set_state,
-            set_tab,
-            special=True,
-        )
-    )
-
-
-@component
-def essentials(
-    state: HomepageState, set_state: Callable[[HomepageState], None], set_tab
-):
-    return _(
-        spotlight(
-            "Essentials",
-            "Something we think all users should consider.",
-            state,
-            set_state,
-            set_tab,
-        )
-    )
-
-
-@component
-def random_selection(
-    state: HomepageState, set_state: Callable[[HomepageState], None], set_tab
-):
-    return _(
-        spotlight(
-            "Random Selection",
-            "Are you feeling lucky?",
-            state,
-            set_state,
-            set_tab,
-        )
+        [
+            spotlight(
+                category.name,
+                category.description,
+                state,
+                set_state,
+                set_tab,
+                apps=category.apps,
+                key=category.uuid,
+            )
+            for category in query_data
+        ]
     )
 
 
@@ -176,15 +100,21 @@ def spotlight(
     state: HomepageState,
     set_state: Callable[[HomepageState], None],
     set_tab,
-    apps=None,
+    apps: Iterable[AppPackage],
     special=False,
 ):
     opacity, set_opacity = hooks.use_state(0)
+    apps_query = use_query(get_spotlight_apps, apps)
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():
         await asyncio.sleep(round(random.uniform(0, 0.3), 3))
         set_opacity(1)
+
+    if apps_query.loading or apps_query.error:
+        return
+
+    query_data: Iterable[AppPackage] = apps_query.data  # type: ignore
 
     return div(
         {
@@ -198,12 +128,25 @@ def spotlight(
         ),
         div(
             {"className": "card-stage"},
-            _([card(state, set_state, set_tab, special, key=key) for key in range(8)]),
+            _(
+                [
+                    card(state, set_state, set_tab, special, app, key=app.uuid)
+                    for app in query_data
+                ]
+            ),
         ),
     )
 
 
-def get_categories():
+def get_spotlight_apps(apps):
+    return apps.all()
+
+
+def get_spotlight_categories():
+    return SpotlightCategory.objects.all()
+
+
+def get_nav_categories():
     return Subcategory.objects.select_related("category").order_by("name").all()
 
 
