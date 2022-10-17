@@ -48,7 +48,7 @@ class DragDropOrderedModelAdmin(BaseOrderedModelAdmin, admin.ModelAdmin):
             args=[-1, 0],  # placeholder pks, will be replaced in js
         )
         return mark_safe(
-            """
+            r"""
         <div class="pk-holder" data-pk="%s"></div> <!-- render the pk into each row -->
         <style>[draggable=true] { -khtml-user-drag: element; }</style>  <!-- fix for dragging in safari -->
         <script>
