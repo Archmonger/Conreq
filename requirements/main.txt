@@ -1,4 +1,4 @@
-channels==3.0.5
+channels==4.0.0
 diskcache==5.4.0
 django==3.2.15
 django-cleanup==5.2.0
