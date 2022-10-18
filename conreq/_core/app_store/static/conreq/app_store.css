@@ -47,26 +47,45 @@
 	padding-top: var(--viewport-padding);
 	overflow-y: auto;
 	width: 100%;
+	padding-right: calc(var(--viewport-padding) - 7px);
 }
 
 .spotlight {
 	margin-bottom: 35px;
 }
 
-.spotlight > .description {
-	margin-bottom: 20px;
+.spotlight-head {
+	margin-bottom: 7px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.spotlight > .card-stage {
-	display: flex;
-	flex-flow: row wrap;
+.carousel-controls {
+	font-size: 25px;
+}
+
+.carousel-controls > i {
+	padding: 0 6px;
+	margin: 0 2px;
+}
+
+.spotlight .card-stage {
 	overflow: hidden;
 	height: 225px;
 	margin-bottom: 20px;
-	align-content: flex-start;
 }
 
-.spotlight > .card-stage > .card {
+.spotlight .card-stage .carousel {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	width: -webkit-fit-content;
+	width: -moz-fit-content;
+	width: fit-content;
+}
+
+.spotlight .card-stage .card {
 	--border-radius: 8px;
 	--border-size: 1px;
 	--border-color: #606060;
@@ -79,22 +98,23 @@
 	width: 380px;
 	padding: 20px;
 	margin-right: 20px;
+	display: inline-block;
 }
 
 .fade-in {
 	transition: opacity 1.25s ease;
 }
 
-.spotlight > .card-stage > .card > .top {
+.spotlight .card-stage .card > .top {
 	display: grid;
 	grid-template-columns: auto 80px;
 }
 
-.spotlight > .card-stage > .card > .top > .text-region {
+.spotlight .card-stage .card > .top > .text-region {
 	margin-right: 5px;
 }
 
-.spotlight > .card-stage > .card > .top > .text-region > * {
+.spotlight .card-stage .card > .top > .text-region > * {
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	display: -webkit-box;
@@ -102,11 +122,11 @@
 	padding-bottom: 2px;
 }
 
-.spotlight > .card-stage > .card > .top > .text-region > .card-title {
+.spotlight .card-stage .card > .top > .text-region > .card-title {
 	margin-bottom: 5px;
 }
 
-.spotlight > .card-stage > .card > .top > .image {
+.spotlight .card-stage .card > .top > .image {
 	display: inline-block;
 	position: relative;
 	height: 80px;
@@ -114,15 +134,15 @@
 	background: #6c757d;
 }
 
-.spotlight > .card-stage > .card > .btn-container {
+.spotlight .card-stage .card > .btn-container {
 	margin-bottom: 10px;
 }
 
-.spotlight > .card-stage > .card > .btn-container > .btn {
+.spotlight .card-stage .card > .btn-container > .btn {
 	margin-right: 5px;
 }
 
-.spotlight > .card-stage > .card > .description {
+.spotlight .card-stage .card > .description {
 	padding-bottom: 2px;
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
@@ -152,14 +172,14 @@
 	}
 }
 
-.spotlight > .card-stage > .card.special {
+.spotlight .card-stage .card.special {
 	--border-bg: conic-gradient(var(--border-color), var(--accent-color));
 	background: transparent;
 	overflow: hidden;
 	border: none;
 }
 
-.spotlight > .card-stage > .card.special::before {
+.spotlight .card-stage .card.special::before {
 	content: "";
 	display: block;
 	background: var(--border-bg);
@@ -175,7 +195,7 @@
 	animation: spin 10s linear infinite;
 }
 
-.spotlight > .card-stage > .card.special::after {
+.spotlight .card-stage .card.special::after {
 	content: "";
 	position: absolute;
 	inset: var(--border-size);

@@ -1,11 +1,12 @@
 import asyncio
 import random
+from copy import copy
 from typing import Callable, Iterable
 
 from django_idom.components import django_css
 from django_idom.hooks import use_query
 from idom import component, hooks
-from idom.html import _, a, div, h4, p
+from idom.html import _, div, h4, i, p
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.components.nav import app_store_nav
@@ -75,8 +76,6 @@ def all_spotlight(
     if spotlight_category_query.loading or spotlight_category_query.error:
         return
 
-    query_data: Iterable[SpotlightCategory] = spotlight_category_query.data  # type: ignore
-
     return _(
         [
             spotlight(
@@ -88,7 +87,7 @@ def all_spotlight(
                 apps=category.apps,
                 key=category.uuid,
             )
-            for category in query_data
+            for category in spotlight_category_query.data  # type: ignore
         ]
     )
 
@@ -105,6 +104,7 @@ def spotlight(
 ):
     opacity, set_opacity = hooks.use_state(0)
     apps_query = use_query(get_spotlight_apps, apps)
+    card_list, set_card_list = hooks.use_state([])
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():
@@ -114,25 +114,45 @@ def spotlight(
     if apps_query.loading or apps_query.error:
         return
 
-    query_data: Iterable[AppPackage] = apps_query.data  # type: ignore
+    if not card_list:
+        set_card_list(
+            [
+                card(state, set_state, set_tab, special, app, key=app.uuid)
+                for app in apps_query.data  # type: ignore
+            ]
+        )
+        return
+
+    def rotate_left(_):
+        set_card_list(copy(card_list[-1:] + card_list[:-1]))
+
+    def rotate_right(_):
+        card_list.append(card_list.pop(0))
+        set_card_list(copy(card_list))
 
     return div(
         {
             "className": "spotlight fade-in",
             "style": {"opacity": opacity},
         },
-        a(
-            {"href": "#", "onClick": lambda x: print("clicked")},
-            h4({"className": "title"}, title),
-            p({"className": "description"}, description),
+        div(
+            {"className": "spotlight-head"},
+            div(
+                {"className": "spotlight-title"},
+                h4({"className": "title"}, title),
+                p({"className": "description"}, description),
+            ),
+            div(
+                {"className": "carousel-controls"},
+                i({"className": "fas fa-angle-left", "onClick": rotate_left}),
+                i({"className": "fas fa-angle-right", "onClick": rotate_right}),
+            ),
         ),
         div(
             {"className": "card-stage"},
-            _(
-                [
-                    card(state, set_state, set_tab, special, app, key=app.uuid)
-                    for app in query_data
-                ]
+            div(
+                {"className": "carousel"},
+                _(card_list),
             ),
         ),
     )
