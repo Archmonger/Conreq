@@ -60,7 +60,7 @@ def card(
             {"className": "btn-container"},
             button(
                 {
-                    "className": "btn btn-sm btn-secondary",
+                    "className": "btn btn-sm btn-info",
                     "onClick": click_details_btn,
                 },
                 "Details",

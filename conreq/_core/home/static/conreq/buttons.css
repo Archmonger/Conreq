@@ -15,3 +15,18 @@
 .btn.btn-primary:active {
 	background: #28b18b;
 }
+
+.btn.btn-info {
+	color: #fff;
+	background: #127d93;
+}
+
+.btn.btn-info:hover,
+.btn.btn-info:focus {
+	color: #fff;
+	background: #1592ac;
+}
+.btn.btn-info:active {
+	color: #fff;
+	background: #1a9db9;
+}

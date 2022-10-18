@@ -31,7 +31,7 @@ a:focus {
 	color: rgb(255 255 255 / 0.35);
 }
 
-.custom-select {
+.form-select {
 	background: rgb(20 20 20)
 		url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23ffffff' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
 		no-repeat right 0.75rem center;
@@ -40,7 +40,7 @@ a:focus {
 	border-color: #ffffff3b;
 }
 
-.custom-select:focus {
+.form-select:focus {
 	background: #fff
 		url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23000000' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
 		no-repeat right 0.75rem center;

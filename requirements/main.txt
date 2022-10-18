@@ -35,3 +35,4 @@ Twisted[tls,http2]==22.8.0
 tzlocal==4.2
 uvicorn[standard]==0.18.3
 whitenoise[brotli]==6.2.0
+crispy-bootstrap5==0.7

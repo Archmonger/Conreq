@@ -121,7 +121,8 @@ HUEY = {
 IDOM_BASE_URL = f"{get_base_url()[1:]}idom/"
 os.environ["IDOM_DEBUG_MODE"] = str(int(DEBUG))
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 JAZZMIN_SETTINGS = {"custom_css": "conreq/jazzmin.css"}
 
 
@@ -320,6 +321,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",  # API User Authentication
     # Miscellaneous
     "crispy_forms",  # Simplify generating HTML forms
+    "crispy_bootstrap5",  # Bootstrap 5 support for Crispy Forms
     "django_tables2",  # Simplify generating HTML tables
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
