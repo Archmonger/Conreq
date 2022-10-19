@@ -10,7 +10,7 @@ from conreq._core.user_settings.forms import (
     DeleteMyAccountForm,
     UserSettingsForm,
 )
-from conreq.utils.views import UserInstanceMixin, SuccessCurrentUrlMixin
+from conreq.utils.views import SuccessCurrentUrlMixin, UserInstanceMixin
 
 
 @method_decorator(user_passes_test(lambda u: u.is_authenticated), name="dispatch")
