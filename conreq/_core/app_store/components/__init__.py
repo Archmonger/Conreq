@@ -63,7 +63,7 @@ def app_store(state: HomepageState, set_state: Callable[[HomepageState], None]):
             _(all_spotlight(state, set_state, set_tab)),
             key="spotlight-region",
         ),
-        div({"className": "nav-region blur"}, app_store_nav(nav_categories, set_tab)),
+        app_store_nav(nav_categories, set_tab),
     )
 
 
@@ -100,7 +100,6 @@ def spotlight(
     set_state: Callable[[HomepageState], None],
     set_tab,
     apps: Iterable[AppPackage],
-    special=False,
 ):
     opacity, set_opacity = hooks.use_state(0)
     apps_query = use_query(get_spotlight_apps, apps)
@@ -117,7 +116,7 @@ def spotlight(
     if not card_list:
         set_card_list(
             [
-                card(state, set_state, set_tab, special, app, key=app.uuid)
+                card(state, set_state, set_tab, app, key=app.uuid)
                 for app in apps_query.data  # type: ignore
             ]
         )

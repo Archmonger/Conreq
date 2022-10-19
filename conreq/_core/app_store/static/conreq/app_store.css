@@ -13,12 +13,14 @@
 	background: rgb(0 0 0 / 07%);
 	border-color: #ffffff17;
 	border-width: 0 0 0 1px;
-	margin-left: 3px;
+	margin-left: 2px;
 	border-style: solid;
-	box-shadow: var(--box-shadow);
+	box-shadow: -3px 0px 5px -1px rgb(0 0 0 / 20%),
+		-6px 0 10px 0 rgb(0 0 0 / 14%);
 	color: rgb(156 156 156);
 	-webkit-animation: fade-in 2s ease;
 	animation: fade-in 2s ease;
+	z-index: 2;
 }
 
 .viewport-container.app-store .nav-region ol {
@@ -46,12 +48,14 @@
 .spotlight-region {
 	padding-top: var(--viewport-padding);
 	overflow-y: auto;
+	overflow-y: overlay;
 	width: 100%;
-	padding-right: calc(var(--viewport-padding) - 7px);
 }
 
 .spotlight {
 	margin-bottom: 35px;
+	background: linear-gradient(-90deg, #0000004d, transparent);
+	padding: 5px 0;
 }
 
 .spotlight-head {
@@ -59,6 +63,8 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	color: #fff;
+	padding-right: calc(var(--viewport-padding) - 7px);
 }
 
 .carousel-controls {
@@ -78,8 +84,7 @@
 
 .spotlight .card-stage .carousel {
 	display: flex;
-	flex-flow: row wrap;
-	justify-content: space-around;
+	flex-flow: row;
 	width: -webkit-fit-content;
 	width: -moz-fit-content;
 	width: fit-content;
@@ -88,21 +93,38 @@
 .spotlight .card-stage .card {
 	--border-radius: 8px;
 	--border-size: 1px;
-	--border-color: #606060;
-	--card-bg: rgb(31 33 36 / 96%);
-	color: rgb(255 255 255 / 65%);
+	--border-color: #27464a;
+	--card-bg: #161616;
+	color: #fff;
 	background: var(--card-bg);
 	border-radius: var(--border-radius);
-	border: 1px solid var(--border-color);
+	border: var(--border-size) solid var(--border-color);
 	height: 225px;
 	width: 380px;
 	padding: 20px;
 	margin-right: 20px;
 	display: inline-block;
+	z-index: 1;
 }
 
 .fade-in {
 	transition: opacity 1.25s ease;
+}
+
+.spotlight .card-stage .card .background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	opacity: 0.2;
+	z-index: -1;
+	overflow: hidden;
+	border-radius: var(--border-radius);
+	-webkit-filter: blur(3px);
+	filter: blur(3px);
 }
 
 .spotlight .card-stage .card > .top {
@@ -173,33 +195,21 @@
 }
 
 .spotlight .card-stage .card.special {
-	--border-bg: conic-gradient(var(--border-color), var(--accent-color));
-	background: transparent;
+	--animation-speed: 10s;
+	--card-bg-animation: conic-gradient(#000000ab, #00000036);
+	--border-color: #8b7234;
 	overflow: hidden;
-	border: none;
 }
 
 .spotlight .card-stage .card.special::before {
 	content: "";
-	display: block;
-	background: var(--border-bg);
+	background: var(--card-bg-animation);
 	width: calc(100% * 1.41421356237);
 	padding-bottom: calc(100% * 1.41421356237);
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	transform: translate(-50%, -50%);
-	border-radius: 100%;
 	z-index: -2;
-	-webkit-animation: spin 10s linear infinite;
-	animation: spin 10s linear infinite;
-}
-
-.spotlight .card-stage .card.special::after {
-	content: "";
-	position: absolute;
-	inset: var(--border-size);
-	background: var(--card-bg);
-	z-index: -1;
-	border-radius: calc(var(--border-radius) - var(--border-size));
+	-webkit-animation: spin var(--animation-speed) linear infinite;
+	animation: spin var(--animation-speed) linear infinite;
 }

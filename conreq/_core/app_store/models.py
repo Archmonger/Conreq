@@ -98,6 +98,14 @@ class AppPackage(models.Model):
         upload_to=UUIDFilePath("serve/app_store/logos/"),
         blank=True,
     )
+    background = models.ImageField(
+        upload_to=UUIDFilePath("serve/app_store/backgrounds/"),
+        blank=True,
+    )
+    special = models.BooleanField(
+        default=False,
+        help_text="If enabled, this app's cards will be visually highlighted. Reserved for donations.",
+    )
     short_description = models.CharField(max_length=255, blank=True)
     long_description = models.TextField(blank=True)
     long_description_type = models.CharField(

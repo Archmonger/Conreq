@@ -16,9 +16,9 @@ def card(
     state: HomepageState,
     set_state: Callable[[HomepageState], None],
     set_tab,
-    special,
     app: AppPackage,
 ):
+    animation_speed, _ = hooks.use_state(random.randint(7, 13))
     opacity, set_opacity = hooks.use_state(0)
 
     def click_details_btn(_):
@@ -32,8 +32,9 @@ def card(
 
     return div(
         {
-            "className": "card fade-in" + (" special" if special else ""),
-            "style": {"opacity": opacity},
+            "className": "card fade-in" + (" special" if app.special else ""),
+            "style": {"opacity": opacity}
+            | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
         },
         div(
             {"className": "top"},
@@ -74,4 +75,12 @@ def card(
             ),
         ),
         div({"className": "description"}, app.short_description),
+        div(
+            {"className": "background"}
+            | (
+                {"style": {"backgroundImage": f'url("{app.background.url}")'}}
+                if app.background
+                else {}
+            )
+        ),
     )
