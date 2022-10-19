@@ -268,6 +268,7 @@ if not SECRET_KEY:
 INSTALLED_APPS = [
     *(
         [
+            "daphne",  # Overrides `runserver` command with an ASGI server
             "jazzmin",
             "django.contrib.admin",
             "django.contrib.admindocs",
@@ -313,7 +314,6 @@ INSTALLED_APPS = [
     # TODO: Might need to fork `versionfield` to fix the bugs mentioned above
     # "versionfield",  # Allow for version numbers in the DB
     # ASGI
-    "channels",  # Websocket library
     "django_idom",  # React JS for Python
     # API
     "rest_framework",  # OpenAPI Framework

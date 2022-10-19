@@ -50,7 +50,7 @@ class SuccessCurrentUrlMixin:
         return super().get_success_url()
 
 
-class CurrentUserMixin:
+class UserInstanceMixin:
     """Mixin for `FormView`, `UpdateView`, and `DeleteView` to utilize the current
     user as the object. Forms utilized in these views must be a `ModelForm`."""
 

@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django_tables2 import RequestConfig
@@ -16,6 +18,7 @@ from conreq.utils.views import (
 )
 
 
+@method_decorator(user_passes_test(lambda u: u.is_superuser), name="dispatch")
 class EditUserView(
     SuccessCurrentUrlMixin, ObjectInParamsMixin, CurrentUserOrAdminMixin, UpdateView
 ):
@@ -29,6 +32,7 @@ class EditUserView(
         return context
 
 
+@method_decorator(user_passes_test(lambda u: u.is_superuser), name="dispatch")
 class DeleteUserView(
     SuccessCurrentUrlMixin, ObjectInParamsMixin, CurrentUserOrAdminMixin, DeleteView
 ):
@@ -36,6 +40,7 @@ class DeleteUserView(
     model = get_user_model()
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def manage_users(request):
     table = UsersTable(get_user_model().objects.all())
     RequestConfig(
@@ -45,6 +50,7 @@ def manage_users(request):
     return render(request, "conreq/table.html", {"table": table})
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def manage_invites(request):
     table = UserInviteTable(InviteCode.objects.all())
     RequestConfig(
@@ -54,6 +60,7 @@ def manage_invites(request):
     return render(request, "conreq/table.html", {"table": table})
 
 
+@method_decorator(user_passes_test(lambda u: u.is_superuser), name="dispatch")
 class CreateInvite(SuccessCurrentUrlMixin, CurrentUserOrAdminMixin, CreateView):
     template_name = config.templates.create_invite
     model = InviteCode
@@ -66,5 +73,6 @@ class CreateInvite(SuccessCurrentUrlMixin, CurrentUserOrAdminMixin, CreateView):
         )
 
 
+@method_decorator(user_passes_test(lambda u: u.is_superuser), name="dispatch")
 class CreateInviteSuccess(TemplateView):
     template_name = config.templates.create_invite_success

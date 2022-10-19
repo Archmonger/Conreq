@@ -16,29 +16,36 @@ from conreq._core.server_settings import views
 
 # TODO: Create generic notification agent API.
 
+general_settings_vtc = view_to_component(views.GeneralSettingsView, compatibility=True)
+styling_settings_vtc = view_to_component(views.StylingSettingsView, compatibility=True)
+webserver_settings_vtc = view_to_component(
+    views.WebserverSettingsView, compatibility=True
+)
+email_settings_vtc = view_to_component(views.EmailSettingsView, compatibility=True)
+
 
 @component
 @auth_required(auth_attribute="is_staff")
 def general_settings(state, set_state):
-    return html._(view_to_component(views.GeneralSettingsView, compatibility=True))
+    return general_settings_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def styling_settings(state, set_state):
-    return html._(view_to_component(views.StylingSettingsView, compatibility=True))
+    return styling_settings_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def webserver_settings(state, set_state):
-    return html._(view_to_component(views.WebserverSettingsView, compatibility=True))
+    return webserver_settings_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
 def email_settings(state, set_state):
-    return html._(view_to_component(views.EmailSettingsView, compatibility=True))
+    return email_settings_vtc()
 
 
 def system_info(state, set_state):

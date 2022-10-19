@@ -1,6 +1,6 @@
-channels==3.0.5
+channels[daphne]==4.0.0
 diskcache==5.4.0
-django==4.1.1
+django==4.1.2
 django-ace==1.0.12
 django-cleanup==6.0.0
 django-colorfield==0.7.2
@@ -9,7 +9,7 @@ django-compressor==4.1
 django-crispy-forms==1.14.0
 django-downloadview==2.3.0
 django-health-check==3.17.0
-django-idom==1.2.0
+django-idom==2.0.1
 django-jazzmin==2.5.0
 django-multiselectfield==0.1.12
 django-ordered-model==3.6

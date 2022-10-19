@@ -22,6 +22,11 @@
 	width: stretch;
 }
 
+.tabbed-viewport iframe {
+	height: 100%;
+	width: 100%;
+}
+
 .list-group-item {
 	display: inline-block;
 	white-space: nowrap;
@@ -31,9 +36,4 @@
 .list-group-item.active {
 	background: var(--accent-color);
 	border-color: var(--accent-color);
-}
-
-iframe {
-	height: 100%;
-	width: 100%;
 }
