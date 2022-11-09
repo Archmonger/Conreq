@@ -264,6 +264,7 @@ else:
 # Django Apps & Middleware
 sys.path.append(APPS_DIR)  # User Installed Apps
 INSTALLED_APPS = [
+    "daphne",  # Websocket library
     "django.contrib.admin",
     "django.contrib.admindocs",
     "django.contrib.auth",
@@ -273,7 +274,6 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     *list_modules(CORE_DIR, prefix="conreq.core."),
-    "channels",  # Websocket library
     "encrypted_fields",  # Allow for encrypted text in the DB
     "solo",  # Allow for single-row fields in the DB
     "django_cleanup.apps.CleanupConfig",  # Automatically delete old image files
