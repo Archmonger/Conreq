@@ -11,13 +11,7 @@ def app_store_nav(categories: dict[Category, list[Subcategory]], set_tab):
         [
             div(
                 {"className": "nav-item"},
-                a(
-                    {
-                        "href": f"#{category.uuid}",
-                        "onClick": lambda x: print("clicked"),
-                    },
-                    h5({"className": "nav-title"}, category.name),
-                ),
+                h5({"className": "nav-title"}, category.name),
                 ol(
                     {"className": "nav-sub"},
                     [
