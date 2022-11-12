@@ -5,7 +5,11 @@
 	justify-content: space-between;
 }
 
-.viewport-container.app-store .nav-region {
+.nav-title {
+	color: #c5c5c5;
+}
+
+.nav-region {
 	min-width: -webkit-fit-content;
 	min-width: -moz-fit-content;
 	min-width: fit-content;
@@ -23,25 +27,25 @@
 	z-index: 2;
 }
 
-.viewport-container.app-store .nav-region ol {
+.nav-region ol {
 	padding-left: 0;
 }
 
-.viewport-container.app-store .nav-region li {
+.nav-region li {
 	display: block;
 	margin-bottom: 8px;
 }
 
-.viewport-container.app-store a.nav-sub-link {
+a.nav-sub-link {
 	color: #878b8f;
 }
 
-.viewport-container.app-store a.nav-sub-link:hover,
-.viewport-container.app-store a.nav-sub-link:focus {
+a.nav-sub-link:hover,
+a.nav-sub-link:focus {
 	color: #a5a8ab;
 }
 
-.viewport-container.app-store a.nav-sub-link:active {
+a.nav-sub-link:active {
 	color: #b8bbbd;
 }
 
