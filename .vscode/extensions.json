@@ -3,7 +3,6 @@
         "irongeek.vscode-env",
         "eamodio.gitlens",
         "github.vscode-pull-request-github",
-        "knisterpeter.vscode-github",
         "wholroyd.jinja",
         "esbenp.prettier-vscode",
         "ms-python.vscode-pylance",
@@ -11,6 +10,7 @@
         "mrmlnc.vscode-autoprefixer",
         "gruntfuggly.todo-tree",
         "sourcery.sourcery",
-        "njpwerner.autodocstring"
+        "njpwerner.autodocstring",
+        "github.copilot",
     ]
 }
