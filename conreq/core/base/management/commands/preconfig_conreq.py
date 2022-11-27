@@ -99,6 +99,22 @@ class Command(BaseCommand):
         if uid != -1 or gid != -1:
             # pylint: disable=unused-variable
             for dirpath, dirnames, filenames in os.walk(path):
-                shutil.chown(dirpath, new_uid, new_gid)
-                for filename in filenames:
-                    shutil.chown(os.path.join(dirpath, filename), new_uid, new_gid)
+                try:
+                    shutil.chown(dirpath, new_uid, new_gid)
+                    try:
+                        for filename in filenames:
+                            shutil.chown(
+                                os.path.join(dirpath, filename), new_uid, new_gid
+                            )
+                    except FileNotFoundError:
+                        print(
+                            'Unable to apply permissions to "'
+                            + os.path.join(dirpath, filename)
+                            + '". File not found.'
+                        )
+                except PermissionError:
+                    print(
+                        'Unable to apply permissions to "'
+                        + dirpath
+                        + '". Permission denied.'
+                    )
