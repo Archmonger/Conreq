@@ -2,6 +2,7 @@ import asyncio
 import random
 from typing import Callable
 
+from django_idom.hooks import use_query
 from idom import component, hooks
 from idom.html import a, button, div, h5
 
@@ -9,6 +10,10 @@ from conreq._core.app_store.models import AppPackage
 from conreq.types import HomepageState
 
 # pylint: disable=unused-argument
+
+
+def get_app_subcategory(app: AppPackage):
+    return app.subcategories.first()
 
 
 @component
@@ -20,8 +25,9 @@ def card(
 ):
     animation_speed, _ = hooks.use_state(random.randint(7, 13))
     opacity, set_opacity = hooks.use_state(0)
+    subcategory = use_query(get_app_subcategory, app)
 
-    def click_details_btn(_):
+    def details_modal_event(_):
         state.modal_state.show = True
         set_state(state)
 
@@ -43,7 +49,7 @@ def card(
                 h5(
                     {"className": "card-title"},
                     a(
-                        {"href": f"#{app.uuid}", "onClick": lambda x: print("clicked")},
+                        {"href": f"#{app.uuid}", "onClick": details_modal_event},
                         app.name,
                     ),
                 ),
@@ -54,6 +60,13 @@ def card(
                         app.author,
                     ),
                 ),
+                div(
+                    {"className": "card-category"},
+                    a(
+                        {"href": "#", "onClick": lambda x: print("clicked")},
+                        str(subcategory.data) if subcategory.data else "",
+                    ),
+                ),
             ),
             div({"className": "image"}),
         ),
@@ -61,10 +74,17 @@ def card(
             {"className": "btn-container"},
             button(
                 {
-                    "className": "btn btn-sm btn-info",
-                    "onClick": click_details_btn,
+                    "className": "btn btn-sm btn-dark",
+                    "onClick": details_modal_event,
                 },
                 "Details",
+            ),
+            button(
+                {
+                    "className": "btn btn-sm btn-dark",
+                    "onClick": lambda x: print("clicked"),
+                },
+                "Contact",
             ),
             button(
                 {
