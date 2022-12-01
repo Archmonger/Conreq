@@ -44,7 +44,7 @@ class Viewport:
 class SidebarTab:
     name: str
     viewport: Viewport | None = None
-    on_click: Callable[["SidebarTabEvent"], None] | None = None
+    on_click: Callable[[SidebarTabEvent], None] | None = None
     auth: str = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
@@ -63,7 +63,7 @@ class SubTab:
     component: Callable
     html_class: str = ""
     padding: bool = True
-    on_click: Callable[["SubTabEvent"], None] | None = None
+    on_click: Callable[[SubTabEvent], None] | None = None
     auth: str = AuthLevel.user
 
     def __eq__(self, __o: object) -> bool:
@@ -132,7 +132,7 @@ ModalStateContext: Context[ModalState] = create_context(ModalState())
 
 @dataclass
 class HomepageState:
-    set_state: "SetHomepageState" = lambda _: None
+    set_state: SetHomepageState = lambda _: None
     """a function that can be used to set this homepage state."""
 
     viewport_loading: bool = False
@@ -162,7 +162,7 @@ HomepageStateContext: Context[HomepageState] = create_context(HomepageState())
 @dataclass
 class TabbedViewportState:
     tab: SubTab | None
-    set_state: "SetTabbedViewportState" = lambda _: None
+    set_state: SetTabbedViewportState = lambda _: None
 
 
 SetTabbedViewportState = Callable[[TabbedViewportState], None]
