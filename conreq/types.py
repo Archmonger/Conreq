@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
-from idom.core.component import Component
+from idom.core.hooks import Context, create_context
 from idom.core.types import VdomDict
 from sortedcontainers import SortedSet
 
@@ -31,7 +33,7 @@ class AuthLevel:
 
 @dataclass(frozen=True)
 class Viewport:
-    component: Component
+    component: Callable
     html_class: str = ""
     padding: bool = True
     page_title: str | None = None
@@ -58,7 +60,7 @@ class SidebarTab:
 @dataclass(frozen=True)
 class SubTab:
     name: str
-    component: Component
+    component: Callable
     html_class: str = ""
     padding: bool = True
     on_click: Callable[["SubTabEvent"], None] | None = None
@@ -118,20 +120,21 @@ class HTMLTemplate:
 
 @dataclass
 class ModalState:
-    # FIXME: Some options are not available until IDOM supports react-bootstrap
-    # Solution: https://github.com/idom-team/idom/issues/786
+    # FIXME: Redo this when IDOM supports react-bootstrap
+    # https://github.com/idom-team/idom/issues/786
 
     show: bool = False
-    # size: str = "lg"
-    # centered: bool = True
-    # kwargs: dict = field(default_factory=dict)
 
 
 SetModalState = Callable[[ModalState], None]
+ModalStateContext: Context[ModalState] = create_context(ModalState())
 
 
 @dataclass
 class HomepageState:
+    set_state: "SetHomepageState" = lambda _: None
+    """a function that can be used to set this homepage state."""
+
     viewport_loading: bool = False
     """A toggle to manually set the viewport loading state. This is only used
     by user defined viewport components."""
@@ -153,14 +156,19 @@ class HomepageState:
 
 
 SetHomepageState = Callable[[HomepageState], None]
+HomepageStateContext: Context[HomepageState] = create_context(HomepageState())
 
 
 @dataclass
 class TabbedViewportState:
     tab: SubTab | None
+    set_state: "SetTabbedViewportState" = lambda _: None
 
 
 SetTabbedViewportState = Callable[[TabbedViewportState], None]
+TabbedViewportStateContext: Context[TabbedViewportState] = create_context(
+    TabbedViewportState(None)
+)
 
 
 @dataclass
@@ -169,7 +177,6 @@ class SidebarTabEvent:
     tab: SidebarTab
     websocket: Any
     homepage_state: HomepageState
-    set_homepage_state: Callable
 
 
 @dataclass
@@ -178,9 +185,7 @@ class SubTabEvent:
     tab: SubTab
     websocket: Any
     homepage_state: HomepageState
-    set_homepage_state: Callable
     tabbed_viewport_state: TabbedViewportState
-    set_tabbed_viewport_state: Callable
 
 
 def _compare_names(self, __o):

@@ -26,29 +26,29 @@ email_settings_vtc = view_to_component(views.EmailSettingsView, compatibility=Tr
 
 @component
 @auth_required(auth_attribute="is_staff")
-def general_settings(state, set_state):
+def general_settings():
     return general_settings_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
-def styling_settings(state, set_state):
+def styling_settings():
     return styling_settings_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
-def webserver_settings(state, set_state):
+def webserver_settings():
     return webserver_settings_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
-def email_settings(state, set_state):
+def email_settings():
     return email_settings_vtc()
 
 
-def system_info(state, set_state):
+def system_info():
 
     settings_values = [
         ("Conreq Version", settings.CONREQ_VERSION),
@@ -76,7 +76,7 @@ def system_info(state, set_state):
     )
 
 
-def licenses(state, set_state):
+def licenses():
     return html.div(
         {"style": {"marginTop": "20px"}},
         "This page is under construction, and will be developed in a later release.",
@@ -85,11 +85,9 @@ def licenses(state, set_state):
 
 # pylint: disable=protected-access
 @component
-def server_settings(state, set_state):
+def server_settings():
     return html._(
         tabbed_viewport(
-            state,
-            set_state,
             tabs=config.tabs.server_settings.installed,
             top_tabs=config._internal_tabs.server_settings,
         )

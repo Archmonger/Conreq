@@ -2,26 +2,29 @@ from copy import copy
 from inspect import iscoroutinefunction
 from uuid import uuid4
 
-import idom
 from django_idom.hooks import use_websocket
-from idom.core.types import VdomDict
-from idom.html import div, li, ul
+from idom import component, hooks
+from idom.html import _, div, li, ul
 
-from conreq.types import HomepageState, SubTab, SubTabEvent, TabbedViewportState
+from conreq.types import (
+    HomepageState,
+    HomepageStateContext,
+    SubTab,
+    SubTabEvent,
+    TabbedViewportState,
+    TabbedViewportStateContext,
+)
 
 
-@idom.component
+@component
 def tabbed_viewport(
-    state: HomepageState,
-    set_state,
     tabs: list[SubTab],
     top_tabs: list[SubTab] | None = None,
     bottom_tabs: list[SubTab] | None = None,
     default_tab: SubTab | None = None,
 ):
-    """Generates a viewport with the provided tabs. Viewport functions should accept
-    `state, set_state` as arguements."""
-    tab_state, _set_tab_state = idom.hooks.use_state(
+    """Generates a viewport with the provided tabs."""
+    tab_state, _set_tab_state = hooks.use_state(
         TabbedViewportState(
             _default_tab(
                 top_tabs or [], tabs, bottom_tabs or [], default_tab=default_tab
@@ -29,34 +32,35 @@ def tabbed_viewport(
         )
     )
 
-    def set_tab_state(obj):
+    def _set_tab_state_copy(obj):
         new_obj = copy(obj)
         _set_tab_state(new_obj)
 
-    websocket = use_websocket()
+    tab_state.set_state = _set_tab_state_copy
 
     if not tab_state or not tab_state.tab:
         return
 
     html_class = tab_state.tab.html_class
 
-    return div(
-        {
-            "className": "tabbed-viewport-container"
-            + (f" {html_class}" if html_class else "")
-        },
+    return TabbedViewportStateContext(
         div(
-            {"className": "tabbed-viewport"},
-            tab_state.tab.component(state, set_state),
-        ),
-        ul(
-            {"className": "tabbed-viewport-selector list-group"},
-            _subtabs(state, set_state, tab_state, set_tab_state, top_tabs, websocket),
-            _subtabs(state, set_state, tab_state, set_tab_state, tabs, websocket),
-            _subtabs(
-                state, set_state, tab_state, set_tab_state, bottom_tabs, websocket
+            {
+                "className": "tabbed-viewport-container"
+                + (f" {html_class}" if html_class else "")
+            },
+            div(
+                {"className": "tabbed-viewport"},
+                tab_state.tab.component(),
+            ),
+            ul(
+                {"className": "tabbed-viewport-selector list-group"},
+                _subtabs(top_tabs),  # type: ignore
+                _subtabs(tabs),  # type: ignore
+                _subtabs(bottom_tabs),  # type: ignore
             ),
         ),
+        value=tab_state,
     )
 
 
@@ -66,35 +70,33 @@ def _default_tab(
     return default_tab or next((tabs[0] for tabs in tab_groups if tabs), None)
 
 
+@component
 def _subtabs(
-    state: HomepageState,
-    set_state,
-    tab_state: TabbedViewportState,
-    set_tab_state,
     tabs: list[SubTab] | None,
-    websocket,
-) -> list[VdomDict]:
+):
     # sourcery skip: assign-if-exp
-    if not tabs:
-        return []
+    state = hooks.use_context(HomepageStateContext)
+    tab_state = hooks.use_context(TabbedViewportStateContext)
+    websocket = use_websocket()
 
-    return [
-        li(
-            _subtab_attributes(
-                state, set_state, tab_state, set_tab_state, tab, websocket
-            ),
-            tab.name,
-            key=str(uuid4()),
-        )
-        for tab in tabs
-    ]
+    if not tabs:
+        return _([])
+
+    return _(
+        [
+            li(
+                _subtab_attributes(state, tab_state, tab, websocket),
+                tab.name,
+                key=str(uuid4()),
+            )
+            for tab in tabs
+        ]
+    )
 
 
 def _subtab_attributes(
     state: HomepageState,
-    set_state,
     tab_state: TabbedViewportState,
-    set_tab_state,
     tab: SubTab,
     websocket,
 ) -> dict:
@@ -105,9 +107,7 @@ def _subtab_attributes(
                 tab=tab,
                 websocket=websocket,
                 homepage_state=state,
-                set_homepage_state=set_state,
                 tabbed_viewport_state=tab_state,
-                set_tabbed_viewport_state=set_tab_state,
             )
             if iscoroutinefunction(tab.on_click):
                 await tab.on_click(click_event)
@@ -116,7 +116,7 @@ def _subtab_attributes(
             return
 
         tab_state.tab = tab
-        set_tab_state(tab_state)
+        tab_state.set_state(tab_state)
 
     return {
         "className": f"list-group-item clickable{' active' if tab_state.tab is tab else ''}",

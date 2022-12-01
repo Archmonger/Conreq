@@ -2,10 +2,8 @@ from idom.html import a, div, h5, li, ol
 
 from conreq._core.app_store.models import Category, Subcategory
 
-# pylint: disable=unused-argument
 
-
-def app_store_nav(categories: dict[Category, list[Subcategory]], set_tab):
+def app_store_nav(categories: dict[Category, list[Subcategory]]):
     return div(
         {"className": "nav-region"},
         [

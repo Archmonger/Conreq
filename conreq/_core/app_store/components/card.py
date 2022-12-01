@@ -1,15 +1,12 @@
 import asyncio
 import random
-from typing import Callable
 
 from django_idom.hooks import use_query
 from idom import component, hooks
 from idom.html import a, button, div, h5
 
 from conreq._core.app_store.models import AppPackage
-from conreq.types import HomepageState
-
-# pylint: disable=unused-argument
+from conreq.types import HomepageStateContext
 
 
 def get_app_subcategory(app: AppPackage):
@@ -17,19 +14,15 @@ def get_app_subcategory(app: AppPackage):
 
 
 @component
-def card(
-    state: HomepageState,
-    set_state: Callable[[HomepageState], None],
-    set_tab,
-    app: AppPackage,
-):
+def card(app: AppPackage):
+    state = hooks.use_context(HomepageStateContext)
     animation_speed, _ = hooks.use_state(random.randint(7, 13))
     opacity, set_opacity = hooks.use_state(0)
     subcategory = use_query(get_app_subcategory, app)
 
     def details_modal_event(_):
         state.modal_state.show = True
-        set_state(state)
+        state.set_state(state)
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():

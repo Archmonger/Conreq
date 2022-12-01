@@ -1,7 +1,7 @@
-import idom
+from idom import component, hooks
 from idom.html import div
 
-from conreq import HomepageState, config
+from conreq import HomepageState, HomepageStateContext, config
 from conreq.types import Viewport
 
 # pylint: disable=protected-access
@@ -10,9 +10,9 @@ VIEWPORT_CONTAINER_LOADING = {"className": "viewport-container loading"}
 HIDDEN = {"hidden": "hidden"}
 
 
-@idom.component
-def viewport_loading_animation(state: HomepageState, set_state):
-    # pylint: disable=unused-argument
+@component
+def viewport_loading_animation():
+    state = hooks.use_context(HomepageStateContext)
     return div(
         (
             VIEWPORT_CONTAINER_LOADING
@@ -26,9 +26,10 @@ def viewport_loading_animation(state: HomepageState, set_state):
     )
 
 
-@idom.component
-def viewport(state: HomepageState, set_state):
+@component
+def viewport():
     # sourcery skip: assign-if-exp
+    state = hooks.use_context(HomepageStateContext)
     this_viewport = state._viewport
     base_attrs = {"className": "viewport-container"}
 
@@ -41,7 +42,7 @@ def viewport(state: HomepageState, set_state):
             state,
             this_viewport,
         ),
-        this_viewport.component(state, set_state) if state._viewport else "",
+        this_viewport.component() if state._viewport else "",
         key=f"{this_viewport.component.__module__}.{this_viewport.component.__name__}",
     )
 

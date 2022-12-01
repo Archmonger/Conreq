@@ -1,7 +1,7 @@
-from idom import component
+from idom import component, hooks
 from idom.html import _, div, i, script
 
-from conreq import HomepageState, config
+from conreq import HomepageStateContext, config
 
 # pylint: disable=protected-access
 
@@ -25,12 +25,14 @@ MODAL_FOOTER = {"className": "modal-footer"}
 
 
 @component
-def modal(state: HomepageState, set_state):
+def modal():
+    state = hooks.use_context(HomepageStateContext)
+
     return div(
         MODAL_CONTAINER,
         div(
             MODAL_DIALOG,
-            _(modal_content(state, set_state)),
+            _(modal_content()),
         ),
         script(
             "let conreq_modal = new bootstrap.Modal(document.getElementById('modal-container'), {backdrop: 'static', keyboard: false});"
@@ -47,34 +49,33 @@ def modal(state: HomepageState, set_state):
 
 
 @component
-def modal_content(state: HomepageState, set_state):
+def modal_content():
+    state = hooks.use_context(HomepageStateContext)
     return div(
         MODAL_CONTENT,
         _(
             [
                 state._modal(
-                    state,
-                    set_state,
                     key=f"{state._modal.__module__}.{state._modal.__name__}",
                 )
             ]
             if state._modal
             else [
-                modal_head(state, set_state, key="default-modal-head"),
-                modal_body(state, set_state, key="default-modal-body"),
-                modal_footer(state, set_state, key="default-modal-footer"),
+                modal_head(key="default-modal-head"),
+                modal_body(key="default-modal-body"),
+                modal_footer(key="default-modal-footer"),
             ]
         ),
     )
 
 
 @component
-def modal_head(state: HomepageState, set_state):
-    # pylint: disable=unused-argument
+def modal_head():
+    state = hooks.use_context(HomepageStateContext)
 
     async def close_modal(_):
         state.modal_state.show = False
-        set_state(state)
+        state.set_state(state)
 
     return div(
         MODAL_HEADER,
@@ -93,8 +94,7 @@ def modal_head(state: HomepageState, set_state):
 
 
 @component
-def modal_body(state: HomepageState, set_state):
-    # pylint: disable=unused-argument
+def modal_body():
     return div(
         MODAL_BODY,
         div(
@@ -105,6 +105,5 @@ def modal_body(state: HomepageState, set_state):
 
 
 @component
-def modal_footer(state: HomepageState, set_state):
-    # pylint: disable=unused-argument
+def modal_footer():
     return div(MODAL_FOOTER)

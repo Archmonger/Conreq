@@ -3,11 +3,9 @@ from random import randint
 from django.templatetags.static import static
 from idom import component, hooks, html
 
-from conreq.types import HomepageState
-
 
 @component
-def backdrop(state: HomepageState, set_state):
+def backdrop():
     # TODO: Jump between two images tags for rotating images
 
     default_backdrop, set_default_backdrop = hooks.use_state(

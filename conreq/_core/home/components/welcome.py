@@ -1,16 +1,18 @@
 from django_idom.components import django_css
-from idom import component, html
+from idom import component, hooks, html
 
 from conreq import config
-from conreq.types import HomepageState
+from conreq.types import HomepageStateContext
 
 
 @component
-def welcome(state: HomepageState, set_state):
+def welcome():
+    state = hooks.use_context(HomepageStateContext)
+
     async def on_click(_):
         # pylint: disable=protected-access
         state.viewport_intent = config._homepage.admin_sidebar_tabs[1].viewport
-        set_state(state)
+        state.set_state(state)
 
     return html.div(
         {"className": "welcome"},

@@ -1,7 +1,7 @@
 import asyncio
 import random
 from copy import copy
-from typing import Callable, Iterable
+from typing import Iterable
 
 from django_idom.components import django_css
 from django_idom.hooks import use_query
@@ -11,15 +11,14 @@ from idom.html import _, div, h4, i, p
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.components.nav import app_store_nav
 from conreq._core.app_store.models import AppPackage, SpotlightCategory, Subcategory
-from conreq.types import HomepageState
+from conreq.types import HomepageStateContext
 
-# pylint: disable=unused-argument
 # TODO: Handle situations where there are no spotlight apps or categories
 
 
 @component
-def app_store(state: HomepageState, set_state: Callable[[HomepageState], None]):
-    # pylint: disable=unused-argument,protected-access
+def app_store():
+    state = hooks.use_context(HomepageStateContext)
     tab, set_tab = hooks.use_state(None)
     nav_category_query = use_query(get_nav_categories)
     nav_categories, set_nav_categories = hooks.use_state({})
@@ -29,13 +28,13 @@ def app_store(state: HomepageState, set_state: Callable[[HomepageState], None]):
     if loading_needed and not nav_categories:
         state.viewport_loading = True
         set_loading_needed(False)
-        set_state(state)
+        state.set_state(state)
 
     # Hide loading animation once categories are loaded
     if not loading_needed and nav_categories:
         state.viewport_loading = False
         set_loading_needed(True)
-        set_state(state)
+        state.set_state(state)
 
     # Convert categories to a dictionary for easier rendering
     if (
@@ -60,17 +59,15 @@ def app_store(state: HomepageState, set_state: Callable[[HomepageState], None]):
         if tab
         else div(
             {"className": "spotlight-region"},
-            _(all_spotlight(state, set_state, set_tab)),
+            _(all_spotlight(set_tab)),
             key="spotlight-region",
         ),
-        app_store_nav(nav_categories, set_tab),
+        app_store_nav(nav_categories),
     )
 
 
 @component
-def all_spotlight(
-    state: HomepageState, set_state: Callable[[HomepageState], None], set_tab
-):
+def all_spotlight(set_tab):
     spotlight_category_query = use_query(get_spotlight_categories)
 
     if spotlight_category_query.loading or spotlight_category_query.error:
@@ -81,9 +78,6 @@ def all_spotlight(
             spotlight(
                 category.name,
                 category.description,
-                state,
-                set_state,
-                set_tab,
                 apps=category.apps,
                 key=category.uuid,
             )
@@ -96,9 +90,6 @@ def all_spotlight(
 def spotlight(
     title,
     description,
-    state: HomepageState,
-    set_state: Callable[[HomepageState], None],
-    set_tab,
     apps: Iterable[AppPackage],
 ):
     opacity, set_opacity = hooks.use_state(0)
@@ -115,10 +106,7 @@ def spotlight(
 
     if not card_list:
         set_card_list(
-            [
-                card(state, set_state, set_tab, app, key=app.uuid)
-                for app in apps_query.data  # type: ignore
-            ]
+            [card(app, key=app.uuid) for app in apps_query.data]  # type: ignore
         )
         return
 

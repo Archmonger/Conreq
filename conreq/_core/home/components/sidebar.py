@@ -1,10 +1,17 @@
 from inspect import iscoroutinefunction
 
-import idom
 from django_idom.hooks import use_websocket
+from idom import component, hooks
 from idom.html import _, div, i, nav
 
-from conreq import HomepageState, NavGroup, SidebarTab, Viewport, config
+from conreq import (
+    HomepageState,
+    HomepageStateContext,
+    NavGroup,
+    SidebarTab,
+    Viewport,
+    config,
+)
 from conreq._core.home.components.welcome import welcome
 from conreq.types import SidebarTabEvent
 from conreq.utils.environment import get_debug_mode, get_safe_mode
@@ -58,15 +65,16 @@ USER_ADMIN_DEBUG = ("User", "Admin", "Debug")
 
 # TODO: Add event history tab. Admin group. Database backed.
 # TODO: Add DB backup, media backup, and clear cache somewhere in the admin group
-@idom.component
-def sidebar(state: HomepageState, set_state):
+@component
+def sidebar():
+    state = hooks.use_context(HomepageStateContext)
     websocket = use_websocket()
     if not websocket.scope["user"].is_authenticated:
         return None
 
     sidebar_tabs = config.homepage.sidebar_tabs
 
-    @idom.hooks.use_effect(dependencies=[])
+    @hooks.use_effect(dependencies=[])
     async def set_initial_tab():
         # The initial tab has already been set
         if state._viewport or state.viewport_intent:
@@ -75,7 +83,7 @@ def sidebar(state: HomepageState, set_state):
         # Use the configured default tab, if it exists
         if config.homepage.default_sidebar_tab:
             state.viewport_intent = config.homepage.default_sidebar_tab.viewport
-            set_state(state)
+            state.set_state(state)
             return None
 
         # Select the top most tab, if it exists
@@ -84,18 +92,18 @@ def sidebar(state: HomepageState, set_state):
                 continue
             tab: SidebarTab = group.tabs[0]
             state.viewport_intent = tab.viewport
-            set_state(state)
+            state.set_state(state)
             return None
 
         # Tell the user to install some apps, if they don't have any
         state.viewport_intent = Viewport(welcome)
-        set_state(state)
+        state.set_state(state)
 
     async def username_on_click(_):
         if not config.tabs.user_settings.main:
             return
         state.viewport_intent = config.tabs.user_settings.main.viewport
-        set_state(state)
+        state.set_state(state)
 
     return nav(
         SIDEBAR,
@@ -112,19 +120,12 @@ def sidebar(state: HomepageState, set_state):
             # pylint: disable=protected-access
             NAVIGATION,  # TODO: Change these keys to be database IDs
             [  # App tabs
-                sidebar_group(
-                    state,
-                    set_state,
-                    group,
-                    key=group.name,
-                )
+                sidebar_group(group, key=group.name)
                 for group in sidebar_tabs
                 if group not in USER_ADMIN_DEBUG
             ],  # type: ignore
             [  # User tabs
                 sidebar_group(
-                    state,
-                    set_state,
                     group,
                     bottom_tabs=config._homepage.user_sidebar_tabs,
                     key=group.name,
@@ -134,8 +135,6 @@ def sidebar(state: HomepageState, set_state):
             ],  # type: ignore
             [  # Admin tabs
                 sidebar_group(
-                    state,
-                    set_state,
                     group,
                     bottom_tabs=config._homepage.admin_sidebar_tabs,
                     key=group.name,
@@ -145,11 +144,7 @@ def sidebar(state: HomepageState, set_state):
             ],  # type: ignore
             [  # Debug tabs
                 sidebar_group(
-                    state,
-                    set_state,
-                    group,
-                    top_tabs=config._homepage.debug_sidebar_tabs,
-                    key=group.name,
+                    group, top_tabs=config._homepage.debug_sidebar_tabs, key=group.name
                 )
                 for group in sidebar_tabs
                 if group == "Debug" and websocket.scope["user"].is_staff and DEBUG
@@ -166,8 +161,9 @@ def _sidebar_tab_class(state: HomepageState, tab: SidebarTab):
     return NAV_TAB
 
 
-@idom.component
-def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
+@component
+def sidebar_tab(tab: SidebarTab):
+    state = hooks.use_context(HomepageStateContext)
     websocket = use_websocket()
 
     async def on_click(event):
@@ -177,7 +173,6 @@ def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
                 tab=tab,
                 websocket=websocket,
                 homepage_state=state,
-                set_homepage_state=set_state,
             )
             if iscoroutinefunction(tab.on_click):
                 await tab.on_click(click_event)
@@ -197,7 +192,7 @@ def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
             state.viewport_loading = False
 
             state.viewport_intent = tab.viewport
-            set_state(state)
+            state.set_state(state)
 
     return div(
         _sidebar_tab_class(state, tab) | {"onClick": on_click},
@@ -206,10 +201,8 @@ def sidebar_tab(state: HomepageState, set_state, tab: SidebarTab):
     )
 
 
-@idom.component
+@component
 def sidebar_group(
-    state: HomepageState,
-    set_state,
     group: NavGroup,
     top_tabs: list[SidebarTab] | None = None,
     bottom_tabs: list[SidebarTab] | None = None,
@@ -244,14 +237,10 @@ def sidebar_group(
             div(TABS_INDICATOR),
             div(
                 TABS,  # TODO: Change these keys to be database IDs
-                [sidebar_tab(state, set_state, tab, key=tab.name) for tab in _top_tabs],  # type: ignore
+                [sidebar_tab(tab, key=tab.name) for tab in _top_tabs],  # type: ignore
+                [sidebar_tab(tab, key=tab.name) for tab in group.tabs],  # type: ignore
                 [
-                    sidebar_tab(state, set_state, tab, key=tab.name)
-                    for tab in group.tabs
-                ],  # type: ignore
-                [
-                    sidebar_tab(state, set_state, tab, key=tab.name)
-                    for tab in _bottom_tabs
+                    sidebar_tab(tab, key=tab.name) for tab in _bottom_tabs
                 ],  # type: ignore
             ),
         ),

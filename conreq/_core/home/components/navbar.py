@@ -3,7 +3,7 @@ from django_idom.components import django_js
 from idom import component, hooks
 from idom.html import button, div, script, span
 
-from conreq import HomepageState
+from conreq import HomepageState, HomepageStateContext
 from conreq._core.server_settings.models import GeneralSettings
 
 # pylint: disable=protected-access
@@ -20,8 +20,8 @@ NAVBAR_BRAND = {"className": "navbar-brand ellipsis"}
 
 
 @component
-def navbar(state: HomepageState, set_state):
-    # pylint: disable=unused-argument
+def navbar():
+    state = hooks.use_context(HomepageStateContext)
     page_title, set_page_title = hooks.use_state("")
 
     @hooks.use_effect(dependencies=[state])
@@ -49,4 +49,4 @@ def _get_page_title(state: HomepageState):
 
 
 def _default_page_title():
-    return GeneralSettings.get_solo().server_name
+    return GeneralSettings.get_solo().server_name  # type: ignore

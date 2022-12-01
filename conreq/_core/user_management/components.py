@@ -9,7 +9,6 @@ from conreq._core.components import tabbed_viewport
 from conreq._core.sign_up.models import InviteCode
 from conreq._core.user_management import views
 
-# pylint: disable=unused-argument
 # TODO: Create SimpleTable and SimpleForm that use Conreq templates
 # TODO: Figure out some way to integrate user invites into this
 
@@ -22,31 +21,31 @@ create_invite_vtc = view_to_component(views.CreateInvite, compatibility=True)
 
 @component
 @auth_required(auth_attribute="is_staff")
-def edit_user(state, set_state):
+def edit_user():
     return edit_user_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
-def delete_user(state, set_state):
+def delete_user():
     return delete_user_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
-def manage_users(state, set_state):
+def manage_users():
     return manage_users_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
-def manage_invites(state, set_state):
+def manage_invites():
     return manage_invites_vtc()
 
 
 @component
 @auth_required(auth_attribute="is_staff")
-def create_invite(state, set_state):
+def create_invite():
     return create_invite_vtc()
 
 
@@ -143,11 +142,9 @@ def send_email_invite_btn(invite_code: str):
 # pylint: disable=protected-access
 @component
 @auth_required(auth_attribute="is_staff")
-def user_management(state, set_state):
+def user_management():
     return html._(
         tabbed_viewport(
-            state,
-            set_state,
             tabs=config.tabs.user_management.installed,
             top_tabs=config._internal_tabs.user_management,
         )
