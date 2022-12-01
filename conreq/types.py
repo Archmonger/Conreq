@@ -127,6 +127,9 @@ class ModalState:
     # kwargs: dict = field(default_factory=dict)
 
 
+SetModalState = Callable[[ModalState], None]
+
+
 @dataclass
 class HomepageState:
     viewport_loading: bool = False
@@ -149,9 +152,15 @@ class HomepageState:
     """The modal's current state object."""
 
 
+SetHomepageState = Callable[[HomepageState], None]
+
+
 @dataclass
 class TabbedViewportState:
     tab: SubTab | None
+
+
+SetTabbedViewportState = Callable[[TabbedViewportState], None]
 
 
 @dataclass
