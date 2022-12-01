@@ -23,14 +23,6 @@ MODAL_TITLE = {"className": "title"}
 MODAL_BODY = {"className": "modal-body loading"}
 MODAL_FOOTER = {"className": "modal-footer"}
 
-# FIXME: Broken due to `module_from_template` not being that great.
-# Solution: https://github.com/idom-team/idom/issues/786
-
-# bootstrap = idom.web.module_from_template(
-#     "react@18.1.0", "react-bootstrap@2.4.0", resolve_exports=True
-# )
-# bootstrap_modal = idom.web.export(bootstrap, "Modal", allow_children=True)
-
 
 @component
 def modal(state: HomepageState, set_state):
