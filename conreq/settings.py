@@ -162,7 +162,6 @@ LOGGING_INITIAL = {
     },
     "loggers": {
         "django": {},
-        "hypercorn": {},
         "conreq": {},
         "huey": {},
     },

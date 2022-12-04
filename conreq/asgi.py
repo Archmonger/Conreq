@@ -10,7 +10,7 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-# This is required if running the webserver via CLI (ex. hypercorn conreq.asgi:application)
+# This is required if running the webserver via terminal
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conreq.settings")
 
 # Fetch ASGI application before importing dependencies that require ORM models.
