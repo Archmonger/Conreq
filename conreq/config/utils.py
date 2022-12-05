@@ -1,11 +1,13 @@
 from typing import Callable
 
+from idom.core.component import Component
+
 from conreq.types import AuthLevel, SidebarTab, Viewport
 
 
 def tab_constructor(
     name: str,
-    component: Callable,
+    component: Callable[..., Component],
     on_click: Callable | None = None,
     padding: bool = True,
     auth: str = AuthLevel.user,

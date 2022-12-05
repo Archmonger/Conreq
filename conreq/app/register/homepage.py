@@ -1,6 +1,7 @@
 from typing import Callable
 
 from idom.core.component import Component
+from idom.types import ComponentConstructor
 
 from conreq import config
 from conreq.types import (
@@ -29,7 +30,7 @@ def sidebar_tab(
     # TODO: Implement auth level
     # TODO: URL support (Requires IDOM to support URL routing)
 
-    def decorator(component: Component):
+    def decorator(component: ComponentConstructor | Callable[..., Component]):
         if config.homepage.sidebar_tabs and group not in config.homepage.sidebar_tabs:
             config.homepage.sidebar_tabs.add(group)
 

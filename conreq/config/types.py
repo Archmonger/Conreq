@@ -5,9 +5,8 @@ from multiprocessing import Process
 from typing import Callable
 
 from django.views import View
-from idom.core.component import Component
 from idom.html import div, span
-from idom.types import VdomDict
+from idom.types import ComponentConstructor, VdomDict
 from sortedcontainers import SortedList
 
 from conreq.types import CSS, SCSS, HTMLTemplate, JavaScript, SidebarTab, SubTab
@@ -22,17 +21,17 @@ from conreq.types import CSS, SCSS, HTMLTemplate, JavaScript, SidebarTab, SubTab
 class _UserSettingsComponents:
     """Used to store user-defined components."""
 
-    main: Component | None = None
-    general: Component | None = None
-    change_password: Component | None = None
-    delete_account: Component | None = None
+    main: ComponentConstructor | None = None
+    general: ComponentConstructor | None = None
+    change_password: ComponentConstructor | None = None
+    delete_account: ComponentConstructor | None = None
 
 
 @dataclass
 class _SignOutComponents:
     """Used to store user-defined components."""
 
-    main: Component | None = None
+    main: ComponentConstructor | None = None
     event: Callable | None = None
 
 
@@ -40,24 +39,24 @@ class _SignOutComponents:
 class _UserManagementComponents:
     """Used to store user-defined components."""
 
-    main: Component | None = None
-    manage_users: Component | None = None
-    edit_user: Component | None = None
-    delete_user: Component | None = None
-    manage_invites: Component | None = None
-    create_invite: Component | None = None
+    main: ComponentConstructor | None = None
+    manage_users: ComponentConstructor | None = None
+    edit_user: ComponentConstructor | None = None
+    delete_user: ComponentConstructor | None = None
+    manage_invites: ComponentConstructor | None = None
+    create_invite: ComponentConstructor | None = None
 
 
 @dataclass
 class _ServerSettingsComponents:
     """Used to store user-defined components."""
 
-    main: Component | None = None
-    general: Component | None = None
-    styling: Component | None = None
-    webserver: Component | None = None
-    email: Component | None = None
-    system_info: Component | None = None
+    main: ComponentConstructor | None = None
+    general: ComponentConstructor | None = None
+    styling: ComponentConstructor | None = None
+    webserver: ComponentConstructor | None = None
+    email: ComponentConstructor | None = None
+    system_info: ComponentConstructor | None = None
 
 
 @dataclass
@@ -70,7 +69,7 @@ class _LoadingAnimationComponents:
             span({"className": "sr-only"}, "Loading..."),
         ),
     )
-    small: Component | VdomDict = field(
+    small: ComponentConstructor | VdomDict = field(
         default_factory=lambda: div(
             {"className": "spinner-border loading-animation", "role": "status"},
             span({"className": "sr-only"}, "Loading..."),
@@ -82,7 +81,7 @@ class _LoadingAnimationComponents:
 class _AppStoreComponents:
     """Used to store user-defined components."""
 
-    main: Component | None = None
+    main: ComponentConstructor | None = None
 
 
 # Tab Configuration

@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Callable, Literal
 
 from idom.core.component import Component
 
@@ -6,7 +6,7 @@ from conreq import config
 
 
 def user_management(
-    component: Component | None = None,
+    component: Callable[..., Component] | None = None,
     selector: Literal[
         "main",
         "manage_users",
@@ -22,7 +22,7 @@ def user_management(
 
 
 def server_settings(
-    component: Component | None = None,
+    component: Callable[..., Component] | None = None,
     selector: Literal[
         "main", "general", "styling", "webserver", "email", "system_info"
     ] = "main",
@@ -33,7 +33,7 @@ def server_settings(
 
 
 def user_settings(
-    component: Component | None = None,
+    component: Callable[..., Component] | None = None,
     selector: Literal["main", "general", "change_password", "delete_account"] = "main",
 ):
     """Changes the user settings component."""
@@ -41,7 +41,10 @@ def user_settings(
     return component
 
 
-def app_store(component: Component | None = None, selector: Literal["main"] = "main"):
+def app_store(
+    component: Callable[..., Component] | None = None,
+    selector: Literal["main"] = "main",
+):
     """Changes the app store component."""
     # TODO: Add more selectors after fleshing out the app store tab
     setattr(config.components.app_store, selector, component)
@@ -49,7 +52,8 @@ def app_store(component: Component | None = None, selector: Literal["main"] = "m
 
 
 def loading_animation(
-    component: Component | None = None, selector: Literal["small", "large"] = "large"
+    component: Callable[..., Component] | None = None,
+    selector: Literal["small", "large"] = "large",
 ):
     """Changes the default component loading animation."""
     if component:

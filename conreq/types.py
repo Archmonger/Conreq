@@ -3,8 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
+from idom.core.component import Component
 from idom.core.hooks import Context, create_context
-from idom.core.types import VdomDict
+from idom.core.types import ComponentConstructor, VdomDict
 from sortedcontainers import SortedSet
 
 # pylint: disable=protected-access, too-few-public-methods
@@ -33,7 +34,7 @@ class AuthLevel:
 
 @dataclass(frozen=True)
 class Viewport:
-    component: Callable
+    component: ComponentConstructor | Callable[..., Component]
     html_class: str = ""
     padding: bool = True
     page_title: str | None = None
@@ -60,7 +61,7 @@ class SidebarTab:
 @dataclass(frozen=True)
 class SubTab:
     name: str
-    component: Callable
+    component: ComponentConstructor | Callable[..., Component]
     html_class: str = ""
     padding: bool = True
     on_click: Callable[[SubTabEvent], None] | None = None
