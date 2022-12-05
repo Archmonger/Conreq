@@ -11,6 +11,6 @@
         "gruntfuggly.todo-tree",
         "sourcery.sourcery",
         "njpwerner.autodocstring",
-        "github.copilot",
+        "github.copilot"
     ]
 }
