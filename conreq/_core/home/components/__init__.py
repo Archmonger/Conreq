@@ -24,13 +24,8 @@ from conreq._core.home.components.viewport import viewport, viewport_loading_ani
     )
 )
 def homepage():
-    state, _set_state = hooks.use_state(HomepageState())
-
-    def _set_state_copy(obj):
-        new_obj = copy(obj)
-        _set_state(new_obj)
-
-    state.set_state = _set_state_copy
+    state, set_state = hooks.use_state(HomepageState())
+    state.set_state = lambda obj: set_state(copy(obj))
 
     @hooks.use_effect(dependencies=[state.viewport_intent])
     def set_viewport():
