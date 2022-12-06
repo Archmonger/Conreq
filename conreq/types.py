@@ -34,7 +34,7 @@ class AuthLevel:
 
 @dataclass(frozen=True)
 class Viewport:
-    component: ComponentConstructor | Callable[..., Component]
+    component: ComponentConstructor | Callable[..., Component] | Callable[..., VdomDict]
     html_class: str = ""
     padding: bool = True
     page_title: str | None = None
@@ -61,7 +61,7 @@ class SidebarTab:
 @dataclass(frozen=True)
 class SubTab:
     name: str
-    component: ComponentConstructor | Callable[..., Component]
+    component: ComponentConstructor | Callable[..., Component] | Callable[..., VdomDict]
     html_class: str = ""
     padding: bool = True
     on_click: Callable[[SubTabEvent], None] | None = None

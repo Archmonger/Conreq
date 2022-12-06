@@ -45,7 +45,7 @@ def manage_users(request):
     table = UsersTable(get_user_model().objects.all())
     RequestConfig(
         request,
-        paginate={"per_page": request.GET.get("per_page", 25)},  # type: ignore
+        paginate={"per_page": request.GET.get("per_page", 25)},
     ).configure(table)
     return render(request, "conreq/table.html", {"table": table})
 
@@ -55,7 +55,7 @@ def manage_invites(request):
     table = UserInviteTable(InviteCode.objects.all())
     RequestConfig(
         request,
-        paginate={"per_page": request.GET.get("per_page", 25)},  # type: ignore
+        paginate={"per_page": request.GET.get("per_page", 25)},
     ).configure(table)
     return render(request, "conreq/table.html", {"table": table})
 

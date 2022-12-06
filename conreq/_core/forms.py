@@ -85,14 +85,14 @@ class EnvFormMixin:
     def save(self, commit: bool = True):
         super_class = super()
         saved = (
-            super().save(commit=commit) if getattr(super_class, "save", None) else None
+            super().save(commit=commit) if getattr(super_class, "save", None) else None  # type: ignore
         )
         if not commit:
             return saved
 
-        for name, field in self.base_fields.items():
+        for name, field in self.base_fields.items():  # type: ignore
             if isinstance(field, EnvFieldMixin) and self._env_changed(name, field):
-                set_env(field.env_name or name, self.cleaned_data.get(name))
+                set_env(field.env_name or name, self.cleaned_data.get(name))  # type: ignore
 
         return saved
 
@@ -101,5 +101,5 @@ class EnvFormMixin:
         initial or stored value."""
         initial_value = str(field.initial)
         current_value = get_env(field.env_name, default_value=initial_value)
-        new_value = str(self.cleaned_data.get(name, ""))
+        new_value = str(self.cleaned_data.get(name, ""))  # type: ignore
         return current_value != new_value

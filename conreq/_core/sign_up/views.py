@@ -47,7 +47,7 @@ def sign_up(request, invite_code=None):
             username=form.cleaned_data.get("username"),
             password=form.cleaned_data.get("password1"),
         )
-        code.used_by = user
+        code.used_by = user  # type: ignore
         code.used_at = timezone.now()
         code.save()
         login(request, user)

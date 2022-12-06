@@ -39,7 +39,7 @@ def navbar():
             span(NAVBAR_TOGGLER_ICON),
         ),
         div(NAVBAR_BRAND),  # TODO: Add logo support
-        django_js("conreq/navbar.js"),  # type: ignore
+        django_js("conreq/navbar.js"),
         script(f"if('{page_title}'){{document.title = '{page_title}'}}"),
     )
 
@@ -49,4 +49,4 @@ def _get_page_title(state: HomepageState):
 
 
 def _default_page_title():
-    return GeneralSettings.get_solo().server_name  # type: ignore
+    return GeneralSettings.get_solo().server_name

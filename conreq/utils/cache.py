@@ -144,7 +144,7 @@ def get_or_set_many(
         # If nothing was in cache, or cache was expired, run function()
         thread_list = []
         for cache_key in requested_keys:
-            if not cached_results.__contains__(cache_key):
+            if cache_key in cached_results:
                 key = obtain_key_from_cache_key(cache_key)
                 thread = ReturnThread(
                     target=functions[key]["function"],

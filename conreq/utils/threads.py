@@ -24,8 +24,9 @@ class ReturnThread(Thread):
         This child class added a return value.
         :return:
         """
-        if self._target is not None:
-            self._return = self._target(*self._args, **self._kwargs)
+
+        if self._target is not None:  # type: ignore
+            self._return = self._target(*self._args, **self._kwargs)  # type: ignore
 
     def join(self, timeout: float | None = None) -> Any:
         """

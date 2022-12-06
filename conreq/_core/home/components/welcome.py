@@ -16,7 +16,7 @@ def welcome():
 
     return html.div(
         {"className": "welcome"},
-        django_css("conreq/welcome.css"),  # type: ignore
+        django_css("conreq/welcome.css"),
         html.h1("Welcome to Conreq"),
         html.p("Looks like you don't have any custom tabs yet."),
         html.p("Head over to the App Store and install some!"),

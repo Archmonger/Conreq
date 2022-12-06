@@ -1,16 +1,22 @@
 import asyncio
 import random
 from copy import copy
-from typing import Iterable
+from typing import Callable, Iterable, Union, cast
 
 from django_idom.components import django_css
 from django_idom.hooks import use_query
 from idom import component, hooks
 from idom.html import _, div, h4, i, p
+from idom.types import ComponentType
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.components.nav import app_store_nav
-from conreq._core.app_store.models import AppPackage, SpotlightCategory, Subcategory
+from conreq._core.app_store.models import (
+    AppPackage,
+    Category,
+    SpotlightCategory,
+    Subcategory,
+)
 from conreq.types import HomepageStateContext
 
 # TODO: Handle situations where there are no spotlight apps or categories
@@ -19,9 +25,11 @@ from conreq.types import HomepageStateContext
 @component
 def app_store():
     state = hooks.use_context(HomepageStateContext)
-    tab, set_tab = hooks.use_state(None)
+    tab, set_tab = hooks.use_state(cast(Union[Callable, None], None))
     nav_category_query = use_query(get_nav_categories)
-    nav_categories, set_nav_categories = hooks.use_state({})
+    nav_categories, set_nav_categories = hooks.use_state(
+        cast(dict[Category, list[Subcategory]], {})
+    )
     loading_needed, set_loading_needed = hooks.use_state(True)
 
     # Display loading animation until categories are loaded
@@ -94,7 +102,7 @@ def spotlight(
 ):
     opacity, set_opacity = hooks.use_state(0)
     apps_query = use_query(get_spotlight_apps, apps)
-    card_list, set_card_list = hooks.use_state([])
+    card_list, set_card_list = hooks.use_state(cast(list[ComponentType], []))
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():
@@ -157,8 +165,8 @@ def get_nav_categories():
     return Subcategory.objects.select_related("category").order_by("name").all()
 
 
-def subcategories_to_dict(query) -> dict[str, dict[str, str]]:
-    new_categories = {}
+def subcategories_to_dict(query) -> dict[Category, list[Subcategory]]:
+    new_categories: dict[Category, list[Subcategory]] = {}
     for subcategory in query:
         new_categories.setdefault(subcategory.category, []).append(subcategory)
     return new_categories

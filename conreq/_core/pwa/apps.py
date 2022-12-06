@@ -42,6 +42,6 @@ class PwaConfig(AppConfig):
         }
     ]
 
-    app_splash_screen = []
+    app_splash_screen: list[str] = []
     app_dir = "auto"
     app_lang = "en-US"

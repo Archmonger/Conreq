@@ -8,7 +8,7 @@ from conreq.app.models import EmailSettings
 
 
 def get_from_name(email_config: EmailSettings | None = None):
-    config: EmailSettings = email_config or EmailSettings.get_solo()  # type: ignore
+    config: EmailSettings = email_config or EmailSettings.get_solo()
 
     return (
         f"{config.sender_name} <{config.username}>"

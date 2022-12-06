@@ -30,7 +30,7 @@ class AppLoaderConfig(AppConfig):
                 if module_name not in self.skip_module_names:
                     import_module(".".join([app_config.name, module_name]))
                     if is_pkg:
-                        loader.find_module(module_name).load_module(module_name)
+                        loader.find_module(module_name).load_module(module_name)  # type: ignore
             except Exception as exception:
                 if not fail_silently:
                     raise exception

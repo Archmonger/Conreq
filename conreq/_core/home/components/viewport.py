@@ -34,7 +34,7 @@ def viewport():
     base_attrs = {"className": "viewport-container"}
 
     if not this_viewport:
-        return div(base_attrs | HIDDEN)
+        return div(base_attrs | HIDDEN)  # type: ignore
 
     return div(
         viewport_attrs(

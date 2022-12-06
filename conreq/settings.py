@@ -14,6 +14,7 @@ from glob import glob
 from importlib import import_module
 from logging.config import dictConfig as logging_config
 from pathlib import Path
+from typing import Any
 
 from django.core.management.utils import get_random_secret_key
 from split_settings.tools import include
@@ -131,7 +132,8 @@ _logger = logging.getLogger(__name__)
 CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
 ACCESS_LOG_FILE = LOG_DIR / "access.log"
 LOG_LEVEL = get_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
-LOGGING_INITIAL = {
+LOGGING: dict[str, Any]
+LOGGING_INITIAL: dict[str, Any] = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
@@ -213,7 +215,7 @@ SECURE_BROWSER_XSS_FILTER = True
 
 
 # API Settings
-REST_FRAMEWORK = {
+REST_FRAMEWORK: dict[str, Any] = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],

@@ -95,9 +95,9 @@ class Command(BaseCommand):
         if not no_perms and (uid != -1 or gid != -1) and sys.platform == "linux":
             # pylint: disable=no-member
             print("[X] Applying permissions")
-            new_uid = uid or os.getuid()
-            new_gid = gid or os.getgid()
-            os.chown(path, new_uid, new_gid)
+            new_uid = uid or os.getuid()  # type: ignore
+            new_gid = gid or os.getgid()  # type: ignore
+            os.chown(path, new_uid, new_gid)  # type: ignore
 
     @staticmethod
     def recursive_chown(path, uid, gid, verbosity):

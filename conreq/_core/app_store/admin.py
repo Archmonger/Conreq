@@ -21,7 +21,7 @@ class DragDropOrderedModelAdmin(BaseOrderedModelAdmin, admin.ModelAdmin):
             def wrapper(*args, **kwargs):
                 return self.admin_site.admin_view(view)(*args, **kwargs)
 
-            wrapper.model_admin = self
+            setattr(wrapper, "model_admin", self)
             return update_wrapper(wrapper, view)
 
         return [
@@ -86,8 +86,8 @@ class DragDropOrderedModelAdmin(BaseOrderedModelAdmin, admin.ModelAdmin):
             % (obj.pk, url)
         )
 
-    make_draggable.allow_tags = True
-    make_draggable.short_description = ""
+    setattr(make_draggable, "allow_tags", True)
+    setattr(make_draggable, "short_description", "")
 
 
 # Register your models here.

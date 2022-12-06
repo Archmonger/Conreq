@@ -52,6 +52,11 @@ class DeleteMyAccountForm(ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+
+        if not cleaned_data:
+            self.add_error("password", "Invalid data.")
+            return
+
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
 

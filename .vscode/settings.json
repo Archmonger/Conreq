@@ -4,10 +4,11 @@
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": true,
-    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.mypyEnabled": true,
+    "python.analysis.typeCheckingMode": "off",
     "python.languageServer": "Pylance",
     "python.formatting.provider": "black",
-    "python.sortImports.args": [
+    "isort.args": [
         "--src=${workspaceFolder}"
     ],
     "python.analysis.extraPaths": [
@@ -19,7 +20,7 @@
         ".venv",
         "docs"
     ],
-    "terminal.integrated.scrollback": 20000,
+    "terminal.integrated.scrollback": 10000,
     "git.autofetch": true,
     "prettier.tabWidth": 4,
     "prettier.useTabs": true,

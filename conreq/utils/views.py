@@ -32,7 +32,7 @@ class CurrentUserOrAdminMixin:
             )
 
         if request.user.is_superuser or request.user.id == self.user_id:
-            return super().dispatch(request, *args, **kwargs)
+            return super().dispatch(request, *args, **kwargs)  # type: ignore
 
         return HttpResponse(status=403)
 
@@ -44,10 +44,10 @@ class SuccessCurrentUrlMixin:
     # pylint: disable=too-few-public-methods
 
     def get_success_url(self):
-        params = self.request.GET.copy()
+        params = self.request.GET.copy()  # type: ignore
         params["success"] = True
-        self.success_url = f"{self.request.path}?{params.urlencode()}"
-        return super().get_success_url()
+        self.success_url = f"{self.request.path}?{params.urlencode()}"  # type: ignore
+        return super().get_success_url()  # type: ignore
 
 
 class UserInstanceMixin:
@@ -57,14 +57,14 @@ class UserInstanceMixin:
     # pylint: disable=too-few-public-methods
 
     def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
+        kwargs = super().get_form_kwargs()  # type: ignore
         if isinstance(self, FormView):
             kwargs["instance"] = self.request.user
         return kwargs
 
     def get_object(self, queryset=None):
         # pylint: disable=unused-argument
-        return self.request.user
+        return self.request.user  # type: ignore
 
 
 class ObjectInParamsMixin:
@@ -75,7 +75,7 @@ class ObjectInParamsMixin:
 
     def get_object(self, queryset=None):
         # pylint: disable=unused-argument
-        return self.model.objects.get(id=self.request.GET["id"])
+        return self.model.objects.get(id=self.request.GET["id"])  # type: ignore
 
 
 class SaveFormViewMixin:
@@ -84,11 +84,11 @@ class SaveFormViewMixin:
     # pylint: disable=too-few-public-methods
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form()
+        form = self.get_form()  # type: ignore
         if not form.is_valid():
-            return self.form_invalid(form)
+            return self.form_invalid(form)  # type: ignore
         form.save()
-        return self.form_valid(form)
+        return self.form_valid(form)  # type: ignore
 
 
 def login_required(view, login_url=None, redirect_field_name=None):
@@ -116,7 +116,7 @@ def staff_required(view, login_url=None, redirect_field_name=None):
     if isclass(view):
         return method_decorator(
             user_passes_test(
-                lambda user: user.is_staff,
+                lambda user: user.is_staff,  # type: ignore
                 login_url=login_url,
                 redirect_field_name=redirect_field_name,
             ),
@@ -125,7 +125,7 @@ def staff_required(view, login_url=None, redirect_field_name=None):
 
     # Function view
     return user_passes_test(
-        lambda user: user.is_staff,
+        lambda user: user.is_staff,  # type: ignore
         login_url=login_url,
         redirect_field_name=redirect_field_name,
     )(view)

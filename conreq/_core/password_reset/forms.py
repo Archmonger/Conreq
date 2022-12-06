@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.forms import PasswordResetForm as _PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm as _SetPasswordForm
-from django.contrib.auth.forms import _unicode_ci_compare
+from django.contrib.auth.forms import _unicode_ci_compare  # type: ignore
 from django.db.models import Q
 from django.forms import CharField, TextInput
 from django.utils.translation import gettext_lazy as _

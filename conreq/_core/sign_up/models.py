@@ -21,7 +21,7 @@ class InviteCode(models.Model):
     email = models.EmailField()
 
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField(default=_expiration, null=True)
+    expires_at = models.DateTimeField(default=_expiration)
     used_at = models.DateTimeField(blank=True, null=True)
     locked = models.BooleanField(default=False)
 

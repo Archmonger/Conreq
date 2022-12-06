@@ -54,7 +54,7 @@ def _send_email_invite(invite_code: str, scope: dict):
     from conreq._core.server_settings.models import GeneralSettings
     from conreq.app.services.email import Email, send_email
 
-    general_settings: GeneralSettings = GeneralSettings.get_solo()  # type: ignore
+    general_settings: GeneralSettings = GeneralSettings.get_solo()
     origin = general_settings.public_url or get_origin_header(scope)
 
     invite = InviteCode.objects.get(code=invite_code)

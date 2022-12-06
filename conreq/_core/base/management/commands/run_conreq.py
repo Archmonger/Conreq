@@ -101,7 +101,7 @@ class Command(BaseCommand):
         from conreq._core.server_settings.models import WebserverSettings
 
         # TODO: Add in Uvicorn's reverse proxy stuff
-        db_conf: WebserverSettings = WebserverSettings.get_solo()  # type: ignore
+        db_conf: WebserverSettings = WebserverSettings.get_solo()
         config_kwargs = {
             "ssl_certfile": self._f_path(db_conf.ssl_certificate),
             "ssl_keyfile": self._f_path(db_conf.ssl_key),
@@ -116,7 +116,7 @@ class Command(BaseCommand):
             port=self.port,
             workers=settings.WEBSERVER_WORKERS,
             log_config=UVICORN_LOGGING_CONFIG if debug else {"version": 1},
-            debug=debug,
+            log_level="debug" if debug else None,
             server_header=False,
             **config_kwargs,
         )

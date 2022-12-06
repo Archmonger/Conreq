@@ -7,3 +7,4 @@ rope
 twine
 types-requests
 types-tzlocal
+mypy

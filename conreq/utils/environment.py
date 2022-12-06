@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import Any, Callable, Tuple, Type
+from typing import Any, Tuple, Type
 
 import dotenv
 from dotenv import dotenv_values
@@ -44,7 +44,7 @@ def get_env(
     default_value: Any = None,
     sys_env=True,
     dot_env=True,
-    return_type: Callable = str,
+    return_type: Type = str,
 ) -> Any:
     """Returns an environment variable from either system variables or Conreq's dotenv file."""
     if not name or not isinstance(name, str):

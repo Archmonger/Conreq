@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.core.exceptions import ValidationError
 from django.shortcuts import redirect, render
 
 from conreq._core.initialization.forms import InitializationForm
@@ -41,9 +42,13 @@ def _display_initialization(form, request, initialization):
     username = form.cleaned_data.get("username")
     password = form.cleaned_data.get("password1")
     user = authenticate(username=username, password=password)
-    user.is_staff = True
-    user.is_admin = True
-    user.is_superuser = True
+
+    if not user:
+        raise ValidationError("Failed to authenticate user")
+
+    setattr(user, "is_staff", True)
+    setattr(user, "is_admin", True)
+    setattr(user, "is_superuser", True)
     user.save()
     login(request, user)
     initialization.initialized = True

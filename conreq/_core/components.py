@@ -55,9 +55,9 @@ def tabbed_viewport(
             ),
             ul(
                 {"className": "tabbed-viewport-selector list-group"},
-                _subtabs(top_tabs),  # type: ignore
-                _subtabs(tabs),  # type: ignore
-                _subtabs(bottom_tabs),  # type: ignore
+                _subtabs(top_tabs),
+                _subtabs(tabs),
+                _subtabs(bottom_tabs),
             ),
         ),
         value=tab_state,

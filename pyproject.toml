@@ -12,6 +12,10 @@ exclude = [
     'migrations/.*',
 ]
 ignore_missing_imports = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+check_untyped_defs = true
 plugins = ["mypy_django_plugin.main"]
 
 [tool.django-stubs]

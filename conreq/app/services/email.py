@@ -28,7 +28,7 @@ _logger = logging.getLogger(__name__)
 
 
 def _get_mail_backend(email_config: EmailSettings | None = None, lock: bool = False):
-    config: EmailSettings = email_config or EmailSettings.get_solo()  # type: ignore
+    config: EmailSettings = email_config or EmailSettings.get_solo()
     backend = smtp.EmailBackend(
         host=config.server,
         port=config.port,
@@ -55,7 +55,7 @@ def send_email(
 
     Emails can either be send out immediately, or sent in the background.
     """
-    email_config: EmailSettings = EmailSettings.get_solo()  # type: ignore
+    email_config: EmailSettings = EmailSettings.get_solo()
 
     if not email_config.enabled:
         try:
@@ -94,7 +94,7 @@ def send_mass_email(
 
     Emails can either be send out immediately, or sent in the background.
     """
-    email_config: EmailSettings = EmailSettings.get_solo()  # type: ignore
+    email_config: EmailSettings = EmailSettings.get_solo()
 
     if not email_config.enabled:
         try:

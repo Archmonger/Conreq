@@ -26,7 +26,7 @@ class EmailBackend(smtp.EmailBackend):
     """Email backend to be used for Django reverse compatibility."""
 
     def configure(self, email_config: EmailSettings | None = None):
-        config: EmailSettings = email_config or EmailSettings.get_solo()  # type: ignore
+        config: EmailSettings = email_config or EmailSettings.get_solo()
         self.host = config.server
         self.port = config.port
         self.username = config.username
@@ -36,7 +36,7 @@ class EmailBackend(smtp.EmailBackend):
         self.timeout = config.timeout
 
     def send_messages(self, email_messages: Sequence[EmailMessage]) -> int:
-        config: EmailSettings = EmailSettings.get_solo()  # type: ignore
+        config: EmailSettings = EmailSettings.get_solo()
         if config.enabled:
             self.configure(config)
             return super().send_messages(email_messages)
