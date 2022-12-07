@@ -69,7 +69,7 @@ class _LoadingAnimationComponents:
             span({"className": "sr-only"}, "Loading..."),
         ),
     )
-    small: ComponentConstructor | VdomDict = field(
+    small: VdomDict = field(
         default_factory=lambda: div(
             {"className": "spinner-border loading-animation", "role": "status"},
             span({"className": "sr-only"}, "Loading..."),

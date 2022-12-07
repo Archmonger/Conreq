@@ -54,7 +54,7 @@ def app_store():
 
     # Don't render if there's an error loading categories
     if nav_category_query.error:
-        return _("Error!")
+        return "Error!"
 
     # Don't render if categories are still loading, or if they haven't been converted to a dict yet
     if nav_category_query.loading or not nav_categories:
@@ -67,7 +67,7 @@ def app_store():
         if tab
         else div(
             {"className": "spotlight-region"},
-            _(all_spotlight()),
+            all_spotlight(),
             key="spotlight-region",
         ),
         app_store_nav(nav_categories),
@@ -147,7 +147,7 @@ def spotlight(
             {"className": "card-stage"},
             div(
                 {"className": "carousel"},
-                _(card_list),
+                card_list,
             ),
         ),
     )

@@ -1,5 +1,5 @@
 from idom import component, hooks
-from idom.html import _, div, i, script
+from idom.html import div, i, script
 
 from conreq import HomepageStateContext, config
 
@@ -32,7 +32,7 @@ def modal():
         MODAL_CONTAINER,
         div(
             MODAL_DIALOG,
-            _(modal_content()),
+            modal_content(),
         ),
         script(
             "let conreq_modal = new bootstrap.Modal(document.getElementById('modal-container'), {backdrop: 'static', keyboard: false});"
@@ -53,19 +53,17 @@ def modal_content():
     state = hooks.use_context(HomepageStateContext)
     return div(
         MODAL_CONTENT,
-        _(
-            [
-                state._modal(
-                    key=f"{state._modal.__module__}.{state._modal.__name__}",
-                )
-            ]
-            if state._modal
-            else [
-                modal_head(key="default-modal-head"),
-                modal_body(key="default-modal-body"),
-                modal_footer(key="default-modal-footer"),
-            ]
-        ),
+        [
+            state._modal(
+                key=f"{state._modal.__module__}.{state._modal.__name__}",
+            )
+        ]
+        if state._modal
+        else [
+            modal_head(key="default-modal-head"),
+            modal_body(key="default-modal-body"),
+            modal_footer(key="default-modal-footer"),
+        ],
     )
 
 
@@ -99,7 +97,7 @@ def modal_body():
         MODAL_BODY,
         div(
             {"className": "loading"},
-            _(config.components.loading_animation.small),
+            config.components.loading_animation.small,
         ),
     )
 
