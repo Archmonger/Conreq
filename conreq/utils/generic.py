@@ -1,26 +1,5 @@
 """Generic functions to be used anywhere. All functions only have stdlib dependencies."""
 from re import sub
-from typing import Any
-
-
-def is_key_value_in_iter(
-    key: Any, value: Any, search_list: list, return_item: bool = False
-) -> bool:
-    """Iterate through a sequence (list, tuple, etc) containing dicts to check if a
-    specific key/value pair exists."""
-    return next(
-        (
-            item if return_item else True
-            for item in search_list
-            if item.__contains__(key) and item[key] == value
-        ),
-        False,
-    )
-
-
-def replace_item_in_list(search_for, replace_with, search_list):
-    """Replaces matching items in a list with a replacement value."""
-    return [replace_with if x == search_for else x for x in search_list]
 
 
 def remove_duplicates_from_list(duplicate_list: list) -> list:
@@ -53,7 +32,8 @@ def clean_string(
 
 
 def list_intersection(list_1: list, list_2: list) -> list:
-    """Returns a new list that is the intersection of two lists."""
+    """Returns a new list that is the intersection of two lists.
+    Helps find duplicates between two lists."""
     return [value for value in list_1 if value in list_2]
 
 
@@ -74,5 +54,5 @@ class DoNothingWith:
     def __enter__(self):
         pass
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, *_):
         pass

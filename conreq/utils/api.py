@@ -95,7 +95,7 @@ class APIDocs:
 
 
 @api_view(["GET"])
-def stub(request, *args, **kwargs):
+def stub(*_, **__):
     """This is a stub for an endpoint that has not yet been developed."""
     return Response({"error": "This endpoint is not yet developed."})
 
