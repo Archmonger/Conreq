@@ -101,7 +101,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def recursive_chown(path, uid, gid, verbosity):
-        vprint('[X] Recursively applying permissions to "' + path + '"', verbosity)
+        vprint(f'[X] Recursively applying permissions to "{path}"', verbosity)
         new_uid = uid if uid != -1 else None
         new_gid = gid if gid != -1 else None
         if uid != -1 or gid != -1:
