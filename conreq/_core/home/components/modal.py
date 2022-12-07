@@ -40,7 +40,7 @@ def modal():
                 "conreq_modal.show();"
                 if state.modal_state.show
                 else "conreq_modal.hide();"
-                + "if (document.querySelector('.modal-backdrop.show') &&"
+                "if (document.querySelector('.modal-backdrop.show') &&"
                 "!document.querySelector('.modal.show'))"
                 "{!document.querySelector('.modal-backdrop.show').remove();}"
             )
