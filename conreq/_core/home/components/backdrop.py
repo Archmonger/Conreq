@@ -9,7 +9,7 @@ def backdrop():
     # TODO: Jump between two images tags for rotating images
 
     default_backdrop, set_default_backdrop = hooks.use_state(
-        f"conreq/backdrop ({randint(1, 200)}).jpg"
+        f"conreq/backdrop-({randint(1, 200)}).jpg"
     )
     backdrop_selector, set_backdrop_selector = hooks.use_state(1)
     prev_backdrop, set_prev_backdrop = hooks.use_state(None)
