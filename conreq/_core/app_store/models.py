@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.auth import get_user_model
 from django.db import models
 from multiselectfield import MultiSelectField
 from ordered_model.models import OrderedModel
@@ -126,7 +127,7 @@ class AppPackage(models.Model):
     )
     banner_message = models.TextField(
         blank=True,
-        help_text="Optional text message banner shown on the app info page.",
+        help_text="Optional text message shown on the app info modal.",
         max_length=1000,
     )
     sync_with_pypi = models.BooleanField(
@@ -223,7 +224,9 @@ class Screenshot(models.Model):
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
 
 
-class NoticeMessage(models.Model):
+class AppNoticeMessage(models.Model):
+    """Message that needs to be delivered to admins that currently have the app installed."""
+
     def __str__(self):
         return str(self.title)
 
@@ -234,3 +237,4 @@ class NoticeMessage(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     app_package = models.ForeignKey(AppPackage, on_delete=models.CASCADE)
+    read_by = models.ManyToManyField(get_user_model(), blank=True)

@@ -129,6 +129,6 @@ class Screenshots(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.NoticeMessage)
+@admin.register(models.AppNoticeMessage)
 class NoticeMessages(admin.ModelAdmin):
     pass
