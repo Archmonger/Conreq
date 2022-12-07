@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from django_idom.hooks import use_websocket
 from idom import component, hooks
-from idom.html import div, li, ul
+from idom.html import _, div, li, ul
 
 from conreq.types import (
     HomepageState,
@@ -82,14 +82,16 @@ def _subtabs(
     if not tabs:
         return None
 
-    return [
-        li(
-            _subtab_attributes(state, tab_state, tab, websocket),
-            tab.name,
-            key=str(uuid4()),
-        )
-        for tab in tabs
-    ]
+    return _(
+        [
+            li(
+                _subtab_attributes(state, tab_state, tab, websocket),
+                tab.name,
+                key=str(uuid4()),
+            )
+            for tab in tabs
+        ]
+    )
 
 
 def _subtab_attributes(
