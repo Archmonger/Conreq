@@ -67,7 +67,7 @@ def app_store():
         if tab
         else div(
             {"className": "spotlight-region"},
-            _(all_spotlight(set_tab)),
+            _(all_spotlight()),
             key="spotlight-region",
         ),
         app_store_nav(nav_categories),
@@ -75,7 +75,7 @@ def app_store():
 
 
 @component
-def all_spotlight(set_tab):
+def all_spotlight():
     spotlight_category_query = use_query(get_spotlight_categories)
 
     if spotlight_category_query.loading or spotlight_category_query.error:
