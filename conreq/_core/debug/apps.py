@@ -32,6 +32,7 @@ class DebugConfig(AppConfig):
                     include("django.contrib.admindocs.urls"),
                     name="admin-docs",
                 ),
+                path("admin/", include("massadmin.urls")),
                 path("admin/", admin.site.urls, name="admin"),
                 path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
                 path(

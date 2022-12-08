@@ -273,6 +273,7 @@ INSTALLED_APPS = [
             "jazzmin",
             "django.contrib.admin",
             "django.contrib.admindocs",
+            "massadmin",  # Mass edit actions for admin pages
             "health_check",
             "health_check.db",
             "health_check.cache",
