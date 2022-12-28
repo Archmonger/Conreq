@@ -26,12 +26,11 @@ class AsyncCompatibility(models.TextChoices):
 
 
 class SysPlatform(models.TextChoices):
-    ANY = "ANY", "Any"
-    AIX = "AIX", "Aix"
-    LINUX = "LINUX", "Linux"
-    WINDOWS = "WINDOWS", "Windows"
-    CYGWIN = "CYGWIN", "Cygwin"
-    MACOS = "MACOS", "Darwin"
+    ANY = "Any", "Any"
+    LINUX = "Linux", "Linux"
+    WINDOWS = "Windows", "Windows"
+    MACOS = "Darwin", "MacOS"
+    FREEBSD = "FreeBSD", "FreeBSD"
 
 
 class DescriptionType(models.TextChoices):
