@@ -2,6 +2,7 @@ import asyncio
 import random
 
 from django_idom.hooks import use_query
+from django_idom.types import QueryOptions
 from idom import component, hooks
 from idom.html import a, button, div, h5
 
@@ -13,12 +14,17 @@ def get_app_subcategory(app: AppPackage):
     return app.subcategories.first()
 
 
+def check_installable(app: AppPackage):
+    return app.installable
+
+
 @component
 def card(app: AppPackage):
     state = hooks.use_context(HomepageStateContext)
     animation_speed, _ = hooks.use_state(random.randint(7, 13))
     opacity, set_opacity = hooks.use_state(0)
     subcategory = use_query(get_app_subcategory, app)
+    installable = use_query(QueryOptions(postprocessor=None), check_installable, app)
 
     def details_modal_event(_):
         state.modal_state.show = True
@@ -72,20 +78,30 @@ def card(app: AppPackage):
                 },
                 "Details",
             ),
-            button(
-                {
-                    "className": "btn btn-sm btn-dark",
-                    "onClick": lambda x: print("clicked"),
-                },
-                "Contact",
-            ),
-            button(
-                {
-                    "className": "btn btn-sm btn-primary",
-                    "onClick": lambda x: print("clicked"),
-                },
-                "Install",
-            ),
+            [
+                a(
+                    {
+                        "href": f"mailto:{app.author_email}",
+                        "className": "btn btn-sm btn-dark",
+                    },
+                    "Contact",
+                    key="email",
+                )
+            ]
+            if app.author_email
+            else [],
+            [
+                button(
+                    {
+                        "className": "btn btn-sm btn-primary",
+                        "onClick": lambda x: print("clicked"),
+                    },
+                    "Install",
+                    key="install",
+                )
+            ]
+            if installable.data
+            else [],
         ),
         div({"className": "description"}, app.short_description),
         div(

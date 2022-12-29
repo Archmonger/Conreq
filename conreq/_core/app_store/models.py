@@ -1,9 +1,12 @@
+import importlib
+import platform
 import uuid
 
 from django.contrib.auth import get_user_model
 from django.db import models
 from multiselectfield import MultiSelectField
 from ordered_model.models import OrderedModel
+from packaging import version
 from versionfield import VersionField
 
 from conreq.utils.models import UUIDFilePath
@@ -178,6 +181,37 @@ class AppPackage(models.Model):
     incompatible_subcategories = models.ManyToManyField(
         Subcategory, related_name="incompatible_subcategories", blank=True
     )
+
+    # Installable property that checks the development_stage, sys_platforms, and conreq_min_version fields
+    # to determine if the app is installable on the current system.
+    # Also checks if any incompatible apps are installed.
+    @property
+    def installable(self):
+        # pylint: disable=import-outside-toplevel
+        from django.conf import settings
+
+        # Invalid development stage
+        if self.development_stage == DevelopmentStage.PLANNING:
+            return False
+
+        # Incorrect system platform
+        if (
+            SysPlatform.ANY not in self.sys_platforms
+            and platform.system() not in self.sys_platforms
+        ):
+            return False
+
+        # Incompatible Conreq version
+        if version.parse(str(self.conreq_min_version)) > version.parse(
+            str(settings.CONREQ_VERSION)
+        ):
+            return False
+
+        # Incompatible app is installed
+        return not any(
+            importlib.util.find_spec(app.pkg_name)
+            for app in self.incompatible_apps.all()  # pylint: disable=no-member
+        )
 
 
 class SpotlightCategory(OrderedModel):
