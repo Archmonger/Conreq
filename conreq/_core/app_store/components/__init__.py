@@ -16,7 +16,7 @@ from conreq.types import AppStoreState, AppStoreStateContext
 
 
 @component
-def app_store():
+def app_store():  # sourcery skip
     state, set_state = hooks.use_state(AppStoreState())
     state.set_state = lambda obj: set_state(copy(obj))
     nav_category_query = use_query(get_nav_categories)
