@@ -27,9 +27,6 @@ def app_store():
 
     # Don't render if there are no apps
     if not nav_category_query.loading and not nav_category_query.data:
-        if state.viewport_loading:
-            state.viewport_loading = False
-            state.set_state(state)
         return "Error. No apps found!"
 
     # Don't render if categories are still loading
