@@ -1,5 +1,3 @@
-import asyncio
-import random
 from copy import copy
 from typing import Callable, Iterable, Union, cast
 
@@ -78,14 +76,8 @@ def spotlight(
     description,
     apps: Iterable[AppPackage],
 ):
-    opacity, set_opacity = hooks.use_state(0)
     apps_query = use_query(get_spotlight_apps, apps)
     card_list, set_card_list = hooks.use_state(cast(list[ComponentType], []))
-
-    @hooks.use_effect(dependencies=[])
-    async def fade_in_animation():
-        await asyncio.sleep(round(random.uniform(0, 0.3), 3))
-        set_opacity(1)
 
     if apps_query.loading or apps_query.error:
         return
@@ -104,10 +96,7 @@ def spotlight(
         set_card_list(copy(card_list))
 
     return div(
-        {
-            "className": "spotlight fade-in",
-            "style": {"opacity": opacity},
-        },
+        {"className": "spotlight fade-in"},
         div(
             {"className": "spotlight-head"},
             div(
