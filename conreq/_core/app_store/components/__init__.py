@@ -11,12 +11,7 @@ from idom.types import ComponentType
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.components.nav import app_store_nav
-from conreq._core.app_store.models import (
-    AppPackage,
-    Category,
-    SpotlightCategory,
-    Subcategory,
-)
+from conreq._core.app_store.models import AppPackage, Category, SpotlightCategory
 from conreq.types import HomepageStateContext
 
 # TODO: Handle situations where there are no spotlight apps or categories
@@ -27,35 +22,10 @@ def app_store():
     state = hooks.use_context(HomepageStateContext)
     tab, set_tab = hooks.use_state(cast(Union[Callable, None], None))
     nav_category_query = use_query(get_nav_categories)
-    nav_categories, set_nav_categories = hooks.use_state(
-        cast(dict[Category, list[Subcategory]], {})
-    )
-    loading_needed, set_loading_needed = hooks.use_state(True)
-
-    # Display loading animation until categories are loaded
-    if loading_needed and not nav_categories:
-        state.viewport_loading = True
-        set_loading_needed(False)
-        state.set_state(state)
-
-    # Hide loading animation once categories are loaded
-    if not loading_needed and nav_categories:
-        state.viewport_loading = False
-        set_loading_needed(True)
-        state.set_state(state)
-
-    # Convert categories to a dictionary for easier rendering
-    if (
-        not nav_category_query.loading
-        and not nav_category_query.error
-        and not nav_categories
-        and nav_category_query.data
-    ):
-        set_nav_categories(subcategories_to_dict(nav_category_query.data))
 
     # Don't render if there's an error loading categories
     if nav_category_query.error:
-        return "Error during loading aopps!"
+        return "Error during loading apps!"
 
     # Don't render if there are no apps
     if not nav_category_query.loading and not nav_category_query.data:
@@ -65,7 +35,7 @@ def app_store():
         return "Error. No apps found!"
 
     # Don't render if categories are still loading
-    if nav_category_query.loading or not nav_categories:
+    if nav_category_query.loading:
         return None
 
     # TODO: Update app store entries every first load
@@ -78,7 +48,7 @@ def app_store():
             all_spotlight(),
             key="spotlight-region",
         ),
-        app_store_nav(nav_categories),
+        app_store_nav(nav_category_query.data),
     )
 
 
@@ -170,11 +140,4 @@ def get_spotlight_categories():
 
 
 def get_nav_categories():
-    return Subcategory.objects.select_related("category").order_by("name").all()
-
-
-def subcategories_to_dict(query) -> dict[Category, list[Subcategory]]:
-    new_categories: dict[Category, list[Subcategory]] = {}
-    for subcategory in query:
-        new_categories.setdefault(subcategory.category, []).append(subcategory)
-    return new_categories
+    return Category.objects.all().order_by("name")

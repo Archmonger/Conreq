@@ -1,9 +1,11 @@
+from typing import Iterable
+
 from idom.html import a, div, h5, li, ol
 
-from conreq._core.app_store.models import Category, Subcategory
+from conreq._core.app_store.models import Category
 
 
-def app_store_nav(categories: dict[Category, list[Subcategory]]):
+def app_store_nav(categories: Iterable[Category]):
     return div(
         {"className": "nav-region"},
         [
@@ -25,11 +27,13 @@ def app_store_nav(categories: dict[Category, list[Subcategory]]):
                             ),
                             key=str(subcategory.uuid),
                         )
-                        for subcategory in value
+                        for subcategory in sorted(
+                            category.subcategory_set.all(), key=lambda x: x.name
+                        )
                     ],
                 ),
                 key=str(category.uuid),
             )
-            for category, value in categories.items()
+            for category in categories
         ],
     )
