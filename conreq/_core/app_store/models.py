@@ -143,7 +143,11 @@ class AppPackage(models.Model):
 
     # Ownership Info
     author = models.CharField(max_length=50)
-    author_email = models.EmailField(blank=True)
+    contact_email = models.EmailField(blank=True)
+    contact_link = models.URLField(
+        blank=True,
+        help_text='Link takes priority of email for the small "Contact" button.',
+    )
     pypi_url = models.URLField(blank=True)
     repository_url = models.URLField(
         blank=True,

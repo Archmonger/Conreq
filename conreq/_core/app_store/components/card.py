@@ -75,14 +75,14 @@ def card(app: AppPackage):
             [
                 a(
                     {
-                        "href": f"mailto:{app.author_email}",
+                        "href": f"{app.contact_link}" or f"mailto:{app.contact_email}",
                         "className": "btn btn-sm btn-dark",
                     },
                     "Contact",
                     key="email",
                 )
             ]
-            if app.author_email
+            if app.contact_link or app.contact_email
             else [],
             [
                 button(
