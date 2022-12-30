@@ -1,11 +1,25 @@
 from typing import Iterable
 
+from idom import hooks
 from idom.html import a, div, h5, li, ol
 
 from conreq._core.app_store.models import Category
+from conreq.types import AppStoreStateContext
 
 
 def app_store_nav(categories: Iterable[Category]):
+    state = hooks.use_context(AppStoreStateContext)
+
+    print("current state", state)
+
+    def nav_onclick(subcategory):
+        def event(_):
+            state.tab = subcategory
+            state.set_state(state)
+            print("setting state to", state)
+
+        return event
+
     return div(
         {"className": "nav-region"},
         [
@@ -21,7 +35,7 @@ def app_store_nav(categories: Iterable[Category]):
                                 {
                                     "className": "nav-sub-link",
                                     "href": f"#{subcategory.uuid}",
-                                    "onClick": lambda x: print("clicked"),
+                                    "onClick": nav_onclick(subcategory),
                                 },
                                 subcategory.name,
                             ),

@@ -134,7 +134,7 @@ ModalStateContext: Context[ModalState] = create_context(ModalState())
 @dataclass
 class HomepageState:
     set_state: SetHomepageState = lambda _: None
-    """a function that can be used to set this homepage state."""
+    """A function that can be used to set this state."""
 
     viewport_loading: bool = False
     """A toggle to manually set the viewport loading state. This is only used
@@ -161,9 +161,25 @@ HomepageStateContext: Context[HomepageState] = create_context(HomepageState())
 
 
 @dataclass
+class AppStoreState:
+    set_state: SetAppStoreState = lambda _: None
+    """A function that can be used to set this state."""
+
+    tab: Any | None = None
+    """The current app store tab being rendered."""
+
+
+SetAppStoreState = Callable[[AppStoreState], None]
+AppStoreStateContext: Context[AppStoreState] = create_context(AppStoreState())
+
+
+@dataclass
 class TabbedViewportState:
     tab: SubTab | None
+    """The current subtab being rendered."""
+
     set_state: SetTabbedViewportState = lambda _: None
+    """A function that can be used to set this state."""
 
 
 SetTabbedViewportState = Callable[[TabbedViewportState], None]

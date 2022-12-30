@@ -1,5 +1,5 @@
 from copy import copy
-from typing import Callable, Iterable, Union, cast
+from typing import Iterable, cast
 
 from django_idom.components import django_css
 from django_idom.hooks import use_query
@@ -10,16 +10,19 @@ from idom.types import ComponentType
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.components.nav import app_store_nav
 from conreq._core.app_store.models import AppPackage, Category, SpotlightCategory
-from conreq.types import HomepageStateContext
+from conreq.types import AppStoreState, AppStoreStateContext
 
 # TODO: Handle situations where there are no spotlight apps or categories
 
 
 @component
 def app_store():
-    state = hooks.use_context(HomepageStateContext)
-    tab, set_tab = hooks.use_state(cast(Union[Callable, None], None))
+    state, set_state = hooks.use_state(AppStoreState())
+    state.set_state = lambda obj: set_state(copy(obj))
     nav_category_query = use_query(get_nav_categories)
+
+    if state.tab:
+        print("current tab has been set!", state.tab.name)
 
     # Don't render if there's an error loading categories
     if nav_category_query.error:
@@ -34,16 +37,17 @@ def app_store():
         return None
 
     # TODO: Update app store entries every first load
-    return _(
+    return AppStoreStateContext(
         django_css("conreq/app_store.css"),
-        tab(key=tab.__name__)
-        if tab
+        state.tab.name
+        if state.tab
         else div(
             {"className": "spotlight-region"},
             all_spotlight(),
             key="spotlight-region",
         ),
         app_store_nav(nav_category_query.data),
+        value=state,
     )
 
 
