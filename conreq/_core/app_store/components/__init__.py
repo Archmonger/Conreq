@@ -49,14 +49,22 @@ def app_store():
         not nav_category_query.loading
         and not nav_category_query.error
         and not nav_categories
+        and nav_category_query.data
     ):
         set_nav_categories(subcategories_to_dict(nav_category_query.data))
 
     # Don't render if there's an error loading categories
     if nav_category_query.error:
-        return "Error!"
+        return "Error during loading aopps!"
 
-    # Don't render if categories are still loading, or if they haven't been converted to a dict yet
+    # Don't render if there are no apps
+    if not nav_category_query.loading and not nav_category_query.data:
+        if state.viewport_loading:
+            state.viewport_loading = False
+            state.set_state(state)
+        return "Error. No apps found!"
+
+    # Don't render if categories are still loading
     if nav_category_query.loading or not nav_categories:
         return None
 
