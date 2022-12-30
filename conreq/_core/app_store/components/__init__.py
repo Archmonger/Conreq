@@ -129,4 +129,4 @@ def get_spotlight_categories():
 
 
 def get_nav_categories():
-    return Category.objects.all().order_by("name")
+    return Category.objects.all().order_by("order")

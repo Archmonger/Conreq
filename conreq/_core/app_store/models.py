@@ -42,7 +42,7 @@ class DescriptionType(models.TextChoices):
     MD = "text/markdown", "Markdown (.md)"
 
 
-class Category(models.Model):
+class Category(OrderedModel):
     def __str__(self):
         return str(self.name)
 

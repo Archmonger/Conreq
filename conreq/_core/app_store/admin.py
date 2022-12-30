@@ -92,8 +92,10 @@ class DragDropOrderedModelAdmin(BaseOrderedModelAdmin, admin.ModelAdmin):
 
 # Register your models here.
 @admin.register(models.Category)
-class AppCategories(admin.ModelAdmin):
-    pass
+class AppCategories(OrderedInlineModelAdminMixin, DragDropOrderedModelAdmin):
+    model = models.Category
+    list_display = ("name", "order", "make_draggable")
+    ordering = ("order",)
 
 
 @admin.register(models.Subcategory)
