@@ -195,7 +195,10 @@ class AppPackage(models.Model):
         from django.conf import settings
 
         # Invalid development stage
-        if self.development_stage == DevelopmentStage.PLANNING:
+        if (
+            not self.development_stage
+            or self.development_stage == DevelopmentStage.PLANNING
+        ):
             return False
 
         # Incorrect system platform
@@ -208,6 +211,10 @@ class AppPackage(models.Model):
         # Incompatible Conreq version
         if version.parse(str(self.conreq_min_version)) > version.parse(
             str(settings.CONREQ_VERSION)
+        ) or (
+            self.conreq_max_version
+            and version.parse(str(self.conreq_max_version))
+            < version.parse(str(settings.CONREQ_VERSION))
         ):
             return False
 
