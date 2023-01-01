@@ -11,8 +11,6 @@ from conreq._core.app_store.components.nav import app_store_nav
 from conreq._core.app_store.models import AppPackage, Category, SpotlightCategory
 from conreq.types import AppStoreState
 
-# TODO: Handle situations where there are no spotlight apps or categories
-
 
 @component
 def app_store():  # sourcery skip

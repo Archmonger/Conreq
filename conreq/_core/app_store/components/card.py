@@ -69,7 +69,14 @@ def card_top(app: AppPackage, state: HomepageState, subcategory: Subcategory | N
                 ),
             ),
         ),
-        div({"className": "image"}),
+        div(
+            {"className": "logo"}
+            | (
+                {"style": {"backgroundImage": f'url("{app.logo.url}")'}}
+                if app.logo
+                else {}
+            )
+        ),
     )
 
 

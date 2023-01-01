@@ -152,12 +152,13 @@ a.nav-sub-link:active {
 	margin-bottom: 5px;
 }
 
-.spotlight .card-stage .card > .top > .image {
+.spotlight .card-stage .card > .top > .logo {
 	display: inline-block;
 	position: relative;
 	height: 80px;
 	width: 80px;
-	background: #6c757d;
+	background: #1c1c1c;
+	background-size: cover;
 }
 
 .spotlight .card-stage .card > .btn-container {
