@@ -1,16 +1,15 @@
 from copy import copy
-from typing import Iterable, cast
+from typing import Iterable
 
 from django_idom.components import django_css
 from django_idom.hooks import use_query
 from idom import component, hooks
 from idom.html import _, div, h4, i, p
-from idom.types import ComponentType
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.components.nav import app_store_nav
 from conreq._core.app_store.models import AppPackage, Category, SpotlightCategory
-from conreq.types import AppStoreState, AppStoreStateContext
+from conreq.types import AppStoreState
 
 # TODO: Handle situations where there are no spotlight apps or categories
 
@@ -26,7 +25,7 @@ def app_store():  # sourcery skip
 
     # Don't render if there's an error loading categories
     if nav_category_query.error:
-        return "Error during loading apps!"
+        return "Error. Could not load apps!"
 
     # Don't render if there are no apps
     if not nav_category_query.loading and not nav_category_query.data:
@@ -37,7 +36,7 @@ def app_store():  # sourcery skip
         return None
 
     # TODO: Update app store entries every first load
-    return AppStoreStateContext(
+    return _(
         django_css("conreq/app_store.css"),
         state.tab.name
         if state.tab
@@ -47,7 +46,6 @@ def app_store():  # sourcery skip
             key="spotlight-region",
         ),
         app_store_nav(nav_category_query.data),
-        value=state,
     )
 
 
@@ -63,7 +61,7 @@ def all_spotlight():
             spotlight(
                 category.name,
                 category.description,
-                apps=category.apps,
+                apps=category.apps.all(),
                 key=category.uuid,
             )
             for category in spotlight_category_query.data  # type: ignore
@@ -77,17 +75,9 @@ def spotlight(
     description,
     apps: Iterable[AppPackage],
 ):
-    apps_query = use_query(get_spotlight_apps, apps)
-    card_list, set_card_list = hooks.use_state(cast(list[ComponentType], []))
-
-    if apps_query.loading or apps_query.error:
-        return
-
-    if not card_list:
-        set_card_list(
-            [card(app, key=app.uuid) for app in apps_query.data]  # type: ignore
-        )
-        return
+    card_list, set_card_list = hooks.use_state(
+        [card(app, key=app.uuid) for app in apps]
+    )
 
     def rotate_left(_):
         set_card_list(copy(card_list[-1:] + card_list[:-1]))
@@ -119,10 +109,6 @@ def spotlight(
             ),
         ),
     )
-
-
-def get_spotlight_apps(apps):
-    return apps.all()
 
 
 def get_spotlight_categories():
