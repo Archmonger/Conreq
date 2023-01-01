@@ -1,3 +1,4 @@
+import asyncio
 import random
 
 from django_idom.hooks import use_query
@@ -21,15 +22,20 @@ def check_installable(app: AppPackage):
 def card(app: AppPackage):
     state = hooks.use_context(HomepageStateContext)
     animation_speed, _ = hooks.use_state(random.randint(7, 13))
+    opacity, set_opacity = hooks.use_state(0)
     subcategory = use_query(get_app_subcategory, app)
     installable = use_query(QueryOptions(postprocessor=None), check_installable, app)
+
+    @hooks.use_effect(dependencies=[])
+    async def fade_in_animation():
+        await asyncio.sleep(round(random.uniform(0, 0.55), 3))
+        set_opacity(1)
 
     return div(
         {
             "className": "card fade-in" + (" special" if app.special else ""),
-            "style": {"--animation-speed": f"{animation_speed}s"}
-            if app.special
-            else {},
+            "style": {"opacity": opacity}
+            | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
         },
         card_top(app, state, subcategory.data),
         card_btns(app, state, installable.data),

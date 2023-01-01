@@ -1,3 +1,5 @@
+import asyncio
+import random
 from copy import copy
 from typing import Iterable
 
@@ -73,9 +75,15 @@ def spotlight(
     description,
     apps: Iterable[AppPackage],
 ):
+    opacity, set_opacity = hooks.use_state(0)
     card_list, set_card_list = hooks.use_state(
         [card(app, key=app.uuid) for app in apps]
     )
+
+    @hooks.use_effect(dependencies=[])
+    async def fade_in_animation():
+        await asyncio.sleep(round(random.uniform(0, 0.3), 3))
+        set_opacity(1)
 
     def rotate_left(_):
         set_card_list(copy(card_list[-1:] + card_list[:-1]))
@@ -85,7 +93,10 @@ def spotlight(
         set_card_list(copy(card_list))
 
     return div(
-        {"className": "spotlight fade-in"},
+        {
+            "className": "spotlight fade-in",
+            "style": {"opacity": opacity},
+        },
         div(
             {"className": "spotlight-head"},
             div(
