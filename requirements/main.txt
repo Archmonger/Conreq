@@ -10,7 +10,7 @@ django-compressor==4.1
 django-crispy-forms==1.14.0
 django-downloadview==2.3.0
 django-health-check==3.17.0
-django-idom==2.2.0
+git+https://github.com/Archmonger/django-idom@fix-use-query-recursive
 django-jazzmin==2.6.0
 django-mass-edit==3.4.1
 django-multiselectfield==0.1.12
