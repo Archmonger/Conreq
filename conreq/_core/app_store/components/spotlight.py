@@ -1,11 +1,10 @@
 import asyncio
 import random
-from copy import copy
 from typing import Iterable
 
 from django_idom.hooks import use_query
 from idom import component, hooks
-from idom.html import _, div, h4, i, p
+from idom.html import _, button, div, h4, i, p
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.models import AppPackage, SpotlightCategory
@@ -38,21 +37,13 @@ def spotlight_section(
     apps: Iterable[AppPackage],
 ):
     opacity, set_opacity = hooks.use_state(0)
-    card_list, set_card_list = hooks.use_state(
-        [card(app, key=app.uuid) for app in apps]
-    )
+    show_more, set_show_more = hooks.use_state(False)
+    card_list = [card(app, key=app.uuid) for app in apps]
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():
         await asyncio.sleep(round(random.uniform(0, 0.3), 3))
         set_opacity(1)
-
-    def rotate_left(_):
-        set_card_list(copy(card_list[-1:] + card_list[:-1]))
-
-    def rotate_right(_):
-        card_list.append(card_list.pop(0))
-        set_card_list(copy(card_list))
 
     return div(
         {
@@ -67,15 +58,27 @@ def spotlight_section(
                 p({"className": "description"}, description),
             ),
             div(
-                {"className": "carousel-controls"},
-                i({"className": "fas fa-angle-left", "onClick": rotate_left}),
-                i({"className": "fas fa-angle-right", "onClick": rotate_right}),
+                {"className": "collapse-controls"},
+                button(
+                    {
+                        "className": "btn btn-sm btn-dark",
+                        "onClick": lambda _: set_show_more(not show_more),
+                    },
+                    "Show More ",
+                    i({"className": f'fas fa-angle-{"up" if show_more else "down"}'}),
+                ),
             ),
         ),
         div(
-            {"className": "card-stage"},
+            {"className": "card-stage"}
+            | ({"style": {"height": "auto"}} if show_more else {}),
             div(
-                {"className": "carousel"},
+                {"className": "collapse"}
+                | (
+                    {"style": {"flex-flow": "wrap", "width": "auto"}}
+                    if show_more
+                    else {}
+                ),
                 card_list,
             ),
         ),

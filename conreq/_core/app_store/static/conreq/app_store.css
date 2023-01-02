@@ -71,11 +71,11 @@ a.nav-sub-link:active {
 	padding-right: calc(var(--viewport-padding) - 7px);
 }
 
-.carousel-controls {
+.collapse-controls {
 	font-size: 25px;
 }
 
-.carousel-controls > i {
+.collapse-controls > i {
 	padding: 0 6px;
 	margin: 0 2px;
 }
@@ -86,7 +86,7 @@ a.nav-sub-link:active {
 	margin-bottom: 20px;
 }
 
-.spotlight .card-stage .carousel {
+.spotlight .card-stage .collapse {
 	display: flex;
 	flex-flow: row;
 	width: -webkit-fit-content;
@@ -107,6 +107,7 @@ a.nav-sub-link:active {
 	width: 380px;
 	padding: 20px;
 	margin-right: 20px;
+	margin-bottom: 20px;
 	display: inline-block;
 	z-index: 1;
 }
