@@ -42,7 +42,7 @@ def viewport():
             state,
             this_viewport,
         ),
-        this_viewport.component() if state._viewport else "",
+        this_viewport.component(*this_viewport.args) if this_viewport else "",
         key=f"{this_viewport.component.__module__}.{this_viewport.component.__name__}",
     )
 

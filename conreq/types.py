@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import Any, Callable, Iterable
 
 from idom.core.component import Component
 from idom.core.hooks import Context, create_context
@@ -35,10 +35,22 @@ class AuthLevel:
 @dataclass(frozen=True)
 class Viewport:
     component: ComponentConstructor | Callable[..., Component] | Callable[..., VdomDict]
+    """The component to render in the viewport."""
+
+    args: tuple = field(default_factory=tuple)
+    """The arguments to pass to the viewport component."""
+
     html_class: str = ""
+    """HTML class to apply to the viewport."""
+
     padding: bool = True
+    """Whether or not to apply padding to the viewport."""
+
     page_title: str | None = None
+    """The page title to display on the browser tab."""
+
     background: str | None = None  # TODO: Implement this
+    """The background property to apply to the webpage."""
 
 
 @dataclass(frozen=True)
@@ -130,11 +142,11 @@ class ModalState:
     modal_intent: ComponentConstructor | None = None
     """The modal that needs to be loaded."""
 
-    modal_args: list = field(default_factory=list)
-    """The arguments to pass to the modal function."""
+    modal_args: Iterable = field(default_factory=list)
+    """The arguments to pass to the modal component."""
 
     modal_kwargs: dict = field(default_factory=dict)
-    """The keyword arguments to pass to the modal function."""
+    """The keyword arguments to pass to the modal component."""
 
     _modal: ComponentConstructor | None = None
     """The currently visible modal."""
