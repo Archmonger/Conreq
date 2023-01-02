@@ -131,13 +131,21 @@ class ModalState:
     """The modal that needs to be loaded."""
 
     modal_args: list = field(default_factory=list)
-    """The arguments to pass to the modal."""
+    """The arguments to pass to the modal function."""
 
     modal_kwargs: dict = field(default_factory=dict)
-    """The keyword arguments to pass to the modal."""
+    """The keyword arguments to pass to the modal function."""
 
     _modal: ComponentConstructor | None = None
     """The currently visible modal."""
+
+    def reset_modal(self) -> None:
+        """Resets the modal to defaults."""
+        self.show = False
+        self.modal_intent = None
+        self._modal = None
+        self.modal_args = []
+        self.modal_kwargs = {}
 
 
 SetModalState = Callable[[ModalState], None]

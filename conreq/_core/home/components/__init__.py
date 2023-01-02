@@ -37,9 +37,8 @@ def homepage():
         state._viewport = state.viewport_intent
         state.viewport_intent = None
 
-        # Hide the modal
-        state.modal_state.show = False
-        state.modal_state._modal = None
+        # Reset the modal
+        state.modal_state.reset_modal()
 
         state.set_state(state)
 
