@@ -20,9 +20,6 @@ def app_store():  # sourcery skip
     state.set_state = lambda obj: set_state(copy(obj))
     nav_category_query = use_query(get_nav_categories)
 
-    if state.tab:
-        print("current tab has been set!", state.tab.name)
-
     # Don't render if there's an error loading categories
     if nav_category_query.error:
         return "Error. Could not load apps!"

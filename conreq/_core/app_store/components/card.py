@@ -6,8 +6,19 @@ from django_idom.types import QueryOptions
 from idom import component, hooks
 from idom.html import a, button, div, h5
 
+from conreq._core.app_store.components.modal import app_modal
 from conreq._core.app_store.models import AppPackage, Subcategory
 from conreq.types import HomepageState, HomepageStateContext
+
+
+def details_modal_event(state: HomepageState, app: AppPackage):
+    async def event(_):
+        state.modal_state.show = True
+        state.modal_intent = app_modal
+        state.modal_args = [app]
+        state.set_state(state)
+
+    return event
 
 
 def get_app_subcategory(app: AppPackage):
@@ -45,10 +56,6 @@ def card(app: AppPackage):
 
 
 def card_top(app: AppPackage, state: HomepageState, subcategory: Subcategory | None):
-    def details_modal_event(_):
-        state.modal_state.show = True
-        state.set_state(state)
-
     return div(
         {"className": "top"},
         div(
@@ -56,7 +63,10 @@ def card_top(app: AppPackage, state: HomepageState, subcategory: Subcategory | N
             h5(
                 {"className": "card-title"},
                 a(
-                    {"href": f"#{app.uuid}", "onClick": details_modal_event},
+                    {
+                        "href": f"#{app.uuid}",
+                        "onClick": details_modal_event(state, app),
+                    },
                     app.name,
                 ),
             ),
@@ -87,16 +97,12 @@ def card_top(app: AppPackage, state: HomepageState, subcategory: Subcategory | N
 
 
 def card_btns(app: AppPackage, state: HomepageState, installable: bool | None):
-    def details_modal_event(_):
-        state.modal_state.show = True
-        state.set_state(state)
-
     return div(
         {"className": "btn-container"},
         button(
             {
                 "className": "btn btn-sm btn-dark",
-                "onClick": details_modal_event,
+                "onClick": details_modal_event(state, app),
             },
             "Details",
         ),

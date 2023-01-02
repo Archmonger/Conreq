@@ -10,13 +10,10 @@ from conreq.types import AppStoreStateContext
 def app_store_nav(categories: Iterable[Category]):
     state = hooks.use_context(AppStoreStateContext)
 
-    print("current state", state)
-
     def nav_onclick(subcategory):
         def event(_):
             state.tab = subcategory
             state.set_state(state)
-            print("setting state to", state)
 
         return event
 

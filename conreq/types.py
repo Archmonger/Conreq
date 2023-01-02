@@ -146,10 +146,16 @@ class HomepageState:
     _viewport: Viewport | None = None
     """The currently visible viewport."""
 
-    modal_intent: Callable | None = None
+    modal_intent: ComponentConstructor | None = None
     """The modal that needs to be loaded."""
 
-    _modal: Callable | None = None
+    modal_args: list = field(default_factory=list)
+    """The arguments to pass to the modal."""
+
+    modal_kwargs: dict = field(default_factory=dict)
+    """The keyword arguments to pass to the modal."""
+
+    _modal: ComponentConstructor | None = None
     """The currently visible modal."""
 
     modal_state: ModalState = field(default_factory=ModalState)

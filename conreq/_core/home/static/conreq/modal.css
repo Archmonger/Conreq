@@ -14,6 +14,7 @@
 	background: #252525;
 	color: #fff;
 	padding: 0;
+	line-height: 1.25;
 	max-height: 50vh;
 	overflow-y: auto;
 	overflow-y: overlay;
@@ -58,7 +59,11 @@
 }
 
 .modal-header-btn-container {
-	margin-left: 25px;
+	margin-left: 12px;
+}
+
+.modal-header-btn-container i {
+	margin-left: 13px;
 }
 
 .modal-header .fas:hover {
