@@ -312,9 +312,7 @@ INSTALLED_APPS = [
     "encrypted_fields",  # Encrypted text in the DB
     "solo",  # Single-row models in the DB
     "django_ace",  # Code hightlighted form fields
-    # FIXME: When DEBUG is false.... 'django-versionfield/fonts/glyphicons-halflings-regular.eot' could not be found
-    # TODO: Might need to fork `versionfield` to fix the bugs mentioned above
-    # "versionfield",  # Allow for version numbers in the DB
+    "versionfield",  # Allow for version numbers in the DB
     # ASGI
     "django_idom",  # React JS for Python
     # API
