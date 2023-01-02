@@ -125,6 +125,19 @@ class ModalState:
     # https://github.com/idom-team/idom/issues/786
 
     show: bool = False
+    """A toggle to set the modal's visibility."""
+
+    modal_intent: ComponentConstructor | None = None
+    """The modal that needs to be loaded."""
+
+    modal_args: list = field(default_factory=list)
+    """The arguments to pass to the modal."""
+
+    modal_kwargs: dict = field(default_factory=dict)
+    """The keyword arguments to pass to the modal."""
+
+    _modal: ComponentConstructor | None = None
+    """The currently visible modal."""
 
 
 SetModalState = Callable[[ModalState], None]
@@ -145,18 +158,6 @@ class HomepageState:
 
     _viewport: Viewport | None = None
     """The currently visible viewport."""
-
-    modal_intent: ComponentConstructor | None = None
-    """The modal that needs to be loaded."""
-
-    modal_args: list = field(default_factory=list)
-    """The arguments to pass to the modal."""
-
-    modal_kwargs: dict = field(default_factory=dict)
-    """The keyword arguments to pass to the modal."""
-
-    _modal: ComponentConstructor | None = None
-    """The currently visible modal."""
 
     modal_state: ModalState = field(default_factory=ModalState)
     """The modal's current state object."""

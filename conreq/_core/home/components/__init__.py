@@ -39,7 +39,7 @@ def homepage():
 
         # Hide the modal
         state.modal_state.show = False
-        state._modal = None
+        state.modal_state._modal = None
 
         state.set_state(state)
 

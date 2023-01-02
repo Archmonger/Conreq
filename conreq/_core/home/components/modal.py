@@ -35,24 +35,24 @@ def _fragment_if_iterable(children):
 def modal():
     state = hooks.use_context(HomepageStateContext)
 
-    @hooks.use_effect(dependencies=[state.modal_intent])
+    @hooks.use_effect(dependencies=[state.modal_state.modal_intent])
     async def set_modal():
         """Set the modal based on intent."""
-        if not state.modal_intent:
+        if not state.modal_state.modal_intent:
             return
 
-        state._modal = state.modal_intent
-        state.modal_intent = None
+        state.modal_state._modal = state.modal_state.modal_intent
+        state.modal_state.modal_intent = None
         state.set_state(state)
 
     return div(
         MODAL_CONTAINER,
-        state._modal(
-            *state.modal_args,
-            **state.modal_kwargs,
-            key=f"{state._modal.__module__}.{state._modal.__name__}",
+        state.modal_state._modal(
+            *state.modal_state.modal_args,
+            **state.modal_state.modal_kwargs,
+            key=f"{state.modal_state._modal.__module__}.{state.modal_state._modal.__name__}",
         )
-        if state._modal
+        if state.modal_state._modal
         else modal_dialog(),
         script(
             "let conreq_modal = new bootstrap.Modal(document.getElementById('modal-container'), {backdrop: 'static', keyboard: false});"

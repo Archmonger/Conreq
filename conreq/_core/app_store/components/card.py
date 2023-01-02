@@ -14,8 +14,8 @@ from conreq.types import HomepageState, HomepageStateContext
 def details_modal_event(state: HomepageState, app: AppPackage):
     async def event(_):
         state.modal_state.show = True
-        state.modal_intent = app_modal
-        state.modal_args = [app]
+        state.modal_state.modal_intent = app_modal
+        state.modal_state.modal_args = [app]
         state.set_state(state)
 
     return event
