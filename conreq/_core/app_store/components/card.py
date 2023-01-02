@@ -65,13 +65,18 @@ def card_top(app: AppPackage, state: HomepageState, subcategory: Subcategory | N
                     app.name,
                 ),
             ),
-            div(
-                {"className": "card-author"},
-                a(
-                    {"href": "#", "onClick": lambda x: print("clicked")},
-                    app.author,
-                ),
-            ),
+            [
+                div(
+                    {"className": "card-author"},
+                    a(
+                        {"href": "#", "onClick": lambda x: print("clicked")},
+                        app.author,
+                    ),
+                    key="author",
+                )
+            ]
+            if app.author
+            else [],
             div(
                 {"className": "card-category"},
                 a(

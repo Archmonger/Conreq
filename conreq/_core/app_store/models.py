@@ -143,7 +143,7 @@ class AppPackage(models.Model):
     related_apps = models.ManyToManyField("self", blank=True)
 
     # Ownership Info
-    author = models.CharField(max_length=50)
+    author = models.CharField(blank=True, max_length=50)
     author_url = models.URLField(
         blank=True,
         help_text="This is typically a link to your GitHub user account or organization.",
