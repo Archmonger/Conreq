@@ -23,9 +23,9 @@ class DevelopmentStage(models.TextChoices):
 
 
 class AsyncCompatibility(models.TextChoices):
-    NONE = "NONE", "No Async"
-    SEMI = "SEMI", "Semi Async"
-    FULL = "FULL", "Fully Async"
+    NONE = "No Async", "No Async"
+    SEMI = "Semi Async", "Semi Async"
+    FULL = "Fully Async", "Fully Async"
 
 
 class SysPlatform(models.TextChoices):
@@ -109,40 +109,45 @@ class AppPackage(models.Model):
         default=False,
         help_text="If enabled, this app's cards will be visually highlighted. Reserved for donations.",
     )
+    banner_message = models.TextField(
+        blank=True,
+        help_text="Optional text message shown on the app info modal.",
+        max_length=1000,
+    )
     short_description = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    # PyPI Info
+    sync_with_pypi = models.BooleanField(
+        default=False,
+        help_text="Will automatically sync relevant information with the latest PyPI version.",
+        verbose_name="Sync with PyPI",
+    )
     long_description = models.TextField(blank=True)
     long_description_type = models.CharField(
         max_length=20,
         choices=DescriptionType.choices,
         default=DescriptionType.TXT,
     )
-    subcategories = models.ManyToManyField(Subcategory)
+    versions = models.ManyToManyField(PackageVersion, blank=True)
+
+    # Package Details
     development_stage = models.CharField(
         max_length=21,
         choices=DevelopmentStage.choices,
         default=DevelopmentStage.PLANNING,
         blank=True,
     )
-    min_version = VersionField(
-        default="0.0.0",
-        help_text="Minimum PyPI version or Git tag for this package that is compatible with Conreq.",
-    )
-    banner_message = models.TextField(
-        blank=True,
-        help_text="Optional text message shown on the app info modal.",
-        max_length=1000,
-    )
-    sync_with_pypi = models.BooleanField(
-        default=False,
-        help_text="Will automatically sync relevant information with the latest PyPI version.",
-        verbose_name="Sync with PyPI",
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
-    versions = models.ManyToManyField(PackageVersion, blank=True)
+    subcategories = models.ManyToManyField(Subcategory)
+    related_apps = models.ManyToManyField("self", blank=True)
 
     # Ownership Info
     author = models.CharField(max_length=50)
+    author_url = models.URLField(
+        blank=True,
+        help_text="This is typically a link to your GitHub user account or organization.",
+    )
     contact_email = models.EmailField(blank=True)
     contact_link = models.URLField(
         blank=True,
@@ -158,33 +163,28 @@ class AppPackage(models.Model):
     donation_url = models.URLField(blank=True)
     license_type = models.CharField(max_length=100, default="GPLv3")
 
-    # Environment
+    # Compatibility
     sys_platforms = MultiSelectField(
         choices=SysPlatform.choices,
         max_length=40,
         verbose_name="Supported Platforms",
         default=SysPlatform.ANY,
     )
-
-    # Compatibility
     touch_compatible = models.BooleanField()
     mobile_compatible = models.BooleanField()
+    min_version = VersionField(
+        default="0.0.0",
+        help_text="Minimum PyPI version or Git tag for this package that is compatible with Conreq.",
+    )
     conreq_min_version = VersionField(default="0.0.0")
-    conreq_tested_version = VersionField(blank=True, null=True)
     conreq_max_version = VersionField(blank=True, null=True)
     asynchronous = models.CharField(
         max_length=20,
         choices=AsyncCompatibility.choices,
         default=AsyncCompatibility.NONE,
     )
-
-    # App Dependencies
     required_apps = models.ManyToManyField("self", blank=True)
-    optional_apps = models.ManyToManyField("self", blank=True)
     incompatible_apps = models.ManyToManyField("self", blank=True)
-    incompatible_subcategories = models.ManyToManyField(
-        Subcategory, related_name="incompatible_subcategories", blank=True
-    )
 
     # Installable property that checks the development_stage, sys_platforms, and conreq_min_version fields
     # to determine if the app is installable on the current system.

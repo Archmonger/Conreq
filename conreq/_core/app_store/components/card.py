@@ -21,10 +21,6 @@ def details_modal_event(state: HomepageState, app: AppPackage):
     return event
 
 
-def get_app_subcategory(app: AppPackage):
-    return app.subcategories.first()
-
-
 def check_installable(app: AppPackage):
     return app.installable
 
@@ -34,7 +30,6 @@ def card(app: AppPackage):
     state = hooks.use_context(HomepageStateContext)
     animation_speed, _ = hooks.use_state(random.randint(7, 13))
     opacity, set_opacity = hooks.use_state(0)
-    subcategory = use_query(get_app_subcategory, app)
     installable = use_query(QueryOptions(postprocessor=None), check_installable, app)
 
     @hooks.use_effect(dependencies=[])
@@ -48,7 +43,7 @@ def card(app: AppPackage):
             "style": {"opacity": opacity}
             | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
         },
-        card_top(app, state, subcategory.data),
+        card_top(app, state, app.subcategories.all()[0]),
         card_btns(app, state, installable.data),
         div({"className": "description"}, app.short_description),
         card_background(app),
