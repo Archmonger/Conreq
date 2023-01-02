@@ -49,14 +49,14 @@ a.nav-sub-link:active {
 	color: #b8bbbd;
 }
 
-.spotlight-region {
+.spotlight {
 	padding-top: var(--viewport-padding);
 	overflow-y: auto;
 	overflow-y: overlay;
 	width: 100%;
 }
 
-.spotlight {
+.spotlight-section {
 	margin-bottom: 35px;
 	background: linear-gradient(-90deg, #0000004d, transparent);
 	padding: 5px 0;
