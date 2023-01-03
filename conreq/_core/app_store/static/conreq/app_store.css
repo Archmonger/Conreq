@@ -86,12 +86,21 @@ a.nav-sub-link:active {
 	margin-bottom: 20px;
 }
 
+.spotlight .card-stage.show-more {
+	height: auto;
+}
+
 .spotlight .card-stage .collapse {
 	display: flex;
 	flex-flow: row;
 	width: -webkit-fit-content;
 	width: -moz-fit-content;
 	width: fit-content;
+}
+
+.spotlight .card-stage.show-more .collapse {
+	flex-flow: wrap;
+	width: auto;
 }
 
 .spotlight .card-stage .card {

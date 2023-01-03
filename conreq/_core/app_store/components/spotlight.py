@@ -37,8 +37,9 @@ def spotlight_section(
     apps: Iterable[AppPackage],
 ):
     opacity, set_opacity = hooks.use_state(0)
-    show_more, set_show_more = hooks.use_state(False)
     card_list = [card(app, key=app.uuid) for app in apps]
+    min_show_len = 3
+    show_more, set_show_more = hooks.use_state(len(card_list) <= min_show_len)
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():
@@ -57,28 +58,31 @@ def spotlight_section(
                 h4({"className": "title"}, title),
                 p({"className": "description"}, description),
             ),
-            div(
-                {"className": "collapse-controls"},
-                button(
-                    {
-                        "className": "btn btn-sm btn-dark",
-                        "onClick": lambda _: set_show_more(not show_more),
-                    },
-                    "Show More ",
-                    i({"className": f'fas fa-angle-{"up" if show_more else "down"}'}),
-                ),
-            ),
+            [
+                div(
+                    {"className": "collapse-controls"},
+                    button(
+                        {
+                            "className": "btn btn-sm btn-dark",
+                            "onClick": lambda _: set_show_more(not show_more),
+                        },
+                        "Show More ",
+                        i(
+                            {
+                                "className": f'fas fa-angle-{"up" if show_more else "down"}'
+                            }
+                        ),
+                    ),
+                    key="collapse-controls",
+                )
+            ]
+            if len(card_list) > min_show_len
+            else [],
         ),
         div(
-            {"className": "card-stage"}
-            | ({"style": {"height": "auto"}} if show_more else {}),
+            {"className": f"card-stage {'show-more' if show_more else ''}"},
             div(
-                {"className": "collapse"}
-                | (
-                    {"style": {"flex-flow": "wrap", "width": "auto"}}
-                    if show_more
-                    else {}
-                ),
+                {"className": "collapse"},
                 card_list,
             ),
         ),
