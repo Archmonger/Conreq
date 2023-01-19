@@ -1,6 +1,6 @@
 from inspect import iscoroutinefunction
 
-from django_idom.hooks import use_websocket
+from django_idom.hooks import use_scope, use_websocket
 from idom import component, hooks
 from idom.html import _, div, i, nav
 
@@ -68,8 +68,8 @@ USER_ADMIN_DEBUG = ("User", "Admin", "Debug")
 @component
 def sidebar():
     state = hooks.use_context(HomepageStateContext)
-    websocket = use_websocket()
-    if not websocket.scope["user"].is_authenticated:
+    scope = use_scope()
+    if not scope["user"].is_authenticated:
         return None
 
     sidebar_tabs = config.homepage.sidebar_tabs
@@ -113,7 +113,7 @@ def sidebar():
             div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
             div(
                 USERNAME_CONTAINER,
-                div(USERNAME, websocket.scope["user"].get_username()),
+                div(USERNAME, scope["user"].get_username()),
             ),
         ),
         div(
@@ -140,14 +140,14 @@ def sidebar():
                     key=group.name,
                 )
                 for group in sidebar_tabs
-                if group == "Admin" and websocket.scope["user"].is_staff
+                if group == "Admin" and scope["user"].is_staff
             ],
             [  # Debug tabs
                 sidebar_group(
                     group, top_tabs=config._homepage.debug_sidebar_tabs, key=group.name
                 )
                 for group in sidebar_tabs
-                if group == "Debug" and websocket.scope["user"].is_staff and DEBUG
+                if group == "Debug" and scope["user"].is_staff and DEBUG
             ],
         ),
     )
