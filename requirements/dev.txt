@@ -1,5 +1,6 @@
 black
 django-stubs[compatible-mypy]
+django_stubs_ext
 flake8
 flake8-django
 mypy

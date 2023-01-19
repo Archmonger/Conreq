@@ -16,6 +16,7 @@ from logging.config import dictConfig as logging_config
 from pathlib import Path
 from typing import Any
 
+import django_stubs_ext
 from django.core.management.utils import get_random_secret_key
 from split_settings.tools import include
 from tzlocal import get_localzone_name
@@ -31,6 +32,10 @@ from conreq.utils.environment import (
     set_env,
 )
 from conreq.utils.packages import find_packages
+
+# Monkey patches for type hints
+django_stubs_ext.monkeypatch()
+
 
 # Project Directories
 ROOT_DIR = Path(__file__).resolve().parent.parent
