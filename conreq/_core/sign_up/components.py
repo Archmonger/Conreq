@@ -12,6 +12,7 @@ def lock_invite_code(code_id: int):
     def _lock_invite_code(_event):
         code = InviteCode.objects.get(id=code_id)
         code.locked = True
+        code.full_clean()
         code.save()
         set_locked(True)
 

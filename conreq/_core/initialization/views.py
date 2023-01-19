@@ -37,7 +37,10 @@ def initialize(request):
     return render(request, "conreq/initialization.html")
 
 
-def _display_initialization(form, request, initialization):
+def _display_initialization(
+    form: InitializationForm, request, initialization: Initialization
+):
+    form.full_clean()
     form.save()
     username = form.cleaned_data.get("username")
     password = form.cleaned_data.get("password1")
@@ -49,8 +52,10 @@ def _display_initialization(form, request, initialization):
     setattr(user, "is_staff", True)
     setattr(user, "is_admin", True)
     setattr(user, "is_superuser", True)
+    user.full_clean()
     user.save()
     login(request, user)
     initialization.initialized = True
+    initialization.full_clean()
     initialization.save()
     return redirect("landing")

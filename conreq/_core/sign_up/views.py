@@ -42,6 +42,7 @@ def sign_up(request, invite_code=None):
             )
 
         # Create and login the user
+        form.full_clean()
         form.save()
         user = authenticate(
             username=form.cleaned_data.get("username"),
@@ -49,6 +50,7 @@ def sign_up(request, invite_code=None):
         )
         code.used_by = user  # type: ignore
         code.used_at = timezone.now()
+        code.full_clean()
         code.save()
         login(request, user)
         return redirect(LOGIN_REDIRECT_URL)
