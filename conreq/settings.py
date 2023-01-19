@@ -387,6 +387,7 @@ CACHES = {
         "OPTIONS": {"size_limit": 2**30},  # 1 gigabyte max cache size
     }
 }
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 BACKUP_KEEP_MAX = 20
 BACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M"
 BACKUP_COMPRESSION = "xz"
