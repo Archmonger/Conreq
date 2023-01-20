@@ -219,7 +219,7 @@ TabbedViewportStateContext: Context[TabbedViewportState] = create_context(
 class SidebarTabEvent:
     event: dict
     tab: SidebarTab
-    websocket: Any
+    connection: Any
     homepage_state: HomepageState
 
 
@@ -227,7 +227,7 @@ class SidebarTabEvent:
 class SubTabEvent:
     event: dict
     tab: SubTab
-    websocket: Any
+    connection: Any
     homepage_state: HomepageState
     tabbed_viewport_state: TabbedViewportState
 

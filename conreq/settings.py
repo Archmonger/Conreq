@@ -21,7 +21,7 @@ from django.core.management.utils import get_random_secret_key
 from split_settings.tools import include
 from tzlocal import get_localzone_name
 
-from conreq import Seconds
+from conreq.types import Seconds
 from conreq.utils.apps import find_apps
 from conreq.utils.environment import (
     get_base_url,
@@ -415,6 +415,7 @@ LANGUAGE_COOKIE_NAME = "conreq_language"
 # Internationalization
 LANGUAGE_CODE = "en-US"
 TIME_ZONE = get_localzone_name()
+USE_TZ = True
 
 
 # Static Files (CSS, JavaScript, Images)

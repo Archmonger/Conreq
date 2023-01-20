@@ -2,7 +2,7 @@ from copy import copy
 from inspect import iscoroutinefunction
 from uuid import uuid4
 
-from django_idom.hooks import use_websocket
+from django_idom.hooks import use_connection
 from idom import component, hooks
 from idom.html import _, div, li, ul
 
@@ -77,7 +77,7 @@ def _subtabs(
     # sourcery skip: assign-if-exp
     state = hooks.use_context(HomepageStateContext)
     tab_state = hooks.use_context(TabbedViewportStateContext)
-    websocket = use_websocket()
+    connection = use_connection()
 
     if not tabs:
         return None
@@ -85,7 +85,7 @@ def _subtabs(
     return _(
         [
             li(
-                _subtab_attributes(state, tab_state, tab, websocket),
+                _subtab_attributes(state, tab_state, tab, connection),
                 tab.name,
                 key=str(uuid4()),
             )
@@ -98,14 +98,14 @@ def _subtab_attributes(
     state: HomepageState,
     tab_state: TabbedViewportState,
     tab: SubTab,
-    websocket,
+    connection,
 ) -> dict:
     async def on_click(event):
         if tab.on_click:
             click_event = SubTabEvent(
                 event=event,
                 tab=tab,
-                websocket=websocket,
+                connection=connection,
                 homepage_state=state,
                 tabbed_viewport_state=tab_state,
             )

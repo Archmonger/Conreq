@@ -1,6 +1,6 @@
 from inspect import iscoroutinefunction
 
-from django_idom.hooks import use_scope, use_websocket
+from django_idom.hooks import use_connection, use_scope
 from idom import component, hooks
 from idom.html import _, div, i, nav
 
@@ -164,14 +164,14 @@ def _sidebar_tab_class(state: HomepageState, tab: SidebarTab):
 @component
 def sidebar_tab(tab: SidebarTab):
     state = hooks.use_context(HomepageStateContext)
-    websocket = use_websocket()
+    connection = use_connection()
 
     async def on_click(event):
         if tab.on_click:
             click_event = SidebarTabEvent(
                 event=event,
                 tab=tab,
-                websocket=websocket,
+                connection=connection,
                 homepage_state=state,
             )
             if iscoroutinefunction(tab.on_click):
