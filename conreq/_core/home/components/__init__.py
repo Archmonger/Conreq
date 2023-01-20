@@ -5,12 +5,12 @@ from django_idom.decorators import auth_required
 from idom import component, hooks
 from idom.html import script
 
-from conreq import HomepageState, HomepageStateContext
 from conreq._core.home.components.backdrop import backdrop
 from conreq._core.home.components.modal import modal
 from conreq._core.home.components.navbar import navbar
 from conreq._core.home.components.sidebar import sidebar
 from conreq._core.home.components.viewport import viewport, viewport_loading_animation
+from conreq.types import HomepageState, HomepageStateContext
 
 # pylint: disable=protected-access
 # TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap

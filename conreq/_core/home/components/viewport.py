@@ -1,8 +1,8 @@
 from idom import component, hooks
 from idom.html import div
 
-from conreq import HomepageState, HomepageStateContext, config
-from conreq.types import Viewport
+from conreq import config
+from conreq.types import HomepageState, HomepageStateContext, Viewport
 
 # pylint: disable=protected-access
 

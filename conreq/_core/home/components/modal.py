@@ -3,7 +3,8 @@ from typing import Callable
 from idom import component, hooks
 from idom.html import _, div, i, script
 
-from conreq import HomepageStateContext, config
+from conreq import config
+from conreq.types import HomepageStateContext
 
 # pylint: disable=protected-access
 

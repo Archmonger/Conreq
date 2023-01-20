@@ -3,9 +3,10 @@ from django_idom.components import view_to_component
 from django_idom.decorators import auth_required
 from idom import component, html
 
-from conreq import SidebarTabEvent, Viewport, config
+from conreq import config
 from conreq._core.components import tabbed_viewport
 from conreq._core.user_settings import views
+from conreq.types import SidebarTabEvent, Viewport
 
 user_settings_vtc = view_to_component(views.UserSettingsView, compatibility=True)
 change_password_vtc = view_to_component(views.ChangePasswordView, compatibility=True)

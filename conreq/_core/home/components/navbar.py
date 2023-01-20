@@ -3,8 +3,8 @@ from django_idom.components import django_js
 from idom import component, hooks
 from idom.html import button, div, script, span
 
-from conreq import HomepageState, HomepageStateContext
 from conreq._core.server_settings.models import GeneralSettings
+from conreq.types import HomepageState, HomepageStateContext
 
 # pylint: disable=protected-access
 

@@ -4,16 +4,16 @@ from django_idom.hooks import use_scope, use_websocket
 from idom import component, hooks
 from idom.html import _, div, i, nav
 
-from conreq import (
+from conreq import config
+from conreq._core.home.components.welcome import welcome
+from conreq.types import (
     HomepageState,
     HomepageStateContext,
     NavGroup,
     SidebarTab,
+    SidebarTabEvent,
     Viewport,
-    config,
 )
-from conreq._core.home.components.welcome import welcome
-from conreq.types import SidebarTabEvent
 from conreq.utils.environment import get_debug_mode, get_safe_mode
 from conreq.utils.generic import clean_string
 

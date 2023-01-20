@@ -1,6 +1,6 @@
 from huey.contrib.djhuey import db_periodic_task
 
-from conreq import Seconds
+from conreq.types import Seconds
 from conreq.utils.backup import backup_needed, backup_now
 
 
