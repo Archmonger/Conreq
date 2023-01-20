@@ -11,7 +11,7 @@ django-silk==5.0.2
 django-solo==2.0.0
 django-url-or-relative-url-field==0.2.0
 djangorestframework==3.14.0
-djangorestframework-api-key==2.2.0
+djangorestframework-api-key==2.3.0
 docutils==0.19
 drf-yasg==1.21.4
 huey==2.4.4
