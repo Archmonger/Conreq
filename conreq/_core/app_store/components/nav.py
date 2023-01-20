@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Sequence
 
 from idom import hooks
 from idom.html import a, div, h5, li, ol
@@ -7,7 +7,7 @@ from conreq._core.app_store.models import Category
 from conreq.types import AppStoreStateContext
 
 
-def app_store_nav(categories: Iterable[Category]):
+def app_store_nav(categories: Sequence[Category]):
     state = hooks.use_context(AppStoreStateContext)
 
     def nav_onclick(subcategory):

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Callable, Iterable
+from typing import Any, Callable, Sequence
 
 from idom.core.component import Component
 from idom.core.hooks import Context, create_context
@@ -142,7 +142,7 @@ class ModalState:
     modal_intent: ComponentConstructor | None = None
     """The modal that needs to be loaded."""
 
-    modal_args: Iterable = field(default_factory=list)
+    modal_args: Sequence = field(default_factory=list)
     """The arguments to pass to the modal component."""
 
     modal_kwargs: dict = field(default_factory=dict)

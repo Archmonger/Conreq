@@ -1,6 +1,6 @@
 import asyncio
 import random
-from typing import Iterable
+from typing import Sequence
 
 from django_idom.hooks import use_query
 from idom import component, hooks
@@ -34,7 +34,7 @@ def spotlight():
 def spotlight_section(
     title,
     description,
-    apps: Iterable[AppPackage],
+    apps: Sequence[AppPackage],
 ):
     opacity, set_opacity = hooks.use_state(0)
     card_list = [card(app, key=app.uuid) for app in apps]
