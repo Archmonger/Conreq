@@ -8,15 +8,15 @@ from idom.html import a, button, div, h5
 
 from conreq._core.app_store.components.modal import app_modal
 from conreq._core.app_store.models import AppPackage, Subcategory
-from conreq.types import HomepageState, HomepageStateContext
+from conreq.types import ModalState, ModalStateContext
 
 
-def details_modal_event(state: HomepageState, app: AppPackage):
+def details_modal_event(modal_state: ModalState, app: AppPackage):
     async def event(_):
-        state.modal_state.show = True
-        state.modal_state.modal_intent = app_modal
-        state.modal_state.modal_args = [app]
-        state.set_state(state)
+        modal_state.show = True
+        modal_state.modal_intent = app_modal
+        modal_state.modal_args = [app]
+        modal_state.set_state(modal_state)
 
     return event
 
@@ -27,7 +27,7 @@ def check_installable(app: AppPackage):
 
 @component
 def card(app: AppPackage):
-    state = hooks.use_context(HomepageStateContext)
+    modal_state = hooks.use_context(ModalStateContext)
     animation_speed, _ = hooks.use_state(random.randint(7, 13))
     opacity, set_opacity = hooks.use_state(0)
     installable = use_query(QueryOptions(postprocessor=None), check_installable, app)
@@ -43,14 +43,14 @@ def card(app: AppPackage):
             "style": {"opacity": opacity}
             | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
         },
-        card_top(app, state, app.subcategories.all()[0]),
-        card_btns(app, state, installable.data),
+        card_top(app, modal_state, app.subcategories.all()[0]),
+        card_btns(app, modal_state, installable.data),
         div({"className": "description"}, app.short_description),
         card_background(app),
     )
 
 
-def card_top(app: AppPackage, state: HomepageState, subcategory: Subcategory | None):
+def card_top(app: AppPackage, modal_state: ModalState, subcategory: Subcategory | None):
     return div(
         {"className": "top"},
         div(
@@ -60,7 +60,7 @@ def card_top(app: AppPackage, state: HomepageState, subcategory: Subcategory | N
                 a(
                     {
                         "href": f"#{app.uuid}",
-                        "onClick": details_modal_event(state, app),
+                        "onClick": details_modal_event(modal_state, app),
                     },
                     app.name,
                 ),
@@ -96,13 +96,13 @@ def card_top(app: AppPackage, state: HomepageState, subcategory: Subcategory | N
     )
 
 
-def card_btns(app: AppPackage, state: HomepageState, installable: bool | None):
+def card_btns(app: AppPackage, modal_state: ModalState, installable: bool | None):
     return div(
         {"className": "btn-container"},
         button(
             {
                 "className": "btn btn-sm btn-dark",
-                "onClick": details_modal_event(state, app),
+                "onClick": details_modal_event(modal_state, app),
             },
             "Details",
         ),

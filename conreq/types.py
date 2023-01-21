@@ -136,6 +136,9 @@ class ModalState:
     # FIXME: Redo this when IDOM supports react-bootstrap
     # https://github.com/idom-team/idom/issues/786
 
+    set_state: SetModalState = lambda _: None
+    """A function that can be used to set this state."""
+
     show: bool = False
     """A toggle to set the modal's visibility."""
 
@@ -178,9 +181,6 @@ class HomepageState:
 
     _viewport: Viewport | None = None
     """The currently visible viewport."""
-
-    modal_state: ModalState = field(default_factory=ModalState)
-    """The modal's current state object."""
 
 
 SetHomepageState = Callable[[HomepageState], None]

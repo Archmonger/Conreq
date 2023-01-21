@@ -4,7 +4,7 @@ from idom import component, hooks
 from idom.html import _, div, i, script
 
 from conreq import config
-from conreq.types import HomepageStateContext
+from conreq.types import ModalStateContext
 
 # pylint: disable=protected-access
 
@@ -34,32 +34,32 @@ def _fragment_if_iterable(children):
 
 @component
 def modal():
-    state = hooks.use_context(HomepageStateContext)
+    modal_state = hooks.use_context(ModalStateContext)
 
-    @hooks.use_effect(dependencies=[state.modal_state.modal_intent])
+    @hooks.use_effect(dependencies=[modal_state.modal_intent])
     async def set_modal():
         """Set the modal based on intent."""
-        if not state.modal_state.modal_intent:
+        if not modal_state.modal_intent:
             return
 
-        state.modal_state._modal = state.modal_state.modal_intent
-        state.modal_state.modal_intent = None
-        state.set_state(state)
+        modal_state._modal = modal_state.modal_intent
+        modal_state.modal_intent = None
+        modal_state.set_state(modal_state)
 
     return div(
         MODAL_CONTAINER,
-        state.modal_state._modal(
-            *state.modal_state.modal_args,
-            **state.modal_state.modal_kwargs,
-            key=f"{state.modal_state._modal.__module__}.{state.modal_state._modal.__name__}",
+        modal_state._modal(
+            *modal_state.modal_args,
+            **modal_state.modal_kwargs,
+            key=f"{modal_state._modal.__module__}.{modal_state._modal.__name__}",
         )
-        if state.modal_state._modal
+        if modal_state._modal
         else modal_dialog(),
         script(
             "let conreq_modal = new bootstrap.Modal(document.getElementById('modal-container'), {backdrop: 'static', keyboard: false});"
             + (
                 "conreq_modal.show();"
-                if state.modal_state.show
+                if modal_state.show
                 else "conreq_modal.hide();"
                 "if (document.querySelector('.modal-backdrop.show') &&"
                 "!document.querySelector('.modal.show'))"
@@ -92,11 +92,11 @@ def modal_content(*content):
 
 @component
 def modal_head(*content, title="Loading...", close_action: Callable = None):
-    state = hooks.use_context(HomepageStateContext)
+    modal_state = hooks.use_context(ModalStateContext)
 
     async def close_modal(_):
-        state.modal_state.show = False
-        state.set_state(state)
+        modal_state.show = False
+        modal_state.set_state(modal_state)
 
     return div(
         MODAL_HEADER,
