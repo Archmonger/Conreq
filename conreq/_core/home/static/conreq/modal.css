@@ -61,7 +61,7 @@
 	margin-left: 12px;
 }
 
-.modal-header-btn-container i {
+.modal-header-btn-container i:before {
 	margin-left: 13px;
 }
 

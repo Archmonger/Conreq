@@ -1,6 +1,6 @@
 .btn {
 	border: none;
-	box-shadow: none !important;
+	box-shadow: none;
 }
 
 .btn.btn-primary {
