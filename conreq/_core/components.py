@@ -45,20 +45,15 @@ def tabbed_viewport(
 
     return TabbedViewportStateContext(
         div(
-            {
-                "className": "tabbed-viewport-container"
-                + (f" {html_class}" if html_class else "")
-            },
-            div(
-                {"className": "tabbed-viewport"},
-                tab_state.tab.component(),
-            ),
+            div(tab_state.tab.component(), class_name="tabbed-viewport"),
             ul(
-                {"className": "tabbed-viewport-selector list-group"},
                 _subtabs(top_tabs),
                 _subtabs(tabs),
                 _subtabs(bottom_tabs),
+                class_name="tabbed-viewport-selector list-group",
             ),
+            class_name="tabbed-viewport-container"
+            + (f" {html_class}" if html_class else ""),
         ),
         value=tab_state,
     )
@@ -85,9 +80,9 @@ def _subtabs(
     return _(
         [
             li(
-                _subtab_attributes(state, tab_state, tab, connection),
                 tab.name,
                 key=str(uuid4()),
+                **_subtab_attributes(state, tab_state, tab, connection),
             )
             for tab in tabs
         ]
@@ -119,6 +114,6 @@ def _subtab_attributes(
         tab_state.set_state(tab_state)
 
     return {
-        "className": f"list-group-item clickable{' active' if tab_state.tab is tab else ''}",
-        "onClick": on_click,
+        "class_name": f"list-group-item clickable{' active' if tab_state.tab is tab else ''}",
+        "on_click": on_click,
     }

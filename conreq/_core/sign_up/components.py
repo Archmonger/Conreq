@@ -20,12 +20,8 @@ def lock_invite_code(code_id: int):
         None
         if locked
         else html.button(
-            {"className": "btn btn-sm", "onClick": _lock_invite_code},
-            html.span(
-                {
-                    "className": "glyphicon glyphicon-lock",
-                    "aria-hidden": "true",
-                }
-            ),
+            html.span(class_name="glyphicon glyphicon-lock", aria_hidden="true"),
+            class_name="btn btn-sm",
+            on_click=_lock_invite_code,
         )
     )

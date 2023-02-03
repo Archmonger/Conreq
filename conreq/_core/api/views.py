@@ -11,7 +11,8 @@ class LocalAuthentication(APIView):
 
     def post(self, request):
         """Authenticate a session using a `username` and `password`.
-        Requires CSRF tokens on all further insecure requests (POST, PUT, DELETE, PATCH)."""
+        Requires CSRF tokens on all further insecure requests (POST, PUT, DELETE, PATCH).
+        """
         username = request.data.get("username")
         password = request.data.get("password")
         user = authenticate(request, username=username, password=password)

@@ -49,14 +49,13 @@ def email_settings():
 
 
 def system_info():
-
     settings_values = [
         ("Conreq Version", settings.CONREQ_VERSION),
         ("Configuration File", relpath(settings.DOTENV_FILE)),
         ("Cache Directory", relpath(settings.CACHES["default"]["LOCATION"])),
         ("Conreq Log File", relpath(settings.CONREQ_LOG_FILE)),
         ("Webserver Log File", relpath(settings.ACCESS_LOG_FILE)),
-        ("Database File", relpath(settings.DATABASES["default"]["NAME"])),
+        ("Database File", relpath(str(settings.DATABASES["default"]["NAME"]))),
         ("Log Level", settings.LOG_LEVEL),
         ("Platform", platform.platform()),
         ("CPU Architecture", platform.machine()),
@@ -68,18 +67,18 @@ def system_info():
     ]
 
     return html.table(
-        {"style": {"marginTop": "20px"}},
         [
             html.tr(html.td(f"{name}"), html.td(f"{value}"), key=uuid4().hex)
-            for name, value in settings_values
+            for (name, value) in settings_values
         ],
+        style={"marginTop": "20px"},
     )
 
 
 def licenses():
     return html.div(
-        {"style": {"marginTop": "20px"}},
         "This page is under construction, and will be developed in a later release.",
+        style={"marginTop": "20px"},
     )
 
 

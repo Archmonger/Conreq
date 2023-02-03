@@ -65,14 +65,16 @@ class _LoadingAnimationComponents:
 
     large: VdomDict = field(
         default_factory=lambda: div(
-            {"className": "spinner-border loading-animation lg", "role": "status"},
-            span({"className": "sr-only"}, "Loading..."),
+            span("Loading...", class_name="sr-only"),
+            class_name="spinner-border loading-animation lg",
+            role="status",
         ),
     )
     small: VdomDict = field(
         default_factory=lambda: div(
-            {"className": "spinner-border loading-animation", "role": "status"},
-            span({"className": "sr-only"}, "Loading..."),
+            span("Loading...", class_name="sr-only"),
+            class_name="spinner-border loading-animation",
+            role="status",
         ),
     )
 

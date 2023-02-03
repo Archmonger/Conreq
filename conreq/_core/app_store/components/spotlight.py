@@ -47,45 +47,34 @@ def spotlight_section(
         set_opacity(1)
 
     return div(
-        {
-            "className": "spotlight-section fade-in",
-            "style": {"opacity": opacity},
-        },
         div(
-            {"className": "spotlight-head"},
             div(
-                {"className": "spotlight-title"},
-                h4({"className": "title"}, title),
-                p({"className": "description"}, description),
+                h4(title, class_name="title"),
+                p(description, class_name="description"),
+                class_name="spotlight-title",
             ),
             [
                 div(
-                    {"className": "collapse-controls"},
                     button(
-                        {
-                            "className": "btn btn-sm btn-dark",
-                            "onClick": lambda _: set_show_more(not show_more),
-                        },
                         "Show More ",
-                        i(
-                            {
-                                "className": f'fas fa-angle-{"up" if show_more else "down"}'
-                            }
-                        ),
+                        i(class_name=f"fas fa-angle-{('up' if show_more else 'down')}"),
+                        class_name="btn btn-sm btn-dark",
+                        on_click=lambda _: set_show_more(not show_more),
                     ),
                     key="collapse-controls",
+                    class_name="collapse-controls",
                 )
             ]
             if len(card_list) > min_show_len
             else [],
+            class_name="spotlight-head",
         ),
         div(
-            {"className": f"card-stage {'show-more' if show_more else ''}"},
-            div(
-                {"className": "collapse"},
-                card_list,
-            ),
+            div(card_list, class_name="collapse"),
+            class_name=f"card-stage {('show-more' if show_more else '')}",
         ),
+        class_name="spotlight-section fade-in",
+        style={"opacity": opacity},
     )
 
 

@@ -22,24 +22,19 @@ def backdrop():
     #     set_bg_num(val)
     #     print(f"bg_num: {val}")
 
+    # html.img(
+    #     {
+    #         "className": f"backdrop {'opacity-0' if backdrop_selector == 2 else ''}",
+    #         "src": prev_backdrop,
+    #         "loading": "lazy",
+    #     }
+    # ),
     return html.div(
-        {
-            "className": "backdrop-container",
-            # "onClick": on_click,
-        },
-        html.div({"className": "backdrop-tint"}),
+        html.div(class_name="backdrop-tint"),
         html.img(
-            {
-                "className": f"backdrop {'opacity-0' if backdrop_selector != 1 else ''}",
-                "src": static(default_backdrop),
-                "loading": "lazy",
-            }
-        )
-        # html.img(
-        #     {
-        #         "className": f"backdrop {'opacity-0' if backdrop_selector == 2 else ''}",
-        #         "src": prev_backdrop,
-        #         "loading": "lazy",
-        #     }
-        # ),
+            class_name=f"backdrop {('opacity-0' if backdrop_selector != 1 else '')}",
+            src=static(default_backdrop),
+            loading="lazy",
+        ),
+        class_name="backdrop-container",
     )

@@ -18,33 +18,31 @@ def app_store_nav(categories: Sequence[Category]):
         return event
 
     return div(
-        {"className": "nav-region"},
         [
             div(
-                {"className": "nav-item"},
-                h5({"className": "nav-title"}, category.name),
+                h5(category.name, class_name="nav-title"),
                 ol(
-                    {"className": "nav-sub"},
                     [
                         li(
-                            {"className": "nav-sub-item"},
                             a(
-                                {
-                                    "className": "nav-sub-link",
-                                    "href": f"#{subcategory.uuid}",
-                                    "onClick": nav_onclick(subcategory),
-                                },
                                 subcategory.name,
+                                class_name="nav-sub-link",
+                                href=f"#{subcategory.uuid}",
+                                on_click=nav_onclick(subcategory),
                             ),
                             key=str(subcategory.uuid),
+                            class_name="nav-sub-item",
                         )
                         for subcategory in sorted(
                             category.subcategory_set.all(), key=lambda x: x.name
                         )
                     ],
+                    class_name="nav-sub",
                 ),
                 key=str(category.uuid),
+                class_name="nav-item",
             )
             for category in categories
         ],
+        class_name="nav-region",
     )

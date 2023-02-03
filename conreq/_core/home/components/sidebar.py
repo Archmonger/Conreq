@@ -21,44 +21,42 @@ from conreq.utils.generic import clean_string
 
 DEBUG = get_debug_mode()
 SAFE_MODE = get_safe_mode()
-SIDEBAR = {"id": "sidebar", "className": "sidebar no-hightlighting blur collapsed"}
-SIDEBAR_USER = {"className": "sidebar-user clickable"}
-USER_PIC = {"className": "sidebar-profile-pic"}
-USER_PIC_PLACEHOLDER = {"className": "fas fa-user"}
-USERNAME_CONTAINER = {"className": "username-container"}
-USERNAME = {"className": "username ellipsis"}
+SIDEBAR = {"id": "sidebar", "class_name": "sidebar no-hightlighting blur collapsed"}
+SIDEBAR_USER = {"class_name": "sidebar-user clickable"}
+USER_PIC = {"class_name": "sidebar-profile-pic"}
+USER_PIC_PLACEHOLDER = {"class_name": "fas fa-user"}
+USERNAME_CONTAINER = {"class_name": "username-container"}
+USERNAME = {"class_name": "username ellipsis"}
 NAVIGATION = {"id": "navigation"}
 NAV_GROUP = {
-    "className": "nav-group clickable",
+    "class_name": "nav-group clickable",
     "data-bs-toggle": "collapse",
     "aria-expanded": "true",
 }
-GROUP_NAME = {"className": "group-name ellipsis"}
-GROUP_ICON = {"className": "group-icon"}
-EXAMPLE_GROUP_ICON = {"className": "fas fa-user icon-left"}
-GROUP_CARET = {"className": "fas fa-caret-up icon-right"}
+GROUP_NAME = {"class_name": "group-name ellipsis"}
+GROUP_ICON = {"class_name": "group-icon"}
+EXAMPLE_GROUP_ICON = {"class_name": "fas fa-user icon-left"}
+GROUP_CARET = {"class_name": "fas fa-caret-up icon-right"}
 TABS_COLLAPSE = {
-    "className": "tabs-collapse collapse show",
+    "class_name": "tabs-collapse collapse show",
 }
-TABS_INDICATOR = {"className": "tabs-indicator"}
-TABS = {"className": "tabs"}
-NAV_TAB = {"className": "nav-tab clickable"}
-NAV_TAB_ACTIVE = {"className": "nav-tab clickable active"}
-TAB_NAME = {"className": "tab-name ellipsis"}
-DEFAULT_NAV_GROUP_ICON = i({"className": "far fa-circle"})
+TABS_INDICATOR = {"class_name": "tabs-indicator"}
+TABS = {"class_name": "tabs"}
+NAV_TAB = {"class_name": "nav-tab clickable"}
+NAV_TAB_ACTIVE = {"class_name": "nav-tab clickable active"}
+TAB_NAME = {"class_name": "tab-name ellipsis"}
+DEFAULT_NAV_GROUP_ICON = i(class_name="far fa-circle")
 SIDEBAR_SAFE_MODE = div(
-    {
-        "style": {
-            "display": "flex",
-            "align-items": "center",
-            "justify-content": "center",
-            "padding": "10px",
-            "background": "red",
-            "color": "#FFF",
-            "font-weight": "700",
-        }
-    },
     "SAFE MODE",
+    style={
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center",
+        "padding": "10px",
+        "background": "red",
+        "color": "#FFF",
+        "font-weight": "700",
+    },
 )
 USER_ADMIN_DEBUG = ("User", "Admin", "Debug")
 
@@ -106,19 +104,15 @@ def sidebar():
         state.set_state(state)
 
     return nav(
-        SIDEBAR,
         SIDEBAR_SAFE_MODE if SAFE_MODE else "",
         div(
-            SIDEBAR_USER | {"onClick": username_on_click},
-            div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
-            div(
-                USERNAME_CONTAINER,
-                div(USERNAME, scope["user"].get_username()),
-            ),
+            div(i(**USER_PIC_PLACEHOLDER), **USER_PIC),
+            div(div(scope["user"].get_username(), **USERNAME), **USERNAME_CONTAINER),
+            **(SIDEBAR_USER | {"on_click": username_on_click}),
         ),
         div(
             # pylint: disable=protected-access
-            NAVIGATION,  # TODO: Change these keys to be database IDs
+            # TODO: Change these keys to be database IDs
             [  # App tabs
                 sidebar_group(group, key=group.name)
                 for group in sidebar_tabs
@@ -149,7 +143,9 @@ def sidebar():
                 for group in sidebar_tabs
                 if group == "Debug" and scope["user"].is_staff and DEBUG
             ],
+            **NAVIGATION,
         ),
+        **SIDEBAR,
     )
 
 
@@ -195,8 +191,8 @@ def sidebar_tab(tab: SidebarTab):
             state.set_state(state)
 
     return div(
-        _sidebar_tab_class(state, tab) | {"onClick": on_click},
-        div(TAB_NAME, tab.name),
+        div(tab.name, **TAB_NAME),
+        **(_sidebar_tab_class(state, tab) | {"on_click": on_click}),
         key=tab.name,
     )
 
@@ -215,31 +211,36 @@ def sidebar_group(
 
     return _(
         div(
-            NAV_GROUP
-            | {
-                "id": group_id,
-                "data-bs-target": f"#{tabs_id}",
-                "aria-controls": tabs_id,
-                "title": group.name,
-            },
             div(
-                GROUP_NAME,
-                div(GROUP_ICON, group.icon or DEFAULT_NAV_GROUP_ICON),
+                div(group.icon or DEFAULT_NAV_GROUP_ICON, **GROUP_ICON),
                 group.name,
+                **GROUP_NAME,
             ),
-            i(GROUP_CARET | {"title": f'Collapse the "{group.name}" group.'}),
+            i(**(GROUP_CARET | {"title": f'Collapse the "{group.name}" group.'})),
+            **(
+                NAV_GROUP
+                | {
+                    "id": group_id,
+                    "data-bs-target": f"#{tabs_id}",
+                    "aria-controls": tabs_id,
+                    "title": group.name,
+                }
+            ),
         ),
         div(
-            TABS_COLLAPSE
-            | {
-                "id": tabs_id,
-            },
-            div(TABS_INDICATOR),
+            div(**TABS_INDICATOR),
             div(
-                TABS,  # TODO: Change these keys to be database IDs
+                # TODO: Change these keys to be database IDs
                 [sidebar_tab(tab, key=tab.name) for tab in _top_tabs],
                 [sidebar_tab(tab, key=tab.name) for tab in group.tabs],
                 [sidebar_tab(tab, key=tab.name) for tab in _bottom_tabs],
+                **TABS,
+            ),
+            **(
+                TABS_COLLAPSE
+                | {
+                    "id": tabs_id,
+                }
             ),
         ),
         key=group_id,
