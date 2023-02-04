@@ -24,7 +24,7 @@ djangorestframework-api-key==2.2.0
 docutils==0.19
 drf-spectacular[sidecar]==0.25.1
 django-idom==3.0.0a2
-git+https://github.com/mcldev/django-versionfield@51c67a3
+django-versionfield==1.0.3
 huey==2.4.4
 markdown==3.4.1
 pillow==9.4.0
