@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Callable, Sequence
+from typing import TYPE_CHECKING, Any, Callable, Sequence
 
 from idom.core.component import Component
 from idom.core.hooks import Context, create_context
 from idom.core.types import ComponentConstructor, VdomDict
 from sortedcontainers import SortedSet
+
+if TYPE_CHECKING:
+    from django_idom.types import Connection
 
 # pylint: disable=protected-access, too-few-public-methods
 
@@ -219,7 +222,7 @@ TabbedViewportStateContext: Context[TabbedViewportState] = create_context(
 class SidebarTabEvent:
     event: dict
     tab: SidebarTab
-    connection: Any
+    connection: Connection
     homepage_state: HomepageState
 
 
@@ -227,7 +230,7 @@ class SidebarTabEvent:
 class SubTabEvent:
     event: dict
     tab: SubTab
-    connection: Any
+    connection: Connection
     homepage_state: HomepageState
     tabbed_viewport_state: TabbedViewportState
 

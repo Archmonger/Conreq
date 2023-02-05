@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Sequence, Union
+from typing import Sequence
 
 from django.core.mail.backends import smtp
 from django.core.mail.message import EmailMessage
@@ -18,7 +18,7 @@ class Email:
     recipient_list: list[str]
     """List of email addresses"""
 
-    html_message: Union[str, None] = None
+    html_message: str | None = None
     """Emails can be rendered as HTML, if supported by the client"""
 
 

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 from drf_spectacular.utils import (
     OpenApiExample,
@@ -23,7 +23,7 @@ class APIDocs:
     """replaces the auto-generated operation_id. make sure there
         are no naming collisions."""
 
-    parameters: Optional[List[Union[OpenApiParameter, _SerializerType]]] = None
+    parameters: Optional[list[Union[OpenApiParameter, _SerializerType]]] = None
     """list of additional or replacement parameters added to the
         auto-discovered fields."""
 
@@ -56,7 +56,7 @@ class APIDocs:
         - ``dict`` with media_type as keys and one of the above as values. Additionally in
           this case, it is also possible to provide a raw schema dict as value."""
 
-    auth: Optional[List[str]] = None
+    auth: Optional[list[str]] = None
     """replace discovered auth with explicit list of auth methods"""
 
     description: Optional[str] = None
@@ -68,7 +68,7 @@ class APIDocs:
     deprecated: Optional[bool] = None
     """mark operation as deprecated"""
 
-    tags: Optional[List[str]] = None
+    tags: Optional[list[str]] = None
     """override default list of tags"""
 
     filters: Optional[bool] = None
@@ -77,20 +77,20 @@ class APIDocs:
     exclude: bool = False
     """set True to exclude operation from schema"""
 
-    operation: Optional[Dict] = None
+    operation: Optional[dict] = None
     """manually override what auto-discovery would generate. you must
         provide a OpenAPI3-compliant dictionary that gets directly translated to YAML."""
 
-    methods: Optional[List[str]] = None
+    methods: Optional[list[str]] = None
     """scope extend_schema to specific methods. matches all by default."""
 
-    versions: Optional[List[str]] = None
+    versions: Optional[list[str]] = None
     """scope extend_schema to specific API version. matches all by default."""
 
-    examples: Optional[List[OpenApiExample]] = None
+    examples: Optional[list[OpenApiExample]] = None
     """attach request/response examples to the operation"""
 
-    extensions: Optional[Dict[str, Any]] = None
+    extensions: Optional[dict[str, Any]] = None
     """specification extensions, e.g. ``x-badges``, ``x-code-samples``, etc."""
 
 
