@@ -117,7 +117,6 @@ def modal_head(*content, title="Loading...", close_action: Callable = None):
 
 @component
 def modal_body(*content):
-
     if content:
         return div(MODAL_BODY, _fragment_if_iterable(content))
 
