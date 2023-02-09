@@ -101,36 +101,41 @@ def send_email_invite_btn(invite_code: str):
 
     if not btn_clicked:
         return html.button(
-            html.i(class_name="fas fa-paper-plane"),
+            {
+                "type": "button",
+                "className": "btn btn-primary",
+                "onClick": send_email_invite,
+            },
+            html.i({"className": "fas fa-paper-plane"}),
             " Send Email",
-            type="button",
-            class_name="btn btn-primary",
-            on_click=send_email_invite,
         )
 
     if send_email.loading:
         return html.button(
-            html.i(class_name="fas fa-spinner fa-spin"),
+            {
+                "type": "button",
+                "className": "btn btn-primary",
+                "disabled": True,
+            },
+            html.i({"className": "fas fa-spinner fa-spin"}),
             " Sending...",
-            type="button",
-            class_name="btn btn-primary",
-            disabled=True,
         )
 
     if send_email.error:
         return html.button(
-            html.i(class_name="fas fa-redo"),
+            {
+                "type": "button",
+                "className": "btn btn-danger",
+                "onClick": retry,
+            },
+            html.i({"className": "fas fa-redo"}),
             " Error! Try again?",
-            type="button",
-            class_name="btn btn-danger",
-            on_click=retry,
         )
 
     return html.button(
-        html.i(class_name="fas fa-check"),
+        {"type": "button", "className": "btn btn-success"},
+        html.i({"className": "fas fa-check"}),
         " Sent!",
-        type="button",
-        class_name="btn btn-success",
     )
 
 

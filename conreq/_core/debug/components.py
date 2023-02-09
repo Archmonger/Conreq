@@ -6,23 +6,23 @@ from conreq.config.utils import tab_constructor
 
 
 def performance(*_):
-    return iframe(src=reverse("silk:summary"))
+    return iframe({"src": reverse("silk:summary")})
 
 
 def health_check(*_):
-    return iframe(src=reverse("health_check"))
+    return iframe({"src": reverse("health_check")})
 
 
 def database(*_):
-    return iframe(src=reverse("admin:index"))
+    return iframe({"src": reverse("admin:index")})
 
 
 def code_outline(*_):
-    return iframe(src=reverse("django-admindocs-docroot"))
+    return iframe({"src": reverse("django-admindocs-docroot")})
 
 
 def api_docs(*_):
-    return iframe(src=reverse("swagger_ui"))
+    return iframe({"src": reverse("swagger_ui")})
 
 
 # pylint: disable=protected-access

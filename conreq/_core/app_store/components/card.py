@@ -38,99 +38,107 @@ def card(app: AppPackage):
         set_opacity(1)
 
     return div(
+        {
+            "className": "card fade-in" + (" special" if app.special else ""),
+            "style": {"opacity": opacity}
+            | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
+        },
         card_top(app, modal_state, app.subcategories.all()[0]),
         card_btns(app, modal_state, installable.data),
-        div(app.short_description, class_name="description"),
+        div({"className": "description"}, app.short_description),
         card_background(app),
-        class_name="card fade-in" + (" special" if app.special else ""),
-        style={"opacity": opacity}
-        | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
     )
 
 
 def card_top(app: AppPackage, modal_state: ModalState, subcategory: Subcategory | None):
     return div(
+        {"className": "top"},
         div(
+            {"className": "text-region"},
             h5(
+                {"className": "card-title"},
                 a(
+                    {
+                        "href": f"#{app.uuid}",
+                        "onClick": details_modal_event(modal_state, app),
+                    },
                     app.name,
-                    href=f"#{app.uuid}",
-                    on_click=details_modal_event(modal_state, app),
                 ),
-                class_name="card-title",
             ),
             [
                 div(
-                    a(app.author, href="#", on_click=lambda x: print("clicked")),
+                    {"className": "card-author"},
+                    a(
+                        {"href": "#", "onClick": lambda x: print("clicked")},
+                        app.author,
+                    ),
                     key="author",
-                    class_name="card-author",
                 )
             ]
             if app.author
             else [],
             div(
+                {"className": "card-category"},
                 a(
+                    {"href": "#", "onClick": lambda x: print("clicked")},
                     str(subcategory) if subcategory else "",
-                    href="#",
-                    on_click=lambda x: print("clicked"),
                 ),
-                class_name="card-category",
             ),
-            class_name="text-region",
         ),
         div(
-            **(
-                {"class_name": "logo"}
-                | (
-                    {"style": {"background_image": f'url("{app.logo.url}")'}}
-                    if app.logo
-                    else {}
-                )
-            ),
+            {"className": "logo"}
+            | (
+                {"style": {"backgroundImage": f'url("{app.logo.url}")'}}
+                if app.logo
+                else {}
+            )
         ),
-        class_name="top",
     )
 
 
 def card_btns(app: AppPackage, modal_state: ModalState, installable: bool | None):
     return div(
+        {"className": "btn-container"},
         button(
+            {
+                "className": "btn btn-sm btn-dark",
+                "onClick": details_modal_event(modal_state, app),
+            },
             "Details",
-            class_name="btn btn-sm btn-dark",
-            on_click=details_modal_event(modal_state, app),
         ),
         [
             a(
+                {
+                    "href": f"{app.contact_link}" or f"mailto:{app.contact_email}",
+                    "className": "btn btn-sm btn-dark",
+                },
                 "Contact",
                 key="email",
-                href=f"{app.contact_link}" or f"mailto:{app.contact_email}",
-                class_name="btn btn-sm btn-dark",
             )
         ]
         if app.contact_link or app.contact_email
         else [],
         [
             button(
+                {
+                    "className": "btn btn-sm btn-primary",
+                    "onClick": lambda x: print("clicked"),
+                },
                 "Install",
                 key="install",
-                class_name="btn btn-sm btn-primary",
-                on_click=lambda x: print("clicked"),
             )
         ]
         if installable
         else [],
-        class_name="btn-container",
     )
 
 
 def card_background(app: AppPackage):
     return div(
-        **(
-            {"class_name": "background"}
-            | (
-                {"style": {"backgroundImage": f'url("{app.background.url}")'}}
-                if app.background
-                else {}
-            )
-        ),
+        {"className": "background"}
+        | (
+            {"style": {"backgroundImage": f'url("{app.background.url}")'}}
+            if app.background
+            else {}
+        )
     )

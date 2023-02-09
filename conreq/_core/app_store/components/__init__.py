@@ -32,7 +32,7 @@ def app_store():  # sourcery skip
     # TODO: Update app store entries every first load
     return _(
         django_css("conreq/app_store.css"),
-        state.tab.name if state.tab else div(spotlight(), class_name="spotlight"),
+        state.tab.name if state.tab else div({"className": "spotlight"}, spotlight()),
         app_store_nav(nav_category_query.data),
     )
 
