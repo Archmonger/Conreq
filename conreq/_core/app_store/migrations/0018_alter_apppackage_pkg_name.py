@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_store", "0017_rename_verbose_name_apppackage_name_and_more"),
     ]

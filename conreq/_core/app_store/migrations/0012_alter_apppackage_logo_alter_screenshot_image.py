@@ -6,7 +6,6 @@ import conreq.utils.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_store", "0011_alter_apppackage_logo_alter_screenshot_image"),
     ]

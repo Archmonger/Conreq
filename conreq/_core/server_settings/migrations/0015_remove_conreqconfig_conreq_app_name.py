@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0014_auto_20210313_0231"),
     ]

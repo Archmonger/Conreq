@@ -5,7 +5,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_store", "0029_appnoticemessage_alter_apppackage_banner_message_and_more"),
     ]

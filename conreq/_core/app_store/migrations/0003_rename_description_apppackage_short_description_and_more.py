@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_store", "0002_alter_apppackage_incompatible_apps_and_more"),
     ]

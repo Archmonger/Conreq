@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_store", "0033_remove_apppackage_conreq_tested_version"),
     ]

@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0029_stylingsettings_webserversettings"),
     ]

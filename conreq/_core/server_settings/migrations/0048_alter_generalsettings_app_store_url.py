@@ -6,7 +6,6 @@ import conreq._core.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0047_alter_generalsettings_app_store_url_and_more"),
     ]

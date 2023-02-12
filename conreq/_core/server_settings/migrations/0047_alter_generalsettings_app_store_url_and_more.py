@@ -6,7 +6,6 @@ import conreq._core.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0046_alter_stylingsettings_accent_color"),
     ]

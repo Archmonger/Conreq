@@ -6,7 +6,6 @@ import conreq._core.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0037_delete_webserversettings"),
     ]

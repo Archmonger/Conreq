@@ -6,7 +6,6 @@ import conreq._core.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0009_auto_20210204_1938"),
     ]

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0007_conreqconfig_conreq_http_header_auth"),
     ]

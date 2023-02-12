@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0025_serverconfig_rotate_secret_key"),
     ]

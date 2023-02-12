@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0028_remove_generalsettings_custom_css_and_more"),
     ]

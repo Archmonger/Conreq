@@ -5,7 +5,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0030_stylingsettings_accent_color_and_more"),
     ]

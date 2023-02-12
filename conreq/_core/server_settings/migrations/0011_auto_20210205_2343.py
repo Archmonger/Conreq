@@ -5,7 +5,6 @@ from django.db.models.fields import URLField
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("server_settings", "0010_auto_20210205_2326"),
     ]

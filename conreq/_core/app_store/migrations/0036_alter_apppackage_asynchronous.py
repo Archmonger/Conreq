@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_store", "0035_remove_apppackage_incompatible_subcategories"),
     ]

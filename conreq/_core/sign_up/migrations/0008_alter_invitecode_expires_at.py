@@ -6,7 +6,6 @@ import conreq._core.sign_up.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("sign_up", "0007_invitecode_locked"),
     ]

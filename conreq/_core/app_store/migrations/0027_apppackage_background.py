@@ -6,7 +6,6 @@ import conreq.utils.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_store", "0026_spotlightapp_spotlightcategory_spotlightapp_category"),
     ]

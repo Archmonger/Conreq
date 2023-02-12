@@ -10,7 +10,6 @@ import conreq._core.sign_up.models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [

@@ -5,7 +5,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_store", "0005_remove_apppackage_incompatible_categories"),
     ]

@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("sign_up", "0002_alter_invitecode_expires_at"),
     ]

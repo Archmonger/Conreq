@@ -7,7 +7,6 @@ import conreq._core.fields
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []
