@@ -1,0 +1,23 @@
+:root {
+	--accent-color: #258a6d;
+}
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+
+table {
+	border-radius: 10px 10px 0 0;
+	color: #333;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+
+table > thead th {
+	padding-top: 13px !important;
+	padding-bottom: 13px !important;
+	padding-right: 13px !important;
+	font-size: 14px;
+	padding: 15px 15px;
+}

@@ -1,0 +1,52 @@
+{% load crispy_forms_tags %}
+{% load static %}
+{% load bootstrap %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% bootstrap_5 %}
+    <link rel="stylesheet" href="{% static 'conreq/scrollbar.css' %}">
+    <link rel="stylesheet" href="{% static 'conreq/form.css' %}">
+    <link rel="stylesheet" href="{% static 'conreq/buttons.css' %}">
+    {% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="{% firstof column_class 'col-12' %}">
+                {% block form_title %}
+                <div class="mt-5"></div>
+                <h1 class="mt-2">{{ form_title }}</h1>
+                <h5 class="mt-2">{{ form_subtitle}}</h5>
+                <div class="mt-0 mb-4"></div>
+                {% endblock %}
+
+                {% block form_top %}{% endblock %}
+                {% block form_content %}{% crispy form %}{% endblock %}
+                {% block form_bottom %}{% endblock %}
+                <div class="mb-5"></div>
+            </div>
+        </div>
+    </div>
+
+    {% if request.GET.success %}
+    <script>
+        if (window.frameElement) {
+            window.parent.document.dispatchEvent(new CustomEvent('success-toast', {
+                "detail": {
+                    title: "{% firstof success_title 'Saved' %}",
+                    message: "{{ success_message }}"
+                }
+            }))
+        }
+    </script>
+    {% endif %}
+</body>
+
+</html>

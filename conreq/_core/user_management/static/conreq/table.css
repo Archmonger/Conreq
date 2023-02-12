@@ -1,0 +1,81 @@
+:root {
+	--accent-color: #258a6d;
+}
+
+body {
+	background: transparent;
+	color: rgba(255, 255, 255, 0.75);
+}
+
+select {
+	color: #000;
+}
+
+a {
+	color: #4499e3;
+	text-decoration: none !important;
+}
+
+a:hover,
+a:focus {
+	color: #44a9ff;
+}
+
+table > thead {
+	background: var(--accent-color);
+}
+
+table > thead a,
+table > thead th,
+table > thead td,
+table > thead th:hover,
+table > thead td:hover {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+table > thead a:hover,
+table > thead a:focus {
+	color: #fff;
+}
+
+.table-container {
+	border-radius: 10px 10px 0 0;
+	color: #333;
+	margin-bottom: 20px;
+}
+
+.table,
+table {
+	margin-bottom: 0;
+	background: #fff;
+	border-bottom: 4px solid var(--accent-color);
+}
+
+.pagination {
+	margin-bottom: 0;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+	vertical-align: middle;
+}
+
+.table > thead > tr > td,
+.table > thead > tr > th {
+	padding: 15px 15px;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th {
+	padding: 10px 15px;
+}
+
+tr.odd {
+	background: rgba(0, 0, 0, 0.02);
+}

@@ -1,8 +1,9 @@
-def add_unique_to_db(model, **kwargs):
-    """Adds a row to the database only if all parameters are unique."""
-    if not model.objects.filter(**kwargs):
-        new_request = model(**kwargs)
-        new_request.clean_fields()
-        new_request.save()
-        return new_request
-    return None
+def add_unique(model, **kwargs) -> bool:
+    """Save to the database only if the model is fully unique.
+    Returns `True` if the operation was successful."""
+    new_request = model(**kwargs)
+    new_request.full_clean()
+    if model.objects.filter(**kwargs):
+        return False
+    new_request.save()
+    return True

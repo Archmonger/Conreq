@@ -1,0 +1,16 @@
+{% load pwa %}
+{
+  "name": {{ pwa.app_name|jsonify }},
+  "short_name": {{ pwa.app_name|jsonify }},
+  "description": {{ pwa.app_description|jsonify }},
+  "start_url": {{ pwa.app_start_url|jsonify }},
+  "display": {{ pwa.app_display|jsonify }},
+  "scope": {{ pwa.app_scope|jsonify }},
+  "orientation": {{ pwa.app_orientation|jsonify }},
+  "background_color": {{ pwa.app_background_color|jsonify }},
+  "theme_color": {{ pwa.app_theme_color|jsonify }},
+  "status_bar": {{ pwa.app_status_bar_color|jsonify }},
+  "icons": {{ pwa.app_icons|jsonify }},
+  "dir": {{ pwa.app_dir|jsonify }},
+  "lang": {{ pwa.app_lang|jsonify }}
+}

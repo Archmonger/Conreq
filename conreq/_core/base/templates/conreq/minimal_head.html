@@ -1,0 +1,26 @@
+{% load static compress %}
+{% load static %}
+{% load pwa %}
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<!-- Note: Most of these files are also cached in serviceworker.js -->
+
+<!-- Favicons and App icons -->
+{% include "conreq/icons.html" %}
+{% pwa_head_content %}
+
+<!-- Font (Roboto) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap"
+    crossorigin="anonymous">
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+    crossorigin="anonymous"></script>
+
+<!-- Local CSS -->
+{% compress css %}
+<link rel="stylesheet" href="{% static 'conreq/main_slim.css' %}">
+{% endcompress %}

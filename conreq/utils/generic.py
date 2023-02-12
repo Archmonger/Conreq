@@ -1,61 +1,58 @@
 """Generic functions to be used anywhere. All functions only have stdlib dependencies."""
-import os
-import pkgutil
 from re import sub
 
 
-def is_key_value_in_list(
-    key: any, value: any, search_list: list, return_item: bool = False
-) -> bool:
-    """Iterate through a list of dicts to check if a specific key/value pair exists."""
-    if isinstance(search_list, list):
-        for item in search_list:
-            if item.__contains__(key) and item[key] == value:
-                if return_item:
-                    return item
-                return True
-    return False
-
-
 def remove_duplicates_from_list(duplicate_list: list) -> list:
-    """Returns a list that contains no duplicate values"""
+    """Returns a list that contains no duplicate values."""
     return list(dict.fromkeys(duplicate_list))
 
 
-def clean_string(string: str) -> str:
-    """Removes non-alphanumerics from a string"""
-    return sub(r"\W+", "", string).lower()
+def clean_string(
+    string: str,
+    allow_ascii: bool = True,
+    rm_spaces: bool = True,
+    rm_repeated_spaces: bool = True,
+    rm_special_chars: bool = True,
+    lowercase: bool = True,
+    spaces: str = "-",
+) -> str:
+    """Removes non-alphanumerics from a string."""
+    new_string = string
+    if allow_ascii:
+        new_string = string.encode("ascii", "ignore").decode()
+    if rm_spaces:
+        new_string = new_string.replace(" ", spaces)
+    if rm_special_chars:
+        new_string = sub(r"[^a-zA-Z0-9 ]+", "", new_string)
+    if lowercase:
+        new_string = new_string.lower()
+    if rm_repeated_spaces:
+        new_string = sub(r"  +", " ", new_string)
+    return new_string
 
 
-def str_to_bool(string: str, default_value: bool = True) -> bool:
-    """Converts a string into a boolean."""
-    if isinstance(string, str):
-        if string.lower() == "true" or string == "1":
-            return True
-        if string.lower() == "false" or string == "0":
-            return False
-    return default_value
+def list_intersection(list_1: list, list_2: list) -> list:
+    """Returns a new list that is the intersection of two lists.
+    Helps find duplicates between two lists."""
+    return [value for value in list_1 if value in list_2]
 
 
-def str_to_int(value: str, default_value: int = 0) -> int:
-    """Converts a string into a integer."""
-    if isinstance(value, str) and value.isdigit():
-        return int(value)
-    return default_value
+class DoNothingDecorator:
+    """Decorator that does nothing."""
+
+    # pylint: disable=too-few-public-methods
+    def __init__(self, *args, **kwargs) -> None:
+        pass
+
+    def __call__(self, target, *args, **kwargs):
+        return target
 
 
-def list_modules(path: str, prefix: str = "") -> list[str]:
-    """Returns all modules in a path"""
-    return [name for _, name, _ in pkgutil.iter_modules([path], prefix=prefix)]
+class DoNothingWith:
+    """Class usable in a python `with` statement that does nothing."""
 
+    def __enter__(self):
+        pass
 
-def list_modules_with(path: str, submodule_name: str, prefix: str = "") -> list[str]:
-    """Returns a tuple of all modules containing module name and an importable path to 'example.module.urls'"""
-    modules = list_modules(path)
-    module_files = []
-    for module in modules:
-        module_path = os.path.join(path, module)
-        if submodule_name in list_modules(module_path):
-            urls_path = prefix + module + "." + submodule_name
-            module_files.append((module, urls_path))
-    return module_files
+    def __exit__(self, *_):
+        pass

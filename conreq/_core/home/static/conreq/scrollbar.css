@@ -1,0 +1,28 @@
+/* Webkit Scrollbar Styling */
+
+::-webkit-scrollbar {
+	width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 3px;
+	background: rgb(76 79 79 / 60%);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(76 79 79);
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+	display: none;
+}
+
+/* Hide scrollbars for non-webkit browsers */
+
+* {
+	/* IE 11+ */
+	-ms-overflow-style: none;
+	/* Firefox 64+ */
+	scrollbar-width: none;
+}

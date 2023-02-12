@@ -1,0 +1,2 @@
+refactor:
+    skip: [use-named-expression]

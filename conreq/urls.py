@@ -1,117 +1,40 @@
-"""Conreq URL Configuration
+"""Conreq URL Configuration"""
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 
 from django.conf import settings
-from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.core.files.storage import FileSystemStorage
 from django.urls import include, path
 from django.views.generic.base import RedirectView
+from django_downloadview import StorageDownloadView
 
-from conreq.utils.environment import get_base_url, get_debug
-from conreq.utils.generic import list_modules_with
+from conreq.config.wrappers import views
+from conreq.utils.environment import get_base_url, get_home_url
 
-APPS_DIR = getattr(settings, "APPS_DIR")
-DEBUG = get_debug()
-BASE_URL = get_base_url()
+BASE_URL = get_base_url(prepend_slash=False, empty_if_unset=True)
+HOME_URL = get_home_url(prepend_slash=False)
 
 
-urlpatterns = [
-    path("", include("conreq.core.base.urls")),
-    path("", include("conreq.core.pwa.urls")),
+conreq_urls = [
+    path("", include("conreq._core.pwa.urls")),
+    path("", views.landing, name="landing"),
+    path(HOME_URL, views.home, name="home"),
+    path("idom/", include("django_idom.http.urls")),
     path(
-        "sign_in/",
-        auth_views.LoginView.as_view(template_name="registration/sign_in.html"),
-        name="sign_in",
+        "files/serve/<path:path>",
+        StorageDownloadView.as_view(
+            storage=FileSystemStorage(settings.MEDIA_SERVE_DIR)
+        ),
+        name="media",
     ),
-    path("sign_out/", auth_views.logout_then_login, name="sign_out"),
-    path("sign_up/", include("conreq.core.sign_up.urls")),
-    path("request/", include("conreq.core.user_requests.urls")),
-    path("password_reset/", include("conreq.core.password_reset.urls")),
-    # Viewport Locations
-    path("discover/", include("conreq.core.discover.urls")),
-    path("more_info/", include("conreq.core.more_info.urls")),
-    path("report_issue/", include("conreq.core.issue_reporting.urls")),
-    path("search/", include("conreq.core.search.urls")),
-    path("manage_users/", include("conreq.core.manage_users.urls")),
-    path("server_settings/", include("conreq.core.server_settings.urls")),
-    path("api/v1/", include("conreq.core.api.urls")),
+    path("api/", include("conreq._core.api.urls")),
+    path("sign-in/", views.sign_in, name="sign_in"),
+    path("sign-up/", include("conreq._core.sign_up.urls")),
+    path("sign-out/", auth_views.logout_then_login, name="sign_out"),
+    path("user-management/", include("conreq._core.user_management.urls")),
+    path("password-reset/", include("conreq._core.password_reset.urls")),
 ]
 
-# Add User Installed Apps URLS
-for app_name, module_path in list_modules_with(APPS_DIR, "urls"):
-    urlpatterns.insert(0, path(app_name + "/", include(module_path)))
-
-# Debug tools
-if DEBUG:
-    # Performance analysis tool
-    urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))
-    # Ability to edit the DB from admin/
-    urlpatterns.append(path("admin/docs/", include("django.contrib.admindocs.urls")))
-    urlpatterns.append(path("admin/", admin.site.urls))
-
-    # Django Rest Framework documentation (Swagger and Redoc)
-    # pylint: disable=ungrouped-imports
-    from django.urls import re_path
-    from drf_yasg import openapi
-    from drf_yasg.views import get_schema_view
-    from rest_framework import permissions
-
-    SchemaView = get_schema_view(
-        openapi.Info(
-            title="Conreq API Endpoints",
-            default_version="v1",
-            description="""
-            Outline for all endpoints available within this Conreq instance.
-
-            All endpoints require an API key either in **HTTP Header (Authorization: Api-Key)** or in the **URL Parameter (apikey)**.
-
-            Token Authentication is performed using **HTTP Header (Authorization: Token)**. Session Authentication can alternatively be performed.
-            """,
-            contact=openapi.Contact(email="archiethemonger@gmail.com"),
-            license=openapi.License(name="GPL-3.0 License"),
-        ),
-        public=True,
-        permission_classes=[permissions.AllowAny],
-    )
-
-    docs_urlpatterns = [
-        re_path(
-            r"^swagger(?P<format>\.json|\.yaml)$",
-            SchemaView.without_ui(cache_timeout=0),
-            name="schema-json",
-        ),
-        re_path(
-            r"^swagger/$",
-            SchemaView.with_ui("swagger", cache_timeout=0),
-            name="schema-swagger-ui",
-        ),
-        re_path(
-            r"^redoc/$",
-            SchemaView.with_ui("redoc", cache_timeout=0),
-            name="schema-redoc",
-        ),
-    ]
-
-    for pattern in docs_urlpatterns:
-        urlpatterns.append(pattern)
-
-
-# Wrap the urlpatterns in BASE_URL if required
+urlpatterns = [path(BASE_URL, include(conreq_urls), name="base_url")]
 if BASE_URL:
-    urlpatterns = [
-        path("", RedirectView.as_view(url=BASE_URL)),
-        path(BASE_URL[1:] + "/", include(urlpatterns)),
-    ]
+    urlpatterns.append(path("", RedirectView.as_view(url=BASE_URL)))  # type: ignore

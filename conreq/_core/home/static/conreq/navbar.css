@@ -1,0 +1,50 @@
+.navbar {
+	background: rgb(0 0 0 / 07%);
+	height: var(--navbar-height);
+	box-shadow: var(--box-shadow);
+	padding-left: 15px;
+	padding-right: 15px;
+	z-index: 300;
+	display: none;
+	border-color: #ffffff17;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+}
+
+.navbar-dark .navbar-brand {
+	margin-left: 20px;
+	margin-right: 0;
+	color: rgba(255, 255, 255, 0.5);
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.navbar-toggler {
+	display: inline-block;
+	border: none;
+	padding-left: 0;
+	padding-right: 0;
+	background: none;
+	border-radius: 5px;
+}
+.navbar-toggler:focus {
+	box-shadow: none;
+}
+
+.navbar-toggler-icon {
+	font-size: 16px;
+}
+
+@media only screen and (max-width: 800px) {
+	:root {
+		--navbar-height: 45px;
+	}
+	::-webkit-scrollbar {
+		display: none;
+	}
+	.navbar {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+	}
+}

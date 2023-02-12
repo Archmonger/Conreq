@@ -1,0 +1,35 @@
+{% extends 'conreq/centered_box.html' %}
+{% load static %}
+
+{% block extend_head %}
+<script>
+    // Don't load if inside an iFrame
+    if (window.frameElement) {
+        window.parent.document.dispatchEvent(new CustomEvent('warning-toast', {
+            "detail": {
+                title: "Network Error",
+                message: "Could not connect to Conreq.",
+                timeout: 15000,
+            }
+        }))
+        window.stop();
+    }
+</script>
+{% endblock %}
+
+{% block title %}
+<title>Offline</title>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'conreq/offline.css' %}">
+<h1>Could not connect to {{ GeneralSettings.server_name }}.</h1>
+<p>Check your network connection or try again later.</p>
+<div class="lds-ellipsis">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<button onclick="location.reload(); $('.lds-ellipsis').fadeIn();">Try Again</button>
+{% endblock %}

@@ -1,0 +1,23 @@
+[tool.black]
+target-version = ['py39']
+extend-exclude = 'migrations'
+
+[tool.isort]
+profile = 'black'
+skip = 'migrations'
+
+[tool.mypy]
+exclude = [
+    'conreq/templates/.*',
+    'migrations/.*',
+]
+ignore_missing_imports = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+check_untyped_defs = true
+incremental = false
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = 'conreq.settings'

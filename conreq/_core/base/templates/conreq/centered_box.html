@@ -1,0 +1,35 @@
+{% load static compress %}
+{% load static %}
+{% load solo_tags %}
+{% get_solo 'server_settings.GeneralSettings' as GeneralSettings %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %}
+    <title>{{ GeneralSettings.server_name }}</title>
+    {% endblock title %}
+    {% block description %}
+    <meta name="Description" content="{{ GeneralSettings.server_description }}">
+    {% endblock description %}
+    {% block head %}{% include "conreq/minimal_head.html" %}{% endblock head %}
+    {% block extend_head %}{% endblock extend_head %}
+</head>
+
+<body>
+    <!-- Wave Animation -->
+    {% block body %}
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="main">
+        <div class="default-box zoom-in">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

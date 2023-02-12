@@ -1,0 +1,126 @@
+---
+nav:
+    - Home: index.md
+    - Install:
+          - Unraid: install/unraid.md
+          - Windows: install/windows.md
+          - Linux: install/linux.md
+          - MacOS: install/macos.md
+          - FreeBSD: install/freebsd.md
+    - User's Guide:
+          - Getting Started: users/getting_started.md
+          - Installing Apps: users/install_apps.md
+          - Reverse Proxy: users/reverse_proxy.md
+          - Optimizations: users/optimizations.md
+          - Configuring Conreq:
+                - Server Settings Interface: users/configure/server_settings.md
+                - Settings Config File: users/configure/env_vars.md
+                - Custom CSS/JS: users/configure/static_files.md
+    - Developer's Guide:
+          - Setup a Conreq Enviroment:
+                - 1. Install Requirements: developers/setup/requirements.md
+                - 2. Run Conreq from Source: developers/setup/run.md
+          - Command Line Interface: developers/interface/cli.md
+          - Python Interface:
+                - Front-End:
+                      - Components: developers/interface/python/components.md
+                      - Views: developers/interface/python/views.md
+                - Database & Forms:
+                      - Forms: developers/interface/python/forms.md
+                      - Fields: developers/interface/python/fields.md
+                      - Models: developers/interface/python/models.md
+                      - Validators: developers/interface/python/validators.md
+                      - Widgets: developers/interface/python/widgets.md
+                - Startup Registration:
+                      - Backup: developers/interface/python/register/backup.md
+                      - Components: developers/interface/python/register/components.md
+                      - Homepage: developers/interface/python/register/homepage.md
+                      - Http: developers/interface/python/register/http.md
+                      - Notifications: developers/interface/python/register/notifications.md
+                      - Startup: developers/interface/python/register/startup.md
+                      - Tabs: developers/interface/python/register/tabs.md
+                      - Templates: developers/interface/python/register/templates.md
+                      - Views: developers/interface/python/register/views.md
+                      - Websockets: developers/interface/python/register/websockets.md
+                - Services:
+                      - Email: developers/interface/python/services/email.md
+                - Background Tasks: developers/interface/python/processing/tasks.md
+          - Creating Your First App:
+                - Getting Started: developers/apps/getting_started.md
+                - App File Structure: developers/apps/file_structure.md
+                - Creating "Hello World": developers/apps/hello_world.md
+          - Contributing:
+                - Conreq Source Code Explained: developers/contribute/code_tldr.md
+                - Updating Conreq Source Code: developers/contribute/source.md
+                - Updating Conreq Docs: developers/contribute/docs.md
+                - Listing an App: developers/contribute/apps.md
+          - Deployment Tips: developers/deploy_tips.md
+    - Changelog: changelog/index.md
+
+theme:
+    name: material
+    palette:
+        - media: "(prefers-color-scheme: dark)"
+          scheme: slate
+          toggle:
+              icon: material/white-balance-sunny
+              name: Switch to light mode
+          primary: teal
+          accent: teal
+        - media: "(prefers-color-scheme: light)"
+          scheme: default
+          toggle:
+              icon: material/weather-night
+              name: Switch to dark mode
+          primary: teal
+          accent: teal
+    features:
+        - navigation.instant
+        - navigation.tracking
+        - navigation.tabs
+        - navigation.top
+    icon:
+        repo: fontawesome/brands/github
+
+markdown_extensions:
+    - toc:
+          permalink: true
+    - pymdownx.emoji:
+          emoji_index: !!python/name:materialx.emoji.twemoji
+          emoji_generator: !!python/name:materialx.emoji.to_svg
+    - pymdownx.tabbed:
+          alternate_style: true
+    - pymdownx.highlight
+    - pymdownx.superfences
+    - pymdownx.details
+    - pymdownx.inlinehilite
+    - admonition
+    - attr_list
+
+plugins:
+    - search
+    - include-markdown
+    - git-revision-date-localized:
+          fallback_to_build_date: true
+
+extra:
+    generator: false
+
+extra_css:
+    - stylesheets/extra.css
+
+watch:
+    - docs
+    - mkdocs.yml
+    - README.md
+    - CHANGELOG.md
+
+site_name: Conreq Documentation
+site_author: Archmonger
+site_description: Conreq Web Platform
+copyright: Copyright &copy; 2022 Conreq Team
+repo_url: https://github.com/Archmonger/Conreq/
+site_url: https://archmonger.github.io/Conreq/
+repo_name: Archmonger/Conreq
+edit_uri: edit/docs
+docs_dir: docs/src

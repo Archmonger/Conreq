@@ -1,0 +1,43 @@
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load solo_tags %}
+{% get_solo 'server_settings.StylingSettings' as StylingSettings %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'conreq/table.css' %}">
+    <script>
+        document.documentElement.style.setProperty("--accent-color", "{{ StylingSettings.accent_color }}");
+    </script>
+</head>
+
+<body style="margin: 30px 0;">
+    {% render_table table %}
+    Show <select id="select_per_page" onchange="perPageChange(this.value)">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="100">250</option>
+    </select> items
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        function perPageChange(perPage) {
+            // Set per_page in the URL
+            urlParams.set('per_page', perPage)
+            // Reload the page
+            location.href = "?" + urlParams.toString();
+        }
+        // Select the correct option in the select 
+        document.querySelector('#select_per_page').value = urlParams.get('per_page') || 25;
+    </script>
+</body>
+
+</html>

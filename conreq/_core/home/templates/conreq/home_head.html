@@ -1,0 +1,92 @@
+{% load static compress %}
+{% load static %}
+{% load pwa %}
+{% load bootstrap %}
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="Description" content="{{ GeneralSettings.server_description }}">
+<title>{{ GeneralSettings.server_name }}</title>
+
+<!-- Note: Some of these files are also cached in serviceworker.js -->
+
+<!-- Favicons and App icons -->
+{% include "conreq/icons.html" %}
+{% pwa_head_content %}
+
+<!-- Preconnections -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://stackpath.bootstrapcdn.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+<!-- TODO: Host remote stuff locally within Conreq via NPM -->
+<!-- Font (Roboto) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    crossorigin="anonymous">
+
+<!-- Icons (FontAwesome) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/webfonts/fa-solid-900.woff2"
+    as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Bootstrap Styling and JS -->
+{% bootstrap_5 %}
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+    crossorigin="anonymous"></script>
+
+<!-- Notification Popups (izi Toast) -->
+<script src="{% static 'conreq/izi_toast_1.4.0.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'conreq/izi_toast_1.4.0.min.css' %}">
+
+<!-- CSS -->
+{% compress css %}
+<link rel="stylesheet" href="{% static 'conreq/main.css' %}">
+<link rel="stylesheet" href="{% static 'conreq/sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'conreq/navbar.css' %}">
+<link rel="stylesheet" href="{% static 'conreq/viewport.css' %}">
+<link rel="stylesheet" href="{% static 'conreq/modal.css' %}">
+<link rel="stylesheet" href="{% static 'conreq/components.css' %}">
+<link rel="stylesheet" href="{% static 'conreq/backdrop.css' %}">
+<link rel="stylesheet" href="{% static 'conreq/scrollbar.css' %}">
+<link rel="stylesheet" href="{% static 'conreq/buttons.css' %}">
+{% for stylesheet in home_config.local_stylesheets %}
+<link rel="stylesheet" href="{% static stylesheet.path %}" {% for key, value in stylesheet.attributes.items %}
+    {% if value %} {{key}}="{{value}}" {% else %} {{key}} {% endif %} {% endfor %}>
+{% endfor %}
+{% endcompress %}
+
+{% for stylesheet in home_config.remote_stylesheets %}
+<link rel="stylesheet" href="{{ stylesheet.path }}" {% for key, value in stylesheet.attributes.items %} {% if value %}
+    {{key}}="{{value}}" {% else %} {{key}} {% endif %} {% endfor %}>
+{% endfor %}
+
+<!-- JS -->
+{% compress js %}
+<script src="{% static 'conreq/iframe_events.js' %}"></script>
+{% for script in home_config.local_scripts %}
+<script src="{% static script.path %}" {% for key, value in script.attributes.items %} {% if value %}
+    {{key}}="{{value}}" {% else %} {{key}} {% endif %} {% endfor %}></script>
+{% endfor %}
+{% endcompress %}
+
+{% for script in home_config.remote_scripts %}
+<script src="{{ script.path }}" {% for key, value in script.attributes.items %} {% if value %} {{key}}="{{value}}"
+    {% else %} {{key}} {% endif %} {% endfor %}></script>
+{% endfor %}
+
+<!-- App defined head content -->
+{% for template in home_config.head_content %}
+{% include template.path %}
+{% endfor %}
+
+<!-- User Configured Values -->
+<script>
+    document.documentElement.style.setProperty("--accent-color", "{{ StylingSettings.accent_color }}");
+</script>
+
+{{ StylingSettings.head_html | safe }}

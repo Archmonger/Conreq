@@ -1,0 +1,11 @@
+Store your licenses for each dependency within this folder structure.
+
+For example, if you use FontAwesome store your licenses as such:
+
+{{app_name}}/licenses/Font Awesome/LICENSE.txt
+
+Note
+---
+Folder name should retain the spaces and capitalization of the project
+Only markdown and txt licenses are supported.
+Licenses are automatically displayed within Conreq's user interface

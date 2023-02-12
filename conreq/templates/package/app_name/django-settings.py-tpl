@@ -1,0 +1,3 @@
+"""{{ verbose_name }} code that needs to run within the context of Django's settings.py file.
+
+See django-split-settings docs for more details."""
