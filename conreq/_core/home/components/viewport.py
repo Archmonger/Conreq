@@ -33,17 +33,22 @@ def viewport():
     # sourcery skip: assign-if-exp
     state = hooks.use_context(HomepageStateContext)
     this_viewport = state._viewport
-    base_attrs = {
-        "class_name": "viewport-container",
-        "key": f"{this_viewport.component.__module__}.{this_viewport.component.__name__}",
-    }
 
     if not this_viewport:
-        return div(base_attrs | HIDDEN)
+        return div(
+            {
+                "class_name": "viewport-container",
+                "key": "hidden-viewport",
+            }
+            | HIDDEN
+        )
 
     return div(
         viewport_attrs(
-            base_attrs,
+            {
+                "class_name": "viewport-container",
+                "key": f"{this_viewport.component.__module__}.{this_viewport.component.__name__}",
+            },
             state,
             this_viewport,
         ),
