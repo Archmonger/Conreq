@@ -106,8 +106,8 @@ def modal_head(*content, title="Loading...", close_action: Callable = None):
             i(
                 {
                     "title": "Close",
-                    "className": "fas fa-window-close clickable",
-                    "onClick": close_action or close_modal,
+                    "class_name": "fas fa-window-close clickable",
+                    "on_click": close_action or close_modal,
                 }
             ),
         ),
@@ -122,10 +122,7 @@ def modal_body(*content):
 
     return div(
         MODAL_BODY,
-        div(
-            {"className": "loading"},
-            config.components.loading_animation.small,
-        ),
+        div({"class_name": "loading"}, config.components.loading_animation.small),
     )
 
 

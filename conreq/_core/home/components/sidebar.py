@@ -45,7 +45,7 @@ TABS = {"className": "tabs"}
 NAV_TAB = {"className": "nav-tab clickable"}
 NAV_TAB_ACTIVE = {"className": "nav-tab clickable active"}
 TAB_NAME = {"className": "tab-name ellipsis"}
-DEFAULT_NAV_GROUP_ICON = i({"className": "far fa-circle"})
+DEFAULT_NAV_GROUP_ICON = i({"class_name": "far fa-circle"})
 SIDEBAR_SAFE_MODE = div(
     {
         "style": {
@@ -195,9 +195,9 @@ def sidebar_tab(tab: SidebarTab):
             state.set_state(state)
 
     return div(
+        {"key": tab.name},
         _sidebar_tab_class(state, tab) | {"onClick": on_click},
         div(TAB_NAME, tab.name),
-        key=tab.name,
     )
 
 
@@ -214,6 +214,7 @@ def sidebar_group(
     tabs_id = f"{group_name_clean}-tabs"
 
     return _(
+        {"key": group_id},
         div(
             NAV_GROUP
             | {
@@ -242,5 +243,4 @@ def sidebar_group(
                 [sidebar_tab(tab, key=tab.name) for tab in _bottom_tabs],
             ),
         ),
-        key=group_id,
     )

@@ -46,15 +46,12 @@ def tabbed_viewport(
     return TabbedViewportStateContext(
         div(
             {
-                "className": "tabbed-viewport-container"
+                "class_name": "tabbed-viewport-container"
                 + (f" {html_class}" if html_class else "")
             },
-            div(
-                {"className": "tabbed-viewport"},
-                tab_state.tab.component(),
-            ),
+            div({"class_name": "tabbed-viewport"}, tab_state.tab.component()),
             ul(
-                {"className": "tabbed-viewport-selector list-group"},
+                {"class_name": "tabbed-viewport-selector list-group"},
                 _subtabs(top_tabs),
                 _subtabs(tabs),
                 _subtabs(bottom_tabs),
@@ -85,9 +82,9 @@ def _subtabs(
     return _(
         [
             li(
+                {"key": str(uuid4())},
                 _subtab_attributes(state, tab_state, tab, connection),
                 tab.name,
-                key=str(uuid4()),
             )
             for tab in tabs
         ]

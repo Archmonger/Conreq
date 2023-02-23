@@ -47,44 +47,37 @@ def spotlight_section(
         set_opacity(1)
 
     return div(
-        {
-            "className": "spotlight-section fade-in",
-            "style": {"opacity": opacity},
-        },
+        {"class_name": "spotlight-section fade-in", "style": {"opacity": opacity}},
         div(
-            {"className": "spotlight-head"},
+            {"class_name": "spotlight-head"},
             div(
-                {"className": "spotlight-title"},
-                h4({"className": "title"}, title),
-                p({"className": "description"}, description),
+                {"class_name": "spotlight-title"},
+                h4({"class_name": "title"}, title),
+                p({"class_name": "description"}, description),
             ),
             [
                 div(
-                    {"className": "collapse-controls"},
+                    {"class_name": "collapse-controls", "key": "collapse-controls"},
                     button(
                         {
-                            "className": "btn btn-sm btn-dark",
-                            "onClick": lambda _: set_show_more(not show_more),
+                            "class_name": "btn btn-sm btn-dark",
+                            "on_click": lambda _: set_show_more(not show_more),
                         },
                         "Show More ",
                         i(
                             {
-                                "className": f'fas fa-angle-{"up" if show_more else "down"}'
+                                "class_name": f"fas fa-angle-{('up' if show_more else 'down')}"
                             }
                         ),
                     ),
-                    key="collapse-controls",
                 )
             ]
             if len(card_list) > min_show_len
             else [],
         ),
         div(
-            {"className": f"card-stage {'show-more' if show_more else ''}"},
-            div(
-                {"className": "collapse"},
-                card_list,
-            ),
+            {"class_name": f"card-stage {('show-more' if show_more else '')}"},
+            div({"class_name": "collapse"}, card_list),
         ),
     )
 

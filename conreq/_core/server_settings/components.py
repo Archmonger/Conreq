@@ -69,7 +69,7 @@ def system_info():
     return html.table(
         {"style": {"marginTop": "20px"}},
         [
-            html.tr(html.td(f"{name}"), html.td(f"{value}"), key=uuid4().hex)
+            html.tr({"key": uuid4().hex}, html.td(f"{name}"), html.td(f"{value}"))
             for name, value in settings_values
         ],
     )

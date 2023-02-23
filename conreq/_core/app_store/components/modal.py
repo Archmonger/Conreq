@@ -48,7 +48,7 @@ def app_modal(app: AppPackage):
                 html.div(f"Screenshots: {app.screenshot_set.all()}"),
                 html.div(app.long_description),
                 html.div(html.button("show more")),
-                [html.p(app_str, key=app_str) for app_str in app_details],
+                [html.p({"key": app_str}, app_str) for app_str in app_details],
             ),
             modal_footer(),
         )

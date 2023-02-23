@@ -18,10 +18,10 @@ class BaseConfig(AppConfig):
 
         config.asgi.websockets.append(IDOM_WEBSOCKET_PATH)
         config.homepage.sidebar_tabs.add(
-            NavGroup(name="User", icon=i({"className": "fas fa-users icon-left"}))
+            NavGroup(name="User", icon=i({"class_name": "fas fa-users icon-left"}))
         )
         config.homepage.sidebar_tabs.add(
-            NavGroup(name="Admin", icon=i({"className": "fas fa-cogs icon-left"}))
+            NavGroup(name="Admin", icon=i({"class_name": "fas fa-cogs icon-left"}))
         )
         import_module("conreq.config.wrappers.components")
 

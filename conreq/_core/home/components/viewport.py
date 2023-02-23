@@ -34,16 +34,18 @@ def viewport():
     base_attrs = {"className": "viewport-container"}
 
     if not this_viewport:
-        return div(base_attrs | HIDDEN)  # type: ignore
+        return div(base_attrs | HIDDEN)
 
     return div(
+        {
+            "key": f"{this_viewport.component.__module__}.{this_viewport.component.__name__}"
+        },
         viewport_attrs(
             base_attrs,
             state,
             this_viewport,
         ),
         this_viewport.component(*this_viewport.args) if this_viewport else "",
-        key=f"{this_viewport.component.__module__}.{this_viewport.component.__name__}",
     )
 
 
