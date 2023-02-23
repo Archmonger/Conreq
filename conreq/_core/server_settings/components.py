@@ -55,7 +55,7 @@ def system_info():
         ("Cache Directory", relpath(settings.CACHES["default"]["LOCATION"])),
         ("Conreq Log File", relpath(settings.CONREQ_LOG_FILE)),
         ("Webserver Log File", relpath(settings.ACCESS_LOG_FILE)),
-        ("Database File", relpath(settings.DATABASES["default"]["NAME"])),
+        ("Database File", relpath(settings.DATABASES["default"]["NAME"])),  # type: ignore
         ("Log Level", settings.LOG_LEVEL),
         ("Platform", platform.platform()),
         ("CPU Architecture", platform.machine()),
@@ -67,7 +67,7 @@ def system_info():
     ]
 
     return html.table(
-        {"style": {"marginTop": "20px"}},
+        {"style": {"margin_top": "20px"}},
         [
             html.tr({"key": uuid4().hex}, html.td(f"{name}"), html.td(f"{value}"))
             for name, value in settings_values
@@ -77,7 +77,7 @@ def system_info():
 
 def licenses():
     return html.div(
-        {"style": {"marginTop": "20px"}},
+        {"style": {"margin_top": "20px"}},
         "This page is under construction, and will be developed in a later release.",
     )
 

@@ -8,15 +8,15 @@ from conreq.types import HomepageState, HomepageStateContext
 
 # pylint: disable=protected-access
 
-NAVBAR = {"className": "navbar navbar-expand-md navbar-dark blur"}
+NAVBAR = {"class_name": "navbar navbar-expand-md navbar-dark blur"}
 NAVBAR_TOGGLER = {
-    "className": "navbar-toggler",
+    "class_name": "navbar-toggler",
     "type": "button",
     "aria-label": "Toggle sidebar",
     "title": "Toggle sidebar",
 }
-NAVBAR_TOGGLER_ICON = {"className": "navbar-toggler-icon"}
-NAVBAR_BRAND = {"className": "navbar-brand ellipsis"}
+NAVBAR_TOGGLER_ICON = {"class_name": "navbar-toggler-icon"}
+NAVBAR_BRAND = {"class_name": "navbar-brand ellipsis"}
 
 
 @component

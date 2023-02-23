@@ -21,30 +21,30 @@ from conreq.utils.generic import clean_string
 
 DEBUG = get_debug_mode()
 SAFE_MODE = get_safe_mode()
-SIDEBAR = {"id": "sidebar", "className": "sidebar no-hightlighting blur collapsed"}
-SIDEBAR_USER = {"className": "sidebar-user clickable"}
-USER_PIC = {"className": "sidebar-profile-pic"}
-USER_PIC_PLACEHOLDER = {"className": "fas fa-user"}
-USERNAME_CONTAINER = {"className": "username-container"}
-USERNAME = {"className": "username ellipsis"}
+SIDEBAR = {"id": "sidebar", "class_name": "sidebar no-hightlighting blur collapsed"}
+SIDEBAR_USER = {"class_name": "sidebar-user clickable"}
+USER_PIC = {"class_name": "sidebar-profile-pic"}
+USER_PIC_PLACEHOLDER = {"class_name": "fas fa-user"}
+USERNAME_CONTAINER = {"class_name": "username-container"}
+USERNAME = {"class_name": "username ellipsis"}
 NAVIGATION = {"id": "navigation"}
 NAV_GROUP = {
-    "className": "nav-group clickable",
+    "class_name": "nav-group clickable",
     "data-bs-toggle": "collapse",
     "aria-expanded": "true",
 }
-GROUP_NAME = {"className": "group-name ellipsis"}
-GROUP_ICON = {"className": "group-icon"}
-EXAMPLE_GROUP_ICON = {"className": "fas fa-user icon-left"}
-GROUP_CARET = {"className": "fas fa-caret-up icon-right"}
+GROUP_NAME = {"class_name": "group-name ellipsis"}
+GROUP_ICON = {"class_name": "group-icon"}
+EXAMPLE_GROUP_ICON = {"class_name": "fas fa-user icon-left"}
+GROUP_CARET = {"class_name": "fas fa-caret-up icon-right"}
 TABS_COLLAPSE = {
-    "className": "tabs-collapse collapse show",
+    "class_name": "tabs-collapse collapse show",
 }
-TABS_INDICATOR = {"className": "tabs-indicator"}
-TABS = {"className": "tabs"}
-NAV_TAB = {"className": "nav-tab clickable"}
-NAV_TAB_ACTIVE = {"className": "nav-tab clickable active"}
-TAB_NAME = {"className": "tab-name ellipsis"}
+TABS_INDICATOR = {"class_name": "tabs-indicator"}
+TABS = {"class_name": "tabs"}
+NAV_TAB = {"class_name": "nav-tab clickable"}
+NAV_TAB_ACTIVE = {"class_name": "nav-tab clickable active"}
+TAB_NAME = {"class_name": "tab-name ellipsis"}
 DEFAULT_NAV_GROUP_ICON = i({"class_name": "far fa-circle"})
 SIDEBAR_SAFE_MODE = div(
     {
@@ -109,7 +109,7 @@ def sidebar():
         SIDEBAR,
         SIDEBAR_SAFE_MODE if SAFE_MODE else "",
         div(
-            SIDEBAR_USER | {"onClick": username_on_click},
+            SIDEBAR_USER | {"on_click": username_on_click},
             div(USER_PIC, i(USER_PIC_PLACEHOLDER)),
             div(
                 USERNAME_CONTAINER,
@@ -195,8 +195,7 @@ def sidebar_tab(tab: SidebarTab):
             state.set_state(state)
 
     return div(
-        {"key": tab.name},
-        _sidebar_tab_class(state, tab) | {"onClick": on_click},
+        {"on_click": on_click, "key": tab.name} | _sidebar_tab_class(state, tab),
         div(TAB_NAME, tab.name),
     )
 

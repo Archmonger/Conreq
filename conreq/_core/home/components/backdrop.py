@@ -22,10 +22,10 @@ def backdrop():
     #     set_bg_num(val)
     #     print(f"bg_num: {val}")
 
-    # "onClick": on_click,
+    # "on_click": on_click,
     # html.img(
     #     {
-    #         "className": f"backdrop {'opacity-0' if backdrop_selector == 2 else ''}",
+    #         "class_name": f"backdrop {'opacity-0' if backdrop_selector == 2 else ''}",
     #         "src": prev_backdrop,
     #         "loading": "lazy",
     #     }

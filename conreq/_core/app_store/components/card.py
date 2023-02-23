@@ -85,9 +85,9 @@ def card_top(app: AppPackage, modal_state: ModalState, subcategory: Subcategory 
             ),
         ),
         div(
-            {"className": "logo"}
+            {"class_name": "logo"}
             | (
-                {"style": {"backgroundImage": f'url("{app.logo.url}")'}}
+                {"style": {"background_image": f'url("{app.logo.url}")'}}
                 if app.logo
                 else {}
             )
@@ -134,9 +134,9 @@ def card_btns(app: AppPackage, modal_state: ModalState, installable: bool | None
 
 def card_background(app: AppPackage):
     return div(
-        {"className": "background"}
+        {"class_name": "background"}
         | (
-            {"style": {"backgroundImage": f'url("{app.background.url}")'}}
+            {"style": {"background_image": f'url("{app.background.url}")'}}
             if app.background
             else {}
         )

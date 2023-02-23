@@ -25,7 +25,7 @@ from conreq.types import (
 @auth_required(
     fallback=script(
         f"window.location.href = '{reverse_lazy('sign_in')}"
-        + "?next=' + window.location.pathname"
+        + "?next=' + window.location.pathname",
     )
 )
 def homepage():

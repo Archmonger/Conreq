@@ -10,21 +10,21 @@ from conreq.types import ModalStateContext
 
 MODAL_CONTAINER = {
     "id": "modal-container",
-    "className": "modal fade",
-    "tabIndex": "-1",
+    "class_name": "modal fade",
+    "tab_index": "-1",
     "aria-hidden": "true",
 }
-MODAL_DIALOG = {"className": "modal-dialog modal-dialog-centered modal-lg"}
-MODAL_CONTENT = {"className": "modal-content"}
-MODAL_HEADER = {"className": "modal-header"}
+MODAL_DIALOG = {"class_name": "modal-dialog modal-dialog-centered modal-lg"}
+MODAL_CONTENT = {"class_name": "modal-content"}
+MODAL_HEADER = {"class_name": "modal-header"}
 MODAL_HEADER_BTN_CONTAINER = {
-    "className": "modal-header-btn-container",
+    "class_name": "modal-header-btn-container",
     "data-bs-dismiss": "modal",
     "aria-label": "Close",
 }
-MODAL_TITLE = {"className": "title"}
-MODAL_BODY = {"className": "modal-body loading"}
-MODAL_FOOTER = {"className": "modal-footer"}
+MODAL_TITLE = {"class_name": "title"}
+MODAL_BODY = {"class_name": "modal-body loading"}
+MODAL_FOOTER = {"class_name": "modal-footer"}
 
 
 def _fragment_if_iterable(children):
@@ -91,7 +91,7 @@ def modal_content(*content):
 
 
 @component
-def modal_head(*content, title="Loading...", close_action: Callable = None):
+def modal_head(*content, title="Loading...", close_action: Callable | None = None):
     modal_state = hooks.use_context(ModalStateContext)
 
     async def close_modal(_):

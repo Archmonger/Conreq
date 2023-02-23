@@ -82,8 +82,8 @@ def _subtabs(
     return _(
         [
             li(
-                {"key": str(uuid4())},
-                _subtab_attributes(state, tab_state, tab, connection),
+                {"key": str(uuid4())}
+                | _subtab_attributes(state, tab_state, tab, connection),
                 tab.name,
             )
             for tab in tabs
@@ -116,6 +116,6 @@ def _subtab_attributes(
         tab_state.set_state(tab_state)
 
     return {
-        "className": f"list-group-item clickable{' active' if tab_state.tab is tab else ''}",
-        "onClick": on_click,
+        "class_name": f"list-group-item clickable{' active' if tab_state.tab is tab else ''}",
+        "on_click": on_click,
     }
