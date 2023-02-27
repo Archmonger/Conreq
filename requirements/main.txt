@@ -27,5 +27,5 @@ titlecase==2.4
 tmdbsimple==2.9.1
 Twisted[tls,http2]==22.10.0
 tzlocal==4.2
-whitenoise[brotli]==6.2.0
+whitenoise[brotli]==6.4.0
 attrs
