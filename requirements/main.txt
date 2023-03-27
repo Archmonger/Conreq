@@ -18,7 +18,7 @@ huey==2.4.4
 hypercorn[h3]==0.14.3
 jsonfield==3.1.0
 markdown==3.4.1
-pwned-passwords-django==1.6
+pwned-passwords-django==2.0
 pyarr==3.1.1
 pymysql==1.0.2
 python-dotenv==0.21.0
