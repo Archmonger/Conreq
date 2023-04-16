@@ -103,8 +103,8 @@ class AppSubCategories(admin.ModelAdmin):
     list_display = ("name", "category")
 
 
-class SpotlightAppTabularInline(OrderedTabularInline):
-    model = models.SpotlightApp
+class SpotlightAppPackagesTabularInline(OrderedTabularInline):
+    model = models.SpotlightAppPackages
     readonly_fields = (
         "order",
         "move_up_down_links",
@@ -118,7 +118,7 @@ class SpotlightCategories(OrderedInlineModelAdminMixin, DragDropOrderedModelAdmi
     model = models.SpotlightCategory
     list_display = ("name", "order", "make_draggable")
     ordering = ("order",)
-    inlines = (SpotlightAppTabularInline,)
+    inlines = (SpotlightAppPackagesTabularInline,)
 
 
 @admin.register(models.AppPackage)

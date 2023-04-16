@@ -13,7 +13,7 @@ django-health-check==3.17.0
 django-jazzmin==2.6.0
 django-mass-edit==3.4.1
 django-multiselectfield==0.1.12
-django-ordered-model==3.6
+git+https://github.com/django-ordered-model/django-ordered-model@add-field-ordered-m2m
 django-searchable-encrypted-fields==0.2.1
 django-silk==5.0.3
 django-solo==2.0.0

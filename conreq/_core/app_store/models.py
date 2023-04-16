@@ -5,6 +5,7 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.db import models
 from multiselectfield import MultiSelectField
+from ordered_model.fields import OrderedManyToManyField
 from ordered_model.models import OrderedModel
 from packaging import version
 from versionfield import VersionField
@@ -48,6 +49,7 @@ class Category(OrderedModel):
 
     class Meta:
         verbose_name_plural = "Categories"
+        ordering = ["order"]
 
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
@@ -232,6 +234,7 @@ class SpotlightCategory(OrderedModel):
     class Meta:
         verbose_name = "Spotlight category"
         verbose_name_plural = "Spotlight categories"
+        ordering = ["order"]
 
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
@@ -239,11 +242,12 @@ class SpotlightCategory(OrderedModel):
 
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True)
-    apps = models.ManyToManyField(AppPackage, through="SpotlightApp")
+    apps = OrderedManyToManyField(AppPackage, through="SpotlightAppPackages")
 
 
-class SpotlightApp(OrderedModel):
-    """This model is used to create a many-to-many relationship between SpotlightCategory and AppPackage.
+class SpotlightAppPackages(OrderedModel):
+    """This model is a `through` model used to create a many-to-many relationship
+    between SpotlightCategory and AppPackage.
     This allows for the ordering of apps within a spotlight category."""
 
     category = models.ForeignKey(SpotlightCategory, on_delete=models.CASCADE)

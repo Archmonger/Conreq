@@ -1,10 +1,11 @@
 import asyncio
 import random
-from typing import Sequence
 
+from django.db.models.manager import Manager
 from django_idom.hooks import use_query
 from idom import component, hooks
-from idom.html import _, button, div, h4, i, p
+from idom.html import _, div, h4, p
+from idom.types import VdomChild
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.models import AppPackage, SpotlightCategory
@@ -22,7 +23,7 @@ def spotlight():
             spotlight_section(
                 category.name,
                 category.description,
-                apps=category.apps.all(),
+                apps=category.apps,
                 key=category.uuid,
             )
             for category in spotlight_category_query.data  # type: ignore
@@ -34,12 +35,16 @@ def spotlight():
 def spotlight_section(
     title,
     description,
-    apps: Sequence[AppPackage],
+    apps: Manager[AppPackage],
 ):
+    # FIXME: This shouldn't be needed, but `OrderedManyToManyField` doesn't work with `django_query_postprocessor`
+    spotlight_apps_query = use_query(get_spotlight_apps, apps)
     opacity, set_opacity = hooks.use_state(0)
-    card_list = [card(app, key=app.uuid) for app in apps]
-    min_show_len = 3
-    show_more, set_show_more = hooks.use_state(len(card_list) <= min_show_len)
+    card_list: list[VdomChild] = (
+        [card(app, key=app.uuid) for app in spotlight_apps_query.data]  # type: ignore
+        if spotlight_apps_query.data
+        else []
+    )
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():
@@ -55,28 +60,9 @@ def spotlight_section(
                 h4({"class_name": "title"}, title),
                 p({"class_name": "description"}, description),
             ),
-            [
-                div(
-                    {"class_name": "collapse-controls", "key": "collapse-controls"},
-                    button(
-                        {
-                            "class_name": "btn btn-sm btn-dark",
-                            "on_click": lambda _: set_show_more(not show_more),
-                        },
-                        "Show More ",
-                        i(
-                            {
-                                "class_name": f"fas fa-angle-{('up' if show_more else 'down')}"
-                            }
-                        ),
-                    ),
-                )
-            ]
-            if len(card_list) > min_show_len
-            else [],
         ),
         div(
-            {"class_name": f"card-stage {('show-more' if show_more else '')}"},
+            {"class_name": "card-stage show-more"},
             div({"class_name": "collapse"}, card_list),
         ),
     )
@@ -84,3 +70,7 @@ def spotlight_section(
 
 def get_spotlight_categories():
     return SpotlightCategory.objects.all()
+
+
+def get_spotlight_apps(apps: Manager[AppPackage]):
+    return apps.all()
