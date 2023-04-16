@@ -1,6 +1,6 @@
 from typing import Callable
 
-from idom.core.component import Component
+from reactpy.core.component import Component
 
 from conreq.types import AuthLevel, SidebarTab, Viewport
 

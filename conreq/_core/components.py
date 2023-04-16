@@ -2,9 +2,9 @@ from copy import copy
 from inspect import iscoroutinefunction
 from uuid import uuid4
 
-from django_idom.hooks import use_connection
-from idom import component, hooks
-from idom.html import _, div, li, ul
+from reactpy import component, hooks
+from reactpy.html import _, div, li, ul
+from reactpy_django.hooks import use_connection
 
 from conreq.types import (
     HomepageState,

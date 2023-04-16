@@ -1,7 +1,7 @@
 from typing import Callable
 
-from idom.core.component import Component
-from idom.types import ComponentConstructor
+from reactpy.core.component import Component
+from reactpy.types import ComponentConstructor
 
 from conreq import config
 from conreq.types import (
@@ -24,11 +24,11 @@ def sidebar_tab(
     padding: bool = True,
     auth: str = AuthLevel.user,
 ) -> Callable:
-    """Decorates an IDOM component. Tab is added to the sidebar and is rendered when clicked.
+    """Decorates an ReactPy component. Tab is added to the sidebar and is rendered when clicked.
     By default, the function decorated will be rendered to the viewport. The `on_click` event
     can be overridden to change this behavior."""
     # TODO: Implement auth level
-    # TODO: URL support (Requires IDOM to support URL routing)
+    # TODO: URL support (Requires ReactPy to support URL routing)
 
     def decorator(component: ComponentConstructor | Callable[..., Component]):
         if config.homepage.sidebar_tabs and group not in config.homepage.sidebar_tabs:

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 from django.urls import include, path
-from idom.html import i
+from reactpy.html import i
 
 from conreq import config
 from conreq._core.debug import views

@@ -1,6 +1,6 @@
 from inspect import iscoroutinefunction
 
-from idom import component, html
+from reactpy import component, html
 
 from conreq import config
 

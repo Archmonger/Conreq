@@ -1,9 +1,9 @@
 from copy import copy
 
-from django_idom.components import django_css
-from django_idom.hooks import use_query
-from idom import component, hooks
-from idom.html import _, div
+from reactpy import component, hooks
+from reactpy.html import _, div
+from reactpy_django.components import django_css
+from reactpy_django.hooks import use_query
 
 from conreq._core.app_store.components.nav import app_store_nav
 from conreq._core.app_store.components.spotlight import spotlight
@@ -32,7 +32,7 @@ def app_store():  # sourcery skip
     # TODO: Update app store entries every first load
     return _(
         django_css("conreq/app_store.css"),
-        state.tab.name if state.tab else div({'class_name': 'spotlight'}, spotlight()),
+        state.tab.name if state.tab else div({"class_name": "spotlight"}, spotlight()),
         app_store_nav(nav_category_query.data),
     )
 

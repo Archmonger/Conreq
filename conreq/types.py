@@ -3,13 +3,13 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Callable, Sequence
 
-from idom.core.component import Component
-from idom.core.hooks import Context, create_context
-from idom.core.types import ComponentConstructor, VdomDict
+from reactpy.core.component import Component
+from reactpy.core.hooks import Context, create_context
+from reactpy.core.types import ComponentConstructor, VdomDict
 from sortedcontainers import SortedSet
 
 if TYPE_CHECKING:
-    from django_idom.types import Connection
+    from reactpy_django.types import Connection
 
 # pylint: disable=protected-access, too-few-public-methods
 
@@ -136,8 +136,8 @@ class HTMLTemplate:
 
 @dataclass
 class ModalState:
-    # FIXME: Redo this when IDOM supports react-bootstrap
-    # https://github.com/idom-team/idom/issues/786
+    # FIXME: Redo this when ReactPy supports react-bootstrap
+    # https://github.com/reactive-python/reactpy/issues/786
 
     set_state: SetModalState = lambda _: None
     """A function that can be used to set this state."""

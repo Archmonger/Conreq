@@ -2,10 +2,10 @@ import asyncio
 import random
 
 from django.db.models.manager import Manager
-from django_idom.hooks import use_query
-from idom import component, hooks
-from idom.html import _, div, h4, p
-from idom.types import VdomChild
+from reactpy import component, hooks
+from reactpy.html import _, div, h4, p
+from reactpy.types import VdomChild
+from reactpy_django.hooks import use_query
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.models import AppPackage, SpotlightCategory

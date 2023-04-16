@@ -1,4 +1,4 @@
-from idom import component, html
+from reactpy import component, html
 
 from conreq._core.app_store.models import AppPackage
 from conreq._core.home.components.modal import (

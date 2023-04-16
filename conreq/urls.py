@@ -19,7 +19,7 @@ conreq_urls = [
     path("", include("conreq._core.pwa.urls")),
     path("", views.landing, name="landing"),
     path(HOME_URL, views.home, name="home"),
-    path("idom/", include("django_idom.http.urls")),
+    path("reactpy/", include("reactpy_django.http.urls")),
     path(
         "files/serve/<path:path>",
         StorageDownloadView.as_view(

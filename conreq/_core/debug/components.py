@@ -1,5 +1,5 @@
 from django.urls.base import reverse
-from idom.html import iframe
+from reactpy.html import iframe
 
 from conreq import config
 from conreq.config.utils import tab_constructor

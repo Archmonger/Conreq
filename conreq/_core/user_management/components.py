@@ -1,8 +1,8 @@
 from django.urls import reverse
-from django_idom.components import view_to_component
-from django_idom.decorators import auth_required
-from django_idom.hooks import use_mutation, use_scope
-from idom import component, hooks, html
+from reactpy import component, hooks, html
+from reactpy_django.components import view_to_component
+from reactpy_django.decorators import auth_required
+from reactpy_django.hooks import use_mutation, use_scope
 
 from conreq import config
 from conreq._core.components import tabbed_viewport

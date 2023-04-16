@@ -124,8 +124,6 @@ HUEY = {
         "workers": WEBSERVER_WORKERS * 5,  # TODO: Add setting to configure this
     },
 }
-IDOM_BASE_URL = f"{get_base_url()[1:]}idom/"
-os.environ["IDOM_DEBUG_MODE"] = str(int(DEBUG))
 FILE_UPLOAD_TEMP_DIR = TEMP_DIR
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -319,7 +317,7 @@ INSTALLED_APPS = [
     "django_ace",  # Code hightlighted form fields
     "versionfield",  # Allow for version numbers in the DB
     # ASGI
-    "django_idom",  # React JS for Python
+    "reactpy_django",  # React JS for Python
     # API
     "rest_framework",  # OpenAPI Framework
     "rest_framework_api_key",  # API Key Manager

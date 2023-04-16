@@ -1,7 +1,7 @@
 from typing import Callable
 
-from idom import component, hooks
-from idom.html import _, div, i, script
+from reactpy import component, hooks
+from reactpy.html import _, div, i, script
 
 from conreq import config
 from conreq.types import ModalStateContext

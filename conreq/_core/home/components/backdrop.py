@@ -1,7 +1,7 @@
 from random import randint
 
 from django.templatetags.static import static
-from idom import component, hooks, html
+from reactpy import component, hooks, html
 
 
 @component

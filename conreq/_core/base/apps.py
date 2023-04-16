@@ -2,7 +2,7 @@ from sqlite3 import Connection
 
 from django.apps import AppConfig
 from django.db.backends.signals import connection_created
-from idom.html import i
+from reactpy.html import i
 
 from conreq import config
 from conreq.types import NavGroup
@@ -14,9 +14,9 @@ class BaseConfig(AppConfig):
 
     def ready(self):
         # pylint: disable=import-outside-toplevel
-        from django_idom import IDOM_WEBSOCKET_PATH
+        from reactpy_django import REACTPY_WEBSOCKET_PATH
 
-        config.asgi.websockets.append(IDOM_WEBSOCKET_PATH)
+        config.asgi.websockets.append(REACTPY_WEBSOCKET_PATH)
         config.homepage.sidebar_tabs.add(
             NavGroup(name="User", icon=i({"class_name": "fas fa-users icon-left"}))
         )

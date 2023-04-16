@@ -1,9 +1,9 @@
 from copy import copy
 
 from django.urls import reverse_lazy
-from django_idom.decorators import auth_required
-from idom import component, hooks
-from idom.html import script
+from reactpy import component, hooks
+from reactpy.html import script
+from reactpy_django.decorators import auth_required
 
 from conreq._core.home.components.backdrop import backdrop
 from conreq._core.home.components.modal import modal

@@ -1,10 +1,10 @@
 import asyncio
 import random
 
-from django_idom.hooks import use_query
-from django_idom.types import QueryOptions
-from idom import component, hooks
-from idom.html import a, button, div, h5
+from reactpy import component, hooks
+from reactpy.html import a, button, div, h5
+from reactpy_django.hooks import use_query
+from reactpy_django.types import QueryOptions
 
 from conreq._core.app_store.components.modal import app_modal
 from conreq._core.app_store.models import AppPackage, Subcategory

@@ -1,3 +1,3 @@
 """
-IDOM components for {{ verbose_name }}.
+ReactPy components for {{ verbose_name }}.
 """

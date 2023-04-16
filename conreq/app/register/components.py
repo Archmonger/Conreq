@@ -1,6 +1,6 @@
 from typing import Callable, Literal
 
-from idom.core.component import Component
+from reactpy.core.component import Component
 
 from conreq import config
 

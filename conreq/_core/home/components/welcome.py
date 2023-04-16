@@ -1,5 +1,5 @@
-from django_idom.components import django_css
-from idom import component, hooks, html
+from reactpy import component, hooks, html
+from reactpy_django.components import django_css
 
 from conreq import config
 from conreq.types import HomepageStateContext

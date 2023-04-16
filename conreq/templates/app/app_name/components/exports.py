@@ -1,3 +1,3 @@
 """
-ReactJS to IDOM exports for {{ verbose_name }}.
+ReactJS to ReactPy exports for {{ verbose_name }}.
 """

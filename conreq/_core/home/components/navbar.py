@@ -1,7 +1,7 @@
 from channels.db import database_sync_to_async
-from django_idom.components import django_js
-from idom import component, hooks
-from idom.html import button, div, script, span
+from reactpy import component, hooks
+from reactpy.html import button, div, script, span
+from reactpy_django.components import django_js
 
 from conreq._core.server_settings.models import GeneralSettings
 from conreq.types import HomepageState, HomepageStateContext

@@ -5,8 +5,8 @@ from multiprocessing import Process
 from typing import Callable
 
 from django.views import View
-from idom.html import div, span
-from idom.types import ComponentConstructor, VdomDict
+from reactpy.html import div, span
+from reactpy.types import ComponentConstructor, VdomDict
 from sortedcontainers import SortedList
 
 from conreq.types import CSS, SCSS, HTMLTemplate, JavaScript, SidebarTab, SubTab

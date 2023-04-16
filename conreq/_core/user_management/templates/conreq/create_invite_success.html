@@ -1,5 +1,5 @@
 {% load static %}
-{% load idom %}
+{% load reactpy %}
 {% load bootstrap %}
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +42,7 @@
 
                 <div class="mt-4"></div>
                 {% component 'conreq._core.user_management.components.send_email_invite_btn' class='inline-block' invite_code=invite_code %}
-                <a href="{% url 'idom:view_to_component' 'conreq._core.user_management.views.CreateInvite' %}">
+                <a href="{% url 'reactpy:view_to_component' 'conreq._core.user_management.views.CreateInvite' %}">
                     <button type="button" class="btn btn-light">
                         <i class="fas fa-plus"></i>
                         Create More

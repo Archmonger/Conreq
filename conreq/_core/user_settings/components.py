@@ -1,7 +1,7 @@
 from channels.auth import logout
-from django_idom.components import view_to_component
-from django_idom.decorators import auth_required
-from idom import component, html
+from reactpy import component, html
+from reactpy_django.components import view_to_component
+from reactpy_django.decorators import auth_required
 
 from conreq import config
 from conreq._core.components import tabbed_viewport

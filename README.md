@@ -18,7 +18,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   Graphical Database Administration
 -   MySQL and SQLite Databases
 -   Customizable Base URL
--   [Interactive HTML via ReactJS in Python](https://github.com/idom-team/django-idom)
+-   [Interactive HTML via ReactPy](https://github.com/reactive-python/reactpy)
 -   [Support for Django Features](https://github.com/django/django)
 -   [Background Task Processing](https://github.com/coleifer/huey)
 -   [Async and Websockets (ASGI)](https://github.com/django/channels)

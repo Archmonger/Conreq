@@ -1,8 +1,8 @@
 from inspect import iscoroutinefunction
 
-from django_idom.hooks import use_connection, use_scope
-from idom import component, hooks
-from idom.html import _, div, i, nav
+from reactpy import component, hooks
+from reactpy.html import _, div, i, nav
+from reactpy_django.hooks import use_connection, use_scope
 
 from conreq import config
 from conreq._core.home.components.welcome import welcome

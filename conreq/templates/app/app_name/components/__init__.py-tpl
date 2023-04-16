@@ -3,6 +3,6 @@ Frontend component registration for {{ verbose_name }}.
 
 Allows for dynamically updating webpages, akin to ReactJS.
 
-See more information in IDOM docs.
+See more information in ReactPy docs.
 """
-from idom import component
+from reactpy import component

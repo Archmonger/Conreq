@@ -1,5 +1,5 @@
 from channels.db import database_sync_to_async
-from idom import component, hooks, html
+from reactpy import component, hooks, html
 
 from conreq._core.sign_up.models import InviteCode
 

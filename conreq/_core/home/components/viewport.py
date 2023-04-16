@@ -1,5 +1,5 @@
-from idom import component, hooks
-from idom.html import div
+from reactpy import component, hooks
+from reactpy.html import div
 
 from conreq import config
 from conreq.types import HomepageState, HomepageStateContext, Viewport
