@@ -239,7 +239,7 @@ def update_settings(request):
             except ValidationError as error:
                 for field, message in dict(error).items():
                     response["success"] = False
-                    response["error_message"] = field + ": " + message[0]
+                    response["error_message"] = f"{field}: {message[0]}"
                     # Send a message to the user
                     return JsonResponse(response)
 
@@ -253,7 +253,6 @@ def update_settings(request):
                 )
                 return JsonResponse(response)
 
-        # Unknown exception occured
         except Exception:
             response["success"] = False
             response["error_message"] = "Unknown error!"

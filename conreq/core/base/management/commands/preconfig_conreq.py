@@ -93,7 +93,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def recursive_chown(path, uid, gid):
-        print('Recursively applying permissions to "' + path + '"')
+        print(f'Recursively applying permissions to "{path}"')
         new_uid = uid if uid != -1 else None
         new_gid = gid if gid != -1 else None
         if uid != -1 or gid != -1:

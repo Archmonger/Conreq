@@ -19,7 +19,7 @@ def add_filter_values(new_values, current_filter):
             current_filter[key.replace("overwrite:", "")] = value
 
         elif current_filter.__contains__(key):
-            current_filter[key] = current_filter[key] + "," + value
+            current_filter[key] = f"{current_filter[key]},{value}"
 
         else:
             current_filter[key] = value
@@ -38,14 +38,12 @@ def preprocess_filters(preset_filters, slug, add_values):
         if slug:
             processed_filters[slugify(key)] = preset_filters[key]
 
-    if processed_filters:
-        return processed_filters
-    return preset_filters
+    return processed_filters if processed_filters else preset_filters
 
 
 def combined_filters(filter_name=None, slug=False, add_values=()):
     """These filters are automatically merged into TV and Movies."""
-    today = datetime.today()
+    today = datetime.now()
     preset_filters = {
         "new and loved": {
             "sort_by": "vote_average.desc",
@@ -145,14 +143,12 @@ def combined_filters(filter_name=None, slug=False, add_values=()):
 
     preset_filters = preprocess_filters(preset_filters, slug, add_values)
 
-    if filter_name:
-        return preset_filters[filter_name]
-    return preset_filters
+    return preset_filters[filter_name] if filter_name else preset_filters
 
 
 def tv_filters(filter_name=None, slug=False, add_values=()):
     """Predefined categories shown for the TV filter modal."""
-    today = datetime.today()
+    today = datetime.now()
     preset_filters = {
         "currently ongoing": {
             "sort_by": "popularity.desc",
@@ -177,14 +173,12 @@ def tv_filters(filter_name=None, slug=False, add_values=()):
         **combined_filters(slug=slug, add_values=add_values),
     }
 
-    if filter_name:
-        return preset_filters[filter_name]
-    return preset_filters
+    return preset_filters[filter_name] if filter_name else preset_filters
 
 
 def movie_filters(filter_name=None, slug=False, add_values=()):
     """Predefined categories shown in the movie filter modal."""
-    today = datetime.today()
+    today = datetime.now()
     preset_filters = {
         "in theaters": {
             "sort_by": "popularity.desc",
@@ -204,6 +198,4 @@ def movie_filters(filter_name=None, slug=False, add_values=()):
         **combined_filters(slug=slug, add_values=add_values),
     }
 
-    if filter_name:
-        return preset_filters[filter_name]
-    return preset_filters
+    return preset_filters[filter_name] if filter_name else preset_filters

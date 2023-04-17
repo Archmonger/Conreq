@@ -27,7 +27,7 @@ class TmdbSearch(TmdbBase):
             query: A string containing a search term.
         """
         try:
-            results = self._remove_bad_content_types(
+            return self._remove_bad_content_types(
                 self._set_content_attributes(
                     None,
                     cache.handler(
@@ -43,8 +43,6 @@ class TmdbSearch(TmdbBase):
                     ),
                 )
             )
-            return results
-
         except Exception:
             log.handler(
                 "Searching for all failed!",
@@ -61,7 +59,7 @@ class TmdbSearch(TmdbBase):
             conreq_rank: Calculate conreq similarity ranking and sort the results (True/False)
         """
         try:
-            results = self._set_content_attributes(
+            return self._set_content_attributes(
                 "tv",
                 cache.handler(
                     "search tv",
@@ -75,8 +73,6 @@ class TmdbSearch(TmdbBase):
                     },
                 ),
             )
-            return results
-
         except Exception:
             log.handler(
                 "Searching for TV failed!",
@@ -92,7 +88,7 @@ class TmdbSearch(TmdbBase):
             query: A string containing a search term.
         """
         try:
-            results = self._set_content_attributes(
+            return self._set_content_attributes(
                 "movie",
                 cache.handler(
                     "search movie",
@@ -106,8 +102,6 @@ class TmdbSearch(TmdbBase):
                     },
                 ),
             )
-            return results
-
         except Exception:
             log.handler(
                 "Searching for movies failed!",

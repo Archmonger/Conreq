@@ -158,7 +158,7 @@ class TmdbDiscovery(TmdbBase):
         return self._set_content_attributes(
             "movie",
             self._multi_page_fetch(
-                "discover filter " + filter_name + " movie",
+                f"discover filter {filter_name} movie",
                 tmdb.Discover().movie,
                 page_number,
                 page_multiplier,
@@ -179,7 +179,7 @@ class TmdbDiscovery(TmdbBase):
         return self._set_content_attributes(
             "tv",
             self._multi_page_fetch(
-                "discover filter " + filter_name + " tv",
+                f"discover filter {filter_name} tv",
                 tmdb.Discover().tv,
                 page_number,
                 page_multiplier,
@@ -214,7 +214,7 @@ class TmdbDiscovery(TmdbBase):
                         thread_list.append(thread)
 
             # There wasn't enough results in recommended, get one similar page
-            if not recommend_page_one["total_pages"] > 1:
+            if recommend_page_one["total_pages"] <= 1:
                 thread = ReturnThread(
                     target=self.__similar,
                     args=[tmdb_id, content_type, 1],
@@ -257,7 +257,7 @@ class TmdbDiscovery(TmdbBase):
 
         except Exception:
             log.handler(
-                "Failed to obtain collection with ID " + str(collection_id) + "!",
+                f"Failed to obtain collection with ID {str(collection_id)}!",
                 log.ERROR,
                 _logger,
             )
@@ -290,11 +290,7 @@ class TmdbDiscovery(TmdbBase):
         # Searches for content based on TMDB ID
         try:
             # Obtain extras if needed
-            if obtain_extras:
-                extras = "reviews,keywords,videos,credits,images"
-            else:
-                extras = None
-
+            extras = "reviews,keywords,videos,credits,images" if obtain_extras else None
             # Obtain a movie by ID
             if content_type == "movie":
                 return self._set_content_attributes(
@@ -323,7 +319,7 @@ class TmdbDiscovery(TmdbBase):
 
             # Content Type was invalid
             log.handler(
-                "Invalid content_type " + str(content_type) + " in get_by_id().",
+                f"Invalid content_type {str(content_type)} in get_by_id().",
                 log.WARNING,
                 _logger,
             )
@@ -354,7 +350,7 @@ class TmdbDiscovery(TmdbBase):
             return results
         except Exception:
             log.handler(
-                "Failed to obtain content with TVDB ID " + str(tvdb_id) + "!",
+                f"Failed to obtain content with TVDB ID {str(tvdb_id)}!",
                 log.ERROR,
                 _logger,
             )
@@ -407,7 +403,7 @@ class TmdbDiscovery(TmdbBase):
                     content_type,
                     cache.handler(
                         "discover recommended movies",
-                        page_key=str(tmdb_id) + "page" + str(page_number),
+                        page_key=f"{str(tmdb_id)}page{str(page_number)}",
                         function=tmdb.Movies(tmdb_id).recommendations,
                         cache_duration=RECOMMENDED_CACHE_TIMEOUT,
                         kwargs={
@@ -422,7 +418,7 @@ class TmdbDiscovery(TmdbBase):
                     content_type,
                     cache.handler(
                         "discover recommended tv",
-                        page_key=str(tmdb_id) + "page" + str(page_number),
+                        page_key=f"{str(tmdb_id)}page{str(page_number)}",
                         function=tmdb.TV(tmdb_id).recommendations,
                         cache_duration=RECOMMENDED_CACHE_TIMEOUT,
                         kwargs={
@@ -434,7 +430,7 @@ class TmdbDiscovery(TmdbBase):
 
             # Content Type was invalid
             log.handler(
-                "Invalid content_type " + str(content_type) + " in recommend().",
+                f"Invalid content_type {str(content_type)} in recommend().",
                 log.WARNING,
                 _logger,
             )
@@ -461,7 +457,7 @@ class TmdbDiscovery(TmdbBase):
                     content_type,
                     cache.handler(
                         "discover similar movies",
-                        page_key=str(tmdb_id) + "page" + str(page_number),
+                        page_key=f"{str(tmdb_id)}page{str(page_number)}",
                         function=tmdb.Movies(tmdb_id).similar_movies,
                         cache_duration=SIMILAR_CACHE_TIMEOUT,
                         kwargs={
@@ -476,7 +472,7 @@ class TmdbDiscovery(TmdbBase):
                     content_type,
                     cache.handler(
                         "discover similar tv",
-                        page_key=str(tmdb_id) + "page" + str(page_number),
+                        page_key=f"{str(tmdb_id)}page{str(page_number)}",
                         function=tmdb.TV(tmdb_id).similar,
                         cache_duration=SIMILAR_CACHE_TIMEOUT,
                         kwargs={
@@ -488,7 +484,7 @@ class TmdbDiscovery(TmdbBase):
 
             # Content Type was invalid
             log.handler(
-                "Invalid content_type " + str(content_type) + " in similar().",
+                f"Invalid content_type {str(content_type)} in similar().",
                 log.WARNING,
                 _logger,
             )

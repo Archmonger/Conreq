@@ -51,7 +51,7 @@ class RadarrManager(ArrBase):
 
             # Couldn't find the movie
             log.handler(
-                "Movie with TMDB ID " + str(tmdb_id) + " not found within Radarr.",
+                f"Movie with TMDB ID {str(tmdb_id)} not found within Radarr.",
                 log.INFO,
                 _logger,
             )
@@ -112,23 +112,18 @@ class RadarrManager(ArrBase):
 
         """
         try:
-            # Search for a movie with a specific Radarr ID.
-            response = {
-                "movie_update_results": [],
-                "movie_search_results": [],
-            }
-
             # Get the movie
             movie = self.__radarr.get_movie_by_movie_id(radarr_id)
 
             # Set the movie as monitored
             movie["monitored"] = True
 
-            # Save the changes to Radarr
-            response["movie_update_results"] = self.__radarr.upd_movie(
-                movie, move_files=True
-            )
-
+            response = {
+                "movie_search_results": [],
+                "movie_update_results": self.__radarr.upd_movie(
+                    movie, move_files=True
+                ),
+            }
             # Search for the movie
             response["movie_search_results"] = self.__radarr.post_command(
                 name="MoviesSearch", movieIds=[radarr_id]
@@ -168,36 +163,37 @@ class RadarrManager(ArrBase):
 
     def check_radarr_defaults(self):
         """Will configure default root dirs and quality profiles (if unset)"""
-        if self.conreq_config.radarr_enabled:
-            radarr_movies_folder = self.conreq_config.radarr_movies_folder
-            radarr_anime_folder = self.conreq_config.radarr_anime_folder
-            radarr_movies_quality_profile = (
-                self.conreq_config.radarr_movies_quality_profile
-            )
-            radarr_anime_quality_profile = (
-                self.conreq_config.radarr_anime_quality_profile
-            )
+        if not self.conreq_config.radarr_enabled:
+            return
+        radarr_movies_folder = self.conreq_config.radarr_movies_folder
+        radarr_anime_folder = self.conreq_config.radarr_anime_folder
+        radarr_movies_quality_profile = (
+            self.conreq_config.radarr_movies_quality_profile
+        )
+        radarr_anime_quality_profile = (
+            self.conreq_config.radarr_anime_quality_profile
+        )
 
             # Root dirs
-            if not radarr_movies_folder or not radarr_anime_folder:
-                default_dir = self.radarr_root_dirs()[0]["id"]
-                if not radarr_movies_folder:
-                    self.conreq_config.radarr_movies_folder = default_dir
-                if not radarr_anime_folder:
-                    self.conreq_config.radarr_anime_folder = default_dir
+        if not radarr_movies_folder or not radarr_anime_folder:
+            default_dir = self.radarr_root_dirs()[0]["id"]
+        if not radarr_movies_folder:
+            self.conreq_config.radarr_movies_folder = default_dir
+        if not radarr_anime_folder:
+            self.conreq_config.radarr_anime_folder = default_dir
 
             # Qualtiy Profiles
-            if not radarr_movies_quality_profile or not radarr_anime_quality_profile:
-                default_profile = self.radarr_quality_profiles()[0]["id"]
-                if not radarr_movies_quality_profile:
-                    self.conreq_config.radarr_movies_quality_profile = default_profile
-                if not radarr_anime_quality_profile:
-                    self.conreq_config.radarr_anime_quality_profile = default_profile
+        if not radarr_movies_quality_profile or not radarr_anime_quality_profile:
+            default_profile = self.radarr_quality_profiles()[0]["id"]
+        if not radarr_movies_quality_profile:
+            self.conreq_config.radarr_movies_quality_profile = default_profile
+        if not radarr_anime_quality_profile:
+            self.conreq_config.radarr_anime_quality_profile = default_profile
 
-            # Save to DB
-            if self.conreq_config.tracker.changed():
-                self.conreq_config.clean_fields()
-                self.conreq_config.save()
+        # Save to DB
+        if self.conreq_config.tracker.changed():
+            self.conreq_config.clean_fields()
+            self.conreq_config.save()
 
     def radarr_root_dirs(self):
         """Returns the root dirs available within Radarr"""

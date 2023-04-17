@@ -23,7 +23,7 @@ def handler(msg: str, level: int, logger: Logger) -> None:
         level: Logging module log level (ex. logging.WARNING)
     """
     # Remove trailing and proceeding whitespace from the message
-    message = str(msg).rstrip("\n").rstrip().lstrip("\n").lstrip()
+    message = msg.rstrip("\n").rstrip().lstrip("\n").lstrip()
 
     # Log within a different stream depending on severity
     if level == DEBUG:

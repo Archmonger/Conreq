@@ -58,7 +58,7 @@ class SonarrManager(ArrBase):
 
             # Couldn't find the series
             log.handler(
-                "Series with TVDB ID " + str(tvdb_id) + " not found within Sonarr.",
+                f"Series with TVDB ID {str(tvdb_id)} not found within Sonarr.",
                 log.INFO,
                 _logger,
             )
@@ -139,15 +139,6 @@ class SonarrManager(ArrBase):
                 "episode_search_results"
         """
         try:
-            # Search for a show with a specific Sonarr ID.
-            response = {
-                "season_update_results": [],
-                "episode_update_results": [],
-                "show_search_results": [],
-                "season_search_results": [],
-                "episode_search_results": [],
-            }
-
             # Set the series as monitored
             series = self.__sonarr.get_series(sonarr_id)
             series["monitored"] = True
@@ -161,9 +152,13 @@ class SonarrManager(ArrBase):
                 elif not seasons and not episode_ids and season["seasonNumber"] != 0:
                     season["monitored"] = True
 
-            # Save the season changes to Sonarr
-            response["season_update_results"] = self.__sonarr.upd_series(series)
-
+            response = {
+                "episode_update_results": [],
+                "show_search_results": [],
+                "season_search_results": [],
+                "episode_search_results": [],
+                "season_update_results": self.__sonarr.upd_series(series),
+            }
             # Get the episodes
             episodes = self.__sonarr.get_episodes_by_series_id(sonarr_id)
             modified_episodes = []
@@ -171,19 +166,18 @@ class SonarrManager(ArrBase):
 
             for episode in episodes:
                 # Set every episode as monitored if "select all" was used
-                if not episode_ids and not seasons:
-                    if episode["seasonNumber"] != 0:
-                        episode["monitored"] = True
-                        modified_episodes.append(episode)
-
-                # Set episodes as monitored if they are contained within a requested season
-                elif episode["seasonNumber"] in seasons:
-                    if episode["seasonNumber"] != 0:
-                        episode["monitored"] = True
-                        modified_episodes.append(episode)
-
-                # Set specific episodes as monitored
-                elif episode_ids and episode["id"] in episode_ids:
+                if (
+                    not episode_ids
+                    and not seasons
+                    and episode["seasonNumber"] != 0
+                    or (episode_ids or seasons)
+                    and episode["seasonNumber"] in seasons
+                    and episode["seasonNumber"] != 0
+                    or (episode_ids or seasons)
+                    and episode["seasonNumber"] not in seasons
+                    and episode_ids
+                    and episode["id"] in episode_ids
+                ):
                     episode["monitored"] = True
                     modified_episodes.append(episode)
 
@@ -274,34 +268,35 @@ class SonarrManager(ArrBase):
 
     def check_sonarr_defaults(self):
         """Will configure default root dirs and quality profiles (if unset)"""
-        if self.conreq_config.sonarr_enabled:
-            sonarr_tv_folder = self.conreq_config.sonarr_tv_folder
-            sonarr_anime_folder = self.conreq_config.sonarr_anime_folder
-            sonarr_tv_quality_profile = self.conreq_config.sonarr_tv_quality_profile
-            sonarr_anime_quality_profile = (
-                self.conreq_config.sonarr_anime_quality_profile
-            )
+        if not self.conreq_config.sonarr_enabled:
+            return
+        sonarr_tv_folder = self.conreq_config.sonarr_tv_folder
+        sonarr_anime_folder = self.conreq_config.sonarr_anime_folder
+        sonarr_tv_quality_profile = self.conreq_config.sonarr_tv_quality_profile
+        sonarr_anime_quality_profile = (
+            self.conreq_config.sonarr_anime_quality_profile
+        )
 
             # Root dirs
-            if not sonarr_tv_folder or not sonarr_anime_folder:
-                default_dir = self.sonarr_root_dirs()[0]["id"]
-                if not sonarr_tv_folder:
-                    self.conreq_config.sonarr_tv_folder = default_dir
-                if not sonarr_anime_folder:
-                    self.conreq_config.sonarr_anime_folder = default_dir
+        if not sonarr_tv_folder or not sonarr_anime_folder:
+            default_dir = self.sonarr_root_dirs()[0]["id"]
+        if not sonarr_tv_folder:
+            self.conreq_config.sonarr_tv_folder = default_dir
+        if not sonarr_anime_folder:
+            self.conreq_config.sonarr_anime_folder = default_dir
 
             # Qualtiy Profiles
-            if not sonarr_tv_quality_profile or not sonarr_anime_quality_profile:
-                default_profile = self.sonarr_quality_profiles()[0]["id"]
-                if not sonarr_tv_quality_profile:
-                    self.conreq_config.sonarr_tv_quality_profile = default_profile
-                if not sonarr_anime_quality_profile:
-                    self.conreq_config.sonarr_anime_quality_profile = default_profile
+        if not sonarr_tv_quality_profile or not sonarr_anime_quality_profile:
+            default_profile = self.sonarr_quality_profiles()[0]["id"]
+        if not sonarr_tv_quality_profile:
+            self.conreq_config.sonarr_tv_quality_profile = default_profile
+        if not sonarr_anime_quality_profile:
+            self.conreq_config.sonarr_anime_quality_profile = default_profile
 
-            # Save to DB
-            if self.conreq_config.tracker.changed():
-                self.conreq_config.clean_fields()
-                self.conreq_config.save()
+        # Save to DB
+        if self.conreq_config.tracker.changed():
+            self.conreq_config.clean_fields()
+            self.conreq_config.save()
 
     def sonarr_root_dirs(self):
         """Returns the root dirs available within Sonarr"""

@@ -12,7 +12,7 @@ conreq_app_description = get_str_from_env("APP_DESCRIPTION", "Content Requesting
 @register.simple_tag
 def viewport_url(namespace):
     url = reverse(namespace)
-    return "#" + url[base_url_len:]
+    return f"#{url[base_url_len:]}"
 
 
 @register.simple_tag

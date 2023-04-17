@@ -50,16 +50,18 @@ def preprocess_tmdb_result(tmdb_result):
         tmdb_result["overview"] = None
     # Budget
     if tmdb_result.__contains__("budget") and isinstance(tmdb_result["budget"], int):
-        if not tmdb_result["budget"]:
-            tmdb_result["budget"] = None
-        else:
-            tmdb_result["budget"] = "{:,}".format(tmdb_result["budget"])
+        tmdb_result["budget"] = (
+            "{:,}".format(tmdb_result["budget"])
+            if tmdb_result["budget"]
+            else None
+        )
     # Revenue
     if tmdb_result.__contains__("revenue") and isinstance(tmdb_result["revenue"], int):
-        if not tmdb_result["revenue"]:
-            tmdb_result["revenue"] = None
-        else:
-            tmdb_result["revenue"] = "{:,}".format(tmdb_result["revenue"])
+        tmdb_result["revenue"] = (
+            "{:,}".format(tmdb_result["revenue"])
+            if tmdb_result["revenue"]
+            else None
+        )
     # Runtime
     if tmdb_result.__contains__("runtime") and isinstance(tmdb_result["runtime"], int):
         tmdb_result["runtime"] = "{:d}h {:d}m".format(
@@ -103,11 +105,10 @@ def preprocess_tmdb_result(tmdb_result):
         if not tmdb_result["videos"]["results"]:
             tmdb_result["videos"]["results"] = None
         else:
-            contains_youtube = False
-            for video in tmdb_result["videos"]["results"]:
-                if video["site"] == "YouTube":
-                    contains_youtube = True
-                    break
+            contains_youtube = any(
+                video["site"] == "YouTube"
+                for video in tmdb_result["videos"]["results"]
+            )
             if not contains_youtube:
                 tmdb_result["videos"]["results"] = None
     # Artwork (Images)

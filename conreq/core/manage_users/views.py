@@ -26,7 +26,7 @@ def manage_users(request):
             return JsonResponse(
                 {
                     "success": False,
-                    "message": "User " + original_username + " does not exist!",
+                    "message": f"User {original_username} does not exist!",
                 }
             )
 
@@ -58,11 +58,11 @@ def manage_users(request):
         # Fields only modifiable by an admin
         if request.user.is_staff:
             staff_status = request.POST.get("staff")
-            if staff_status == "on":
-                user.is_staff = True
-            elif staff_status == "off":
+            if staff_status == "off":
                 user.is_staff = False
 
+            elif staff_status == "on":
+                user.is_staff = True
         # Save the user
         try:
             user.clean_fields()

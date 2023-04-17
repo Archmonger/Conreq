@@ -35,7 +35,7 @@ def configure(request):
         user.is_staff = False
         if organizr_group == 0:
             user.is_superuser = True
-        if organizr_group in (0, 1):
+        if organizr_group in {0, 1}:
             user.is_staff = True
         if user.has_usable_password():
             user.set_unusable_password()
@@ -84,17 +84,15 @@ def landing(request):
     """The primary view that handles whether to take the user to
     login, splash, initialization, or homepage."""
 
-    config_needed = configure(request)
-
-    if config_needed:
+    if config_needed := configure(request):
         return config_needed
 
-    if not LANDING_TEMPLATE:
-        return redirect("base:homescreen")
-
-    # Render the landing page
-    return login_required(render)(
-        request, LANDING_TEMPLATE, {"base_url": BASE_URL, "debug": DEBUG}
+    return (
+        login_required(render)(
+            request, LANDING_TEMPLATE, {"base_url": BASE_URL, "debug": DEBUG}
+        )
+        if LANDING_TEMPLATE
+        else redirect("base:homescreen")
     )
 
 
@@ -118,7 +116,7 @@ def home(request):
         user.is_staff = False
         if organizr_group == 0:
             user.is_superuser = True
-        if organizr_group in (0, 1):
+        if organizr_group in {0, 1}:
             user.is_staff = True
         if user.has_usable_password():
             user.set_unusable_password()

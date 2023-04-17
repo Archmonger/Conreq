@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+
 import json
 import os
 import secrets
@@ -84,7 +85,7 @@ SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
 HTML_MINIFY = True
-WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
+WHITENOISE_MAX_AGE = 0 if DEBUG else 31536000
 COMPRESS_OUTPUT_DIR = "minified"
 COMPRESS_OFFLINE = True
 COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
@@ -132,21 +133,24 @@ PWA_APP_THEME_COLOR = "#3fcfa6"
 PWA_APP_BACKGROUND_COLOR = "#04110d"
 PWA_APP_ICONS = [
     {
-        "src": BASE_URL + "/static/icons/standard.png",
+        "src": f"{BASE_URL}/static/icons/standard.png",
         "sizes": "512x512",
         "purpose": "any",
     },
     {
-        "src": BASE_URL + "/static/icons/maskable.png",
+        "src": f"{BASE_URL}/static/icons/maskable.png",
         "sizes": "512x512",
         "purpose": "maskable",
     },
 ]
 PWA_APP_ICONS_APPLE = [
-    {"src": BASE_URL + "/static/icons/apple-touch-icon.png", "sizes": "180x180"}
+    {
+        "src": f"{BASE_URL}/static/icons/apple-touch-icon.png",
+        "sizes": "180x180",
+    }
 ]
 PWA_APP_SPLASH_SCREEN = []
-PWA_APP_START_URL = BASE_URL + "/"
+PWA_APP_START_URL = f"{BASE_URL}/"
 PWA_APP_SCOPE = PWA_APP_START_URL
 PWA_APP_DEBUG_MODE = DEBUG
 
@@ -417,7 +421,7 @@ USE_TZ = True
 
 # Static Files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(DATA_DIR, "collectstatic")
-STATIC_URL = BASE_URL + "/static/"
+STATIC_URL = f"{BASE_URL}/static/"
 STATICFILES_DIRS = [
     USER_STATICFILES_DIR,
 ]
