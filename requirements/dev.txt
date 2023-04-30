@@ -9,3 +9,4 @@ rope
 twine
 types-requests
 types-tzlocal
+reactpy-flake8
