@@ -1,0 +1,41 @@
+.modal .banner {
+	background: #995f00;
+	text-align: center;
+	padding: 5px;
+	margin: 15px;
+	margin-bottom: 0;
+	border-radius: 4px;
+}
+
+.modal .carousel {
+	margin: 15px 0;
+	background: rgb(0 0 0 / 25%);
+}
+
+.modal .carousel-item {
+	height: 300px;
+}
+
+.modal .carousel-item img {
+	height: 100%;
+	margin: auto;
+}
+
+.modal .description {
+	margin: 30px 15px 15px 15px;
+	background: rgb(0 0 0 / 25%);
+	border-radius: 8px;
+	padding: 15px;
+}
+
+.modal .info-table-container {
+	margin: 15px;
+	padding: 15px;
+	background: rgb(0 0 0 / 25%);
+	border-radius: 8px;
+	display: inline-block;
+}
+
+.modal .info-table th {
+	padding-right: 25px;
+}

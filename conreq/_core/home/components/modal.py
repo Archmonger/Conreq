@@ -18,7 +18,7 @@ MODAL_DIALOG = {"class_name": "modal-dialog modal-dialog-centered modal-lg"}
 MODAL_CONTENT = {"class_name": "modal-content"}
 MODAL_HEADER = {"class_name": "modal-header"}
 MODAL_HEADER_BTN_CONTAINER = {
-    "class_name": "modal-header-btn-container",
+    "class_name": "modal-header-btns",
     "data-bs-dismiss": "modal",
     "aria-label": "Close",
 }

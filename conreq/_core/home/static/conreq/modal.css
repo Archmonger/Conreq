@@ -8,6 +8,13 @@
 	background: #3f3f3f;
 }
 
+@media (min-width: 1200px) {
+	.modal-lg,
+	.modal-xl {
+		--bs-modal-width: 1000px;
+	}
+}
+
 /* Modal Body */
 
 .modal-body {
@@ -26,16 +33,6 @@
 	min-height: 65px;
 }
 
-.modal .text-input-container {
-	background: rgb(255 255 255 / 0.08);
-	color: rgb(255 255 255 / 0.75);
-}
-
-.modal .text-input-container:focus-within {
-	background: #fff;
-	color: #252525;
-}
-
 /* Modal Header */
 
 .modal-header {
@@ -45,23 +42,17 @@
 	flex-direction: row-reverse;
 }
 
-.modal-header.mini {
-	align-items: flex-end;
-	justify-content: flex-end;
-	flex-direction: row;
-}
-
 .modal-header .fas {
 	color: rgba(255, 255, 255, 0.7);
 	font-size: 20px;
 	transition: color 0.3s ease;
 }
 
-.modal-header-btn-container {
+.modal-header-btns {
 	margin-left: 12px;
 }
 
-.modal-header-btn-container i:before {
+.modal-header-btns i:before {
 	margin-left: 13px;
 }
 
@@ -80,252 +71,4 @@
 
 .modal-footer {
 	border: none;
-}
-
-/* Seasons/Episode Modal Styling */
-
-.row-container {
-	padding: 0px 15px;
-	display: grid;
-	grid-template-columns: 30px auto 30px;
-}
-
-.row-container > * {
-	padding: 15px 0px;
-}
-
-.row-container .fa-angle-down {
-	grid-column: 3;
-	color: rgba(255, 255, 255, 0.7);
-	height: auto;
-	width: 100%;
-	text-align: center;
-	font-size: 20px;
-}
-
-.row-container .fa-angle-down:hover {
-	color: #fff;
-}
-
-.row-container .fa-angle-down:not(.collapsed) {
-	transform: rotate(180deg);
-}
-
-.row-container .row-title {
-	font-weight: 700;
-	color: rgba(255, 255, 255, 0.7);
-	line-height: 24px;
-	display: flex;
-	align-items: center;
-	height: 24px;
-}
-
-.row-container .row-collapse-icon-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.suboption-row-container {
-	padding: 7px 15px;
-	display: grid;
-	grid-template-columns: 30px auto;
-	color: rgba(255, 255, 255, 0.5);
-}
-
-.suboption-row-container > .checkbox-container {
-	grid-column: 1;
-}
-
-.suboption-row-container .suboption-title-container {
-	color: rgba(255, 255, 255, 0.5);
-	grid-column: 2;
-	line-height: 20px;
-	display: flex;
-	align-items: center;
-	height: 20px;
-}
-
-.suboption-row-container
-	.suboption-title-container
-	> *:not(.modal-dot-container) {
-	display: inline-block;
-	display: -webkit-inline-box;
-	margin-right: 5px;
-}
-
-.all-suboptions-container {
-	background: rgba(255, 255, 255, 0.03);
-}
-
-.checkbox-container,
-.row-title-container {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	width: -webkit-fit-content;
-	width: -moz-fit-content;
-	width: fit-content;
-}
-
-.modal-dot {
-	width: 5px;
-	height: 5px;
-	border-radius: 50%;
-}
-
-.modal-dot-container {
-	padding-left: 5px;
-	padding-right: 10px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-}
-
-/* Content Preview Modal */
-.modal-content.content-preview {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.modal-content.content-preview .poster-container {
-	min-width: 35%;
-	padding: 25px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.modal-content.content-preview .poster {
-	border-radius: 6px;
-	width: 100%;
-	-o-object-fit: contain;
-	object-fit: contain;
-	background: var(--poster-bg-color);
-}
-
-.modal-content.content-preview .grid-modal-right {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	min-width: 65%;
-}
-
-.modal-content.content-preview .modal-header {
-	height: -webkit-min-content;
-	height: -moz-min-content;
-	height: min-content;
-}
-
-.modal-content.content-preview .modal-footer {
-	height: -webkit-min-content;
-	height: -moz-min-content;
-	height: min-content;
-}
-
-.modal-content.content-preview .info {
-	height: auto;
-	margin-right: 25px;
-}
-
-.modal-content.content-preview .title {
-	font-size: 24px;
-	color: rgba(255, 255, 255, 0.7);
-	margin-bottom: 10px;
-}
-
-.modal-content.content-preview .description {
-	color: rgba(255, 255, 255, 0.7);
-	font-size: 16px;
-	margin-top: 10px;
-	padding-right: 10px;
-	line-height: 1.25;
-	min-height: 150px;
-	max-height: 250px;
-	overflow-y: auto;
-}
-
-.mini-info-bar {
-	display: grid;
-	grid-template-columns: repeat(2, auto);
-	grid-template-rows: -webkit-min-content -webkit-min-content -webkit-min-content;
-	grid-template-rows: min-content min-content min-content;
-	background: #252525;
-	padding: 13px;
-	padding-top: 6px;
-	padding-left: 8px;
-	border-radius: 5px;
-}
-
-.modal-info-block {
-	color: rgba(255, 255, 255, 0.7);
-	margin-top: 7px;
-	margin-left: 5px;
-	font-size: 14.5px;
-}
-
-.modal-info {
-	display: inline;
-}
-
-.modal-info.bold {
-	margin-right: 5px;
-}
-
-/* Filter Modal */
-.modal-body.filter .simple-filter-container {
-	padding: 20px;
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-	grid-auto-rows: minmax(0, 1fr);
-}
-
-.modal-body.filter .simple-filter-toggle-container {
-	padding: 20px;
-	padding-bottom: 0;
-	display: flex;
-	justify-content: center;
-}
-
-.modal-body .simple-filter-btn {
-	font-size: 22px;
-	font-weight: 600;
-	padding: 15px 30px;
-	background: #00695c;
-	border-radius: 4px;
-	margin: 6px;
-	transition: background 0.3s ease;
-}
-
-.modal-body .simple-filter-btn:hover {
-	background: #009688;
-}
-
-/* Manage User */
-.modal-body.manage-user {
-	padding: 15px;
-}
-.manage-user-input {
-	padding-bottom: 20px;
-}
-
-/* Modals */
-@media only screen and (max-width: 991px) {
-	.modal-body.filter .simple-filter-container {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	.modal-body.filter .simple-filter-toggle-container {
-		flex-direction: column;
-		margin: 0 6px;
-	}
-	.modal-body.filter .simple-filter-toggle-container > *:not(:last-child) {
-		margin-bottom: 10px;
-	}
-	.modal-body .simple-filter-btn {
-		padding: 15px 25px;
-		width: 100%;
-	}
 }

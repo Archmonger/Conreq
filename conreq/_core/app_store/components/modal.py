@@ -1,6 +1,9 @@
-from reactpy import component, html
+from typing import Sequence
 
-from conreq._core.app_store.models import AppPackage
+from reactpy import component, html
+from reactpy_django.components import django_css
+
+from conreq._core.app_store.models import AppPackage, DevelopmentStage, Screenshot
 from conreq._core.home.components.modal import (
     modal_body,
     modal_content,
@@ -12,44 +15,156 @@ from conreq._core.home.components.modal import (
 
 @component
 def app_modal(app: AppPackage):
-    app_details = (
-        "Package Details",
-        f"Development Stage: {app.development_stage}",
-        f"Subcategories: {app.subcategories.all()}",
-        f"Related Apps: {app.related_apps.all()}",
-        "Ownership Details",
-        f"Author: {app.author}",
-        f"Author URL: {app.author_url}",
-        f"Contact Email: {app.contact_email}",
-        f"Contact Link: {app.contact_link}",
-        f"PyPI URL: {app.pypi_url}",
-        f"Repository URL: {app.repository_url}",
-        f"Homepage URL: {app.homepage_url}",
-        f"Support URL: {app.support_url}",
-        f"Donation URL: {app.donation_url}",
-        f"License Type: {app.license_type}",
-        "Compatibility",
-        f"Supported Platforms: {app.sys_platforms}",
-        f"Touch Compatible: {app.touch_compatible}",
-        f"Mobile Compatible: {app.mobile_compatible}",
-        f"Minimum Package Version: {app.min_version}",
-        f"Conreq Minimum Version: {app.conreq_min_version}",
-        f"Conreq Maximum Version: {app.conreq_max_version}",
-        f"Asynchronous Support: {app.asynchronous}",
-        f"Required Apps: {app.required_apps.all()}",
-        f"Incompatible Apps: {app.incompatible_apps.all()}",
-    )
+    package_details = {
+        "Development Stage": dict(DevelopmentStage.choices).get(
+            app.development_stage, ""
+        ),
+        "Subcategories": ", ".join(
+            [str(subcat.name) for subcat in app.subcategories.all()]
+        ),
+        "Author": text_to_link(app.author_url, app.author)
+        if app.author_url
+        else app.author,
+        "Contact Email": text_to_link(f"mailto:{app.contact_email}", app.contact_email)
+        if app.contact_email
+        else "",
+        "Contact Link": text_to_link(app.contact_link),
+        "PyPI URL": text_to_link(app.pypi_url),
+        "Repository URL": text_to_link(app.repository_url),
+        "Homepage URL": text_to_link(app.homepage_url),
+        "Support URL": text_to_link(app.support_url),
+        "Donation URL": text_to_link(app.donation_url),
+        "License Type": app.license_type,
+    }
+    compatibility = {
+        "Supported Platforms": app.sys_platforms,
+        "Touch Compatible": app.touch_compatible,
+        "Mobile Compatible": app.mobile_compatible,
+        "Minimum Package Version": app.min_version,
+        "Conreq Minimum Version": app.conreq_min_version,
+        "Conreq Maximum Version": app.conreq_max_version,
+        "Asynchronous Support": app.asynchronous,
+        "Required Apps": app.required_apps.all(),
+        "Incompatible Apps": app.incompatible_apps.all(),
+        "Related Apps": app.related_apps.all(),
+    }
 
     return modal_dialog(
         modal_content(
             modal_head(title=app.name),
             modal_body(
-                html.div(app.banner_message),
-                html.div(f"Screenshots: {app.screenshot_set.all()}"),
-                html.div(app.long_description),
-                html.div(html.button("show more")),
-                [html.p({"key": app_str}, app_str) for app_str in app_details],
+                html.div(
+                    {"class_name": "banner"}, "This app has not been developed yet!"
+                )
+                if not app.development_stage
+                or app.development_stage == DevelopmentStage.PLANNING
+                else "",
+                html.div({"class_name": "banner"}, app.banner_message)
+                if app.banner_message
+                else "",
+                screenshot_carousel(app.screenshot_set.all())
+                if app.screenshot_set.all()
+                else "",
+                html.p(
+                    {"class_name": "description"},
+                    html.h5("Description"),
+                    app.long_description,
+                )
+                if app.long_description
+                else "",
+                info_table("Package Details", package_details),
+                info_table("Compatibility", compatibility),
             ),
-            modal_footer(),
-        )
+            modal_footer(
+                html.button({"class_name": "btn btn-primary"}, "Install")
+                if app.installable
+                else ""
+            ),
+        ),
+        django_css("conreq/app_modal.css"),
     )
+
+
+@component
+def info_table(title: str, info: dict):
+    return html.div(
+        {"class_name": "info-table-container"},
+        html.h5({"class_name": "info-table-title"}, title),
+        html.table(
+            {"class_name": "info-table"},
+            html.tbody(
+                [
+                    html.tr(
+                        {"key": section_name},
+                        html.th(section_name),
+                        html.td(value),
+                    )
+                    for section_name, value in info.items()
+                    if value
+                ]
+            ),
+        ),
+    )
+
+
+@component
+def screenshot_carousel(screenshots: Sequence[Screenshot]):
+    """Converts a list of screenshots into a Bootstrap 5 carousel with indicators  and controls."""
+
+    return html.div(
+        {
+            "id": "screenshot-carousel",
+            "class_name": "carousel slide carousel-fade",
+            "data-bs-ride": "carousel",
+        },
+        html.div(
+            {"class_name": "carousel-indicators"},
+            [
+                html.button(
+                    {
+                        "type": "button",
+                        "data-bs-target": "#screenshot-carousel",
+                        "data-bs-slide-to": str(i),
+                        "class_name": "active" if i == 0 else "",
+                        "aria-current": "true" if i == 0 else "false",
+                        "aria-label": f"Slide {i + 1}",
+                        "key": i,
+                    },
+                )
+                for i in range(len(screenshots))
+            ],
+        ),
+        html.div(
+            {"class_name": "carousel-inner"},
+            [
+                html.div(
+                    {
+                        "class_name": "carousel-item active"
+                        if i == 0
+                        else "carousel-item",
+                        "key": str(screenshot.uuid),
+                        "data-bs-interval": 10000,
+                    },
+                    html.img(
+                        {
+                            "src": screenshot.image.url,
+                            "class_name": "d-block",
+                            "alt": screenshot.description,
+                        }
+                    ),
+                    html.div(
+                        {"class_name": "carousel-caption d-none d-md-block"},
+                        html.h5(screenshot.title),
+                        html.p(screenshot.description),
+                    ),
+                )
+                for i, screenshot in enumerate(screenshots)
+            ],
+        ),
+    )
+
+
+def text_to_link(link_str: str, text_str: str = ""):
+    """Converts a string into a link if possible, otherwise return None."""
+
+    return html.a({"href": link_str}, text_str or link_str) if link_str else None

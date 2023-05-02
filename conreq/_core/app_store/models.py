@@ -142,7 +142,6 @@ class AppPackage(models.Model):
         blank=True,
     )
     subcategories = models.ManyToManyField(Subcategory)
-    related_apps = models.ManyToManyField("self", blank=True)
 
     # Ownership Info
     author = models.CharField(blank=True, max_length=50)
@@ -187,6 +186,7 @@ class AppPackage(models.Model):
     )
     required_apps = models.ManyToManyField("self", blank=True)
     incompatible_apps = models.ManyToManyField("self", blank=True)
+    related_apps = models.ManyToManyField("self", blank=True)
 
     # Installable property that checks the development_stage, sys_platforms, and conreq_min_version fields
     # to determine if the app is installable on the current system.
