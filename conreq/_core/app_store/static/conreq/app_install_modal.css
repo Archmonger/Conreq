@@ -1,0 +1,27 @@
+.confirm {
+	margin: 15px;
+}
+
+.terminal {
+	font-family: monospace;
+	margin: 15px;
+	padding: 15px;
+	border-radius: 8px;
+	background: black;
+	min-height: 300px;
+	height: 300px;
+	max-height: 300px;
+	line-height: 1.35;
+	white-space: nowrap;
+	overflow: scroll;
+	-ms-scroll-snap-type: y proximity;
+	scroll-snap-type: y proximity;
+}
+
+.terminal p {
+	margin-bottom: 0;
+}
+
+.terminal p:last-child {
+	scroll-snap-align: end;
+}

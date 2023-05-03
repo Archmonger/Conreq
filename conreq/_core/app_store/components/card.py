@@ -6,7 +6,7 @@ from reactpy.html import a, button, div, h5
 from reactpy_django.hooks import use_query
 from reactpy_django.types import QueryOptions
 
-from conreq._core.app_store.components.modal import app_modal
+from conreq._core.app_store.components.modal import app_details_modal
 from conreq._core.app_store.models import AppPackage, Subcategory
 from conreq.types import ModalState, ModalStateContext
 
@@ -14,7 +14,7 @@ from conreq.types import ModalState, ModalStateContext
 def details_modal_event(modal_state: ModalState, app: AppPackage):
     async def event(_):
         modal_state.show = True
-        modal_state.modal_intent = app_modal
+        modal_state.modal_intent = app_details_modal
         modal_state.modal_args = [app]
         modal_state.set_state(modal_state)
 

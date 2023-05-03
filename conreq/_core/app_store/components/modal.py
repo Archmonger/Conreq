@@ -1,6 +1,10 @@
-from typing import Sequence
+import asyncio
+import subprocess
+import threading
+import time
+from typing import Sequence, Union, cast
 
-from reactpy import component, html
+from reactpy import component, hooks, html
 from reactpy_django.components import django_css
 
 from conreq._core.app_store.models import AppPackage, DevelopmentStage, Screenshot
@@ -11,10 +15,18 @@ from conreq._core.home.components.modal import (
     modal_footer,
     modal_head,
 )
+from conreq.types import ModalStateContext
 
 
 @component
-def app_modal(app: AppPackage):
+def app_details_modal(app: AppPackage):
+    modal_state = hooks.use_context(ModalStateContext)
+
+    async def install_click(_):
+        modal_state.modal_intent = app_install_modal
+        modal_state.modal_args = [app]
+        modal_state.set_state(modal_state)
+
     package_details = {
         "Development Stage": dict(DevelopmentStage.choices).get(
             app.development_stage, ""
@@ -76,12 +88,15 @@ def app_modal(app: AppPackage):
                 info_table("Compatibility", compatibility),
             ),
             modal_footer(
-                html.button({"class_name": "btn btn-primary"}, "Install")
+                html.button(
+                    {"class_name": "btn btn-primary", "on_click": install_click},
+                    "Install",
+                )
                 if app.installable
                 else ""
             ),
         ),
-        django_css("conreq/app_modal.css"),
+        django_css("conreq/app_details_modal.css"),
     )
 
 
@@ -168,3 +183,144 @@ def text_to_link(link_str: str, text_str: str = ""):
     """Converts a string into a link if possible, otherwise return None."""
 
     return html.a({"href": link_str}, text_str or link_str) if link_str else None
+
+
+@component
+def app_install_modal(app: AppPackage):
+    cmd = ["pip", "install", app.pkg_name, "--disable-pip-version-check"]
+    confirmed, set_confirmed = hooks.use_state(False)
+    cancelled, set_cancelled = hooks.use_state(False)
+    proc, set_proc = hooks.use_state(cast(Union[subprocess.Popen, None], None))
+    stdout, set_stdout = hooks.use_state(html.p(" ".join(cmd)))
+    retcode, set_retcode = hooks.use_state(cast(Union[int, None], None))
+    modal_state = hooks.use_context(ModalStateContext)
+
+    async def close_modal(_):
+        print("close")
+        modal_state.show = False
+        modal_state.set_state(modal_state)
+
+    @hooks.use_effect
+    def install_app():
+        if confirmed and not proc:
+            set_proc(
+                subprocess.Popen(
+                    cmd,
+                    shell=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                )
+            )
+
+        if proc and cancelled:
+            proc.kill()
+
+    @hooks.use_effect(dependencies=[proc, stdout])
+    async def update_stdout():
+        if not proc:
+            return
+
+        def thread_func():
+            if not proc:
+                return
+            if proc.poll() is None:
+                if not proc.stdout:
+                    set_stdout(
+                        html.p("An error has occurred. Unable to read output shell.")
+                    )
+                    return
+                set_stdout(
+                    html._(stdout, html.p(proc.stdout.readline().decode("utf-8")))
+                )
+
+        threading.Thread(target=thread_func, daemon=True).start()
+
+    @hooks.use_effect(dependencies=[proc])
+    async def update_retcode():
+        if not proc:
+            return
+
+        def thread_func():
+            if not proc:
+                return
+            proc.wait()
+            set_retcode(proc.returncode)
+
+        threading.Thread(target=thread_func, daemon=True).start()
+
+    return modal_dialog(
+        modal_content(
+            modal_head(title=f"Installing: {app.name}"),
+            modal_body(
+                html.div(
+                    {"class_name": "terminal", "key": "terminal"},
+                    stdout,
+                    [
+                        html.p(
+                            {"key": "success"},
+                            "Success. A restart is required to use this app.",
+                        )
+                        if retcode == 0
+                        else html.p(
+                            {"key": "failure"},
+                            "An error occurred during installation.",
+                        )
+                    ]
+                    if retcode is not None
+                    else "",
+                )
+                if confirmed
+                else html.div(
+                    {"class_name": "confirm", "key": "confirm"},
+                    "Are you sure you want to install ",
+                    html.b(app.name),
+                    "?",
+                )
+            ),
+            modal_footer(
+                [
+                    html.button(
+                        {
+                            "class_name": "btn btn-secondary",
+                            "disabled": True,
+                            "key": "restart",
+                        },
+                        "Restart Required",
+                    )
+                    if retcode == 0
+                    else ""
+                ]
+                if retcode is not None
+                else html.button(
+                    {
+                        "class_name": "btn btn-danger",
+                        "on_click": lambda _: set_cancelled(True),
+                        "key": "cancel",
+                    },
+                    "Cancel",
+                )
+                if confirmed
+                else html._(
+                    html.button(
+                        {
+                            "class_name": "btn btn-primary",
+                            "on_click": lambda _: set_confirmed(True),
+                            "key": "yes",
+                        },
+                        "Yes",
+                    ),
+                    html.button(
+                        {
+                            "class_name": "btn btn-danger",
+                            "data-bs-dismiss": "modal",
+                            "aria-label": "Close",
+                            "on_click": close_modal,
+                            "key": "no",
+                        },
+                        "No",
+                    ),
+                ),
+            ),
+        ),
+        django_css("conreq/app_install_modal.css"),
+    )
