@@ -88,13 +88,8 @@ class Command(BaseCommand):
         for process in config.startup.processes:
             process.start()
 
-        # Run the production webserver
-        if not DEBUG:
-            self._run_webserver()
-
-        # Run the development webserver
-        if DEBUG:
-            call_command("runserver", self.bind)
+        # Run the webserver
+        self._run_webserver()
 
     def _run_webserver(self):
         # pylint: disable=import-outside-toplevel

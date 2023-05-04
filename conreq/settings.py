@@ -37,9 +37,8 @@ from conreq.utils.packages import find_packages
 django_stubs_ext.monkeypatch()
 
 
-# Project Directories
+# // DIRECTORY STRUCTURE //
 ROOT_DIR = Path(__file__).resolve().parent.parent
-INTERNAL_DIR = ROOT_DIR / "conreq" / "internal"
 DATA_DIR: Path = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False, return_type=Path)
 DATABASE_DIR = DATA_DIR / "databases"
 PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
@@ -66,14 +65,11 @@ MAKE_DIRS: list[Path] = [
     LOG_DIR,
     PID_DIR,
 ]
-if not DATA_DIR.parent.exists:
-    raise OSError
+if not DATA_DIR.parent.exists():
+    raise OSError(f"Parent directory of DATA_DIR ({DATA_DIR.parent}) does not exist.")
 for directory in MAKE_DIRS:
     if not directory.exists():
         directory.mkdir(parents=True)
-
-
-# App Template Diretories
 APP_TEMPLATE_DIR = ROOT_DIR / "conreq" / "templates"
 PACKAGE_TEMPLATE = APP_TEMPLATE_DIR / "package"
 PACKAGE_SLIM_TEMPLATE = APP_TEMPLATE_DIR / "package_slim"
@@ -81,56 +77,21 @@ APP_TEMPLATE = APP_TEMPLATE_DIR / "app"
 APP_SLIM_TEMPLATE = APP_TEMPLATE_DIR / "app_slim"
 
 
-# Environment Variables
+# // PROJECT SETTINGS //
 DOTENV_FILE: Path = DATA_DIR / "settings.env"
 if not DOTENV_FILE.exists():
     with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
         pass
 DEBUG = get_debug_mode()
 WEBSERVER_WORKERS = get_env("WEBSERVER_WORKERS", 1, return_type=int)
-
-
-# Basic Configuration
 with (ROOT_DIR / "VERSION").open() as f:
     CONREQ_VERSION = f.read().strip()
 APP_STORE_VERSION = get_env("APP_STORE_VERSION", 1, return_type=int)
+ROOT_URLCONF = "conreq.urls"
+ASGI_APPLICATION = "conreq.asgi.application"
 
 
-# Python Packages
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-SILKY_AUTHENTICATION = True
-SILKY_AUTHORISATION = True
-SILKY_PYTHON_PROFILER = True
-SILKY_PYTHON_PROFILER_BINARY = True
-SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
-SILKY_ANALYZE_QUERIES = get_database_engine() != "SQLITE3"
-SILKY_MAX_RECORDED_REQUESTS = 1000
-WHITENOISE_MAX_AGE = 0 if DEBUG else 31536000
-COMPRESS_OUTPUT_DIR = "minified"
-COMPRESS_OFFLINE = True
-COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
-COMPRESS_FILTERS = {
-    "css": ["compressor.filters.cssmin.rCSSMinFilter"],
-    "js": ["compressor.filters.jsmin.JSMinFilter"],
-}
-HUEY_FILENAME = DATABASE_DIR / "background_tasks.sqlite3"
-HUEY = {
-    "name": "huey",  # DB table name
-    "huey_class": "conreq._core.database.SqliteHuey",  # Huey implementation to use
-    "filename": HUEY_FILENAME,  # Sqlite filename
-    "immediate": False,  # If True, run tasks synchronously
-    "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
-    "consumer": {
-        "workers": WEBSERVER_WORKERS * 5,  # TODO: Add setting to configure this
-    },
-}
-FILE_UPLOAD_TEMP_DIR = TEMP_DIR
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
-JAZZMIN_SETTINGS = {"custom_css": "conreq/jazzmin.css"}
-
-
-# Logging
+# // LOGGING //
 _logger = logging.getLogger(__name__)
 CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
 ACCESS_LOG_FILE = LOG_DIR / "access.log"
@@ -183,7 +144,7 @@ else:
 logging_config(LOGGING)
 
 
-# Security Settings
+# // SECURITY SETTINGS //
 SESSION_COOKIE_AGE = get_env("SESSION_COOKIE_AGE", Seconds.month * 3, return_type=int)
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = get_env(
@@ -217,7 +178,7 @@ else:
 SECURE_BROWSER_XSS_FILTER = True
 
 
-# API Settings
+# // API SETTINGS //
 REST_FRAMEWORK: dict[str, Any] = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
@@ -258,7 +219,7 @@ SPECTACULAR_SETTINGS = {  # Use Swagger UI for API endpoints
 }
 
 
-# Encryption
+# // ENCRYPTION //
 FIELD_ENCRYPTION_KEYS = [get_env("DB_ENCRYPTION_KEY")]
 SECRET_KEY = get_env("WEB_ENCRYPTION_KEY")
 if not FIELD_ENCRYPTION_KEYS[0]:
@@ -268,7 +229,7 @@ if not SECRET_KEY:
     SECRET_KEY = set_env("WEB_ENCRYPTION_KEY", get_random_secret_key())[1]
 
 
-# Django Apps & Middleware
+# // DJANGO APPS AND MIDDLEWARE //
 INSTALLED_APPS = [
     *(
         [
@@ -343,28 +304,40 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
 ]
-
-
-# URL Routing and Page Rendering
-ROOT_URLCONF = "conreq.urls"
-ASGI_APPLICATION = "conreq.asgi.application"
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+SILKY_AUTHENTICATION = True
+SILKY_AUTHORISATION = True
+SILKY_PYTHON_PROFILER = True
+SILKY_PYTHON_PROFILER_BINARY = True
+SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
+SILKY_ANALYZE_QUERIES = get_database_engine() != "SQLITE3"
+SILKY_MAX_RECORDED_REQUESTS = 1000
+WHITENOISE_MAX_AGE = 0 if DEBUG else 31536000
+COMPRESS_OUTPUT_DIR = "minified"
+COMPRESS_OFFLINE = True
+COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
+COMPRESS_FILTERS = {
+    "css": ["compressor.filters.cssmin.rCSSMinFilter"],
+    "js": ["compressor.filters.jsmin.JSMinFilter"],
+}
+HUEY_FILENAME = DATABASE_DIR / "background_tasks.sqlite3"
+HUEY = {
+    "name": "huey",  # DB table name
+    "huey_class": "conreq._core.database.SqliteHuey",  # Huey implementation to use
+    "filename": HUEY_FILENAME,  # Sqlite filename
+    "immediate": False,  # If True, run tasks synchronously
+    "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
+    "consumer": {
+        "workers": WEBSERVER_WORKERS * 5,  # TODO: Add setting to configure this
     },
-]
+}
+FILE_UPLOAD_TEMP_DIR = TEMP_DIR
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+JAZZMIN_SETTINGS = {"custom_css": "conreq/jazzmin.css"}
 
 
-# Databases and Caches
+# // DATA STORAGE //
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -391,7 +364,7 @@ BACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M"
 BACKUP_COMPRESSION = "xz"
 
 
-# User Authentication
+# // USER AUTHENTICATION //
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -404,19 +377,19 @@ LOGIN_REDIRECT_URL = "landing"
 LOGIN_URL = "sign_in"
 
 
-# Cookie Names
+# // COOKIES //
 SESSION_COOKIE_NAME = "conreq_sessionidd"
 CSRF_COOKIE_NAME = "conreq_csrftoken"
 LANGUAGE_COOKIE_NAME = "conreq_language"
 
 
-# Internationalization
+# // INTERNATIONALIZATION //
 LANGUAGE_CODE = "en-US"
 TIME_ZONE = get_localzone_name()
 USE_TZ = True
 
 
-# Static Files (CSS, JavaScript, Images)
+# // STATIC FILES //
 STATIC_ROOT = DATA_DIR / "static_processed"
 STATIC_URL = f"{get_base_url()}static/"
 STATICFILES_DIRS = [
@@ -432,20 +405,31 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = "files/"
 if get_base_url(empty_if_unset=True):
     MEDIA_URL = get_base_url(append_slash=False) + MEDIA_URL
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
 
 
-# Email
+# // EMAIL //
 EMAIL_BACKEND = "conreq.app.services.email.EmailBackend"
 EMAIL_SUBJECT_PREFIX = ""
 
 
-# Add packages folder to Python's path
-sys.path.append(str(PACKAGES_DEV_DIR))
-sys.path.append(str(PACKAGES_DIR))
-
-
-# Install user apps
+# // USER INSTALLED APPS //
 if not get_safe_mode():
+    sys.path.insert(0, str(PACKAGES_DEV_DIR))
+    sys.path.insert(0, str(PACKAGES_DIR))
     user_apps = find_apps()
     INSTALLED_APPS += user_apps
     _logger.info("Booting with the following apps:\n+ " + "\n+ ".join(user_apps))
@@ -460,20 +444,17 @@ for package in packages:
     except Exception as exception:
         _logger.error('%s startup script has failed due to "%s"!', package, exception)
 
-
 # Execute settings scripts from Conreq Apps
 external_settings = list(glob(str(PACKAGES_DIR / "*" / "django-settings.py"))) + list(
     glob(str(PACKAGES_DEV_DIR / "*" / "django-settings.py"), recursive=True)
 )
 include(*external_settings)
 
-
 # Add conditional apps
 if DEBUG:
     INSTALLED_APPS.extend(("silk", "drf_spectacular", "drf_spectacular_sidecar"))
 # Automatically delete dangling files
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
-
 
 # Ensure Conreq app loader comes last
 if not get_safe_mode():

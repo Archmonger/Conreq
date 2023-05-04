@@ -6,7 +6,7 @@ from reactpy.html import a, button, div, h5
 from reactpy_django.hooks import use_query
 from reactpy_django.types import QueryOptions
 
-from conreq._core.app_store.components.modal import app_details_modal
+from conreq._core.app_store.components.modal import app_details_modal, app_install_modal
 from conreq._core.app_store.models import AppPackage, Subcategory
 from conreq.types import ModalState, ModalStateContext
 
@@ -96,6 +96,12 @@ def card_top(app: AppPackage, modal_state: ModalState, subcategory: Subcategory 
 
 
 def card_btns(app: AppPackage, modal_state: ModalState, installable: bool | None):
+    async def install_click(_):
+        modal_state.show = True
+        modal_state.modal_intent = app_install_modal
+        modal_state.modal_args = [app]
+        modal_state.set_state(modal_state)
+
     return div(
         {"class_name": "btn-container"},
         button(
@@ -105,30 +111,26 @@ def card_btns(app: AppPackage, modal_state: ModalState, installable: bool | None
             },
             "Details",
         ),
-        [
-            a(
-                {
-                    "href": f"{app.contact_link}" or f"mailto:{app.contact_email}",
-                    "class_name": "btn btn-sm btn-dark",
-                    "key": "email",
-                },
-                "Contact",
-            )
-        ]
+        a(
+            {
+                "href": f"{app.contact_link}" or f"mailto:{app.contact_email}",
+                "class_name": "btn btn-sm btn-dark",
+                "key": "email",
+            },
+            "Contact",
+        )
         if app.contact_link or app.contact_email
-        else [],
-        [
-            button(
-                {
-                    "class_name": "btn btn-sm btn-primary",
-                    "on_click": lambda x: print("clicked"),
-                    "key": "install",
-                },
-                "Install",
-            )
-        ]
+        else "",
+        button(
+            {
+                "class_name": "btn btn-sm btn-primary",
+                "on_click": install_click,
+                "key": "install",
+            },
+            "Install",
+        )
         if installable
-        else [],
+        else "",
     )
 
 

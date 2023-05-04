@@ -25,3 +25,11 @@
 .terminal p:last-child {
 	scroll-snap-align: end;
 }
+
+.terminal p.success {
+	color: #00ff00;
+}
+
+.terminal p.error {
+	color: #ff0000;
+}

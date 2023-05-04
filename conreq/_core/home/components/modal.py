@@ -51,7 +51,7 @@ def modal():
         modal_state._modal(
             *modal_state.modal_args,
             **modal_state.modal_kwargs,
-            key=f"{modal_state._modal.__module__}.{modal_state._modal.__name__}",
+            key=f"{modal_state._modal.__module__}.{modal_state._modal.__name__}.{modal_state.modal_args}.{modal_state.modal_kwargs}",
         )
         if modal_state._modal
         else modal_dialog(),
@@ -95,7 +95,7 @@ def modal_head(*content, title="Loading...", close_action: Callable | None = Non
     modal_state = hooks.use_context(ModalStateContext)
 
     async def close_modal(_):
-        modal_state.show = False
+        modal_state.reset_modal()
         modal_state.set_state(modal_state)
 
     return div(
