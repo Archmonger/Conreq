@@ -26,7 +26,7 @@ def dotenv_path() -> Path:
 
 
 def _parse_env_value(value: Any, default_value: Any, return_type: Type) -> Any:
-    """Returns a value based on the return type."""
+    """Attempts to convert a value to the requested return type, if needed."""
     if not value:
         return default_value
     if return_type is bool and isinstance(value, str):
@@ -35,7 +35,7 @@ def _parse_env_value(value: Any, default_value: Any, return_type: Type) -> Any:
         except ValueError:
             return default_value
     if return_type in {list, dict} and isinstance(value, str):
-        return json.loads(value)
+        value = json.loads(value)
     return value if isinstance(value, return_type) else return_type(value)
 
 
@@ -147,7 +147,11 @@ def set_env(name: str, value: Any, sys_env=False, dot_env=True) -> Tuple[str, An
     if sys_env:
         os.environ[ENV_PREFIX + name.upper()] = str(value)
     if dot_env:
-        dotenv.set_key(dotenv_path(), name.upper(), str(value))
+        dotenv.set_key(
+            dotenv_path(),
+            name.upper(),
+            json.dumps(value) if isinstance(value, (dict, list)) else str(value),
+        )
     return (name, value)
 
 

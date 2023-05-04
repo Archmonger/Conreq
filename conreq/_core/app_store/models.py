@@ -10,6 +10,7 @@ from ordered_model.models import OrderedModel
 from packaging import version
 from versionfield import VersionField
 
+from conreq.utils.environment import get_env
 from conreq.utils.models import UUIDFilePath
 
 
@@ -188,11 +189,14 @@ class AppPackage(models.Model):
     incompatible_apps = models.ManyToManyField("self", blank=True)
     related_apps = models.ManyToManyField("self", blank=True)
 
-    # Installable property that checks the development_stage, sys_platforms, and conreq_min_version fields
-    # to determine if the app is installable on the current system.
-    # Also checks if any incompatible apps are installed.
     @property
-    def installable(self):
+    def installed(self):
+        """Checks if the app is already installed on the current system."""
+        return self.pkg_name in get_env("INSTALLED_PACKAGES", [], return_type=list)
+
+    @property
+    def compatible(self):
+        """Checks if the app is installable on the current system."""
         # pylint: disable=import-outside-toplevel
         from django.conf import settings
 

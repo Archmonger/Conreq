@@ -7,7 +7,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 
 import logging
-import os
 import secrets
 import sys
 from glob import glob
@@ -92,12 +91,10 @@ ASGI_APPLICATION = "conreq.asgi.application"
 
 
 # // LOGGING //
-_logger = logging.getLogger(__name__)
 CONREQ_LOG_FILE = LOG_DIR / "conreq.log"
 ACCESS_LOG_FILE = LOG_DIR / "access.log"
 LOG_LEVEL = get_env("LOG_LEVEL", "INFO" if DEBUG else "WARNING")
-LOGGING: dict[str, Any]
-LOGGING_INITIAL: dict[str, Any] = {
+LOGGING: dict[str, Any] = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
@@ -132,16 +129,11 @@ LOGGING_INITIAL: dict[str, Any] = {
         "huey": {},
     },
 }
-for logger_name in LOGGING_INITIAL["loggers"]:
-    LOGGING_INITIAL["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
-    LOGGING_INITIAL["loggers"][logger_name]["level"] = LOG_LEVEL
-if DEBUG and os.environ.get("RUN_MAIN", None) != "true":
-    # Hack to avoid duplicate logging messages in DEBUG mode
-    LOGGING = {"version": 1}
-else:
-    LOGGING = LOGGING_INITIAL
-    del LOGGING_INITIAL
+for logger_name in LOGGING["loggers"]:
+    LOGGING["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
+    LOGGING["loggers"][logger_name]["level"] = LOG_LEVEL
 logging_config(LOGGING)
+_logger = logging.getLogger(__name__)
 
 
 # // SECURITY SETTINGS //
@@ -426,13 +418,13 @@ EMAIL_BACKEND = "conreq.app.services.email.EmailBackend"
 EMAIL_SUBJECT_PREFIX = ""
 
 
-# // USER INSTALLED APPS //
+# // USER INSTALLED APP PACKAGES //
 if not get_safe_mode():
     sys.path.insert(0, str(PACKAGES_DEV_DIR))
     sys.path.insert(0, str(PACKAGES_DIR))
     user_apps = find_apps()
     INSTALLED_APPS += user_apps
-    _logger.info("Booting with the following apps:\n+ " + "\n+ ".join(user_apps))
+    _logger.info("Booting with the following apps:%s", "\n+ " + "\n+ ".join(user_apps))
 
 # Run startup.py
 packages = find_packages()
@@ -450,7 +442,7 @@ external_settings = list(glob(str(PACKAGES_DIR / "*" / "django-settings.py"))) +
 )
 include(*external_settings)
 
-# Add conditional apps
+# Add conditional django apps
 if DEBUG:
     INSTALLED_APPS.extend(("silk", "drf_spectacular", "drf_spectacular_sidecar"))
 # Automatically delete dangling files

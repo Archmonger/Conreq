@@ -14,14 +14,15 @@ from conreq._core.home.components.modal import (
     modal_head,
 )
 from conreq.types import ModalStateContext
+from conreq.utils.environment import get_env, set_env
 
 
 @component
-def app_details_modal(app: AppPackage):
+def package_details_modal(app: AppPackage):
     modal_state = hooks.use_context(ModalStateContext)
 
     async def install_click(_):
-        modal_state.modal_intent = app_install_modal
+        modal_state.modal_intent = package_install_modal
         modal_state.modal_args = [app]
         modal_state.set_state(modal_state)
 
@@ -87,14 +88,27 @@ def app_details_modal(app: AppPackage):
             ),
             modal_footer(
                 html.button(
-                    {"class_name": "btn btn-primary", "on_click": install_click},
+                    {
+                        "class_name": "btn btn-primary",
+                        "on_click": install_click,
+                        "key": "install",
+                    },
                     "Install",
                 )
-                if app.installable
+                if app.compatible and not app.installed
+                else html.button(
+                    {
+                        "class_name": "btn btn-primary",
+                        "disabled": True,
+                        "key": "installed",
+                    },
+                    "Installed",
+                )
+                if app.installed
                 else ""
             ),
         ),
-        django_css("conreq/app_details_modal.css"),
+        django_css("conreq/package_details_modal.css"),
     )
 
 
@@ -184,7 +198,7 @@ def text_to_link(link_str: str, text_str: str = ""):
 
 
 @component
-def app_install_modal(app: AppPackage):
+def package_install_modal(app: AppPackage):
     from conreq import settings  # pylint: disable=import-outside-toplevel
 
     cmd = [
@@ -226,6 +240,7 @@ def app_install_modal(app: AppPackage):
 
     @hooks.use_effect(dependencies=[proc, stdout])
     async def update_stdout():
+        """Gives the component visibility on the stdout of the process."""
         if not proc:
             return
 
@@ -246,6 +261,7 @@ def app_install_modal(app: AppPackage):
 
     @hooks.use_effect(dependencies=[proc])
     async def update_retcode():
+        """Gives the component visibility on the return code of the process."""
         if not proc:
             return
 
@@ -256,6 +272,16 @@ def app_install_modal(app: AppPackage):
             set_retcode(proc.returncode)
 
         threading.Thread(target=thread_func, daemon=True).start()
+
+    @hooks.use_effect
+    async def register_install():
+        """Adds the app to the `settings.env` file."""
+        if retcode == 0:
+            # Update the installed packages list
+            packages = get_env("INSTALLED_PACKAGES", [], return_type=list)
+            if app.pkg_name not in packages:
+                packages.append(app.pkg_name)
+            set_env("INSTALLED_PACKAGES", packages)
 
     return modal_dialog(
         modal_content(
@@ -329,5 +355,5 @@ def app_install_modal(app: AppPackage):
                 else ""
             ),
         ),
-        django_css("conreq/app_install_modal.css"),
+        django_css("conreq/package_install_modal.css"),
     )

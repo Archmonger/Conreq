@@ -3,26 +3,25 @@ import random
 
 from reactpy import component, hooks
 from reactpy.html import a, button, div, h5
-from reactpy_django.hooks import use_query
-from reactpy_django.types import QueryOptions
 
-from conreq._core.app_store.components.modal import app_details_modal, app_install_modal
+from conreq._core.app_store.components.modal import (
+    package_details_modal,
+    package_install_modal,
+)
 from conreq._core.app_store.models import AppPackage, Subcategory
 from conreq.types import ModalState, ModalStateContext
 
 
 def details_modal_event(modal_state: ModalState, app: AppPackage):
+    """Returns an event callable that can be used to show the details modal"""
+
     async def event(_):
         modal_state.show = True
-        modal_state.modal_intent = app_details_modal
+        modal_state.modal_intent = package_details_modal
         modal_state.modal_args = [app]
         modal_state.set_state(modal_state)
 
     return event
-
-
-def check_installable(app: AppPackage):
-    return app.installable
 
 
 @component
@@ -30,7 +29,6 @@ def card(app: AppPackage):
     modal_state = hooks.use_context(ModalStateContext)
     animation_speed, _ = hooks.use_state(random.randint(7, 13))
     opacity, set_opacity = hooks.use_state(0)
-    installable = use_query(QueryOptions(postprocessor=None), check_installable, app)
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():
@@ -44,7 +42,7 @@ def card(app: AppPackage):
             | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
         },
         card_top(app, modal_state, app.subcategories.all()[0]),
-        card_btns(app, modal_state, installable.data),
+        card_btns(app, modal_state),
         div({"class_name": "description"}, app.short_description),
         card_background(app),
     )
@@ -95,10 +93,10 @@ def card_top(app: AppPackage, modal_state: ModalState, subcategory: Subcategory 
     )
 
 
-def card_btns(app: AppPackage, modal_state: ModalState, installable: bool | None):
+def card_btns(app: AppPackage, modal_state: ModalState):
     async def install_click(_):
         modal_state.show = True
-        modal_state.modal_intent = app_install_modal
+        modal_state.modal_intent = package_install_modal
         modal_state.modal_args = [app]
         modal_state.set_state(modal_state)
 
@@ -129,7 +127,16 @@ def card_btns(app: AppPackage, modal_state: ModalState, installable: bool | None
             },
             "Install",
         )
-        if installable
+        if app.compatible and not app.installed
+        else button(
+            {
+                "class_name": "btn btn-sm btn-primary",
+                "disabled": True,
+                "key": "installed",
+            },
+            "Installed",
+        )
+        if app.installed
         else "",
     )
 

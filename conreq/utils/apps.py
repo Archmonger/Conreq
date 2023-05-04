@@ -10,7 +10,7 @@ from conreq.utils.packages import (
 
 
 def find_apps() -> set[str]:
-    """Returns all Conreq apps within packages."""
+    """Returns all Conreq apps within any installed packages."""
     apps = set()
     user_packages = find_packages()
 
