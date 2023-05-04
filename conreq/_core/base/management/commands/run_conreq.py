@@ -62,7 +62,14 @@ class Command(BaseCommand):
             cache.clear()
 
         # Migrate the database
-        call_command("migrate", "--noinput", verbosity)
+        for database in settings.DATABASES.keys():
+            call_command(
+                "migrate",
+                "--database",
+                database,
+                "--noinput",
+                verbosity,
+            )
 
         if not DEBUG:
             # Collect static files

@@ -339,6 +339,7 @@ DATABASES = {
         },
     }
 }
+DATABASE_ROUTERS = ["conreq._core.database.router.DatabaseRouter"]
 CACHE_SHARDS = min(WEBSERVER_WORKERS, 10)
 CACHES = {
     "default": {

@@ -17,6 +17,7 @@ Or, check out the **[documentation](https://archmonger.github.io/Conreq/)** for 
 -   Customizable Core Webpages (Landing, Home, Sign In, Sign Up, Password Reset)
 -   Graphical Database Administration
 -   MySQL and SQLite Databases
+-   Automatic Multi-Database Routing
 -   Customizable Base URL
 -   [Interactive HTML via ReactPy](https://github.com/reactive-python/reactpy)
 -   [Support for Django Features](https://github.com/django/django)
