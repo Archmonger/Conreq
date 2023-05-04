@@ -424,7 +424,12 @@ if not get_safe_mode():
     sys.path.insert(0, str(PACKAGES_DIR))
     user_apps = find_apps()
     INSTALLED_APPS += user_apps
-    _logger.info("Booting with the following apps:%s", "\n+ " + "\n+ ".join(user_apps))
+    if user_apps:
+        _logger.info(
+            "Booting with the following apps:%s", ("\n+ " + "\n+ ".join(user_apps))
+        )
+    else:
+        _logger.warning("No user installed apps detected.")
 
 # Run startup.py
 packages = find_packages()

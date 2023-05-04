@@ -51,7 +51,6 @@ class GeneralSettingsForm(EnvFormMixin, ModelForm):
             "server_name",
             "server_description",
             "public_url",
-            "app_store_url",
             "logging_level",
         )
 

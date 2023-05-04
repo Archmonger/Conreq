@@ -3,8 +3,6 @@ from django.db import models
 from django.db.models.fields import CharField, URLField
 from solo.models import SingletonModel
 
-from conreq._core.fields import HostnameOrURLField
-
 
 class GeneralSettings(SingletonModel):
     def __str__(self):
@@ -28,11 +26,6 @@ class GeneralSettings(SingletonModel):
         help_text="Can be used by apps to construct meaningful URLs, such as in emails or invite links.",
         verbose_name="Public URL",
         blank=True,
-    )
-    app_store_url = HostnameOrURLField(
-        blank=True,
-        verbose_name="App store URL",
-        help_text="Set this to override the default app store.",
     )
 
 
