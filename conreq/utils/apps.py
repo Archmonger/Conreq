@@ -1,27 +1,26 @@
+import importlib
 import os
 
 from conreq.utils.generic import remove_duplicates_from_list
-from conreq.utils.packages import (
-    _packages_dev_dir,
-    _packages_dir,
-    find_modules,
-    find_packages,
-)
+from conreq.utils.modules import _find_wildcards, find_modules
+from conreq.utils.packages import _packages_dev_dir, _packages_dir, find_packages
 
 
 def find_apps() -> set[str]:
-    """Returns all Conreq apps within any installed packages."""
+    """Returns all apps within installed packages. Apps must be declared
+    within a package's `django_apps` list. If the delcared app contains a
+    trailing wildcard, all modules within the given directory are considered apps."""
     apps = set()
     user_packages = find_packages()
 
     for package in user_packages:
-        apps_dir = os.path.join(_packages_dir(), package, "apps")
-        apps_dev_dir = os.path.join(_packages_dev_dir(), package, "apps")
-        all_modules = find_modules(apps_dir) + find_modules(apps_dev_dir)
-        all_modules = remove_duplicates_from_list(all_modules)
-        for app in all_modules:
-            apps.add(f"{package}.apps.{app}")
-
+        module = importlib.import_module(package)
+        if hasattr(module, "django_apps") and isinstance(module.django_apps, list):
+            for app in module.django_apps:
+                if app.endswith(".*"):
+                    apps.update(_find_wildcards(app))
+                else:
+                    apps.add(app)
     return apps
 
 

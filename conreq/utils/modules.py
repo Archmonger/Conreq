@@ -2,8 +2,11 @@ import inspect
 import os
 import pkgutil
 from importlib import import_module as _import_module
+from logging import getLogger
 from pathlib import Path
 from types import ModuleType
+
+_logger = getLogger(__name__)
 
 
 def import_module(
@@ -49,7 +52,7 @@ def find_modules(folder_path: str | Path, prefix: str = "") -> list[str]:
 def find_modules_with(
     folder_path: str, submodule_name: str, prefix: str = ""
 ) -> list[str]:
-    """Returns a tuple of all modules containing module name and an importable path to 'example.module.urls'"""
+    """Returns a list of modules containing a submodule with the given name."""
     modules = find_modules(folder_path)
     modules_with = []
 
@@ -59,3 +62,23 @@ def find_modules_with(
             modules_with.append(prefix + module)
 
     return modules_with
+
+
+def _find_wildcards(dotted_path: str) -> set[str]:
+    """Returns all dotted paths of all modules within a given wildcard directory.
+    This is currently limited to trailing wildcards."""
+
+    if not dotted_path.endswith(".*"):
+        raise ValueError(f"App '{dotted_path}' does not end with '.*'.")
+
+    dotted_path = dotted_path[:-2]
+    apps_container = import_module(dotted_path)
+    if not apps_container:
+        _logger.warning(
+            "\033[93mApp '%s' could not be imported.\033[0m",
+            dotted_path,
+        )
+        return set()
+
+    module_names = find_modules(apps_container.__path__[0])
+    return {f"{dotted_path}.{name}" for name in module_names}

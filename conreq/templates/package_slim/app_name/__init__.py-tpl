@@ -1,1 +1,3 @@
 """Conreq Package: {{ verbose_name }}"""
+
+django_apps = ["{{ app_name }}.apps.*"]
