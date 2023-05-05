@@ -1,0 +1,55 @@
+/* Spotlight Region */
+
+.spotlight {
+	padding-top: var(--viewport-padding);
+	width: 100%;
+}
+
+.spotlight-section {
+	margin-bottom: 35px;
+	background: linear-gradient(90deg, #0000004d, #0000000d);
+	padding-top: 35px;
+	padding-bottom: 5px;
+	padding-left: var(--viewport-padding);
+}
+
+.spotlight-head {
+	margin-bottom: 7px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #fff;
+	padding-right: calc(var(--viewport-padding) - 7px);
+}
+
+.collapse-controls {
+	font-size: 25px;
+}
+
+.collapse-controls > i {
+	padding: 0 6px;
+	margin: 0 2px;
+}
+
+.spotlight .card-stage {
+	overflow: hidden;
+	height: 225px;
+	margin-bottom: 20px;
+}
+
+.spotlight .card-stage.show-more {
+	height: auto;
+}
+
+.spotlight .card-stage .collapse {
+	display: flex;
+	flex-flow: row;
+	width: -webkit-fit-content;
+	width: -moz-fit-content;
+	width: fit-content;
+}
+
+.spotlight .card-stage.show-more .collapse {
+	flex-flow: wrap;
+	width: auto;
+}

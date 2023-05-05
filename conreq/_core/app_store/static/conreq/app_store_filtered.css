@@ -1,0 +1,7 @@
+/* Filtered Card View */
+.filtered-cards {
+	padding: var(--viewport-padding);
+	overflow-y: auto;
+	overflow-y: overlay;
+	width: 100%;
+}

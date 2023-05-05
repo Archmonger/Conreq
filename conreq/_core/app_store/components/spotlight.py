@@ -5,6 +5,7 @@ from django.db.models.manager import Manager
 from reactpy import component, hooks
 from reactpy.html import div, h4, p
 from reactpy.types import VdomChild
+from reactpy_django.components import django_css
 from reactpy_django.hooks import use_query
 
 from conreq._core.app_store.components.card import card
@@ -20,6 +21,8 @@ def spotlight():
 
     return div(
         {"class_name": "spotlight", "key": "spotlight"},
+        django_css("conreq/app_store_spotlight.css"),
+        django_css("conreq/app_store_card.css"),
         [
             spotlight_section(
                 category.name,
