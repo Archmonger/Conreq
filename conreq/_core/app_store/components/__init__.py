@@ -1,14 +1,13 @@
 from copy import copy
 
 from reactpy import component, hooks
-from reactpy.html import _, div
 from reactpy_django.components import django_css
 from reactpy_django.hooks import use_query
 
 from conreq._core.app_store.components.nav import app_store_nav
 from conreq._core.app_store.components.spotlight import spotlight
 from conreq._core.app_store.models import Category
-from conreq.types import AppStoreState
+from conreq.types import AppStoreState, AppStoreStateContext
 
 
 @component
@@ -30,10 +29,17 @@ def app_store():  # sourcery skip
         return None
 
     # TODO: Update app store entries every first load
-    return _(
+    return AppStoreStateContext(
         django_css("conreq/app_store.css"),
-        state.tab.name if state.tab else div({"class_name": "spotlight"}, spotlight()),
         app_store_nav(nav_category_query.data),
+        state.tab(
+            *state.tab_args,
+            *state.tab_kwargs,
+            key=f"{state.tab.__module__}.{state.tab.__name__}",
+        )
+        if state.tab
+        else spotlight(),
+        value=state,
     )
 
 

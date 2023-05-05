@@ -8,7 +8,6 @@ class DatabaseRouter:
     """A router to control all database operations on models."""
 
     # pylint: disable=protected-access,unused-argument
-
     def db_for_read(self, model: Type[Model], **hints) -> None | str:
         return getattr(model._meta, "db_for_read", "default")
 

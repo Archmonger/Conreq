@@ -3,7 +3,7 @@ import random
 
 from django.db.models.manager import Manager
 from reactpy import component, hooks
-from reactpy.html import _, div, h4, p
+from reactpy.html import div, h4, p
 from reactpy.types import VdomChild
 from reactpy_django.hooks import use_query
 
@@ -18,7 +18,8 @@ def spotlight():
     if spotlight_category_query.loading or spotlight_category_query.error:
         return
 
-    return _(
+    return div(
+        {"class_name": "spotlight", "key": "spotlight"},
         [
             spotlight_section(
                 category.name,
@@ -27,7 +28,7 @@ def spotlight():
                 key=category.uuid,
             )
             for category in spotlight_category_query.data  # type: ignore
-        ]
+        ],
     )
 
 

@@ -8,6 +8,8 @@
 		0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 	--accent-color: #258a6d;
 	--blur-filter: blur(20px);
+	--bs-link-color: #5495f6;
+	--bs-link-hover-color: #286dd3;
 	/* Sidebar */
 	--sidebar-width: 240px;
 	--navigation-btn-padding: 13px 15px;
@@ -20,7 +22,6 @@
 }
 
 /* Generic rules */
-
 html {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -47,13 +48,11 @@ body {
 }
 
 a {
-	color: unset;
 	transition: 0.3s ease color;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #fff;
 	text-decoration: initial;
 }
 

@@ -4,24 +4,14 @@ import random
 from reactpy import component, hooks
 from reactpy.html import a, button, div, h5
 
-from conreq._core.app_store.components.modal import (
-    package_details_modal,
-    package_install_modal,
+from conreq._core.app_store.components.event import (
+    author_click_event,
+    details_modal_event,
+    subcategory_click_event,
 )
+from conreq._core.app_store.components.modal import package_install_modal
 from conreq._core.app_store.models import AppPackage, Subcategory
-from conreq.types import ModalState, ModalStateContext
-
-
-def details_modal_event(modal_state: ModalState, app: AppPackage):
-    """Returns an event callable that can be used to show the details modal"""
-
-    async def event(_):
-        modal_state.show = True
-        modal_state.modal_intent = package_details_modal
-        modal_state.modal_args = [app]
-        modal_state.set_state(modal_state)
-
-    return event
+from conreq.types import AppStoreStateContext, ModalState, ModalStateContext
 
 
 @component
@@ -41,46 +31,49 @@ def card(app: AppPackage):
             "style": {"opacity": opacity}
             | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
         },
-        card_top(app, modal_state, app.subcategories.all()[0]),
+        card_top(app, app.subcategories.all()[0]),
         card_btns(app, modal_state),
         div({"class_name": "description"}, app.short_description),
         card_background(app),
     )
 
 
-def card_top(app: AppPackage, modal_state: ModalState, subcategory: Subcategory | None):
+def card_top(app: AppPackage, subcategory: Subcategory | None):
+    state = hooks.use_context(AppStoreStateContext)
+
     return div(
         {"class_name": "top"},
         div(
             {"class_name": "text-region"},
             h5(
                 {"class_name": "card-title"},
-                a(
-                    {
-                        "href": f"#{app.uuid}",
-                        "on_click": details_modal_event(modal_state, app),
-                    },
-                    app.name,
-                ),
+                app.name,
             ),
             [
                 div(
                     {"class_name": "card-author", "key": "author"},
                     a(
-                        {"href": "#", "on_click": lambda x: print("clicked")},
+                        {"href": "#", "on_click": author_click_event(state, app)},
                         app.author,
                     ),
                 )
             ]
             if app.author
             else [],
-            div(
-                {"class_name": "card-category"},
-                a(
-                    {"href": "#", "on_click": lambda x: print("clicked")},
-                    str(subcategory) if subcategory else "",
-                ),
-            ),
+            [
+                div(
+                    {"class_name": "card-category", "key": "category"},
+                    a(
+                        {
+                            "href": "#",
+                            "on_click": subcategory_click_event(state, subcategory),
+                        },
+                        str(subcategory) if subcategory else "",
+                    ),
+                )
+            ]
+            if subcategory
+            else [],
         ),
         div(
             {"class_name": "logo"}

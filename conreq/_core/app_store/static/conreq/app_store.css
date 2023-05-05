@@ -1,65 +1,62 @@
 .viewport-container.app-store {
 	display: flex;
-	flex-direction: row;
-	padding-left: var(--viewport-padding);
-	justify-content: space-between;
+	flex-direction: column;
 }
 
-.nav-title {
-	color: #c5c5c5;
+/* Nav Region */
+
+.nav-btn {
+	border: 1px #ffffff61 solid !important;
+	border-radius: 80px;
 }
 
 .nav-region {
-	min-width: -webkit-fit-content;
-	min-width: -moz-fit-content;
-	min-width: fit-content;
-	padding: var(--viewport-padding);
-	background: rgb(0 0 0 / 07%);
-	border-color: #ffffff17;
-	border-width: 0 0 0 1px;
-	margin-left: 2px;
-	border-style: solid;
-	box-shadow: -3px 0px 5px -1px rgb(0 0 0 / 20%),
-		-6px 0 10px 0 rgb(0 0 0 / 14%);
-	color: rgb(156 156 156);
-	-webkit-animation: fade-in 2s ease;
-	animation: fade-in 2s ease;
-	z-index: 2;
+	margin-top: 30px;
+	padding: 0 var(--viewport-padding);
+	display: flex;
 }
 
-.nav-region ol {
-	padding-left: 0;
+.nav-region .btn {
+	margin-right: 15px;
 }
 
-.nav-region li {
+.nav-region .btn.return {
+	margin-left: auto;
+}
+
+.dropdown-menu li {
+	position: relative;
+}
+
+.dropdown-menu .dropdown-submenu {
+	display: none;
+	position: absolute;
+	left: 100%;
+	top: -7px;
+}
+
+.dropdown-menu .dropdown-submenu-left {
+	right: 100%;
+	left: auto;
+}
+
+.dropdown-menu > li:hover > .dropdown-submenu {
 	display: block;
-	margin-bottom: 8px;
 }
 
-a.nav-sub-link {
-	color: #878b8f;
-}
-
-a.nav-sub-link:hover,
-a.nav-sub-link:focus {
-	color: #a5a8ab;
-}
-
-a.nav-sub-link:active {
-	color: #b8bbbd;
-}
+/* Spotlight Region */
 
 .spotlight {
 	padding-top: var(--viewport-padding);
-	overflow-y: auto;
-	overflow-y: overlay;
 	width: 100%;
 }
 
 .spotlight-section {
 	margin-bottom: 35px;
-	background: linear-gradient(-90deg, #0000004d, transparent);
-	padding: 5px 0;
+	background: linear-gradient(90deg, #0000004d, #0000000d);
+	padding-top: 35px;
+	padding-bottom: 5px;
+	padding-left: var(--viewport-padding);
 }
 
 .spotlight-head {
@@ -103,7 +100,7 @@ a.nav-sub-link:active {
 	width: auto;
 }
 
-.spotlight .card-stage .card {
+.card {
 	--border-radius: 8px;
 	--border-size: 1px;
 	--border-color: #27464a;
@@ -125,7 +122,7 @@ a.nav-sub-link:active {
 	transition: opacity 1.25s ease;
 }
 
-.spotlight .card-stage .card .background {
+.card .background {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -141,16 +138,16 @@ a.nav-sub-link:active {
 	filter: blur(3px);
 }
 
-.spotlight .card-stage .card > .top {
+.card > .top {
 	display: grid;
 	grid-template-columns: auto 80px;
 }
 
-.spotlight .card-stage .card > .top > .text-region {
+.card > .top > .text-region {
 	margin-right: 5px;
 }
 
-.spotlight .card-stage .card > .top > .text-region > * {
+.card > .top > .text-region > * {
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	display: -webkit-box;
@@ -158,11 +155,11 @@ a.nav-sub-link:active {
 	padding-bottom: 2px;
 }
 
-.spotlight .card-stage .card > .top > .text-region > .card-title {
+.card > .top > .text-region > .card-title {
 	margin-bottom: 5px;
 }
 
-.spotlight .card-stage .card > .top > .logo {
+.card > .top > .logo {
 	display: inline-block;
 	position: relative;
 	height: 80px;
@@ -171,15 +168,15 @@ a.nav-sub-link:active {
 	background-size: cover;
 }
 
-.spotlight .card-stage .card > .btn-container {
+.card > .btn-container {
 	margin-bottom: 10px;
 }
 
-.spotlight .card-stage .card > .btn-container > .btn {
+.card > .btn-container > .btn {
 	margin-right: 5px;
 }
 
-.spotlight .card-stage .card > .description {
+.card > .description {
 	padding-bottom: 2px;
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
@@ -209,14 +206,14 @@ a.nav-sub-link:active {
 	}
 }
 
-.spotlight .card-stage .card.special {
+.card.special {
 	--animation-speed: 10s;
 	--card-bg-animation: conic-gradient(#000000ab, #00000036);
 	--border-color: #8b7234;
 	overflow: hidden;
 }
 
-.spotlight .card-stage .card.special::before {
+.card.special::before {
 	content: "";
 	background: var(--card-bg-animation);
 	width: calc(100% * 1.41421356237);
@@ -227,4 +224,12 @@ a.nav-sub-link:active {
 	z-index: -2;
 	-webkit-animation: spin var(--animation-speed) linear infinite;
 	animation: spin var(--animation-speed) linear infinite;
+}
+
+/* Filtered Card View */
+.card-view {
+	padding: var(--viewport-padding);
+	overflow-y: auto;
+	overflow-y: overlay;
+	width: 100%;
 }

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, Callable, Sequence
+from typing import TYPE_CHECKING, Callable, Sequence
 
 from reactpy.core.component import Component
 from reactpy.core.hooks import Context, create_context
@@ -195,8 +195,14 @@ class AppStoreState:
     set_state: SetAppStoreState = lambda _: None
     """A function that can be used to set this state."""
 
-    tab: Any | None = None
+    tab: ComponentConstructor | None = None
     """The current app store tab being rendered."""
+
+    tab_args: Sequence = field(default_factory=list)
+    """The arguments to pass to the tab component."""
+
+    tab_kwargs: dict = field(default_factory=dict)
+    """The keyword arguments to pass to the tab component."""
 
 
 SetAppStoreState = Callable[[AppStoreState], None]
@@ -205,6 +211,7 @@ AppStoreStateContext: Context[AppStoreState] = create_context(AppStoreState())
 
 @dataclass
 class TabbedViewportState:
+    # TODO: Match this to the design of AppStoreState
     tab: SubTab | None
     """The current subtab being rendered."""
 
