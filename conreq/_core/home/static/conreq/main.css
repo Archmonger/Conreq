@@ -10,6 +10,7 @@
 	--blur-filter: blur(20px);
 	--bs-link-color: #5495f6;
 	--bs-link-hover-color: #286dd3;
+	--bs-warning-rgb: 255, 99, 7;
 	/* Sidebar */
 	--sidebar-width: 240px;
 	--navigation-btn-padding: 13px 15px;

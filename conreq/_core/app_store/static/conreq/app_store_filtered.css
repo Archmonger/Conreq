@@ -4,4 +4,6 @@
 	overflow-y: auto;
 	overflow-y: overlay;
 	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
 }

@@ -60,15 +60,3 @@
 		left: 0px;
 	}
 }
-
-@-webkit-keyframes fade-in {
-	100% {
-		opacity: 1;
-	}
-}
-
-@keyframes fade-in {
-	100% {
-		opacity: 1;
-	}
-}

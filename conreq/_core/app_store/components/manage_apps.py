@@ -1,12 +1,13 @@
-import importlib
 import subprocess
 import threading
+from logging import getLogger
 
-import pkg_resources as pkg
 from reactpy import component, hooks, html
 from reactpy_django.components import django_css
 
 from conreq.utils.environment import get_env
+
+_logger = getLogger(__name__)
 
 
 @component
@@ -15,7 +16,9 @@ def manage_apps():
     Apps contain the following action buttons: logs, upgrade, reinstall, remove, and details
     """
 
-    installed_packages = get_env("INSTALLED_PACKAGES", [], return_type=list)
+    installed_packages = sorted(
+        set(get_env("INSTALLED_PACKAGES", [], return_type=list))
+    )
 
     return html.div(
         {"class_name": "manage-apps"},
@@ -27,54 +30,101 @@ def manage_apps():
             html.thead(
                 html.tr(
                     html.th("Name"),
-                    html.th("Version"),
-                    html.th("Status"),
-                    html.th("Actions"),
+                    html.th("Installed"),
+                    html.th("Latest"),
+                    html.th({"style": {"text-align": "center"}}, "Actions"),
                 )
             ),
-            html.tbody(*[app_row(app) for app in installed_packages]),
+            html.tbody([app_row(app, key=app) for app in installed_packages]),
         ),
     )
 
 
 @component
 def app_row(pkg_name: str):
-    status, set_status = hooks.use_state("Checking...")
+    error_msg, set_error_msg = hooks.use_state("")
+    current_version, set_current_version = hooks.use_state("")
     latest_version, set_latest_version = hooks.use_state("")
-    metadata_dir = getattr(pkg.get_distribution(pkg_name), "egg_info")
-    module_name = (
-        open(f"{metadata_dir}/top_level.txt", encoding="UTF-8").read().rstrip()
-    )
-    module = importlib.import_module(module_name)
 
     @hooks.use_effect(dependencies=[])
     async def get_status():
         def thread_func():
             """Runs `pip index versions {app.pkg_name}` and parses the latest version."""
             proc = subprocess.Popen(
-                ["pip", "index", "versions", pkg_name, "--no-input"],
+                [
+                    "pip",
+                    "index",
+                    "versions",
+                    pkg_name,
+                    "--no-input",
+                ],
                 shell=True,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
+                stderr=subprocess.PIPE,
             )
-            if not proc.stdout:
-                set_status("Error while checking for updates")
+            proc.wait()
+
+            # Check if output is broken
+            if not proc.stderr or not proc.stdout:
+                set_error_msg("Error. Check logs.")
+                _logger.error(
+                    "Broken stderr or stdout while getting pip index versions for %s",
+                    pkg_name,
+                )
                 return
-            lines = proc.stdout.readlines()
-            for line in lines:
+
+            # Check if pip index versions failed
+            stderr = proc.stderr.readlines()
+            for line in stderr:
+                if line.strip().startswith(b"ERROR:"):
+                    set_error_msg("Error. Check logs.")
+                    _logger.error(
+                        "'pip index versions' failed for %s: %s",
+                        pkg_name,
+                        line.strip().decode()[7:],
+                    )
+                    return
+
+            # Parse output
+            stdout = proc.stdout.readlines()
+            installed: str = ""
+            latest: str = ""
+            for line in stdout:
+                if line.strip().startswith(b"INSTALLED:"):
+                    installed = line.split(b":")[1].strip().decode()
+                    set_current_version(installed)
                 if line.strip().startswith(b"LATEST:"):
-                    version = line.split(b":")[1].strip().decode()
-                    set_latest_version(version)
-                    if version == module.__version__:
-                        set_status("Up to date")
-                    else:
-                        set_status(f"Update available ({version})")
+                    latest = line.split(b":")[1].strip().decode()
+                    set_latest_version(latest)
+
+            # Output wasn't parse properly, or package isn't installed
+            if not installed or not latest:
+                set_error_msg("Error. Check logs.")
+                _logger.error(
+                    "Failed to parse 'pip index versions' for %s: %s",
+                    pkg_name,
+                    stdout,
+                )
+
+            proc.kill()
 
         threading.Thread(target=thread_func, daemon=True).start()
 
+    status = ""
+    if error_msg:
+        status = "text-danger"
+    if latest_version and current_version:
+        status = "text-success" if latest_version == current_version else "text-warning"
+
     return html.tr(
         html.td(pkg_name),
-        html.td(module.__version__),
-        html.td(status),
-        html.td(html.div("Actions")),
+        html.td(
+            html.div(
+                {"class_name": status}, error_msg or current_version or "Checking..."
+            )
+        ),
+        html.td(html.div("N/A" if error_msg else latest_version or "Checking...")),
+        html.td(
+            {"style": {"text-align": "center"}}, html.i({"class_name": "fas fa-cog"})
+        ),
     )

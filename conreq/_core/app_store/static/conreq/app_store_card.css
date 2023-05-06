@@ -79,6 +79,30 @@
 	line-height: 1.2;
 }
 
+/* Fade in animation */
+
+.card.fade-in {
+	transition: opacity 1.25s ease;
+}
+
+@-webkit-keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
 /* Spinny Colors */
 /* Credits: https://codepen.io/MauriciAbad/pen/WNrpmPr */
 @-webkit-keyframes spin {

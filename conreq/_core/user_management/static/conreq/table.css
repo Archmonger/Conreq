@@ -20,18 +20,14 @@ table > thead a:focus {
 	color: #fff;
 }
 
-.table-container {
-	border-radius: 10px 10px 0 0;
-	color: #333;
-	margin-bottom: 20px;
-}
-
 .table,
 table {
 	margin-bottom: 0;
 	background: #fff;
 	border-bottom: none;
 	border-radius: 8px;
+	color: #333;
+	margin-bottom: 20px;
 }
 
 th:first-of-type {

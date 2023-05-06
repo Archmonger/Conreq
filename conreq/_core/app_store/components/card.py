@@ -22,12 +22,14 @@ def card(app: AppPackage):
 
     @hooks.use_effect(dependencies=[])
     async def fade_in_animation():
-        await asyncio.sleep(round(random.uniform(0, 0.55), 3))
+        await asyncio.sleep(round(random.uniform(0.35, 0.75), 3))
         set_opacity(1)
 
     return div(
         {
-            "class_name": "card fade-in" + (" special" if app.special else ""),
+            "class_name": "card"
+            + (" special" if app.special else "")
+            + (" fade-in" if opacity else ""),
             "style": {"opacity": opacity}
             | ({"--animation-speed": f"{animation_speed}s"} if app.special else {}),
         },
