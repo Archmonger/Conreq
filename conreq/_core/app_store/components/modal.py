@@ -27,6 +27,7 @@ def package_details_modal(app: AppPackage):
         modal_state.set_state(modal_state)
 
     package_details = {
+        "PyPI Package": app.pkg_name,
         "Development Stage": dict(DevelopmentStage.choices).get(
             app.development_stage, ""
         ),
