@@ -49,9 +49,9 @@ def modal():
     return div(
         MODAL_CONTAINER,
         modal_state._modal(
-            *modal_state.modal_args,
-            **modal_state.modal_kwargs,
-            key=f"{modal_state._modal.__module__}.{modal_state._modal.__name__}.{modal_state.modal_args}.{modal_state.modal_kwargs}",
+            *modal_state.args,
+            **modal_state.kwargs,
+            key=f"{modal_state._modal.__module__}.{modal_state._modal.__name__}.{modal_state.args}.{modal_state.kwargs}",
         )
         if modal_state._modal
         else modal_dialog(),

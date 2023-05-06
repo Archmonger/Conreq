@@ -90,7 +90,7 @@ def card_btns(app: AppPackage, modal_state: ModalState):
     async def install_click(_):
         modal_state.show = True
         modal_state.modal_intent = package_install_modal
-        modal_state.modal_args = [app]
+        modal_state.args = [app]
         modal_state.set_state(modal_state)
 
     return div(

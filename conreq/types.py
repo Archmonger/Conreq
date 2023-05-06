@@ -37,10 +37,11 @@ class AuthLevel:
 
 @dataclass(frozen=True)
 class Viewport:
+    # TODO: Add kwargs
     component: ComponentConstructor | Callable[..., Component] | Callable[..., VdomDict]
     """The component to render in the viewport."""
 
-    args: tuple = field(default_factory=tuple)
+    args: Sequence = field(default_factory=tuple)
     """The arguments to pass to the viewport component."""
 
     html_class: str = ""
@@ -75,6 +76,7 @@ class SidebarTab:
 
 @dataclass(frozen=True)
 class SubTab:
+    # TODO: Add args and kwargs
     name: str
     component: ComponentConstructor | Callable[..., Component] | Callable[..., VdomDict]
     html_class: str = ""
@@ -148,10 +150,10 @@ class ModalState:
     modal_intent: ComponentConstructor | None = None
     """The modal that needs to be loaded."""
 
-    modal_args: Sequence = field(default_factory=list)
+    args: Sequence = field(default_factory=tuple)
     """The arguments to pass to the modal component."""
 
-    modal_kwargs: dict = field(default_factory=dict)
+    kwargs: dict = field(default_factory=dict)
     """The keyword arguments to pass to the modal component."""
 
     _modal: ComponentConstructor | None = None
@@ -162,8 +164,8 @@ class ModalState:
         self.show = False
         self.modal_intent = None
         self._modal = None
-        self.modal_args = []
-        self.modal_kwargs = {}
+        self.args = []
+        self.kwargs = {}
 
 
 SetModalState = Callable[[ModalState], None]
@@ -192,6 +194,7 @@ HomepageStateContext: Context[HomepageState] = create_context(HomepageState())
 
 @dataclass
 class AppStoreState:
+    # TODO: Delete this and use TabbedViewportState
     set_state: SetAppStoreState = lambda _: None
     """A function that can be used to set this state."""
 
@@ -204,6 +207,12 @@ class AppStoreState:
     tab_kwargs: dict = field(default_factory=dict)
     """The keyword arguments to pass to the tab component."""
 
+    def reset_tab(self) -> None:
+        """Resets the tab to defaults."""
+        self.tab = None
+        self.tab_args = []
+        self.tab_kwargs = {}
+
 
 SetAppStoreState = Callable[[AppStoreState], None]
 AppStoreStateContext: Context[AppStoreState] = create_context(AppStoreState())
@@ -211,7 +220,6 @@ AppStoreStateContext: Context[AppStoreState] = create_context(AppStoreState())
 
 @dataclass
 class TabbedViewportState:
-    # TODO: Match this to the design of AppStoreState
     tab: SubTab | None
     """The current subtab being rendered."""
 

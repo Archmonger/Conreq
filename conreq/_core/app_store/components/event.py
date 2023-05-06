@@ -12,6 +12,7 @@ def author_click_event(state: AppStoreState, app: AppPackage):
         # pylint: disable=import-outside-toplevel
         from conreq._core.app_store.components.filtered import filtered_cards
 
+        state.reset_tab()
         state.tab = filtered_cards
         state.tab_args = (await get_author_apps(app.author),)
         state.set_state(state)
@@ -26,7 +27,7 @@ def details_modal_event(state: ModalState, app: AppPackage):
 
         state.show = True
         state.modal_intent = package_details_modal
-        state.modal_args = [app]
+        state.args = [app]
         state.set_state(state)
 
     return event
@@ -37,6 +38,7 @@ def subcategory_click_event(state: AppStoreState, subcategory: Subcategory):
         # pylint: disable=import-outside-toplevel
         from conreq._core.app_store.components.filtered import filtered_cards
 
+        state.reset_tab()
         state.tab = filtered_cards
         state.tab_args = (await get_subcategory_apps(subcategory),)
         state.set_state(state)
@@ -49,8 +51,21 @@ def category_click_event(state: AppStoreState, category: Category):
         # pylint: disable=import-outside-toplevel
         from conreq._core.app_store.components.filtered import filtered_cards
 
+        state.reset_tab()
         state.tab = filtered_cards
         state.tab_args = (await get_category_apps(category),)
+        state.set_state(state)
+
+    return event
+
+
+def manage_apps_click_event(state: AppStoreState):
+    async def event(_):
+        # pylint: disable=import-outside-toplevel
+        from conreq._core.app_store.components.manage_apps import manage_apps
+
+        state.reset_tab()
+        state.tab = manage_apps
         state.set_state(state)
 
     return event

@@ -23,7 +23,7 @@ def package_details_modal(app: AppPackage):
 
     async def install_click(_):
         modal_state.modal_intent = package_install_modal
-        modal_state.modal_args = [app]
+        modal_state.args = [app]
         modal_state.set_state(modal_state)
 
     package_details = {

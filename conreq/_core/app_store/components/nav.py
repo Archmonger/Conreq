@@ -5,6 +5,7 @@ from reactpy.html import a, button, div, li, ul
 
 from conreq._core.app_store.components.event import (
     category_click_event,
+    manage_apps_click_event,
     subcategory_click_event,
 )
 from conreq._core.app_store.models import Category, Subcategory
@@ -16,7 +17,7 @@ def app_store_nav(categories: Sequence[Category]):
     state = hooks.use_context(AppStoreStateContext)
 
     async def return_click(_):
-        state.tab = None
+        state.reset_tab()
         state.set_state(state)
 
     return div(
@@ -37,7 +38,13 @@ def app_store_nav(categories: Sequence[Category]):
                 [dropdown_item(category, key=category.uuid) for category in categories],
             ),
         ),
-        button({"class_name": "nav-btn btn btn btn-dark"}, "Manage Apps"),
+        button(
+            {
+                "class_name": "nav-btn btn btn btn-dark",
+                "on_click": manage_apps_click_event(state),
+            },
+            "Manage Apps",
+        ),
         button(
             {"class_name": "nav-btn btn btn btn-dark return", "on_click": return_click},
             "Return",
