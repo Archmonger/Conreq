@@ -1,6 +1,7 @@
 import subprocess
 import threading
 from logging import getLogger
+from typing import cast
 
 from reactpy import component, hooks, html
 from reactpy_django.components import django_css
@@ -45,6 +46,7 @@ def app_row(pkg_name: str):
     error_msg, set_error_msg = hooks.use_state("")
     current_version, set_current_version = hooks.use_state("")
     latest_version, set_latest_version = hooks.use_state("")
+    available_versions, set_available_versions = hooks.use_state(cast(list[str], []))
 
     @hooks.use_effect(dependencies=[])
     async def get_status():
@@ -87,21 +89,41 @@ def app_row(pkg_name: str):
 
             # Parse output
             stdout = proc.stdout.readlines()
+            versions: list[str] = []
             installed: str = ""
             latest: str = ""
             for line in stdout:
+                if line.strip().startswith(b"Available versions:"):
+                    versions = line.split(b":")[1].strip().decode().split(", ")
+                    latest = versions[0]
                 if line.strip().startswith(b"INSTALLED:"):
                     installed = line.split(b":")[1].strip().decode()
-                    set_current_version(installed)
                 if line.strip().startswith(b"LATEST:"):
                     latest = line.split(b":")[1].strip().decode()
-                    set_latest_version(latest)
+            if versions:
+                set_available_versions(versions)
+            if installed:
+                set_current_version(installed)
+            if latest:
+                set_latest_version(latest)
 
-            # Output wasn't parse properly, or package isn't installed
-            if not installed or not latest:
+            # Output wasn't parsed properly, or package isn't installed
+            if not installed:
                 set_error_msg("Error. Check logs.")
                 _logger.error(
-                    "Failed to parse 'pip index versions' for %s: %s",
+                    "Failed to obtain installed version 'pip index versions' for %s: %s",
+                    pkg_name,
+                    stdout,
+                )
+            if not versions:
+                _logger.error(
+                    "Failed to obtain versions list from 'pip index versions' for %s: %s",
+                    pkg_name,
+                    stdout,
+                )
+            if not latest:
+                _logger.error(
+                    "Failed to obtain latest version from 'pip index versions' for %s: %s",
                     pkg_name,
                     stdout,
                 )
@@ -114,7 +136,7 @@ def app_row(pkg_name: str):
     if error_msg:
         status = "text-danger"
     if latest_version and current_version:
-        status = "text-success" if latest_version == current_version else "text-warning"
+        status = "" if latest_version == current_version else "text-warning"
 
     return html.tr(
         html.td(pkg_name),
@@ -123,7 +145,7 @@ def app_row(pkg_name: str):
                 {"class_name": status}, error_msg or current_version or "Checking..."
             )
         ),
-        html.td(html.div("N/A" if error_msg else latest_version or "Checking...")),
+        html.td(latest_version or ("N/A" if error_msg else "Checking...")),
         html.td(
             {"style": {"text-align": "center"}}, html.i({"class_name": "fas fa-cog"})
         ),

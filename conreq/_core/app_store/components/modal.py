@@ -200,8 +200,6 @@ def text_to_link(link_str: str, text_str: str = ""):
 
 @component
 def package_install_modal(app: AppPackage):
-    from conreq import settings  # pylint: disable=import-outside-toplevel
-
     cmd = [
         "pip",
         "install",
