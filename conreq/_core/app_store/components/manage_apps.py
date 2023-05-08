@@ -111,7 +111,7 @@ def app_row(pkg_name: str):
             if not installed:
                 set_error_msg("Error. Check logs.")
                 _logger.error(
-                    "Failed to obtain installed version 'pip index versions' for %s: %s",
+                    "Failed to obtain currently installed version from 'pip index versions' for %s: %s",
                     pkg_name,
                     stdout,
                 )

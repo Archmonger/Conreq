@@ -26,7 +26,7 @@ def app_store_nav(categories: Sequence[Category]):
             {"class_name": "dropdown"},
             button(
                 {
-                    "class_name": "nav-btn btn btn btn-dark dropdown-toggle",
+                    "class_name": "nav-btn btn btn-dark dropdown-toggle",
                     "type": "button",
                     "data-bs-toggle": "dropdown",
                     "aria-expanded": "false",
