@@ -91,3 +91,65 @@
 		border-radius: 0;
 	}
 }
+
+/* Replicating bootstrap animations */
+.modal.show .modal-dialog {
+	transform: initial;
+}
+
+.modal.fade .modal-dialog {
+	-webkit-animation: modal 0.5s ease-out;
+	animation: modal 0.5s ease-out;
+}
+
+@-webkit-keyframes modal {
+	0% {
+		transform: translate(0, 50px);
+		opacity: 0;
+	}
+	33% {
+		transform: translate(0, 50px);
+		opacity: 0;
+	}
+	100% {
+		transform: translate(0, 0px);
+		opacity: 1;
+	}
+}
+@keyframes modal {
+	0% {
+		transform: translate(0, 50px);
+		opacity: 0;
+	}
+	33% {
+		transform: translate(0, 50px);
+		opacity: 0;
+	}
+	100% {
+		transform: translate(0, 0px);
+		opacity: 1;
+	}
+}
+
+.modal-backdrop.show {
+	-webkit-animation: modal-backdrop 0.5s ease-out;
+	animation: modal-backdrop 0.5s ease-out;
+}
+
+@-webkit-keyframes modal-backdrop {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: var(--bs-backdrop-opacity);
+	}
+}
+
+@keyframes modal-backdrop {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: var(--bs-backdrop-opacity);
+	}
+}

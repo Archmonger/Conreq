@@ -17,11 +17,7 @@ MODAL_CONTAINER = {
 MODAL_DIALOG = {"class_name": "modal-dialog modal-dialog-centered modal-lg"}
 MODAL_CONTENT = {"class_name": "modal-content"}
 MODAL_HEADER = {"class_name": "modal-header"}
-MODAL_HEADER_BTN_CONTAINER = {
-    "class_name": "modal-header-btns",
-    "data-bs-dismiss": "modal",
-    "aria-label": "Close",
-}
+MODAL_HEADER_BTN_CONTAINER = {"class_name": "modal-header-btns"}
 MODAL_TITLE = {"class_name": "title"}
 MODAL_BODY = {"class_name": "modal-body loading"}
 MODAL_FOOTER = {"class_name": "modal-footer"}
@@ -56,15 +52,36 @@ def modal():
         if modal_state._modal
         else modal_dialog(),
         script(
-            "let conreq_modal = new bootstrap.Modal(document.getElementById('modal-container'), {backdrop: 'static', keyboard: false});"
-            + (
-                "conreq_modal.show();"
-                if modal_state.show
-                else "conreq_modal.hide();"
-                "if (document.querySelector('.modal-backdrop.show') &&"
-                "!document.querySelector('.modal.show'))"
-                "{!document.querySelector('.modal-backdrop.show').remove();}"
-            )
+            "let body = document.querySelector('body');"
+            "let modal = document.querySelector('#modal-container');"
+            "body.classList.add('modal-open');"
+            "body.style.paddingRight = '0px';"
+            "body.style.overflow = 'hidden';"
+            "body.setAttribute('data-bs-overflow', 'hidden');"
+            "body.setAttribute('data-bs-padding-right', '0px');"
+            "modal.classList.add('show');"
+            "modal.style.display = 'block';"
+            "modal.setAttribute('aria-modal', 'true');"
+            "modal.setAttribute('role', 'dialog');"
+            "modal.removeAttribute('aria-hidden');"
+            "if (!document.querySelector('.modal-backdrop.show'))"
+            "{let backdrop = document.createElement('div');"
+            "backdrop.classList.add('modal-backdrop', 'show');"
+            "document.querySelector('body').appendChild(backdrop);}"
+            if modal_state.show
+            else "let body = document.querySelector('body');"
+            "let modal = document.querySelector('#modal-container');"
+            "body.removeAttribute('style');"
+            "body.removeAttribute('class');"
+            "body.removeAttribute('data-bs-overflow');"
+            "body.removeAttribute('data-bs-padding-right');"
+            "modal.classList.remove('show');"
+            "modal.removeAttribute('aria-modal');"
+            "modal.removeAttribute('role');"
+            "modal.setAttribute('aria-hidden', 'true');"
+            "modal.style.display = 'none';"
+            "if (document.querySelector('.modal-backdrop.show'))"
+            "{document.querySelector('.modal-backdrop.show').remove();}"
         ),
     )
 
