@@ -208,8 +208,6 @@ def package_install_modal(app: AppPackage):
         "--upgrade",
         "--upgrade-strategy",
         "eager",
-        "--target",
-        str(settings.PACKAGES_DIR),
     ]
     confirmed, set_confirmed = hooks.use_state(False)
     cancelled, set_cancelled = hooks.use_state(False)
