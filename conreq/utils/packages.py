@@ -10,9 +10,13 @@ from conreq.utils.environment import get_env
 _logger = getLogger(__name__)
 
 
-def find_packages() -> list[str]:
+def find_packages(show_disabled: bool = False) -> list[str]:
     """Returns all available Conreq packages, typically installed from the app store."""
-    return get_env("INSTALLED_PACKAGES", [], return_type=list)
+    installed_packages = get_env("INSTALLED_PACKAGES", [], return_type=list)
+    if show_disabled:
+        return installed_packages
+    disabled_packages = get_env("DISABLED_PACKAGES", [], return_type=list)
+    return [pkg for pkg in installed_packages if pkg not in disabled_packages]
 
 
 def packages_to_modules(*packages: str) -> list[str]:

@@ -6,7 +6,8 @@ from typing import cast
 from reactpy import component, hooks, html
 from reactpy_django.components import django_css
 
-from conreq.utils.environment import get_env
+from conreq.utils.environment import get_env, set_env
+from conreq.utils.packages import find_packages
 
 _logger = getLogger(__name__)
 
@@ -15,9 +16,7 @@ _logger = getLogger(__name__)
 def manage_apps():
     """Bootstrap table for managing apps."""
 
-    installed_packages = sorted(
-        set(get_env("INSTALLED_PACKAGES", [], return_type=list))
-    )
+    installed_packages = find_packages(show_disabled=True)
 
     return html.div(
         {"class_name": "manage-apps"},
@@ -46,6 +45,9 @@ def app_row(pkg_name: str):
     current_version, set_current_version = hooks.use_state("")
     latest_version, set_latest_version = hooks.use_state("")
     available_versions, set_available_versions = hooks.use_state(cast(list[str], []))
+    disabled_packages, set_disabled_packages = hooks.use_state(
+        sorted(set(get_env("DISABLED_PACKAGES", [], return_type=list)))
+    )
 
     @hooks.use_effect(dependencies=[])
     async def get_status():
@@ -131,6 +133,14 @@ def app_row(pkg_name: str):
 
         threading.Thread(target=thread_func, daemon=True).start()
 
+    async def disable_click(_):
+        if pkg_name in disabled_packages:
+            disabled_packages.remove(pkg_name)
+        else:
+            disabled_packages.append(pkg_name)
+        set_env("DISABLED_PACKAGES", disabled_packages)
+        set_disabled_packages(sorted(disabled_packages))
+
     status = ""
     if error_msg:
         status = "text-danger"
@@ -145,7 +155,7 @@ def app_row(pkg_name: str):
             )
         ),
         html.td(latest_version or ("N/A" if error_msg else "Checking...")),
-        html.td("No"),
+        html.td("Yes" if pkg_name in disabled_packages else "No"),
         html.td(
             {"style": {"text-align": "center"}},
             html.div(
@@ -161,26 +171,31 @@ def app_row(pkg_name: str):
                 ),
                 html.ul(
                     {"class_name": "dropdown-menu"},
-                    dropdown_item("Update")
+                    dropdown_item("Update", lambda _: None)
                     if latest_version != current_version
                     else "",
-                    dropdown_item("Uninstall"),
-                    dropdown_item("Disable"),
-                    dropdown_item("Change Version") if available_versions else "",
+                    dropdown_item("Uninstall", lambda _: None),
+                    dropdown_item(
+                        "Enable" if pkg_name in disabled_packages else "Disable",
+                        disable_click,
+                    ),
+                    dropdown_item("Change Version", lambda _: None)
+                    if available_versions
+                    else "",
                 ),
             ),
         ),
     )
 
 
-def dropdown_item(option: str):
+def dropdown_item(option: str, on_click):
     return html.li(
         {"key": option},
         html.a(
             {
                 "class_name": "dropdown-item",
                 "href": f"#{option}",
-                "on_click": lambda _: None,
+                "on_click": on_click,
             },
             f"{option}",
         ),
