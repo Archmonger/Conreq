@@ -1,3 +1,4 @@
 """Conreq Package: {{ verbose_name }}"""
 
-django_apps = ["{{ app_name }}.apps.*"]
+conreq_apps = ["{{ app_name }}.apps.*"]
+"""List of apps to be added to Django's `settings.py:INSTALLED_APPS`"""

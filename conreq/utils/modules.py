@@ -1,3 +1,4 @@
+import importlib
 import inspect
 import os
 import pkgutil
@@ -64,9 +65,10 @@ def find_modules_with(
     return modules_with
 
 
-def _find_wildcards(dotted_path: str) -> set[str]:
+def find_wildcards(dotted_path: str) -> set[str]:
     """Returns all dotted paths of all modules within a given wildcard directory.
     This is currently limited to trailing wildcards."""
+    # TODO: Support non-trailing wildcards
 
     if not dotted_path.endswith(".*"):
         raise ValueError(f"App '{dotted_path}' does not end with '.*'.")
@@ -82,3 +84,38 @@ def _find_wildcards(dotted_path: str) -> set[str]:
 
     module_names = find_modules(apps_container.__path__[0])
     return {f"{dotted_path}.{name}" for name in module_names}
+
+
+def validate_conreq_modules(module_names: list[str]) -> list[str]:
+    """Check if modules are properly configured for Conreq.
+    Returns a new list of valid modules."""
+
+    valid_packages = []
+
+    for package in module_names:
+        try:
+            module = importlib.import_module(package)
+        except ModuleNotFoundError:
+            _logger.warning(
+                "\033[93mPackage '%s' could not be imported.\033[0m",
+                package,
+            )
+            continue
+        except Exception:
+            _logger.exception(
+                "\033[93mAn unknown error has occurred while importing '%s'.\033[0m",
+                package,
+            )
+            continue
+
+        if not hasattr(module, "conreq_apps"):
+            _logger.warning(
+                "\033[93mPackage '%s' is not properly configured. "
+                "Please define `conreq_apps`.\033[0m",
+                package,
+            )
+            continue
+
+        valid_packages.append(package)
+
+    return valid_packages

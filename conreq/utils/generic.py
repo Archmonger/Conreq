@@ -2,11 +2,6 @@
 from re import sub
 
 
-def remove_duplicates_from_list(duplicate_list: list) -> list:
-    """Returns a list that contains no duplicate values."""
-    return list(dict.fromkeys(duplicate_list))
-
-
 def clean_string(
     string: str,
     allow_ascii: bool = True,
@@ -29,12 +24,6 @@ def clean_string(
     if rm_repeated_spaces:
         new_string = sub(r"  +", " ", new_string)
     return new_string
-
-
-def list_intersection(list_1: list, list_2: list) -> list:
-    """Returns a new list that is the intersection of two lists.
-    Helps find duplicates between two lists."""
-    return [value for value in list_1 if value in list_2]
 
 
 class DoNothingDecorator:

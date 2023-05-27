@@ -37,3 +37,4 @@ Twisted[tls,http2]==22.10.0
 tzlocal==4.2
 uvicorn[standard]==0.20.0
 whitenoise[brotli]==6.4.0
+johnnydep==1.20.1

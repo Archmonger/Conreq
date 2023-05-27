@@ -8,8 +8,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 import logging
 import secrets
-import sys
-from glob import glob
 from importlib import import_module
 from logging.config import dictConfig as logging_config
 from pathlib import Path
@@ -40,8 +38,7 @@ django_stubs_ext.monkeypatch()
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR: Path = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False, return_type=Path)
 DATABASE_DIR = DATA_DIR / "databases"
-PACKAGES_DIR = DATA_DIR / "packages" / "__installed__"
-PACKAGES_DEV_DIR = DATA_DIR / "packages" / "develop"
+DEV_PACKAGES_DIR = DATA_DIR / "dev-packages"
 MEDIA_DIR = DATA_DIR / "files"
 MEDIA_SERVE_DIR = MEDIA_DIR / "serve"
 METRICS_DIR = MEDIA_DIR / "metrics"
@@ -53,8 +50,7 @@ PID_DIR = DATA_DIR / "pids"
 MAKE_DIRS: list[Path] = [
     DATA_DIR,
     DATABASE_DIR,
-    PACKAGES_DIR,
-    PACKAGES_DEV_DIR,
+    DEV_PACKAGES_DIR,
     MEDIA_DIR,
     MEDIA_SERVE_DIR,
     METRICS_DIR,
@@ -421,8 +417,6 @@ EMAIL_SUBJECT_PREFIX = ""
 
 # // USER INSTALLED APP PACKAGES //
 if not get_safe_mode():
-    sys.path.insert(0, str(PACKAGES_DEV_DIR))
-    sys.path.insert(0, str(PACKAGES_DIR))
     user_apps = find_apps()
     INSTALLED_APPS += user_apps
     if user_apps:

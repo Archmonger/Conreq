@@ -9,6 +9,11 @@ from conreq.utils.environment import set_env
 
 # pylint: disable=import-outside-toplevel
 def main():
+    # TODO: If venv dependencies cause exceptions, try to reinstall Conreq dependencies via pip
+    # Make sure we are in a venv
+    if sys.prefix == sys.base_prefix:
+        raise RuntimeError("Conreq requires a virtual environment.")
+
     # Check if Django is installed
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conreq.settings")
     try:
