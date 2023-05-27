@@ -110,8 +110,8 @@ def validate_conreq_modules(module_names: list[str]) -> list[str]:
 
         if not hasattr(module, "conreq_apps"):
             _logger.warning(
-                "\033[93mPackage '%s' is not properly configured. "
-                "Please define `conreq_apps`.\033[0m",
+                "\033[93mApp package '%s' is not properly configured. "
+                "`conreq_apps` is undefined.\033[0m",
                 package,
             )
             continue

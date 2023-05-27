@@ -8,6 +8,7 @@
 		0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 	--accent-color: #258a6d;
 	--blur-filter: blur(20px);
+	/* Bootstrap */
 	--bs-link-color: #5495f6;
 	--bs-link-hover-color: #286dd3;
 	--bs-warning-rgb: 255, 99, 7;
@@ -106,4 +107,8 @@ a:hover {
 .blur {
 	-webkit-backdrop-filter: var(--blur-filter);
 	backdrop-filter: var(--blur-filter);
+}
+
+.dropdown-menu {
+	--bs-dropdown-link-active-bg: var(--accent-color);
 }

@@ -58,7 +58,11 @@ def _parse_records(package: str) -> list[str]:
     install_paths = distribution.get_metadata("RECORD").splitlines()
     names = set()
     for path in install_paths:
-        folder = Path(path).parts[0]
+        path = path.split(",")[0]
+        testable_path = Path(path)
+        if len(testable_path.parts) <= 1:
+            continue
+        folder = testable_path.parts[0]
         if "." in folder:
             continue
         names.add(folder)

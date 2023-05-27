@@ -13,9 +13,7 @@ _logger = getLogger(__name__)
 
 @component
 def manage_apps():
-    """Bootstrap table for managing apps.
-    Apps contain the following action buttons: logs, upgrade, reinstall, remove, and details
-    """
+    """Bootstrap table for managing apps."""
 
     installed_packages = sorted(
         set(get_env("INSTALLED_PACKAGES", [], return_type=list))
@@ -33,6 +31,7 @@ def manage_apps():
                     html.th("Name"),
                     html.th("Installed"),
                     html.th("Latest"),
+                    html.th("Disabled"),
                     html.th({"style": {"text-align": "center"}}, "Actions"),
                 )
             ),
@@ -68,7 +67,7 @@ def app_row(pkg_name: str):
 
             # Check if output is broken
             if not proc.stderr or not proc.stdout:
-                set_error_msg("Error. Check logs.")
+                set_error_msg("ERROR")
                 _logger.error(
                     "Broken stderr or stdout while getting pip index versions for %s",
                     pkg_name,
@@ -79,7 +78,7 @@ def app_row(pkg_name: str):
             stderr = proc.stderr.readlines()
             for line in stderr:
                 if line.strip().startswith(b"ERROR:"):
-                    set_error_msg("Error. Check logs.")
+                    set_error_msg("ERROR")
                     _logger.error(
                         "'pip index versions' failed for %s: %s",
                         pkg_name,
@@ -109,7 +108,7 @@ def app_row(pkg_name: str):
 
             # Output wasn't parsed properly, or package isn't installed
             if not installed:
-                set_error_msg("Error. Check logs.")
+                set_error_msg("ERROR")
                 _logger.error(
                     "Failed to obtain currently installed version from 'pip index versions' for %s: %s",
                     pkg_name,
@@ -146,7 +145,43 @@ def app_row(pkg_name: str):
             )
         ),
         html.td(latest_version or ("N/A" if error_msg else "Checking...")),
+        html.td("No"),
         html.td(
-            {"style": {"text-align": "center"}}, html.i({"class_name": "fas fa-cog"})
+            {"style": {"text-align": "center"}},
+            html.div(
+                {"class_name": "dropdown"},
+                html.button(
+                    {
+                        "class_name": "btn btn-sm btn-dark dropdown-toggle",
+                        "type": "button",
+                        "data-bs-toggle": "dropdown",
+                        "aria-expanded": "false",
+                    },
+                    html.i({"class_name": "fas fa-cog"}),
+                ),
+                html.ul(
+                    {"class_name": "dropdown-menu"},
+                    dropdown_item("Update")
+                    if latest_version != current_version
+                    else "",
+                    dropdown_item("Uninstall"),
+                    dropdown_item("Disable"),
+                    dropdown_item("Change Version") if available_versions else "",
+                ),
+            ),
+        ),
+    )
+
+
+def dropdown_item(option: str):
+    return html.li(
+        {"key": option},
+        html.a(
+            {
+                "class_name": "dropdown-item",
+                "href": f"#{option}",
+                "on_click": lambda _: None,
+            },
+            f"{option}",
         ),
     )

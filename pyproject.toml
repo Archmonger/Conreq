@@ -16,7 +16,6 @@ warn_unused_configs = true
 warn_redundant_casts = true
 warn_unused_ignores = true
 check_untyped_defs = true
-incremental = false
 plugins = ["mypy_django_plugin.main"]
 
 [tool.django-stubs]
