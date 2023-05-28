@@ -7,6 +7,7 @@ from reactpy.html import div, h4, p
 from reactpy.types import VdomChild
 from reactpy_django.components import django_css
 from reactpy_django.hooks import use_query
+from reactpy_django.types import QueryOptions
 
 from conreq._core.app_store.components.card import card
 from conreq._core.app_store.models import AppPackage, SpotlightCategory
@@ -14,7 +15,9 @@ from conreq._core.app_store.models import AppPackage, SpotlightCategory
 
 @component
 def spotlight():
-    spotlight_category_query = use_query(get_spotlight_categories)
+    spotlight_category_query = use_query(
+        QueryOptions(thread_sensitive=False), get_spotlight_categories
+    )
 
     if spotlight_category_query.loading or spotlight_category_query.error:
         return
@@ -42,7 +45,9 @@ def spotlight_section(
     apps: Manager[AppPackage],
 ):
     # FIXME: This shouldn't be needed, but `OrderedManyToManyField` doesn't work with `django_query_postprocessor`
-    spotlight_apps_query = use_query(get_spotlight_apps, apps)
+    spotlight_apps_query = use_query(
+        QueryOptions(thread_sensitive=False), get_spotlight_apps, apps
+    )
     opacity, set_opacity = hooks.use_state(0)
     card_list: list[VdomChild] = (
         [card(app, key=app.uuid) for app in spotlight_apps_query.data]  # type: ignore

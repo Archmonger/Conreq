@@ -3,6 +3,7 @@ from copy import copy
 from reactpy import component, hooks
 from reactpy_django.components import django_css
 from reactpy_django.hooks import use_query
+from reactpy_django.types import QueryOptions
 
 from conreq._core.app_store.components.nav import app_store_nav
 from conreq._core.app_store.components.spotlight import spotlight
@@ -14,7 +15,9 @@ from conreq.types import AppStoreState, AppStoreStateContext
 def app_store():  # sourcery skip
     state, set_state = hooks.use_state(AppStoreState())
     state.set_state = lambda obj: set_state(copy(obj))
-    nav_category_query = use_query(get_nav_categories)
+    nav_category_query = use_query(
+        QueryOptions(thread_sensitive=False), get_nav_categories
+    )
 
     # Don't render if there's an error loading categories
     if nav_category_query.error:
