@@ -8,7 +8,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 import logging
 import secrets
-from importlib import import_module
 from logging.config import dictConfig as logging_config
 from pathlib import Path
 from typing import Any
@@ -28,7 +27,6 @@ from conreq.utils.environment import (
     get_safe_mode,
     set_env,
 )
-from conreq.utils.packages import find_packages
 
 # Monkey patches for type hints
 django_stubs_ext.monkeypatch()
@@ -425,16 +423,6 @@ if not get_safe_mode():
         )
     else:
         _logger.warning("No user installed apps detected.")
-
-# Run startup.py
-packages = find_packages()
-for package in packages:
-    try:
-        import_module(".".join([package, "startup"]))
-    except ModuleNotFoundError:
-        pass
-    except Exception as exception:
-        _logger.error('%s startup script has failed due to "%s"!', package, exception)
 
 # Execute settings scripts from Conreq Apps
 external_settings = list(glob(str(PACKAGES_DIR / "*" / "django-settings.py"))) + list(
