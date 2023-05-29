@@ -3,7 +3,6 @@ from logging import getLogger
 from pathlib import Path
 
 import pkg_resources
-from johnnydep import JohnnyDist
 
 from conreq.utils.environment import get_env
 
@@ -39,14 +38,7 @@ def packages_to_modules(*packages: str) -> list[str]:
                 modules.extend(import_names)
                 continue
 
-        # Rely on johnnydep to handle remote packages
-        _logger.info(
-            "Could determine package info for '%s' locally, trying to find it remotely",
-            pkg,
-        )
-        import_names = JohnnyDist(pkg, ignore_errors=True).import_names
-        if import_names:
-            modules.extend(import_names)
+        _logger.warning("Could not determine package info for '%s'", pkg)
 
     return modules
 
