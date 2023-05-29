@@ -38,7 +38,11 @@ def packages_to_modules(*packages: str) -> list[str]:
                 modules.extend(import_names)
                 continue
 
-        _logger.warning("Could not determine package info for '%s'", pkg)
+        _logger.warning(
+            "\033[93mCould not determine package info for '%s'. "
+            "Package may misconfigured or not installed.\033[0m",
+            pkg,
+        )
 
     return modules
 
