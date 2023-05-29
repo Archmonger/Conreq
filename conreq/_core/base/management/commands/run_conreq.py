@@ -1,7 +1,6 @@
 import contextlib
 import os
 import signal
-from logging.config import dictConfig as logging_config
 from multiprocessing import Process
 
 import django
@@ -81,11 +80,13 @@ class Command(BaseCommand):
             set_env("WEB_ENCRYPTION_KEY", get_random_secret_key())
 
         # Run background task management
+        # FIXME: This causes some duplicate logging during startup.
         self.stop_huey()
         proc = Process(target=self.start_huey, daemon=True)
         proc.start()
-        with open(HUEY_PID_FILE, "w", encoding="utf-8") as huey_pid:
-            huey_pid.write(str(proc.pid))
+        if proc.pid:
+            with open(HUEY_PID_FILE, "w", encoding="utf-8") as huey_pid:
+                huey_pid.write(str(proc.pid))
 
         # Run pre-run functions before starting the webserver
         for script in config.startup.functions:
@@ -162,8 +163,6 @@ class Command(BaseCommand):
     @staticmethod
     def start_huey():
         """Starts the Huey background task manager."""
-        logging_initial = getattr(settings, "LOGGING")
-        logging_config(logging_initial)
         django.setup()
         if DEBUG:
             call_command("run_huey")
@@ -172,7 +171,8 @@ class Command(BaseCommand):
 
     @staticmethod
     def stop_huey():
-        """Stops the Huey background task manager."""
+        """Stops the Huey background task manager.
+        Required to prevent duplicate Huey instances if using live reloading."""
         if not HUEY_PID_FILE.exists():
             return
 
