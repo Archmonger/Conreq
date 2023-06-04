@@ -43,7 +43,7 @@ def main():
             + "\x1b[0m"
         )
         run_in_safe_mode()
-    print("\x1b[91m" + "Conreq has crashed again. Giving up." + "\x1b[0m")
+        print("\x1b[91m" + "Conreq has crashed again. Giving up." + "\x1b[0m")
 
 
 def run_in_safe_mode():
