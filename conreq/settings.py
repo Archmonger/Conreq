@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 import logging
 import secrets
+import sys
 from logging.config import dictConfig as logging_config
 from pathlib import Path
 from typing import Any
@@ -126,6 +127,10 @@ LOGGING: dict[str, Any] = {
 for logger_name in LOGGING["loggers"]:
     LOGGING["loggers"][logger_name]["handlers"] = ["console", "conreq_logs"]
     LOGGING["loggers"][logger_name]["level"] = LOG_LEVEL
+if "run_huey" in sys.argv:
+    LOGGING["loggers"]["conreq"]["level"] = "ERROR"
+    LOGGING["loggers"]["django"]["level"] = "ERROR"
+    LOGGING["disable_existing_loggers"] = True
 logging_config(LOGGING)
 _logger = logging.getLogger(__name__)
 

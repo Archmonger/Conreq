@@ -1,16 +1,15 @@
 import contextlib
 import os
 import signal
-from multiprocessing import Process
+import subprocess
+import sys
 
-import django
 import uvicorn
 from django.conf import settings
 from django.core.cache import cache
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.core.management.utils import get_random_secret_key
-from huey.contrib.djhuey import db_task
 from uvicorn.config import LOGGING_CONFIG as UVICORN_LOGGING_CONFIG
 
 from conreq import config
@@ -52,7 +51,8 @@ class Command(BaseCommand):
             call_command("test", "--noinput", "--parallel", "--failfast")
 
         # Queue a task to backup the database if needed
-        backup_if_needed()
+        if backup_needed():
+            backup_now()
 
         # Perform any debug related clean-up
         if DEBUG:
@@ -82,8 +82,7 @@ class Command(BaseCommand):
         # Run background task management
         # FIXME: This causes some duplicate logging during startup.
         self.stop_huey()
-        proc = Process(target=self.start_huey, daemon=True)
-        proc.start()
+        proc = self.start_huey()
         if proc.pid:
             with open(HUEY_PID_FILE, "w", encoding="utf-8") as huey_pid:
                 huey_pid.write(str(proc.pid))
@@ -163,11 +162,8 @@ class Command(BaseCommand):
     @staticmethod
     def start_huey():
         """Starts the Huey background task manager."""
-        django.setup()
-        if DEBUG:
-            call_command("run_huey")
-        else:
-            call_command("run_huey", "--quiet")
+        start_command = f"{sys.executable} manage.py run_huey"
+        return subprocess.Popen(start_command.split(" "))
 
     @staticmethod
     def stop_huey():
@@ -187,10 +183,3 @@ class Command(BaseCommand):
     def _f_path(model_obj):
         if model_obj:
             return model_obj.path
-
-
-@db_task()
-def backup_if_needed():
-    """Performs a backup if the last backup was longer than the threshold."""
-    if backup_needed():
-        backup_now()
