@@ -10,7 +10,6 @@ from conreq.config.wrappers.components import (
     server_settings_system_info,
     server_settings_webserver,
     sign_out,
-    sign_out_event,
     user_management,
     user_management_create_invite,
     user_management_manage_invites,
@@ -29,9 +28,7 @@ config.tabs.user_settings.main = tab_constructor("Settings", user_settings)
 config._homepage.user_sidebar_tabs.append(config.tabs.user_settings.main)
 
 
-config.tabs.sign_out.main = tab_constructor(
-    "Sign Out", sign_out, on_click=sign_out_event
-)
+config.tabs.sign_out.main = tab_constructor("Sign Out", sign_out)
 config._homepage.user_sidebar_tabs.append(config.tabs.sign_out.main)
 
 

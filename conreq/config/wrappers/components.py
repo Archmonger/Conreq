@@ -59,18 +59,11 @@ def user_settings_delete_account(*args, **kwargs):
 @component
 def sign_out(*args, **kwargs):
     _component = config.components.sign_out.main
-    return None if _component is None else _component(*args, **kwargs)
+    if _component is None:
+        from conreq._core.sign_out import components
 
-
-async def sign_out_event(*args, **kwargs):
-    event = config.components.sign_out.event
-    if event is None:
-        from conreq._core.user_settings import components
-
-        return await components.sign_out_event(*args, **kwargs)
-    if iscoroutinefunction(event):
-        return await event(*args, **kwargs)
-    return event(*args, **kwargs)
+        return html._(components.sign_out(*args, **kwargs))
+    return _component(*args, **kwargs)
 
 
 @component

@@ -60,11 +60,3 @@ def user_settings():
             bottom_tabs=config._internal_tabs.user_settings_bottom,
         )
     )
-
-
-async def sign_out_event(event: SidebarTabEvent):
-    await logout(event.websocket.scope)
-    event.homepage_state.viewport_intent = Viewport(
-        lambda *_: html.script("window.location.reload()")
-    )
-    event.homepage_state.set_state(event.homepage_state)
