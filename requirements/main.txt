@@ -19,7 +19,7 @@ hypercorn[h3]==0.14.3
 jsonfield==3.1.0
 markdown==3.4.1
 pwned-passwords-django==1.6
-pyarr==3.1.1
+pyarr==5.1.1
 pymysql==1.0.2
 python-dotenv==0.21.0
 strsim==0.0.3
