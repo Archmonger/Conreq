@@ -30,17 +30,12 @@ class ReturnThread(Thread):
 def threaded_execution(function_list: list, args: list, **kwargs: dict) -> list[any]:
     """Threaded execution of function calls where all functions utilize the same args/kwargs."""
     thread_list = []
-    results = []
-
     for function in function_list:
         thread = ReturnThread(target=function, args=args, kwargs=kwargs)
         thread.start()
         thread_list.append(thread)
 
-    for thread in thread_list:
-        results.append(thread.join())
-
-    return results
+    return [thread.join() for thread in thread_list]
 
 
 def threaded_execution_unique_args(functions: list[dict]) -> list[any]:

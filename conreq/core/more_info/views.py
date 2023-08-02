@@ -53,14 +53,12 @@ def more_info(request):
     else:
         tmdb_collection_id = None
 
-    # Check if the user has already requested this
-    requested = False
-    if UserRequest.objects.filter(
-        content_id=content["id"],
-        content_type=content["content_type"],
-    ):
-        requested = True
-
+    requested = bool(
+        UserRequest.objects.filter(
+            content_id=content["id"],
+            content_type=content["content_type"],
+        )
+    )
     # Generate context for page rendering
     context = {
         "content": content,
@@ -81,11 +79,7 @@ def person(request):
     template = loader.get_template("viewport/person.html")
     context = {}
 
-    # Get the ID from the URL
-    person_id = request.GET.get("id", None)
-
-    # Fetch the person from TMDB
-    if person_id:
+    if person_id := request.GET.get("id", None):
         results = content_discovery.person(person_id)
 
         # Preprocessing before passing into HTML
@@ -150,11 +144,7 @@ def series_modal(request):
             season_folders=sonarr_params["season_folders"],
         )
 
-    # Keep refreshing until we get the series from Sonarr
-    series = wait_for_series_info(tvdb_id)
-
-    # Series successfully obtained from Sonarr
-    if series:
+    if series := wait_for_series_info(tvdb_id):
         context = {
             "seasons": series["seasons"],
             "tmdb_id": tmdb_id,
@@ -185,14 +175,12 @@ def content_preview_modal(request):
         set_single_availability(content)
         preprocess_tmdb_result(content)
 
-        # Check if the user has already requested this
-        requested = False
-        if UserRequest.objects.filter(
-            content_id=content["id"],
-            content_type=content["content_type"],
-        ):
-            requested = True
-
+        requested = bool(
+            UserRequest.objects.filter(
+                content_id=content["id"],
+                content_type=content["content_type"],
+            )
+        )
         context = {"content": content, "requested": requested}
         template = loader.get_template("modal/content_preview.html")
         return HttpResponse(template.render(context, request))
@@ -217,11 +205,11 @@ def recommended(request):
         else:
             set_many_availability(tmdb_recommended["results"])
 
-        # Detect situation where all results don't have TVDB IDs
-        results_contain_valid_id = False
-        if is_key_value_in_list("conreq_valid_id", True, tmdb_recommended["results"]):
-            results_contain_valid_id = True
-
+        results_contain_valid_id = bool(
+            is_key_value_in_list(
+                "conreq_valid_id", True, tmdb_recommended["results"]
+            )
+        )
         context = {
             "recommended": tmdb_recommended,
             "results_contain_valid_id": results_contain_valid_id,
@@ -235,9 +223,7 @@ def recommended(request):
 @login_required
 @performance_metrics()
 def collection(request):
-    collection_id = request.GET.get("collection_id", None)
-
-    if collection_id:
+    if collection_id := request.GET.get("collection_id", None):
         content_discovery = TmdbDiscovery()
 
         tmdb_collection = content_discovery.collections(collection_id)

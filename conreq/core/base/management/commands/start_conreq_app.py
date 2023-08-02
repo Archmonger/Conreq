@@ -14,10 +14,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         call_command(
-            "startapp",
-            "--template=" + APP_TEMPLATE_DIR,
-            options["name"],
-            APPS_DIR,
+            "startapp", f"--template={APP_TEMPLATE_DIR}", options["name"], APPS_DIR
         )
 
     def add_arguments(self, parser):

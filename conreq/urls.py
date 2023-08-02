@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
@@ -52,7 +53,7 @@ urlpatterns = [
 
 # Add User Installed Apps URLS
 for app_name, module_path in list_modules_with(APPS_DIR, "urls"):
-    urlpatterns.insert(0, path(app_name + "/", include(module_path)))
+    urlpatterns.insert(0, path(f"{app_name}/", include(module_path)))
 
 # Debug tools
 if DEBUG:
@@ -105,13 +106,10 @@ if DEBUG:
         ),
     ]
 
-    for pattern in docs_urlpatterns:
-        urlpatterns.append(pattern)
-
-
+    urlpatterns.extend(iter(docs_urlpatterns))
 # Wrap the urlpatterns in BASE_URL if required
 if BASE_URL:
     urlpatterns = [
         path("", RedirectView.as_view(url=BASE_URL)),
-        path(BASE_URL[1:] + "/", include(urlpatterns)),
+        path(f"{BASE_URL[1:]}/", include(urlpatterns)),
     ]

@@ -5,6 +5,8 @@ from django.utils.deconstruct import deconstructible
 from django.utils.regex_helper import _lazy_re_compile
 
 
+
+
 @deconstructible
 class ExtendedURLValidator(URLValidator):
     """URL validator that supports hostnames (ex. https://sonarr:8000)"""
@@ -25,7 +27,7 @@ class ExtendedURLValidator(URLValidator):
         r"\.?"  # may have a trailing dot
     )
 
-    host_re = "(" + hostname_re + domain_re + tld_re + "|localhost)"
+    host_re = f"({hostname_re}{domain_re}{tld_re}|localhost)"
 
     regex = _lazy_re_compile(
         r"^(?:[a-z0-9.+-]*)://"  # scheme is validated separately

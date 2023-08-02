@@ -20,13 +20,15 @@ def generate_cache_key(
 ) -> str:
     """Generates a key to be used with django caching"""
     return clean_string(
-        cache_name
-        + "_args"
-        + str(cache_args)
-        + "_kwargs"
-        + str(cache_kwargs)
-        + "_key"
-        + str(key)
+        (
+            cache_name
+            + "_args"
+            + str(cache_args)
+            + "_kwargs"
+            + str(cache_kwargs)
+            + "_key"
+            + key
+        )
     )
 
 
@@ -67,33 +69,25 @@ def handler(
         kwargs: A dictionary of keyworded arguements to pass into function.
     """
 
-    cached_results = None
     if kwargs is None:
         kwargs = {}
+    cached_results = None
     # Looks through cache and will perform a search if needed.
     try:
-        log.handler(
-            cache_name + " - Accessed.",
-            log.DEBUG,
-            _logger,
-        )
+        log.handler(f"{cache_name} - Accessed.", log.DEBUG, _logger)
 
         # Get the cached value
         cache_key = generate_cache_key(cache_name, args, kwargs, page_key)
         cached_results = cache.get(cache_key)
         log.handler(
-            cache_name + " - Generated cache key " + cache_key,
+            f"{cache_name} - Generated cache key {cache_key}",
             log.DEBUG,
             _logger,
         )
 
         # No function was provided, just return a bare cache value
         if function is None:
-            log.handler(
-                cache_name + " - Requested raw cache values.",
-                log.DEBUG,
-                _logger,
-            )
+            log.handler(f"{cache_name} - Requested raw cache values.", log.DEBUG, _logger)
             return cached_results
 
         # If the user wants to force update the cache, nothing
@@ -102,19 +96,8 @@ def handler(
             function_results = function(*args, **kwargs)
             if function_results:
                 __cache_set(cache_key, function_results, cache_duration)
-            log.handler(
-                cache_name + " - " + function.__name__ + "()",
-                log.INFO,
-                _logger,
-            )
+            log.handler(f"{cache_name} - {function.__name__}()", log.INFO, _logger)
             return function_results
-
-        if cached_results is None:
-            log.handler(
-                cache_name + " - Cache key " + cache_key + " was empty!",
-                log.INFO,
-                _logger,
-            )
 
         # If a value was in cache and not expired, return that value
         return cached_results
@@ -123,18 +106,13 @@ def handler(
         # If the function threw an exception, return none.
         if hasattr(function, "__name__"):
             log.handler(
-                "Function " + function.__name__ + " failed to execute!",
+                f"Function {function.__name__} failed to execute!",
                 log.ERROR,
                 _logger,
             )
         else:
             log.handler(
-                "Cache handler has failed! Function: "
-                + str(function)
-                + " Cache Name: "
-                + str(cache_name)
-                + " Page Key: "
-                + str(page_key),
+                f"Cache handler has failed! Function: {str(function)} Cache Name: {cache_name} Page Key: {page_key}",
                 log.ERROR,
                 _logger,
             )
@@ -160,11 +138,7 @@ def multi_handler(
     }
     """
     try:
-        log.handler(
-            cache_name + " - Accessed.",
-            log.DEBUG,
-            _logger,
-        )
+        log.handler(f"{cache_name} - Accessed.", log.DEBUG, _logger)
 
         requested_keys = []
         for key, value in functions.items():
@@ -172,9 +146,7 @@ def multi_handler(
                 cache_name, value["args"], value["kwargs"], key
             )
             log.handler(
-                cache_name
-                + " - Cache multi execution generated cache key "
-                + cache_key,
+                f"{cache_name} - Cache multi execution generated cache key {cache_key}",
                 log.DEBUG,
                 _logger,
             )
@@ -183,10 +155,7 @@ def multi_handler(
         # Search cache for all keys
         cached_results = cache.get_many(requested_keys)
         log.handler(
-            cache_name
-            + " - Cache multi execution detected "
-            + str(len(cached_results))
-            + " available keys.",
+            f"{cache_name} - Cache multi execution detected {len(cached_results)} available keys.",
             log.INFO,
             _logger,
         )
@@ -204,17 +173,13 @@ def multi_handler(
                 thread.start()
                 thread_list.append((cache_key, thread))
 
-        missing_keys = {}
-        for key, thread in thread_list:
-            missing_keys[key] = thread.join(timeout=timeout)
-
+        missing_keys = {
+            key: thread.join(timeout=timeout) for key, thread in thread_list
+        }
         # Set values in cache for any newly executed functions
         if bool(missing_keys):
             log.handler(
-                cache_name
-                + " - Cache multi execution detected "
-                + str(len(missing_keys))
-                + " missing keys.",
+                f"{cache_name} - Cache multi execution detected {len(missing_keys)} missing keys.",
                 log.INFO,
                 _logger,
             )
@@ -226,7 +191,7 @@ def multi_handler(
         # If results were none, log it.
         if cached_results is None:
             log.handler(
-                cache_name + " - Cache multi execution generated no results!",
+                f"{cache_name} - Cache multi execution generated no results!",
                 log.WARNING,
                 _logger,
             )
@@ -234,9 +199,5 @@ def multi_handler(
         return cached_results
 
     except Exception:
-        log.handler(
-            "Functions " + str(functions) + " failed to execute!",
-            log.ERROR,
-            _logger,
-        )
+        log.handler(f"Functions {functions} failed to execute!", log.ERROR, _logger)
     return None

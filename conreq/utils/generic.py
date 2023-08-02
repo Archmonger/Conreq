@@ -11,9 +11,7 @@ def is_key_value_in_list(
     if isinstance(search_list, list):
         for item in search_list:
             if item.__contains__(key) and item[key] == value:
-                if return_item:
-                    return item
-                return True
+                return item if return_item else True
     return False
 
 

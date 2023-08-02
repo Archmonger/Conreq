@@ -24,41 +24,36 @@ INVITE_CODE_DURATION = 7 * 24 * 60 * 60
 @performance_metrics()
 def request_content(request):
     # User submitted a new request
-    if request.method == "POST":
-        request_parameters = json.loads(request.body.decode("utf-8"))
-        log.handler(
-            "Request received: " + str(request_parameters),
-            log.INFO,
-            _logger,
-        )
+    if request.method != "POST":
+        return HttpResponseForbidden()
+    request_parameters = json.loads(request.body.decode("utf-8"))
+    log.handler(f"Request received: {str(request_parameters)}", log.INFO, _logger)
 
         # TV show was requested
-        if request_parameters["content_type"] == "tv":
-            # Try to obtain a TVDB ID (from params or fetch it from TMDB)
-            tmdb_id = request_parameters["tmdb_id"]
-            tvdb_id = TmdbDiscovery().get_external_ids(tmdb_id, "tv").get("tvdb_id")
+    if request_parameters["content_type"] == "tv":
+        # Try to obtain a TVDB ID (from params or fetch it from TMDB)
+        tmdb_id = request_parameters["tmdb_id"]
+        if (
+            tvdb_id := TmdbDiscovery()
+            .get_external_ids(tmdb_id, "tv")
+            .get("tvdb_id")
+        ):
+            sonarr_request(
+                tvdb_id,
+                tmdb_id,
+                request,
+                request_parameters,
+            )
 
-            # Request the show by the TVDB ID
-            if tvdb_id:
-                sonarr_request(
-                    tvdb_id,
-                    tmdb_id,
-                    request,
-                    request_parameters,
-                )
+        else:
+            return HttpResponseForbidden()
 
-            else:
-                return HttpResponseForbidden()
+    elif request_parameters["content_type"] == "movie":
+        tmdb_id = request_parameters["tmdb_id"]
+        radarr_request(tmdb_id, request)
 
-        # Movie was requested
-        elif request_parameters["content_type"] == "movie":
-            tmdb_id = request_parameters["tmdb_id"]
-            radarr_request(tmdb_id, request)
-
-        # The request succeeded
-        return JsonResponse({"success": True})
-
-    return HttpResponseForbidden()
+    # The request succeeded
+    return JsonResponse({"success": True})
 
 
 @cache_page(1)

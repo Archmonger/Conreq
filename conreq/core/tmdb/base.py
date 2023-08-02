@@ -66,7 +66,7 @@ class TmdbBase:
 
             # Content Type was invalid
             log.handler(
-                "Invalid content_type " + str(content_type) + " in is_anime().",
+                f"Invalid content_type {str(content_type)} in is_anime().",
                 log.WARNING,
                 _logger,
             )
@@ -109,7 +109,7 @@ class TmdbBase:
 
             # Content Type was invalid
             log.handler(
-                "Invalid content_type " + str(content_type) + " in get_external_ids().",
+                f"Invalid content_type {str(content_type)} in get_external_ids().",
                 log.WARNING,
                 _logger,
             )
@@ -148,7 +148,7 @@ class TmdbBase:
 
             # Content Type was invalid
             log.handler(
-                "Invalid content_type " + str(content_type) + " in get_genres().",
+                f"Invalid content_type {str(content_type)} in get_genres().",
                 log.WARNING,
                 _logger,
             )
@@ -220,7 +220,7 @@ class TmdbBase:
         """Obtains multiple pages of results at once via threads."""
         total_pages = page_number * page_multiplier
         thread_list = []
-        for subtractor in reversed(range(0, page_multiplier)):
+        for subtractor in reversed(range(page_multiplier)):
             thread_kwargs = {
                 **{"page": total_pages - subtractor, "language": LANGUAGE},
                 **kwargs,
@@ -263,16 +263,15 @@ class TmdbBase:
                     merged_results = result.copy()
                     first_run = False
 
-                # On subsequent runs, update or merge the values if needed
                 else:
                     # Set the total pages to the smallest value
-                    if merged_results["total_pages"] > result["total_pages"]:
-                        merged_results["total_pages"] = result["total_pages"]
-
+                    merged_results["total_pages"] = min(
+                        merged_results["total_pages"], result["total_pages"]
+                    )
                     # Set the total results to the smallest value
-                    if merged_results["total_results"] > result["total_results"]:
-                        merged_results["total_results"] = result["total_results"]
-
+                    merged_results["total_results"] = min(
+                        merged_results["total_results"], result["total_results"]
+                    )
                     # Merge the search results
                     merged_results["results"] = (
                         merged_results["results"] + result["results"]
@@ -309,13 +308,11 @@ class TmdbBase:
         try:
             results = query["results"].copy()
 
-            # Results with no duplicates
-            clean_results = []
-
             # Keys used to determine if duplicates exist
             unique_tv_keys = {}
             unique_movie_keys = {}
 
+            clean_results = []
             for entry in results:
                 # Remove duplicate TV
                 if entry.__contains__("name"):
@@ -323,17 +320,14 @@ class TmdbBase:
                         clean_results.append(entry)
                     unique_tv_keys[entry["name"]] = True
 
-                # Remove duplicate movies
                 elif entry.__contains__("title"):
                     if not unique_movie_keys.__contains__(entry["title"]):
                         clean_results.append(entry)
                     unique_movie_keys[entry["title"]] = True
 
-                # Something unexpected happened
                 else:
                     log.handler(
-                        "While removing duplicates, entry found that did not contain name or title!"
-                        + str(entry),
+                        f"While removing duplicates, entry found that did not contain name or title!{str(entry)}",
                         log.WARNING,
                         _logger,
                     )
@@ -363,11 +357,7 @@ class TmdbBase:
 
         # Check if the content contains Keyword: Anime
         if is_key_value_in_list("name", "anime", api_results["results"]):
-            log.handler(
-                str(tmdb_id) + " is anime.",
-                log.INFO,
-                _logger,
-            )
+            log.handler(f"{str(tmdb_id)} is anime.", log.INFO, _logger)
             return True
 
         # Check if fallback method is enabled
@@ -379,17 +369,13 @@ class TmdbBase:
                 and "JP" in tv_info["origin_country"]
             ):
                 log.handler(
-                    str(tmdb_id) + " is anime, based on fallback detection.",
+                    f"{str(tmdb_id)} is anime, based on fallback detection.",
                     log.INFO,
                     _logger,
                 )
                 return True
 
-        log.handler(
-            str(tmdb_id) + " is not anime.",
-            log.INFO,
-            _logger,
-        )
+        log.handler(f"{str(tmdb_id)} is not anime.", log.INFO, _logger)
         return False
 
     @staticmethod
@@ -399,11 +385,7 @@ class TmdbBase:
 
         # Check if the content contains Keyword: Anime
         if is_key_value_in_list("name", "anime", api_results["keywords"]):
-            log.handler(
-                str(tmdb_id) + " is anime.",
-                log.INFO,
-                _logger,
-            )
+            log.handler(f"{str(tmdb_id)} is anime.", log.INFO, _logger)
             return True
 
         # Check if fallback method is enabled
@@ -417,17 +399,13 @@ class TmdbBase:
                 "iso_3166_1", "JP", movie_info["production_countries"]
             ):
                 log.handler(
-                    str(tmdb_id) + " is anime, based on fallback detection.",
+                    f"{str(tmdb_id)} is anime, based on fallback detection.",
                     log.INFO,
                     _logger,
                 )
                 return True
 
-        log.handler(
-            str(tmdb_id) + " is not anime.",
-            log.INFO,
-            _logger,
-        )
+        log.handler(f"{str(tmdb_id)} is not anime.", log.INFO, _logger)
         return False
 
     @staticmethod

@@ -16,9 +16,7 @@ def preset_filter_extras(request):
     filter_type = request.GET.get("type", "")
     if filter_type == "anime":
         return anime_only_values
-    if filter_type == "no-anime":
-        return no_anime_values
-    return ()
+    return no_anime_values if filter_type == "no-anime" else ()
 
 
 def __set_many_availability(card, radarr_library, sonarr_library):
@@ -48,9 +46,9 @@ def set_many_availability(results):
         "sonarr library",
     )
 
-    # Generate the availability if possible, or get the external ID if a TVDB ID is needed
-    thread_list = []
     if isinstance(results, list):
+        # Generate the availability if possible, or get the external ID if a TVDB ID is needed
+        thread_list = []
         for card in results:
             thread = Thread(
                 target=__set_many_availability,

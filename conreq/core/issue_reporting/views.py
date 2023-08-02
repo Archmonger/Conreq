@@ -21,32 +21,28 @@ _logger = log.get_logger(__name__)
 @login_required
 @performance_metrics()
 def report_issue(request):
-    if request.method == "POST":
-        request_parameters = json.loads(request.body.decode("utf-8"))
-        log.handler(
-            "Issue report received: " + str(request_parameters),
-            log.INFO,
-            _logger,
-        )
+    if request.method != "POST":
+        return HttpResponseForbidden()
+    request_parameters = json.loads(request.body.decode("utf-8"))
+    log.handler(
+        f"Issue report received: {str(request_parameters)}", log.INFO, _logger
+    )
 
-        # Get the parameters from the response
-        all_resolutions = [ISSUE_LIST[i][1] for i in request_parameters["issue_ids"]]
-        params = {
-            "reported_by": request.user,
-            "content_id": request_parameters.get("tmdb_id", None),
-            "content_type": request_parameters.get("content_type", None),
-            "issues": [ISSUE_LIST[i][0] for i in request_parameters["issue_ids"]],
-            "resolutions": list(set([j for i in all_resolutions for j in i])),
-            "seasons": request_parameters.get("seasons", []),
-            "episodes": request_parameters.get("episodes", []),
-            "episode_ids": request_parameters.get("episode_ids", []),
-        }
+    # Get the parameters from the response
+    all_resolutions = [ISSUE_LIST[i][1] for i in request_parameters["issue_ids"]]
+    params = {
+        "reported_by": request.user,
+        "content_id": request_parameters.get("tmdb_id", None),
+        "content_type": request_parameters.get("content_type", None),
+        "issues": [ISSUE_LIST[i][0] for i in request_parameters["issue_ids"]],
+        "resolutions": list({j for i in all_resolutions for j in i}),
+        "seasons": request_parameters.get("seasons", []),
+        "episodes": request_parameters.get("episodes", []),
+        "episode_ids": request_parameters.get("episode_ids", []),
+    }
 
-        # Add the report to the database
-        new_issue = add_unique_to_db(ReportedIssue, **params)
-
-        # Auto resolve
-        if new_issue and params["content_type"] == "tv":
+    if new_issue := add_unique_to_db(ReportedIssue, **params):
+        if params["content_type"] == "tv":
             arr_auto_resolve_tv(
                 new_issue.pk,
                 params["content_id"],
@@ -54,14 +50,12 @@ def report_issue(request):
                 params["episode_ids"],
                 params["resolutions"],
             )
-        elif new_issue and params["content_type"] == "movie":
+        elif params["content_type"] == "movie":
             arr_auto_resolve_movie(
                 new_issue.pk, params["content_id"], params["resolutions"]
             )
 
-        return JsonResponse({"success": True})
-
-    return HttpResponseForbidden()
+    return JsonResponse({"success": True})
 
 
 @login_required
@@ -70,7 +64,7 @@ def manage_issue(request):
     if request.method == "POST":
         request_parameters = json.loads(request.body.decode("utf-8"))
         log.handler(
-            "Manage issue command received: " + str(request_parameters),
+            f"Manage issue command received: {str(request_parameters)}",
             log.INFO,
             _logger,
         )
@@ -86,13 +80,13 @@ def manage_issue(request):
                 issue.delete()
                 return JsonResponse({"success": True})
 
-        # Change the resolved status of a request
         elif (
             request_parameters.get("action", None) == "resolve"
             and request.user.is_staff
         ):
-            issue = ReportedIssue.objects.filter(id=request_parameters["request_id"])
-            if issue:
+            if issue := ReportedIssue.objects.filter(
+                id=request_parameters["request_id"]
+            ):
                 issue.update(
                     resolved=request_parameters["resolved"],
                     auto_resolved=False,

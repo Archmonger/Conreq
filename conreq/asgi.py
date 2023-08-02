@@ -6,6 +6,7 @@ It exposes the ASGI callable as a module-level variable named ``application``.
 For more information on this file, see
 https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
+
 # pylint: disable=wrong-import-position
 from django.core.asgi import get_asgi_application
 from django.urls import path
@@ -20,8 +21,7 @@ from channels.security.websocket import AllowedHostsOriginValidator
 from conreq.core.websockets.consumers import CommandConsumer
 from conreq.utils.environment import get_base_url
 
-BASE_URL = get_base_url()
-if BASE_URL:
+if BASE_URL := get_base_url():
     BASE_URL = BASE_URL[1:]
 
 

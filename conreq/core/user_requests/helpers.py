@@ -25,7 +25,9 @@ def sonarr_request(tvdb_id, tmdb_id, request, request_params):
     sonarr_request_background_task(tvdb_id, request_params, sonarr_params)
 
     # Save to DB
-    requested_by = request.user if not isinstance(request.user, AnonymousUser) else None
+    requested_by = (
+        None if isinstance(request.user, AnonymousUser) else request.user
+    )
     add_unique_to_db(
         UserRequest,
         content_id=tmdb_id,
@@ -42,7 +44,9 @@ def radarr_request(tmdb_id, request):
     radarr_request_background_task(tmdb_id, radarr_params)
 
     # Save to DB
-    requested_by = request.user if not isinstance(request.user, AnonymousUser) else None
+    requested_by = (
+        None if isinstance(request.user, AnonymousUser) else request.user
+    )
     add_unique_to_db(
         UserRequest,
         content_id=tmdb_id,
@@ -79,15 +83,13 @@ def generate_requests_cards(user_requests):
     """Takes in a DB query containing requests, and pops out a list of their current request status"""
     content_discovery = TmdbDiscovery()
     all_cards = []
-    function_list = []
-    for request in user_requests:
-        function_list.append(
-            {
-                "function": __generate_request_card,
-                "args": [request, content_discovery],
-            }
-        )
-
+    function_list = [
+        {
+            "function": __generate_request_card,
+            "args": [request, content_discovery],
+        }
+        for request in user_requests
+    ]
     all_cards = threaded_execution_unique_args(function_list)
     content_discovery.determine_id_validity(all_cards)
     set_many_availability(all_cards)

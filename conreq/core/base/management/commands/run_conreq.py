@@ -122,7 +122,7 @@ class Command(BaseCommand):
             tables = list(
                 cursor.execute("select name from sqlite_master where type is 'table'")
             )
-            cursor.executescript(";".join(["delete from %s" % i for i in tables]))
+            cursor.executescript(";".join([f"delete from {i}" for i in tables]))
 
     @staticmethod
     def start_huey():
