@@ -29,8 +29,6 @@
     "autoprefixer.formatOnSave": true,
     "files.associations": {
         "**/requirements/*.txt": "pip-requirements",
-        "**/templates/*/*.json": "jinja",
-        "**/templates/*/*.webmanifest": "jinja",
         "*.py-tpl": "python"
     },
     "[jsonc]": {
