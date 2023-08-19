@@ -14,9 +14,9 @@ class BaseConfig(AppConfig):
 
     def ready(self):
         # pylint: disable=import-outside-toplevel
-        from reactpy_django import REACTPY_WEBSOCKET_PATH
+        from reactpy_django import REACTPY_WEBSOCKET_ROUTE
 
-        config.asgi.websockets.append(REACTPY_WEBSOCKET_PATH)
+        config.asgi.websockets.append(REACTPY_WEBSOCKET_ROUTE)
         config.homepage.sidebar_tabs.add(
             NavGroup(name="User", icon=i({"class_name": "fas fa-users icon-left"}))
         )
