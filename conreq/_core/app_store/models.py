@@ -80,6 +80,10 @@ class Subcategory(models.Model):
 
 
 class PyPiData(models.Model):
+    class Meta:
+        verbose_name = "App PyPI data"
+        verbose_name_plural = "App PyPI data"
+
     author = models.CharField(blank=True, max_length=50)
     author_email = models.EmailField(blank=True)
     development_status = models.CharField(
@@ -111,7 +115,7 @@ class PyPiData(models.Model):
 
     def load(self):
         """Loads the PyPiData from PyPi."""
-        if not self.app_packge.developed or not self.app_package.listed_on_pypi:
+        if not self.app_package.package_name or self.app_package.pypi_name == "N/A":
             return
 
         # pylint: disable=import-outside-toplevel
@@ -155,22 +159,7 @@ class AppPackage(models.Model):
     )
 
     # General Info
-    name = models.CharField(max_length=100)
-    pkg_name = models.CharField(
-        max_length=100,
-        help_text="Must be snake_case. Importable name within Python.",
-        unique=True,
-    )
-    pypi_name = models.CharField(
-        max_length=100,
-        help_text="Name used for PyPI package installation. Defaults to `pkg_name` if left blank.",
-        blank=True,
-    )
-    custom_pip_install = models.TextField(
-        help_text="Custom pip install command. "
-        "If left blank, the default `pip install <pypi_name>` will be used.",
-        blank=True,
-    )
+    name = models.CharField(max_length=100, help_text="Human readable name.")
     logo = models.ImageField(
         upload_to=UUIDFilePath("serve/app_store/logos/"),
         blank=True,
@@ -179,30 +168,43 @@ class AppPackage(models.Model):
         upload_to=UUIDFilePath("serve/app_store/backgrounds/"),
         blank=True,
     )
-    developed = models.BooleanField(
-        default=False,
-        help_text="Whether or not this app has been developed. "
-        "If not, it is a placeholder app.",
+    package_name = models.CharField(
+        max_length=100,
+        help_text="Importable name within Python. Must be snake_case. "
+        "If blank, it is a placeholder app.",
+        unique=True,
+        blank=True,
+        null=True,
     )
-    listed_on_pypi = models.BooleanField(
-        default=False,
-        help_text="Whether or not this app is listed on PyPI. "
-        "If not, it is a placeholder app.",
+    pypi_name = models.CharField(
+        max_length=100,
+        help_text="Name used for PyPI package installation. Defaults to `package_name` if left blank. "
+        "You can set this to N/A to indicate that this app is not listed on PyPI.",
+        blank=True,
+    )
+    custom_pip_install_command = models.TextField(
+        help_text="Custom pip install command. "
+        "If left blank, the default `pip install pypi_name` will be used.",
+        blank=True,
     )
     special = models.BooleanField(
         default=False,
-        help_text="If enabled, this app's cards will be visually highlighted. Reserved for donations.",
+        help_text="If enabled, this app's cards will be visually highlighted. "
+        "Typically reserved for unique situations, such as authors who have donated to Conreq.",
     )
+
     banner_message = models.TextField(
         blank=True,
-        help_text="Optional text message shown on the app info modal.",
+        help_text="Optional text message shown on the app's details.",
         max_length=1000,
     )
-    long_description = models.TextField(
+    hidden_description = models.TextField(
         blank=True,
-        help_text="This description is hidden from the app info modal, but is viewable within the database admin GUI.",
+        help_text="This description is only viewable within the database admin GUI.",
     )
-    donation_url = models.URLField(blank=True)
+    donation_url = models.URLField(
+        blank=True, help_text="Link where users can donate to this app's author."
+    )
     subcategories = models.ManyToManyField(Subcategory)
 
     # Compatibility
@@ -214,7 +216,7 @@ class AppPackage(models.Model):
     )
     touch_compatible = models.BooleanField()
     mobile_compatible = models.BooleanField()
-    min_version = VersionField(
+    package_min_version = VersionField(
         default="0.0.0",
         help_text="Minimum version of this package that is compatible with Conreq.",
     )
@@ -248,13 +250,14 @@ class AppPackage(models.Model):
         blank=True,
         help_text="Python code that will be run before boot up. "
         "This code is run directly within the context of Conreq's `settings.py`. "
-        "If you need revision control for this script, create a dedicated `conreq_settings.py` file in your package release instead.",
+        "If you need revision control, create a dedicated `conreq_settings.py` file in your package release instead.",
     )
-    app_config_script = PythonTextField(
+    app_ready_script = PythonTextField(
         blank=True,
         help_text="Python code that will be run after boot up. "
-        "This code is run directly within the context of an arbitrary `AppConfig.ready()` method. "
-        "If you need revision control for this script, create a dedicated `AppConfig` in your package release instead.",
+        "This code is run directly within the context of Conreq's `AppLoaderConfig.ready()` method. "
+        "If you need revision control, create a dedicated `AppConfig` in your package release instead. "
+        "Please note that this script will run once for each webserver worker.",
     )
 
     # Metadata
@@ -267,7 +270,7 @@ class AppPackage(models.Model):
     @property
     def installed(self):
         """Checks if the app is already installed on the current system."""
-        return self.pkg_name in get_env("INSTALLED_PACKAGES", [], return_type=list)
+        return self.package_name in get_env("INSTALLED_PACKAGES", [], return_type=list)
 
     @property
     def compatible(self):
@@ -301,7 +304,7 @@ class AppPackage(models.Model):
 
         # Incompatible app is installed
         return not any(
-            importlib.util.find_spec(app.pkg_name)
+            importlib.util.find_spec(app.package_name)
             for app in self.incompatible_apps.all()  # pylint: disable=no-member
         )
 

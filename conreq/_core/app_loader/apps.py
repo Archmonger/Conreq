@@ -16,9 +16,9 @@ class AppLoaderConfig(AppConfig):
 
     def ready(self):
         for app_config in apps.get_app_configs():
-            self.auto_import_all(app_config)
+            self.auto_import(app_config)
 
-    def auto_import_all(self, app_config: AppConfig):
+    def auto_import(self, app_config: AppConfig):
         """Imports all submodules for a specific app."""
         if not getattr(app_config, "auto_import", False):
             return

@@ -16,15 +16,11 @@ class PythonTextField(TextField):
     """A regular TextField, but this one displays itself with a Python text editor."""
 
     def formfield(self, **kwargs):
-        kwargs.setdefault(
-            "widget",
-            AceWidget(
-                mode="python",
-                theme="twilight",
-                width="100%",
-                toolbar=False,
-                showprintmargin=False,
-            ),
+        kwargs["widget"] = AceWidget(
+            mode="python",
+            width="100%",
+            toolbar=False,
+            showprintmargin=False,
         )
         return super().formfield(**kwargs)
 

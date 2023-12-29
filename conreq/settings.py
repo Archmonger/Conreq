@@ -421,6 +421,7 @@ EMAIL_SUBJECT_PREFIX = ""
 
 
 # // USER INSTALLED APP PACKAGES //
+# TODO: Add a user editable setting script
 if not get_safe_mode():
     user_apps = find_apps()
     INSTALLED_APPS += user_apps

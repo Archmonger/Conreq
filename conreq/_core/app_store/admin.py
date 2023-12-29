@@ -123,7 +123,14 @@ class SpotlightCategories(OrderedInlineModelAdminMixin, DragDropOrderedModelAdmi
 
 @admin.register(models.AppPackage)
 class Apps(admin.ModelAdmin):
+    list_display = ("name", "hidden_description")
     pass
+
+
+@admin.register(models.PyPiData)
+class PyPiData(admin.ModelAdmin):
+    def has_add_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(models.Screenshot)

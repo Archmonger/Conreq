@@ -11,7 +11,7 @@ class Initialization(SingletonModel):
         return "Initialization"
 
     class Meta:
-        verbose_name = "Initialization"
+        verbose_name = "Initialization Completed Flag"
         verbose_name_plural = verbose_name
 
     initialized = models.BooleanField(default=False)
