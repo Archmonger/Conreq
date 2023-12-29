@@ -10,6 +10,7 @@ from ordered_model.models import OrderedModel
 from packaging import version
 from versionfield import VersionField
 
+from conreq._core.fields import AutoOneToOneField, PythonTextField
 from conreq.utils.environment import get_env
 from conreq.utils.models import UUIDFilePath
 
@@ -78,11 +79,71 @@ class Subcategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
-class PackageVersion(models.Model):
-    def __str__(self):
-        return str(self.version)
+class PyPiData(models.Model):
+    author = models.CharField(blank=True, max_length=50)
+    author_email = models.EmailField(blank=True)
+    development_status = models.CharField(
+        blank=True,
+        max_length=21,
+        choices=DevelopmentStage.choices,
+        default=DevelopmentStage.PLANNING,
+    )
+    description = models.TextField(blank=True)
+    description_content_type = models.CharField(
+        blank=True,
+        max_length=20,
+        choices=DescriptionType.choices,
+        default=DescriptionType.TXT,
+    )
+    keywords = models.TextField(blank=True)
+    license = models.CharField(blank=True, max_length=100)
+    maintainer = models.CharField(blank=True, max_length=50)
+    maintainer_email = models.EmailField(blank=True)
+    package_url = models.URLField(blank=True)
+    requires_python = models.CharField(blank=True, max_length=50)
+    summary = models.CharField(blank=True, max_length=255)
+    version = VersionField(blank=True)
+    releases = models.JSONField(blank=True)
 
-    version = VersionField(unique=True)
+    # State tracking
+    loaded = models.BooleanField(default=False)
+    modified_at = models.DateTimeField(auto_now=True, editable=False)
+
+    def load(self):
+        """Loads the PyPiData from PyPi."""
+        if not self.app_packge.developed or not self.app_package.listed_on_pypi:
+            return
+
+        # pylint: disable=import-outside-toplevel
+        import requests
+
+        # Get PyPi data
+        response = requests.get(
+            f"https://pypi.org/pypi/{self.app_package.pypi_name or self.app_package.pkg_name}/json"
+        )
+        data = response.json()
+
+        # Update fields
+        self.author = data["info"]["author"]
+        self.author_email = data["info"]["author_email"]
+        self.development_status = data["info"]["development_status"]
+        self.description = data["info"]["description"]
+        self.description_content_type = data["info"]["description_content_type"]
+        self.keywords = data["info"]["keywords"]
+        self.license = data["info"]["license"]
+        self.maintainer = data["info"]["maintainer"]
+        self.maintainer_email = data["info"]["maintainer_email"]
+        self.package_url = data["info"]["package_url"]
+        self.requires_python = data["info"]["requires_python"]
+        self.summary = data["info"]["summary"]
+        self.version = data["info"]["version"]
+        self.releases = data["releases"] or {}
+
+        # Mark as loaded
+        self.loaded = True
+
+        # Save
+        self.save()
 
 
 class AppPackage(models.Model):
@@ -97,8 +158,18 @@ class AppPackage(models.Model):
     name = models.CharField(max_length=100)
     pkg_name = models.CharField(
         max_length=100,
-        help_text="Must be snake_case. Used for PyPI package installation, or folder naming on Git installations.",
+        help_text="Must be snake_case. Importable name within Python.",
         unique=True,
+    )
+    pypi_name = models.CharField(
+        max_length=100,
+        help_text="Name used for PyPI package installation. Defaults to `pkg_name` if left blank.",
+        blank=True,
+    )
+    custom_pip_install = models.TextField(
+        help_text="Custom pip install command. "
+        "If left blank, the default `pip install <pypi_name>` will be used.",
+        blank=True,
     )
     logo = models.ImageField(
         upload_to=UUIDFilePath("serve/app_store/logos/"),
@@ -107,6 +178,16 @@ class AppPackage(models.Model):
     background = models.ImageField(
         upload_to=UUIDFilePath("serve/app_store/backgrounds/"),
         blank=True,
+    )
+    developed = models.BooleanField(
+        default=False,
+        help_text="Whether or not this app has been developed. "
+        "If not, it is a placeholder app.",
+    )
+    listed_on_pypi = models.BooleanField(
+        default=False,
+        help_text="Whether or not this app is listed on PyPI. "
+        "If not, it is a placeholder app.",
     )
     special = models.BooleanField(
         default=False,
@@ -117,53 +198,12 @@ class AppPackage(models.Model):
         help_text="Optional text message shown on the app info modal.",
         max_length=1000,
     )
-    short_description = models.CharField(max_length=255, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
-
-    # PyPI Info
-    sync_with_pypi = models.BooleanField(
-        default=False,
-        help_text="Will automatically sync relevant information with the latest PyPI version.",
-        verbose_name="Sync with PyPI",
-    )
-    long_description = models.TextField(blank=True)
-    long_description_type = models.CharField(
-        max_length=20,
-        choices=DescriptionType.choices,
-        default=DescriptionType.TXT,
-    )
-    versions = models.ManyToManyField(PackageVersion, blank=True)
-
-    # Package Details
-    development_stage = models.CharField(
-        max_length=21,
-        choices=DevelopmentStage.choices,
-        default=DevelopmentStage.PLANNING,
+    long_description = models.TextField(
         blank=True,
+        help_text="This description is hidden from the app info modal, but is viewable within the database admin GUI.",
     )
-    subcategories = models.ManyToManyField(Subcategory)
-
-    # Ownership Info
-    author = models.CharField(blank=True, max_length=50)
-    author_url = models.URLField(
-        blank=True,
-        help_text="This is typically a link to your GitHub user account or organization.",
-    )
-    contact_email = models.EmailField(blank=True)
-    contact_link = models.URLField(
-        blank=True,
-        help_text='Link takes priority of email for the small "Contact" button.',
-    )
-    pypi_url = models.URLField(blank=True)
-    repository_url = models.URLField(
-        blank=True,
-        help_text="Must be a Git repository if not using PyPI.",
-    )
-    homepage_url = models.URLField(blank=True)
-    support_url = models.URLField(blank=True)
     donation_url = models.URLField(blank=True)
-    license_type = models.CharField(max_length=100, default="GPLv3")
+    subcategories = models.ManyToManyField(Subcategory)
 
     # Compatibility
     sys_platforms = MultiSelectField(
@@ -176,18 +216,53 @@ class AppPackage(models.Model):
     mobile_compatible = models.BooleanField()
     min_version = VersionField(
         default="0.0.0",
-        help_text="Minimum PyPI version or Git tag for this package that is compatible with Conreq.",
+        help_text="Minimum version of this package that is compatible with Conreq.",
     )
-    conreq_min_version = VersionField(default="0.0.0")
-    conreq_max_version = VersionField(blank=True, null=True)
-    asynchronous = models.CharField(
-        max_length=20,
-        choices=AsyncCompatibility.choices,
-        default=AsyncCompatibility.NONE,
+    conreq_min_version = VersionField(
+        default="0.0.0",
+        help_text="Minimum version Conreq needs to be to support this package.",
     )
-    required_apps = models.ManyToManyField("self", blank=True)
-    incompatible_apps = models.ManyToManyField("self", blank=True)
-    related_apps = models.ManyToManyField("self", blank=True)
+    conreq_max_version = VersionField(
+        help_text="Maximum version Conreq can be to support this package.",
+        blank=True,
+        null=True,
+    )
+    required_apps = models.ManyToManyField(
+        "self",
+        help_text="Conreq apps that must be installed for this package to function.",
+        blank=True,
+    )
+    incompatible_apps = models.ManyToManyField(
+        "self",
+        help_text="Conreq apps that cannot be installed for this package to function.",
+        blank=True,
+    )
+    related_apps = models.ManyToManyField(
+        "self",
+        help_text="Conreq apps that are related to this project.",
+        blank=True,
+    )
+
+    # Start Up
+    settings_script = PythonTextField(
+        blank=True,
+        help_text="Python code that will be run before boot up. "
+        "This code is run directly within the context of Conreq's `settings.py`. "
+        "If you need revision control for this script, create a dedicated `conreq_settings.py` file in your package release instead.",
+    )
+    app_config_script = PythonTextField(
+        blank=True,
+        help_text="Python code that will be run after boot up. "
+        "This code is run directly within the context of an arbitrary `AppConfig.ready()` method. "
+        "If you need revision control for this script, create a dedicated `AppConfig` in your package release instead.",
+    )
+
+    # Metadata
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    modified_at = models.DateTimeField(auto_now=True, editable=False)
+    pypi_data = AutoOneToOneField(
+        PyPiData, blank=True, null=True, on_delete=models.CASCADE, editable=False
+    )
 
     @property
     def installed(self):
@@ -201,9 +276,9 @@ class AppPackage(models.Model):
         from django.conf import settings
 
         # Invalid development stage
-        if (
-            not self.development_stage
-            or self.development_stage == DevelopmentStage.PLANNING
+        if self.pypi_data and (
+            not self.pypi_data.development_status
+            or self.pypi_data.development_status == DevelopmentStage.PLANNING
         ):
             return False
 

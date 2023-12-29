@@ -1,0 +1,4 @@
+"""{{ verbose_name }} code that needs to run within the context of Conreq's settings.py file.
+This is an alternative to defining a `settings_script` within your app's database model.
+
+See django-split-settings docs for more details."""

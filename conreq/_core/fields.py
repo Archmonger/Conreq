@@ -1,14 +1,32 @@
 import contextlib
 
-from django.db.models import FileField, OneToOneField, URLField
+from django.db.models import FileField, OneToOneField, TextField, URLField
 from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor
 from django.db.transaction import atomic
 from django.forms import PasswordInput, ValidationError
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import gettext_lazy
+from django_ace import AceWidget
 from encrypted_fields.fields import EncryptedCharField
 
 from conreq._core import forms, validators
+
+
+class PythonTextField(TextField):
+    """A regular TextField, but this one displays itself with a Python text editor."""
+
+    def formfield(self, **kwargs):
+        kwargs.setdefault(
+            "widget",
+            AceWidget(
+                mode="python",
+                theme="twilight",
+                width="100%",
+                toolbar=False,
+                showprintmargin=False,
+            ),
+        )
+        return super().formfield(**kwargs)
 
 
 class PasswordField(EncryptedCharField):
@@ -55,10 +73,14 @@ class URLOrRelativeURLField(URLField):
 
 class AutoOneToOneField(OneToOneField):
     """
-    OneToOneField creates related object on first call if it doesnt exist yet.
-    Use it instead of original OneToOne field.
+    A OneToOneField that automatically creates itself if it doesnt exist yet.
+    Drop in replacement for a regular OneToOne field.
+
+    Be mindful that the model that you use with this field must have default
+    values for all required fields.
 
     Example:
+
     ```python
     class MyProfile(models.Model):
         user = AutoOneToOneField(User, primary_key=True)

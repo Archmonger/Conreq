@@ -5,9 +5,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
-
 import logging
 import secrets
+import site
 import sys
 from logging.config import dictConfig as logging_config
 from pathlib import Path
@@ -28,7 +28,9 @@ from conreq.utils.environment import (
     get_safe_mode,
     set_env,
 )
+from conreq.utils.packages import find_packages
 
+# TODO: Add GUI support for changing most of the settings in this file
 # Monkey patches for type hints
 django_stubs_ext.monkeypatch()
 
@@ -37,7 +39,7 @@ django_stubs_ext.monkeypatch()
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR: Path = get_env("DATA_DIR", ROOT_DIR / "data", dot_env=False, return_type=Path)
 DATABASE_DIR = DATA_DIR / "databases"
-DEV_PACKAGES_DIR = DATA_DIR / "dev-packages"
+APP_SETTINGS_DIR = DATA_DIR / "app-settings"
 MEDIA_DIR = DATA_DIR / "files"
 MEDIA_SERVE_DIR = MEDIA_DIR / "serve"
 METRICS_DIR = MEDIA_DIR / "metrics"
@@ -49,7 +51,7 @@ PID_DIR = DATA_DIR / "pids"
 MAKE_DIRS: list[Path] = [
     DATA_DIR,
     DATABASE_DIR,
-    DEV_PACKAGES_DIR,
+    APP_SETTINGS_DIR,
     MEDIA_DIR,
     MEDIA_SERVE_DIR,
     METRICS_DIR,
@@ -71,7 +73,7 @@ APP_TEMPLATE = APP_TEMPLATE_DIR / "app"
 APP_SLIM_TEMPLATE = APP_TEMPLATE_DIR / "app_slim"
 
 
-# // PROJECT SETTINGS //
+# // PROJECT CONFIG //
 DOTENV_FILE: Path = DATA_DIR / "settings.env"
 if not DOTENV_FILE.exists():
     with open(DOTENV_FILE, "w", encoding="utf-8") as fp:
@@ -135,7 +137,7 @@ logging_config(LOGGING)
 _logger = logging.getLogger(__name__)
 
 
-# // SECURITY SETTINGS //
+# // SECURITY //
 SESSION_COOKIE_AGE = get_env("SESSION_COOKIE_AGE", Seconds.month * 3, return_type=int)
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = get_env(
@@ -169,7 +171,7 @@ else:
 SECURE_BROWSER_XSS_FILTER = True
 
 
-# // API SETTINGS //
+# // HTTP RESTFUL API //
 REST_FRAMEWORK: dict[str, Any] = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
@@ -225,7 +227,7 @@ INSTALLED_APPS = [
     *(
         [
             "daphne",  # Overrides `runserver` command with an ASGI server
-            "jazzmin",
+            "jazzmin",  # Pretty admin interface
             "django.contrib.admin",
             "django.contrib.admindocs",
             "massadmin",  # Mass edit actions for admin pages
@@ -267,9 +269,9 @@ INSTALLED_APPS = [
     "encrypted_fields",  # Encrypted text in the DB
     "solo",  # Single-row models in the DB
     "django_ace",  # Code hightlighted form fields
-    "versionfield",  # Allow for version numbers in the DB
+    "versionfield",  # Filterable/sortable version numbers fields in the DB
     # ASGI
-    "reactpy_django",  # React JS for Python
+    "reactpy_django",  # ReactJS for Python
     # API
     "rest_framework",  # OpenAPI Framework
     "rest_framework_api_key",  # API Key Manager
@@ -356,7 +358,7 @@ BACKUP_DATE_FORMAT = "%Y-%m-%d_at_%H%M"
 BACKUP_COMPRESSION = "xz"
 
 
-# // USER AUTHENTICATION //
+# // AUTHENTICATION //
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -429,18 +431,35 @@ if not get_safe_mode():
     else:
         _logger.warning("No user installed apps detected.")
 
-# Execute settings scripts from Conreq Apps
-external_settings = list(glob(str(PACKAGES_DIR / "*" / "django-settings.py"))) + list(
-    glob(str(PACKAGES_DEV_DIR / "*" / "django-settings.py"), recursive=True)
-)
-include(*external_settings)
+    # Execute settings scripts from enabled Conreq Apps
+    packages = find_packages()
+    site_dir = Path(site.getsitepackages()[1])
+    settings_files: list[Path] = []
+    if not site.getsitepackages()[1].endswith("site-packages"):
+        raise OSError(
+            "Expected site-packages directory to end with 'site-packages', "
+            f"but got '{site_dir}'."
+        )
+    for pkg_name in packages:
+        # These are settings files defined in the package's directory
+        dedicated_settings = site_dir / f"{pkg_name}" / "conreq_settings.py"
+        if dedicated_settings.exists():
+            settings_files.append(dedicated_settings)
 
-# Add conditional django apps
+        # These are settings files defined in the database's settings_script field
+        simple_settings = APP_SETTINGS_DIR / f"{pkg_name}.py"
+        if simple_settings.exists():
+            settings_files.append(simple_settings)
+
+    include(*settings_files)  # type: ignore
+
+
+# // POSITION / TIMING SENSITIVE CODE //
+# Debug django apps (must be near last)
 if DEBUG:
     INSTALLED_APPS.extend(("silk", "drf_spectacular", "drf_spectacular_sidecar"))
-# Automatically delete dangling files
+# Auto delete dangling files app (must be near last)
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
-
-# Ensure Conreq app loader comes last
+# Conreq app loader (must be last)
 if not get_safe_mode():
     INSTALLED_APPS.append("conreq._core.app_loader")
