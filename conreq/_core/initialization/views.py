@@ -58,4 +58,4 @@ def _display_initialization(
     initialization.initialized = True
     initialization.full_clean()
     initialization.save()
-    return redirect("landing")
+    return redirect("conreq:landing")

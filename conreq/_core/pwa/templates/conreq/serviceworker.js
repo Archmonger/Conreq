@@ -2,8 +2,8 @@
 
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
-	"{% url 'offline' %}",
-	"{% url 'web_manifest' %}",
+	"{% url 'conreq:offline' %}",
+	"{% url 'conreq:web_manifest' %}",
 	"{% static 'conreq/main_slim.css' %}",
 	"{% static 'conreq/offline.css' %}",
 	"{% static 'conreq/icons/favicon-32x32.png' %}",
@@ -45,7 +45,7 @@ self.addEventListener("fetch", (event) => {
 				return response || fetch(event.request);
 			})
 			.catch(() => {
-				return caches.match("{% url 'offline' %}");
+				return caches.match("{% url 'conreq:offline' %}");
 			})
 	);
 });

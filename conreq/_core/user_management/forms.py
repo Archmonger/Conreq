@@ -28,7 +28,7 @@ class UserEditForm(ModelForm):
                 "delete",
                 "Delete",
                 css_class="btn-danger",
-                onclick=f"location.href = '{reverse_lazy('delete_user')}?id=' + new URLSearchParams(window.location.search).get('id')",
+                onclick=f"location.href = '{reverse_lazy('conreq:delete_user')}?id=' + new URLSearchParams(window.location.search).get('id')",
             )
         )
         self.helper.add_input(Button("back", "Back", onclick="history.back()"))

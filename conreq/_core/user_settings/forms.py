@@ -36,7 +36,7 @@ class ChangePasswordForm(PasswordChangeForm):
 class DeleteMyAccountForm(ModelForm):
     password = CharField(widget=PasswordInput())
     confirm_password = CharField(widget=PasswordInput())
-    success_url = reverse_lazy("delete_my_account_confirm")
+    success_url = reverse_lazy("conreq:delete_my_account_confirm")
 
     class Meta:
         model = get_user_model()

@@ -13,9 +13,9 @@ def url(
     """Decorates a Django view function or view class."""
 
     def decorator(view):
-        from conreq.urls import conreq_urls
+        from conreq.urls import external_urls
 
-        _register_view(view, url_pattern, conreq_urls, name, use_regex)
+        _register_view(view, url_pattern, external_urls, name, use_regex)
 
         return view
 

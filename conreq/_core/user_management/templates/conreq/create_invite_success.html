@@ -19,7 +19,6 @@
         .inline-block {
             display: inline-block;
         }
-
     </style>
     {% endblock %}
 </head>
@@ -53,7 +52,7 @@
     </div>
 
     <script>
-        document.querySelector("#clipboard").textContent = location.origin + "{% url 'sign_up_invite' invite_code %}";
+        document.querySelector("#clipboard").textContent = location.origin + "{% url 'conreq:sign_up_invite' invite_code %}";
 
         function copy_to_clipboard() {
             var copy_text = document.querySelector("#clipboard").textContent;

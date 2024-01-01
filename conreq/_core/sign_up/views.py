@@ -14,19 +14,19 @@ LOGIN_REDIRECT_URL = getattr(settings, "LOGIN_REDIRECT_URL")
 def sign_up(request, invite_code=None):
     # No invite code was provided
     if not invite_code:
-        return redirect("landing")
+        return redirect("conreq:landing")
 
     # Check if the invite code is valid
     try:
         code: InviteCode = InviteCode.objects.get(code=invite_code)
         if not code.is_valid:
             # TODO: This should give a meaningful error message
-            return redirect("landing")
+            return redirect("conreq:landing")
     except (
         InviteCode.DoesNotExist,  # pylint: disable=no-member
         InviteCode.MultipleObjectsReturned,  # pylint: disable=no-member
     ):
-        return redirect("landing")
+        return redirect("conreq:landing")
 
     # User submitted the registration form
     if request.method == "POST":

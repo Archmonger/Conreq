@@ -22,15 +22,14 @@ class DebugConfig(AppConfig):
         from django.contrib import admin
         from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-        from conreq.urls import conreq_urls
+        from conreq.urls import external_urls
 
-        conreq_urls.extend(
+        external_urls.extend(
             [
                 path("silk/", include("silk.urls", namespace="silk"), name="silk"),
                 path(
                     "admin/docs/",
                     include("django.contrib.admindocs.urls"),
-                    name="admin-docs",
                 ),
                 path("admin/", include("massadmin.urls")),
                 path("admin/", admin.site.urls, name="admin"),

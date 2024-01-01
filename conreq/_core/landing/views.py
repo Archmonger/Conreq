@@ -9,7 +9,7 @@ def landing(request):
     # sourcery skip: assign-if-exp
     # Redirect if a landing page doesn't exist
     if not config.templates.landing:
-        return redirect("home")
+        return redirect("conreq:home")
 
     # Render the landing page
     return initialize(request) or render(request, config.templates.landing)

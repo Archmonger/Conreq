@@ -24,7 +24,7 @@ from conreq.types import (
 @component
 @auth_required(
     fallback=script(
-        f"window.location.href = '{reverse_lazy('sign_in')}"
+        f"window.location.href = '{reverse_lazy('conreq:sign_in')}"
         + "?next=' + window.location.pathname",
     )
 )

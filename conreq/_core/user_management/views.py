@@ -69,7 +69,7 @@ class CreateInvite(SuccessCurrentUrlMixin, CurrentUserOrAdminMixin, CreateView):
     def get_success_url(self):
         invite_code: InviteCode = getattr(self, "object")
         return reverse(
-            "create_invite_success", kwargs={"invite_code": invite_code.code}
+            "conreq:create_invite_success", kwargs={"invite_code": invite_code.code}
         )
 
 

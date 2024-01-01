@@ -58,7 +58,7 @@ def _send_email_invite(invite_code: str, scope: dict):
     origin = general_settings.public_url or get_origin_header(scope)
 
     invite = InviteCode.objects.get(code=invite_code)
-    path = reverse("sign_up_invite", kwargs={"invite_code": invite.code})
+    path = reverse("conreq:sign_up_invite", kwargs={"invite_code": invite.code})
 
     # TODO: Add email template for user invites. Probably have configuration settings within the user management subtabs?
     email = Email(

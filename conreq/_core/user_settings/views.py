@@ -29,7 +29,7 @@ class ChangePasswordView(SuccessCurrentUrlMixin, PasswordChangeView):
 class DeleteMyAccountView(UserInstanceMixin, FormView):
     template_name = "conreq/form.html"
     form_class = DeleteMyAccountForm
-    success_url = reverse_lazy("delete_my_account_confirm")
+    success_url = reverse_lazy("conreq:delete_my_account_confirm")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -40,7 +40,7 @@ class DeleteMyAccountView(UserInstanceMixin, FormView):
 @method_decorator(user_passes_test(lambda u: u.is_authenticated), name="dispatch")
 class DeleteMyAccountConfirmView(UserInstanceMixin, DeleteView):
     template_name = "conreq/delete_confirm.html"
-    success_url = reverse_lazy("delete_my_account_success")
+    success_url = reverse_lazy("conreq:delete_my_account_success")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
