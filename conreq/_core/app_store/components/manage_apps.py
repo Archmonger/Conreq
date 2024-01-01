@@ -11,6 +11,8 @@ from conreq.utils.packages import find_packages
 
 _logger = getLogger(__name__)
 
+# TODO: Need two modal abstractions. Termninal Caller Modal and Confirmation Modal
+
 
 @component
 def manage_apps():
@@ -179,7 +181,7 @@ def app_row(pkg_name: str):
                         "Enable" if pkg_name in disabled_packages else "Disable",
                         disable_click,
                     ),
-                    dropdown_item("Change Version", lambda _: None)
+                    dropdown_item("Change Version »", lambda _: None)
                     if available_versions
                     else "",
                 ),
