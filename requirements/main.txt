@@ -15,7 +15,7 @@ djangorestframework-api-key==3.0.0
 docutils==0.20.1
 drf-yasg==1.21.7
 huey==2.5.0
-hypercorn[h3]==0.15.0
+hypercorn[h3]==0.16.0
 jsonfield==3.1.0
 markdown==3.5
 pwned-passwords-django==2.0
