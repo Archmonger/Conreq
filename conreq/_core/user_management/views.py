@@ -41,21 +41,21 @@ class DeleteUserView(
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def manage_users(request):
+def manage_users(request, per_page=25, page=1):
     table = UsersTable(get_user_model().objects.all())
     RequestConfig(
         request,
-        paginate={"per_page": request.GET.get("per_page", 25)},
+        paginate={"per_page": per_page, "page": page},
     ).configure(table)
     return render(request, "conreq/table.html", {"table": table})
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def manage_invites(request):
+def manage_invites(request, per_page=25, page=1):
     table = UserInviteTable(InviteCode.objects.all())
     RequestConfig(
         request,
-        paginate={"per_page": request.GET.get("per_page", 25)},
+        paginate={"per_page": per_page, "page": page},
     ).configure(table)
     return render(request, "conreq/table.html", {"table": table})
 
