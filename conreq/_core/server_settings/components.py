@@ -7,7 +7,7 @@ import channels
 import django
 from django.conf import settings
 from reactpy import component, html
-from reactpy_django.components import view_to_component
+from reactpy_django.components import view_to_iframe
 from reactpy_django.decorators import auth_required
 
 from conreq import config
@@ -16,12 +16,10 @@ from conreq._core.server_settings import views
 
 # TODO: Create generic notification agent API.
 
-general_settings_vtc = view_to_component(views.GeneralSettingsView, compatibility=True)
-styling_settings_vtc = view_to_component(views.StylingSettingsView, compatibility=True)
-webserver_settings_vtc = view_to_component(
-    views.WebserverSettingsView, compatibility=True
-)
-email_settings_vtc = view_to_component(views.EmailSettingsView, compatibility=True)
+general_settings_vtc = view_to_iframe(views.GeneralSettingsView)
+styling_settings_vtc = view_to_iframe(views.StylingSettingsView)
+webserver_settings_vtc = view_to_iframe(views.WebserverSettingsView)
+email_settings_vtc = view_to_iframe(views.EmailSettingsView)
 
 
 @component

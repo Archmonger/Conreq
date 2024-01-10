@@ -1,6 +1,6 @@
 from channels.auth import logout
 from reactpy import component, html
-from reactpy_django.components import view_to_component
+from reactpy_django.components import view_to_iframe
 from reactpy_django.decorators import auth_required
 
 from conreq import config
@@ -8,17 +8,11 @@ from conreq._core.components import tabbed_viewport
 from conreq._core.user_settings import views
 from conreq.types import SidebarTabEvent, Viewport
 
-user_settings_vtc = view_to_component(views.UserSettingsView, compatibility=True)
-change_password_vtc = view_to_component(views.ChangePasswordView, compatibility=True)
-delete_my_account_vtc = view_to_component(views.DeleteMyAccountView, compatibility=True)
-delete_my_account_confirm_vtc = view_to_component(
-    views.DeleteMyAccountConfirmView,
-    compatibility=True,
-)
-delete_my_account_success_vtc = view_to_component(
-    views.delete_my_account_success,
-    compatibility=True,
-)
+user_settings_vtc = view_to_iframe(views.UserSettingsView)
+change_password_vtc = view_to_iframe(views.ChangePasswordView)
+delete_my_account_vtc = view_to_iframe(views.DeleteMyAccountView)
+delete_my_account_confirm_vtc = view_to_iframe(views.DeleteMyAccountConfirmView)
+delete_my_account_success_vtc = view_to_iframe(views.delete_my_account_success)
 
 
 @component

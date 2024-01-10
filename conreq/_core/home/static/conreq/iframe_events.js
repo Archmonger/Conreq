@@ -1,4 +1,4 @@
-// TODO: Delete this file after view_to_component is fleshed out
+// TODO: Delete this file after view_to_iframe is fleshed out
 
 window.document.addEventListener(
 	"reload-page",

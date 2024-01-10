@@ -24,7 +24,7 @@ djangorestframework==3.14.0
 djangorestframework-api-key==2.3.0
 docutils==0.19
 drf-spectacular[sidecar]==0.26.2
-reactpy_django==3.4.0
+reactpy_django==3.6.0
 huey==2.4.5
 markdown==3.4.1
 pillow==9.5.0

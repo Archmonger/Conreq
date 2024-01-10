@@ -1,6 +1,6 @@
 from django.urls import reverse
 from reactpy import component, hooks, html
-from reactpy_django.components import view_to_component
+from reactpy_django.components import view_to_iframe
 from reactpy_django.decorators import auth_required
 from reactpy_django.hooks import use_mutation, use_scope
 
@@ -12,11 +12,11 @@ from conreq._core.user_management import views
 # TODO: Create SimpleTable and SimpleForm that use Conreq templates
 # TODO: Figure out some way to integrate user invites into this
 
-edit_user_vtc = view_to_component(views.EditUserView, compatibility=True)
-delete_user_vtc = view_to_component(views.DeleteUserView, compatibility=True)
-manage_users_vtc = view_to_component(views.manage_users, compatibility=True)
-manage_invites_vtc = view_to_component(views.manage_invites, compatibility=True)
-create_invite_vtc = view_to_component(views.CreateInvite, compatibility=True)
+edit_user_vtc = view_to_iframe(views.EditUserView)
+delete_user_vtc = view_to_iframe(views.DeleteUserView)
+manage_users_vtc = view_to_iframe(views.manage_users)
+manage_invites_vtc = view_to_iframe(views.manage_invites)
+create_invite_vtc = view_to_iframe(views.CreateInvite)
 
 
 @component
