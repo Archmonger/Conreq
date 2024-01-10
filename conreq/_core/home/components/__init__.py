@@ -3,7 +3,7 @@ from copy import copy
 from django.urls import reverse_lazy
 from reactpy import component, hooks
 from reactpy.html import script
-from reactpy_django.decorators import auth_required
+from reactpy_django.decorators import user_passes_test
 
 from conreq._core.home.components.backdrop import backdrop
 from conreq._core.home.components.modal import modal
@@ -21,13 +21,14 @@ from conreq.types import (
 # TODO: Add react components: SimpleBar, Pretty-Checkbox, IziToast, Bootstrap
 
 
-@component
-@auth_required(
+@user_passes_test(
+    lambda user: user.is_active,
     fallback=script(
         f"window.location.href = '{reverse_lazy('conreq:sign_in')}"
         + "?next=' + window.location.pathname",
-    )
+    ),
 )
+@component
 def homepage():
     state, set_state = hooks.use_state(HomepageState())
     state.set_state = lambda obj: set_state(copy(obj))

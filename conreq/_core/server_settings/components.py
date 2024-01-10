@@ -8,7 +8,7 @@ import django
 from django.conf import settings
 from reactpy import component, html
 from reactpy_django.components import view_to_iframe
-from reactpy_django.decorators import auth_required
+from reactpy_django.decorators import user_passes_test
 
 from conreq import config
 from conreq._core.components import tabbed_viewport
@@ -22,26 +22,26 @@ webserver_settings_vtc = view_to_iframe(views.WebserverSettingsView)
 email_settings_vtc = view_to_iframe(views.EmailSettingsView)
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def general_settings():
     return general_settings_vtc()
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def styling_settings():
     return styling_settings_vtc()
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def webserver_settings():
     return webserver_settings_vtc()
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def email_settings():
     return email_settings_vtc()
 

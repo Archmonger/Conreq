@@ -1,7 +1,7 @@
 from django.urls import reverse
 from reactpy import component, hooks, html
 from reactpy_django.components import view_to_iframe
-from reactpy_django.decorators import auth_required
+from reactpy_django.decorators import user_passes_test
 from reactpy_django.hooks import use_mutation, use_scope
 
 from conreq import config
@@ -19,32 +19,32 @@ manage_invites_vtc = view_to_iframe(views.manage_invites)
 create_invite_vtc = view_to_iframe(views.CreateInvite)
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def edit_user():
     return edit_user_vtc()
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def delete_user():
     return delete_user_vtc()
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def manage_users():
     return manage_users_vtc()
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def manage_invites():
     return manage_invites_vtc()
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def create_invite():
     return create_invite_vtc()
 
@@ -83,8 +83,8 @@ def get_origin_header(scope) -> str:
     )
 
 
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def send_email_invite_btn(invite_code: str):
     send_email = use_mutation(_send_email_invite, lambda *x: None)
     btn_clicked, set_btn_clicked = hooks.use_state(False)
@@ -132,8 +132,8 @@ def send_email_invite_btn(invite_code: str):
 
 
 # pylint: disable=protected-access
+@user_passes_test(lambda user: user.is_staff)
 @component
-@auth_required(auth_attribute="is_staff")
 def user_management():
     return html._(
         tabbed_viewport(
