@@ -80,7 +80,6 @@ class Command(BaseCommand):
             set_env("WEB_ENCRYPTION_KEY", get_random_secret_key())
 
         # Run background task management
-        # FIXME: This causes some duplicate logging during startup.
         self.stop_huey()
         proc = self.start_huey()
         if proc.pid:
@@ -104,24 +103,23 @@ class Command(BaseCommand):
 
         # TODO: Add in Uvicorn's reverse proxy stuff
         db_conf: WebserverSettings = WebserverSettings.get_solo()
+        debug = get_env("WEBSERVER_DEBUG", return_type=bool)
         config_kwargs = {
+            "host": self.host,
+            "port": self.port,
             "ssl_certfile": self._f_path(db_conf.ssl_certificate),
             "ssl_keyfile": self._f_path(db_conf.ssl_key),
             "ssl_ca_certs": self._f_path(db_conf.ssl_ca_certificate),
+            "log_config": UVICORN_LOGGING_CONFIG if debug else {"version": 1},
+            "log_level": "debug" if debug else None,
+            "server_header": False,
+            "workers": settings.WEBSERVER_WORKERS,
+            "reload": debug,
+            "reload_dirs": [settings.ROOT_DIR],
         }
 
         # Run the webserver
-        debug = get_env("WEBSERVER_DEBUG", return_type=bool)
-        uvicorn.run(
-            "conreq.asgi:application",
-            host=self.host,
-            port=self.port,
-            workers=settings.WEBSERVER_WORKERS,
-            log_config=UVICORN_LOGGING_CONFIG if debug else {"version": 1},
-            log_level="debug" if debug else None,
-            server_header=False,
-            **config_kwargs,
-        )
+        uvicorn.run("conreq.asgi:application", **config_kwargs)
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -162,7 +160,7 @@ class Command(BaseCommand):
     @staticmethod
     def start_huey():
         """Starts the Huey background task manager."""
-        start_command = f"{sys.executable} manage.py run_huey"
+        start_command = f"{sys.executable} manage.py run_huey --quiet"
         return subprocess.Popen(start_command.split(" "))
 
     @staticmethod
