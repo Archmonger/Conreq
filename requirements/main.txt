@@ -8,7 +8,7 @@ django-htmlmin==0.11.0
 django-model-utils==4.3.1
 django-searchable-encrypted-fields==0.2.1
 django-silk==5.0.4
-django-solo==2.1.0
+django-solo==2.2.0
 django-url-or-relative-url-field==0.2.0
 djangorestframework==3.14.0
 djangorestframework-api-key==3.0.0
