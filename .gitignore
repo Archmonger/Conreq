@@ -11,6 +11,9 @@ data/
 # Temp files
 *.tmp
 
+# Docker config folder
+config/
+
 # Backup files #
 *.bak
 *_bak/
