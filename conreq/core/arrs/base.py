@@ -23,83 +23,43 @@ class ArrBase:
             results["content_source"] = content_source
 
     @staticmethod
-    def _check_availability(content):
+    def _check_availability(content: dict):
         """Checks the availability of one item. For use within check_availability()"""
-        # TODO: Rewrite this
-        #####################
-        ### "Unavailable" ###
-        #####################
-        # Check if an individual movie or episode does not exist (Sonarr and Radarr)
-        try:
-            if not content["hasFile"]:
-                content["availability"] = "Unavailable"
-                return content
-        except Exception:
-            pass
+        statistics: dict = content.get("statistics", {})
+        percent_available: int | None = statistics.get("percentOfEpisodes")
+        grabbed: bool | None = statistics.get("grabbed")
 
-        # Check if a season or series is completely unavailable (Sonarr)
-        try:
-            if content["episodeFileCount"] == 0:
-                content["availability"] = "Unavailable"
-                return content
-        except Exception:
-            pass
+        ##### "Unavailable" #####
+        # Sonarr/Radarr: Check if an individual movie or episode does not exist
+        if "hasFile" in content and not content["hasFile"]:
+            content["availability"] = "Unavailable"
+            return content
+        # Sonarr: Check if a season or series is completely unavailable
+        if statistics and percent_available == 0:
+            content["availability"] = "Unavailable"
+            return content
 
-        #################
-        ### "Partial" ###
-        #################
-        # Check if season or series is partially downloaded (Sonarr)
-        try:
-            # Series
-            if content.__contains__("lastInfoSync"):
-                if (
-                    content["episodeFileCount"] != 0
-                    and content["episodeFileCount"] < content["episodeCount"]
-                ):
-                    content["availability"] = "Partial"
-                    return content
+        ##### "Partial" #####
+        # Sonarr: Check if season or series is partially downloaded
+        if statistics and percent_available and percent_available < 100:
+            content["availability"] = "Partial"
+            return content
+        # Radarr: Check if a movie is being downloaded.
+        if grabbed is True and statistics and statistics.get("movieFileCount") == 0:
+            content["availability"] = "Partial"
+            return content
 
-            # Season
-            elif (
-                content["episodeFileCount"] != 0
-                and content["totalEpisodeCount"] > content["episodeCount"]
-            ):
-                content["availability"] = "Partial"
-                return content
-        except Exception:
-            pass
+        ##### "Available" #####
+        # Sonarr: Check if a season or series is fully downloaded
+        if statistics and percent_available == 100:
+            content["availability"] = "Available"
+            return content
+        # Sonarr/Radarr: Check if an individual movie or individual episode exists
+        if "hasFile" in content and content["hasFile"]:
+            content["availability"] = "Available"
+            return content
 
-        ###################
-        ### "Available" ###
-        ###################
-        # Check if a season is fully downloaded (Sonarr)
-        try:
-            # Series
-            if content.__contains__("lastInfoSync"):
-                if (
-                    content["episodeFileCount"] != 0
-                    and content["episodeFileCount"] >= content["episodeCount"]
-                ):
-                    content["availability"] = "Available"
-                    return content
-
-            # Season
-            elif (
-                content["episodeFileCount"] != 0
-                and content["totalEpisodeCount"] <= content["episodeCount"]
-            ):
-                content["availability"] = "Available"
-                return content
-        except Exception:
-            pass
-
-        # Check if an individual movie or individual episode exists (Sonarr & Radarr)
-        try:
-            if content["hasFile"]:
-                content["availability"] = "Available"
-                return content
-        except Exception:
-            pass
-
+        ##### "Unknown" #####
+        # This should never be reached except with Sonarr/Raddarr API changes
         content["availability"] = "Unknown"
         return content

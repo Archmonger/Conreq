@@ -1,4 +1,7 @@
 """Conreq Content Manager: Talks with Sonarr in order to add/remove content."""
+
+from typing import Any
+
 from pyarr import SonarrAPI
 
 from conreq.core.server_settings.models import ConreqConfig
@@ -12,7 +15,7 @@ _logger = log.get_logger(__name__)
 class SonarrManager(ArrBase):
     """Adds and removes content from Sonarr, and can return the request state."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         # Database values
         self.conreq_config = ConreqConfig.get_solo()
 
@@ -24,7 +27,12 @@ class SonarrManager(ArrBase):
         # Set values if DB still contains default values
         self.check_sonarr_defaults()
 
-    def get(self, tvdb_id, obtain_season_info=False, force_update_cache=False):
+    def get(
+        self,
+        tvdb_id,
+        obtain_season_info=False,
+        force_update_cache=False,
+    ) -> dict | None:
         """Gets content information and computes the availability of series, seasons, and episodes within the Sonarr collection.
 
         Args:
@@ -33,20 +41,21 @@ class SonarrManager(ArrBase):
             force_update_cache: Boolean. If True, arr library cache is force updated before returning results.
 
         Returns:
-            JSON response containing the existing content, filled with availability key-value pairs.
-               The availability has three available states: "Unavailable", "Partial", and "Available".
+            JSON response containing the existing content, filled with availability key-value pairs. \
+            The availability has three available states: "Unavailable", "Partial", and "Available".
         """
         try:
             # Get Sonarr's collection
-            results = cache.handler(
+            results: dict = cache.handler(
                 "sonarr library",
                 function=self.get_sonarr_library,
                 cache_duration=ARR_LIBRARY_CACHE_TIMEOUT,
                 force_update_cache=force_update_cache,
             )
+            assert isinstance(results, dict)
 
             # Find our TVDB ID within Sonarr
-            if isinstance(results, dict) and results.__contains__(str(tvdb_id)):
+            if str(tvdb_id) in results:
                 series = results[str(tvdb_id)]
 
                 # Obtain season information if needed
@@ -58,7 +67,7 @@ class SonarrManager(ArrBase):
 
             # Couldn't find the series
             log.handler(
-                "Series with TVDB ID " + str(tvdb_id) + " not found within Sonarr.",
+                f"Series with TVDB ID {str(tvdb_id)} not found within Sonarr.",
                 log.INFO,
                 _logger,
             )
@@ -79,8 +88,13 @@ class SonarrManager(ArrBase):
         return None
 
     def add(
-        self, tvdb_id, quality_profile_id, root_dir, series_type, season_folders=True
-    ):
+        self,
+        tvdb_id,
+        quality_profile_id,
+        root_dir,
+        series_type,
+        season_folders=True,
+    ) -> dict | None:
         """Adds a new series using Sonarr.
         Will not work for content that already exists.
         This does NOT mark content as monitored or perform a search.
@@ -97,21 +111,38 @@ class SonarrManager(ArrBase):
         """
         try:
             # Add the show to Sonarr's collection
-            series_id = self.__sonarr.add_series(
-                tvdb_id,
-                quality_profile_id,
-                root_dir,
+            series = self.__sonarr.lookup_series_by_tvdb_id(tvdb_id)
+            assert isinstance(series, list)
+            assert len(series) == 1
+            assert "title" in series[0]
+            series = series[0]
+
+            # Set the series type
+            series["seriesType"] = series_type.lower().capitalize()
+
+            # Get the default language profile
+            languages = self.__sonarr.get_language_profile()
+            language_profile_id = (
+                languages[0]["id"] if isinstance(languages, list) else languages
+            )
+            assert isinstance(language_profile_id, int)
+
+            # Add the series to Sonarr
+            sonarr_id = self.__sonarr.add_series(
+                series=series,
+                quality_profile_id=quality_profile_id,
+                language_profile_id=language_profile_id,
+                root_dir=root_dir,
                 season_folder=season_folders,
                 monitored=False,
                 ignore_episodes_with_files=True,
                 ignore_episodes_without_files=True,
             )["id"]
 
-            # Obtain all information that Sonarr collected about the series
-            new_series = self.__sonarr.get_series(series_id)
+            # Obtain all information that Sonarr collected about the series (episode numbers)
+            new_series = self.__sonarr.get_series(sonarr_id)
+            assert "title" in new_series
 
-            # Set the series type
-            new_series["seriesType"] = series_type.lower().capitalize()
             return self.__sonarr.upd_series(new_series)
 
         except Exception:
@@ -122,7 +153,12 @@ class SonarrManager(ArrBase):
             )
         return None
 
-    def request(self, sonarr_id, seasons=None, episode_ids=None):
+    def request(
+        self,
+        sonarr_id,
+        seasons=None,
+        episode_ids=None,
+    ) -> dict | None:
         """Monitors and searches for an existing series, season(s), and/or episode(s) using Sonarr.
 
         Args:
@@ -140,7 +176,7 @@ class SonarrManager(ArrBase):
         """
         try:
             # Search for a show with a specific Sonarr ID.
-            response = {
+            response: dict = {
                 "season_update_results": [],
                 "episode_update_results": [],
                 "show_search_results": [],
@@ -150,6 +186,7 @@ class SonarrManager(ArrBase):
 
             # Set the series as monitored
             series = self.__sonarr.get_series(sonarr_id)
+            assert isinstance(series, dict)
             series["monitored"] = True
 
             for season in series["seasons"]:
@@ -190,7 +227,7 @@ class SonarrManager(ArrBase):
             # Save the episode changes to Sonarr
             for episode in modified_episodes:
                 response["episode_update_results"].append(
-                    self.__sonarr.upd_episode(episode)
+                    self.__sonarr.upd_episode(episode["id"], episode)
                 )
 
             # Search for the whole show
@@ -229,7 +266,10 @@ class SonarrManager(ArrBase):
             )
         return None
 
-    def delete(self, sonarr_id):
+    def delete(
+        self,
+        sonarr_id,
+    ) -> dict | None:
         """Deletes an existing series using Sonarr.
 
         Args:
@@ -241,7 +281,9 @@ class SonarrManager(ArrBase):
         # TODO: Need to blacklist deleted content.
         try:
             # Remove a show with a specific Sonarr ID.
-            return self.__sonarr.del_series(sonarr_id, delete_files=True)
+            response = self.__sonarr.del_series(sonarr_id, delete_files=True)
+            assert isinstance(response, dict)
+            return response
 
         except Exception:
             log.handler(
@@ -251,7 +293,7 @@ class SonarrManager(ArrBase):
             )
         return None
 
-    def delete_episode(self, episode_file_id):
+    def delete_episode(self, episode_file_id) -> Any:
         """Deletes episode(s) using Sonarr.
 
         Args:
@@ -272,7 +314,7 @@ class SonarrManager(ArrBase):
             )
         return None
 
-    def check_sonarr_defaults(self):
+    def check_sonarr_defaults(self) -> None:
         """Will configure default root dirs and quality profiles (if unset)"""
         if self.conreq_config.sonarr_enabled:
             sonarr_tv_folder = self.conreq_config.sonarr_tv_folder
@@ -284,7 +326,9 @@ class SonarrManager(ArrBase):
 
             # Root dirs
             if not sonarr_tv_folder or not sonarr_anime_folder:
-                default_dir = self.sonarr_root_dirs()[0]["id"]
+                default_dirs = self.sonarr_root_dirs()
+                assert isinstance(default_dirs, list)
+                default_dir = default_dirs[0]["id"]
                 if not sonarr_tv_folder:
                     self.conreq_config.sonarr_tv_folder = default_dir
                 if not sonarr_anime_folder:
@@ -292,7 +336,9 @@ class SonarrManager(ArrBase):
 
             # Qualtiy Profiles
             if not sonarr_tv_quality_profile or not sonarr_anime_quality_profile:
-                default_profile = self.sonarr_quality_profiles()[0]["id"]
+                default_profiles = self.sonarr_quality_profiles()
+                assert isinstance(default_profiles, list)
+                default_profile = default_profiles[0]["id"]
                 if not sonarr_tv_quality_profile:
                     self.conreq_config.sonarr_tv_quality_profile = default_profile
                 if not sonarr_anime_quality_profile:
@@ -303,10 +349,12 @@ class SonarrManager(ArrBase):
                 self.conreq_config.clean_fields()
                 self.conreq_config.save()
 
-    def sonarr_root_dirs(self):
+    def sonarr_root_dirs(self) -> list | None:
         """Returns the root dirs available within Sonarr"""
         try:
-            return self.__sonarr.get_root_folder()
+            root_folders = self.__sonarr.get_root_folder()
+            assert isinstance(root_folders, list)
+            return root_folders
 
         except Exception:
             log.handler(
@@ -316,10 +364,12 @@ class SonarrManager(ArrBase):
             )
         return None
 
-    def sonarr_quality_profiles(self):
+    def sonarr_quality_profiles(self) -> list | None:
         """Returns the quality profiles available within Sonarr"""
         try:
-            return self.__sonarr.get_quality_profile()
+            profiles = self.__sonarr.get_quality_profile()
+            assert isinstance(profiles, list)
+            return profiles
 
         except Exception:
             log.handler(
@@ -329,7 +379,7 @@ class SonarrManager(ArrBase):
             )
         return None
 
-    def refresh_library(self):
+    def refresh_library(self) -> None:
         """Refreshes our local copy of Sonarr's library"""
         try:
             if self.conreq_config.sonarr_enabled:
@@ -346,18 +396,19 @@ class SonarrManager(ArrBase):
                 _logger,
             )
 
-    def get_sonarr_library(self):
+    def get_sonarr_library(self) -> dict | None:
         """Fetches everything within Sonarr's library"""
         try:
             if self.conreq_config.sonarr_enabled:
                 if self.conreq_config.sonarr_url and self.conreq_config.sonarr_api_key:
                     # Get the latest list of Sonarr's collection
-                    results = self.__sonarr.get_series()
+                    results: list[dict] = self.__sonarr.get_series()  # type: ignore
+                    assert isinstance(results, list)
 
                     # Set up a dictionary of results with IDs as keys
                     results_with_ids = {}
                     for series in results:
-                        if series.__contains__("tvdbId"):
+                        if "tvdbId" in series:
                             self._check_availability(series)
                             self._set_content_attributes("tv", "sonarr", series)
                             results_with_ids[str(series["tvdbId"])] = series
@@ -379,7 +430,7 @@ class SonarrManager(ArrBase):
             )
         return None
 
-    def _season_episode_availability(self, series):
+    def _season_episode_availability(self, series) -> None:
         """Checks the availability of seasons."""
         # Obtain the episodes
         episodes = self.__sonarr.get_episodes_by_series_id(series["id"])

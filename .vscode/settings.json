@@ -1,16 +1,8 @@
 {
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintUseMinimalCheckers": false,
-    "python.linting.pylintArgs": [],
     "python.languageServer": "Pylance",
-    "python.analysis.typeCheckingMode": "off",
-    "python.formatting.provider": "black",
-    "python.sortImports.args": [
-        "--src=${workspaceFolder}"
-    ],
-    "terminal.integrated.scrollback": 20000,
+    "terminal.integrated.scrollback": 2000,
     "git.autofetch": true,
     "prettier.tabWidth": 4,
     "prettier.useTabs": true,
@@ -32,6 +24,6 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[python]": {
-        "editor.defaultFormatter": "ms-python.python"
+        "editor.defaultFormatter": "charliermarsh.ruff"
     },
 }

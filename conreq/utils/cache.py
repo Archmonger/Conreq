@@ -1,5 +1,7 @@
 """Django caching wrapper and cache related capabilities."""
+
 from collections.abc import Callable
+from typing import Any, Sequence
 
 from django.core.cache import cache
 from huey.contrib.djhuey import db_task
@@ -48,12 +50,12 @@ def __cache_set(cache_key, function_results, cache_duration):
 def handler(
     cache_name: str,
     page_key: str = "",
-    function: Callable = None,
+    function: Callable | None = None,
     force_update_cache: bool = False,
     cache_duration: int = DEFAULT_CACHE_DURATION,
-    args: list = (),
-    kwargs: dict = None,
-) -> any:
+    args: Sequence = (),
+    kwargs: dict | None = None,
+) -> Any:
     """Handles caching for results and data.
 
     Args:

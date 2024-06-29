@@ -66,7 +66,6 @@ DB_ENGINE = get_database_type()
 MYSQL_CONFIG_FILE = get_str_from_env("MYSQL_CONFIG_FILE", "")
 SSL_SECURITY = get_bool_from_env("SSL_SECURITY", False)
 PWNED_VALIDATOR = get_bool_from_env("PWNED_VALIDATOR", True)
-X_FRAME_OPTIONS = get_str_from_env("X_FRAME_OPTIONS", "DENY")
 BASE_URL = get_base_url()
 
 
@@ -303,9 +302,6 @@ MIDDLEWARE = [
 
 
 # Enabling apps/middleware based on flags
-if X_FRAME_OPTIONS.lower() != "false" and not DEBUG:
-    # Block embedding conreq
-    MIDDLEWARE.append("django.middleware.clickjacking.XFrameOptionsMiddleware")
 if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
@@ -373,7 +369,7 @@ CACHES = {
         "TIMEOUT": 300,  # Django setting for default timeout of each key.
         "SHARDS": 8,  # Number of "sharded" cache dbs to create
         "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds
-        "OPTIONS": {"size_limit": 2 ** 30},  # 1 gigabyte
+        "OPTIONS": {"size_limit": 2**30},  # 1 gigabyte
     }
 }
 
