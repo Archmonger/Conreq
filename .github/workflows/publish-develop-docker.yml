@@ -22,4 +22,4 @@ jobs:
               uses: docker/build-push-action@v6
               with:
                   push: true
-                  tags: Archmonger/Conreq:develop
+                  tags: archmonger/conreq:develop
