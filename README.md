@@ -1,9 +1,6 @@
 # Conreq Beta
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/roxedus/conreq?style=flat-square)](https://hub.docker.com/r/roxedus/conreq)
-[![Docker Stars](https://img.shields.io/docker/stars/roxedus/conreq?style=flat-square)](https://hub.docker.com/r/roxedus/conreq)
-[![Docker Hub](https://img.shields.io/badge/Open%20On-DockerHub-blue?style=flat-square)](https://hub.docker.com/r/roxedus/conreq)
-[![Discord](https://img.shields.io/discord/440067432552595457?style=flat-square&label=Discord&logo=discord)](https://discord.gg/gQhGZzEjmX "Chat with the community and get realtime support!")
+[![Docker Pulls](https://img.shields.io/docker/pulls/roxedus/conreq?style=flat-square)](https://hub.docker.com/r/roxedus/conreq) [![Docker Stars](https://img.shields.io/docker/stars/roxedus/conreq?style=flat-square)](https://hub.docker.com/r/roxedus/conreq) [![Docker Hub](https://img.shields.io/badge/Open%20On-DockerHub-blue?style=flat-square)](https://hub.docker.com/r/roxedus/conreq) [![Discord](https://img.shields.io/discord/440067432552595457?style=flat-square&label=Discord&logo=discord)](https://discord.gg/gQhGZzEjmX "Chat with the community and get realtime support!")
 
 Conreq, a content requesting platform.
 
@@ -35,7 +32,6 @@ MYSQL_CONFIG_FILE = /config/mysql.cnf  # default: None
 # Security
 SSL_SECURITY = True                      # default: False (True enables advanced SSL security features)
 PWNED_VALIDATOR = False                  # default: True (False disables checking for compromised passwords)
-X_FRAME_OPTIONS = SAMEORIGIN             # default: DENY (False disables X-Frame-Options)
 ALLOWED_HOST = 192.168.0.199             # default: * (Comma separated list. Asterisk allows all hosts.)
 TRUSTED_ORIGINS = https://*.example.com  # default: None (Comma separated list. Required to be set if using https.)
 DEBUG = True                             # default: False (Only enable this during development or testing.)
@@ -51,25 +47,25 @@ EMAIL_HOST_PASSWORD = dogmemes123   # default: None
 # Screenshots
 
 | ![Login screen](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_discover.png?raw=true) | ![Discover tab](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_more_info.png?raw=true) |
-| :------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-|                                               Discover (Desktop)                                               |                                               More Info (Desktop)                                               |
+| :-: | :-: |
+| Discover (Desktop) | More Info (Desktop) |
 
 | ![More Info Tab](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_modal_episode_selection.png?raw=true) | ![Content Preview Modal](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_modal_filter.png?raw=true) |
-| :----------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
-|                                               Episode Selection Modal (Desktop)                                                |                                                   Filter Modal (Desktop)                                                    |
+| :-: | :-: |
+| Episode Selection Modal (Desktop) | Filter Modal (Desktop) |
 
 | ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_modal_preview.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/desktop_sign_in.png?raw=true) |
-| :------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
-|                                                  Preview Modal (Desktop)                                                   |                                                   Sign In (Desktop)                                                   |
+| :-: | :-: |
+| Preview Modal (Desktop) | Sign In (Desktop) |
 
 | ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_discover.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_more_info.png?raw=true) |
-| :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
-|                                                  Discover (Mobile)                                                   |                                                   More Info (Mobile)                                                   |
+| :-: | :-: |
+| Discover (Mobile) | More Info (Mobile) |
 
 | ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_modal_episode_selection.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_modal_filter.png?raw=true) |
-| :---------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
-|                                                  Episode Selection Modal (Mobile)                                                   |                                                   Filter Modal (Mobile)                                                   |
+| :-: | :-: |
+| Episode Selection Modal (Mobile) | Filter Modal (Mobile) |
 
 | ![Discover Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_registration.png?raw=true) | ![More Info Tab Mobile](https://github.com/Archmonger/Conreq/blob/main/misc/screenshots/mobile_sign_in.png?raw=true) |
-| :----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-|                                                  Registration (Mobile)                                                   |                                                   Sign In (Mobile)                                                   |
+| :-: | :-: |
+| Registration (Mobile) | Sign In (Mobile) |
