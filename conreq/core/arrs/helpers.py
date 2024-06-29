@@ -1,7 +1,9 @@
+from time import sleep
+
 from conreq.core.arrs.sonarr import SonarrManager
 
 
-def wait_for_series_info(tvdb_id, max_retries=10):
+def wait_for_series_info(tvdb_id, max_retries=15):
     """Keeps attempting to fetch a series from Sonarr until it becomes available"""
     sonarr_manager = SonarrManager()
     series = sonarr_manager.get(
@@ -16,4 +18,5 @@ def wait_for_series_info(tvdb_id, max_retries=10):
             series = sonarr_manager.get(
                 tvdb_id=tvdb_id, obtain_season_info=True, force_update_cache=True
             )
+            sleep(0.25)
     return series

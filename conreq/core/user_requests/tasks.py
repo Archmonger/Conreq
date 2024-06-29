@@ -63,7 +63,7 @@ def radarr_request_background_task(tmdb_id, radarr_params):
         # Check if the movie is already within Radarr's collection
         movie = radarr_manager.get(tmdb_id=tmdb_id)
 
-        # If it doesn't already exists, add then request it
+        # If it doesn't already exist, then add it
         if movie is None:
             movie = radarr_manager.add(
                 tmdb_id=tmdb_id,
