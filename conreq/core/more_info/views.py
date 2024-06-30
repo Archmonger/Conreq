@@ -139,7 +139,6 @@ def series_modal(request):
 
     # If it doesn't already exists, add then add it
     if requested_show is None:
-
         sonarr_params = obtain_sonarr_parameters(tmdb_id, tvdb_id)
 
         requested_show = sonarr_manager.add(

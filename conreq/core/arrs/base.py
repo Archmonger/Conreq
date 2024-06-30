@@ -25,7 +25,7 @@ class ArrBase:
     @staticmethod
     def _check_availability(content: dict):
         """Checks the availability of one item. For use within check_availability()"""
-        statistics: dict = content.get("statistics", {})
+        statistics: dict = content.get("statistics") or content or {}
         percent_available: int | None = statistics.get("percentOfEpisodes")
         grabbed: bool | None = statistics.get("grabbed")
 
@@ -45,7 +45,7 @@ class ArrBase:
             content["availability"] = "Partial"
             return content
         # Radarr: Check if a movie is being downloaded.
-        if grabbed is True and statistics and statistics.get("movieFileCount") == 0:
+        if grabbed is True and statistics.get("movieFileCount") == 0:
             content["availability"] = "Partial"
             return content
 
