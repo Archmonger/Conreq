@@ -56,4 +56,4 @@ RUN \
 EXPOSE 8000
 
 WORKDIR /app/
-CMD ["sh", "-c", "python3 manage.py run_conreq --uid ${PUID:=1000} --gid ${PGID:=1000}"]
+CMD ["sh", "-c", "python3 manage.py run_conreq --uid ${PUID:=99} --gid ${PGID:=100}"]
