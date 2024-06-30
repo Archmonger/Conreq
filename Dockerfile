@@ -53,7 +53,7 @@ RUN \
     /root/.cargo \
     /tmp/*
 
-EXPOSE 8000
+EXPOSE 7575
 
 WORKDIR /app/
 CMD ["sh", "-c", "python3 manage.py run_conreq --uid ${PUID:=99} --gid ${PGID:=100}"]

@@ -85,7 +85,7 @@ class Command(BaseCommand):
             "-p",
             "--port",
             help="Select the port number for Conreq to run on.",
-            default=8000,
+            default=7575,
             type=int,
         )
 
