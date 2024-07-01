@@ -11,7 +11,7 @@
     default-character-set = utf8
     ```
 
-    _Take a look at [MySQL's docs](https://dev.mysql.com/doc/refman/8.4/en/option-files.html) for all available parameters._
+    _Take a look at MySQL's "Options Files" docs for all available parameters._
 
 3.  Set your `DB_ENGINE ` variable to `MYSQL` and your `MYSQL_CONFIG_FILE` variable to the path to your `mysql.cnf` file.
 
