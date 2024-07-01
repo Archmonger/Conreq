@@ -34,3 +34,4 @@ jobs:
             #       pip install -r requirements/check-style.txt
             #       mypy --show-error-codes docs/
             #       ruff check docs/
+            # Note: Uncomment the above lines to enable type and style checks for documentation examples.
