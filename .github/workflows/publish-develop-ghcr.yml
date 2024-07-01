@@ -3,7 +3,7 @@ name: Publish Develop to GHCR
 on:
     push:
         branches:
-            - develop
+            - develmainop
 
 jobs:
     docker:

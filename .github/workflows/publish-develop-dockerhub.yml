@@ -3,7 +3,7 @@ name: Publish Develop to DockerHub
 on:
     push:
         branches:
-            - develop
+            - main
 
 jobs:
     docker:
