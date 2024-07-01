@@ -1,8 +1,9 @@
-name: Publish Latest Docker Image
+name: Publish Develop to DockerHub
 
 on:
-    release:
-        types: [published]
+    push:
+        branches:
+            - develop
 
 jobs:
     docker:
@@ -21,11 +22,4 @@ jobs:
               uses: docker/build-push-action@v6
               with:
                   push: true
-                  tags: archmonger/conreq:latest,archmonger/conreq:${{ github.event.release.tag_name }}
-            - name: Push to GitHub Container Registry
-              uses: matootie/github-docker@v3.0.0
-              with:
-                  accessToken: ${{ github.token }}
-                  tag: |
-                      latest
-                      ${{ github.event.release.tag_name }}
+                  tags: archmonger/conreq:develop
