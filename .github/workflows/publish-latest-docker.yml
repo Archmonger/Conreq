@@ -22,5 +22,7 @@ jobs:
               with:
                   push: true
                   tags: archmonger/conreq:latest,archmonger/conreq:${{ github.event.release.tag_name }}
-            - name: Push to GitHub Container Registry
+            - name: Push to GitHub Container Registry (latest)
               run: docker push ghcr.io/archmonger/conreq:latest && docker push ghcr.io/archmonger/conreq:${{ github.event.release.tag_name }}
+            - name: Push to GitHub Container Registry (version tag)
+              run: docker push ghcr.io/archmonger/conreq:${{ github.event.release.tag_name }}
