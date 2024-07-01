@@ -1,6 +1,6 @@
 # Conreq Beta
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/roxedus/conreq?style=flat-square)](https://hub.docker.com/r/roxedus/conreq) [![Docker Stars](https://img.shields.io/docker/stars/roxedus/conreq?style=flat-square)](https://hub.docker.com/r/roxedus/conreq) [![Docker Hub](https://img.shields.io/badge/Open%20On-DockerHub-blue?style=flat-square)](https://hub.docker.com/r/roxedus/conreq) [![Discord](https://img.shields.io/discord/440067432552595457?style=flat-square&label=Discord&logo=discord)](https://discord.gg/gQhGZzEjmX "Chat with the community and get realtime support!")
+[![Docker Hub](https://img.shields.io/badge/Docker-DockerHub-blue?style=flat-square)](https://hub.docker.com/r/archmonger/conreq) [![GitHub Container Registry](https://img.shields.io/badge/Docker-GitHub-blue?style=flat-square)](https://github.com/Archmonger/Conreq/pkgs/container/conreq) [![Discord](https://img.shields.io/discord/440067432552595457?style=flat-square&label=Discord&logo=discord)](https://discord.gg/gQhGZzEjmX "Chat with the community and get realtime support!")
 
 ## Notice - July 11th, 2022
 
@@ -20,7 +20,7 @@ Looking for more info? Are you a developer and want to contribute? Check out our
 
 ## Installation (Production Environment)
 
-Install through **[Unraid Community Applications](https://squidly271.github.io/forumpost0.html)**, or **[Hotio](https://hotio.dev/containers/conreq/)**/**[SelfHosters](https://registry.hub.docker.com/r/roxedus/conreq) Docker**.
+Install through [Unraid Community Applications](https://squidly271.github.io/forumpost0.html), or [Docker](https://archmonger.github.io/Conreq/latest/install/docker/).
 
 Here's a list of all available environment variables:
 
