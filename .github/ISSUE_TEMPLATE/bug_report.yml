@@ -25,11 +25,11 @@ body:
           label: Server Operating System
           multiple: true
           options:
-              - N/A
               - Windows
               - Linux
               - FreeBSD
               - MacOS
+              - N/A
       validations:
           required: true
 
@@ -38,13 +38,13 @@ body:
           label: Client Operating System
           multiple: true
           options:
-              - N/A
               - Windows
               - Linux
               - FreeBSD
               - MacOS
               - Android
               - iOS
+              - N/A
       validations:
           required: true
 
@@ -53,12 +53,11 @@ body:
           label: Web Browser(s)
           multiple: true
           options:
-              - N/A
               - Firefox
               - Chrome
               - Safari
               - Microsoft Edge
-              - Other
+              - N/A
       validations:
           required: true
 
