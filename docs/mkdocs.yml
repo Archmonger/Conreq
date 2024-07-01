@@ -1,0 +1,79 @@
+nav:
+    - Home: index.md
+    - Install:
+          - Docker: install/docker.md
+          - Windows NSSM: install/nssm.md
+    - Configuration:
+          - Environment Variables: configure/env_vars.md
+          - Built-in Webserver: configure/webserver.md
+          - Custom CSS/JS: configure/static_files.md
+          - Organizr Authentication: configure/organizr.md
+          - MySQL Database: configure/mysql.md
+    - Development:
+          - Running Conreq Manually: develop/run_conreq.md
+          - Building the Docker: develop/build_docker.md
+          - Creating Custom Apps: develop/creating_apps.md
+    - Contribute:
+          - Updating the Docs: contrib/docs.md
+          - Create an App Store listing: contrib/apps.md
+
+theme:
+    name: material
+    palette:
+        primary: teal
+        accent: teal
+    features:
+        - navigation.instant
+        - navigation.tabs
+        - navigation.tabs.sticky
+        - navigation.top
+        - content.code.copy
+        - search.highlight
+        - navigation.sections
+        - toc.integrate
+
+    icon:
+        repo: fontawesome/brands/github
+
+markdown_extensions:
+    - toc:
+          permalink: true
+    - pymdownx.emoji:
+          emoji_index: !!python/name:material.extensions.emoji.twemoji
+          emoji_generator: !!python/name:material.extensions.emoji.to_svg
+    - pymdownx.tabbed:
+          alternate_style: true
+    - pymdownx.highlight:
+          linenums: true
+    - pymdownx.superfences
+    - pymdownx.details
+    - pymdownx.inlinehilite
+    - admonition
+    - attr_list
+    - md_in_html
+    - pymdownx.keys
+
+plugins:
+    - search
+    - include-markdown
+    - git-authors
+    - minify:
+          minify_html: true
+          minify_js: true
+          minify_css: true
+          cache_safe: true
+    - git-revision-date-localized:
+          fallback_to_build_date: true
+    - spellcheck:
+          known_words: dictionary.txt
+          allow_unicode: no
+          ignore_code: yes
+
+site_name: Conreq Documentation
+site_author: Archmonger
+site_description: Conreq Web Platform
+repo_url: https://github.com/Archmonger/Conreq/
+site_url: https://archmonger.github.io/Conreq/
+repo_name: Archmonger/Conreq
+edit_uri: edit/main/docs/src/
+docs_dir: src
