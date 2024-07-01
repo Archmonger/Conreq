@@ -24,4 +24,7 @@ jobs:
                   push: true
                   tags: archmonger/conreq:develop
             - name: Push to GitHub Container Registry
-              run: docker push ghcr.io/archmonger/conreq:develop
+              uses: matootie/github-docker@v3.0.0
+              with:
+                  accessToken: ${{ github.token }}
+                  tag: develop
