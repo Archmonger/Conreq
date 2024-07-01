@@ -409,7 +409,7 @@ class SonarrManager(ArrBase):
                     results_with_ids = {}
                     for series in results:
                         if "tvdbId" in series:
-                            self._check_availability(series)
+                            self._determine_availability(series)
                             self._set_content_attributes("tv", "sonarr", series)
                             results_with_ids[str(series["tvdbId"])] = series
 
@@ -436,11 +436,11 @@ class SonarrManager(ArrBase):
         episodes = self.__sonarr.get_episodes_by_series_id(series["id"])
         for season in series["seasons"]:
             # Set the season availability
-            self._check_availability(season["statistics"])
+            self._determine_availability(season["statistics"])
 
             # Set the episode availability
             season["episodes"] = []
             for episode in episodes:
                 if episode["seasonNumber"] == season["seasonNumber"]:
-                    self._check_availability(episode)
+                    self._determine_availability(episode)
                     season["episodes"].append(episode)

@@ -23,43 +23,44 @@ class ArrBase:
             results["content_source"] = content_source
 
     @staticmethod
-    def _check_availability(content: dict):
-        """Checks the availability of one item. For use within check_availability()"""
+    def _determine_availability(content: dict):
+        """Checks the availability of one item using fuzzy logic."""
+        # TODO: Rewrite this into separate methods for Sonarr season, Sonarr series, Radarr movie, etc.
         statistics: dict = content.get("statistics") or content or {}
         percent_available: int | None = statistics.get("percentOfEpisodes")
-        grabbed: bool | None = statistics.get("grabbed")
+        monitored: bool | None = statistics.get("monitored") or content.get("monitored")
 
         ##### "Unavailable" #####
-        # Sonarr/Radarr: Check if an individual movie or episode does not exist
-        if "hasFile" in content and not content["hasFile"]:
+        # Sonarr/Radarr: Check if an individual movie or episode does not exist and isn't monitored
+        if content.get("hasFile") is False and not monitored:
             content["availability"] = "Unavailable"
-            return content
+            return
         # Sonarr: Check if a season or series is completely unavailable
-        if statistics and percent_available == 0:
+        if percent_available == 0 and not monitored:
             content["availability"] = "Unavailable"
-            return content
-
-        ##### "Partial" #####
-        # Sonarr: Check if season or series is partially downloaded
-        if statistics and percent_available and percent_available < 100:
-            content["availability"] = "Partial"
-            return content
-        # Radarr: Check if a movie is being downloaded.
-        if grabbed is True and statistics.get("movieFileCount") == 0:
-            content["availability"] = "Partial"
-            return content
+            return
 
         ##### "Available" #####
         # Sonarr: Check if a season or series is fully downloaded
-        if statistics and percent_available == 100:
+        if percent_available == 100:
             content["availability"] = "Available"
-            return content
+            return
         # Sonarr/Radarr: Check if an individual movie or individual episode exists
-        if "hasFile" in content and content["hasFile"]:
+        if content.get("hasFile"):
             content["availability"] = "Available"
-            return content
+            return
+
+        ##### "Partial" #####
+        # Sonarr: Check if season or series is partially downloaded
+        if percent_available and percent_available < 100:
+            content["availability"] = "Partial"
+            return
+        # Sonarr/Radarr: Check if a content is being monitored.
+        if monitored:
+            content["availability"] = "Partial"
+            return
 
         ##### "Unknown" #####
         # This should never be reached except with Sonarr/Raddarr API changes
         content["availability"] = "Unknown"
-        return content
+        return

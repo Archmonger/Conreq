@@ -286,7 +286,7 @@ class RadarrManager(ArrBase):
                     results_with_ids = {}
                     for movie in results:
                         if "tmdbId" in movie:
-                            self._check_availability(movie)
+                            self._determine_availability(movie)
                             self._set_content_attributes("movie", "radarr", movie)
                             results_with_ids[str(movie["tmdbId"])] = movie
 
