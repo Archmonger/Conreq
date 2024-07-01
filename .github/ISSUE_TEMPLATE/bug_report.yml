@@ -6,7 +6,7 @@ body:
       attributes:
           label: Conreq Version
           description: What version did you encounter this issue on?
-          placeholder: For example, v0.15.2
+          placeholder: For example... 1.25.0
       validations:
           required: true
 
@@ -23,44 +23,44 @@ body:
     - type: dropdown
       attributes:
           label: Server Operating System
+          multiple: true
           options:
-              - Not Applicable
+              - N/A
               - Windows
               - Linux
               - FreeBSD
               - MacOS
-              - Other
       validations:
           required: true
 
     - type: dropdown
       attributes:
           label: Client Operating System
+          multiple: true
           options:
-              - Not Applicable
+              - N/A
               - Windows
               - Linux
               - FreeBSD
               - MacOS
               - Android
               - iOS
-              - Other
       validations:
           required: true
 
     - type: dropdown
       attributes:
-          label: Client Browser(s)
+          label: Web Browser(s)
           multiple: true
           options:
-              - Not Applicable
+              - N/A
               - Firefox
               - Chrome
               - Safari
               - Microsoft Edge
               - Other
       validations:
-          required: false
+          required: true
 
     - type: textarea
       attributes:
