@@ -10,7 +10,7 @@ Included in the box will only be basic features such as user authentication/mana
 
 As such, in the future Conreq will be designated as a web app platform.
 
-See the [app store PR](https://github.com/Archmonger/Conreq/pull/69) for more details.
+See the [app store PR](https://github.com/Archmonger/Conreq/pull/295) for more details.
 
 ---
 
