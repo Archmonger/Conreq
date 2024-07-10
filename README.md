@@ -2,7 +2,9 @@
 
 [![Docker Hub](https://img.shields.io/badge/Docker-DockerHub-blue?style=flat-square)](https://hub.docker.com/r/archmonger/conreq) [![GitHub Container Registry](https://img.shields.io/badge/Docker-GitHub-blue?style=flat-square)](https://github.com/Archmonger/Conreq/pkgs/container/conreq) [![Discord](https://img.shields.io/discord/440067432552595457?style=flat-square&label=Discord&logo=discord)](https://discord.gg/gQhGZzEjmX "Chat with the community and get realtime support!")
 
-## Notice - July 11th, 2022
+Conreq is a content requesting platform that allows users to request content from Sonarr/Radarr. It is designed to be a user-friendly interface for requesting content.
+
+## Notice
 
 Conreq is currently undergoing an architectural shift. The biggest change will be the addditional of an app store for adding/removing features to Conreq.
 
@@ -18,41 +20,9 @@ Want to join the community or have a question? Join us on [Discord](https://disc
 
 Looking for more info? Are you a developer and want to contribute? Check out our [Documentation](https://archmonger.github.io/Conreq/)!
 
-## Installation (Production Environment)
+## Installation
 
-Install through [Unraid Community Applications](https://squidly271.github.io/forumpost0.html), or [Docker](https://archmonger.github.io/Conreq/latest/install/docker/).
-
-Here's a list of all available environment variables:
-
-```nginx
-# General Settings
-TZ = America/Los_Angeles         # default: UTC (Timezone for log files, in "TZ Database" format)
-BASE_URL = requests              # default: None
-APP_NAME = RequestCentral        # default: Conreq
-APP_DESCRIPTION = Get yo stuff!  # default: Content Requesting
-ARR_REFRESH_INTERNAL = */15      # default: */1 (Cron minutes for Sonarr/Radarr library refresh)
-LOG_LEVEL = ERROR                # default: WARNING
-CONREQ_ENV_PREFIX = CONREQ       # default: None
-
-# Data Storage
-DATA_DIR = /example/directory          # default: /config (Defaults to "data" outside of docker)
-DB_ENGINE = MYSQL                      # default: SQLITE3
-MYSQL_CONFIG_FILE = /config/mysql.cnf  # default: None
-
-# Security
-SSL_SECURITY = True                      # default: False (True enables advanced SSL security features)
-PWNED_VALIDATOR = False                  # default: True (False disables checking for compromised passwords)
-ALLOWED_HOST = 192.168.0.199             # default: * (Comma separated list. Asterisk allows all hosts.)
-TRUSTED_ORIGINS = https://*.example.com  # default: None (Comma separated list. Required to be set if using https.)
-DEBUG = True                             # default: False (Only enable this during development or testing.)
-
-# Email (Required for password reset features)
-EMAIL_USE_TLS = False               # default: True
-EMAIL_PORT = 587                    # default: None
-EMAIL_HOST = smtp.gmail.com         # default: None
-EMAIL_HOST_USER = myself@gmail.com  # default: None
-EMAIL_HOST_PASSWORD = dogmemes123   # default: None
-```
+Install through [Docker](https://archmonger.github.io/Conreq/latest/install/docker/) or [Windows NSSM](https://archmonger.github.io/Conreq/latest/install/nssm/).
 
 # Screenshots
 
