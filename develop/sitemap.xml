@@ -2,67 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/configure/env_vars/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/configure/mysql/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/configure/organizr/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/configure/static_files/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/configure/webserver/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/contrib/apps/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/contrib/docs/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/develop/build_docker/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/develop/creating_apps/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/develop/run_conreq/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/install/docker/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://archmonger.github.io/Conreq/develop/install/nssm/</loc>
-         <lastmod>2024-07-01</lastmod>
+         <lastmod>2024-07-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
