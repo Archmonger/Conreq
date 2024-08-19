@@ -17,7 +17,7 @@ drf-yasg==1.21.7
 huey==2.5.1
 hypercorn[h3]==0.17.3
 jsonfield==3.1.0
-markdown==3.6.0
+markdown==3.7
 pwned-passwords-django==2.1
 pyarr==5.2.0
 pymysql==1.1.1
