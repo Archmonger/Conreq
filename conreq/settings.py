@@ -82,8 +82,7 @@ SILKY_AUTHORISATION = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
-HTML_MINIFY = True
-WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
+WHITENOISE_MAX_AGE = 0 if DEBUG else 31536000
 COMPRESS_OUTPUT_DIR = "minified"
 COMPRESS_OFFLINE = True
 COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
@@ -96,7 +95,7 @@ HUEY = {
     "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_FILENAME,  # Sqlite filename
-    "results": True,  # Store return values of tasks.
+    "results": False,  # Whether to return values of tasks.
     "immediate": False,  # If True, run tasks synchronously.
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
     "consumer": {
@@ -296,8 +295,6 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
-    "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
 
 
