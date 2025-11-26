@@ -82,7 +82,7 @@ SILKY_AUTHORISATION = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
-WHITENOISE_MAX_AGE = 0 if DEBUG else 31536000
+SERVESTATIC_MAX_AGE = 0 if DEBUG else 31536000
 COMPRESS_OUTPUT_DIR = "minified"
 COMPRESS_OFFLINE = True
 COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
@@ -223,18 +223,6 @@ if SSL_SECURITY:
     LANGUAGE_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
 
 
-# API Settings
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "conreq.core.api.permissions.HasAPIKey",
-    ],
-}
-
-
 # settings.json (old) -> settings.env
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 if os.path.exists(SETTINGS_FILE):
@@ -269,7 +257,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",
+    "servestatic.runserver_nostatic",
     "django.contrib.staticfiles",
     *list_modules(CORE_DIR, prefix="conreq.core."),
     "encrypted_fields",  # Allow for encrypted text in the DB
@@ -278,15 +266,12 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
-    "rest_framework",  # OpenAPI Framework
-    "rest_framework_api_key",  # API Key Manager
-    "rest_framework.authtoken",  # API User Authentication
     *list_modules(APPS_DIR),  # User Installed Apps
 ]
 MIDDLEWARE = [
     "compression_middleware.middleware.CompressionMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
+    "servestatic.middleware.ServeStaticMiddleware",  # Serve static files through Django securely
     "django.middleware.gzip.GZipMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
@@ -303,8 +288,6 @@ if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
     MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
-    # API docs generator
-    INSTALLED_APPS.append("drf_yasg")
 
 
 # URL Routing and Page Rendering
