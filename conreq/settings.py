@@ -344,12 +344,8 @@ else:
     }
 CACHES = {
     "default": {
-        "BACKEND": "diskcache.DjangoCache",
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         "LOCATION": os.path.join(DATA_DIR, "cache"),
-        "TIMEOUT": 300,  # Django setting for default timeout of each key.
-        "SHARDS": 8,  # Number of "sharded" cache dbs to create
-        "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds
-        "OPTIONS": {"size_limit": 2**30},  # 1 gigabyte
     }
 }
 
