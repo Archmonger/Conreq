@@ -7,7 +7,7 @@ from conreq.utils import log
 _logger = log.get_logger(__name__)
 
 
-@db_task()
+@db_task(expires=120)
 def sonarr_request_background_task(tvdb_id, request_params, sonarr_params):
     """Function that can be run in the background to request something on Sonarr"""
     try:
@@ -55,7 +55,7 @@ def sonarr_request_background_task(tvdb_id, request_params, sonarr_params):
         )
 
 
-@db_task()
+@db_task(expires=120)
 def radarr_request_background_task(tmdb_id, radarr_params):
     """Function that can be run in the background to request something on Radarr"""
     try:
