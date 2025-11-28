@@ -1,5 +1,6 @@
 import contextlib
 import os
+import sys
 from logging import getLogger
 from multiprocessing import Process
 from time import sleep
@@ -29,8 +30,6 @@ class Command(BaseCommand):
         verbosity = "-v 1" if DEBUG else "-v 0"
 
         # Perform clean-up
-        print("Removing stale background tasks...")
-        self.reset_huey_db()
         if DEBUG:
             print("Clearing cache...")
             cache.clear()
@@ -75,19 +74,6 @@ class Command(BaseCommand):
                 webserver.start()
 
             sleep(5)
-
-    @staticmethod
-    def reset_huey_db():
-        """Deletes the huey database"""
-        with contextlib.suppress(Exception):
-            if os.path.exists(HUEY_FILENAME):
-                os.remove(HUEY_FILENAME)
-        with contextlib.suppress(Exception):
-            if os.path.exists(f"{HUEY_FILENAME}-shm"):
-                os.remove(f"{HUEY_FILENAME}-shm")
-        with contextlib.suppress(Exception):
-            if os.path.exists(f"{HUEY_FILENAME}-wal"):
-                os.remove(f"{HUEY_FILENAME}-wal")
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -149,3 +135,33 @@ def start_huey():
         call_command("run_huey")
     else:
         call_command("run_huey", "--quiet")
+
+
+# Patch if on a *nix system
+if sys.platform != "win32":
+    # Monkey patch for https://github.com/Kludex/uvicorn/issues/2679
+    from uvicorn import _subprocess
+
+    def subprocess_started(
+        config,
+        target,
+        sockets,
+        stdin_fileno,
+    ) -> None:
+        """
+        Called when the child process starts.
+
+        * config - The Uvicorn configuration instance.
+        * target - A callable that accepts a list of sockets. In practice this will
+                be the `Server.run()` method.
+        * sockets - A list of sockets to pass to the server. Sockets are bound once
+                    by the parent process, and then passed to the child processes.
+        * stdin_fileno - The file number of sys.stdin, so that it can be reattached
+                        to the child process.
+        """
+        config.configure_logging()
+
+        with contextlib.suppress(KeyboardInterrupt):
+            target(sockets=sockets)
+
+    _subprocess.subprocess_started = subprocess_started
