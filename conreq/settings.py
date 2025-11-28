@@ -278,7 +278,6 @@ INSTALLED_APPS = [
     *list_modules(APPS_DIR),  # User Installed Apps
 ]
 MIDDLEWARE = [
-    "compression_middleware.middleware.CompressionMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "servestatic.middleware.ServeStaticMiddleware",  # Serve static files through Django securely
     "django.middleware.gzip.GZipMiddleware",
