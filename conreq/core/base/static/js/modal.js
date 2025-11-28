@@ -20,6 +20,7 @@ var generate_modal = async function (modal_url) {
 		// Add click events
 		request_btn_click_event();
 		content_modal_click_event();
+		quick_request_click_event();
 		modal_select_all_btn_click_event();
 		modal_expand_btn_click_event();
 		row_title_click_event();

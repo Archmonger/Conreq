@@ -31,6 +31,11 @@
         data-content-type="{{card.content_type}}" data-tmdb-id="{% firstof card.tmdbId card.id %}"
         data-modal-url="{% url 'more_info:content_preview_modal' %}"></i>
 
+    <!-- Quick request button -->
+    <i class="fas fa-plus quick-request-btn clickable" title="Quick Request" data-content-type="{{card.content_type}}"
+        data-tmdb-id="{% firstof card.tmdbId card.id %}"
+        data-request-url="{% url 'user_requests:request_content' %}"></i>
+
     <!-- Poster description -->
     <div class="description-tint"></div>
     <div class="poster-description-container">

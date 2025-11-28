@@ -36,7 +36,7 @@ let update_active_tab = async function () {
 // Updates the page name
 let update_page_title = async function (viewport_selector) {
 	let page_name = DOMPurify.sanitize(
-		$(viewport_selector + ">.page-name").val()
+		$(viewport_selector + ">.page-name").val(),
 	);
 	let app_name = $("#app-name").val();
 	if (page_name) {
@@ -68,7 +68,7 @@ let cached_viewport_exists = function () {
 let display_cached_viewport = async function () {
 	let new_viewport = "main[data-url='" + get_window_location() + "']";
 	let old_viewport = $(
-		"main:not([data-url='" + get_window_location() + "'])"
+		"main:not([data-url='" + get_window_location() + "'])",
 	);
 	$(new_viewport).trigger("prepare-cached");
 	update_active_tab();
@@ -97,7 +97,7 @@ let prepare_viewport = async function (viewport_selector) {
 let get_viewport = async function (
 	location,
 	viewport_selector,
-	success = function () {}
+	success = function () {},
 ) {
 	$(viewport_selector).trigger("url-changed");
 
@@ -120,7 +120,7 @@ let get_viewport = async function (
 			await destroy_viewport(viewport_selector);
 			$(viewport_selector + ">*").remove();
 			$(viewport_selector).append(
-				"<h1>Could not connect to the server!</h1>"
+				"<h1>Could not connect to the server!</h1>",
 			);
 			$(viewport_selector + ">h1").css("text-align", "center");
 			select_active_viewport(viewport_selector);
@@ -160,7 +160,7 @@ var generate_viewport = async function (standard_viewport_load = true) {
 				window.history.replaceState(
 					{},
 					null,
-					$(".nav-tab a").attr("href")
+					$(".nav-tab a").attr("href"),
 				);
 				window_location = window.location.hash.split("#")[1];
 			}
@@ -192,14 +192,14 @@ var generate_viewport = async function (standard_viewport_load = true) {
 				// Display the new content
 				$(viewport_selector + ">.loading-animation-container").hide();
 				$(
-					viewport_selector + ">*:not(.loading-animation-container)"
+					viewport_selector + ">*:not(.loading-animation-container)",
 				).show();
 
 				// Set scroll position
 				if (standard_viewport_load) {
 					$(viewport_selector).scrollTop(0);
 				}
-			}
+			},
 		);
 
 		// If the page is taking too long to load, show a loading animation
@@ -209,7 +209,7 @@ var generate_viewport = async function (standard_viewport_load = true) {
 				select_active_viewport(viewport_selector);
 				$(viewport_selector + ">.loading-animation-container").show();
 				$(
-					viewport_selector + ">*:not(.loading-animation-container)"
+					viewport_selector + ">*:not(.loading-animation-container)",
 				).hide();
 			}
 		}, 500);
