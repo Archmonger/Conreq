@@ -36,14 +36,7 @@ class Command(BaseCommand):
 
         # Run any preconfiguration tasks
         if not options["disable_preconfig"]:
-            preconfig_args = [
-                "preconfig_conreq",
-                options["uid"],
-                options["gid"],
-            ]
-            if not options["set_perms"]:
-                preconfig_args.append("--no-perms")
-            call_command(*preconfig_args)
+            call_command("preconfig_conreq")
 
         # Execute tests to ensure Conreq is healthy before starting
         if not options["skip_checks"]:

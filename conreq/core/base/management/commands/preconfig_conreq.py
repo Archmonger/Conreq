@@ -1,7 +1,5 @@
 import os
-import shutil
 import sqlite3
-import sys
 
 from django.conf import settings
 from django.core.management import call_command
@@ -23,100 +21,29 @@ class Command(BaseCommand):
     help = "Runs code that may be required prior to run_conreq Conreq."
 
     def handle(self, *args, **options):
-        uid = options["uid"]
-        gid = options["gid"]
-        no_perms = options["no_perms"]
-
         print("Preconfiguring Conreq...")
 
         # Django database
         if get_database_type() == "SQLITE3":
             database = DATABASES["default"]["NAME"]
-            self.setup_sqlite_database(database, "Conreq", uid, gid, no_perms)
+            self.setup_sqlite_database(database, "Conreq")
 
         # Background task database
         if HUEY_FILENAME:
-            self.setup_sqlite_database(
-                HUEY_FILENAME, "Background Task", uid, gid, no_perms
-            )
+            self.setup_sqlite_database(HUEY_FILENAME, "Background Task")
 
         if DEBUG:
             # Migrate silk due to their wonky dev choices
             call_command("makemigrations", "silk")
 
-        if not no_perms and sys.platform == "linux":
-            # Conreq data dir
-            self.recursive_chown(DATA_DIR, uid, gid)
-
-            # Conreq core dir
-            self.recursive_chown(BASE_DIR, uid, gid)
-
-    def add_arguments(self, parser):
-        parser.add_argument(
-            "uid",
-            nargs="?",
-            help="User ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
-            type=int,
-            default=0,
-        )
-        parser.add_argument(
-            "gid",
-            nargs="?",
-            help="Group ID to chown to (Linux only). Defaults to the current user. Use -1 to remain unchanged.",
-            type=int,
-            default=0,
-        )
-
-        parser.add_argument(
-            "--no-perms",
-            action="store_true",
-            help="Prevent Conreq from setting permissions.",
-        )
-
     @staticmethod
-    def setup_sqlite_database(path, name, uid, gid, no_perms):
-        print(name.rstrip(" ") + " Database")
+    def setup_sqlite_database(path, name):
         if not os.path.exists(path):
-            print("> Creating database")
+            print(f"Creating {name} database")
         with sqlite3.connect(path) as cursor:
-            print("> Optimizing database")
+            print(f"Optimizing {name} database")
             cursor.execute("PRAGMA optimize;")
-            print("> Vacuuming database")
+            print(f"Vacuuming {name} database")
             cursor.execute("VACUUM;")
-            print("> Reindexing database")
+            print(f"Reindexing {name} database")
             cursor.execute("REINDEX;")
-        if not no_perms and (uid != -1 or gid != -1) and sys.platform == "linux":
-            # pylint: disable=no-member
-            print("> Applying permissions")
-            new_uid = uid or os.getuid()
-            new_gid = gid or os.getgid()
-            os.chown(path, new_uid, new_gid)
-        print("> Complete")
-
-    @staticmethod
-    def recursive_chown(path, uid, gid):
-        print('Recursively applying permissions to "' + path + '"')
-        new_uid = uid if uid != -1 else None
-        new_gid = gid if gid != -1 else None
-        if uid != -1 or gid != -1:
-            # pylint: disable=unused-variable
-            for dirpath, dirnames, filenames in os.walk(path):
-                try:
-                    shutil.chown(dirpath, new_uid, new_gid)
-                    try:
-                        for filename in filenames:
-                            shutil.chown(
-                                os.path.join(dirpath, filename), new_uid, new_gid
-                            )
-                    except FileNotFoundError:
-                        print(
-                            'Unable to apply permissions to "'
-                            + os.path.join(dirpath, filename)
-                            + '". File not found.'
-                        )
-                except PermissionError:
-                    print(
-                        'Unable to apply permissions to "'
-                        + dirpath
-                        + '". Permission denied.'
-                    )
