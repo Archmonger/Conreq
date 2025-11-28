@@ -16,7 +16,7 @@ class ExtendedURLValidator(URLValidator):
     domain_re = URLValidator.domain_re
     tld_re = URLValidator.tld_re
 
-    host_re = "(" + hostname_re + domain_re + tld_re + "|localhost|\w+)"
+    host_re = f"({hostname_re}{domain_re}{tld_re}" + r"\|localhost\|\w+)"
 
     regex = _lazy_re_compile(
         r"^(?:[a-z0-9.+-]*)://"  # scheme is validated separately
