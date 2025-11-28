@@ -42,26 +42,6 @@
 	gap: 15px;
 }
 
-.more-info-quick-info.collapse:not(.show) {
-	height: 95px;
-	display: grid;
-	overflow: hidden;
-	-webkit-mask-image: linear-gradient(
-		to bottom,
-		rgba(0, 0, 0, 1),
-		rgba(0, 0, 0, 0)
-	);
-	mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-	pointer-events: none;
-}
-
-.quick-info-read-more-btn {
-	width: 100%;
-	text-align: center;
-	font-weight: 700;
-	font-size: 14px;
-}
-
 .inline-availablity-dot {
 	width: 6px;
 	height: 6px;
@@ -394,15 +374,18 @@
 .movie-backdrop-container > * {
 	-webkit-mask-image: linear-gradient(
 		to bottom,
-		rgba(0, 0, 0, 1),
+		rgba(0, 0, 0, 0.45),
 		rgba(0, 0, 0, 0)
 	);
-	mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+	mask-image: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.45),
+		rgba(0, 0, 0, 0)
+	);
 }
 
 .movie-backdrop-container img {
 	width: 100%;
-	height: var(--backdrop-height);
 	-o-object-fit: cover;
 	object-fit: cover;
 	position: absolute;
@@ -422,7 +405,6 @@
 	background: linear-gradient(360deg, black, transparent);
 	width: 100%;
 	height: var(--backdrop-height);
-	opacity: 0.85;
 	position: absolute;
 	z-index: 1;
 }

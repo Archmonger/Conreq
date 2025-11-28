@@ -81,13 +81,6 @@ var request_btn_click_event = async function () {
 	});
 };
 
-var quick_info_btn_click_event = async function () {
-	$(".quick-info-read-more-btn").click(async function () {
-		$(".more-info-quick-info.collapse").collapse("toggle");
-		$(this).remove();
-	});
-};
-
 var content_modal_click_event = async function () {
 	$(
 		".series-modal-btn, .content-preview-modal-btn, .report-selection-modal-btn",
@@ -124,7 +117,7 @@ var quick_request_click_event = async function () {
 			};
 
 			// Prevent the user from spamming the request button
-			if (ongoing_request == btn) {
+			if (ongoing_request) {
 				return false;
 			} else {
 				ongoing_request = btn;

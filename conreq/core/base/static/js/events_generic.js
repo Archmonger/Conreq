@@ -141,7 +141,6 @@ $(document).ready(async function () {
 		content_modal_click_event();
 		quick_request_click_event();
 		create_report_modal_click_event();
-		quick_info_btn_click_event();
 		more_info_poster_popup_click_event();
 	});
 
@@ -149,7 +148,6 @@ $(document).ready(async function () {
 		// Uncollapse quick info if the height is small
 		if ($(".more-info-quick-info.collapse").prop("scrollHeight") <= 250) {
 			$(".more-info-quick-info.collapse").removeClass("collapse");
-			$(".quick-info-read-more-btn").remove();
 		}
 	});
 
