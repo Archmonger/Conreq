@@ -9,7 +9,6 @@ django-silk==5.4.3
 django-solo==2.4.0
 django-url-or-relative-url-field==0.2.0
 huey==2.5.4
-hypercorn[h3]==0.18.0
 jsonfield==3.2.0
 markdown==3.10.0
 pwned-passwords-django==5.2.0
@@ -22,5 +21,6 @@ tmdbsimple==2.9.1
 Twisted[tls,http2]==25.5.0
 tzlocal==5.3.1
 servestatic[brotli]==3.1.0
+uvicorn[standard]==0.22.0
 attrs
 cffi
