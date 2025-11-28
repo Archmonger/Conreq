@@ -115,6 +115,7 @@ def start_webserver(port):
         workers=1 if DEBUG else (os.cpu_count() or 8),
         access_log=ACCESS_LOG_FILE,
         reload=DEBUG,
+        reload_includes=["*.py", "*.html", "*.css", "*.js"],
         env_file=UVICORN_CONFIG if os.path.exists(UVICORN_CONFIG) else None,
     )
 
