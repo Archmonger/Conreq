@@ -95,11 +95,20 @@ HUEY = {
     "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_FILENAME,  # Sqlite filename
-    "results": False,  # Whether to return values of tasks.
+    "results": True,  # Whether to return values of tasks.
+    "store_none": False,  # Whether to store results of tasks that return None.
     "immediate": False,  # If True, run tasks synchronously.
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
+    "timeout": 10,  # Seconds to wait when reading from the DB.
+    "connection": {
+        "isolation_level": "IMMEDIATE",  # Use immediate transactions to allow sqlite to respect `timeout`.
+        "cached_statements": 2000,  # Number of pages to keep in memory.
+    },
     "consumer": {
-        "workers": 20,
+        "workers": os.cpu_count() or 8,  # Number of worker processes/threads.
+        "worker_type": "thread",  # "thread" or "process"
+        "initial_delay": 0.25,  # Smallest polling interval
+        "check_worker_health": True,  # Whether to monitor worker health.
     },
 }
 
@@ -338,7 +347,17 @@ else:
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
             "OPTIONS": {
-                "timeout": 3,  # 3 second query timeout
+                "init_command": (
+                    "PRAGMA foreign_keys = ON;"
+                    "PRAGMA journal_mode = WAL;"
+                    "PRAGMA synchronous = NORMAL;"
+                    "PRAGMA busy_timeout = 10000;"
+                    "PRAGMA temp_store = MEMORY;"
+                    "PRAGMA mmap_size = 134217728;"
+                    "PRAGMA journal_size_limit = 67108864;"
+                    "PRAGMA cache_size = 2000;"
+                ),
+                "transaction_mode": "IMMEDIATE",
             },
         }
     }
