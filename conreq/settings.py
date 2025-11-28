@@ -82,8 +82,7 @@ SILKY_AUTHORISATION = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = METRICS_DIR
-HTML_MINIFY = True
-WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
+SERVESTATIC_MAX_AGE = 0 if DEBUG else 31536000
 COMPRESS_OUTPUT_DIR = "minified"
 COMPRESS_OFFLINE = True
 COMPRESS_STORAGE = "compressor.storage.BrotliCompressorFileStorage"
@@ -96,11 +95,20 @@ HUEY = {
     "name": "huey",  # DB name for huey.
     "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
     "filename": HUEY_FILENAME,  # Sqlite filename
-    "results": True,  # Store return values of tasks.
+    "results": True,  # Whether to return values of tasks.
+    "store_none": False,  # Whether to store results of tasks that return None.
     "immediate": False,  # If True, run tasks synchronously.
     "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
+    "timeout": 10,  # Seconds to wait when reading from the DB.
+    "connection": {
+        "isolation_level": "IMMEDIATE",  # Use immediate transactions to allow sqlite to respect `timeout`.
+        "cached_statements": 2000,  # Number of pages to keep in memory.
+    },
     "consumer": {
-        "workers": 20,
+        "workers": os.cpu_count() or 8,  # Number of worker processes/threads.
+        "worker_type": "thread",  # "thread" or "process"
+        "initial_delay": 0.25,  # Smallest polling interval
+        "check_worker_health": True,  # Whether to monitor worker health.
     },
 }
 
@@ -224,18 +232,6 @@ if SSL_SECURITY:
     LANGUAGE_COOKIE_HTTPONLY = True  # Do not allow JS to access cookie
 
 
-# API Settings
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "conreq.core.api.permissions.HasAPIKey",
-    ],
-}
-
-
 # settings.json (old) -> settings.env
 SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
 if os.path.exists(SETTINGS_FILE):
@@ -270,7 +266,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",
+    "servestatic.runserver_nostatic",
     "django.contrib.staticfiles",
     *list_modules(CORE_DIR, prefix="conreq.core."),
     "encrypted_fields",  # Allow for encrypted text in the DB
@@ -279,15 +275,11 @@ INSTALLED_APPS = [
     "huey.contrib.djhuey",  # Queuing background tasks
     "compressor",  # Minifies CSS/JS files
     "url_or_relative_url_field",  # Validates relative URLs
-    "rest_framework",  # OpenAPI Framework
-    "rest_framework_api_key",  # API Key Manager
-    "rest_framework.authtoken",  # API User Authentication
     *list_modules(APPS_DIR),  # User Installed Apps
 ]
 MIDDLEWARE = [
-    "compression_middleware.middleware.CompressionMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files through Django securely
+    "servestatic.middleware.ServeStaticMiddleware",  # Serve static files through Django securely
     "django.middleware.gzip.GZipMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
@@ -296,8 +288,6 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "htmlmin.middleware.HtmlMinifyMiddleware",  # Compresses HTML files
-    "htmlmin.middleware.MarkRequestMiddleware",  # Marks the request as minified
 ]
 
 
@@ -306,8 +296,6 @@ if DEBUG:
     # Performance analysis tools
     INSTALLED_APPS.append("silk")
     MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
-    # API docs generator
-    INSTALLED_APPS.append("drf_yasg")
 
 
 # URL Routing and Page Rendering
@@ -358,18 +346,24 @@ else:
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": os.path.join(DATA_DIR, "db.sqlite3"),
             "OPTIONS": {
-                "timeout": 3,  # 3 second query timeout
+                "init_command": (
+                    "PRAGMA foreign_keys = ON;"
+                    "PRAGMA journal_mode = WAL;"
+                    "PRAGMA synchronous = NORMAL;"
+                    "PRAGMA busy_timeout = 10000;"
+                    "PRAGMA temp_store = MEMORY;"
+                    "PRAGMA mmap_size = 134217728;"
+                    "PRAGMA journal_size_limit = 67108864;"
+                    "PRAGMA cache_size = 2000;"
+                ),
+                "transaction_mode": "IMMEDIATE",
             },
         }
     }
 CACHES = {
     "default": {
-        "BACKEND": "diskcache.DjangoCache",
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         "LOCATION": os.path.join(DATA_DIR, "cache"),
-        "TIMEOUT": 300,  # Django setting for default timeout of each key.
-        "SHARDS": 8,  # Number of "sharded" cache dbs to create
-        "DATABASE_TIMEOUT": 0.25,  # 250 milliseconds
-        "OPTIONS": {"size_limit": 2**30},  # 1 gigabyte
     }
 }
 

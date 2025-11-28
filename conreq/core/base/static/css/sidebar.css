@@ -107,7 +107,7 @@
 
 .sidebar-user .username {
 	display: inline-flex;
-	width: calc(100% - 50px);
+	width: calc(100% - 55px);
 	font-weight: 700;
 }
 

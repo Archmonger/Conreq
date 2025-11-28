@@ -32,9 +32,6 @@
 	height: var(--poster-height);
 	display: block;
 	transition: transform 0.3s ease, opacity 2.5s, -webkit-filter 0.3s ease;
-	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s;
-	transition: filter 0.3s ease, transform 0.3s ease, opacity 2.5s,
-		-webkit-filter 0.3s ease;
 	z-index: 6;
 	position: relative;
 }
@@ -92,7 +89,8 @@
 	filter: brightness(25%);
 }
 
-.viewport .poster-container .fa-angle-down {
+.viewport .poster-container .fa-angle-down,
+.viewport .poster-container .fa-plus {
 	position: absolute;
 	bottom: 0px;
 	color: rgba(255, 255, 255, 0.5);
@@ -106,9 +104,34 @@
 	text-align: center;
 }
 
+.viewport .poster-container .fa-plus {
+	right: 5px;
+	top: calc(var(--poster-height) - 25px);
+	width: 20px;
+	height: 20px;
+	padding: unset;
+	color: #000000;
+	background: #e4e4e4;
+	opacity: 0.65;
+	align-content: center;
+	justify-content: center;
+	font-size: 12px;
+	line-height: 14px;
+	border-radius: 20px;
+	transition: color 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+	-webkit-filter: drop-shadow(0 0 6px #000000);
+	filter: drop-shadow(0 0 6px #000000);
+}
+
 .viewport .poster-container .fa-angle-down:hover {
 	background-color: rgb(255 255 255 / 10%);
 	color: rgba(255, 255, 255, 0.85);
+}
+
+.viewport .poster-container .fa-plus:hover {
+	color: var(--accent-color);
+	background: #ffffff;
+	opacity: 1;
 }
 
 .requested-by {

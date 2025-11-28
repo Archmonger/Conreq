@@ -1,4 +1,3 @@
-import os
 import sqlite3
 
 from django.conf import settings
@@ -12,9 +11,8 @@ DB_ENGINE = get_database_type()
 HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
-@db_periodic_task(crontab(minute="0", hour="0", strict=True))
-def vacuum_huey_sqlite_db():
-    """Periodically preforms a SQLITE vacuum on the background task database."""
+@db_periodic_task(crontab(minute="0", hour="0", strict=True), expires=120)
+def huey_db_maintenance():
     with sqlite3.connect(HUEY_FILENAME) as cursor:
         cursor.execute(
             # Only keep the 1000 latest tasks
@@ -31,13 +29,16 @@ def vacuum_huey_sqlite_db():
             """
         )
     with sqlite3.connect(HUEY_FILENAME) as cursor:
-        cursor.execute("VACUUM")
+        cursor.execute("PRAGMA optimize;")
+        cursor.execute("VACUUM;")
+        cursor.execute("REINDEX;")
 
 
 if DB_ENGINE == "SQLITE3":
 
-    @db_periodic_task(crontab(minute="0", hour="0", strict=True))
-    def vacuum_conreq_sqlite_db():
-        """Periodically performs any cleanup tasks needed for the default database."""
+    @db_periodic_task(crontab(minute="0", hour="0", strict=True), expires=120)
+    def conreq_db_maintenance():
         with connection.cursor() as cursor:
-            cursor.execute("VACUUM")
+            cursor.execute("PRAGMA optimize;")
+            cursor.execute("VACUUM;")
+            cursor.execute("REINDEX;")

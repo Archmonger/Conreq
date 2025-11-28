@@ -79,10 +79,12 @@ class Command(BaseCommand):
         if not os.path.exists(path):
             print("> Creating database")
         with sqlite3.connect(path) as cursor:
+            print("> Optimizing database")
+            cursor.execute("PRAGMA optimize;")
             print("> Vacuuming database")
-            cursor.execute("VACUUM")
-            print("> Configuring database")
-            cursor.execute("PRAGMA journal_mode = WAL;")
+            cursor.execute("VACUUM;")
+            print("> Reindexing database")
+            cursor.execute("REINDEX;")
         if not no_perms and (uid != -1 or gid != -1) and sys.platform == "linux":
             # pylint: disable=no-member
             print("> Applying permissions")

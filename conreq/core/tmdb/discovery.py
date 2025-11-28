@@ -1,4 +1,5 @@
 """Conreq Content Discovery: Searches TMDB for content."""
+
 import tmdbsimple as tmdb
 
 from conreq.utils import cache, log

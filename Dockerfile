@@ -1,5 +1,11 @@
-# FROM ghcr.io/linuxserver/baseimage-alpine:3.20
-FROM python:3.11.9-alpine3.20
+# BUILD COMMAND:
+#   docker build . --no-cache -t conreq
+#   mkdir config
+# RUN COMMAND (Windows):
+#   docker run -p '7575:7575/tcp' -v $PWD/config:/config conreq
+# RUN COMMAND (Linux/Mac):
+#   docker run -p '7575:7575/tcp' -v $(pwd)/config:/config conreq
+FROM python:3.12.12-alpine3.21
 
 ENV DATA_DIR=/config DEBUG=False
 
@@ -41,7 +47,9 @@ RUN \
     && \
     echo "**** Install Python dependencies ****" \
     && \
-    pip3 install --no-cache-dir -U -r /app/conreq/requirements/main.txt \
+    pip3 install uv \
+    && \
+    uv pip install --system --no-cache-dir -U -r /app/conreq/requirements/main.txt \
     && \
     echo "**** Cleanup ****" \
     && \

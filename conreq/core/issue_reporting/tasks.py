@@ -14,7 +14,7 @@ from conreq.core.user_requests.helpers import (
 from .models import ReportedIssue
 
 
-@db_task()
+@db_task(expires=120)
 def arr_auto_resolve_tv(issue_id, tmdb_id, seasons, episode_ids, resolutions):
     """Queues a background task to automatically resolve a reported issue."""
     # TODO: Intelligently resolve based on "resolutions"
@@ -64,12 +64,10 @@ def arr_auto_resolve_tv(issue_id, tmdb_id, seasons, episode_ids, resolutions):
                 for episode in season.get("episodes"):
                     if (
                         # User reported an episode, check if the episode has a file
-                        episode.get("id") in episode_ids
-                        and episode.get("hasFile")
+                        episode.get("id") in episode_ids and episode.get("hasFile")
                     ) or (
                         # User reported a season, check if the season has episode files to be deleted
-                        season.get("seasonNumber") in seasons
-                        and episode.get("hasFile")
+                        season.get("seasonNumber") in seasons and episode.get("hasFile")
                     ):
                         sonarr_manager.delete_episode(
                             episode_file_id=episode.get("episodeFileId")
@@ -87,7 +85,7 @@ def arr_auto_resolve_tv(issue_id, tmdb_id, seasons, episode_ids, resolutions):
         issue.save()
 
 
-@db_task()
+@db_task(expires=120)
 def arr_auto_resolve_movie(issue_id, tmdb_id, resolutions):
     """Queues a background task to automatically resolve a reported issue."""
     # TODO: Intelligently resolve based on "resolutions"
@@ -118,7 +116,7 @@ def arr_auto_resolve_movie(issue_id, tmdb_id, resolutions):
         issue.save()
 
 
-@db_periodic_task(crontab(minute="*/1", strict=True))
+@db_periodic_task(crontab(minute="*/1", strict=True), expires=120)
 def auto_resolve_completion_watchdog():
     """Checks to see if an auto resolution has finished completely."""
     # Check if auto resolution is turned on

@@ -90,7 +90,7 @@ var quick_info_btn_click_event = async function () {
 
 var content_modal_click_event = async function () {
 	$(
-		".series-modal-btn, .content-preview-modal-btn, .report-selection-modal-btn"
+		".series-modal-btn, .content-preview-modal-btn, .report-selection-modal-btn",
 	).each(async function () {
 		let current_btn = $(this);
 		if (!current_btn.hasClass("loaded")) {
@@ -99,15 +99,48 @@ var content_modal_click_event = async function () {
 					tmdb_id: $(this).data("tmdb-id"),
 					content_type: $(this).data("content-type"),
 					report_modal: $(this).hasClass(
-						"report-selection-modal-btn"
+						"report-selection-modal-btn",
 					),
 				};
 				generate_modal(
-					$(this).data("modal-url") + "?" + $.param(params)
+					$(this).data("modal-url") + "?" + $.param(params),
 				);
 			});
 			current_btn.addClass("loaded");
 		}
+	});
+};
+
+var quick_request_click_event = async function () {
+	$(".quick-request-btn").each(async function () {
+		let btn = $(this);
+		btn.unbind("click");
+		btn.click(async function () {
+			let params = {
+				tmdb_id: btn.data("tmdb-id"),
+				content_type: btn.data("content-type"),
+				seasons: null,
+				episode_ids: null,
+			};
+
+			// Prevent the user from spamming the request button
+			if (ongoing_request == btn) {
+				return false;
+			} else {
+				ongoing_request = btn;
+			}
+
+			// Request the content
+			post_json(btn.data("request-url"), params, function () {
+				requested_toast_message();
+				console.log(btn);
+				btn.remove();
+				ongoing_request = null;
+			}).fail(async function () {
+				conreq_no_response_toast_message();
+				ongoing_request = null;
+			});
+		});
 	});
 };
 
@@ -124,7 +157,7 @@ var create_report_modal_click_event = async function () {
 			if (params.content_type == "movie") {
 				report_selection = null;
 				generate_modal(
-					$(this).data("modal-url") + "?" + $.param(params)
+					$(this).data("modal-url") + "?" + $.param(params),
 				);
 			}
 
@@ -137,7 +170,7 @@ var create_report_modal_click_event = async function () {
 				// All non-special seasons were checkboxed
 				if (current_selection == true) {
 					generate_modal(
-						$(this).data("modal-url") + "?" + $.param(params)
+						$(this).data("modal-url") + "?" + $.param(params),
 					);
 				}
 
@@ -149,7 +182,7 @@ var create_report_modal_click_event = async function () {
 				) {
 					report_selection = current_selection;
 					generate_modal(
-						$(this).data("modal-url") + "?" + $.param(params)
+						$(this).data("modal-url") + "?" + $.param(params),
 					);
 				}
 
@@ -239,7 +272,7 @@ var row_title_click_event = async function () {
 
 		// Checkmark all related episodes
 		let episode_container = $(
-			season_checkbox.data("all-suboptions-container")
+			season_checkbox.data("all-suboptions-container"),
 		);
 		let episode_checkboxes = episode_container.find("input");
 		episode_checkboxes.prop("checked", season_checkbox.prop("checked"));
@@ -251,7 +284,7 @@ var row_checkbox_click_event = async function () {
 		// Checkmark all related episodes
 		let season_checkbox = $(this);
 		let episode_container = $(
-			season_checkbox.data("all-suboptions-container")
+			season_checkbox.data("all-suboptions-container"),
 		);
 		let episode_checkboxes = episode_container.find("input");
 		episode_checkboxes.prop("checked", season_checkbox.prop("checked"));
@@ -301,7 +334,7 @@ var row_suboption_checkbox_click_event = async function () {
 		// Checkmark the season box if every episode is checked
 		else {
 			let all_episodes_container = $(
-				this.parentElement.parentElement.parentElement.parentElement
+				this.parentElement.parentElement.parentElement.parentElement,
 			);
 			let episode_checkboxes = all_episodes_container.find("input");
 			let checkmarked_episode_checkboxes =
@@ -455,7 +488,7 @@ var server_settings_dropdown_click_event = async function () {
 		change_server_setting(setting_name, dropdown_id).then(
 			async function () {
 				generate_viewport(false);
-			}
+			},
 		);
 	});
 };

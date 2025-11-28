@@ -20,14 +20,14 @@ $(document).ready(async function () {
 
 		// Server Settings
 		$(
-			'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin'
+			'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin',
 		).each(async function () {
 			let setting_name = $(this).data("setting-name");
 			let current_value = $(this).val();
 			previous_admin_settings[setting_name] = current_value;
 		});
 		$(
-			'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin'
+			'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin',
 		).on("keypress", function (e) {
 			let setting_name = $(this).data("setting-name");
 			let current_value = $(this).val();
@@ -37,7 +37,7 @@ $(document).ready(async function () {
 			}
 		});
 		$(
-			'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin'
+			'input[type="text"].settings-item.admin, input[type="url"].settings-item.admin',
 		).focusout(async function () {
 			let setting_name = $(this).data("setting-name");
 			let current_value = $(this).val();
@@ -69,6 +69,7 @@ $(document).ready(async function () {
 		}
 
 		content_modal_click_event();
+		quick_request_click_event();
 
 		// Infinite Scroller
 		if ($(".viewport-container>.infinite-scroll").length) {
@@ -95,6 +96,7 @@ $(document).ready(async function () {
 				masonry_grid.on("append.infiniteScroll", async function () {
 					cull_old_posters();
 					content_modal_click_event();
+					quick_request_click_event();
 				});
 
 				infinite_scroller_created = true;
@@ -137,6 +139,7 @@ $(document).ready(async function () {
 		// More Info page events
 		request_btn_click_event();
 		content_modal_click_event();
+		quick_request_click_event();
 		create_report_modal_click_event();
 		quick_info_btn_click_event();
 		more_info_poster_popup_click_event();
@@ -179,7 +182,7 @@ $(document).ready(async function () {
 					]);
 				});
 			});
-		}
+		},
 	);
 
 	$(".viewport-container, .viewport-container-top").on(
@@ -189,12 +192,13 @@ $(document).ready(async function () {
 			if (new_element.is(".carousel.auto-construct")) {
 				viewport_carousel_constructor();
 				content_modal_click_event();
+				quick_request_click_event();
 			}
 			if (new_element.hasClass("auto-uncollapse")) {
 				new_element.collapse("show");
 			}
 			server_settings_dropdown_click_event();
-		}
+		},
 	);
 
 	$(".sidebar").on("loaded", async function () {

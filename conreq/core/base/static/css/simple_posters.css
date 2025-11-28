@@ -2,7 +2,8 @@
 	height: var(--poster-height);
 }
 
-.viewport .poster-container .fa-angle-down {
+.viewport .poster-container .fa-angle-down,
+.viewport .poster-container .fa-plus {
 	padding-top: 0px;
 	color: #000000;
 	background: #e4e4e4;
@@ -19,11 +20,20 @@
 	transition: color 0.3s ease, background 0.3s ease, opacity 0.3s ease;
 }
 
-.viewport .poster-container:hover .fa-angle-down {
+.viewport .poster-container .fa-plus {
+	left: unset;
+	right: 5px;
+	bottom: 5px;
+	transform: none;
+}
+
+.viewport .poster-container:hover .fa-angle-down,
+.viewport .poster-container:hover .fa-plus {
 	opacity: 1;
 }
 
-.viewport .poster-container .fa-angle-down:hover {
+.viewport .poster-container .fa-angle-down:hover,
+.viewport .poster-container .fa-plus:hover {
 	color: var(--accent-color);
 	background: #ffffff;
 }
