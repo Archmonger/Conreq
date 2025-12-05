@@ -7,7 +7,7 @@ django-searchable-encrypted-fields==0.2.1
 django-silk==5.4.3
 django-solo==2.4.0
 django-url-or-relative-url-field==0.2.0
-huey==2.5.4
+huey==2.5.5
 jsonfield==3.2.0
 markdown==3.10.0
 pwned-passwords-django==5.2.0
