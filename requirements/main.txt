@@ -5,7 +5,7 @@ django-compressor==4.6
 django-model-utils==5.0.0
 django-searchable-encrypted-fields==0.2.1
 django-silk==5.4.3
-django-solo==2.4.0
+django-solo==2.5.1
 django-url-or-relative-url-field==0.2.0
 huey==2.5.4
 jsonfield==3.2.0
