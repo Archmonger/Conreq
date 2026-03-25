@@ -133,7 +133,6 @@ var quick_request_click_event = async function () {
 			// Request the content
 			post_json(btn.data("request-url"), params, function () {
 				requested_toast_message();
-				console.log(btn);
 				btn.remove();
 				ongoing_request = null;
 			}).fail(async function () {

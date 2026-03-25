@@ -13,7 +13,6 @@ DEBUG = get_debug()
 BASE_DIR = getattr(settings, "BASE_DIR")
 DATA_DIR = getattr(settings, "DATA_DIR")
 DATABASES = getattr(settings, "DATABASES")
-HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 
 
 class Command(BaseCommand):
@@ -33,12 +32,6 @@ class Command(BaseCommand):
         if get_database_type() == "SQLITE3":
             database = DATABASES["default"]["NAME"]
             self.setup_sqlite_database(database, "Conreq", uid, gid, no_perms)
-
-        # Background task database
-        if HUEY_FILENAME:
-            self.setup_sqlite_database(
-                HUEY_FILENAME, "Background Task", uid, gid, no_perms
-            )
 
         if DEBUG:
             # Migrate silk due to their wonky dev choices
