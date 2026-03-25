@@ -90,25 +90,15 @@ COMPRESS_FILTERS = {
     "css": ["compressor.filters.cssmin.rCSSMinFilter"],
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
-HUEY_FILENAME = os.path.join(DATA_DIR, "bg_tasks.sqlite3")
 HUEY = {
-    "name": "huey",  # DB name for huey.
-    "huey_class": "huey.SqliteHuey",  # Huey implementation to use.
-    "filename": HUEY_FILENAME,  # Sqlite filename
-    "results": True,  # Whether to return values of tasks.
-    "store_none": False,  # Whether to store results of tasks that return None.
-    "immediate": False,  # If True, run tasks synchronously.
-    "strict_fifo": True,  # Utilize Sqlite AUTOINCREMENT to have unique task IDs
-    "timeout": 10,  # Seconds to wait when reading from the DB.
-    "connection": {
-        "isolation_level": "IMMEDIATE",  # Use immediate transactions to allow sqlite to respect `timeout`.
-        "cached_statements": 2000,  # Number of pages to keep in memory.
-    },
+    "name": "huey",
+    "huey_class": "huey.FileHuey",
+    "path": os.path.join(DATA_DIR, "tasks"),
+    "immediate": False,
+    "use_thread_lock": True,
     "consumer": {
         "workers": os.cpu_count() or 8,  # Number of worker processes/threads.
-        "worker_type": "thread",  # "thread" or "process"
         "initial_delay": 0.25,  # Smallest polling interval
-        "check_worker_health": True,  # Whether to monitor worker health.
     },
 }
 

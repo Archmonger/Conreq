@@ -16,7 +16,6 @@ from conreq.utils.environment import get_debug
 
 UVICORN_CONFIG = os.path.join(getattr(settings, "DATA_DIR"), "uvicorn.env")
 DEBUG = get_debug()
-HUEY_FILENAME = getattr(settings, "HUEY_FILENAME")
 ACCESS_LOG_FILE = getattr(settings, "ACCESS_LOG_FILE")
 
 _logger = getLogger(__name__)
