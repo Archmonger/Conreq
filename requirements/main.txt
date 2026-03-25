@@ -4,7 +4,7 @@ django-cleanup==9.0.0
 django-compressor==4.6
 django-model-utils==5.0.0
 django-searchable-encrypted-fields==0.2.1
-django-silk==5.4.3
+django-silk==5.5.0
 django-solo==2.4.0
 django-url-or-relative-url-field==0.2.0
 huey==2.5.4
